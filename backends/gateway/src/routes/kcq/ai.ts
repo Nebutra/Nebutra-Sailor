@@ -41,10 +41,12 @@ import { bodyLimit } from "hono/body-limit";
 import { routerInternalUrl } from "../ai/gateway.js";
 import {
   defaultKcqAiBilling,
+  defaultKcqWallet,
   estimatePromptTokens,
   KCQ_WALLET_PRODUCT,
   type KcqAiBilling,
   type KcqUsage,
+  type KcqWalletReader,
   quoteKcqRequest,
   settleKcqRequest,
 } from "./ai-billing.js";
@@ -52,6 +54,10 @@ import { resolveWorkspaceTenant } from "./scope.js";
 import { MarketSourceError } from "./twelve-data.js";
 
 const log = logger.child({ service: "kcq-ai" });
+
+/** The offer that funds the KCQ wallet (ops/nebutra/offers.json). */
+export const KCQ_TOPUP_OFFER_ID = "kcq_topup";
+const WALLET_USAGE_ROWS = 8;
 
 export const KCQ_AI_STAFF_MODEL_DEFAULT = "deepseek/deepseek-v4.1-flash";
 
@@ -72,6 +78,8 @@ export interface KcqAiOptions {
   billing?: KcqAiBilling;
   /** The tenant whose KCQ wallet pays for this customer call. */
   resolveWalletTenant?: (request: Request, identity: KcqAiIdentity) => Promise<string>;
+  /** Balance and recent usage of the KCQ wallet (read-only). */
+  wallet?: KcqWalletReader;
 }
 
 /** Same workspace rule as the market routes; the AI surface defaults to the personal workspace. */
@@ -157,6 +165,7 @@ export function createKcqAiRoutes(options: KcqAiOptions = {}) {
   const doFetch = options.fetchImpl ?? fetch;
   const billing = () => options.billing ?? defaultKcqAiBilling();
   const resolveWalletTenant = options.resolveWalletTenant ?? resolveKcqWalletTenant;
+  const walletReader = () => options.wallet ?? defaultKcqWallet();
   const signToken =
     options.signToken ?? ((claims: { userId: string; role?: string }) => signServiceToken(claims));
 
@@ -185,6 +194,39 @@ export function createKcqAiRoutes(options: KcqAiOptions = {}) {
     return c.json({
       object: "list",
       data: [{ id: modelFor(identity), object: "model", owned_by: "nebutra" }],
+    });
+  });
+
+  /**
+   * The KCQ wallet of the workspace named in `X-KCQ-Workspace`, resolved and
+   * membership-checked exactly like the billed calls. Staff ride the internal
+   * source and have no balance to show: they are told so instead.
+   */
+  app.get("/v1/wallet", async (c) => {
+    const identity = c.get("identity");
+    if (identity.staffRole) return c.json({ internal: true, billed: false });
+    let tenantId: string;
+    try {
+      tenantId = await resolveWalletTenant(c.req.raw, identity);
+    } catch (error) {
+      if (error instanceof MarketSourceError) {
+        const status = error.status === 403 ? 403 : 400;
+        return c.json(openAiError(error.message, "workspace_unavailable", status).body, status);
+      }
+      throw error;
+    }
+    const reader = walletReader();
+    const [wallet, usage] = await Promise.all([
+      reader.balance(tenantId),
+      reader.recent(tenantId, WALLET_USAGE_ROWS),
+    ]);
+    return c.json({
+      internal: false,
+      billed: true,
+      balance: wallet.balance,
+      currency: wallet.currency,
+      offerId: KCQ_TOPUP_OFFER_ID,
+      usage,
     });
   });
 

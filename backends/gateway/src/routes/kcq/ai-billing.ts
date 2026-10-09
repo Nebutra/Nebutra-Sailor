@@ -22,7 +22,7 @@
  * reconciliation can select exactly them.
  */
 import { getSystemDb } from "@nebutra/db";
-import { RouterBillingRepository } from "@nebutra/repositories";
+import { RouterBillingRepository, RouterUsageRepository } from "@nebutra/repositories";
 import {
   MIN_REQUEST_CHARGE_USD,
   type PriceResult,
@@ -160,4 +160,54 @@ export async function settleKcqRequest(
     },
   });
   return { charged: totalCost, fellBackToReservation: fellBack };
+}
+
+/** One settled KCQ call, as the usage list shows it. */
+export interface KcqUsageRow {
+  id: string;
+  occurredAt: string;
+  model: string | null;
+  promptTokens: number;
+  completionTokens: number;
+  cost: number;
+  currency: string;
+}
+
+/** The read side of the KCQ wallet: balance and the latest settled calls. */
+export interface KcqWalletReader {
+  balance(tenantId: string): Promise<{ balance: number; currency: string }>;
+  recent(tenantId: string, limit: number): Promise<KcqUsageRow[]>;
+}
+
+/** How far back "recent" reaches; the list is a glance, not a statement. */
+const RECENT_WINDOW_MS = 90 * 24 * 60 * 60 * 1000;
+
+export function defaultKcqWallet(): KcqWalletReader {
+  // AUDIT(no-tenant): same system-client seam as the money path; every query is
+  // keyed by the tenant resolved from the verified session and workspace.
+  const db = getSystemDb();
+  const billing = new RouterBillingRepository(db);
+  const usage = new RouterUsageRepository(db);
+  return {
+    balance: (tenantId) => billing.getBalance(tenantId, KCQ_WALLET_PRODUCT),
+    async recent(tenantId, limit) {
+      const now = Date.now();
+      const { rows } = await usage.records({
+        tenantId,
+        product: KCQ_WALLET_PRODUCT,
+        from: new Date(now - RECENT_WINDOW_MS),
+        to: new Date(now + 60_000),
+        limit,
+      });
+      return rows.map((row) => ({
+        id: row.id,
+        occurredAt: row.occurredAt.toISOString(),
+        model: row.model,
+        promptTokens: row.promptTokens,
+        completionTokens: row.completionTokens,
+        cost: row.totalCost,
+        currency: row.currency,
+      }));
+    },
+  };
 }

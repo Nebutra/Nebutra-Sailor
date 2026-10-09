@@ -37,6 +37,11 @@ export interface RouterUsageWindow {
   from: Date;
   /** Exclusive — so consecutive windows tile without double-counting. */
   to: Date;
+  /**
+   * Whose ledger rows to read: `metadata.product`. Omitted means Router. Another
+   * product that bills through the same spine (KCQ's managed AI) names itself.
+   */
+  product?: string;
 }
 
 export interface RouterUsageSummary {
@@ -139,7 +144,7 @@ export class RouterUsageRepository {
     return Prisma.sql`tenant_id = ${w.tenantId}
       AND occurred_at >= ${w.from}
       AND occurred_at < ${w.to}
-      AND metadata ->> 'product' = ${ROUTER_PRODUCT}`;
+      AND metadata ->> 'product' = ${w.product ?? ROUTER_PRODUCT}`;
   }
 
   async summary(w: RouterUsageWindow): Promise<RouterUsageSummary> {

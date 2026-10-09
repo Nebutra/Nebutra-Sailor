@@ -6,7 +6,8 @@ vi.mock("@nebutra/logger", () => ({
 }));
 
 import { createKcqAiRoutes, createUserRateLimiter, type KcqAiIdentity } from "./ai.js";
-import type { KcqAiBilling } from "./ai-billing.js";
+import type { KcqAiBilling, KcqWalletReader } from "./ai-billing.js";
+import { MarketSourceError } from "./twelve-data.js";
 
 /** In-memory stand-in for the money seam with the same reserve / release / settle contract. */
 function fakeBilling(balance: number) {
@@ -381,6 +382,78 @@ describe("KCQ managed AI billing", () => {
     const res = await app.request("/v1/chat/completions", chat());
     expect(res.status).toBe(503);
     expect(fetchImpl).not.toHaveBeenCalled();
+  });
+});
+
+describe("KCQ wallet read", () => {
+  const walletHeaders = { "X-KCQ-Workspace": "org_1" };
+  function walletApp(
+    identity: KcqAiIdentity | null,
+    resolveWalletTenant: (request: Request) => Promise<string> = async () => "tenant_org",
+  ) {
+    const wallet = {
+      balance: vi.fn(async (_tenantId: string) => ({ balance: 4.25, currency: "USD" })),
+      recent: vi.fn(async (_tenantId: string, _limit: number) => [
+        {
+          id: "u1",
+          occurredAt: "2026-10-09T10:00:00.000Z",
+          model: "gpt-5.6-luna",
+          promptTokens: 10,
+          completionTokens: 5,
+          cost: 0.0002,
+          currency: "USD",
+        },
+      ]),
+    } satisfies KcqWalletReader;
+    const app = createKcqAiRoutes({
+      resolveIdentity: async () => identity,
+      resolveWalletTenant,
+      wallet,
+    });
+    return { app, wallet };
+  }
+
+  it("requires a session", async () => {
+    const { app, wallet } = walletApp(null);
+    expect((await app.request("/v1/wallet")).status).toBe(401);
+    expect(wallet.balance).not.toHaveBeenCalled();
+  });
+
+  it("returns the balance and recent KCQ usage of the resolved workspace tenant", async () => {
+    const resolve = vi.fn(async (_request: Request) => "tenant_org");
+    const { app, wallet } = walletApp({ userId: "cust1", staffRole: null }, resolve);
+    const res = await app.request("/v1/wallet", { headers: walletHeaders });
+    expect(res.status).toBe(200);
+    expect(res.headers.get("cache-control")).toBe("private, no-store");
+    const body = (await res.json()) as Record<string, unknown>;
+    expect(body).toMatchObject({
+      internal: false,
+      balance: 4.25,
+      currency: "USD",
+      offerId: "kcq_topup",
+    });
+    expect(body.usage).toHaveLength(1);
+    expect(resolve.mock.calls[0]?.[0].headers.get("X-KCQ-Workspace")).toBe("org_1");
+    expect(wallet.balance).toHaveBeenCalledWith("tenant_org");
+    expect(wallet.recent).toHaveBeenCalledWith("tenant_org", expect.any(Number));
+  });
+
+  it("refuses a workspace the caller does not belong to without reading any wallet", async () => {
+    const { app, wallet } = walletApp({ userId: "cust1", staffRole: null }, async () => {
+      throw new MarketSourceError(403, "当前工作区已不可访问。");
+    });
+    const res = await app.request("/v1/wallet", { headers: walletHeaders });
+    expect(res.status).toBe(403);
+    expect(wallet.balance).not.toHaveBeenCalled();
+    expect(wallet.recent).not.toHaveBeenCalled();
+  });
+
+  it("tells staff they are not billed instead of showing a balance", async () => {
+    const resolve = vi.fn(async () => "tenant_org");
+    const { app, wallet } = walletApp({ userId: "s1", staffRole: "platform_operator" }, resolve);
+    const res = await app.request("/v1/wallet", { headers: walletHeaders });
+    expect(await res.json()).toEqual({ internal: true, billed: false });
+    expect(wallet.balance).not.toHaveBeenCalled();
   });
 });
 

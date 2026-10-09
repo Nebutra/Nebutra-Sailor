@@ -172,6 +172,22 @@ export function startOfUtcDay(at: Date): Date {
 export class RouterBillingRepository {
   constructor(private readonly prisma: PrismaClient) {}
 
+  /**
+   * A product wallet's balance, read fresh from the table `reserve` decrements.
+   * No row yet is a wallet that was never funded: zero, not an error. Omitted
+   * product means Router.
+   */
+  async getBalance(
+    tenantId: string,
+    product: string = ROUTER_WALLET_PRODUCT,
+  ): Promise<{ balance: number; currency: string }> {
+    const row = await this.prisma.creditBalance.findUnique({
+      where: balanceOf(tenantId, product),
+      select: { balance: true, currency: true },
+    });
+    return { balance: row ? Number(row.balance) : 0, currency: row?.currency ?? "USD" };
+  }
+
   /** The price row for a public model id, or null when the model is unknown. */
   async findPrice(modelName: string): Promise<RouterPriceRow | null> {
     const row = await this.prisma.modelConfig.findUnique({ where: { modelName } });

@@ -57,6 +57,23 @@ describe("RouterBillingRepository (real Prisma over PGlite)", () => {
     );
   });
 
+  describe("getBalance", () => {
+    it("reads the named product's balance fresh and never another product's", async () => {
+      await expect(repository.getBalance(TENANT)).resolves.toEqual({ balance: 1, currency: "USD" });
+      await expect(repository.getBalance(TENANT, "kuanlan")).resolves.toEqual({
+        balance: 900,
+        currency: "USD",
+      });
+    });
+
+    it("is zero for a wallet that was never funded", async () => {
+      await expect(repository.getBalance(TENANT, "kcq")).resolves.toEqual({
+        balance: 0,
+        currency: "USD",
+      });
+    });
+  });
+
   async function balance(tenantId = TENANT): Promise<number> {
     const row = await database.prisma.creditBalance.findUnique({
       where: { tenantId_product: { tenantId, product: "router" } },

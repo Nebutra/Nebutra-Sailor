@@ -151,6 +151,18 @@ describe("RouterUsageRepository (real Prisma over PGlite)", () => {
       });
     });
 
+    it("reads another product's rows only when it is named", async () => {
+      await seed([
+        { at: "2026-08-02T10:00:00Z", cost: 1 },
+        { at: "2026-08-02T11:00:00Z", cost: 7, product: "kcq" },
+      ]);
+      await expect(
+        repository.summary({ tenantId: TENANT, ...AUG, product: "kcq" }),
+      ).resolves.toMatchObject({ totalCost: 7, requestCount: 1 });
+      const records = await repository.records({ tenantId: TENANT, ...AUG, product: "kcq" });
+      expect(records.rows.map((row) => row.totalCost)).toEqual([7]);
+    });
+
     it("reports zeros rather than nulls for a tenant that has never called", async () => {
       await expect(repository.summary({ tenantId: TENANT, ...AUG })).resolves.toEqual({
         totalCost: 0,
