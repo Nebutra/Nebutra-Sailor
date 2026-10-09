@@ -141,6 +141,17 @@ const CASES: Case[] = [
       'export const C = ({ active }: { active: boolean }) => (\n  <span\n    className={\n      active\n        ? "bg-muted font-medium text-foreground"\n        : "text-muted-foreground"\n    }\n  >\n    x\n  </span>\n);\n',
   },
   {
+    // A full page load where data should be revalidated in place.
+    guard: "lint-no-hard-reload",
+    violation: "export const reset = () => window.location.reload();\n",
+  },
+  {
+    // A server read started from an effect instead of the query layer.
+    guard: "lint-no-effect-fetch",
+    violation:
+      'import { useEffect } from "react";\nexport function C() {\n  useEffect(() => {\n    void fetch("/api/probe");\n  }, []);\n  return null;\n}\n',
+  },
+  {
     // A hand-picked stacking number above the local range, instead of a layer role.
     guard: "lint-z-index",
     violation: 'export const C = () => <div className="fixed z-[150]" />;\n',
