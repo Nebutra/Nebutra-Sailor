@@ -3,70 +3,43 @@
 import { ArrowRight, LockClosed, Sparkles, Users } from "@nebutra/icons";
 import { EmptyState } from "@nebutra/ui/layout";
 import { Button } from "@nebutra/ui/primitives";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { CofounderCard, type CofounderCardData } from "./cofounder-card";
-
-interface RoomMatch extends CofounderCardData {
-  readonly profileId: string;
-}
-
-interface RoomAccess {
-  readonly granted: boolean;
-  readonly planName: string | null;
-  readonly status: string;
-}
-
-type LoadState = "loading" | "ready" | "not-match" | "error";
+import { cofounderRoomQueryOptions } from "@/lib/queries/cofounder";
+import { CofounderCard } from "./cofounder-card";
 
 export function RoomView({ profileId }: { profileId: string }) {
   const pathname = usePathname();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
-  const [state, setState] = useState<LoadState>("loading");
-  const [match, setMatch] = useState<RoomMatch | null>(null);
-  const [access, setAccess] = useState<RoomAccess | null>(null);
-  const [formState, setFormState] = useState<"idle" | "forming" | "formed" | "error">("idle");
+  const roomQuery = useQuery(cofounderRoomQueryOptions(profileId));
+  const match = roomQuery.data?.match ?? null;
+  const access = roomQuery.data?.access ?? null;
+  const state = roomQuery.isPending
+    ? "loading"
+    : roomQuery.isError
+      ? "error"
+      : roomQuery.data === null
+        ? "not-match"
+        : "ready";
 
-  const formTeam = useCallback(async () => {
-    setFormState("forming");
-    try {
+  const formTeamMutation = useMutation({
+    mutationFn: async () => {
       const res = await fetch(`/api/cofounder/room/${profileId}/form-team`, {
         method: "POST",
         credentials: "include",
       });
-      setFormState(res.ok ? "formed" : "error");
-    } catch {
-      setFormState("error");
-    }
-  }, [profileId]);
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        const res = await fetch(`/api/cofounder/room/${profileId}`, { credentials: "include" });
-        if (res.status === 404) {
-          if (!cancelled) setState("not-match");
-          return;
-        }
-        if (!res.ok) {
-          if (!cancelled) setState("error");
-          return;
-        }
-        const data = (await res.json()) as { match: RoomMatch; access: RoomAccess };
-        if (cancelled) return;
-        setMatch(data.match);
-        setAccess(data.access);
-        setState("ready");
-      } catch {
-        if (!cancelled) setState("error");
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [profileId]);
+      if (!res.ok) throw new Error(`Failed to form the team (${res.status})`);
+    },
+  });
+  const formState = formTeamMutation.isPending
+    ? "forming"
+    : formTeamMutation.isSuccess
+      ? "formed"
+      : formTeamMutation.isError
+        ? "error"
+        : "idle";
+  const formTeam = () => formTeamMutation.mutate();
 
   if (state === "loading") {
     return (

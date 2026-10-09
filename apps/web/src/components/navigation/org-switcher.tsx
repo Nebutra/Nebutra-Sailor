@@ -11,8 +11,10 @@
  * Wiring notes:
  *   - Reads `useOrganization()` from `@nebutra/auth/client` for the current
  *     active org. When `isLoaded === false` the component renders nothing.
- *   - Fetches the user's org list from `/api/organizations` (existing route).
- *   - On row click, POSTs to `/api/organizations/active`. The route forwards
+ *   - Reads the user's org list through the shared TanStack Query entry
+ *     (`organizationListQueryOptions`) the first time the menu opens.
+ *   - On row click, POSTs to `/api/organizations/active` (a mutation), then
+ *     revalidates the tenant scope in place — no page load. The route forwards
  *     Better Auth's `Set-Cookie` rotation so the next request sees the new
  *     active org (phase 2.3 / SetActiveResult).
  *   - Empty state links to /onboarding (the existing create-org flow).
@@ -32,10 +34,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
+import { useRevalidate } from "@/lib/navigation/use-revalidate";
+import { organizationListQueryOptions } from "@/lib/queries/organizations";
 
 interface OrgSummary {
   id: string;
@@ -47,71 +51,43 @@ function truncate(value: string, max = 24): string {
   return value.length > max ? `${value.slice(0, max - 1)}…` : value;
 }
 
+async function postActiveOrganization(organizationId: string): Promise<void> {
+  const response = await fetch("/api/organizations/active", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ organizationId }),
+  });
+  if (!response.ok) throw new Error(`Failed to switch organization (${response.status})`);
+}
+
 export function OrgSwitcher() {
   const t = useTranslations("navigation.orgSwitcher");
-  const router = useRouter();
+  const revalidate = useRevalidate();
   const { organization, isLoaded } = useOrganization();
 
   const [open, setOpen] = useState(false);
-  const [orgs, setOrgs] = useState<OrgSummary[]>([]);
-  const [pendingId, setPendingId] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // Lazily fetch the org list the first time the menu opens.
-  useEffect(() => {
-    if (!open) return;
-    let cancelled = false;
-    async function load() {
-      try {
-        const { fetchWithTimeout } = await import("@nebutra/browser-utils");
-        const response = await fetchWithTimeout("/api/organizations", { timeoutMs: 12_000 });
-        if (!response.ok) return;
-        const data = (await response.json()) as { organizations?: OrgSummary[] };
-        if (cancelled) return;
-        setOrgs(
-          (data.organizations ?? []).map((entry) => ({
-            id: entry.id,
-            name: entry.name,
-            slug: entry.slug,
-          })),
-        );
-      } catch {
-        // Network failure — surface via the inline error region.
-        if (!cancelled) setErrorMessage(t("error"));
-      }
-    }
-    void load();
-    return () => {
-      cancelled = true;
-    };
-  }, [open, t]);
+  // Fetched the first time the menu opens, then shared with every other
+  // reader of the organization list (the shell's Projects section).
+  const orgsQuery = useQuery({ ...organizationListQueryOptions(), enabled: open });
+  const orgs = orgsQuery.data ?? [];
 
-  const handleSelect = useCallback(
-    async (orgId: string) => {
-      if (pendingId) return;
-      setPendingId(orgId);
-      setErrorMessage(null);
-      try {
-        const response = await fetch("/api/organizations/active", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ organizationId: orgId }),
-        });
-        if (!response.ok) {
-          setErrorMessage(t("error"));
-          return;
-        }
-        setOpen(false);
-        router.refresh();
-      } catch {
-        setErrorMessage(t("error"));
-      } finally {
-        setPendingId(null);
-      }
+  const switchOrganization = useMutation({
+    mutationFn: postActiveOrganization,
+    onSuccess: async () => {
+      setOpen(false);
+      // The active tenant changed: refetch in place — no page load.
+      await revalidate("tenant");
     },
-    [pendingId, router, t],
-  );
+  });
+  const pendingId = switchOrganization.isPending ? switchOrganization.variables : null;
+  const errorMessage = switchOrganization.isError || orgsQuery.isError ? t("error") : null;
+
+  function handleSelect(orgId: string) {
+    if (switchOrganization.isPending) return;
+    switchOrganization.mutate(orgId);
+  }
 
   if (!isLoaded) {
     return null;
@@ -157,9 +133,7 @@ export function OrgSwitcher() {
                   // Stay open until the POST resolves — the row shows its own
                   // pending label, and a failure has to land on the alert below.
                   closeOnClick={false}
-                  onClick={() => {
-                    void handleSelect(entry.id);
-                  }}
+                  onClick={() => handleSelect(entry.id)}
                   className="justify-between gap-2 py-2"
                 >
                   <span className="min-w-0 flex-1">

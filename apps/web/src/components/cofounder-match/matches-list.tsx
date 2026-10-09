@@ -2,47 +2,26 @@
 
 import { ArrowRight, Sparkles } from "@nebutra/icons";
 import { EmptyState } from "@nebutra/ui/layout";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
-import { CofounderCard, type CofounderCardData } from "./cofounder-card";
-
-interface MatchEntry extends CofounderCardData {
-  readonly profileId: string;
-}
-
-type LoadState = "loading" | "ready" | "empty" | "error";
+import { cofounderMatchesQueryOptions } from "@/lib/queries/cofounder";
+import { CofounderCard } from "./cofounder-card";
 
 export function MatchesList() {
   const t = useTranslations("startupOs");
   const pathname = usePathname();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
-  const [state, setState] = useState<LoadState>("loading");
-  const [matches, setMatches] = useState<MatchEntry[]>([]);
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        const res = await fetch("/api/cofounder/matches", { credentials: "include" });
-        if (!res.ok) {
-          if (!cancelled) setState("error");
-          return;
-        }
-        const data = (await res.json()) as { matches?: MatchEntry[] };
-        const next = data.matches ?? [];
-        if (cancelled) return;
-        setMatches(next);
-        setState(next.length > 0 ? "ready" : "empty");
-      } catch {
-        if (!cancelled) setState("error");
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const matchesQuery = useQuery(cofounderMatchesQueryOptions());
+  const matches = matchesQuery.data ?? [];
+  const state = matchesQuery.isPending
+    ? "loading"
+    : matchesQuery.isError
+      ? "error"
+      : matches.length > 0
+        ? "ready"
+        : "empty";
 
   if (state === "loading") {
     return (

@@ -12,21 +12,17 @@ import {
 import { EmptyState, PageHeader } from "@nebutra/ui/layout";
 import { DashboardPanel } from "@nebutra/ui/patterns";
 import { Card } from "@nebutra/ui/primitives";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
 import { DocumentTaskUploader } from "@/components/documents/document-task-uploader";
+import { resolveApiUrl } from "@/lib/api/browser-client";
 import { INTEGRATION_CATALOG } from "@/lib/integrations/catalog";
-
-// ── Types ────────────────────────────────────────────────────────────────────
-
-interface Integration {
-  id: string;
-  type: "SHOPIFY" | "SHOPLINE" | "STRIPE" | "CUSTOM";
-  name: string;
-  isActive: boolean;
-  lastSyncAt: string | null;
-  createdAt: string;
-}
+import {
+  INTEGRATIONS_ENDPOINT,
+  type IntegrationRecord,
+  integrationsQueryOptions,
+} from "@/lib/queries/integrations";
+import { queryKeys } from "@/lib/query-keys";
 
 // ── Integration Catalog ──────────────────────────────────────────────────────
 
@@ -78,70 +74,48 @@ function DocumentPipelineSection() {
 
 export default function IntegrationsPage() {
   const tSos = useTranslations("startupOs");
-  const [integrations, setIntegrations] = useState<Integration[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [connecting, setConnecting] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+  const integrationsQuery = useQuery(integrationsQueryOptions());
+  const integrations: IntegrationRecord[] = integrationsQuery.data ?? [];
+  // An error reads as empty: the catalog below still offers every connector.
+  const loading = integrationsQuery.isPending;
 
-  const fetchIntegrations = useCallback(async () => {
-    try {
-      const res = await fetch("/api/v1/integrations", { credentials: "include" });
-      if (res.ok) {
-        const data = await res.json();
-        setIntegrations(data.integrations ?? []);
-      }
-    } catch {
-      // Silently fail — empty state will show
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const refreshIntegrations = () =>
+    queryClient.invalidateQueries({ queryKey: queryKeys.integrations.all });
 
-  useEffect(() => {
-    fetchIntegrations();
-  }, [fetchIntegrations]);
-
-  const handleConnect = async (type: string, name: string) => {
-    setConnecting(type);
-    try {
-      const res = await fetch("/api/v1/integrations", {
+  const connect = useMutation({
+    mutationFn: async ({ type, name }: { type: string; name: string }) => {
+      const res = await fetch(resolveApiUrl(INTEGRATIONS_ENDPOINT), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({ type, name }),
       });
-      if (res.ok) {
-        await fetchIntegrations();
-      }
-    } finally {
-      setConnecting(null);
-    }
-  };
+      if (!res.ok) throw new Error(`Failed to connect (${res.status})`);
+    },
+    onSuccess: refreshIntegrations,
+  });
+  const connecting = connect.isPending ? (connect.variables?.type ?? null) : null;
 
-  const handleToggle = async (id: string, isActive: boolean) => {
-    try {
-      await fetch(`/api/v1/integrations/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+  const update = useMutation({
+    mutationFn: (request: { id: string; method: "PATCH" | "DELETE"; body?: unknown }) =>
+      fetch(resolveApiUrl(`${INTEGRATIONS_ENDPOINT}/${request.id}`), {
+        method: request.method,
         credentials: "include",
-        body: JSON.stringify({ isActive: !isActive }),
-      });
-      await fetchIntegrations();
-    } catch {
-      // Silently fail
-    }
-  };
+        ...(request.body === undefined
+          ? {}
+          : {
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(request.body),
+            }),
+      }),
+    onSettled: refreshIntegrations,
+  });
 
-  const handleDisconnect = async (id: string) => {
-    try {
-      await fetch(`/api/v1/integrations/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-      await fetchIntegrations();
-    } catch {
-      // Silently fail
-    }
-  };
+  const handleConnect = (type: string, name: string) => connect.mutate({ type, name });
+  const handleToggle = (id: string, isActive: boolean) =>
+    update.mutate({ id, method: "PATCH", body: { isActive: !isActive } });
+  const handleDisconnect = (id: string) => update.mutate({ id, method: "DELETE" });
 
   const connectedTypes = new Set(integrations.map((i) => i.type));
 

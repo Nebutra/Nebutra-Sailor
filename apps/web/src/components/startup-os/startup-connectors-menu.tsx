@@ -9,10 +9,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
+import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { resolveApiUrl } from "@/lib/api/browser-client";
 import { INTEGRATION_CATALOG } from "@/lib/integrations/catalog";
+import { integrationsQueryOptions } from "@/lib/queries/integrations";
 
 /**
  * Connectors menu for the Startup OS prompt — REAL data, no mocks.
@@ -28,33 +28,13 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
   const router = useRouter();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
   const integrationsHref = `/${locale}/integrations`;
-  const [connectedTypes, setConnectedTypes] = useState<ReadonlySet<string>>(new Set());
-
-  useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        const res = await fetch(resolveApiUrl("/api/v1/integrations"), {
-          credentials: "include",
-        });
-        if (!res.ok || cancelled) return;
-        const data = (await res.json()) as {
-          integrations?: Array<{ type?: string; isActive?: boolean }>;
-        };
-        if (cancelled) return;
-        const types = (data.integrations ?? [])
-          .filter((entry) => entry.isActive !== false)
-          .map((entry) => entry.type)
-          .filter((type): type is string => Boolean(type));
-        setConnectedTypes(new Set(types));
-      } catch {
-        // Live state is best-effort; the catalog still renders honestly.
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  // Live state is best-effort: on error the catalog still renders honestly.
+  const integrations = useQuery(integrationsQueryOptions());
+  const connectedTypes: ReadonlySet<string> = new Set(
+    (integrations.data ?? [])
+      .filter((entry) => entry.isActive !== false)
+      .map((entry) => entry.type),
+  );
 
   return (
     <DropdownMenu>

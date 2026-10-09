@@ -13,11 +13,11 @@ import {
   Input,
 } from "@nebutra/ui/primitives";
 import { AUTH_PRIMARY_CTA_CLASS } from "@nebutra/ui/utils";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRevalidate } from "@/lib/navigation/use-revalidate";
 import { ORGANIZATION_ERROR_CODES } from "@/lib/organization-errors";
 
 interface CreateWorkspaceStepProps {
@@ -89,7 +89,7 @@ export function resolveWorkspaceSubmitError(
 
 export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
   const t = useTranslations("onboarding.workspace");
-  const router = useRouter();
+  const revalidate = useRevalidate();
 
   const schema = useMemo(
     () =>
@@ -142,7 +142,8 @@ export function CreateWorkspaceStep({ onComplete }: CreateWorkspaceStepProps) {
 
       const result = await response.json();
       if (result.organizationId) {
-        router.refresh();
+        // The new workspace is now active.
+        await revalidate("tenant");
       }
 
       onComplete();

@@ -1,7 +1,9 @@
 import { useAuthContext } from "@nebutra/auth/react/context";
 import { BrandMark, BrandWordmark } from "@nebutra/brand";
+import { LoadingState } from "@nebutra/ui/layout";
 import { Button } from "@nebutra/ui/primitives";
-import { createRootRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
+import type { QueryClient } from "@tanstack/react-query";
+import { createRootRouteWithContext, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { SidebarProvider } from "@/components/navigation/sidebar-context";
 import { APP_HOME, APP_NAV, AppDevtools } from "@/vite-app/app-shell";
 
@@ -19,7 +21,8 @@ function ProductShell() {
   if (!isLoaded) {
     return (
       <main className="grid min-h-dvh place-items-center bg-neutral-1 text-neutral-12">
-        <p className="text-sm text-neutral-11">Loading…</p>
+        {/* Delays itself, so a fast session read never flashes a spinner. */}
+        <LoadingState size="medium" />
       </main>
     );
   }
@@ -90,6 +93,11 @@ function ProductShell() {
   );
 }
 
-export const rootRoute = createRootRoute({
+/** What every route's loader receives: the app's one query cache. */
+export interface RouterContext {
+  queryClient: QueryClient;
+}
+
+export const rootRoute = createRootRouteWithContext<RouterContext>()({
   component: ProductShell,
 });

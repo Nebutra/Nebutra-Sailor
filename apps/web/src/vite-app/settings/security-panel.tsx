@@ -1,5 +1,5 @@
 import { Badge, Button, Card } from "@nebutra/ui/primitives";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { authRequest } from "./auth-api";
 import { describeDevice } from "./devices";
 
@@ -34,6 +34,11 @@ async function loadSessions(): Promise<SessionsView> {
   return { sessions: sorted, currentToken };
 }
 
+/** Read by the panel and prefetched by the settings route's loader. */
+export function signedInSessionsQueryOptions() {
+  return queryOptions({ queryKey: SESSIONS_KEY, queryFn: loadSessions });
+}
+
 const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" });
 
 function formatDate(value: string): string {
@@ -43,7 +48,7 @@ function formatDate(value: string): string {
 
 export function SecurityPanel() {
   const queryClient = useQueryClient();
-  const sessions = useQuery({ queryKey: SESSIONS_KEY, queryFn: loadSessions });
+  const sessions = useQuery(signedInSessionsQueryOptions());
 
   const revokeOne = useMutation({
     mutationFn: (token: string) =>

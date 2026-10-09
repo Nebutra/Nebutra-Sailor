@@ -59,6 +59,7 @@ vi.mock("@nebutra/i18n/routing", () => ({
 
 vi.mock("next/navigation", () => ({
   usePathname: () => mockPathname,
+  useRouter: () => ({ refresh: vi.fn(), push: vi.fn() }),
 }));
 
 // ── Sidebar context + zustand expansion store (pure local UI state) ──────────

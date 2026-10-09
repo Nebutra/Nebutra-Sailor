@@ -45,7 +45,8 @@ import "./globals.css";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
+  // No maximumScale / userScalable: pinch-zoom must stay available (WCAG
+  // 1.4.4). iOS focus-zoom is avoided by ≥16px input text on touch instead.
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },

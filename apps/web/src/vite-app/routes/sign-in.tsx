@@ -1,7 +1,8 @@
 import { buildAuthCenterSignInUrl, getAuthCenterOrigin } from "@nebutra/auth/client";
 import { Button, Field, Input } from "@nebutra/ui/primitives";
-import { createRoute } from "@tanstack/react-router";
+import { createRoute, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, useEffect, useState } from "react";
+import { useSessionScopeChanged } from "@/vite-app/auth-provider";
 import {
   DEMO_ACCOUNT,
   describeError,
@@ -48,8 +49,13 @@ function SignInForm() {
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
 
-  // A full load lets the session provider read the new cookie.
-  const finish = () => window.location.assign("/welcome");
+  const sessionScopeChanged = useSessionScopeChanged();
+  const navigate = useNavigate();
+  // Read the new session in place, then move on: no page load.
+  const finish = async () => {
+    await sessionScopeChanged();
+    await navigate({ to: "/welcome" });
+  };
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
@@ -58,7 +64,7 @@ function SignInForm() {
     const failure = await authenticate(mode, email, password, name).catch(describeError);
     setPending(false);
     if (failure) setError(failure);
-    else finish();
+    else await finish();
   };
 
   const continueWithDemoAccount = async () => {
@@ -67,7 +73,7 @@ function SignInForm() {
     const failure = await signInWithDemoAccount();
     setPending(false);
     if (failure) setError(failure);
-    else finish();
+    else await finish();
   };
 
   return (

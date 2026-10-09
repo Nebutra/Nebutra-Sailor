@@ -38,6 +38,13 @@ describe("apps/web Vite migration contract", () => {
     expect(packageJson.devDependencies["@tanstack/router-plugin"]).toBe("1.168.16");
   });
 
+  it("compiles the Vite build with the React Compiler, as next.config.ts does", () => {
+    const viteConfig = readAppFile("vite.config.ts");
+    expect(readAppFile("next.config.ts")).toMatch(/reactCompiler:\s*true/);
+    expect(viteConfig).toContain("reactCompilerPreset()");
+    expect(viteConfig).toMatch(/babel\(\{\s*presets:\s*\[reactCompilerPreset\(\)\]/);
+  });
+
   it("has a Vite browser entry that does not import Next.js runtime APIs", () => {
     const requiredFiles = [
       "index.html",
