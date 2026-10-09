@@ -41,6 +41,32 @@
         "type": "object",
         "properties": {},
         "additionalProperties": {}
+      },
+      "KcqChatCompletion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "choices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": {}
+            }
+          },
+          "usage": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "additionalProperties": {}
       }
     },
     "parameters": {}
@@ -6884,7 +6910,19 @@
         },
         "responses": {
           "200": {
-            "description": "OpenAI-compatible completion or SSE stream"
+            "description": "OpenAI-compatible completion (JSON) or SSE stream when `stream: true`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KcqChatCompletion"
+                }
+              },
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }

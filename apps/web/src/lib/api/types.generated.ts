@@ -2859,12 +2859,15 @@ export interface paths {
         };
       };
       responses: {
-        /** @description OpenAI-compatible completion or SSE stream */
+        /** @description OpenAI-compatible completion (JSON) or SSE stream when `stream: true` */
         200: {
           headers: {
             [name: string]: unknown;
           };
-          content?: never;
+          content: {
+            "application/json": components["schemas"]["KcqChatCompletion"];
+            "text/event-stream": string;
+          };
         };
       };
     };
@@ -7190,6 +7193,19 @@ export interface components {
       updatedAt: string;
     };
     PlatformStaffGrant: {
+      [key: string]: unknown;
+    };
+    KcqChatCompletion: {
+      id?: string;
+      object?: string;
+      model?: string;
+      choices?: {
+        [key: string]: unknown;
+      }[];
+      usage?: {
+        [key: string]: unknown;
+      };
+    } & {
       [key: string]: unknown;
     };
   };

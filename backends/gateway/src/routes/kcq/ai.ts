@@ -165,6 +165,18 @@ const chatBody = z
   })
   .catchall(z.unknown());
 
+/** An OpenAI-compatible chat completion, as the Router returns it. */
+const chatCompletion = z
+  .object({
+    id: z.string().optional(),
+    object: z.string().optional(),
+    model: z.string().optional(),
+    choices: z.array(z.record(z.string(), z.unknown())).optional(),
+    usage: z.record(z.string(), z.unknown()).optional(),
+  })
+  .catchall(z.unknown())
+  .openapi("KcqChatCompletion");
+
 function openAiError(message: string, code: string, status: number) {
   return { body: { error: { message, type: "invalid_request_error", code } }, status };
 }
@@ -249,7 +261,17 @@ export function createKcqAiRoutes(options: KcqAiOptions = {}) {
       tags: ["KCQ"],
       summary: "Managed KCQ AI chat completions via Router",
       request: { body: { required: true, content: { "application/json": { schema: chatBody } } } },
-      responses: { 200: { description: "OpenAI-compatible completion or SSE stream" } },
+      responses: {
+        200: {
+          description: "OpenAI-compatible completion (JSON) or SSE stream when `stream: true`",
+          content: {
+            // The Router's completion body is passed through as-is, so its
+            // shape is the upstream's: an open object, not a pinned schema.
+            "application/json": { schema: chatCompletion },
+            "text/event-stream": { schema: z.string() },
+          },
+        },
+      },
     }),
     async (c) => {
       const identity = c.get("identity");
