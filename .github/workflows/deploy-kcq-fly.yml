@@ -146,6 +146,7 @@ jobs:
           rm -rf "$stage/gotdx/.git" "$stage/python/.git"
           cp infra/fly/Dockerfile.kcq "$stage/Dockerfile"
           cp infra/fly/kcq.nginx.conf "$stage/nginx.conf"
+          cp infra/fly/kcq.security-headers.conf "$stage/security-headers.conf"
           cp infra/fly/kcq-supervisor.py infra/fly/kcq-python-entrypoint.py infra/fly/smoke-kcq-connector.sh "$stage/"
           printf '.git\n.venv\n__pycache__\n' > "$stage/.dockerignore"
           echo "STAGE=$stage" >> "$GITHUB_ENV"
@@ -154,7 +155,7 @@ jobs:
         run: |
           set -euo pipefail
           # nginx resolves no upstream at parse time (loopback IP literals), so a bare nginx -t is enough.
-          docker run --rm -v "$STAGE/nginx.conf:/etc/nginx/conf.d/default.conf:ro" nginx:1.27-alpine nginx -t
+          docker run --rm -v "$STAGE/nginx.conf:/etc/nginx/conf.d/default.conf:ro" -v "$STAGE/security-headers.conf:/etc/nginx/snippets/kcq-security-headers.conf:ro" nginx:1.27-alpine nginx -t
           python3 -m py_compile infra/fly/kcq-supervisor.py infra/fly/kcq-python-entrypoint.py
 
       - name: Setup flyctl

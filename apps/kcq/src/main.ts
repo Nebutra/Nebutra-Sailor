@@ -6,6 +6,9 @@ import { createAuthCenterBrowserClient } from "@nebutra/auth/browser";
 import { createApp, type App as VueApp } from "vue";
 import "./styles.css";
 import { getKcqRoute } from "./main-route";
+import { installPreloadRecovery } from "./preload-recovery";
+
+installPreloadRecovery();
 
 const auth = createAuthCenterBrowserClient(`https://${brand.domains.auth}`);
 async function boot() {

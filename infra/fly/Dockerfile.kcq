@@ -4,7 +4,7 @@
 # docs/ops/nebutra/2026-10-09-kcq-consolidation.md.
 #
 # Build context (staged by deploy-kcq-fly.yml):
-#   html/ gotdx/ python/ nginx.conf kcq-supervisor.py kcq-python-entrypoint.py smoke-kcq-connector.sh
+#   html/ gotdx/ python/ nginx.conf security-headers.conf kcq-supervisor.py kcq-python-entrypoint.py smoke-kcq-connector.sh
 
 FROM golang:1.27-alpine AS gotdx
 WORKDIR /src
@@ -38,6 +38,7 @@ RUN apt-get update \
 COPY --from=gotdx /out/kcq-tdx /out/kcq-binance /usr/local/bin/
 COPY --from=python-build --chown=connector:connector /opt/kcq-python /opt/kcq-python
 COPY nginx.conf /etc/nginx/conf.d/kcq.conf
+COPY security-headers.conf /etc/nginx/snippets/kcq-security-headers.conf
 COPY html/ /usr/share/nginx/html/
 COPY kcq-supervisor.py /usr/local/bin/kcq-supervisor
 COPY kcq-python-entrypoint.py /opt/kcq-python/nebutra-entrypoint.py
