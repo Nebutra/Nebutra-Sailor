@@ -1286,7 +1286,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     id: "dotted-map",
     title: "Dotted Map",
     category: "charts",
-    status: "experimental",
+    status: "stable",
     import: "@nebutra/ui/primitives",
     files: ["primitives/dotted-map.tsx"],
     demos: ["dotted-map-demo"],
