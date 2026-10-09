@@ -907,7 +907,7 @@ jobs:
             flyctl volumes create inngest_data -a nebutra-inngest --region sin --size 1 --yes
           fi
           for k in INNGEST_EVENT_KEY INNGEST_SIGNING_KEY INNGEST_REDIS_URI; do
-            flyctl secrets list -a nebutra-inngest | grep -q "^ *$k " || { echo "::error::secret $k missing on nebutra-inngest; run infra/ops/scripts/bootstrap-inngest.sh"; exit 1; }
+            flyctl secrets list -a nebutra-inngest | grep -qE "^ *(\* )?$k " || { echo "::error::secret $k missing on nebutra-inngest; run infra/ops/scripts/bootstrap-inngest.sh"; exit 1; }
           done
 
       - name: Deploy Machine

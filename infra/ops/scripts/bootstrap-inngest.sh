@@ -25,7 +25,8 @@ TOML=infra/fly/inngest.toml
 [ -f "$TOML" ] || { echo "$TOML missing: run from a checkout that has it" >&2; exit 1; }
 for c in flyctl openssl python3 curl; do command -v "$c" >/dev/null || { echo "need $c" >&2; exit 1; }; done
 
-has_secret() { flyctl secrets list -a "$1" 2>/dev/null | grep -q "^ *$2 "; }
+# A staged (not yet deployed) secret lists as " * NAME"; both states count.
+has_secret() { flyctl secrets list -a "$1" 2>/dev/null | grep -qE "^ *(\* )?$2 "; }
 app_exists() { flyctl apps list --json | python3 -c "import json,sys; n={a.get('Name') or a.get('name') for a in json.load(sys.stdin)}; sys.exit(0 if '$1' in n else 1)"; }
 
 flyctl auth whoami >/dev/null 2>&1 || { echo "flyctl is not logged in — run: fly auth login" >&2; exit 1; }
