@@ -22,8 +22,10 @@ or privileged GitHub Actions workflows.
 - CI and nightly security scans run `pnpm supply-chain:verify`.
 - The production dependency gate counts high and critical records from pnpm's
   structured advisory report. pnpm 11 removes configured ignores from advisory
-  records but leaves the metadata totals unchanged. Neither text summaries nor
-  metadata totals determine the decision. Registry errors retry three times;
+  records but leaves the metadata totals unchanged. With no ignores in this
+  policy, the gate requires record counts to match metadata exactly; hidden or
+  missing findings fail validation. Record severities determine the decision,
+  while metadata is used only to check report integrity. Registry errors retry three times;
   a missing or malformed report fails the gate. Raw reports and evaluations
   are uploaded as CI evidence.
 

@@ -52,7 +52,13 @@ export function applyLocalPatches(result, evidence) {
 }
 
 export function evaluateAudit(report) {
-  if (!report || report.error || !report.advisories || typeof report.advisories !== "object") {
+  if (
+    !report ||
+    report.error ||
+    !report.advisories ||
+    typeof report.advisories !== "object" ||
+    Array.isArray(report.advisories)
+  ) {
     throw new Error("Missing advisory report");
   }
   const metadata = report.metadata?.vulnerabilities;
@@ -62,9 +68,10 @@ export function evaluateAudit(report) {
       throw new Error(`Invalid vulnerability count: ${severity}`);
     }
   }
-  // pnpm 11 filters ignored entries from advisories, but leaves metadata totals
-  // unchanged. Count the remaining advisory records; never subtract ignores
-  // from already filtered entries or parse the human-readable summary.
+  // pnpm 11 filters ignored entries but leaves metadata totals unchanged.
+  // This policy has no ignores: require an unfiltered, complete report rather
+  // than treating missing findings as safe. Records determine the severity;
+  // metadata is an integrity check, never a reason to subtract findings.
   for (const advisory of Object.values(report.advisories)) {
     if (!advisory || !Object.hasOwn(counts, advisory.severity)) {
       throw new Error("Invalid advisory severity");
@@ -72,7 +79,7 @@ export function evaluateAudit(report) {
     counts[advisory.severity]++;
   }
   for (const severity of Object.keys(counts)) {
-    if (counts[severity] > metadata[severity]) throw new Error("Inconsistent advisory counts");
+    if (counts[severity] !== metadata[severity]) throw new Error("Inconsistent advisory counts");
   }
   return { counts, blocking: counts.high + counts.critical, report };
 }

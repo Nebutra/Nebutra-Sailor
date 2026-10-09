@@ -22,9 +22,22 @@ const report = (counts = {}) => ({
 test("blocks critical even when high is zero", () => {
   assert.equal(evaluateAudit(report({ critical: 1 })).blocking, 1);
 });
-test("uses already filtered JSON counts without subtracting ignores again", () => {
+test("never subtracts ignore summaries from active advisory records", () => {
   assert.equal(evaluateAudit({ ...report({ high: 2 }), ignored: { high: 2 } }).blocking, 2);
-  assert.equal(evaluateAudit({ ...report({ high: 2 }), advisories: {} }).blocking, 0);
+});
+test("rejects missing advisory records even if an ignore summary claims they are safe", () => {
+  for (const severity of ["low", "moderate", "high", "critical"]) {
+    assert.throws(
+      () =>
+        evaluateAudit({
+          ...report({ [severity]: 2 }),
+          advisories: {},
+          ignored: { [severity]: 2 },
+        }),
+      /Inconsistent advisory counts/,
+    );
+  }
+  assert.throws(() => evaluateAudit({ ...report(), advisories: [] }), /Missing advisory report/);
 });
 test("moderate is reported without failing the production high gate", () => {
   assert.equal(evaluateAudit(report({ moderate: 7 })).blocking, 0);
