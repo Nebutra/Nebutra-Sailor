@@ -10,7 +10,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'Numeric entry on Base UI NumberField. Replaces `<input type="number">`: themed steppers, arrow-key stepping (Shift = largeStep), wheel scrubbing off by default, locale-aware parsing and formatting, min/max clamping, and an optional drag-to-scrub label. `value` accepts a number, `null`, or a numeric string so string-state forms migrate unchanged.',
+          "Numeric entry on Base UI NumberField. Replaces native number inputs: themed steppers, arrow-key stepping (Shift = largeStep), wheel scrubbing off by default, locale-aware parsing and formatting, min/max clamping, and an optional drag-to-scrub label. `value` accepts a number, `null`, or a numeric string so string-state forms migrate unchanged.",
       },
     },
   },

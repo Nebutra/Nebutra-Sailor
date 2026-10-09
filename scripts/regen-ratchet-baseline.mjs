@@ -7,7 +7,7 @@
 // The cost is that migrating a file means editing governance.config.json by hand,
 // which is tedious enough that people work around the gate instead. This does it.
 //
-// Usage: node scripts/regen-ratchet-baseline.mjs <arbitraryTypography|primitiveReuse>
+// Usage: node scripts/regen-ratchet-baseline.mjs <key>  (see GUARDS below)
 
 import { execSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -15,6 +15,9 @@ import { readFileSync, writeFileSync } from "node:fs";
 const GUARDS = {
   arbitraryTypography: "scripts/lint-arbitrary-typography.mjs",
   primitiveReuse: "scripts/lint-primitive-reuse.mjs",
+  rawNumberFileInputs: "scripts/lint-no-raw-number-file-inputs.mjs",
+  titleTooltips: "scripts/lint-no-title-tooltips.mjs",
+  rawClipboardWrites: "scripts/lint-no-raw-clipboard.mjs",
 };
 
 const key = process.argv[2];
