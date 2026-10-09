@@ -52,7 +52,7 @@ const VISUALS: Record<
   string,
   { name: string; altKey: "altRouter" | "altKcq"; width: number; height: number }
 > = {
-  router: { name: "router-shelf", altKey: "altRouter", width: 1600, height: 900 },
+  router: { name: "router-shelf", altKey: "altRouter", width: 1600, height: 1000 },
   kcq: { name: "kcq-workbench", altKey: "altKcq", width: 1600, height: 1000 },
 };
 

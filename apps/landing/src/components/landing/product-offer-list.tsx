@@ -99,14 +99,13 @@ export function ProductOfferList({
             <div className="p-6 sm:p-8 lg:p-10">
               <div className="flex flex-wrap items-center gap-4">
                 {product?.glyph ? (
-                  // biome-ignore lint/performance/noImgElement: a 44px static SVG glyph
                   <img
                     src={product.glyph}
                     alt=""
                     aria-hidden
                     width={44}
                     height={44}
-                    className="size-11 rounded-[10px] shadow-ambient-sm"
+                    className="size-11 rounded-[10px] ring-1 ring-border shadow-ambient-sm"
                   />
                 ) : (
                   <span
@@ -130,7 +129,7 @@ export function ProductOfferList({
                 {product ? (
                   <a
                     href={product.href}
-                    className="shrink-0 text-sm font-medium text-muted-foreground transition-colors duration-micro hover:text-foreground"
+                    className="w-full shrink-0 text-sm font-medium text-muted-foreground transition-colors duration-micro hover:text-foreground sm:w-auto"
                   >
                     {t("viewProduct", { product: name })} ↗
                   </a>
@@ -140,7 +139,7 @@ export function ProductOfferList({
               <div
                 className={
                   product?.visual && balances.length > 0
-                    ? "mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] lg:items-center"
+                    ? "mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] lg:items-center"
                     : "mt-2"
                 }
               >
@@ -413,14 +412,14 @@ function ProductWindow({
   const base = `/images/product/${visual.name}`;
   return (
     <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-xl border border-border bg-muted/50 sm:aspect-[16/11]">
-      <div className="absolute top-[7%] left-[6%] w-[118%] overflow-hidden rounded-lg border border-border bg-card shadow-ambient-lg">
+      <div className="absolute top-[6%] left-[4%] w-[115%] sm:left-[5%] sm:w-[90%] overflow-hidden rounded-lg border border-border bg-card shadow-ambient-lg">
         <div className="flex items-center gap-3 border-b border-border bg-muted/70 px-3.5 py-2">
           <span aria-hidden className="flex gap-1.5">
             <span className="size-2.5 rounded-full bg-[#ff5f57]" />
             <span className="size-2.5 rounded-full bg-[#febc2e]" />
             <span className="size-2.5 rounded-full bg-[#28c840]" />
           </span>
-          <span className="mx-auto truncate rounded-md bg-background px-3 py-0.5 font-mono text-[11px] text-muted-foreground">
+          <span className="mx-auto truncate rounded-md bg-background px-3 py-0.5 font-mono text-xs text-muted-foreground">
             {domain}
           </span>
           <span aria-hidden className="w-12" />
@@ -428,7 +427,6 @@ function ProductWindow({
         <picture>
           <source srcSet={`${base}.avif`} type="image/avif" />
           <source srcSet={`${base}.webp`} type="image/webp" />
-          {/* biome-ignore lint/performance/noImgElement: static capture served as AVIF/WebP via <picture> */}
           <img
             src={`${base}.webp`}
             alt={visual.alt}

@@ -84,7 +84,7 @@ describe("public product pricing", () => {
         offers={offers.filter((offer) => offer.kind === "balance")}
         products={[
           {
-            ...products[0]!,
+            ...(products[0] as (typeof products)[number]),
             id: "router",
             visual: { name: "router-shelf", alt: "A shelf of models", width: 1600, height: 900 },
           },
