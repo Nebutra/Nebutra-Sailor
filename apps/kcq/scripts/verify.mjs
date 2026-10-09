@@ -43,7 +43,9 @@ run(
   source,
 );
 run(["build:packages"], source);
-run(["turbo", "run", "build", "--filter=@nebutra/ui", "--filter=@nebutra/icons"]);
+// Build every workspace package KCQ depends on (dist exports such as @nebutra/billing/links),
+// not a hand-kept list that silently goes stale when a dependency is added.
+run(["turbo", "run", "build", "--filter=@nebutra/kcq^..."]);
 run(["exec", "vitest", "run", "--config", "apps/kcq/vitest.config.ts"]);
 run(["--filter", "@nebutra/kcq", "typecheck"]);
 run(["--filter", "@nebutra/kcq", "build"]);
