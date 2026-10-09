@@ -1,10 +1,10 @@
 {
   "gotdx": {
-    "repository": "363045841/GoTDX-Connector",
-    "commit": "ab9372e2fc884fb3799c6fc67d52f9383f1a9512"
+    "repository": "TsekaLuk/GoTDX-Connector",
+    "commit": "a7990d8ee5dff0bd72e2d933c46c31deb07c0b58"
   },
   "python": {
-    "repository": "363045841/Baostock-Tradingview-Connector",
-    "commit": "92779ca2c324bb0ad0e04443ed8df9e1fc3406e1"
+    "repository": "TsekaLuk/Baostock-Tradingview-Connector",
+    "commit": "25dd57d03196f1de25a9edffd64efc6b33632704"
   }
 }

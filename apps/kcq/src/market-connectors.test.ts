@@ -37,6 +37,35 @@ describe("production market connectors", () => {
     );
   });
 
+  it("streams live bars from the same-origin connector with the resolved instrument", () => {
+    const registry = new MarketDataProviderRegistry();
+    initializeMarketConnectors("https://kcq.nebutra.com", memoryStorage(), registry);
+    const urls: string[] = [];
+    vi.stubGlobal(
+      "EventSource",
+      class {
+        onopen = null;
+        onerror = null;
+        onmessage = null;
+        constructor(url: string) {
+          urls.push(url);
+        }
+        close() {}
+      },
+    );
+    const stream = registry.getRequired("gotdx").liveBars?.createStream({
+      symbol: "000001",
+      period: "5min",
+      barAggregation: "original",
+      instrumentId: "gotdx:SZ:000001",
+    });
+    stream?.connect();
+    stream?.destroy();
+    expect(urls).toEqual([
+      "https://kcq.nebutra.com/market/tdx/api/v1/market-data/sources/gotdx/stream?symbol=000001&period=5min&barAggregation=original&instrumentId=gotdx%3ASZ%3A000001",
+    ]);
+  });
+
   it("migrates scoped localhost defaults while preserving source choices and custom endpoints", () => {
     const storage = memoryStorage();
     const key = scopedPersistenceName("klinechart.aggregation-sources");
