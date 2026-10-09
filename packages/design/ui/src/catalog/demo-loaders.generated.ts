@@ -111,6 +111,7 @@ export const DEMO_LOADERS: Readonly<Record<string, () => Promise<ComponentType>>
   "command-menu-demo": () => import("@nebutra/ui/catalog/demos/command-menu-demo").then(pick("CommandMenuDemo")),
   "confetti-demo": () => import("@nebutra/ui/catalog/demos/confetti-demo").then(pick("ConfettiDemo")),
   "confirm-dialog-demo": () => import("@nebutra/ui/catalog/demos/confirm-dialog-demo").then(pick("ConfirmDialogDemo")),
+  "confirm-dialog-use-confirm-demo": () => import("@nebutra/ui/catalog/demos/confirm-dialog-use-confirm-demo").then(pick("ConfirmDialogUseConfirmDemo")),
   "consent-card-demo": () => import("@nebutra/ui/catalog/demos/consent-card-demo").then(pick("ConsentCardDemo")),
   "context-card-demo": () => import("@nebutra/ui/catalog/demos/context-card-demo").then(pick("ContextCardDemo")),
   "context-menu-demo": () => import("@nebutra/ui/catalog/demos/context-menu-demo").then(pick("ContextMenuDemo")),

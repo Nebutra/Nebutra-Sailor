@@ -31,6 +31,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
   toast,
+  usePrompt,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -163,6 +164,8 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // session preference) — kept local, never in React Query cache.
   const [workspace, setWorkspace] = useState<string>("");
   const tSidebar = useTranslations("Sidebar");
+  const tCommon = useTranslations("Common");
+  const [prompt, promptDialog] = usePrompt();
 
   // ─── Server read: organization list (replaces loadWorkspaces useEffect) ────
   const organizationsQuery = useQuery({
@@ -285,19 +288,23 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     for (const id of itemsWithChildren) setExpansionOpen(id, true);
   };
 
-  // New-project flow — v1 uses window.prompt to avoid a new dialog component.
+  // New-project flow — an in-app prompt dialog (usePrompt) collects the name.
   // POSTs to the existing /threads route, then invalidates the threads query so
   // the sidebar list refetches the canonical server order (no optimistic insert
   // — keeps lastActivityAt sort honest with no rollback path).
   const handleNewProject = async () => {
     if (!supportsWorkspaceSwitching || !workspace) return;
     const defaultTitle = tSidebar("newProjectDefault");
-    const input =
-      typeof window !== "undefined"
-        ? window.prompt(tSidebar("newProjectPlaceholder"), defaultTitle)
-        : null;
+    const input = await prompt({
+      title: tSidebar("newProject"),
+      label: tSidebar("newProjectPlaceholder"),
+      defaultValue: defaultTitle,
+      confirmLabel: tCommon("actions.confirm"),
+      cancelLabel: tCommon("actions.cancel"),
+      allowEmpty: true,
+    });
     if (input === null) return; // user cancelled
-    const title = input.trim().length > 0 ? input.trim() : defaultTitle;
+    const title = input.length > 0 ? input : defaultTitle;
     try {
       const response = await fetch(`/api/organizations/${workspace}/threads`, {
         method: "POST",
@@ -693,6 +700,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
           {children}
         </section>
       )}
+      {promptDialog}
     </AppShell>
   );
 }

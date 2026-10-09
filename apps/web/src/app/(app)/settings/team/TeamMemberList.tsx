@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
   Table,
+  useConfirm,
 } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -109,6 +110,7 @@ export function TeamMemberList({ orgId }: Props) {
   const t = useTranslations("startupOs");
   const queryClient = useQueryClient();
   const listKey = queryKeys.teamMembers.list(orgId);
+  const [confirm, confirmDialog] = useConfirm();
 
   // Pure client state — UI feedback message + per-row busy indicator.
   // These are not server cache, so they stay local (NOT in react-query).
@@ -228,14 +230,25 @@ export function TeamMemberList({ orgId }: Props) {
     roleMutation.mutate({ member, role });
   };
 
-  const handleRemoveMember = (member: TeamMember) => {
+  const handleRemoveMember = async (member: TeamMember) => {
     const isSelf = member.userId === payload.currentUserId;
     const label = memberDisplayName(member);
-    const message = isSelf
-      ? "Leave this organization? You may lose access immediately."
-      : `Remove ${label} from this organization?`;
-
-    if (!confirm(message)) return;
+    const ok = await confirm(
+      isSelf
+        ? {
+            title: "Leave Organization",
+            description: "You may lose access immediately.",
+            confirmLabel: "Leave",
+            tone: "destructive",
+          }
+        : {
+            title: `Remove ${label}`,
+            description: `${label} loses access to this organization.`,
+            confirmLabel: "Remove",
+            tone: "destructive",
+          },
+    );
+    if (!ok) return;
 
     removeMutation.mutate({ member, isSelf });
   };
@@ -348,7 +361,7 @@ export function TeamMemberList({ orgId }: Props) {
                   <button
                     type="button"
                     disabled={!canRemove}
-                    onClick={() => handleRemoveMember(member)}
+                    onClick={() => void handleRemoveMember(member)}
                     className="rounded px-2 py-1 text-xs font-medium text-destructive-strong hover:text-destructive-strong/80 disabled:cursor-not-allowed disabled:text-muted-foreground"
                     aria-label={
                       isSelf
@@ -372,6 +385,7 @@ export function TeamMemberList({ orgId }: Props) {
           )}
         </Table.Body>
       </Table>
+      {confirmDialog}
     </div>
   );
 }

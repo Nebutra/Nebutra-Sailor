@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 import { MultipleSelector } from "./multiple-selector";
 
 const meta = {
@@ -70,7 +71,7 @@ export const WithMaxSelection: Story = {
         defaultOptions={frameworks}
         placeholder="Select up to 3 frameworks..."
         maxSelected={3}
-        onMaxSelected={(max) => alert(`Max ${max} selections allowed`)}
+        onMaxSelected={fn().mockName("maxSelected")}
       />
       <p className="text-xs text-muted-foreground">Maximum 3 selections</p>
     </div>

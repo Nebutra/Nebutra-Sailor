@@ -476,8 +476,8 @@ export const CATALOG: readonly CatalogEntry[] = [
     category: "overlays",
     status: "stable",
     import: "@nebutra/ui/primitives",
-    files: ["primitives/confirm-dialog.tsx"],
-    demos: ["confirm-dialog-demo"],
+    files: ["primitives/confirm-dialog.tsx", "primitives/use-confirm.tsx"],
+    demos: ["confirm-dialog-demo", "confirm-dialog-use-confirm-demo"],
   },
   {
     id: "context-menu",

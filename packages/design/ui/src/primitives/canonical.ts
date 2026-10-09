@@ -146,3 +146,4 @@ export {
   TooltipTrigger,
 } from "./tooltip";
 export * from "./tree";
+export * from "./use-confirm";

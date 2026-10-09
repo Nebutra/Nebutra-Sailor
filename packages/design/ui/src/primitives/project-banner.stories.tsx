@@ -1,5 +1,6 @@
 import { RotateCounterClockwise, ShieldCheck, Warning as WarningIcon } from "@nebutra/icons";
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 import { ProjectBanner } from "./project-banner";
 
 const meta: Meta<typeof ProjectBanner> = {
@@ -41,7 +42,7 @@ export const Warning: Story = {
       label="This project was rolled back by @johnphamous"
       callToAction={{
         label: "Undo Rollback",
-        onClick: () => alert("Undo clicked"),
+        onClick: fn().mockName("undo"),
       }}
     />
   ),

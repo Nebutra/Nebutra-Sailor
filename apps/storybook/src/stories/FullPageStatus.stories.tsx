@@ -1,5 +1,6 @@
 import { FullPageStatus } from "@nebutra/ui/layout";
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 
 const meta: Meta<typeof FullPageStatus> = {
   title: "Layout/FullPageStatus",
@@ -40,7 +41,7 @@ export const ServerError: Story = {
     title: "Something went wrong.",
     description:
       "An unexpected error occurred. Our team has been notified automatically. You can try again, or return to the dashboard.",
-    primaryAction: { label: "Try again", onClick: () => alert("retry") },
+    primaryAction: { label: "Try again", onClick: fn().mockName("retry") },
     secondaryAction: { label: "Return home", href: "/" },
     meta: { errorId: "abc123def456", statusUrl: "status.nebutra.com" },
   },

@@ -440,6 +440,7 @@ export {
   TooltipTrigger,
 } from "./tooltip";
 export * from "./tree";
+export * from "./use-confirm";
 export * from "./warp-background";
 export * from "./wave-animation";
 export * from "./word-fade-in";

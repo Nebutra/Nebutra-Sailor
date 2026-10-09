@@ -1,5 +1,6 @@
 import { ErrorState, LoadingState } from "@nebutra/ui/layout";
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 
 // ── LoadingState ─────────────────────────────────────────────────────────────
 
@@ -47,7 +48,7 @@ export const ErrorExample: StoryObj = {
     <ErrorState
       title="Failed to load data"
       message="The server returned a 503 error. Please try again."
-      onRetry={() => alert("Retrying…")}
+      onRetry={fn().mockName("retry")}
     />
   ),
   name: "ErrorState / With Retry",

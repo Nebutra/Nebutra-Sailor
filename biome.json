@@ -60,6 +60,7 @@
       "suspicious": {
         "noExplicitAny": "warn",
         "noArrayIndexKey": "off",
+        "noAlert": "error",
         "noAssignInExpressions": "off",
         "noImplicitAnyLet": "warn",
         "noEmptyInterface": "off",
