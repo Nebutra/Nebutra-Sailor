@@ -63,6 +63,6 @@ describe("theme-init and the CSP", () => {
     const { THEME_INIT_CSP } = await import("../../scripts/landing-plugin.mjs");
     const { readFileSync } = await import("node:fs");
     const headers = readFileSync(new URL("../../../../infra/fly/kcq.security-headers.conf", import.meta.url), "utf8");
-    expect(headers).toMatch(new RegExp(`script-src 'self' ${THEME_INIT_CSP.replace(/[+/=]/g, "\\$&")} `));
+    expect(headers).toMatch(new RegExp(`script-src 'self' ${THEME_INIT_CSP.replace(/[.*+?^${}()|[\]\\/=]/g, "\\$&")} `));
   });
 });

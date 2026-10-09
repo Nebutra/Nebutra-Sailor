@@ -97,11 +97,12 @@ const readMeta = (html, property) =>
   html.match(new RegExp(`<meta (?:property|name)="${property}" content="([^"]*)"`))?.[1];
 const decode = (text) =>
   text
-    .replace(/&amp;/g, "&")
     .replace(/&#39;/g, "'")
     .replace(/&quot;/g, '"')
     .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">");
+    .replace(/&gt;/g, ">")
+    // &amp; last, so "&amp;lt;" decodes to "&lt;" rather than "<".
+    .replace(/&amp;/g, "&");
 
 const poster = resolve(root, "src/public/home/hero/poster/poster-dark-1600.webp");
 const background = await sharp(poster)
