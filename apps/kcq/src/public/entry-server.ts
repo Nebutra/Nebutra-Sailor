@@ -5,6 +5,7 @@ import { createMemoryHistory } from "vue-router";
 import { createPublicApp } from "./create-app";
 
 export { KCQ_ORIGIN, NOT_FOUND_ROUTES, PUBLIC_ROUTES } from "./routes";
+export { renderLlmsTxt } from "./llms";
 export { renderRobotsTxt, renderSitemapXml } from "./seo-files";
 
 export const APP_OUTLET = "<!--kcq-public-app-->";
@@ -32,7 +33,9 @@ export async function render(url: string, template: string, manifest: SsrManifes
   const { app, router } = createPublicApp(createMemoryHistory(), head);
   await router.push(url);
   await router.isReady();
-  if (router.currentRoute.value.matched.length === 0) throw new Error(`Not a public route: ${url}`);
+  // The client-only catch-all (create-app.ts) matches anything; prerender renders listed routes only.
+  const current = router.currentRoute.value;
+  if (current.matched.length === 0 || "unknown" in current.params) throw new Error(`Not a public route: ${url}`);
   // The repo lockfile pairs vue 3.5.32 with @vue/server-renderer 3.5.43 types; at build time
   // both resolve to the canonical chart's single Vue runtime (vite.config.mjs aliases).
   const context: { modules?: Set<string> } = {};

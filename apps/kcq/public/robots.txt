@@ -6,6 +6,8 @@ Allow: /zh/home$
 Allow: /benchmark$
 Allow: /zh/benchmark$
 Allow: /assets/
+# The agent-readable view of these pages (src/public/llms.ts).
+Allow: /llms.txt$
 Disallow: /
 
 Sitemap: https://kcq.nebutra.com/sitemap.xml

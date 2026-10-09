@@ -1,4 +1,6 @@
 /** Head metadata for a public page, rendered by @unhead/vue at prerender time and kept on hydration. */
+// The same file public.css loads as `kcq-outfit-600.woff2` (vite.config.mjs alias), so one fetch.
+import outfitFont from "@fontsource/outfit/files/outfit-latin-600-normal.woff2?url";
 import { PUBLIC_MESSAGES } from "./messages";
 import {
   KCQ_ORIGIN,
@@ -41,6 +43,19 @@ const ICONS = [
   { rel: "apple-touch-icon" as const, href: "/apple-touch-icon.png" },
 ];
 
+/**
+ * The display face is preloaded and set to `font-display: optional` (public.css): it is almost
+ * always ready for first paint, and if it is not, the page keeps the fallback instead of reflowing
+ * the headline when the font arrives (the swap was the only layout shift Lighthouse measured).
+ */
+const FONT_PRELOAD = {
+  rel: "preload" as const,
+  href: outfitFont,
+  as: "font" as const,
+  type: "font/woff2",
+  crossorigin: "anonymous" as const,
+};
+
 export function publicHead(page: PublicPage, locale: PublicLocale) {
   const copy = PUBLIC_MESSAGES[locale][page];
   const url = KCQ_ORIGIN + publicPath(page, locale);
@@ -58,6 +73,7 @@ export function publicHead(page: PublicPage, locale: PublicLocale) {
         href,
       })),
       ...ICONS,
+      FONT_PRELOAD,
     ],
     meta: [
       { name: "description", content: copy.description },

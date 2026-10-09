@@ -6,7 +6,7 @@
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { THEME_PREFERENCES, type ThemePreference } from "../theme";
-import { useTheme } from "../use-theme";
+import { useTheme } from "../state/use-theme";
 import KcqIcon from "./kcq-icon.vue";
 
 const props = defineProps<{ variant: "segmented" | "cycle" }>();
