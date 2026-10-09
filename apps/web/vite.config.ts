@@ -1,7 +1,8 @@
 import path from "node:path";
+import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
-import react from "@vitejs/plugin-react";
+import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
@@ -14,6 +15,9 @@ export default defineConfig({
       enableRouteGeneration: false,
     }),
     react(),
+    // React Compiler, matching next.config.ts `reactCompiler: true`: automatic
+    // memoisation for the Vite build too (plugin-react 6 runs it via Babel).
+    babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
   ],
   server: {
