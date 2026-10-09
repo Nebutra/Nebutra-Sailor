@@ -19,6 +19,7 @@
 import { type ChildProcess, spawn, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import net from "node:net";
+import os from "node:os";
 import path from "node:path";
 import {
   CAPABILITY_TABLE,
@@ -287,6 +288,20 @@ function stopAll(code: number): void {
   setTimeout(() => process.exit(code), 1500).unref();
 }
 
+/** "exited with code 1" or "was killed by SIGKILL" (a null code is a signal, never "?"). */
+function describeExit(code: number | null, signal: NodeJS.Signals | null): string {
+  if (signal) {
+    const hint = signal === "SIGKILL" ? " (usually the OS out-of-memory killer)" : "";
+    return `was killed by ${signal}${hint}`;
+  }
+  return `exited with code ${code ?? 0}`;
+}
+
+function exitStatus(code: number | null, signal: NodeJS.Signals | null): number {
+  if (signal) return 128 + (os.constants.signals[signal] ?? 1);
+  return code ?? 1;
+}
+
 function prefixLines(label: string, stream: NodeJS.ReadableStream, out: NodeJS.WriteStream): void {
   let buffer = "";
   stream.on("data", (chunk: Buffer) => {
@@ -308,10 +323,10 @@ function startApp(app: PreviewApp, dir: string, port: number, env: NodeJS.Proces
   const label = `[${app.id}]`.padEnd(10);
   if (child.stdout) prefixLines(label, child.stdout, process.stdout);
   if (child.stderr) prefixLines(label, child.stderr, process.stderr);
-  child.on("exit", (code) => {
+  child.on("exit", (code, signal) => {
     if (stopping) return;
-    process.stderr.write(`\n${label} exited with code ${code ?? "?"} — stopping the preview.\n`);
-    stopAll(code ?? 1);
+    process.stderr.write(`\n${label} ${describeExit(code, signal)} — stopping the preview.\n`);
+    stopAll(exitStatus(code, signal));
   });
 }
 
@@ -391,17 +406,17 @@ function startPreviewDatabase(env: NodeJS.ProcessEnv): Promise<Record<string, st
     };
     child.stdout?.on("data", read);
     child.stderr?.on("data", read);
-    child.on("exit", (code) => {
+    child.on("exit", (code, signal) => {
       // "already running" returns at once: another preview of this project owns it.
       if (settled && code === 0) return;
       if (!settled) {
         settled = true;
-        reject(new Error(`the preview database exited with code ${code ?? "?"}`));
+        reject(new Error(`the preview database ${describeExit(code, signal)}`));
         return;
       }
       if (!stopping) {
         process.stderr.write("\n[db] the preview database stopped — stopping the preview.\n");
-        stopAll(code ?? 1);
+        stopAll(exitStatus(code, signal));
       }
     });
   });

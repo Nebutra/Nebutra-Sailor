@@ -129,36 +129,65 @@ function unpublishedBlogMetadata(lang: string, slug: string): Metadata {
   });
 }
 
+/**
+ * A `"use cache"` result is serialised through the RSC protocol, which refuses
+ * a `URL` ("Only plain objects can be passed to Client Components from Server
+ * Components. URL objects are not supported"). Metadata carries one:
+ * `metadataBase`. So the cached function returns it without, and this wrapper
+ * puts it back outside the cache.
+ */
 export async function buildBlogMetadata(lang: string, slug: string): Promise<Metadata> {
+  const { metadataBase } = buildPageMetadata({
+    title: "",
+    description: "",
+    path: "/",
+    locale: hasLocale(routing.locales, lang) ? lang : routing.defaultLocale,
+  });
+  const cached = await buildBlogMetadataCached(lang, slug);
+  return metadataBase ? { ...cached, metadataBase } : cached;
+}
+
+async function buildBlogMetadataCached(
+  lang: string,
+  slug: string,
+): Promise<Omit<Metadata, "metadataBase">> {
   "use cache";
   cacheLife("hours");
   cacheTag("blog");
 
   if (!hasLocale(routing.locales, lang) || slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
-    return unpublishedBlogMetadata(lang, slug);
+    return withoutBase(unpublishedBlogMetadata(lang, slug));
   }
   cacheTag(`blog:${slug}`);
 
   const post =
     (await getCachedBlogPost(slug, toBlogLanguage(lang))) ??
     (await getCachedLocalizedPostForSiblingSlug(slug, toBlogLanguage(lang)));
-  if (!post) return unpublishedBlogMetadata(lang, slug);
+  if (!post) return withoutBase(unpublishedBlogMetadata(lang, slug));
 
   const ogImage = `${getSiteUrl()}${localizedPostHref(lang, post.slug)}/opengraph-image`;
   const authorName = getAuthorName(post.author);
 
-  return buildPageMetadata({
-    title: `${post.title} — ${brand.name} Blog`,
-    description: post.excerpt || post.title,
-    path: `/blog/${post.slug}`,
-    locale: lang as Locale,
-    type: "article",
-    image: ogImage,
-    publishedIn: await blogPublicationSet(post),
-    ...(contentTimestamp(post.date) ? { publishedTime: contentTimestamp(post.date) } : {}),
-    ...(contentTimestamp(post.updatedAt) ? { modifiedTime: contentTimestamp(post.updatedAt) } : {}),
-    ...(authorName ? { authors: [authorName] } : {}),
-  });
+  return withoutBase(
+    buildPageMetadata({
+      title: `${post.title} — ${brand.name} Blog`,
+      description: post.excerpt || post.title,
+      path: `/blog/${post.slug}`,
+      locale: lang as Locale,
+      type: "article",
+      image: ogImage,
+      publishedIn: await blogPublicationSet(post),
+      ...(contentTimestamp(post.date) ? { publishedTime: contentTimestamp(post.date) } : {}),
+      ...(contentTimestamp(post.updatedAt)
+        ? { modifiedTime: contentTimestamp(post.updatedAt) }
+        : {}),
+      ...(authorName ? { authors: [authorName] } : {}),
+    }),
+  );
+}
+
+function withoutBase({ metadataBase: _base, ...rest }: Metadata): Omit<Metadata, "metadataBase"> {
+  return rest;
 }
 
 function formatBlogDate(iso: string | undefined, isZh: boolean): string | null {
