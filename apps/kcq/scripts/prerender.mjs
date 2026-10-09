@@ -75,6 +75,9 @@ for (const { path } of server.NOT_FOUND_ROUTES) {
   writeFileSync(target, html, { flag: "wx" });
   console.log(`prerendered ${path} -> ${target.slice(distDir.length + 1)}`);
 }
+// The agent-readable view (src/public/llms.ts), from the same pinned facts as the pages.
+writeFileSync(resolve(distDir, "llms.txt"), server.renderLlmsTxt(), { flag: "wx" });
+console.log("prerendered /llms.txt -> llms.txt");
 rmSync(templatePath);
 // The manifest is a build input, not something to serve.
 rmSync(resolve(distDir, ".vite"), { recursive: true, force: true });

@@ -5,6 +5,7 @@ import { createMemoryHistory } from "vue-router";
 import { createPublicApp } from "./create-app";
 
 export { KCQ_ORIGIN, NOT_FOUND_ROUTES, PUBLIC_ROUTES } from "./routes";
+export { renderLlmsTxt } from "./llms";
 export { renderRobotsTxt, renderSitemapXml } from "./seo-files";
 
 export const APP_OUTLET = "<!--kcq-public-app-->";

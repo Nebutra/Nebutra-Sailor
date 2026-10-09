@@ -11,6 +11,8 @@ export function renderRobotsTxt(): string {
     "User-agent: *",
     ...PUBLIC_ROUTES.map((route) => `Allow: ${route.path}$`),
     "Allow: /assets/",
+    "# The agent-readable view of these pages (src/public/llms.ts).",
+    "Allow: /llms.txt$",
     "Disallow: /",
     "",
     `Sitemap: ${KCQ_ORIGIN}/sitemap.xml`,

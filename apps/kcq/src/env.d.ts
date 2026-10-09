@@ -33,13 +33,22 @@ declare module "virtual:kcq-facts" {
     version: string;
     license: string;
     license_href: string;
-    tools: Fact & { count: number; names: string[] };
+    tools: Fact & {
+      count: number;
+      names: string[];
+      safety: Record<string, "read-only" | "destructive">;
+    };
     backends: Fact & { names: string[] };
     drawingKinds: Fact & { count: number };
     bindings: Fact & { names: string[] };
     presets: Fact & { count: number };
   };
   export default facts;
+}
+declare module "virtual:kcq-code" {
+  /** Build-time Shiki output per developer snippet: the lines inside `<code>`. */
+  const code: { id: string; html: string; lines: number }[];
+  export default code;
 }
 declare module "*.webp" {
   const url: string;

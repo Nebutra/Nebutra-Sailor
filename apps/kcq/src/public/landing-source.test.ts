@@ -5,8 +5,11 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { SNIPPETS } from "./home/developer-snippets";
 // @ts-expect-error: plain ESM build helpers without types.
 import { resolveChartSource } from "../../scripts/chart-source.mjs";
+// @ts-expect-error: plain ESM build helpers without types.
+import { highlightSnippets } from "../../scripts/landing-plugin.mjs";
 // @ts-expect-error: plain ESM build helpers without types.
 import { buildTokensCss, readFacts, readPresetPalettes, readVars } from "../../scripts/landing-source.mjs";
 
@@ -88,6 +91,26 @@ describe("generated inputs", () => {
     expect(facts.license).toBe("Apache-2.0");
     for (const href of [facts.tools.href, facts.backends.href, facts.license_href]) {
       expect(href).toContain(`/blob/${pin.commit}/`);
+    }
+  });
+
+  it("reads every tool's safety level from its @Tool declaration", () => {
+    const facts = readFacts(source, pin);
+    expect(Object.keys(facts.tools.safety).sort()).toEqual([...facts.tools.names].sort());
+    expect(facts.tools.safety.panes_list).toBe("read-only");
+    expect(facts.tools.safety.drawing_create).toBe("destructive");
+    expect(new Set(Object.values(facts.tools.safety))).toEqual(new Set(["read-only", "destructive"]));
+  });
+});
+
+describe("developer snippets at build time", () => {
+  it("are highlighted into token-variable spans, one line span per source line", async () => {
+    const code = await highlightSnippets(SNIPPETS);
+    expect(code.map((entry: { id: string }) => entry.id)).toEqual(SNIPPETS.map((snippet) => snippet.id));
+    for (const [index, entry] of code.entries()) {
+      expect(entry.html).toContain("var(--shiki-token-keyword)");
+      expect(entry.html).not.toMatch(/#[0-9a-f]{6}/i);
+      expect(entry.html.match(/class="line"/g)?.length).toBe(SNIPPETS[index]!.code.split("\n").length);
     }
   });
 });
