@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@nebutra/auth": "workspace:*",
+    "@nebutra/billing": "workspace:*",
     "@nebutra/brand": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "vue": "3.5.32",

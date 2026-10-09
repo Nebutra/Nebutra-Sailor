@@ -83,5 +83,7 @@ describe("paying", () => {
   it("names products as written, in every language", () => {
     expect(productName("kuanlan")).toBe("观澜 Kuanlan");
     expect(productName("router")).toBe("Router");
+    expect(productName("kcq")).toBe("KCQ");
+    expect(resolveReturnTo(`https://kcq.${ROOT}/`)).toBe(`https://kcq.${ROOT}/`);
   });
 });

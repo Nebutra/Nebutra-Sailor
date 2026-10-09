@@ -1,5 +1,5 @@
 /**
- * Typed client for Nebutra's managed AI (gateway `/api/v1/kcq-ai`, proxied by the
+ * Typed client for the platform's managed AI (gateway `/api/v1/kcq-ai`, proxied by the
  * KCQ host at `/market/ai`). The session cookie is the only credential: no key is
  * stored in the browser, and the browser never chooses a model or a routing tier.
  * The gateway serves staff the internal default and everyone else Router's public
@@ -9,12 +9,15 @@
  * with `managedAiFetch` as its `fetch` (see BYOK.md, "Managed AI").
  */
 
+import { brand } from "@nebutra/brand/metadata";
+import { parseWallet, type WalletState } from "./wallet";
+
 export const MANAGED_AI_BASE_PATH = "/market/ai/v1";
 /** Placeholder bearer value for providers that require a non-empty API key. */
 export const MANAGED_AI_CREDENTIAL = "nebutra-session";
 
 /** Name of the managed provider in the Agent settings. */
-export const MANAGED_AI_NAME = "Nebutra";
+export const MANAGED_AI_NAME = brand.name;
 /** Placeholder model id sent in requests; the gateway ignores it and serves the account's default. */
 export const MANAGED_AI_MODEL = "auto";
 /** Matches the gateway's default output cap (`KCQ_AI_MAX_OUTPUT_TOKENS`). */
@@ -38,17 +41,34 @@ export class ManagedAiError extends Error {
   }
 }
 
+export interface ManagedAiHooks {
+  /**
+   * The gateway refused a call because the workspace's KCQ wallet cannot cover it
+   * (402). The Agent library only sees a failed request; the host hears it here and
+   * can offer the top-up. The response itself is returned untouched.
+   */
+  onInsufficientBalance?: () => void;
+}
+
 /** A `fetch` that authenticates with the session cookie and never sends the placeholder key. */
 export function managedAiFetch(
   fetchImpl: typeof fetch = fetch,
   /** The active workspace; its KCQ wallet pays for the call. Defaults to the personal workspace. */
   workspace = "personal",
+  hooks: ManagedAiHooks = {},
 ): typeof fetch {
-  return (input, init = {}) => {
+  return async (input, init = {}) => {
     const headers = new Headers(init.headers);
     headers.delete("Authorization");
     headers.set("X-KCQ-Workspace", workspace);
-    return fetchImpl(input, { ...init, headers, credentials: "same-origin", cache: "no-store" });
+    const response = await fetchImpl(input, {
+      ...init,
+      headers,
+      credentials: "same-origin",
+      cache: "no-store",
+    });
+    if (response.status === 402) hooks.onInsufficientBalance?.();
+    return response;
   };
 }
 
@@ -92,6 +112,12 @@ export function createManagedAiClient(
           row && typeof row === "object" ? Object.getOwnPropertyDescriptor(row, "id")?.value : null;
         return typeof id === "string" ? [{ id }] : [];
       });
+    },
+    /** Balance and recent calls of the workspace's KCQ wallet (or the staff "not billed" marker). */
+    async getWallet(signal?: AbortSignal): Promise<WalletState> {
+      const response = await send(`${base}/wallet`, signal ? { signal } : {});
+      if (!response.ok) throw await failure(response);
+      return parseWallet(await response.json().catch(() => null));
     },
     async complete(messages: ManagedAiMessage[], signal?: AbortSignal): Promise<string> {
       const response = await send(`${base}/chat/completions`, {

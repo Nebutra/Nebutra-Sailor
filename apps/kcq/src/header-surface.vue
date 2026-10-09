@@ -17,7 +17,7 @@ onMounted(() => {
     render();
   }
 });
-watch(() => [props.context, props.busy, props.signInUrl], render);
+watch(() => [props.context, props.busy, props.signInUrl, props.wallet], render);
 onBeforeUnmount(() => root?.unmount());
 </script>
 <template><div ref="host" class="header-surface" /></template>

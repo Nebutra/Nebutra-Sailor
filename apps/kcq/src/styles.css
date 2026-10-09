@@ -365,3 +365,61 @@ button {
   color: var(--klc-color-ui-danger);
   margin-top: 8px;
 }
+.wallet-trigger {
+  padding: 0 8px 0 6px;
+}
+.wallet-trigger svg {
+  width: 16px;
+  height: 16px;
+  color: var(--klc-color-ui-muted);
+}
+.wallet-amount {
+  font-size: 13px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.wallet-trigger[data-low] .wallet-amount {
+  color: var(--klc-color-ui-text);
+  text-decoration: underline dotted;
+}
+.wallet-note {
+  margin: 0;
+  padding: 0 12px 8px;
+  color: var(--klc-color-ui-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.wallet-usage {
+  margin: 0;
+  padding: 0 12px 8px;
+  list-style: none;
+  font-size: 12px;
+  color: var(--klc-color-ui-muted);
+}
+.wallet-usage li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 8px;
+  padding: 2px 0;
+}
+.wallet-cost {
+  font-variant-numeric: tabular-nums;
+  color: var(--klc-color-ui-text);
+}
+.balance-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.balance-notice-actions {
+  display: flex;
+  gap: 8px;
+}
+@media (max-width: 720px) {
+  .wallet-amount {
+    font-size: 12px;
+  }
+}

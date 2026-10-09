@@ -156,6 +156,11 @@ rate, reserved before forwarding and settled from the upstream's usage. Platform
 internal source and are not billed. The money path is Router's (`RouterBillingRepository` with
 `product: "kcq"`); reservations record their product so the expiry sweep refunds the right wallet.
 
+KCQ shows and funds its wallet through the same pieces: the gateway reads the balance
+(`GET /api/v1/kcq-ai/v1/wallet`, `RouterBillingRepository.getBalance` and the product-aware
+`RouterUsageRepository`), and the KCQ toolbar chip and the 402 notice send the buyer to the shared
+checkout with `offer=kcq_topup`. There is no KCQ payment code.
+
 ## Sources
 
 - 剪映会员服务协议 — lf9-cdn-tos.draftstatic.com/obj/ies-hotsoon-draft/vco/f445affd-403f-4ddd-8f86-b7e29f5c6523.html

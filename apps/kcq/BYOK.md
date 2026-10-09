@@ -24,8 +24,13 @@ KCQ requires sign-in, and the Agent's default model goes through Nebutra Router.
 - Every other signed-in user is served Router's PUBLIC supply with `gpt-5.6-luna` (`KCQ_AI_PUBLIC_MODEL`).
 - The browser cannot choose the model or tier. The gateway signs a service token carrying the user id and, for staff only, the staff role. Router refuses INTERNAL sources to any token without that identity (`internalRouteFor`), so a customer call can never reach an INTERNAL source.
 - Per-user rate limit (`KCQ_AI_RATE_PER_MINUTE`, default 20), output cap (`KCQ_AI_MAX_OUTPUT_TOKENS`, 8192), body cap 1 MB, same-origin POSTs only.
-- Usage is logged per request as `kcq.ai.usage` (user, tier, model, tokens, `billed: false`). Billing gap: Router's reserve/settle money edge is keyed to API keys on the public relay, not the service-token relay, so KCQ customer calls are not yet debited from a product wallet.
+- Usage is logged per request as `kcq.ai.usage` (user, tier, model, tokens, `billed`). Customer calls are paid from the KCQ product wallet of the workspace named in `X-KCQ-Workspace`; staff are not billed (ADR 2026-09-27, KCQ addendum).
+- `GET /market/ai/v1/wallet` (same session and workspace resolution as the billed calls) returns `{ balance, currency, usage[], offerId: "kcq_topup" }` for a customer, or `{ internal: true, billed: false }` for staff.
 
 Host client: `src/managed-ai.ts` (`createManagedAiClient`, `managedAiFetch`, `MANAGED_AI_BASE_PATH`).
 
 Wiring: `src/use-workbench.ts` passes `managedProvider` to `BrowserAgentBridge` (upstream KCQ PR TsekaLuk/KLineChartQuant#11, pinned in `chart-source.json`): `baseUrl` from `createManagedAiClient(origin)`, a placeholder model id (`MANAGED_AI_MODEL`, never routed), `ReadOnlyProviderCredentialStore(MANAGED_AI_CREDENTIAL)` and `fetch = managedAiFetch()`. The Nebutra provider is the default selection and never persisted; the Agent settings hide its key, URL and model picker, and users can still add their own provider.
+
+### Wallet in the shell
+
+`src/wallet.ts` holds the decoded wallet and the only top-up path: `topUpUrl()` builds the link to the shared checkout (`app.nebutra.com/checkout?offer=kcq_topup`, returning to this app) with `@nebutra/billing/links`. The toolbar chip (`wallet-chip.tsx`, mounted in the account navigation) shows the active workspace's balance, the latest calls and top-up entries; staff see "内部使用 · 不计费". `managedAiFetch(fetch, workspace, { onInsufficientBalance })` reports a 402 to `use-workbench.ts`, which shows the insufficient-balance notice (top-up action) above the chart and re-reads the balance. The Agent client and the chip use the same workspace, so what is shown is what is spent. The balance is read on load, on window focus and when the chip opens; checkout returns to the app, which reloads it.

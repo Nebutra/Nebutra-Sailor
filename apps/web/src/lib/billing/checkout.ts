@@ -37,6 +37,7 @@ const PRODUCT_NAMES: Record<string, string> = {
   kuanlan: "观澜 Kuanlan",
   para: "Para",
   forge: "Forge",
+  kcq: "KCQ",
 };
 
 export function productName(product: string): string {

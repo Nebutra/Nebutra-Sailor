@@ -10,6 +10,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives/canonical";
+import type { WalletState } from "./wallet";
+import { WalletChip } from "./wallet-chip";
 
 export interface WorkbenchHeaderProps {
   context: BrowserAuthContext | null;
@@ -17,6 +19,9 @@ export interface WorkbenchHeaderProps {
   signInUrl: string;
   onSwitch: (id: string | null) => Promise<void>;
   onSignOut: () => Promise<void>;
+  /** The active workspace's KCQ wallet; omitted for a visitor. */
+  wallet?: WalletState;
+  onWalletOpen?: () => void;
 }
 export function WorkbenchHeader({
   context,
@@ -24,6 +29,8 @@ export function WorkbenchHeader({
   signInUrl,
   onSwitch,
   onSignOut,
+  wallet,
+  onWalletOpen,
 }: WorkbenchHeaderProps) {
   const active = context?.workspaces.find(
     (workspace) => workspace.id === context.activeWorkspaceId,
@@ -99,6 +106,13 @@ export function WorkbenchHeader({
           )}
         </DropdownMenuContent>
       </DropdownMenu>
+      {context && wallet && (
+        <WalletChip
+          wallet={wallet}
+          origin={window.location.origin}
+          onOpen={onWalletOpen ?? (() => undefined)}
+        />
+      )}
     </nav>
   );
 }

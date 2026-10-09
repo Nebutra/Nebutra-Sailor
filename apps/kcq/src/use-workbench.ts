@@ -16,7 +16,7 @@ import {
   buildAuthCenterSignInUrl,
   type createAuthCenterBrowserClient,
 } from "@nebutra/auth/browser";
-import { onBeforeUnmount, shallowRef } from "vue";
+import { onBeforeUnmount, onMounted, shallowRef } from "vue";
 import { APP_PATH } from "./main-route";
 
 import {
@@ -28,6 +28,7 @@ import {
   managedAiFetch,
 } from "./managed-ai";
 import type { MarketConnections } from "./market-connections";
+import type { WalletState } from "./wallet";
 
 export { AgentWorkbenchShell, KlineChart };
 export interface WorkbenchProps {
@@ -44,15 +45,42 @@ export function useWorkbench(props: WorkbenchProps) {
   const dataLoading = shallowRef(false);
   const dataError = shallowRef<string | null>(null);
   let unsubscribeData: (() => void)[] = [];
+  // The workspace named here is the one whose KCQ wallet pays for Agent calls and the one
+  // the balance chip reads, so what is shown is always what is spent.
+  const workspace = props.context?.activeWorkspaceId ?? "personal";
+  const wallet = shallowRef<WalletState>({ status: "loading" });
+  const lowBalance = shallowRef(false);
+  let walletRequest: AbortController | undefined;
   // The gateway picks the model and tier from the session; the placeholder id is never routed.
-  const managedAi = createManagedAiClient(window.location.origin);
+  const managedAi = createManagedAiClient(window.location.origin, undefined, workspace);
+  async function refreshWallet() {
+    if (!props.context) return;
+    walletRequest?.abort();
+    const request = new AbortController();
+    walletRequest = request;
+    try {
+      const next = await managedAi.getWallet(request.signal);
+      if (!request.signal.aborted) wallet.value = next;
+    } catch {
+      if (!request.signal.aborted) wallet.value = { status: "error" };
+    }
+  }
+  function onWalletFocus() {
+    if (document.visibilityState === "visible") void refreshWallet();
+  }
   const bridge = new BrowserAgentBridge({
     managedProvider: {
       name: MANAGED_AI_NAME,
       baseUrl: managedAi.baseUrl,
       model: { id: MANAGED_AI_MODEL, maxOutputTokens: MANAGED_AI_OUTPUT_TOKENS },
       credentials: new ReadOnlyProviderCredentialStore(MANAGED_AI_CREDENTIAL),
-      fetch: managedAiFetch(),
+      fetch: managedAiFetch(undefined, workspace, {
+        // The library only sees a failed request; the shell offers the way forward.
+        onInsufficientBalance: () => {
+          lowBalance.value = true;
+          void refreshWallet();
+        },
+      }),
     },
     getChartAgent: () => controller.value?.agent,
     createSessions: (redaction) =>
@@ -110,7 +138,13 @@ export function useWorkbench(props: WorkbenchProps) {
   function onThemeChange(theme: "light" | "dark") {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }
+  onMounted(() => {
+    void refreshWallet();
+    window.addEventListener("focus", onWalletFocus);
+  });
   onBeforeUnmount(() => {
+    walletRequest?.abort();
+    window.removeEventListener("focus", onWalletFocus);
     unsubscribeData.forEach((unsubscribe) => {
       unsubscribe();
     });
@@ -118,6 +152,9 @@ export function useWorkbench(props: WorkbenchProps) {
   });
   return {
     busy,
+    wallet,
+    lowBalance,
+    refreshWallet,
     hasData,
     dataLoading,
     dataError,
