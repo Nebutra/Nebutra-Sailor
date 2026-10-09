@@ -1775,6 +1775,9 @@ importers:
       '@nebutra/cinema':
         specifier: workspace:*
         version: link:../../packages/ai/cinema
+      '@nebutra/contracts':
+        specifier: workspace:*
+        version: link:../../packages/commerce/contracts
       '@nebutra/db':
         specifier: workspace:*
         version: link:../../packages/platform/db
