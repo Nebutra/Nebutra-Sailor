@@ -154,6 +154,7 @@ const ALL_SEO_ROUTES: ReadonlyArray<SeoRouteEntry> = [
   { pattern: "/sleptons", changeFrequency: "weekly", priority: 0.6, localization: "content" },
   { pattern: "/building", changeFrequency: "weekly", priority: 0.6, localization: "content" },
   { pattern: "/careers", changeFrequency: "weekly", priority: 0.6, localization: "ui" },
+  { pattern: "/investors", changeFrequency: "monthly", priority: 0.6, localization: "ui" },
   { pattern: "/ideas", changeFrequency: "weekly", priority: 0.6, localization: "ui" },
   { pattern: "/about/products", changeFrequency: "monthly", priority: 0.6, localization: "ui" },
   {

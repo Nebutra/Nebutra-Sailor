@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Nhà đầu tư"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} đang xây dựng lớp vận hành cho các công ty AI-native. Dành cho nhà đầu tư và đối tác chiến lược: luận điểm, những gì đang hoạt động hôm nay và cách yêu cầu bộ hồ sơ.",
+      "hero": {
+        "kicker": "Dành cho nhà đầu tư và đối tác",
+        "title": "AI đã trao cho mọi founder đôi tay. Chúng tôi đang xây dựng <signature>phán đoán</signature>.",
+        "lead": "{brandName} là hệ sinh thái doanh nghiệp AI-native: Sailor, nền tảng source-available nơi các sản phẩm và agent bắt đầu với tư duy kỹ thuật được tích hợp sẵn; một thực hành đưa sản phẩm AI từ R&D ra thị trường toàn cầu; và các sản phẩm mà chúng tôi phát hành trên cả hai.",
+        "stage": "Chúng tôi đang gọi vốn vòng angel và trao đổi với một số ít nhà đầu tư và đối tác chiến lược.",
+        "primary": "Yêu cầu bộ hồ sơ",
+        "secondary": "Đặt lịch gọi",
+        "reelLabel": "Sản phẩm đang hoạt động trên nền tảng"
+      },
+      "chapters": {
+        "label": "Trên trang này",
+        "why": "Vì sao là bây giờ",
+        "built": "Những gì chúng tôi đã xây",
+        "practice": "Đi ra toàn cầu",
+        "work": "Cách chúng tôi làm việc",
+        "next": "Hướng đi tiếp theo",
+        "talk": "Nói chuyện với chúng tôi"
+      },
+      "why": {
+        "title": "Code đã trở nên rẻ. Phán đoán thì không.",
+        "lead": "Bất kỳ ai cũng có thể yêu cầu một mô hình tạo demo chạy được trong một phút. Điều quyết định một công ty có sống sót hay không — tenancy, billing, audit, kiến trúc bên dưới — vẫn cần một đội ngũ cấp cao mà hầu hết founder không thể thuê được.",
+        "timeline": {
+          "label": "Năm đầu tiên của một công ty vibe-coded",
+          "day": "Ngày {n}",
+          "d1": "Nó chạy được. Nó cảm giác như phép màu.",
+          "d30": "Tính năng cứ liên tục ra mắt.",
+          "d90": "Thanh toán bắt đầu chạy.",
+          "d180": "Một trăm người dùng. Hệ thống hỏng ngẫu nhiên.",
+          "d270": "Cách ly tenant làm vỡ schema.",
+          "d365": "Kỹ sư đầu tiên: “Chúng ta cần viết lại toàn bộ.”",
+          "source": "Như nhà sáng lập kể lại trong",
+          "essay": "Vì sao chúng tôi xây dựng {brandName}"
+        },
+        "shifts": {
+          "code": {
+            "title": "Viết code không còn là phần khó.",
+            "body": "Agent viết code. Điều khan hiếm là biết đoạn code nào vẫn đứng vững sau sáu tháng."
+          },
+          "solo": {
+            "title": "Công ty bắt đầu nhỏ hơn.",
+            "body": "Nhiều nhà sáng lập bắt đầu một mình, dùng agent thay cho cả đội. Họ cần sự phán đoán của một đội trong hệ thống, chứ không phải trong bảng lương."
+          },
+          "global": {
+            "title": "Thị trường bắt đầu toàn cầu.",
+            "body": "Sản phẩm ra mắt từ Trung Quốc bán ra toàn thế giới ngay ngày đầu, và phải đối mặt với hai bộ stack thanh toán, tuân thủ và nhà cung cấp."
+          }
+        }
+      },
+      "built": {
+        "title": "Một nền tảng. Mọi thứ khác mọc lên trên đó.",
+        "lead": "Ba mảng kinh doanh dùng chung một nền tảng, một hệ thống tài khoản và một bộ quy tắc.",
+        "sailor": {
+          "role": "Nền tảng",
+          "body": "Một hệ điều hành sản phẩm và agent source-available theo Functional Source License (FSL): tenancy, auth, billing, audit và design system, được quản trị bằng code."
+        },
+        "products": {
+          "name": "Sản phẩm",
+          "role": "Xây trên đó",
+          "body": "Sản phẩm đang vận hành cho lập trình viên, nhà thiết kế và người sáng tạo, mỗi sản phẩm đều phát triển trên Sailor."
+        },
+        "practice": {
+          "name": "AI doanh nghiệp & mở rộng toàn cầu",
+          "role": "Thực hành",
+          "body": "Nghiên cứu và phát triển ứng dụng AI cho doanh nghiệp, đồng thời đưa các sản phẩm AI từ Trung Quốc ra các thị trường toàn cầu."
+        }
+      },
+      "sailor": {
+        "title": "Sailor trao cho mỗi nhà sáng lập nền tảng mà một đội ngũ cấp cao sẽ xây dựng.",
+        "lead": "Chỉ một lệnh tạo khung một sản phẩm đa thuê bao với xác thực, thanh toán, kiểm toán và hệ thống thiết kế đã được quyết định. Các nhà cung cấp chuyển đổi giữa các stack toàn cầu và Trung Quốc bằng cấu hình, và các agent đọc cùng các quy tắc mà mã nguồn phải tuân theo.",
+        "acme": "Mẫu như khi phát hành, đã triển khai.",
+        "source": "Đọc mã nguồn",
+        "more": "Tìm hiểu thêm về Sailor"
+      },
+      "products": {
+        "title": "Đã phát hành, không phải slide.",
+        "lead": "Các sản phẩm chúng tôi xây dựng trên cùng nền tảng. Tất cả đều đang hoạt động — hãy mở ra.",
+        "caption": "Ảnh chụp màn hình các trang web đang hoạt động, chụp ngày 9 tháng 10 năm 2026.",
+        "router": "Một thị trường và một API cho models, apps và tools.",
+        "forge": "184 công cụ trong trình duyệt, cùng engine như API và MCP.",
+        "typelens": "Các cặp font thực tế cho nhà thiết kế và design agents.",
+        "kcq": "Bàn làm việc nghiên cứu biểu đồ và định lượng, với một agent đồng hành.",
+        "also": "Cũng trên nền tảng",
+        "open": "Mở {name}"
+      },
+      "practice": {
+        "title": "Chúng tôi đưa sản phẩm AI ra thế giới — của chúng tôi và của khách hàng.",
+        "lead": "Đội ngũ kỹ thuật vận hành sản phẩm của chính chúng tôi cũng thực hiện công việc cho khách hàng: AI tích hợp vào các doanh nghiệp đã tồn tại, và các sản phẩm được đưa từ Trung Quốc ra các thị trường toàn cầu.",
+        "rnd": {
+          "title": "Nghiên cứu & phát triển AI doanh nghiệp",
+          "body": "Agents, model routing và dữ liệu được quản trị, tích hợp sẵn vào các hệ thống mà doanh nghiệp đang vận hành, và bàn giao ở trạng thái hoạt động."
+        },
+        "global": {
+          "title": "Thương mại hóa toàn cầu",
+          "body": "Địa phương hóa, thanh toán, tuân thủ và nhà cung cấp ở cả hai phía của bức tường, cùng với việc ra mắt. Chúng tôi làm điều này cho sản phẩm của chính mình trước tiên."
+        },
+        "locales": "Trang này được phục vụ bằng {count} ngôn ngữ.",
+        "hq": "Được xây dựng tại Vô Tích, Trung Quốc. Phân phối toàn cầu."
+      },
+      "work": {
+        "title": "Cách chúng tôi làm việc",
+        "architecture": {
+          "title": "Kiến trúc tốt nghĩa là bạn có thể đi xa.",
+          "body": "Chúng tôi áp dụng cho sản phẩm của mình chính tiêu chuẩn mà chúng tôi bán: các điểm mở rộng, cách ly và kiểm toán ngay từ commit đầu tiên."
+        },
+        "rules": {
+          "title": "Quy tắc nằm trong code, không nằm trong tài liệu.",
+          "body": "Thiết kế, truy cập dữ liệu và nội dung được máy kiểm tra ở mỗi lần thay đổi. Trang này cũng phải vượt qua chúng để có thể phát hành."
+        },
+        "tools": {
+          "title": "Dùng công cụ tốt nhất. Đừng thay thế chúng.",
+          "body": "Codex, Claude Code, Vercel, mọi nhà cung cấp model lớn: chúng tôi tích hợp những gì các founder đã yêu thích."
+        },
+        "open": {
+          "title": "Xây dựng công khai.",
+          "body": "Mã nguồn của Sailor là công khai, và mọi thứ trên trang này đều đang hoạt động. Kiểm tra bắt đầu từ một liên kết."
+        }
+      },
+      "next": {
+        "title": "Một câu, một <signature>toàn bộ công ty</signature>.",
+        "lead": "{brandName} OS là nơi hướng tới: mô tả một công ty một lần, và thương hiệu, sản phẩm, code và ra mắt đều đến từ một ngữ cảnh duy nhất, với phán đoán được xây dựng sẵn. Nó đang trong giai đoạn phát triển, và chúng tôi sẽ công bố khi nó thực sự hoàn thiện.",
+        "vision": "Trong năm năm tới, chúng tôi muốn việc khởi nghiệp nghĩa là bắt đầu với phán đoán đó đã sẵn sàng."
+      },
+      "talk": {
+        "title": "Hãy trò chuyện.",
+        "lead": "Chúng tôi chia sẻ deck sau một giới thiệu ngắn. Hãy cho chúng tôi biết bạn là ai và bạn muốn gì.",
+        "investors": {
+          "title": "Nhà đầu tư",
+          "body": "Chúng tôi đang gọi vốn vòng angel. Chi tiết vòng gọi vốn, kế hoạch và các con số sẽ được gửi kèm trong bộ tài liệu."
+        },
+        "partners": {
+          "title": "Đối tác chiến lược",
+          "body": "Thương hiệu, phân phối, nội dung hoặc kênh doanh nghiệp. Chúng tôi mang đến nền tảng, sản phẩm đang hoạt động và phương pháp đã được kiểm chứng để mở rộng toàn cầu."
+        },
+        "form": {
+          "intent": "Bạn muốn điều gì?",
+          "deck": {
+            "title": "Yêu cầu bộ tài liệu",
+            "description": "Sẽ gửi sau khi bạn giới thiệu ngắn gọn."
+          },
+          "call": {
+            "title": "Đặt lịch gọi",
+            "description": "30 phút với nhà sáng lập."
+          },
+          "partner": {
+            "title": "Khám phá hợp tác",
+            "description": "Thương hiệu, kênh, nội dung hoặc doanh nghiệp."
+          },
+          "name": "Họ tên",
+          "email": "Email công việc",
+          "firm": "Công ty hoặc tổ chức",
+          "message": "Có điều gì chúng tôi nên biết không?",
+          "optional": "không bắt buộc",
+          "submit": "Gửi",
+          "sending": "Đang gửi…",
+          "success": "Cảm ơn bạn. Chúng tôi sẽ liên hệ qua email.",
+          "error": "Không gửi được. Vui lòng thử lại.",
+          "note": "Chúng tôi chỉ sử dụng thông tin của bạn để phản hồi cho bạn."
+        },
+        "direct": "Thích email hơn? Hãy viết cho người sáng lập tại"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Nhà đầu tư"
       }
     }
   },

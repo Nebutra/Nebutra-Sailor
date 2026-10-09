@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Investors"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} is building the operating layer for AI-native companies. For investors and strategic partners: the thesis, what is live today, and how to request the deck.",
+      "hero": {
+        "kicker": "For investors and partners",
+        "title": "AI gave every founder hands. We're building the <signature>judgment</signature>.",
+        "lead": "{brandName} is an AI-native company ecosystem: Sailor, the source-available platform where products and agents start with engineering judgment built in; a practice that takes AI products from R&D to markets worldwide; and the products we ship on both.",
+        "stage": "We're raising our angel round and talking with a small number of investors and strategic partners.",
+        "primary": "Request the deck",
+        "secondary": "Book a call",
+        "reelLabel": "Products live on the platform"
+      },
+      "chapters": {
+        "label": "On this page",
+        "why": "Why now",
+        "built": "What we've built",
+        "practice": "Going global",
+        "work": "How we work",
+        "next": "Where it goes",
+        "talk": "Talk to us"
+      },
+      "why": {
+        "title": "Code got cheap. Judgment didn't.",
+        "lead": "Anyone can ask a model for a working demo in a minute. What decides whether a company survives — tenancy, billing, audit, the architecture underneath — still needs a senior team most founders can't hire.",
+        "timeline": {
+          "label": "The first year of a vibe-coded company",
+          "day": "Day {n}",
+          "d1": "It works. It feels like magic.",
+          "d30": "Features keep coming.",
+          "d90": "Payments go in.",
+          "d180": "A hundred users. Things break at random.",
+          "d270": "Tenant isolation breaks the schema.",
+          "d365": "The first engineer: “We need to rewrite this.”",
+          "source": "As the founder tells it in",
+          "essay": "Why we are building {brandName}"
+        },
+        "shifts": {
+          "code": {
+            "title": "Building is no longer the hard part.",
+            "body": "Agents write the code. What is scarce is knowing which code will still stand in six months."
+          },
+          "solo": {
+            "title": "Companies start smaller.",
+            "body": "More founders start alone, with agents for a team. They need a team's judgment in the system, not on the payroll."
+          },
+          "global": {
+            "title": "Markets start global.",
+            "body": "A product launched from China sells to the world on day one, and meets two stacks of payments, compliance and providers."
+          }
+        }
+      },
+      "built": {
+        "title": "One foundation. Everything else grows on it.",
+        "lead": "Three lines of business share one platform, one account system and one set of rules.",
+        "sailor": {
+          "role": "The platform",
+          "body": "A source-available product and agent OS under the Functional Source License (FSL): tenancy, auth, billing, audit and a design system, governed in code."
+        },
+        "products": {
+          "name": "Products",
+          "role": "Built on it",
+          "body": "Live products for developers, designers and creators, each grown on Sailor."
+        },
+        "practice": {
+          "name": "Enterprise AI & go-global",
+          "role": "The practice",
+          "body": "AI application R&D for companies, and taking AI products from China to markets worldwide."
+        }
+      },
+      "sailor": {
+        "title": "Sailor hands every founder the foundation a senior team would build.",
+        "lead": "One command scaffolds a multi-tenant product with auth, billing, audit and a design system already decided. Providers switch between global and China stacks by configuration, and agents read the same rules the code is held to.",
+        "acme": "The template as it ships, deployed.",
+        "source": "Read the source",
+        "more": "More on Sailor"
+      },
+      "products": {
+        "title": "Shipped, not slideware.",
+        "lead": "Products we built on the same foundation. Every one is live — open it.",
+        "caption": "Screenshots of the live sites, taken on 9 October 2026.",
+        "router": "One market and one API for models, apps and tools.",
+        "forge": "184 tools in the browser, and the same engine as API and MCP.",
+        "typelens": "Real-world type pairings for designers and design agents.",
+        "kcq": "A chart and quant research workbench, with an agent alongside.",
+        "also": "Also on the platform",
+        "open": "Open {name}"
+      },
+      "practice": {
+        "title": "We take AI products to the world — ours, and our clients'.",
+        "lead": "The engineering that runs our own products runs client work too: AI built into businesses that already exist, and products carried from China to markets worldwide.",
+        "rnd": {
+          "title": "Enterprise AI R&D",
+          "body": "Agents, model routing and governed data, built into the systems a company already runs, and handed over working."
+        },
+        "global": {
+          "title": "Go-global commercialization",
+          "body": "Localization, payments, compliance and providers on both sides of the wall, and the launch itself. We do it for our own products first."
+        },
+        "locales": "This page is served in {count} languages.",
+        "hq": "Built in Wuxi, China. Shipped worldwide."
+      },
+      "work": {
+        "title": "How we work",
+        "architecture": {
+          "title": "Good architecture means you can go far.",
+          "body": "We hold our own products to the standard we sell: extension points, isolation and audit from the first commit."
+        },
+        "rules": {
+          "title": "Rules live in code, not in documents.",
+          "body": "Design, data access and copy are checked by machine on every change. This page had to pass them to ship."
+        },
+        "tools": {
+          "title": "Use the best tools. Don't replace them.",
+          "body": "Codex, Claude Code, Vercel, every major model provider: we integrate what founders already love."
+        },
+        "open": {
+          "title": "Build in the open.",
+          "body": "Sailor's source is public, and everything on this page is live. Diligence starts with a link."
+        }
+      },
+      "next": {
+        "title": "One sentence, a <signature>whole company</signature>.",
+        "lead": "{brandName} OS is where this goes: describe a company once, and brand, product, code and launch come from one context, with the judgment built in. It is in development, and we will show it when it is real.",
+        "vision": "In five years, we want starting a company to mean starting with that judgment already in place."
+      },
+      "talk": {
+        "title": "Let's talk.",
+        "lead": "We share the deck after a short introduction. Tell us who you are and what you would like.",
+        "investors": {
+          "title": "Investors",
+          "body": "We're raising our angel round. Round details, the plan and the numbers come with the deck."
+        },
+        "partners": {
+          "title": "Strategic partners",
+          "body": "Brand, distribution, content or enterprise channels. We bring the platform, live products and a tested way to go global."
+        },
+        "form": {
+          "intent": "What would you like?",
+          "deck": {
+            "title": "Request the deck",
+            "description": "Sent after a short intro."
+          },
+          "call": {
+            "title": "Book a call",
+            "description": "30 minutes with the founder."
+          },
+          "partner": {
+            "title": "Explore a partnership",
+            "description": "Brand, channels, content or enterprise."
+          },
+          "name": "Name",
+          "email": "Work email",
+          "firm": "Firm or company",
+          "message": "Anything we should know?",
+          "optional": "optional",
+          "submit": "Send",
+          "sending": "Sending…",
+          "success": "Thank you. We'll be in touch by email.",
+          "error": "That didn't go through. Please try again.",
+          "note": "We use your details only to reply to you."
+        },
+        "direct": "Prefer email? Write to the founder at"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Investors"
       }
     }
   },

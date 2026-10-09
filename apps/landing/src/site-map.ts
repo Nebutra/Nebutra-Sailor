@@ -419,6 +419,16 @@ export const SITE_MAP: readonly SitePage[] = [
     template: false,
   },
   {
+    // For investors and strategic partners: the story, what is live, and a way
+    // to ask for the deck. The deck itself is never on the page.
+    path: "/investors",
+    rail: true,
+    section: "company",
+    key: "investors",
+    status: "live",
+    template: false,
+  },
+  {
     path: "/careers",
     rail: true,
     section: "company",

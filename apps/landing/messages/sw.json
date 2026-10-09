@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Wawekezaji"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} inajenga tabaka la utendaji kwa kampuni zinazotegemea AI. Kwa wawekezaji na washirika wa kimkakati: dhana, yale yaliyopo leo, na jinsi ya kufanya ombi la deck.",
+      "hero": {
+        "kicker": "Kwa wawekezaji na washirika",
+        "title": "AI imewapa kila msingi mikono. Tunaajenga <signature>heshima</signature>.",
+        "lead": "{brandName} ni mfumo wa biashara wa AI-native: Sailor, jukwaa la source-available ambapo bidhaa na agents huanza na uamuzi wa uhandisi uliojengwa ndani; mazoezi yanayobeba bidhaa za AI kutoka R&D hadi masoko duniani kote; na bidhaa tunazozitoa kwenye yote mawili.",
+        "stage": "Tunapata mzunguko wetu wa angel na tunaongea na idadi ndogo ya wawekezaji na washirika wa kimkakati.",
+        "primary": "Omba deck",
+        "secondary": "Weka simu",
+        "reelLabel": "Bidhaa zilizopo kwenye jukwaa"
+      },
+      "chapters": {
+        "label": "Kwenye ukurasa huu",
+        "why": "Kwa nini sasa",
+        "built": "Yale tuliyoyajenga",
+        "practice": "Kuenda kimataifa",
+        "work": "Jinsi tunavyofanya kazi",
+        "next": "Wapi inavyoenda",
+        "talk": "Ongea nasi"
+      },
+      "why": {
+        "title": "Msimbo umekuwa gharama. Heshima haina.",
+        "lead": "Mtu yeyote anaweza kuuliza modeli demo inayofanya kazi kwa dakika moja. Yaliyofanya kampuni iendelee — tenancy, billing, audit, muundo chini — bado yanahitaji timu ya senior ambayo wengi wa wasingi hawawezi kuwaajiri.",
+        "timeline": {
+          "label": "Mwaka wa kwanza wa kampuni iliyopangwa kwa vibe",
+          "day": "Siku {n}",
+          "d1": "Inafanya kazi. Inahisi kama ajabu.",
+          "d30": "Sifa zinaendelea kuingia.",
+          "d90": "Malipo huanza kuingia.",
+          "d180": "Watumiaji mia moja. Mambo hupotea kwa nasibu.",
+          "d270": "Utengano wa mizigo hupoteza muundo.",
+          "d365": "Mhandisi wa kwanza: “Tunahitaji kuandika upya hii.”",
+          "source": "Kama mwenyekiti anavyoieleza katika",
+          "essay": "Kwa nini tunajenga {brandName}"
+        },
+        "shifts": {
+          "code": {
+            "title": "Kujenga sio tena sehemu ngumu.",
+            "body": "Wakala huandika msimbo. Kinachokosekana ni kujua msimbo gani utabaki imara baada ya miezi sita."
+          },
+          "solo": {
+            "title": "Makampuni huanza kuwa ndogo.",
+            "body": "Wakandarazi wengi huanza peke yao, na wakala badala ya timu. Wanaohitaji uamuzi wa timu katika mfumo, si kwenye mshahara."
+          },
+          "global": {
+            "title": "Soko huanza kuwa la kimataifa.",
+            "body": "Bidhaa iliyotolewa kutoka China inauza duniani kote siku ya kwanza, na inakutana na mizunguko miwili ya malipo, utii na waatoa huduma."
+          }
+        }
+      },
+      "built": {
+        "title": "Msingi mmoja. Kila kitu kingine hukuza juu yake.",
+        "lead": "Mifumo mitatu ya biashara hushiriki jukwaa moja, mfumo mmoja wa akaunti na seti moja ya kanuni.",
+        "sailor": {
+          "role": "Jukwaa",
+          "body": "OS ya bidhaa na agent ya source-available chini ya Functional Source License (FSL): tenancy, auth, billing, audit na mfumo wa muundo, yaliyodhibitiwa kwa kodi."
+        },
+        "products": {
+          "name": "Bidhaa",
+          "role": "Zilizojengwa juu yake",
+          "body": "Bidhaa hai kwa waandishi, wabuni na wabunifu, kila moja ikikua juu ya Sailor."
+        },
+        "practice": {
+          "name": "Enterprise AI & kupeleka nje",
+          "role": "Shughuli",
+          "body": "Utafiti na uundaji wa matumizi ya AI kwa makampuni, na kubeba bidhaa za AI kutoka China hadi masoko ya dunia nzima."
+        }
+      },
+      "sailor": {
+        "title": "Sailor anampa kila msingi msingi ambao timu ya juu ingekuunda.",
+        "lead": "Amri moja huunda bidhaa ya multi-tenant yenye ukaguzi wa utambulisho, malipo, ukaguzi na mfumo wa muundo uliowekwa tayari. Watoa huduma hubadilisha kati ya mifumo ya kimataifa na ya China kwa muundo, na watoa huduma huchukua kanuni zilizofanana na ambazo msimbo unashikiliwa.",
+        "acme": "Templeti kama inavyotumwa, imetumwa.",
+        "source": "Soma chanzo",
+        "more": "Zaidi kuhusu Sailor"
+      },
+      "products": {
+        "title": "Zimetumwa, si slaidi.",
+        "lead": "Bidhaa tulizounda kwenye msingi mmoja. Kila moja iko hai — fungua.",
+        "caption": "Picha za tovuti hai, zilizochukuliwa tarehe 9 Oktoba 2026.",
+        "router": "Soko moja na API moja kwa models, apps na zana.",
+        "forge": "Zana 184 kwenye kivinjari, na injini ileile kama API na MCP.",
+        "typelens": "Mchanganyiko halisi wa aina za type kwa wabuni na watoa huduma wa muundo.",
+        "kcq": "Mwanga wa utafiti wa grafu na quant, na agent mstari.",
+        "also": "Pia kwenye jukwaa",
+        "open": "Fungua {name}"
+      },
+      "practice": {
+        "title": "Tunabeba bidhaa za AI hadi dunia — zetu, na za wateja wetu.",
+        "lead": "Uhandisi unaosimamia bidhaa zetu pia unasimamia kazi za wateja: AI iliyoingizwa kwenye biashara zilizopo, na bidhaa zinazobebwa kutoka China hadi masoko ya dunia nzima.",
+        "rnd": {
+          "title": "Utafiti na uundaji wa Enterprise AI",
+          "body": "Wakala, usafirishaji wa modeli na data iliyosimamiwa, zimejengwa ndani ya mifumo ambayo kampuni tayari inayatumia, na zimetolewa zikifanya kazi."
+        },
+        "global": {
+          "title": "Uuzaji wa kimataifa",
+          "body": "Ukarabati wa mahali, malipo, utii na watoa huduma pande zote za ukuta, na uzinduzi mwenyewe. Tunafanya hivyo kwa bidhaa zetu kwanza."
+        },
+        "locales": "Ukurasa huu hutolewa kwa lugha {count}.",
+        "hq": "Imejengwa Wuxi, China. Inatumwa duniani kote."
+      },
+      "work": {
+        "title": "Jinsi tunavyofanya kazi",
+        "architecture": {
+          "title": "Muundo mzuri unamaanisha unaweza kwenda mbali.",
+          "body": "Tunaweka bidhaa zetu kwenye kiwango tunacholizua: maeneo ya upanuzi, utengano na ukaguzi tangu commit ya kwanza."
+        },
+        "rules": {
+          "title": "Mistari hupita kwenye msimbo, si kwenye nyaraka.",
+          "body": "Muundo, ufikio wa data na maandishi hukaguliwa na mashine kila mabadiliko. Ukurasa huu ulipaswa kupita kwenye hivyo ili kutolewa."
+        },
+        "tools": {
+          "title": "Tumia zana bora. Usizibadilishe.",
+          "body": "Codex, Claude Code, Vercel, kila mtoa modeli mkuu: tunajumuisha kile ambacho waanzilishi watakapenda."
+        },
+        "open": {
+          "title": "Jenga kwa wazi.",
+          "body": "Chanzo cha Sailor ni cha umma, na kila kitu kwenye ukurasa huu ni hai. Uchambuzi huanza na kiungo."
+        }
+      },
+      "next": {
+        "title": "Sentensi moja, <signature>kampuni nzima</signature>.",
+        "lead": "{brandName} OS ndiko hii inavyoenda: eleza kampuni mara moja, na brand, bidhaa, msimbo na uzinduzi hutoka kwenye muktadha mmoja, na uamuzi umejengwa ndani. Inaendelea, na tutaitaonyesha inapokuwa halisi.",
+        "vision": "Baada ya miaka mitano, tunataka kuanzisha kampuni kumaanisha kuanza ukiwa na uamuzi huo tayari."
+      },
+      "talk": {
+        "title": "Tusikumbuke.",
+        "lead": "Tunashiriki deck baada ya utangulizi mfupi. Tuambie ni nani wewe na unachotaka.",
+        "investors": {
+          "title": "Wachambuzi",
+          "body": "Tunapatafuta mzungumzaji wa angel round. Maelezo ya mzungumzaji, mpango na takwimu zinatolewa pamoja na deck."
+        },
+        "partners": {
+          "title": "Washirika wa kimkakati",
+          "body": "Brand, usambazaji, maudhui au njia za biashara. Sisi tunatoa jukwaa, bidhaa hai na njia iliyopimwa ya kuingia duniani."
+        },
+        "form": {
+          "intent": "Unataka nini?",
+          "deck": {
+            "title": "Omba deck",
+            "description": "Inatumwa baada ya utangulizi mfupi."
+          },
+          "call": {
+            "title": "Weka simu",
+            "description": "Dakika 30 na mwanzilishi."
+          },
+          "partner": {
+            "title": "Chunguza ushirikiano",
+            "description": "Brand, njia, maudhui au biashara."
+          },
+          "name": "Jina",
+          "email": "Barua pepe ya kazi",
+          "firm": "Kampuni au shirika",
+          "message": "Kila kitu tunachopaswa kujua?",
+          "optional": "hiari",
+          "submit": "Tuma",
+          "sending": "Inatuma…",
+          "success": "Asante. Tutakutumia barua pepe.",
+          "error": "Hili halikupita. Tafadhali jaribu tena.",
+          "note": "Tunatumia maelezo yako tu kukujibu."
+        },
+        "direct": "Unapendelea barua pepe? Andika kwa msingi wa kampuni kwenye"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Wawekezaji"
       }
     }
   },

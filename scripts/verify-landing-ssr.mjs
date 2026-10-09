@@ -82,6 +82,8 @@ const NEBUTRA_ROUTES = [
   { path: "/building", text: [] },
   { path: "/licensing", text: [] },
   { path: "/careers", text: [] },
+  { path: "/investors", text: ["Request the deck"] },
+  { path: "/zh-Hans/investors", text: ["索取融资材料"] },
   { path: "/solutions", text: [] },
   { path: "/open", text: [] },
 ];

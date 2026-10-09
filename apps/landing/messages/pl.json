@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Inwestorzy"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} buduje warstwę operacyjną dla firm natywnych w AI. Dla inwestorów i partnerów strategicznych: teza, co działa dziś i jak poprosić o prezentację.",
+      "hero": {
+        "kicker": "Dla investorów i partnerów",
+        "title": "AI dał każdemu założycielowi ręce. My budujemy <signature>osąd</signature>.",
+        "lead": "{brandName} to ekosystem firm AI-native: Sailor — platforma source-available, na której produkty i agenci startują z wbudowanym inżynierskim osądem; praktyka przenosząca produkty AI z R&D na rynki na całym świecie; oraz produkty, które dostarczamy na obu tych płaszczyznach.",
+        "stage": "Zbieramy rundę anioła i rozmawiamy z niewielką liczbą inwestorów i partnerów strategicznych.",
+        "primary": "Poproś o prezentację",
+        "secondary": "Umów rozmowę",
+        "reelLabel": "Produkty działające na platformie"
+      },
+      "chapters": {
+        "label": "Na tej stronie",
+        "why": "Dlaczego teraz",
+        "built": "Co zbudowaliśmy",
+        "practice": "Idziemy na globalnie",
+        "work": "Jak pracujemy",
+        "next": "Dokąd to zmierza",
+        "talk": "Porozmawiaj z nami"
+      },
+      "why": {
+        "title": "Kod stał się tani. Osąd nie.",
+        "lead": "Każdy może poprosić model o działający demo w minutę. Co decyduje o tym, czy firma przetrwa — tenancy, billing, audyt, architektura pod spodem — wciąż wymaga zespołu seniorów, których większość założycieli nie może zatrudnić.",
+        "timeline": {
+          "label": "Pierwszy rok firmy vibe-coded",
+          "day": "Dzień {n}",
+          "d1": "Działa. Czujesz, że to magia.",
+          "d30": "Funkcje wciąż się pojawiają.",
+          "d90": "Płatności zaczynają wpływać.",
+          "d180": "Sto użytkowników. Rzeczy psują się losowo.",
+          "d270": "Izolacja najemców łamie schemat.",
+          "d365": "Pierwszy inżynier: „Musimy to przepisać.”",
+          "source": "Jak opowiada to założyciel w",
+          "essay": "Dlaczego budujemy {brandName}"
+        },
+        "shifts": {
+          "code": {
+            "title": "Budowanie to już nie jest trudna część.",
+            "body": "Kod piszą agenci. Czym jest rzadkość, to wiedza, który kod wciąż się utrzyma za sześć miesięcy."
+          },
+          "solo": {
+            "title": "Firmy zaczynają mniejsze.",
+            "body": "Coraz więcej założycieli zaczyna sam, z agentami jako zespołem. Potrzebują w systemie osądu zespołu, nie na liście płac."
+          },
+          "global": {
+            "title": "Rynki zaczynają globalne.",
+            "body": "Produkt wystartowany z Chin sprzedaje się na cały świat od pierwszego dnia i spotyka się z dwoma stosami płatności, zgodności i dostawców."
+          }
+        }
+      },
+      "built": {
+        "title": "Jedna podstawa. Wszystko inne rośnie na niej.",
+        "lead": "Trzy linie biznesowe dzielą jedną platformę, jeden system kont i jeden zestaw zasad.",
+        "sailor": {
+          "role": "Platforma",
+          "body": "System operacyjny produktów i agentów typu source-available na licencji Functional Source License (FSL): tenancy, auth, billing, audit oraz system projektowy — wszystko zarządzane w kodzie."
+        },
+        "products": {
+          "name": "Produkty",
+          "role": "Zbudowane na nim",
+          "body": "Produkty na żywo dla deweloperów, projektantów i twórców, każdy wyhodowany na Sailor."
+        },
+        "practice": {
+          "name": "Enterprise AI i ekspansja globalna",
+          "role": "Zakres praktyki",
+          "body": "Rozwój aplikacji AI dla firm oraz wprowadzanie produktów AI z Chin na rynki całego świata."
+        }
+      },
+      "sailor": {
+        "title": "Sailor daje każdemu założycielowi fundament, który zbudowałby zespół seniorów.",
+        "lead": "Jedna komenda tworzy szkielet produktu wielodostępowego z uwierzytelnianiem, rozliczeniami, audytem i gotowym systemem projektowym. Dostawców przełącza się między globalnym a chińskim stackiem przez konfigurację, a agenci czytają te same zasady, którym podlega kod.",
+        "acme": "Szablon w wersji produkcyjnej, po wdrożeniu.",
+        "source": "Przeczytaj kod źródłowy",
+        "more": "Więcej o Sailor"
+      },
+      "products": {
+        "title": "Wdrożone, nie slajdy.",
+        "lead": "Produkty, które zbudowaliśmy na tej samej podstawie. Każdy z nich działa — otwórz go.",
+        "caption": "Zrzuty ekranu działających stron, wykonane 9 października 2026 r.",
+        "router": "Jeden rynek i jedno API dla modeli, aplikacji i narzędzi.",
+        "forge": "184 narzędzia w przeglądarce oraz ten sam silnik jako API i MCP.",
+        "typelens": "Prawdziwe pary typograficzne dla projektantów i agentów projektowych.",
+        "kcq": "Stacja badawcza do wykresów i analiz kwantowych, z agentem obok.",
+        "also": "Również na platformie",
+        "open": "Otwórz {name}"
+      },
+      "practice": {
+        "title": "Wprowadzamy produkty AI na świat — nasze i naszych klientów.",
+        "lead": "Inżynieria, która napędza nasze produkty, napędza też pracę dla klientów: AI wbudowane w istniejące firmy oraz produkty przenoszone z Chin na rynki całego świata.",
+        "rnd": {
+          "title": "Przedsiębiorcze AI R&D",
+          "body": "Agentów, routingu modeli i zarządzanych danych, wbudowanych w systemy, z których firma już korzysta, i przekazanych w gotowym do pracy stanie."
+        },
+        "global": {
+          "title": "Globalna komercjalizacja",
+          "body": "Lokalizacja, płatności, zgodność i dostawcy po obu stronach muru oraz sam launch. Najpierw robimy to dla własnych produktów."
+        },
+        "locales": "Ta strona jest dostępna w {count} językach.",
+        "hq": "Tworzone w Wuxi, Chiny. Dostarczane na całym świecie."
+      },
+      "work": {
+        "title": "Jak pracujemy",
+        "architecture": {
+          "title": "Dobra architektura pozwala zajść daleko.",
+          "body": "Własne produkty trzymamy do standardu, który sprzedajemy: punkty rozszerzeń, izolacja i audyt od pierwszego commita."
+        },
+        "rules": {
+          "title": "Zasady żyją w kodzie, nie w dokumentach.",
+          "body": "Projekt, dostęp do danych i teksty są sprawdzane maszynowo przy każdej zmianie. Ta strona musiała je przejść, żeby zostać wydana."
+        },
+        "tools": {
+          "title": "Używaj najlepszych narzędzi. Nie zamieniaj ich.",
+          "body": "Codex, Claude Code, Vercel, każdy duży dostawca modeli: integrujemy to, co założyciele już kochają."
+        },
+        "open": {
+          "title": "Buduj w otwartości.",
+          "body": "Kod źródłowy Sailor jest publiczny, a wszystko na tej stronie działa na żywo. Due diligence zaczyna się od linku."
+        }
+      },
+      "next": {
+        "title": "Jedno zdanie, a <signature>cała firma</signature>.",
+        "lead": "{brandName} OS to kierunek: opisujesz firmę raz, a marka, produkt, kod i launch powstają z jednego kontekstu, z wbudowanym osądem. Jest w rozwoju i pokażemy go, gdy będzie realny.",
+        "vision": "Za pięć lat chcemy, żeby założenie firmy oznaczało start z tym osądem już na miejscu."
+      },
+      "talk": {
+        "title": "Porozmawiajmy.",
+        "lead": "Udostępniamy prezentację po krótkim wprowadzeniu. Powiedz nam, kim jesteś i czego szukasz.",
+        "investors": {
+          "title": "Inwestorzy",
+          "body": "Zbieramy rundę anioła. Szczegóły rundy, plan i liczby znajdziesz w prezentacji."
+        },
+        "partners": {
+          "title": "Strategiczni partnerzy",
+          "body": "Marka, dystrybucja, treści lub kanały enterprise. My dostarczamy platformę, działające produkty i sprawdzone podejście do ekspansji globalnej."
+        },
+        "form": {
+          "intent": "Czego potrzebujesz?",
+          "deck": {
+            "title": "Poproś o prezentację",
+            "description": "Wyślemy ją po krótkim wprowadzeniu."
+          },
+          "call": {
+            "title": "Umów rozmowę",
+            "description": "30 minut z założycielem."
+          },
+          "partner": {
+            "title": "Omów współpracę",
+            "description": "Marka, kanały, treści lub enterprise."
+          },
+          "name": "Imię i nazwisko",
+          "email": "Adres e-mail służbowy",
+          "firm": "Firma lub organizacja",
+          "message": "Coś, o czym powinniśmy wiedzieć?",
+          "optional": "opcjonalne",
+          "submit": "Wyślij",
+          "sending": "Wysyłanie…",
+          "success": "Dziękujemy. Skontaktujemy się z Tobą e-mailem.",
+          "error": "Coś poszło nie tak. Spróbuj ponownie.",
+          "note": "Używamy Twoich danych wyłącznie w celu odpowiedzi."
+        },
+        "direct": "Wolisz e-mail? Napisz do założyciela na"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Inwestorzy"
       }
     }
   },

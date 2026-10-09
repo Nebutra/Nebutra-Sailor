@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Investoren"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} baut die Betriebssystemebene für KI-native Unternehmen. Für Investoren und strategische Partner: die These, was heute live ist und wie Sie die Präsentation anfordern.",
+      "hero": {
+        "kicker": "Für Investoren und Partner",
+        "title": "KI hat jedem Gründer Hände gegeben. Wir bauen das <signature>Urteilsvermögen</signature>.",
+        "lead": "{brandName} ist ein KI-natives Unternehmensökosystem: Sailor, die source-available Plattform, auf der Produkte und Agenten mit eingebautem Engineering-Urteil starten; eine Praxis, die KI-Produkte von der Forschung und Entwicklung auf Märkte weltweit bringt; und die Produkte, die wir auf beiden ausliefern.",
+        "stage": "Wir führen unsere Angel-Runde durch und sprechen mit einer kleinen Gruppe von Investoren und strategischen Partnern.",
+        "primary": "Präsentation anfordern",
+        "secondary": "Termin vereinbaren",
+        "reelLabel": "Produkte live auf der Plattform"
+      },
+      "chapters": {
+        "label": "Auf dieser Seite",
+        "why": "Warum jetzt",
+        "built": "Was wir gebaut haben",
+        "practice": "Globalisierung",
+        "work": "Wie wir arbeiten",
+        "next": "Wohin es geht",
+        "talk": "Sprechen Sie mit uns"
+      },
+      "why": {
+        "title": "Code wurde billig. Urteilsvermögen nicht.",
+        "lead": "Jeder kann ein Modell in einer Minute um eine funktionierende Demo bitten. Was darüber entscheidet, ob ein Unternehmen überlebt – Tenancy, Abrechnung, Audit, die Architektur dahinter – braucht weiterhin ein erfahrenes Team, das die meisten Gründer nicht einstellen können.",
+        "timeline": {
+          "label": "Das erste Jahr eines vibe-coded Unternehmens",
+          "day": "Tag {n}",
+          "d1": "Es funktioniert. Es fühlt sich an wie Magie.",
+          "d30": "Neue Features kommen laufend dazu.",
+          "d90": "Zahlungen werden eingebaut.",
+          "d180": "Hundert Nutzer. Dinge brechen scheinbar zufällig.",
+          "d270": "Mandantentrennung zerstört das Schema.",
+          "d365": "Der erste Engineer: „Das müssen wir neu schreiben.“",
+          "source": "Wie der Gründer es in",
+          "essay": "Warum wir {brandName} bauen"
+        },
+        "shifts": {
+          "code": {
+            "title": "Bauen ist nicht mehr der schwierige Teil.",
+            "body": "Agenten schreiben den Code. Was knapp ist, ist zu wissen, welcher Code in sechs Monaten noch Bestand hat."
+          },
+          "solo": {
+            "title": "Unternehmen starten kleiner.",
+            "body": "Immer mehr Gründer starten allein – mit Agenten als Team. Sie brauchen die Urteilskraft eines Teams im System, nicht auf der Gehaltsliste."
+          },
+          "global": {
+            "title": "Märkte starten global.",
+            "body": "Ein in China veröffentlichtes Produkt verkauft sich ab Tag eins weltweit – und trifft dabei zwei Stacks aus Zahlungen, Compliance und Anbietern."
+          }
+        }
+      },
+      "built": {
+        "title": "Eine Grundlage. Alles andere wächst darauf auf.",
+        "lead": "Drei Geschäftsbereiche teilen sich eine Plattform, ein Kontosystem und einen Satz von Regeln.",
+        "sailor": {
+          "role": "Die Plattform",
+          "body": "Ein source-available Produkt- und Agenten-OS unter der Functional Source License (FSL): Tenancy, Auth, Billing, Audit und ein Design-System, alles in Code verwaltet."
+        },
+        "products": {
+          "name": "Produkte",
+          "role": "Darauf aufgebaut",
+          "body": "Live-Produkte für Entwickler, Designer und Kreative – jedes davon auf Sailor aufgebaut."
+        },
+        "practice": {
+          "name": "Enterprise KI & Global Expansion",
+          "role": "Die Practice",
+          "body": "Entwicklung von KI-Anwendungen für Unternehmen und der Ausbau von KI-Produkten aus China auf Märkte weltweit."
+        }
+      },
+      "sailor": {
+        "title": "Sailor gibt jedem Gründer das Fundament, das ein erfahrenes Team aufbauen würde.",
+        "lead": "Ein Befehl erstellt das Gerüst für ein Multi-Tenant-Produkt mit Auth, Billing, Audit und einem bereits festgelegten Design-System. Anbieter wechseln per Konfiguration zwischen globalen und China-Stacks, und Agenten lesen dieselben Regeln, nach denen der Code gemessen wird.",
+        "acme": "Die Vorlage im ausgelieferten Zustand, deployed.",
+        "source": "Quellcode ansehen",
+        "more": "Mehr zu Sailor"
+      },
+      "products": {
+        "title": "Ausgeliefert, keine Folien.",
+        "lead": "Produkte, die wir auf derselben Grundlage gebaut haben. Jedes davon ist live — öffne es.",
+        "caption": "Screenshots der Live-Sites, aufgenommen am 9. Oktober 2026.",
+        "router": "Ein Markt und eine API für Modelle, Apps und Tools.",
+        "forge": "184 Tools im Browser – und derselbe Engine als API und MCP.",
+        "typelens": "Echte Typ-Paarungen für Designer und Design-Agenten.",
+        "kcq": "Eine Chart- und Quant-Forschungs-Workbench mit Agent an der Seite.",
+        "also": "Auch auf der Plattform",
+        "open": "{name} öffnen"
+      },
+      "practice": {
+        "title": "Wir bringen KI-Produkte in die Welt – unsere und die unserer Kunden.",
+        "lead": "Die Engineering, die unsere eigenen Produkte betreibt, erledigt auch Kundenprojekte: KI, die in bestehende Unternehmen integriert wird, und Produkte, die von China auf Märkte weltweit getragen werden.",
+        "rnd": {
+          "title": "Enterprise-KI-F&E",
+          "body": "Agenten, Modell-Routing und governed Data – eingebaut in die Systeme, die ein Unternehmen bereits nutzt, und funktionsbereit übergeben."
+        },
+        "global": {
+          "title": "Globalisierung der Vermarktung",
+          "body": "Lokalisierung, Zahlungen, Compliance und Anbieter auf beiden Seiten der Mauer – und der Launch selbst. Wir machen es zuerst für unsere eigenen Produkte."
+        },
+        "locales": "Diese Seite wird in {count} Sprachen ausgeliefert.",
+        "hq": "Entwickelt in Wuxi, China. Weltweit ausgeliefert."
+      },
+      "work": {
+        "title": "So arbeiten wir",
+        "architecture": {
+          "title": "Gute Architektur bedeutet, dass man weit kommt.",
+          "body": "Wir halten unsere eigenen Produkte an dem Standard, den wir verkaufen: Erweiterungspunkte, Isolation und Audit ab dem ersten Commit."
+        },
+        "rules": {
+          "title": "Regeln leben im Code, nicht in Dokumenten.",
+          "body": "Design, Datenzugriff und Texte werden bei jeder Änderung maschinell geprüft. Diese Seite musste sie bestehen, um ausgeliefert zu werden."
+        },
+        "tools": {
+          "title": "Nutze die besten Tools. Ersetze sie nicht.",
+          "body": "Codex, Claude Code, Vercel, jeder große Modell-Anbieter: Wir integrieren, was Gründer bereits lieben."
+        },
+        "open": {
+          "title": "Offen entwickeln.",
+          "body": "Der Quellcode von Sailor ist öffentlich, und alles auf dieser Seite ist live. Due Diligence beginnt mit einem Link."
+        }
+      },
+      "next": {
+        "title": "Ein Satz, ein <signature>gesamtes Unternehmen</signature>.",
+        "lead": "{brandName} OS ist der nächste Schritt: Beschreibe ein Unternehmen einmal, und Marke, Produkt, Code und Launch entstehen aus einem Kontext – mit eingebauter Urteilskraft. Es ist in Entwicklung, und wir zeigen es, wenn es real ist.",
+        "vision": "In fünf Jahren soll der Start eines Unternehmens bedeuten, dass man mit dieser Urteilskraft bereits antritt."
+      },
+      "talk": {
+        "title": "Lass uns sprechen.",
+        "lead": "Wir teilen die Präsentation nach einer kurzen Vorstellung. Sag uns, wer du bist und was du dir wünschst.",
+        "investors": {
+          "title": "Investoren",
+          "body": "Wir führen unsere Angel-Runde durch. Details zur Runde, der Plan und die Zahlen finden sich im Deck."
+        },
+        "partners": {
+          "title": "Strategische Partner",
+          "body": "Marke, Vertrieb, Inhalte oder Enterprise-Kanäle. Wir bringen die Plattform, live Produkte und einen erprobten Weg, global zu skalieren."
+        },
+        "form": {
+          "intent": "Was möchten Sie?",
+          "deck": {
+            "title": "Deck anfordern",
+            "description": "Wird nach einer kurzen Vorstellung gesendet."
+          },
+          "call": {
+            "title": "Termin vereinbaren",
+            "description": "30 Minuten mit dem Gründer."
+          },
+          "partner": {
+            "title": "Partnerschaft erkunden",
+            "description": "Marke, Kanäle, Inhalte oder Enterprise."
+          },
+          "name": "Name",
+          "email": "Geschäftliche E-Mail",
+          "firm": "Firma oder Unternehmen",
+          "message": "Gibt es etwas, das wir wissen sollten?",
+          "optional": "optional",
+          "submit": "Senden",
+          "sending": "Wird gesendet…",
+          "success": "Vielen Dank. Wir melden uns per E-Mail bei Ihnen.",
+          "error": "Das hat nicht funktioniert. Bitte versuchen Sie es erneut.",
+          "note": "Wir verwenden Ihre Angaben nur, um Ihnen zu antworten."
+        },
+        "direct": "Eher per E-Mail? Schreiben Sie dem Gründer unter"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Investoren"
       }
     }
   },

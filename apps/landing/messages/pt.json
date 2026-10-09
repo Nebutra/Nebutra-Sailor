@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Investidores"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} está construindo a camada operacional para empresas nativas de IA. Para investidores e parceiros estratégicos: a tese, o que já está no ar hoje e como solicitar o deck.",
+      "hero": {
+        "kicker": "Para investidores e parceiros",
+        "title": "A IA deu mãos a cada fundador. Estamos construindo o <signature>julgamento</signature>.",
+        "lead": "{brandName} é um ecossistema de empresas nativas em IA: Sailor, a plataforma source-available onde produtos e agentes começam com julgamento de engenharia embutido; uma prática que leva produtos de IA da P&D aos mercados em todo o mundo; e os produtos que lançamos em ambos.",
+        "stage": "Estamos levantando nossa rodada angel e conversando com um pequeno número de investidores e parceiros estratégicos.",
+        "primary": "Solicitar o deck",
+        "secondary": "Agendar uma chamada",
+        "reelLabel": "Produtos no ar na plataforma"
+      },
+      "chapters": {
+        "label": "Nesta página",
+        "why": "Por que agora",
+        "built": "O que construímos",
+        "practice": "Expandindo para o mundo",
+        "work": "Como trabalhamos",
+        "next": "Para onde vai",
+        "talk": "Fale conosco"
+      },
+      "why": {
+        "title": "Código ficou barato. Julgamento não.",
+        "lead": "Qualquer um pode pedir a um modelo um demo funcional em um minuto. O que decide se uma empresa sobrevive — tenancy, billing, auditoria, a arquitetura por baixo — ainda precisa de uma equipe sênior que a maioria dos fundadores não consegue contratar.",
+        "timeline": {
+          "label": "O primeiro ano de uma empresa vibe-coded",
+          "day": "Dia {n}",
+          "d1": "Funciona. Parece mágica.",
+          "d30": "Os recursos continuam chegando.",
+          "d90": "Os pagamentos começam a entrar.",
+          "d180": "Cem usuários. As coisas quebram aleatoriamente.",
+          "d270": "O isolamento de tenants quebra o schema.",
+          "d365": "O primeiro engenheiro: “Precisamos reescrever isso.”",
+          "source": "Conforme o fundador conta em",
+          "essay": "Por que estamos construindo o {brandName}"
+        },
+        "shifts": {
+          "code": {
+            "title": "Construir já não é a parte difícil.",
+            "body": "Agentes escrevem o código. O que é escasso é saber qual código ainda estará de pé em seis meses."
+          },
+          "solo": {
+            "title": "As empresas começam menores.",
+            "body": "Mais fundadores começam sozinhos, com agentes como equipe. Eles precisam do julgamento de uma equipe no sistema, não na folha de pagamento."
+          },
+          "global": {
+            "title": "Os mercados começam globais.",
+            "body": "Um produto lançado da China vende para o mundo no primeiro dia e encontra dois conjuntos de pagamentos, conformidade e provedores."
+          }
+        }
+      },
+      "built": {
+        "title": "Uma fundação. Tudo o mais cresce sobre ela.",
+        "lead": "Três linhas de negócio compartilham uma plataforma, um sistema de contas e um conjunto de regras.",
+        "sailor": {
+          "role": "A plataforma",
+          "body": "Um sistema operacional de produtos e agentes source-available sob a Functional Source License (FSL): tenancy, auth, billing, audit e um design system, governados em código."
+        },
+        "products": {
+          "name": "Produtos",
+          "role": "Construídos sobre ela",
+          "body": "Produtos ao vivo para desenvolvedores, designers e criadores, cada um criado sobre o Sailor."
+        },
+        "practice": {
+          "name": "IA empresarial e expansão global",
+          "role": "A prática",
+          "body": "P&D de aplicações de IA para empresas, e levar produtos de IA da China para mercados em todo o mundo."
+        }
+      },
+      "sailor": {
+        "title": "O Sailor entrega a cada fundador a base que uma equipe sênior construiria.",
+        "lead": "Um único comando cria a estrutura de um produto multi-tenant com autenticação, cobrança, auditoria e um sistema de design já definido. Os provedores alternam entre pilhas globais e da China por configuração, e os agentes seguem as mesmas regras aplicadas ao código.",
+        "acme": "O template como é entregue, já implantado.",
+        "source": "Ler o código-fonte",
+        "more": "Mais sobre o Sailor"
+      },
+      "products": {
+        "title": "Entregues, não slides.",
+        "lead": "Produtos que construímos sobre a mesma base. Todos estão no ar — abra-os.",
+        "caption": "Capturas de tela dos sites ao vivo, tiradas em 9 de outubro de 2026.",
+        "router": "Um mercado e uma API para modelos, aplicativos e ferramentas.",
+        "forge": "184 ferramentas no navegador, e o mesmo motor como API e MCP.",
+        "typelens": "Combinações reais de tipografia para designers e agentes de design.",
+        "kcq": "Uma bancada de pesquisa de gráficos e quant, com um agente ao lado.",
+        "also": "Também na plataforma",
+        "open": "Abrir {name}"
+      },
+      "practice": {
+        "title": "Levamos produtos de IA ao mundo — os nossos e os dos nossos clientes.",
+        "lead": "A engenharia que sustenta nossos próprios produtos também executa o trabalho dos clientes: IA integrada a negócios que já existem, e produtos levados da China para mercados em todo o mundo.",
+        "rnd": {
+          "title": "P&D de IA empresarial",
+          "body": "Agentes, roteamento de modelos e dados governados, integrados aos sistemas que a empresa já opera e entregues funcionando."
+        },
+        "global": {
+          "title": "Comercialização global",
+          "body": "Localização, pagamentos, conformidade e provedores dos dois lados da muralha, além do próprio lançamento. Fazemos isso primeiro para os nossos próprios produtos."
+        },
+        "locales": "Esta página é exibida em {count} idiomas.",
+        "hq": "Desenvolvido em Wuxi, China. Entregue em todo o mundo."
+      },
+      "work": {
+        "title": "Como trabalhamos",
+        "architecture": {
+          "title": "Boa arquitetura significa que você pode ir longe.",
+          "body": "Aplicamos aos nossos próprios produtos o mesmo padrão que vendemos: pontos de extensão, isolamento e auditoria desde o primeiro commit."
+        },
+        "rules": {
+          "title": "Regras vivem no código, não em documentos.",
+          "body": "Design, acesso a dados e textos são verificados por máquina a cada alteração. Esta página precisou passar por eles para ser publicada."
+        },
+        "tools": {
+          "title": "Use as melhores ferramentas. Não as substitua.",
+          "body": "Codex, Claude Code, Vercel, todos os principais provedores de modelos: integramos o que os fundadores já amam."
+        },
+        "open": {
+          "title": "Construa em aberto.",
+          "body": "O código-fonte do Sailor é público e tudo nesta página está ao vivo. A due diligence começa com um link."
+        }
+      },
+      "next": {
+        "title": "Uma frase, uma <signature>empresa inteira</signature>.",
+        "lead": "O {brandName} OS é para onde isso vai: descreva uma empresa uma vez, e marca, produto, código e lançamento surgem de um único contexto, com o julgamento embutido. Está em desenvolvimento e o mostraremos quando for real.",
+        "vision": "Em cinco anos, queremos que começar uma empresa signifique começar com esse julgamento já em lugar."
+      },
+      "talk": {
+        "title": "Vamos conversar.",
+        "lead": "Compartilhamos o deck após uma breve introdução. Conte-nos quem você é e o que gostaria.",
+        "investors": {
+          "title": "Investidores",
+          "body": "Estamos levantando nossa rodada angel. Detalhes da rodada, o plano e os números acompanham o deck."
+        },
+        "partners": {
+          "title": "Parceiros estratégicos",
+          "body": "Marca, distribuição, conteúdo ou canais enterprise. Nós trazemos a plataforma, produtos em produção e um caminho testado para ir global."
+        },
+        "form": {
+          "intent": "O que você gostaria?",
+          "deck": {
+            "title": "Solicitar o deck",
+            "description": "Enviado após uma breve apresentação."
+          },
+          "call": {
+            "title": "Agendar uma call",
+            "description": "30 minutos com o fundador."
+          },
+          "partner": {
+            "title": "Explorar uma parceria",
+            "description": "Marca, canais, conteúdo ou enterprise."
+          },
+          "name": "Nome",
+          "email": "E-mail corporativo",
+          "firm": "Fundo ou empresa",
+          "message": "Algo que devemos saber?",
+          "optional": "opcional",
+          "submit": "Enviar",
+          "sending": "Enviando…",
+          "success": "Obrigado. Entraremos em contato por e-mail.",
+          "error": "Não foi possível enviar. Tente novamente.",
+          "note": "Usamos seus dados apenas para responder a você."
+        },
+        "direct": "Prefere e-mail? Escreva para o fundador em"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Investidores"
       }
     }
   },

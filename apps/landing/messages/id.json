@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Investor"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} sedang membangun lapisan operasional untuk perusahaan AI-native. Untuk investor dan mitra strategis: tesis kami, apa yang sudah berjalan hari ini, dan cara meminta deck.",
+      "hero": {
+        "kicker": "Untuk investor dan mitra",
+        "title": "AI memberi setiap founder tangan. Kami membangun <signature>penilaian</signature>.",
+        "lead": "{brandName} adalah ekosistem perusahaan AI-native: Sailor, platform source-available tempat produk dan agen dimulai dengan pertimbangan engineering yang sudah tertanam; praktik yang membawa produk AI dari R&D ke pasar di seluruh dunia; serta produk-produk yang kami rilis di keduanya.",
+        "stage": "Kami sedang mengumpulkan putaran angel dan berdiskusi dengan sejumlah kecil investor dan mitra strategis.",
+        "primary": "Minta deck-nya",
+        "secondary": "Jadwalkan panggilan",
+        "reelLabel": "Produk yang berjalan di platform"
+      },
+      "chapters": {
+        "label": "Di halaman ini",
+        "why": "Mengapa sekarang",
+        "built": "Apa yang sudah kami bangun",
+        "practice": "Menuju global",
+        "work": "Cara kami bekerja",
+        "next": "Ke mana arahnya",
+        "talk": "Hubungi kami"
+      },
+      "why": {
+        "title": "Kode jadi murah. Penilaian tidak.",
+        "lead": "Siapa pun bisa meminta model untuk demo yang berfungsi dalam satu menit. Yang menentukan apakah perusahaan bertahan — tenancy, billing, audit, arsitektur di baliknya — tetap membutuhkan tim senior yang kebanyakan founder tidak bisa rekrut.",
+        "timeline": {
+          "label": "Tahun pertama perusahaan vibe-coded",
+          "day": "Hari {n}",
+          "d1": "Berjalan. Terasa seperti sihir.",
+          "d30": "Fitur terus bertambah.",
+          "d90": "Pembayaran mulai masuk.",
+          "d180": "Seratus pengguna. Hal-hal mulai rusak secara acak.",
+          "d270": "Isolasi tenant merusak skema.",
+          "d365": "Insinyur pertama: “Kita perlu menulis ulang ini.”",
+          "source": "Seperti yang diceritakan pendirinya dalam",
+          "essay": "Mengapa kami membangun {brandName}"
+        },
+        "shifts": {
+          "code": {
+            "title": "Membangun bukan lagi bagian yang sulit.",
+            "body": "Agen menulis kode. Yang langka adalah tahu kode mana yang masih bertahan dalam enam bulan."
+          },
+          "solo": {
+            "title": "Perusahaan mulai lebih kecil.",
+            "body": "Lebih banyak pendiri memulai sendirian, dengan agen sebagai tim. Mereka butuh penilaian sebuah tim di dalam sistem, bukan di dalam daftar gaji."
+          },
+          "global": {
+            "title": "Pasar mulai global.",
+            "body": "Produk yang diluncurkan dari Tiongkok langsung dijual ke seluruh dunia pada hari pertama, dan menghadapi dua tumpukan pembayaran, kepatuhan, dan penyedia."
+          }
+        }
+      },
+      "built": {
+        "title": "Satu fondasi. Segala hal lain tumbuh di atasnya.",
+        "lead": "Tiga lini bisnis berbagi satu platform, satu sistem akun, dan satu set aturan.",
+        "sailor": {
+          "role": "Platformnya",
+          "body": "OS produk dan agen source-available di bawah Functional Source License (FSL): tenancy, auth, billing, audit, dan design system, diatur melalui kode."
+        },
+        "products": {
+          "name": "Produk",
+          "role": "Dibangun di atasnya",
+          "body": "Produk live untuk developer, desainer, dan kreator, masing-masing tumbuh di atas Sailor."
+        },
+        "practice": {
+          "name": "Enterprise AI & go-global",
+          "role": "Practice ini",
+          "body": "R&D aplikasi AI untuk perusahaan, serta membawa produk AI dari Tiongkok ke pasar di seluruh dunia."
+        }
+      },
+      "sailor": {
+        "title": "Sailor memberikan setiap founder fondasi yang akan dibangun oleh tim senior.",
+        "lead": "Satu perintah membuat kerangka produk multi-tenant lengkap dengan auth, billing, audit, dan design system yang sudah ditentukan. Provider dapat beralih antara stack global dan Tiongkok melalui konfigurasi, dan agen membaca aturan yang sama yang diterapkan pada kode.",
+        "acme": "Template sebagaimana dikirim, sudah di-deploy.",
+        "source": "Baca sumbernya",
+        "more": "Lainnya tentang Sailor"
+      },
+      "products": {
+        "title": "Sudah dirilis, bukan sekadar slide.",
+        "lead": "Produk yang kami bangun di atas fondasi yang sama. Semuanya sudah live — buka saja.",
+        "caption": "Tangkapan layar situs live, diambil pada 9 Oktober 2026.",
+        "router": "Satu pasar dan satu API untuk model, aplikasi, dan tools.",
+        "forge": "184 tools di browser, dengan engine yang sama sebagai API dan MCP.",
+        "typelens": "Pasangan type dunia nyata untuk desainer dan agen desain.",
+        "kcq": "Meja kerja riset chart dan kuantitatif, dengan agen di sampingnya.",
+        "also": "Juga di platform ini",
+        "open": "Buka {name}"
+      },
+      "practice": {
+        "title": "Kami membawa produk AI ke dunia — milik kami, dan milik klien kami.",
+        "lead": "Engineering yang menjalankan produk kami sendiri juga menjalankan pekerjaan klien: AI yang dibangun ke dalam bisnis yang sudah ada, serta produk yang dibawa dari Tiongkok ke pasar di seluruh dunia.",
+        "rnd": {
+          "title": "R&D AI Perusahaan",
+          "body": "Agen, routing model, dan data yang diatur—semua dibangun langsung ke dalam sistem yang sudah dijalankan perusahaan, lalu diserahkan dalam kondisi siap pakai."
+        },
+        "global": {
+          "title": "Komersialisasi go-global",
+          "body": "Lokalisasi, pembayaran, kepatuhan, dan penyedia di kedua sisi tembok—plus peluncurannya sendiri. Kami melakukannya untuk produk kami sendiri terlebih dahulu."
+        },
+        "locales": "Halaman ini disajikan dalam {count} bahasa.",
+        "hq": "Dibangun di Wuxi, Tiongkok. Dikirim ke seluruh dunia."
+      },
+      "work": {
+        "title": "Cara kami bekerja",
+        "architecture": {
+          "title": "Arsitektur yang baik berarti Anda bisa melangkah jauh.",
+          "body": "Kami menerapkan standar yang kami jual pada produk kami sendiri: titik ekstensi, isolasi, dan audit sejak commit pertama."
+        },
+        "rules": {
+          "title": "Aturan hidup di dalam kode, bukan di dokumen.",
+          "body": "Desain, akses data, dan copy diperiksa oleh mesin pada setiap perubahan. Halaman ini harus lolos pemeriksaan tersebut untuk bisa dirilis."
+        },
+        "tools": {
+          "title": "Gunakan alat terbaik. Jangan menggantinya.",
+          "body": "Codex, Claude Code, Vercel, setiap penyedia model utama: kami mengintegrasikan apa yang sudah disukai para founder."
+        },
+        "open": {
+          "title": "Bangun secara terbuka.",
+          "body": "Sumber Sailor bersifat publik, dan semua yang ada di halaman ini berjalan langsung. Due diligence dimulai dari sebuah tautan."
+        }
+      },
+      "next": {
+        "title": "Satu kalimat, sebuah <signature>perusahaan utuh</signature>.",
+        "lead": "{brandName} OS adalah ke arah mana ini menuju: jelaskan sebuah perusahaan sekali, lalu brand, produk, kode, dan peluncuran berasal dari satu konteks, dengan penilaian yang sudah dibangun di dalamnya. Ini sedang dalam pengembangan, dan kami akan menunjukkannya saat sudah nyata.",
+        "vision": "Dalam lima tahun, kami ingin memulai sebuah perusahaan berarti memulai dengan penilaian itu sudah ada di tempatnya."
+      },
+      "talk": {
+        "title": "Mari bicara.",
+        "lead": "Kami membagikan deck setelah perkenalan singkat. Beritahu kami siapa Anda dan apa yang Anda inginkan.",
+        "investors": {
+          "title": "Investor",
+          "body": "Kami sedang mengumpulkan putaran angel. Detail putaran, rencana, dan angkanya disertakan dalam deck."
+        },
+        "partners": {
+          "title": "Mitra strategis",
+          "body": "Brand, distribusi, konten, atau saluran enterprise. Kami menyediakan platform, produk live, dan cara yang sudah teruji untuk go global."
+        },
+        "form": {
+          "intent": "Apa yang Anda inginkan?",
+          "deck": {
+            "title": "Minta deck",
+            "description": "Dikirim setelah pengantar singkat."
+          },
+          "call": {
+            "title": "Jadwalkan panggilan",
+            "description": "30 menit bersama founder."
+          },
+          "partner": {
+            "title": "Jelajahi kemitraan",
+            "description": "Brand, saluran, konten, atau enterprise."
+          },
+          "name": "Nama",
+          "email": "Email kerja",
+          "firm": "Firma atau perusahaan",
+          "message": "Ada yang perlu kami ketahui?",
+          "optional": "opsional",
+          "submit": "Kirim",
+          "sending": "Mengirim…",
+          "success": "Terima kasih. Kami akan menghubungi Anda melalui email.",
+          "error": "Pesan tidak terkirim. Silakan coba lagi.",
+          "note": "Kami hanya menggunakan detail Anda untuk membalas Anda."
+        },
+        "direct": "Lebih suka email? Kirim ke pendiri di"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Investor"
       }
     }
   },

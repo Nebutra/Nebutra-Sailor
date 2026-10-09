@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Investor"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} bygger operativt lager för AI-inativa företag. För investerare och strategiska partners: tesen, vad som är live idag och hur man begär presentationen.",
+      "hero": {
+        "kicker": "För investerare och partners",
+        "title": "AI gav varje grundare händer. Vi bygger <signature>dömeskapaciteten</signature>.",
+        "lead": "{brandName} är ett AI-inhämtat företagsökosystem: Sailor, den källtillgängliga plattformen där produkter och agenter startar med inbyggd teknisk bedömningsförmåga; en praxis som tar AI-produkter från R&D till marknader världen över; samt de produkter vi levererar på båda.",
+        "stage": "Vi samlar in vår ängelrunda och pratar med ett litet antal investerare och strategiska partners.",
+        "primary": "Begär presentationen",
+        "secondary": "Boka ett samtal",
+        "reelLabel": "Produkter live på plattformen"
+      },
+      "chapters": {
+        "label": "På denna sida",
+        "why": "Varför nu",
+        "built": "Vad vi byggt",
+        "practice": "Global expansion",
+        "work": "Så här arbetar vi",
+        "next": "Vart det går",
+        "talk": "Prata med oss"
+      },
+      "why": {
+        "title": "Kod blev billig. Dömeskapacitet blev det inte.",
+        "lead": "Vem som helst kan be en modell om en fungerande demo på en minut. Det som avgör om ett företag överlever — tenancy, fakturering, revision, arkitekturen under ytan — kräver fortfarande ett senior team som de flesta grundare inte kan anställa.",
+        "timeline": {
+          "label": "Det första året för ett vibe-coded företag",
+          "day": "Dag {n}",
+          "d1": "Det fungerar. Det känns som magi.",
+          "d30": "Funktionaliteterna kommer löpande.",
+          "d90": "Betalningarna börjar komma in.",
+          "d180": "Hundra användare. Det går sönder slumpmässigt.",
+          "d270": "Tenant-isoleringen bryter schemat.",
+          "d365": "Den första ingenjören: ”Vi måste skriva om detta.”",
+          "source": "Som grundaren berättar det i",
+          "essay": "Varför vi bygger {brandName}"
+        },
+        "shifts": {
+          "code": {
+            "title": "Att bygga är inte längre det svåra.",
+            "body": "Agenter skriver koden. Det som är knappt är att veta vilken kod som fortfarande håller om sex månader."
+          },
+          "solo": {
+            "title": "Företag startar mindre.",
+            "body": "Fler grundare startar ensam, med agenter som team. De behöver ett teams omdöme i systemet, inte på lönelistan."
+          },
+          "global": {
+            "title": "Marknader startar globalt.",
+            "body": "En produkt lanserad från Kina säljs till hela världen från dag ett och möter två stackar av betalningar, compliance och leverantörer."
+          }
+        }
+      },
+      "built": {
+        "title": "En grund. Allt annat växer på den.",
+        "lead": "Tre affärsområden delar en plattform, ett kontosystem och en uppsättning regler.",
+        "sailor": {
+          "role": "Plattformen",
+          "body": "Ett källtillgängligt produkt- och agent-OS under Functional Source License (FSL): tenancy, auth, billing, audit och ett designsystem, styrda i kod."
+        },
+        "products": {
+          "name": "Produkter",
+          "role": "Byggt på den",
+          "body": "Aktiva produkter för utvecklare, designers och skapare, var och en växt på Sailor."
+        },
+        "practice": {
+          "name": "Enterprise AI & global expansion",
+          "role": "Praktiken",
+          "body": "Utveckling av AI-applikationer för företag, samt lansering av AI-produkter från Kina till marknader världen över."
+        }
+      },
+      "sailor": {
+        "title": "Sailor ger varje grundare grunden som ett senior team skulle bygga.",
+        "lead": "Ett kommando skapar en produkt med flera hyresgäster, med autentisering, fakturering, revision och ett designsystem redan bestämt. Leverantörer växlar mellan globala och kinesiska stackar via konfiguration, och agenter följer samma regler som koden hålls till.",
+        "acme": "Mallen som den levereras, deployad.",
+        "source": "Läs källkoden",
+        "more": "Mer om Sailor"
+      },
+      "products": {
+        "title": "Levererat, inte presentationsskivor.",
+        "lead": "Produkter vi byggt på samma grund. Alla är live — öppna dem.",
+        "caption": "Skärmdumpar från de live-sajter, tagna 9 oktober 2026.",
+        "router": "En marknad och en API för modeller, appar och verktyg.",
+        "forge": "184 verktyg i webbläsaren, och samma motor som API och MCP.",
+        "typelens": "Verkliga typkombinationer för designers och designagenter.",
+        "kcq": "Ett arbetsbord för chart och kvantresearch, med en agent vid sidan.",
+        "also": "Även på plattformen",
+        "open": "Öppna {name}"
+      },
+      "practice": {
+        "title": "Vi tar AI-produkter till världen — våra och våra kunders.",
+        "lead": "Den teknik som driver våra egna produkter driver även kundprojekt: AI inbyggd i befintliga företag, och produkter som föras från Kina till marknader världen över.",
+        "rnd": {
+          "title": "Enterprise AI-utveckling",
+          "body": "Agenter, modellrouting och styrda data, inbyggda i de system ett företag redan kör, och överlämnade i fungerande skick."
+        },
+        "global": {
+          "title": "Global kommersialisering",
+          "body": "Lokalisering, betalningar, efterlevnad och leverantörer på båda sidor om muren, samt själva lanseringen. Vi gör det först för våra egna produkter."
+        },
+        "locales": "Denna sida visas på {count} språk.",
+        "hq": "Utvecklat i Wuxi, Kina. Levererat över hela världen."
+      },
+      "work": {
+        "title": "Så arbetar vi",
+        "architecture": {
+          "title": "Bra arkitektur betyder att du kan gå långt.",
+          "body": "Vi håller våra egna produkter till den standard vi säljer: utökningspunkter, isolering och revision från första commit."
+        },
+        "rules": {
+          "title": "Regler finns i kod, inte i dokument.",
+          "body": "Design, dataåtkomst och text kontrolleras av maskin vid varje ändring. Denna sida fick klara dem för att kunna släppas."
+        },
+        "tools": {
+          "title": "Använd de bästa verktygen. Ersätt dem inte.",
+          "body": "Codex, Claude Code, Vercel, alla stora modellleverantörer: vi integrerar det grundare redan älskar."
+        },
+        "open": {
+          "title": "Bygg öppet.",
+          "body": "Sailors källa är offentlig, och allt på denna sida är live. Due diligence börjar med en länk."
+        }
+      },
+      "next": {
+        "title": "En mening, ett <signature>helt företag</signature>.",
+        "lead": "{brandName} OS är dit detta går: beskriv ett företag en gång, så kommer varumärke, produkt, kod och lansering från en gemensam kontext, med omdöme inbyggt. Det är under utveckling, och vi visar det när det är verkligt.",
+        "vision": "Om fem år vill vi att att starta ett företag betyder att starta med det omdömet redan på plats."
+      },
+      "talk": {
+        "title": "Låt oss prata.",
+        "lead": "Vi delar presentationen efter en kort introduktion. Berätta vem du är och vad du vill.",
+        "investors": {
+          "title": "Investorer",
+          "body": "Vi samlar in kapital i vår ängelrunda. Rundans detaljer, planen och siffrorna följer med presentationen."
+        },
+        "partners": {
+          "title": "Strategiska partners",
+          "body": "Varumärke, distribution, innehåll eller företagskanaler. Vi tillhandahåller plattformen, liveprodukter och en beprövad väg ut på den globala marknaden."
+        },
+        "form": {
+          "intent": "Vad önskar du?",
+          "deck": {
+            "title": "Begär presentationen",
+            "description": "Skickas efter en kort introduktion."
+          },
+          "call": {
+            "title": "Boka ett samtal",
+            "description": "30 minuter med grundaren."
+          },
+          "partner": {
+            "title": "Utforska ett partnerskap",
+            "description": "Varumärke, kanaler, innehåll eller företag."
+          },
+          "name": "Namn",
+          "email": "Arbets e-post",
+          "firm": "Firma eller företag",
+          "message": "Något vi bör veta?",
+          "optional": "valfritt",
+          "submit": "Skicka",
+          "sending": "Skickar…",
+          "success": "Tack. Vi hör av oss via e-post.",
+          "error": "Det gick inte igenom. Försök igen.",
+          "note": "Vi använder dina uppgifter endast för att svara till dig."
+        },
+        "direct": "Föredrar du e-post? Skriv till grundaren på"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Investerare"
       }
     }
   },
