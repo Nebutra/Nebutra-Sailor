@@ -29,7 +29,6 @@ const LENS = 144;
 /** Device pixels across the lens: few enough that each one is a visible cell. */
 const CELLS = 12;
 const BARS = CACHED_BARS.slice(-28);
-let ready = false;
 
 function colors() {
   const style = getComputedStyle(root.value!);
@@ -136,33 +135,45 @@ function onKey(event: KeyboardEvent) {
   clampTo(at.value.x + delta[0]!, at.value.y + delta[1]!);
 }
 
-useResizeObserver(root, () => {
+/** Start on the longest wick the lens can sit on fully: the most telling pixels. */
+function placeOnCandle() {
+  const step = size.value.width / BARS.length;
+  const low = Math.min(...BARS.map((item) => item.low));
+  const high = Math.max(...BARS.map((item) => item.high));
+  const pad = 12;
+  const y = (price: number) => pad + ((high - price) / (high - low)) * (size.value.height - pad * 2);
+  const half = LENS / 2 + 4;
+  // Where the wick meets the body: one column of wick, the body's edge just below it.
+  const target = (index: number) => {
+    const bar = BARS[index]!;
+    return { x: step * (index + 0.5), y: (y(bar.high) + y(Math.max(bar.open, bar.close))) / 2 + 2 };
+  };
+  const reachable = BARS.map((bar, index) => ({ bar, index, at: target(index) })).filter(
+    ({ at: point }) =>
+      point.x >= half && point.x <= size.value.width - half && point.y >= half && point.y <= size.value.height - half,
+  );
+  const pool = reachable.length ? reachable : BARS.map((bar, index) => ({ bar, index, at: target(index) }));
+  const best = pool.reduce((a, b) => (b.bar.high - b.bar.low > a.bar.high - a.bar.low ? b : a));
+  clampTo(best.at.x, best.at.y);
+}
+
+let placed = false;
+useResizeObserver(strip, () => {
   const canvas = strip.value;
-  if (!canvas) return;
+  if (!canvas || !canvas.clientWidth) return;
   size.value = { width: canvas.clientWidth, height: canvas.clientHeight };
-  if (!ready) return;
-  clampTo(at.value.x, at.value.y);
-  drawStrip();
+  // Placed from the first real layout, not from the canvas's default size at mount.
+  if (!placed) {
+    placeOnCandle();
+    placed = true;
+  } else {
+    clampTo(at.value.x, at.value.y);
+  }
+  if (visible.value) drawStrip();
 });
 
 onMounted(() => {
   dpr.value = window.devicePixelRatio || 1;
-  const canvas = strip.value!;
-  size.value = { width: canvas.clientWidth, height: canvas.clientHeight };
-  // Start on the recent bar with the longest wick, away from the edges: the most telling pixels.
-  const step = size.value.width / BARS.length;
-  const candidates = BARS.map((bar, index) => ({ bar, index })).slice(-12, -3);
-  const { bar: last, index } = candidates.reduce((best, item) =>
-    item.bar.high - item.bar.low > best.bar.high - best.bar.low ? item : best,
-  );
-  const low = Math.min(...BARS.map((bar) => bar.low));
-  const high = Math.max(...BARS.map((bar) => bar.high));
-  const pad = 12;
-  const wickTop = pad + ((high - last.high) / (high - low)) * (size.value.height - pad * 2);
-  const bodyTop = pad + ((high - Math.max(last.open, last.close)) / (high - low)) * (size.value.height - pad * 2);
-  // Centre where the wick meets the body: one column of wick, the body's edge below it.
-  clampTo(step * (index + 0.5), (wickTop + bodyTop) / 2 + 2);
-  ready = true;
 });
 
 watch([visible, snapped, mode], () => visible.value && drawStrip(), { flush: "post" });
