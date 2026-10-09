@@ -42,6 +42,7 @@ export async function SiteFooter({ lang }: { lang?: string }) {
       k: t("company"),
       links: [
         { label: t("about"), href: ROUTES.company },
+        { label: t("investors"), href: "/investors" },
         {
           label: t("writeToFounder"),
           href: `mailto:tseka@${brand.domains.landing}`,

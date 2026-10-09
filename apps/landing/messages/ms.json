@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Pelabur"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} sedang membina lapisan pengoperasian untuk syarikat AI-native. Untuk pelabur dan rakan strategik: tesis kami, apa yang sudah aktif hari ini, dan cara memohon deck.",
+      "hero": {
+        "kicker": "Untuk pelabur dan rakan",
+        "title": "AI memberi setiap pengasas tangan. Kami membina <signature>kebijaksanaan</signature>.",
+        "lead": "{brandName} ialah ekosistem syarikat asli AI: Sailor, platform sumber tersedia di mana produk dan ejen bermula dengan penilaian kejuruteraan terbina dalam; satu amalan yang membawa produk AI daripada R&D ke pasaran di seluruh dunia; dan produk-produk yang kami lancarkan di kedua-duanya.",
+        "stage": "Kami sedang mengumpulkan pusingan malaikat dan berbincang dengan sejumlah kecil pelabur dan rakan strategik.",
+        "primary": "Minta deck",
+        "secondary": "Tempah panggilan",
+        "reelLabel": "Produk aktif di platform"
+      },
+      "chapters": {
+        "label": "Di halaman ini",
+        "why": "Mengapa sekarang",
+        "built": "Apa yang telah kami bina",
+        "practice": "Membina skala global",
+        "work": "Cara kami bekerja",
+        "next": "Ke mana ia pergi",
+        "talk": "Bercakap dengan kami"
+      },
+      "why": {
+        "title": "Kod jadi murah. Penilaian tetap mahal.",
+        "lead": "Siapa sahaja boleh minta model menghasilkan demo berfungsi dalam satu minit. Tetapi apa yang menentukan sama ada syarikat bertahan — tenancy, billing, audit, dan arkitektur di sebaliknya — masih memerlukan pasukan senior yang kebanyakan pengasas tidak mampu gajikan.",
+        "timeline": {
+          "label": "Tahun pertama syarikat yang dibina dengan vibe-coding",
+          "day": "Hari {n}",
+          "d1": "Ia berfungsi. Rasanya seperti sihir.",
+          "d30": "Ciri-ciri terus bertambah.",
+          "d90": "Pembayaran mula masuk.",
+          "d180": "Seratus pengguna. Perkara rosak secara rawak.",
+          "d270": "Pengasingan penyewa memecahkan skema.",
+          "d365": "Jurutera pertama: “Kita perlu menulis semula ini.”",
+          "source": "Seperti yang diceritakan oleh pengasas dalam",
+          "essay": "Mengapa kami membina {brandName}"
+        },
+        "shifts": {
+          "code": {
+            "title": "Membina bukan lagi bahagian yang sukar.",
+            "body": "Ejen menulis kod. Yang langka ialah mengetahui kod mana yang masih bertahan dalam enam bulan."
+          },
+          "solo": {
+            "title": "Syarikat bermula lebih kecil.",
+            "body": "Lebih ramai pengasas bermula seorang diri, dengan ejen sebagai pasukan. Mereka perlukan penilaian pasukan dalam sistem, bukan dalam gajir."
+          },
+          "global": {
+            "title": "Pasar bermula secara global.",
+            "body": "Produk yang dilancarkan dari China menjual ke seluruh dunia pada hari pertama, dan berhadapan dengan dua set pembayaran, pematuhan dan pembekal."
+          }
+        }
+      },
+      "built": {
+        "title": "Satu asas. Segala-galanya lain tumbuh di atasnya.",
+        "lead": "Tiga garis perniagaan berkongsi satu platform, satu sistem akaun dan satu set peraturan.",
+        "sailor": {
+          "role": "Platform",
+          "body": "OS produk dan ejen sumber tersedia di bawah Functional Source License (FSL): penyewaan, pengesahan, pengebilan, audit dan sistem reka bentuk, diuruskan dalam kod."
+        },
+        "products": {
+          "name": "Produk",
+          "role": "Dibina di atasnya",
+          "body": "Produk langsung untuk pembangun, pereka dan pencipta, setiap satunya dibangunkan di atas Sailor."
+        },
+        "practice": {
+          "name": "AI Perusahaan & go-global",
+          "role": "Amalan ini",
+          "body": "R&D aplikasi AI untuk syarikat, dan membawa produk AI dari China ke pasaran di seluruh dunia."
+        }
+      },
+      "sailor": {
+        "title": "Sailor memberikan setiap pengasas asas yang akan dibina oleh pasukan kanan.",
+        "lead": "Satu perintah membina rangka produk multi-tenant dengan pengesahan, pengebilan, audit dan sistem reka bentuk yang sudah ditetapkan. Penyedia boleh bertukar antara stack global dan China melalui konfigurasi, dan ejen membaca peraturan yang sama yang digunakan untuk kod.",
+        "acme": "Templat seperti yang dihantar, telah dipasang.",
+        "source": "Baca sumber",
+        "more": "Lagi tentang Sailor"
+      },
+      "products": {
+        "title": "Telah dihantar, bukan slaid.",
+        "lead": "Produk yang kami bina di atas asas yang sama. Setiap satunya aktif — buka ia.",
+        "caption": "Tangkapan skrin laman web langsung, diambil pada 9 Oktober 2026.",
+        "router": "Satu pasaran dan satu API untuk model, aplikasi dan alat.",
+        "forge": "184 alat dalam pelayar, dan enjin yang sama sebagai API dan MCP.",
+        "typelens": "Jodoh pasangan jenis huruf dunia nyata untuk pereka dan ejen reka bentuk.",
+        "kcq": "Meja kerja penyelidikan carta dan kuant, dengan ejen di sisi.",
+        "also": "Juga di platform",
+        "open": "Buka {name}"
+      },
+      "practice": {
+        "title": "Kami membawa produk AI ke dunia — milik kami, dan milik klien kami.",
+        "lead": "Kejuruteraan yang mengendalikan produk kami sendiri juga mengendalikan kerja klien: AI dibina ke dalam perniagaan yang sudah wujud, dan produk dibawa dari China ke pasaran di seluruh dunia.",
+        "rnd": {
+          "title": "R&D AI Perusahaan",
+          "body": "Agen, penghalaan model dan data yang diurus, dibina ke dalam sistem yang syarikat sudah gunakan, dan diserahkan dalam keadaan berfungsi."
+        },
+        "global": {
+          "title": "Pembajaan komersial ke peringkat global",
+          "body": "Lokalisasi, pembayaran, pematuhan dan pembekal di kedua-dua belah pihak tembok, serta pelancaran itu sendiri. Kami melakukannya untuk produk kami sendiri dahulu."
+        },
+        "locales": "Halaman ini disajikan dalam {count} bahasa.",
+        "hq": "Dibina di Wuxi, China. Dihantar ke seluruh dunia."
+      },
+      "work": {
+        "title": "Cara kami bekerja",
+        "architecture": {
+          "title": "Seni bina yang baik bermakna anda boleh pergi jauh.",
+          "body": "Kami menetapkan produk kami sendiri kepada piawai yang kami jual: titik sambungan, pengasingan dan audit sejak commit pertama."
+        },
+        "rules": {
+          "title": "Peraturan wujud dalam kod, bukan dalam dokumen.",
+          "body": "Reka bentuk, akses data dan salinan disemak oleh mesin pada setiap perubahan. Halaman ini perlu melepasi semakan tersebut untuk dilancarkan."
+        },
+        "tools": {
+          "title": "Guna alat terbaik. Jangan gantikannya.",
+          "body": "Codex, Claude Code, Vercel, setiap penyedia model utama: kami mengintegrasikan apa yang sudah dicintai oleh pengasas."
+        },
+        "open": {
+          "title": "Bina secara terbuka.",
+          "body": "Kod sumber Sailor adalah awam, dan semua kandungan di halaman ini berfungsi secara langsung. Penyiasatan bermula dengan satu pautan."
+        }
+      },
+      "next": {
+        "title": "Satu ayat, satu <signature>syarikat penuh</signature>.",
+        "lead": "{brandName} OS adalah arah tuju ini: huraikan sebuah syarikat sekali, dan jenama, produk, kod serta pelancaran datang daripada satu konteks, dengan pertimbangan terbina di dalamnya. Ia sedang dalam pembangunan, dan kami akan mempamerkannya apabila ia menjadi realiti.",
+        "vision": "Dalam lima tahun, kami mahu bermulanya sebuah syarikat bermakna bermula dengan pertimbangan itu sudah sedia ada."
+      },
+      "talk": {
+        "title": "Mari berbincang.",
+        "lead": "Kami berkongsi slaid selepas pengenalan ringkas. Beritahu kami siapa anda dan apa yang anda inginkan.",
+        "investors": {
+          "title": "Pelabur",
+          "body": "Kami sedang mengumpulkan pusingan malaikat. Butiran pusingan, pelan dan angka disertakan bersama deck."
+        },
+        "partners": {
+          "title": "Rakan strategik",
+          "body": "Jenama, pengedaran, kandungan atau saluran perusahaan. Kami menyediakan platform, produk langsung dan cara yang telah diuji untuk melangkah ke peringkat global."
+        },
+        "form": {
+          "intent": "Apa yang anda inginkan?",
+          "deck": {
+            "title": "Minta deck",
+            "description": "Dihantar selepas pengenalan ringkas."
+          },
+          "call": {
+            "title": "Tempah panggilan",
+            "description": "30 minit bersama pengasas."
+          },
+          "partner": {
+            "title": "Terokai kerjasama",
+            "description": "Jenama, saluran, kandungan atau perusahaan."
+          },
+          "name": "Nama",
+          "email": "E-mel kerja",
+          "firm": "Firma atau syarikat",
+          "message": "Ada apa-apa yang perlu kami tahu?",
+          "optional": "pilihan",
+          "submit": "Hantar",
+          "sending": "Menghantar…",
+          "success": "Terima kasih. Kami akan menghubungi anda melalui e-mel.",
+          "error": "Ia tidak berjaya dihantar. Sila cuba lagi.",
+          "note": "Kami menggunakan maklumat anda hanya untuk membalas kepada anda."
+        },
+        "direct": "Lebih suka e-mel? Tulis kepada pengasas di"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Pelabur"
       }
     }
   },

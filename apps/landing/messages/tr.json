@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Yatırımcılar"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName}, yapay zekâ odaklı şirketler için işletim katmanını inşa ediyor. Yatırımcılar ve stratejik ortaklar için: tezimiz, bugün canlı olanlar ve sunumu nasıl talep edebileceğiniz.",
+      "hero": {
+        "kicker": "Yatırımcılar ve ortaklar için",
+        "title": "Yapay zekâ her kurucuya eller verdi. Biz <signature>yargıyı</signature> inşa ediyoruz.",
+        "lead": "{brandName}, yapay zekâ odaklı bir şirket ekosistemi: Ürünlerin ve ajanların mühendislik yargısıyla doğduğu, kaynak kodu erişime açık platform Sailor; yapay zekâ ürünlerini Ar-Ge'den dünya genelindeki pazarlara taşıyan uygulama pratiğimiz; ve her ikisinde de sunduğumuz ürünler.",
+        "stage": "Melek turumuzu topluyoruz ve küçük bir yatırımcı ve stratejik ortak grubuyla görüşüyoruz.",
+        "primary": "Sunumu talep et",
+        "secondary": "Görüşme ayarla",
+        "reelLabel": "Platformda canlı ürünler"
+      },
+      "chapters": {
+        "label": "Bu sayfada",
+        "why": "Neden şimdi",
+        "built": "Ne inşa ettik",
+        "practice": "Küreselleşme",
+        "work": "Nasıl çalışıyoruz",
+        "next": "Nereye gidiyor",
+        "talk": "Bize ulaşın"
+      },
+      "why": {
+        "title": "Kod ucuzladı. Yargı ucuzlamadı.",
+        "lead": "Herkes bir modelden bir dakikada çalışan bir demo isteyebilir. Bir şirketin hayatta kalıp kalmayacağını belirleyen şey — kiracılık, faturalandırma, denetim, altındaki mimari — hâlâ çoğu kurucunun işe alamayacağı kıdemli bir ekip gerektiriyor.",
+        "timeline": {
+          "label": "Vibe-coded bir şirketin ilk yılı",
+          "day": "{n}. gün",
+          "d1": "Çalışıyor. Sihir gibi hissettiriyor.",
+          "d30": "Özellikler gelmeye devam ediyor.",
+          "d90": "Ödemeler başlıyor.",
+          "d180": "Yüz kullanıcı. Her şey rastgele bozuluyor.",
+          "d270": "Kiracı izolasyonu şemayı bozuyor.",
+          "d365": "İlk mühendis: “Bunu yeniden yazmamız gerekiyor.”",
+          "source": "Kurucu bunu şöyle anlatıyor:",
+          "essay": "Neden {brandName} inşa ediyoruz"
+        },
+        "shifts": {
+          "code": {
+            "title": "İnşa etmek artık zor kısım değil.",
+            "body": "Kodu ajanlar yazıyor. Kıtlık, altı ay sonra hâlâ ayakta kalacak kodun hangisi olduğunu bilmek."
+          },
+          "solo": {
+            "title": "Şirketler daha küçük başlıyor.",
+            "body": "Daha fazla kurucu, bir ekip yerine ajanlarla yalnız başına başlıyor. Maaş bordrosunda değil, sistemde bir ekibin yargısına ihtiyaçları var."
+          },
+          "global": {
+            "title": "Piyasalar küresel başlıyor.",
+            "body": "Çin'den piyasaya sürülen bir ürün, ilk günden tüm dünyaya satış yapıyor ve ödemeler, uyumluluk ve sağlayıcılar için iki ayrı yığınla karşılaşıyor."
+          }
+        }
+      },
+      "built": {
+        "title": "Tek bir temel. Geri kalan her şey bunun üzerine büyüyor.",
+        "lead": "Üç iş hattı tek bir platformu, tek bir hesap sistemini ve tek bir kural setini paylaşıyor.",
+        "sailor": {
+          "role": "Platform",
+          "body": "Functional Source License (FSL) kapsamında kaynak kodu erişime açık bir ürün ve ajan işletim sistemi: çok kiracılılık, kimlik doğrulama, faturalandırma, denetim ve tasarım sistemi — hepsi kodla yönetilir."
+        },
+        "products": {
+          "name": "Ürünler",
+          "role": "Üzerinde inşa edildi",
+          "body": "Geliştiriciler, tasarımcılar ve içerik üreticileri için canlı ürünler; her biri Sailor üzerinde büyütüldü."
+        },
+        "practice": {
+          "name": "Kurumsal Yapay Zeka ve Küresel Genişleme",
+          "role": "Pratik",
+          "body": "Şirketler için yapay zeka uygulama Ar-Ge'si ve yapay zeka ürünlerinin Çin'den dünya genelindeki pazarlara taşınması."
+        }
+      },
+      "sailor": {
+        "title": "Sailor, her kurucuya kıdemli bir ekibin inşa edeceği temeli sunar.",
+        "lead": "Tek komutla kimlik doğrulama, faturalandırma, denetim ve hazır bir tasarım sistemi içeren çok kiracılı bir ürün iskeleti oluşturulur. Sağlayıcılar, yapılandırmayla küresel ve Çin altyapıları arasında geçiş yapar; ajanlar, kodun tabi tutulduğu aynı kuralları okur.",
+        "acme": "Şablon, dağıtıldığı haliyle.",
+        "source": "Kaynağı oku",
+        "more": "Sailor hakkında daha fazla bilgi"
+      },
+      "products": {
+        "title": "Sunum değil, teslim edilmiş ürünler.",
+        "lead": "Aynı temelin üzerine inşa ettiğimiz ürünler. Her biri yayında — açın.",
+        "caption": "9 Ekim 2026'da canlı sitelerden alınmış ekran görüntüleri.",
+        "router": "Modeller, uygulamalar ve araçlar için tek pazar ve tek API.",
+        "forge": "Tarayıcıda 184 araç ve API ile MCP için aynı motor.",
+        "typelens": "Tasarımcılar ve tasarım ajanları için gerçek dünya tipografi eşleştirmeleri.",
+        "kcq": "Yanında bir ajanla grafik ve kantitatif araştırma çalışma istasyonu.",
+        "also": "Platformda ayrıca",
+        "open": "{name} aç"
+      },
+      "practice": {
+        "title": "Yapay zeka ürünlerini dünyaya taşıyoruz — kendi ürünlerimizi ve müşterilerimizinkileri.",
+        "lead": "Kendi ürünlerimizi çalıştıran mühendislik, müşteri işlerini de çalıştırır: Zaten var olan işletmelere gömülü yapay zeka ve Çin'den dünya genelindeki pazarlara taşınan ürünler.",
+        "rnd": {
+          "title": "Kurumsal Yapay Zeka Ar-Ge",
+          "body": "Ajanlar, model yönlendirme ve yönetilen veri; şirketin zaten kullandığı sistemlere gömülü ve çalışır halde teslim edilir."
+        },
+        "global": {
+          "title": "Küresel pazara açılma",
+          "body": "Duvarın her iki tarafında da yerelleştirme, ödeme, uyumluluk ve sağlayıcılar; ayrıca lansman süreci. Bunları önce kendi ürünlerimiz için yapıyoruz."
+        },
+        "locales": "Bu sayfa {count} dilde sunuluyor.",
+        "hq": "Wuxi, Çin'de geliştirildi. Tüm dünyaya dağıtıldı."
+      },
+      "work": {
+        "title": "Nasıl çalışıyoruz",
+        "architecture": {
+          "title": "İyi mimari, ileri gitmenizi sağlar.",
+          "body": "Satışa sunduğumuz standardı kendi ürünlerimizde de uygularız: genişletme noktaları, izolasyon ve denetim ilk commit'ten itibaren hazır."
+        },
+        "rules": {
+          "title": "Kurallar belgelerde değil, kodda yaşar.",
+          "body": "Tasarım, veri erişimi ve metin her değişiklikte makine tarafından kontrol edilir. Bu sayfanın yayına alınabilmesi için bunları geçmesi gerekiyordu."
+        },
+        "tools": {
+          "title": "En iyi araçları kullanın. Onların yerini almaya çalışmayın.",
+          "body": "Codex, Claude Code, Vercel ve tüm büyük model sağlayıcıları: kurucuların zaten sevdiği araçları entegre ediyoruz."
+        },
+        "open": {
+          "title": "Açık şekilde geliştirin.",
+          "body": "Sailor'ın kaynağı herkese açık ve bu sayfadaki her şey canlı. Due diligence bir bağlantıyla başlar."
+        }
+      },
+      "next": {
+        "title": "Tek cümle, <signature>bir şirket</signature>.",
+        "lead": "{brandName} OS bunun gideceği yer: bir şirketi bir kez tanımlayın; marka, ürün, kod ve lansman tek bir bağlamdan gelsin ve yargı gücü hazır olsun. Geliştirme aşamasında ve gerçek olduğunda göstereceğiz.",
+        "vision": "Beş yıl içinde, bir şirket kurmanın o yargı gücüyle başlamayı ifade etmesini istiyoruz."
+      },
+      "talk": {
+        "title": "Konuşalım.",
+        "lead": "Sunumu kısa bir tanışma sonrası paylaşıyoruz. Kim olduğunuzu ve ne istediğinizi bize yazın.",
+        "investors": {
+          "title": "Yatırımcılar",
+          "body": "Melek turumuzu topluyoruz. Tur detayları, plan ve rakamlar sunumla birlikte paylaşılır."
+        },
+        "partners": {
+          "title": "Stratejik ortaklar",
+          "body": "Marka, dağıtım, içerik veya kurumsal kanallar. Biz platformu, canlı ürünleri ve küresel büyüme için test edilmiş yöntemi getiriyoruz."
+        },
+        "form": {
+          "intent": "Ne istersiniz?",
+          "deck": {
+            "title": "Sunumu talep et",
+            "description": "Kısa bir girişten sonra gönderilir."
+          },
+          "call": {
+            "title": "Görüşme ayarla",
+            "description": "Kurucuyla 30 dakikalık görüşme."
+          },
+          "partner": {
+            "title": "Ortaklık fırsatını keşfet",
+            "description": "Marka, kanallar, içerik veya kurumsal iş birlikleri."
+          },
+          "name": "Ad",
+          "email": "İş e-postası",
+          "firm": "Firma veya şirket",
+          "message": "Bilmemiz gereken bir şey var mı?",
+          "optional": "isteğe bağlı",
+          "submit": "Gönder",
+          "sending": "Gönderiliyor…",
+          "success": "Teşekkürler. E-posta ile size dönüş yapacağız.",
+          "error": "Gönderim başarısız oldu. Lütfen tekrar deneyin.",
+          "note": "Bilgilerinizi yalnızca size yanıt vermek için kullanıyoruz."
+        },
+        "direct": "E-posta mı tercih edersiniz? Kurucuya yazın: "
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Yatırımcılar"
       }
     }
   },

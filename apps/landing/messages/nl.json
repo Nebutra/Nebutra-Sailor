@@ -1930,7 +1930,8 @@
       "writeToFounder": "Write to the founder",
       "privacy": "Privacy",
       "terms": "Terms",
-      "credits": "Credits"
+      "credits": "Credits",
+      "investors": "Investeerders"
     }
   },
   "sitePages": {
@@ -2082,6 +2083,169 @@
       "title": "Journal",
       "lead": "What we believe about building now — agents, the layer after them, and the founder's craft.",
       "cn": "我们对这个时代的判断。"
+    },
+    "investors": {
+      "metaDescription": "{brandName} bouwt de operationele laag voor AI-native bedrijven. Voor investeerders en strategische partners: de thesis, wat vandaag live is en hoe je de deck aanvraagt.",
+      "hero": {
+        "kicker": "Voor investeerders en partners",
+        "title": "AI gaf elke oprichter handen. Wij bouwen het <signature>oordeel</signature>.",
+        "lead": "{brandName} is een AI-native bedrijfseco-systeem: Sailor, het source-available platform waar producten en agents starten met ingebouwde engineering-judgment; een practice die AI-producten van R&D naar markten over de hele wereld brengt; en de producten die we op beide leveren.",
+        "stage": "Wij verzamelen onze angel round en spreken met een klein aantal investeerders en strategische partners.",
+        "primary": "Vraag de deck aan",
+        "secondary": "Plan een gesprek",
+        "reelLabel": "Producten live op het platform"
+      },
+      "chapters": {
+        "label": "Op deze pagina",
+        "why": "Waarom nu",
+        "built": "Wat we hebben gebouwd",
+        "practice": "Wereldwijd gaan",
+        "work": "Hoe we werken",
+        "next": "Waar het naartoe gaat",
+        "talk": "Spreek met ons"
+      },
+      "why": {
+        "title": "Code werd goedkoop. Oordeel niet.",
+        "lead": "Iedereen kan een model om een werkende demo vragen in een minuut. Wat bepaalt of een bedrijf overleeft — tenancy, facturatie, audit, de architectuur eronder — vereist nog steeds een senior team dat de meeste oprichters niet kunnen inhuren.",
+        "timeline": {
+          "label": "Het eerste jaar van een vibe-coded bedrijf",
+          "day": "Dag {n}",
+          "d1": "Het werkt. Het voelt als magie.",
+          "d30": "De functies blijven binnenkomen.",
+          "d90": "De betalingen gaan binnen.",
+          "d180": "Een honderd gebruikers. Dingen breken willekeurig.",
+          "d270": "Tenant-isolatie breekt de schema.",
+          "d365": "De eerste engineer: “We moeten dit herschrijven.”",
+          "source": "Zo vertelt de oprichter het in",
+          "essay": "Waarom we {brandName} bouwen"
+        },
+        "shifts": {
+          "code": {
+            "title": "Bouwen is niet langer het moeilijke deel.",
+            "body": "Agents schrijven de code. Wat schaars is, is weten welke code over zes maanden nog steeds zal staan."
+          },
+          "solo": {
+            "title": "Bedrijven starten kleiner.",
+            "body": "Meer oprichters starten alleen, met agents als team. Ze hebben het oordeel van een team nodig in het systeem, niet op de salarisstrook."
+          },
+          "global": {
+            "title": "Markten starten globaal.",
+            "body": "Een product dat vanuit China wordt gelanceerd, verkoopt op dag één wereldwijd en komt twee stacks van betalingen, compliance en providers tegen."
+          }
+        }
+      },
+      "built": {
+        "title": "Eén fundament. Alles andere groeit erop.",
+        "lead": "Drie businesslijnen delen één platform, één accountsysteem en één set regels.",
+        "sailor": {
+          "role": "Het platform",
+          "body": "Een source-available product- en agent-OS onder de Functional Source License (FSL): tenancy, auth, billing, audit en een design system, beheerd in code."
+        },
+        "products": {
+          "name": "Producten",
+          "role": "Gebouwd erop",
+          "body": "Live producten voor ontwikkelaars, ontwerpers en creators, elk op Sailor gekweekt."
+        },
+        "practice": {
+          "name": "Enterprise AI & wereldwijde uitrol",
+          "role": "De praktijk",
+          "body": "O&O van AI-toepassingen voor bedrijven, en het wereldwijd lanceren van AI-producten vanuit China."
+        }
+      },
+      "sailor": {
+        "title": "Sailor geeft elke oprichter de basis die een senior team zou bouwen.",
+        "lead": "Met één commando scaffold je een multi-tenant product met auth, facturatie, audit en een al vastgelegd design system. Providers schakelen via configuratie tussen wereldwijde en Chinese stacks, en agents volgen dezelfde regels waaraan de code wordt gehouden.",
+        "acme": "Het template zoals het wordt geleverd, al ingezet.",
+        "source": "Bekijk de broncode",
+        "more": "Meer over Sailor"
+      },
+      "products": {
+        "title": "Geleverd, geen presentaties.",
+        "lead": "Producten die we op dezelfde basis hebben gebouwd. Elk ervan is live — open het.",
+        "caption": "Screenshots van de live sites, genomen op 9 oktober 2026.",
+        "router": "Eén markt en één API voor modellen, apps en tools.",
+        "forge": "184 tools in de browser, en dezelfde engine als API en MCP.",
+        "typelens": "Echte typecombinaties voor designers en design agents.",
+        "kcq": "Een werkbank voor chart- en quantonderzoek, met een agent ernaast.",
+        "also": "Ook op het platform",
+        "open": "Openen {name}"
+      },
+      "practice": {
+        "title": "Wij brengen AI-producten de wereld in — onze eigen en die van onze klanten.",
+        "lead": "De engineering die onze eigen producten draait, draait ook klantwerk: AI ingebouwd in bestaande bedrijven, en producten die vanuit China naar markten wereldwijd worden gebracht.",
+        "rnd": {
+          "title": "Enterprise AI O&O",
+          "body": "Agents, model routing en beheerd data, ingebouwd in de systemen die een bedrijf al draait, en overgedragen in werkende staat."
+        },
+        "global": {
+          "title": "Commercialisering op wereldschaal",
+          "body": "Lokalisatie, betalingen, compliance en providers aan beide kanten van de muur, en de lancering zelf. We doen het eerst voor onze eigen producten."
+        },
+        "locales": "Deze pagina wordt in {count} talen aangeboden.",
+        "hq": "Gebouwd in Wuxi, China. Wereldwijd geleverd."
+      },
+      "work": {
+        "title": "Hoe we werken",
+        "architecture": {
+          "title": "Goede architectuur betekent dat je ver kunt komen.",
+          "body": "We houden onze eigen producten aan de standaard die we verkopen: extensiepunten, isolatie en audit vanaf de eerste commit."
+        },
+        "rules": {
+          "title": "Regels leven in code, niet in documenten.",
+          "body": "Ontwerp, data-toegang en copy worden bij elke wijziging door de machine gecontroleerd. Deze pagina moest ze doorstaan om te verschijnen."
+        },
+        "tools": {
+          "title": "Gebruik de beste tools. Vervang ze niet.",
+          "body": "Codex, Claude Code, Vercel, elke grote modelprovider: we integreren wat oprichters al waarderen."
+        },
+        "open": {
+          "title": "Bouw in het open.",
+          "body": "De broncode van Sailor is openbaar en alles op deze pagina is live. Due diligence begint met een link."
+        }
+      },
+      "next": {
+        "title": "Eén zin, een <signature>hele bedrijf</signature>.",
+        "lead": "{brandName} OS is waar dit naartoe gaat: beschrijf een bedrijf één keer, en merk, product, code en lancering komen uit één context, met het oordeel ingebouwd. Het is in ontwikkeling en we tonen het zodra het echt is.",
+        "vision": "Over vijf jaar willen we dat een bedrijf starten betekent dat je begint met dat oordeel al op zijn plek."
+      },
+      "talk": {
+        "title": "Laten we praten.",
+        "lead": "We delen de deck na een korte kennismaking. Vertel ons wie je bent en wat je wilt.",
+        "investors": {
+          "title": "Investeerders",
+          "body": "We zijn bezig met het ophalen van onze angel round. De details van de ronde, het plan en de cijfers zitten in de deck."
+        },
+        "partners": {
+          "title": "Strategische partners",
+          "body": "Merk, distributie, content of enterprisekanalen. Wij leveren het platform, live producten en een bewezen manier om wereldwijd te groeien."
+        },
+        "form": {
+          "intent": "Wat wilt u graag?",
+          "deck": {
+            "title": "Vraag de deck aan",
+            "description": "Verstuurd na een korte introductie."
+          },
+          "call": {
+            "title": "Plan een gesprek in",
+            "description": "30 minuten met de oprichter."
+          },
+          "partner": {
+            "title": "Ontdek een samenwerking",
+            "description": "Merk, kanalen, content of enterprise."
+          },
+          "name": "Naam",
+          "email": "Werk-e-mail",
+          "firm": "Bedrijf of organisatie",
+          "message": "Iets dat wij moeten weten?",
+          "optional": "optioneel",
+          "submit": "Versturen",
+          "sending": "Versturen…",
+          "success": "Bedankt. We nemen contact met u op per e-mail.",
+          "error": "Dit is niet gelukt. Probeer het opnieuw.",
+          "note": "We gebruiken uw gegevens alleen om u te beantwoorden."
+        },
+        "direct": "Voorkeur voor e-mail? Schrijf naar de oprichter op"
+      }
     }
   },
   "siteMap": {
@@ -2278,6 +2442,9 @@
         "slug": {
           "title": "Legal"
         }
+      },
+      "investors": {
+        "title": "Investeerders"
       }
     }
   },
