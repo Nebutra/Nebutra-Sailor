@@ -18,7 +18,7 @@ permission boundary against same-origin scripts. Organization provisioning,
 team administration and billing remain in Nebutra. Managed AI credentials
 are not provisioned by this shell.
 
-Market data uses private Fly Machines in Singapore, proxied through this host:
+Market data connectors run inside the same Singapore Fly Machine as the static host (one Machine, supervised processes; see `docs/ops/nebutra/2026-10-09-kcq-consolidation.md`) and are proxied by nginx over loopback:
 GOTDX at `/market/tdx` (A shares, indices and extended markets), TradingView
 at `/market/python` (global historical bars), and Binance read-only orderbook
 and depth SSE at `/market/binance/api/binance`. Binance is not a V1 K-line
@@ -27,14 +27,16 @@ depth visualization integration. Only GOTDX and TradingView enter the chart
 source catalog. Old scoped loopback defaults migrate to hosted endpoints;
 custom addresses and user source choices are retained.
 
-Connector revisions are pinned in `connector-sources.json`. Run
-`deploy-kcq-connectors.yml` before deploying the product with
-`deploy-kcq-fly.yml`. The connector workflow verifies real search and recent
-bars (or Binance depth), not just process liveness. Upstream directory SQLite
+Connector revisions are pinned in `connector-sources.json`. `deploy-kcq-fly.yml`
+builds one image containing the product, nginx and the three connectors and
+deploys it; it then verifies real search and recent bars (or Binance depth) on
+the Machine, not just process liveness. `verify_only` re-runs that check without
+deploying. `infra/fly/kcq-supervisor.py` restarts each process independently
+and prefixes its logs (`[tdx]`, `[binance]`, `[python]`, `[nginx]`). Upstream directory SQLite
 files are disposable caches, regenerated after Machine replacement. GOTDX
 runs in Shanghai timezone to preserve upstream timestamp interpretation.
 Nginx restricts exposed paths, request sizes, rates and concurrent connections;
-connectors have no public listeners and receive no account/trading secrets.
+connectors are not published as Fly services and receive no account/trading secrets.
 
 BaoStock is withheld until upstream login succeeds; FinShare is withheld while
 its tested continuous-contract history is stale. MT5 requires a Windows host

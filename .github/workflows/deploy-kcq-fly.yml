@@ -1,8 +1,10 @@
 name: Deploy KCQ to Fly
 
 # The chart library lives in its own repository. Build Nebutra's product shell,
-# ships the static product surface to a dedicated Fly app, and optionally cuts
-# over kcq.nebutra.com after the Fly URL is healthy.
+# ship it with the three pinned market connectors (GOTDX, Binance depth,
+# TradingView) as one Fly Machine, and optionally cut over kcq.nebutra.com after
+# the Fly URL is healthy. Connector revisions stay pinned independently in
+# apps/kcq/connector-sources.json. ADR: docs/ops/nebutra/2026-10-09-kcq-consolidation.md
 
 on:
   workflow_dispatch:
@@ -14,6 +16,11 @@ on:
         type: boolean
       diagnostics:
         description: "Read existing KCQ proxy diagnostics without deploying"
+        required: false
+        default: "false"
+        type: boolean
+      verify_only:
+        description: "Re-run the real-data connector checks on the running Machine without deploying"
         required: false
         default: "false"
         type: boolean
@@ -41,10 +48,32 @@ jobs:
           curl -sS -o /dev/null -w 'KCQ anonymous BYOK HTTP %{http_code}\n' --max-time 25 https://nebutra-kcq.fly.dev/market/byok/connections
           flyctl logs -a nebutra-kcq --no-tail | python3 -c 'import sys; print("".join(line for line in sys.stdin if "[error]" in line))'
           flyctl ssh console -a nebutra-kcq -C "/bin/sh -c 'cat /etc/resolv.conf; nslookup nebutra-gateway.fly.dev; wget -S -O /dev/null https://nebutra-gateway.fly.dev/api/v1/kcq/connections'" || true
+  verify:
+    if: inputs.diagnostics != true && inputs.verify_only == true
+    name: Verify connectors
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
+      - name: Verify real search and fresh bars or depth
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          flyctl status -a nebutra-kcq
+          for connector in tdx python binance; do
+            ok=0
+            for attempt in 1 2 3 4 5 6; do
+              if flyctl ssh console -a nebutra-kcq -C "env CONNECTOR=$connector /bin/sh /usr/local/bin/nebutra-smoke.sh"; then ok=1; break; fi
+              sleep 15
+            done
+            test "$ok" = 1 || { flyctl logs -a nebutra-kcq --no-tail || true; echo "::error::Connector $connector failed real-data verification"; exit 1; }
+          done
   deploy:
-    if: inputs.diagnostics != true
+    if: inputs.diagnostics != true && inputs.verify_only != true
     name: Fly KCQ
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - name: Require deployment credentials
         env:
@@ -70,6 +99,25 @@ jobs:
           ref: ${{ steps.chart.outputs.commit }}
           path: kcq-source
 
+      - name: Resolve immutable connector sources
+        id: connectors
+        run: |
+          node -e 'const s=require("./apps/kcq/connector-sources.json"); const o=[]; for (const k of ["gotdx","python"]) { if(!/^[a-f0-9]{40}$/.test(s[k].commit)) throw Error("Expected immutable SHA for "+k); o.push(k+"_repository="+s[k].repository, k+"_commit="+s[k].commit); } require("fs").appendFileSync(process.env.GITHUB_OUTPUT, o.join("\n")+"\n");'
+
+      - name: Checkout GOTDX connector
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: ${{ steps.connectors.outputs.gotdx_repository }}
+          ref: ${{ steps.connectors.outputs.gotdx_commit }}
+          path: connector-gotdx
+
+      - name: Checkout TradingView connector
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: ${{ steps.connectors.outputs.python_repository }}
+          ref: ${{ steps.connectors.outputs.python_commit }}
+          path: connector-python
+
       # The shared action owns the Nebutra toolchain and root lockfile cache.
       # KCQ installs its separate frozen lockfile in the following step.
       - name: Setup product toolchain
@@ -86,19 +134,28 @@ jobs:
           node apps/kcq/scripts/verify.mjs
           grep -q 'KCQ · Nebutra' apps/kcq/dist/index.html
 
-      - name: Stage static image
+      - name: Stage image (static product, nginx and connectors)
         run: |
           set -euo pipefail
           stage="$RUNNER_TEMP/stage-kcq"
           rm -rf "$stage"
           mkdir -p "$stage/html"
           cp -R apps/kcq/dist/. "$stage/html/"
+          cp -R connector-gotdx "$stage/gotdx"
+          cp -R connector-python "$stage/python"
+          rm -rf "$stage/gotdx/.git" "$stage/python/.git"
           cp infra/fly/Dockerfile.kcq "$stage/Dockerfile"
           cp infra/fly/kcq.nginx.conf "$stage/nginx.conf"
+          cp infra/fly/kcq-supervisor.py infra/fly/kcq-python-entrypoint.py infra/fly/smoke-kcq-connector.sh "$stage/"
+          printf '.git\n.venv\n__pycache__\n' > "$stage/.dockerignore"
           echo "STAGE=$stage" >> "$GITHUB_ENV"
 
       - name: Validate market proxy configuration
-        run: docker run --rm -v "$STAGE/nginx.conf:/etc/nginx/conf.d/default.conf:ro" nginx:1.27-alpine nginx -t
+        run: |
+          set -euo pipefail
+          # nginx resolves no upstream at parse time (loopback IP literals), so a bare nginx -t is enough.
+          docker run --rm -v "$STAGE/nginx.conf:/etc/nginx/conf.d/default.conf:ro" nginx:1.27-alpine nginx -t
+          python3 -m py_compile infra/fly/kcq-supervisor.py infra/fly/kcq-python-entrypoint.py
 
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
@@ -127,6 +184,25 @@ jobs:
             --ha=false \
             --remote-only \
             --yes
+
+      - name: Verify real search and fresh bars or depth
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          flyctl status -a nebutra-kcq
+          for connector in tdx python binance; do
+            ok=0
+            for attempt in 1 2 3 4 5 6; do
+              if flyctl ssh console -a nebutra-kcq -C "env CONNECTOR=$connector /bin/sh /usr/local/bin/nebutra-smoke.sh"; then ok=1; break; fi
+              sleep 15
+            done
+            if [ "$ok" != 1 ]; then
+              flyctl logs -a nebutra-kcq --no-tail || true
+              echo "::error::Connector $connector failed real-data verification; DNS will not cut over"
+              exit 1
+            fi
+          done
 
       - name: Add Fly certificate
         env:

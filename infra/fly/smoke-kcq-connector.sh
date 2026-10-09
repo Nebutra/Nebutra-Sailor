@@ -1,7 +1,14 @@
 #!/bin/sh
 # Validate real data on the Machine, beyond dependency-only health probes.
 set -eu
-base=http://localhost:8080
+# Connectors share one Machine: tdx 8081, binance 8082, python 8083 (kcq-supervisor.py).
+case "$CONNECTOR" in
+  tdx) port=8081 ;;
+  binance) port=8082 ;;
+  python) port=8083 ;;
+  *) echo "Unknown CONNECTOR: $CONNECTOR" >&2; exit 2 ;;
+esac
+base=http://127.0.0.1:${KCQ_CONNECTOR_PORT:-$port}
 if [ "$CONNECTOR" = binance ]; then
   curl -fsS --max-time 20 "$base/api/binance/orderbook?symbol=btcusdt" |
     jq -e '(.bids | length) > 0 and (.asks | length) > 0'

@@ -10,6 +10,7 @@ on:
       - ".github/actions/setup-node-pnpm/**"
       - ".github/workflows/kcq-compatibility.yml"
       - ".github/workflows/deploy-kcq-fly.yml"
+      - "infra/fly/*kcq*"
   push:
     branches: [main]
     paths:
@@ -20,6 +21,7 @@ on:
       - ".github/actions/setup-node-pnpm/**"
       - ".github/workflows/kcq-compatibility.yml"
       - ".github/workflows/deploy-kcq-fly.yml"
+      - "infra/fly/*kcq*"
   workflow_dispatch:
     inputs:
       candidate_ref:
@@ -49,6 +51,12 @@ jobs:
         with:
           node-version: "22.23.2"
           install-command: pnpm install --frozen-lockfile --filter @nebutra/kcq...
+      - name: Test KCQ Machine supervisor and proxy contract
+        run: python3 -m unittest discover -s infra/fly -p 'test_kcq_*.py'
+      - name: Validate proxy configuration
+        run: |
+          set -euo pipefail
+          docker run --rm -v "$PWD/infra/fly/kcq.nginx.conf:/etc/nginx/conf.d/default.conf:ro" nginx:1.27-alpine nginx -t
       - name: Test upgrade safety
         run: node --test apps/kcq/scripts/upstream.test.mjs
       - name: Verify pinned product

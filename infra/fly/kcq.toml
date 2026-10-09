@@ -1,6 +1,10 @@
 app = "nebutra-kcq"
 primary_region = "sin"
 
+# One Machine: nginx (public) + GOTDX + Binance depth + TradingView connectors,
+# restarted independently by kcq-supervisor. Connectors listen on 8081-8083 and
+# are reached by nginx over 127.0.0.1 only; they are not published as services.
+# See docs/ops/nebutra/2026-10-09-kcq-consolidation.md.
 [http_service]
   internal_port = 8080
   force_https = true
@@ -9,6 +13,24 @@ primary_region = "sin"
   min_machines_running = 1
   processes = ["app"]
 
+[checks.tdx]
+  type = "http"
+  port = 8081
+  method = "GET"
+  path = "/health/live"
+  interval = "30s"
+  timeout = "5s"
+  grace_period = "60s"
+
+[checks.python]
+  type = "http"
+  port = 8083
+  method = "GET"
+  path = "/"
+  interval = "30s"
+  timeout = "5s"
+  grace_period = "60s"
+
 [[vm]]
   size = "shared-cpu-1x"
-  memory = "512mb"
+  memory = "1gb"
