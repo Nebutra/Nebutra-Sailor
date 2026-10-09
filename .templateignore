@@ -465,6 +465,9 @@ infra/fly/kcq-supervisor.py
 infra/fly/kcq-python-entrypoint.py
 infra/fly/smoke-kcq-connector.sh
 infra/fly/test_kcq_supervisor.py
+infra/fly/kcq.security-headers.conf
+docs/architecture/2026-10-09-kcq-product-surface.md
+docs/architecture/2026-10-09-kcq-brand-architecture.md
 .github/workflows/deploy-kcq-fly.yml
 
 # Instance-only KCQ upstream/product compatibility gate
