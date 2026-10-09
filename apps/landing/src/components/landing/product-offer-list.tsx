@@ -16,6 +16,16 @@ export interface PricingProduct {
   what?: string;
   /** Bare domain, shown in the window's title bar. */
   domain?: string;
+  /** A real capture of the product, shown in a window. */
+  visual?: {
+    /** Path under /images/product, without extension: `.avif` and `.webp` exist. */
+    name: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+  /** The product's glyph, under /images/product. */
+  glyph?: string;
 }
 
 const CURRENCIES = ["USD", "CNY"] as const;
@@ -86,34 +96,26 @@ export function ProductOfferList({
             aria-labelledby={`pricing-${productId}-title`}
             className="scroll-mt-24 overflow-hidden rounded-xl border border-border bg-card shadow-ambient-sm"
           >
-            {/* The window's title bar: the product's real address. */}
-            <div className="flex items-center gap-3 border-b border-border bg-muted/40 px-4 py-2.5">
-              <span aria-hidden className="flex gap-1.5">
-                <span className="size-2.5 rounded-full bg-border" />
-                <span className="size-2.5 rounded-full bg-border" />
-                <span className="size-2.5 rounded-full bg-border" />
-              </span>
-              <span className="flex-1 truncate text-center font-mono text-xs text-muted-foreground">
-                {product?.domain ?? productId}
-              </span>
-              {product ? (
-                <a
-                  href={product.href}
-                  className="shrink-0 text-xs font-medium text-muted-foreground transition-colors duration-micro hover:text-foreground"
-                >
-                  {t("viewProduct", { product: name })} ↗
-                </a>
-              ) : null}
-            </div>
-
             <div className="p-6 sm:p-8 lg:p-10">
               <div className="flex flex-wrap items-center gap-4">
-                <span
-                  aria-hidden
-                  className="grid size-11 place-items-center rounded-lg border border-border bg-background font-heading text-lg text-foreground"
-                >
-                  {name.charAt(0)}
-                </span>
+                {product?.glyph ? (
+                  // biome-ignore lint/performance/noImgElement: a 44px static SVG glyph
+                  <img
+                    src={product.glyph}
+                    alt=""
+                    aria-hidden
+                    width={44}
+                    height={44}
+                    className="size-11 rounded-[10px] shadow-ambient-sm"
+                  />
+                ) : (
+                  <span
+                    aria-hidden
+                    className="grid size-11 place-items-center rounded-lg border border-border bg-background font-heading text-lg text-foreground"
+                  >
+                    {name.charAt(0)}
+                  </span>
+                )}
                 <div className="min-w-[12rem] flex-1">
                   <h2
                     id={`pricing-${productId}-title`}
@@ -122,26 +124,41 @@ export function ProductOfferList({
                     {name}
                   </h2>
                   {product?.what ? (
-                    <p className="text-sm text-muted-foreground">{product.what}</p>
+                    <p className="max-w-2xl text-sm text-muted-foreground">{product.what}</p>
                   ) : null}
                 </div>
-                <span className="hidden rounded-full border border-border px-3 py-1 sm:inline-block text-xs text-muted-foreground">
-                  {balances.length > 0 && memberships.length === 0 && packs.length === 0
-                    ? t("usageBased")
-                    : t("membershipsAndCredits")}
-                </span>
+                {product ? (
+                  <a
+                    href={product.href}
+                    className="shrink-0 text-sm font-medium text-muted-foreground transition-colors duration-micro hover:text-foreground"
+                  >
+                    {t("viewProduct", { product: name })} ↗
+                  </a>
+                ) : null}
               </div>
 
-              {balances.map((offer) => (
-                <BalanceBlock
-                  key={offer.id}
-                  offer={offer}
-                  money={money}
-                  moneyShort={moneyShort}
-                  t={t}
-                />
-              ))}
-
+              <div
+                className={
+                  product?.visual && balances.length > 0
+                    ? "mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] lg:items-center"
+                    : "mt-2"
+                }
+              >
+                <div>
+                  {balances.map((offer) => (
+                    <BalanceBlock
+                      key={offer.id}
+                      offer={offer}
+                      money={money}
+                      moneyShort={moneyShort}
+                      t={t}
+                    />
+                  ))}
+                </div>
+                {product?.visual && balances.length > 0 ? (
+                  <ProductWindow domain={product.domain ?? productId} visual={product.visual} />
+                ) : null}
+              </div>
               {tiers.size > 0 ? (
                 <div className="mt-8 grid gap-4 md:grid-cols-2">
                   {Array.from(tiers.entries()).map(([tier, tierOffers]) => {
@@ -327,10 +344,7 @@ function BalanceBlock({
 }) {
   const usd = offer.customAmount?.USD;
   return (
-    <div
-      data-offer-id={offer.id}
-      className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center"
-    >
+    <div data-offer-id={offer.id}>
       <div>
         <p className="text-xs uppercase tracking-wider text-muted-foreground">{t("payAsYouGo")}</p>
         {usd ? (
@@ -343,7 +357,7 @@ function BalanceBlock({
           {t("usageBalance")}
         </p>
       </div>
-      <div className="overflow-hidden rounded-lg border border-border">
+      <div className="mt-6 overflow-hidden rounded-lg border border-border">
         <table className="w-full border-collapse text-left text-sm">
           <thead className="bg-muted/40 text-xs text-muted-foreground">
             <tr>
@@ -380,5 +394,52 @@ function BalanceBlock({
         </table>
       </div>
     </div>
+  );
+}
+
+/**
+ * A real capture of the product inside a window. The stage is a quiet neutral
+ * panel; the window bleeds off its lower right edge, the way a product shot
+ * does when it is bigger than the frame. Captures are the product's own
+ * rendering (Router is light, KCQ is dark), so they do not follow the site theme.
+ */
+function ProductWindow({
+  domain,
+  visual,
+}: {
+  domain: string;
+  visual: NonNullable<PricingProduct["visual"]>;
+}) {
+  const base = `/images/product/${visual.name}`;
+  return (
+    <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-xl border border-border bg-muted/50 sm:aspect-[16/11]">
+      <div className="absolute top-[7%] left-[6%] w-[118%] overflow-hidden rounded-lg border border-border bg-card shadow-ambient-lg">
+        <div className="flex items-center gap-3 border-b border-border bg-muted/70 px-3.5 py-2">
+          <span aria-hidden className="flex gap-1.5">
+            <span className="size-2.5 rounded-full bg-[#ff5f57]" />
+            <span className="size-2.5 rounded-full bg-[#febc2e]" />
+            <span className="size-2.5 rounded-full bg-[#28c840]" />
+          </span>
+          <span className="mx-auto truncate rounded-md bg-background px-3 py-0.5 font-mono text-[11px] text-muted-foreground">
+            {domain}
+          </span>
+          <span aria-hidden className="w-12" />
+        </div>
+        <picture>
+          <source srcSet={`${base}.avif`} type="image/avif" />
+          <source srcSet={`${base}.webp`} type="image/webp" />
+          {/* biome-ignore lint/performance/noImgElement: static capture served as AVIF/WebP via <picture> */}
+          <img
+            src={`${base}.webp`}
+            alt={visual.alt}
+            width={visual.width}
+            height={visual.height}
+            loading="lazy"
+            decoding="async"
+            className="block h-auto w-full"
+          />
+        </picture>
+      </div>
+    </figure>
   );
 }

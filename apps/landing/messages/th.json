@@ -1,7 +1,7 @@
 {
   "productPricing": {
     "title": "{brandName} plans & credits",
-    "description": "Prices for Router and Para, in USD and CNY. Top up a balance, take a membership or buy a credit pack. One-time payments, no automatic renewal.",
+    "description": "Prices for Router and KCQ, in USD and CNY. Top up a balance for metered usage. One-time payments, no automatic renewal.",
     "loading": "Loading current prices…",
     "unavailable": "Prices are temporarily unavailable. Please try again shortly or contact us before purchasing.",
     "empty": "No paid offers are available at the moment.",

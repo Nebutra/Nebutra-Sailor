@@ -9,7 +9,9 @@ describe("pricing listing", () => {
     const offers: PublicOffer[] = [
       { ...base, id: "a", product: "kuanlan", prices: { USD: 1 } },
       { ...base, id: "b", product: "para", prices: { USD: 1 } },
+      { ...base, id: "c", product: "kcq", prices: { USD: 1 } },
+      { ...base, id: "d", product: "router", prices: { USD: 1 } },
     ];
-    expect(listedOffers(offers).map((o) => o.id)).toEqual(["b"]);
+    expect(listedOffers(offers).map((o) => o.id)).toEqual(["c", "d"]);
   });
 });

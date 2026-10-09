@@ -1,7 +1,7 @@
 {
   "productPricing": {
     "title": "{brandName} 方案與積分",
-    "description": "查看 Router 與 Para 的價格，支援美元與人民幣。餘額儲值、會員或積分包，均為一次性付款，不自動續費。",
+    "description": "查看 Router 與 KCQ 的價格，支援美元與人民幣。餘額按量使用，儲值一次性付款，不自動續費。",
     "loading": "正在載入目前價格…",
     "unavailable": "價格暫時無法載入，請稍後重試，或在購買前聯絡我們。",
     "empty": "目前沒有可購買的付費商品。",

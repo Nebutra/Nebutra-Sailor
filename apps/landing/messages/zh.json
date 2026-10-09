@@ -1,7 +1,7 @@
 {
   "productPricing": {
     "title": "{brandName} 套餐与积分",
-    "description": "查看 Router 与 Para 的价格，支持美元与人民币。余额充值、会员或积分包，均为一次性付款，不自动续费。",
+    "description": "查看 Router 与 KCQ 的价格，支持美元与人民币。余额按量使用，充值一次性付款，不自动续费。",
     "loading": "正在加载当前价格…",
     "unavailable": "价格暂时无法加载，请稍后重试，或在购买前联系我们。",
     "empty": "目前没有可购买的付费商品。",
@@ -15,7 +15,7 @@
     "monthlyCredits": "会员有效期内每月获得 {credits} 积分。",
     "creditPack": "此产品的 {credits} 积分。",
     "expiryDays": "购买的积分在 {days} 天后到期。",
-    "usageBalance": "可在上述范围内自选充值金额，余额用于按量计费的 API 调用，模型费率请查看 Router。",
+    "usageBalance": "可在上述范围内自选充值金额。余额按量计费：Router 的 API 调用，以及 KCQ 的托管 AI，均按 Router 货架上的模型费率结算。",
     "paymentNote": "美元银行卡付款由 Creem 处理；人民币付款在可用时使用支付宝或微信支付。适用税费及最终总额在结账时显示。积分与余额归属于所购产品。",
     "refund": "退款政策",
     "terms": "服务条款",
@@ -24,6 +24,8 @@
     "heroTitle": "按<signature>用量</signature>付费。",
     "jumpSailor": "Sailor 授权",
     "jumpFaq": "常见问题",
+    "altRouter": "Router 的 API 市场：按厂商和类别排列的模型货架，标有每百万 token 的输入与输出价格。",
+    "altKcq": "KCQ 工作台：贵州茅台日 K 线图，右侧是 AI 分析师对话面板。",
     "trustCards": "银行卡由 Creem（商户代理）收款",
     "trustCn": "人民币支持支付宝与微信支付",
     "trustCurrency": "美元与人民币标价",
@@ -68,7 +70,7 @@
     "faq": {
       "f1": {
         "q": "套餐会自动续费吗？",
-        "a": "不会。这里所有商品都是一次性付款。会员在所购期限内有效，积分包与充值按需购买。"
+        "a": "不会。这里所有商品都是一次性付款。充值按需购买。"
       },
       "f2": {
         "q": "支持哪些币种和支付方式？",
@@ -76,7 +78,7 @@
       },
       "f3": {
         "q": "余额充值用来做什么？",
-        "a": "用于 Router 的计量 API 调用。模型费率在 Router 中列出，充值金额在所示范围内任意。"
+        "a": "用于 Router 的计量 API 调用，以及 KCQ 的托管 AI 用量，后者按 Router 货架的模型价格结算。模型费率在 Router 中列出，充值金额在所示范围内任意。"
       },
       "f4": {
         "q": "积分会过期吗？",

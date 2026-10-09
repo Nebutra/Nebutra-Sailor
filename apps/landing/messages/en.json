@@ -1,7 +1,7 @@
 {
   "productPricing": {
     "title": "{brandName} plans & credits",
-    "description": "Prices for Router and Para, in USD and CNY. Top up a balance, take a membership or buy a credit pack. One-time payments, no automatic renewal.",
+    "description": "Prices for Router and KCQ, in USD and CNY. Top up a balance for metered usage. One-time payments, no automatic renewal.",
     "loading": "Loading current prices…",
     "unavailable": "Prices are temporarily unavailable. Please try again shortly or contact us before purchasing.",
     "empty": "No paid offers are available at the moment.",
@@ -15,7 +15,7 @@
     "monthlyCredits": "{credits} credits per month during the membership term.",
     "creditPack": "{credits} credits for this product.",
     "expiryDays": "Purchased credits expire after {days} days.",
-    "usageBalance": "Choose a top-up amount in the range above. Balance pays for metered API usage; model rates are shown in Router.",
+    "usageBalance": "Choose a top-up amount in the range above. A balance pays for metered usage: API calls in Router, and managed AI in KCQ, both at the model shelf prices shown in Router.",
     "paymentNote": "USD card payments are processed by Creem. CNY payments use Alipay or WeChat Pay when available. Applicable taxes and the final total are shown at checkout. Credits and balances belong to the product purchased.",
     "refund": "Refund policy",
     "terms": "Terms of service",
@@ -24,6 +24,8 @@
     "heroTitle": "Pay for what you <signature>use</signature>.",
     "jumpSailor": "Sailor licences",
     "jumpFaq": "Questions",
+    "altRouter": "Router's API market: a shelf of models by vendor and category, with input and output prices per million tokens.",
+    "altKcq": "The KCQ workbench: a daily candlestick chart of a Shanghai-listed stock, with an AI analyst panel on the right.",
     "trustCards": "Cards via Creem, our merchant of record",
     "trustCn": "Alipay and WeChat Pay for CNY",
     "trustCurrency": "Prices in USD and CNY",
@@ -68,7 +70,7 @@
     "faq": {
       "f1": {
         "q": "Do plans renew automatically?",
-        "a": "No. Every offer here is a one-time payment. A membership runs for the term you buy; credit packs and top-ups are bought when you need them."
+        "a": "No. Every offer here is a one-time payment. Top-ups are bought when you need them."
       },
       "f2": {
         "q": "Which currencies and payment methods do you take?",
@@ -76,7 +78,7 @@
       },
       "f3": {
         "q": "What does a balance top-up pay for?",
-        "a": "Metered API usage in Router. Model rates are listed in Router, and a top-up can be any amount within the range shown."
+        "a": "Metered API usage in Router, and managed AI usage in KCQ at Router's model shelf prices. Model rates are listed in Router, and a top-up can be any amount within the range shown."
       },
       "f4": {
         "q": "Do credits expire?",

@@ -42,16 +42,35 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
 }
 
-const PRICING_PRODUCTS = PRODUCTS.map((p) => ({
-  id: p.id,
-  name: p.name,
-  href: p.href,
-  what: p.what,
-  domain: p.domain,
-}));
+const GLYPHS: Record<string, string> = {
+  router: "/images/product/router-glyph.svg",
+  kcq: "/images/product/kcq-glyph.svg",
+};
+
+/** Real captures of the live products (see public/images/product). */
+const VISUALS: Record<
+  string,
+  { name: string; altKey: "altRouter" | "altKcq"; width: number; height: number }
+> = {
+  router: { name: "router-shelf", altKey: "altRouter", width: 1600, height: 900 },
+  kcq: { name: "kcq-workbench", altKey: "altKcq", width: 1600, height: 1000 },
+};
 
 async function PaidProductPricing({ lang }: { lang: string }) {
   const t = await getTranslations({ locale: lang, namespace: "productPricing" });
+  const zh = lang.startsWith("zh");
+  const PRICING_PRODUCTS = PRODUCTS.map((p) => {
+    const v = VISUALS[p.id];
+    return {
+      id: p.id,
+      name: p.name,
+      href: p.href,
+      what: zh ? p.whatZh : p.what,
+      domain: p.domain,
+      glyph: GLYPHS[p.id],
+      visual: v ? { name: v.name, alt: t(v.altKey), width: v.width, height: v.height } : undefined,
+    };
+  });
   try {
     // Only products the site knows by name are listed; an unnamed one would print a bare id.
     const known = new Set(PRICING_PRODUCTS.map((p) => p.id));
@@ -69,7 +88,7 @@ async function PaidProductPricing({ lang }: { lang: string }) {
 
 const eyebrow = "text-xs uppercase tracking-wider text-muted-foreground";
 const SAILOR_FAQ = ["q1", "q2", "q3"] as const;
-const PRODUCT_FAQ = ["f1", "f2", "f3", "f4", "f5"] as const;
+const PRODUCT_FAQ = ["f1", "f2", "f3", "f5"] as const;
 
 export default async function PricingPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -151,9 +170,9 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
             aria-label={paid("eyebrow")}
             className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground"
           >
-            {PRICING_PRODUCTS.filter((p) => p.id === "router" || p.id === "para").map((p) => (
-              <a key={p.id} href={`#pricing-${p.id}`} className="hover:text-foreground">
-                {p.name}
+            {["router", "kcq"].map((id) => (
+              <a key={id} href={`#pricing-${id}`} className="hover:text-foreground">
+                {PRODUCTS.find((p) => p.id === id)?.name}
               </a>
             ))}
             <a href="#sailor-licences" className="hover:text-foreground">

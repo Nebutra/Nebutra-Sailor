@@ -76,6 +76,25 @@ describe("public product pricing", () => {
     );
     expect(html).not.toContain("CNY");
     expect(html).not.toContain("expire");
-    expect(html).toContain("metered API usage");
+    expect(html).toContain("metered usage");
+  });
+  it("frames a product capture with its real domain, a real alt and AVIF/WebP sources", () => {
+    const html = renderToStaticMarkup(
+      <ProductOfferList
+        offers={offers.filter((offer) => offer.kind === "balance")}
+        products={[
+          {
+            ...products[0]!,
+            id: "router",
+            visual: { name: "router-shelf", alt: "A shelf of models", width: 1600, height: 900 },
+          },
+        ]}
+        locale="en"
+        t={t}
+      />,
+    );
+    expect(html).toContain('alt="A shelf of models"');
+    expect(html).toContain("/images/product/router-shelf.avif");
+    expect(html).toContain("kuanlan.example.com");
   });
 });

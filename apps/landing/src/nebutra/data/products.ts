@@ -64,6 +64,16 @@ export const PRODUCTS: readonly Product[] = [
     domain: at("forge"),
   },
   {
+    id: "kcq",
+    name: "KCQ",
+    line: "Charts that read back.",
+    what: "The open-source charting engine and quant workstation — millisecond charts, with an AI analyst reading them alongside you.",
+    whatZh: "开源 K 线引擎与量化工作台。图表毫秒级渲染，AI 分析师与你同读一张图。",
+    category: "Developer",
+    href: `https://${at("kcq")}`,
+    domain: at("kcq"),
+  },
+  {
     id: "para",
     name: "Para",
     line: "What are you making?",
