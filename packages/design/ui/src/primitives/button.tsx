@@ -2,6 +2,7 @@
 
 import type { VariantProps } from "class-variance-authority";
 import type * as React from "react";
+import { usePendingVisible } from "../hooks/use-pending-visible";
 import { cn } from "../utils/cn";
 import { RENDERS_NATIVE_BUTTON } from "../utils/native-button";
 import { Slot } from "../utils/slot";
@@ -91,10 +92,14 @@ interface ButtonContentProps {
 
 function ButtonContent({ loading, prefix, suffix, size, iconSize, children }: ButtonContentProps) {
   const iconSizeClass = getIconSizeClass(size, iconSize);
+  // The button is disabled and aria-busy the moment `loading` flips (see
+  // Button below); only the spinner glyph waits. A save that lands in 120ms
+  // never flashes a spinner, and one that is shown stays long enough to read.
+  const spinnerVisible = usePendingVisible(loading);
 
   return (
     <>
-      {loading && <Spinner className={getSpinnerSizeClass(size, iconSize)} />}
+      {spinnerVisible && <Spinner className={getSpinnerSizeClass(size, iconSize)} />}
       {prefix != null && (
         <span aria-hidden="true" className={cn("shrink-0", iconSizeClass)}>
           {prefix}
