@@ -13,7 +13,7 @@ const home = computed(() => publicPath("home", route.meta.locale ?? DEFAULT_PUBL
 const path = glyphPath();
 </script>
 <template>
-  <main id="main" class="container">
+  <main id="main" class="band container">
     <div class="not-found">
     <svg class="not-found-glyph" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <path :d="path" />
@@ -36,7 +36,6 @@ const path = glyphPath();
   display: grid;
   justify-items: start;
   gap: var(--klc-space-16);
-  padding-block: var(--klc-space-96) 0;
   max-width: 44rem;
 }
 .not-found-glyph {

@@ -55,8 +55,11 @@
   line-gap-override: 0%;
 }
 
-:root {
-  /* Page roles, each one KCQ interface token (Radix-style fixed jobs, CP 1). */
+:root,
+[data-theme] {
+  /* Page roles, each one KCQ interface token (Radix-style fixed jobs, CP 1). Declared on every
+     [data-theme] element too: custom properties resolve where they are declared, so a band that
+     sets data-theme="dark" (agent, final CTA, footer) re-derives every role from the dark tokens. */
   --kcq-page: var(--klc-color-ui-background);
   --kcq-surface: var(--klc-color-ui-surface);
   --kcq-raised: var(--klc-color-ui-card);
@@ -64,30 +67,40 @@
   --kcq-hover: var(--klc-color-ui-hover);
   --kcq-ink: var(--klc-color-ui-text);
   --kcq-ink-2: var(--klc-color-ui-muted);
+  /* Long copy: ink pulled 20% toward the page, still ≥ 7:1 (rich, not grey-heavy). */
+  --kcq-ink-soft: color-mix(in oklab, var(--kcq-ink) 80%, var(--kcq-page));
   --kcq-rule: var(--klc-color-ui-border);
   --kcq-rule-strong: var(--klc-color-ui-border-strong);
   --kcq-accent: var(--klc-brand-accent);
   --kcq-accent-text: var(--klc-brand-accent-text);
+  --kcq-accent-wash: color-mix(in oklab, var(--klc-brand-accent) 14%, transparent);
   --kcq-up: var(--klc-color-candle-up-body);
   --kcq-down: var(--klc-color-candle-down-body);
+  --kcq-warning: var(--klc-color-ui-warning-strong);
+  --kcq-grid: var(--klc-color-grid-major);
+  /* The inverted bands' ground: the dark page pulled toward black, so it stays a distinct band
+     when the whole page is dark too. */
+  --kcq-deep: color-mix(in oklab, var(--klc-color-ui-background) 64%, #000);
+}
+:root {
   --kcq-font-display: "Outfit", "Outfit Fallback", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
   --kcq-font-ui: "Geist", "Geist Fallback", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
   --kcq-font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, "SFMono-Regular", Menlo, monospace;
   /* Basement page grid: 4 columns with 16px gutters, 12 from lg (CP 26). */
   --kcq-gutter: var(--klc-space-16);
   --kcq-column-gap: var(--klc-space-12);
-  --kcq-section-space: var(--klc-space-64);
+  --kcq-band-space: var(--klc-space-64);
   --kcq-header-height: var(--klc-space-64);
 }
 @media (min-width: 768px) {
   :root {
     --kcq-gutter: var(--klc-space-32);
-    --kcq-section-space: var(--klc-space-96);
+    --kcq-band-space: var(--klc-space-96);
   }
 }
 @media (min-width: 1280px) {
   :root {
-    --kcq-section-space: var(--klc-space-160);
+    --kcq-band-space: var(--klc-space-160);
   }
 }
 
@@ -110,7 +123,6 @@ html {
 }
 body {
   margin: 0;
-  min-height: 100vh;
   background: var(--kcq-page);
   color: var(--kcq-ink);
   font-family: var(--kcq-font-ui);
@@ -164,7 +176,23 @@ pre {
   font-family: var(--kcq-font-mono);
 }
 ::selection {
-  background: color-mix(in oklab, var(--kcq-accent) 28%, transparent);
+  background: color-mix(in oklab, var(--kcq-accent) 32%, transparent);
+  color: var(--kcq-ink);
+}
+img {
+  -webkit-user-drag: none;
+}
+
+/* Sticky footer: the app root is a full-height column and the page body takes the slack, so short
+   pages (/benchmark, 404) keep the footer at the bottom edge instead of mid-viewport. */
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+#app > main {
+  flex: 1 0 auto;
 }
 
 a {
@@ -217,7 +245,8 @@ a {
   padding-inline: var(--kcq-gutter);
 }
 
-/* Type roles (design §3.3 type scale; display per CP 17/45). */
+/* Type roles (design §3.3 type scale; display per CP 17/45). Outfit is the brand face, used for
+   the wordmark, the hero and the two big-type moments only (research J5); section heads are Geist. */
 .t-display {
   font-family: var(--kcq-font-display);
   font-weight: var(--klc-text-48-font-weight);
@@ -232,18 +261,32 @@ a {
     letter-spacing: var(--klc-text-72-letter-spacing);
   }
 }
-.t-heading {
+/* A one-line statement with nothing under it resets the rhythm (research A3). */
+.t-statement {
   font-family: var(--kcq-font-display);
+  font-weight: 600;
+  font-size: var(--klc-text-48-font-size);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+@media (min-width: 1024px) {
+  .t-statement {
+    font-size: calc(var(--klc-text-72-font-size) * 1.34);
+    line-height: 0.92;
+  }
+}
+.t-heading {
+  font-family: var(--kcq-font-ui);
   font-weight: var(--klc-text-32-font-weight);
   font-size: var(--klc-text-32-font-size);
   line-height: var(--klc-text-32-line-height);
-  letter-spacing: var(--klc-text-32-letter-spacing);
+  letter-spacing: -0.03em;
 }
 @media (min-width: 1024px) {
   .t-heading {
     font-size: var(--klc-text-48-font-size);
     line-height: var(--klc-text-48-line-height);
-    letter-spacing: var(--klc-text-48-letter-spacing);
+    letter-spacing: -0.04em;
   }
 }
 .t-title {
@@ -253,16 +296,31 @@ a {
   line-height: var(--klc-text-20-line-height);
   letter-spacing: var(--klc-text-20-letter-spacing);
 }
-/* Han glyphs need air the Latin display tracking takes away. */
-:lang(zh-Hans) :is(.t-display, .t-heading) {
+/* Han glyphs need air the Latin display tracking takes away; keep phrases whole. */
+:lang(zh-Hans) :is(.t-display, .t-heading, .t-statement) {
   letter-spacing: 0;
   line-height: 1.15;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+/* Han display on phones: sized so a nine-character phrase fits one line without breaking inside it. */
+@media (max-width: 767px) {
+  :lang(zh-Hans) :is(.t-display, .t-statement) {
+    font-size: min(var(--klc-text-48-font-size), 9.2vw);
+  }
 }
 .t-lede {
   font-size: var(--klc-text-copy-16-font-size);
   line-height: var(--klc-text-copy-16-line-height);
   letter-spacing: var(--klc-text-copy-16-letter-spacing);
-  color: var(--kcq-ink-2);
+  color: var(--kcq-ink-soft);
+}
+@media (min-width: 768px) {
+  .t-lede {
+    font-size: var(--klc-text-copy-20-font-size);
+    line-height: var(--klc-text-copy-20-line-height);
+    letter-spacing: var(--klc-text-copy-20-letter-spacing);
+  }
 }
 .t-copy {
   font-size: var(--klc-text-copy-14-font-size);
@@ -290,31 +348,110 @@ a {
   font-synthesis-weight: none;
   font-variant-numeric: tabular-nums slashed-zero;
 }
-
-/* Section frame: a numbered mono eyebrow on a hairline, then the heading (LB 3.4: numbered
-   sections, ordered by argument). */
-.section {
-  padding-block: var(--kcq-section-space) 0;
+/* Units read after the value (research C2): ×, Hz, ms, %, ¥. */
+.unit {
+  color: var(--kcq-ink-2);
+  font-size: 0.62em;
+  letter-spacing: 0;
+  margin-left: 0.12em;
 }
+
+/* Bands (research A4): full-bleed, abutting, and spaced by their own padding, so the band edge is
+   the divider. `band-inverted` re-themes its subtree dark (the token aliases re-resolve there). */
+.band {
+  position: relative;
+  padding-block: var(--kcq-band-space);
+  background: var(--kcq-band, var(--kcq-page));
+  color: var(--kcq-ink);
+}
+.band-raised {
+  --kcq-band: var(--kcq-raised);
+}
+.band-inverted {
+  --kcq-band: var(--kcq-deep);
+}
+.band + .band {
+  /* Two bands of the same ground meet on a hairline instead of a gap. */
+  box-shadow: inset 0 1px 0 var(--kcq-rule);
+}
+.band-raised + .band,
+.band + .band-raised,
+.band-inverted + .band,
+.band + .band-inverted {
+  box-shadow: none;
+}
+
+/* Section head: index chip styled as the chart's price label, then the label (research §3 rhythm
+   map, sections numbered from the hero as 01). */
 .section-head {
   display: grid;
   align-content: start;
   gap: var(--klc-space-16);
   max-width: 44rem;
 }
-/* The eyebrow rule spans the whole container in every section, so all section rules align. */
 .eyebrow {
-  grid-column: 1 / -1;
-  /* Same 24px to the heading whether the section is a grid (minus its row gap) or a block. */
-  margin-bottom: calc(var(--klc-space-24) - var(--row-gap, 0px));
-  display: flex;
-  gap: var(--klc-space-12);
-  align-items: baseline;
-  padding-top: var(--klc-space-12);
-  border-top: 1px solid var(--kcq-rule);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--klc-space-8);
+  margin-bottom: var(--klc-space-8);
 }
 .eyebrow-index {
-  color: var(--kcq-accent-text);
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--klc-space-24);
+  height: var(--klc-space-16);
+  padding-inline: var(--klc-space-4);
+  border-radius: var(--klc-radius-xs);
+  background: var(--kcq-accent);
+  color: #fff;
+  font-size: var(--klc-text-11-mono-font-size);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+/* Crop-mark corners instead of a box (research A6): 8px brackets at each corner, no extra DOM. */
+.ticks {
+  position: relative;
+  --tick: var(--kcq-rule-strong);
+  --tick-length: var(--klc-space-8);
+}
+.ticks::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--tick), var(--tick)) left top / var(--tick-length) 1px,
+    linear-gradient(var(--tick), var(--tick)) left top / 1px var(--tick-length),
+    linear-gradient(var(--tick), var(--tick)) right top / var(--tick-length) 1px,
+    linear-gradient(var(--tick), var(--tick)) right top / 1px var(--tick-length),
+    linear-gradient(var(--tick), var(--tick)) left bottom / var(--tick-length) 1px,
+    linear-gradient(var(--tick), var(--tick)) left bottom / 1px var(--tick-length),
+    linear-gradient(var(--tick), var(--tick)) right bottom / var(--tick-length) 1px,
+    linear-gradient(var(--tick), var(--tick)) right bottom / 1px var(--tick-length);
+  background-repeat: no-repeat;
+}
+
+/* The chart's own "no data" pattern (research I3), for honest empty states only. */
+.hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    color-mix(in oklab, var(--kcq-ink) 9%, transparent) 0 1px,
+    transparent 1px 6px
+  );
+}
+
+kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5em;
+  padding: 0 var(--klc-space-4);
+  border: 1px solid var(--kcq-rule);
+  border-bottom-width: 2px;
+  border-radius: var(--klc-radius-xs);
+  font-size: var(--klc-text-12-font-size);
+  line-height: 1.4;
+  color: var(--kcq-ink);
 }
 
 /* Buttons. Primary is ink on page: the strongest pair on every preset, and it keeps Cobalt for
@@ -351,26 +488,70 @@ a {
   background: var(--kcq-ink);
   color: var(--kcq-page);
 }
-.button-primary .button-arrow {
-  transition: transform var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
-}
 @media (hover: hover) and (pointer: fine) {
-  .button-primary:hover .button-arrow {
-    transform: translateX(2px);
+  .button-primary:hover {
+    background: color-mix(in oklab, var(--kcq-ink) 86%, var(--kcq-accent));
   }
 }
 .button-quiet {
-  background: var(--kcq-surface);
+  background: transparent;
   color: var(--kcq-ink);
-  border-color: var(--kcq-rule);
+  border-color: var(--kcq-rule-strong);
 }
 @media (hover: hover) and (pointer: fine) {
   .button-quiet:hover {
-    border-color: var(--kcq-rule-strong);
-    background: var(--kcq-raised);
+    border-color: var(--kcq-ink-2);
+    background: var(--kcq-hover);
   }
 }
+/* The hover arrow (research F1): a chevron that grows a shaft. The icon box never changes size. */
+.button-arrow .arrow-shaft {
+  transform: scaleX(0);
+  transform-origin: 3px 8px;
+  transition: transform var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+.button-arrow .arrow-head {
+  transform: translateX(-3px);
+  transition: transform var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  :is(a, button):hover > .button-arrow .arrow-shaft {
+    transform: scaleX(1);
+  }
+  :is(a, button):hover > .button-arrow .arrow-head {
+    transform: translateX(0);
+  }
+}
+:is(a, button):focus-visible > .button-arrow .arrow-shaft {
+  transform: scaleX(1);
+}
+:is(a, button):focus-visible > .button-arrow .arrow-head {
+  transform: translateX(0);
+}
 
+/* A short status chip: dot + label, shared by the nav, hero, footer and agent transcript. */
+.status-dot {
+  display: inline-block;
+  flex: none;
+  width: var(--klc-space-8);
+  height: var(--klc-space-8);
+  border-radius: var(--klc-radius-full);
+  background: var(--kcq-ink-2);
+}
+[data-status="live"] > .status-dot {
+  background: var(--kcq-up);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--kcq-up) 22%, transparent);
+}
+[data-status="delayed"] > .status-dot {
+  background: var(--kcq-warning);
+}
+[data-status="connecting"] > .status-dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--kcq-ink-2);
+}
+
+/* Reduced motion keeps opacity and colour changes and drops movement (CP 40); each feature also
+   has its own designed reduced path (research K4). */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
