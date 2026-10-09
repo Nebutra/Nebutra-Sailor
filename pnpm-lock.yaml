@@ -692,6 +692,9 @@ importers:
 
   apps/kcq:
     dependencies:
+      '@fontsource/noto-sans-sc':
+        specifier: 5.3.0
+        version: 5.3.0
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth
@@ -7874,6 +7877,9 @@ packages:
 
   '@fontsource-variable/work-sans@5.3.0':
     resolution: {integrity: sha512-le8h/OIIuhm5Z7TdvuMw0yKg2gaCZUiMec8zaumsVVjzeJRBPEF0bQI/MkaZDHCVzZDvZoP/O2LiGOSfDLSbaw==}
+
+  '@fontsource/noto-sans-sc@5.3.0':
+    resolution: {integrity: sha512-HeqIlGm0+ohOKxZLuHj1qW6r6avHH0OWdKERAcSDI0RQ+MXrteuLKA+M+5eOA8rYy0MFvOR5AT0fQo2rUkye0Q==}
 
   '@formatjs/ecma402-abstract@3.1.1':
     resolution: {integrity: sha512-jhZbTwda+2tcNrs4kKvxrPLPjx8QsBCLCUgrrJ/S+G9YrGHWLhAyFMMBHJBnBoOwuLHd7L14FgYudviKaxkO2Q==}
@@ -25156,6 +25162,8 @@ snapshots:
   '@fontsource-variable/space-grotesk@5.3.0': {}
 
   '@fontsource-variable/work-sans@5.3.0': {}
+
+  '@fontsource/noto-sans-sc@5.3.0': {}
 
   '@formatjs/ecma402-abstract@3.1.1':
     dependencies:

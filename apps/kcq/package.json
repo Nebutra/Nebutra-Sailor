@@ -22,7 +22,8 @@
     "@nebutra/icons": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "geist": "catalog:"
+    "geist": "catalog:",
+    "@fontsource/noto-sans-sc": "5.3.0"
   },
   "devDependencies": {
     "vite": "catalog:",

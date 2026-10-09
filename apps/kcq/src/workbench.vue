@@ -1,6 +1,8 @@
 <!-- Host navigation shares the canonical toolbar; the chart owns the viewport. -->
 <script setup lang="ts">
+import { onMounted } from "vue";
 import HeaderSurface from "./header-surface.vue";
+import { scheduleScreenshotFont } from "./screenshot-font";
 import SourceConnectionsSurface from "./source-connections-surface.vue";
 import {
   AgentWorkbenchShell,
@@ -34,6 +36,8 @@ const {
   onControllerReady,
   onThemeChange,
 } = useWorkbench(props);
+
+onMounted(() => scheduleScreenshotFont());
 </script>
 <template>
   <div class="workbench" :aria-busy="busy">
