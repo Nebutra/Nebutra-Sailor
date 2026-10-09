@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, ChevronRight, Cross, LogoGithub } from "@nebutra/icons";
+import { ArrowLeft, ArrowRight, ChevronRight, LogoGithub } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
@@ -34,13 +34,11 @@ export function SiteMenu({
   pathname,
   mailto,
   onNavigate,
-  onClose,
 }: {
   open: boolean;
   pathname: string;
   mailto: string;
   onNavigate: () => void;
-  onClose: () => void;
 }) {
   const here = pageAt(pathname)?.section;
   const t = useTranslations("siteShell");
@@ -56,7 +54,7 @@ export function SiteMenu({
   const shownPages = shown ? pagesOf(shown.id) : [];
 
   return (
-    <div className="flex h-dvh">
+    <div className="flex min-h-full">
       {/* Level one — hidden on a phone while a section is open. */}
       <div
         className={cn(
@@ -64,20 +62,7 @@ export function SiteMenu({
           shown && "max-sm:hidden",
         )}
       >
-        <div className="flex h-10 items-center justify-end">
-          <Button
-            type="button"
-            variant="ghost"
-            shape="square"
-            iconSize="md"
-            aria-label={t("nav.closeNavigation")}
-            onClick={onClose}
-          >
-            <Cross />
-          </Button>
-        </div>
-
-        <ul className="mt-10 flex flex-col gap-2">
+        <ul className="mt-6 flex flex-col gap-2">
           {NAV_SECTIONS.map((s, i) => {
             const hasPages = pagesOf(s.id).length > 0;
             const lit = panel ? panel === s.id : here === s.id;
@@ -159,14 +144,14 @@ export function SiteMenu({
           key={shown.id}
           className="site-menu-panel flex w-screen shrink-0 flex-col border-border bg-muted/40 px-8 pt-6 pb-8 sm:w-[400px] sm:border-l sm:px-10"
         >
-          <div className="flex h-10 items-center sm:invisible">
+          <div className="flex h-10 items-center sm:hidden">
             <Button type="button" variant="ghost" size="sm" onClick={() => setPanel(null)}>
               <ArrowLeft />
               {t("menu.back")}
             </Button>
           </div>
 
-          <div className="mt-10 flex flex-col gap-3">
+          <div className="mt-0 flex flex-col gap-3 max-sm:mt-6 sm:mt-6">
             <Link
               href={SECTION_PATH[shown.id]}
               onClick={onNavigate}

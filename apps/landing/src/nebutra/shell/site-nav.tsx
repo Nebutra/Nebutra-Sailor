@@ -12,6 +12,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
+import type * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import type { SiteMapTranslator } from "@/nebutra/i18n";
@@ -26,7 +27,16 @@ import { pageAt, SECTIONS, SITE_MAP } from "@/site-map";
  * navigation drawer that is fully hidden until asked for. Hovering the mark
  * slides the drawer out; leaving it slides it back. A click pins it open,
  * which is also how touch screens and keyboards reach it.
+ *
+ * One bar, one logo position. The bar sits above the drawer, so the mark never
+ * moves or disappears; opening the drawer glides the wordmark from the centre
+ * of the bar to rest beside the mark — the drawer's own top row. The page
+ * behind is dimmed by a scrim that fades with the drawer, never cut off. All of
+ * it is transform/opacity on the brand duration and easing tokens, and reduced
+ * motion drops the glide (`motion-safe`).
  */
+const GLIDE =
+  "motion-safe:transition-[transform,opacity] motion-safe:[transition-duration:var(--duration-reveal)] motion-safe:ease-brand";
 /** Hover intent: a pointer crossing the mark on its way elsewhere opens nothing. */
 const OPEN_DELAY_MS = 120;
 const CLOSE_DELAY_MS = 240;
@@ -37,8 +47,12 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
   // A full-viewport tool keeps the bar but gives the screen back to the tool.
   const compact = pageAt(pathname)?.chrome === "tool";
   // "hover" closes when the pointer leaves; "pinned" stays until dismissed.
+  const wordmark = compact ? 88 : 112;
+  // The wordmark's centre travels from the bar's centre to 56px right of the mark's edge.
+  const restX = `calc(-50vw + ${wordmark / 2 + (compact ? 58 : 66)}px)`;
   const [open, setOpen] = useState<false | "hover" | "pinned">(false);
   const [searching, setSearching] = useState(false);
+  const asideRef = useRef<HTMLElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clear = () => {
@@ -54,6 +68,14 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
     clear();
     if (open !== "hover") return;
     timer.current = setTimeout(() => setOpen(false), CLOSE_DELAY_MS);
+  };
+  // The bar sits over the drawer's top row, so the pointer crossing the bar on its way
+  // down is still inside the drawer's territory: left of the drawer's edge keeps it open.
+  const barMove = (event: React.MouseEvent) => {
+    if (open !== "hover") return;
+    const edge = asideRef.current?.getBoundingClientRect().right ?? 0;
+    if (event.clientX <= edge) clear();
+    else if (!timer.current) timer.current = setTimeout(() => setOpen(false), CLOSE_DELAY_MS);
   };
   const close = useCallback(() => {
     clear();
@@ -81,12 +103,18 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
   return (
     <>
       <header
+        onMouseMove={barMove}
+        onMouseLeave={hoverClose}
         className={cn(
-          "sticky top-0 z-40 grid shrink-0 grid-cols-[1fr_auto_1fr] items-center bg-background/85 px-3 backdrop-blur-xl sm:px-5",
+          "sticky top-0 z-50 grid shrink-0 grid-cols-[1fr_auto_1fr] items-center bg-background/85 px-3 backdrop-blur-xl sm:px-5",
           compact ? "h-12 border-border/80 border-b" : "h-16",
         )}
       >
-        <div className="flex items-center" onMouseEnter={hoverOpen} onMouseLeave={hoverClose}>
+        <div
+          className="flex items-center"
+          onMouseEnter={hoverOpen}
+          onMouseLeave={() => !open && clear()}
+        >
           <Button
             type="button"
             variant="ghost"
@@ -104,13 +132,16 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
           </Button>
         </div>
 
+        {/* Closed: centred. Open: rests beside the mark — the same slot in both states. */}
         <Link
           href={ROUTES.home}
           aria-label={brandName}
-          className="flex items-center justify-center"
+          onClick={close}
+          style={{ transform: `translateX(${open ? restX : "0px"})` }}
+          className={cn("flex items-center justify-center will-change-transform", GLIDE)}
         >
           {/* The official wordmark, reversed for the void — never the name typed in a font. */}
-          <ThemedLogo size={compact ? 88 : 112} />
+          <ThemedLogo size={wordmark} />
         </Link>
 
         <div className="flex items-center justify-end gap-2 sm:gap-4">
@@ -127,35 +158,34 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         </div>
       </header>
 
-      {/* The drawer: out of the layout entirely, so pages always get the full width. */}
+      {/* The drawer: out of the layout entirely, so pages always get the full width.
+          The scrim fades with it (hover included) so the page recedes instead of being cut. */}
       <div
         aria-hidden
         onClick={close}
         className={cn(
-          "fixed inset-0 z-40 bg-background/60 motion-safe:transition-opacity motion-safe:duration-flow",
-          open === "pinned" ? "opacity-100" : "pointer-events-none opacity-0",
+          "fixed inset-0 z-40 bg-background/60 backdrop-blur-[2px] motion-safe:transition-opacity motion-safe:[transition-duration:var(--duration-reveal)] motion-safe:ease-brand",
+          open ? "opacity-100" : "opacity-0",
+          open === "pinned" ? "" : "pointer-events-none",
         )}
       />
       <aside
+        ref={asideRef}
         id="site-drawer"
         aria-label={t("nav.siteNavigation")}
         inert={!open}
         onMouseEnter={() => open === "hover" && clear()}
         onMouseLeave={hoverClose}
         className={cn(
+          // z-[45]: under the bar, so the bar is the drawer's top row. pt = bar height.
           // overscroll-contain: scrolling the drawer never scrolls the page behind it (Stripe does the same).
-          "fixed inset-y-0 left-0 z-50 max-w-[100vw] overflow-y-auto overscroll-contain border-r border-border bg-background shadow-ambient-lg",
-          "motion-safe:transition-transform motion-safe:duration-flow motion-safe:ease-brand",
-          open ? "translate-x-0" : "-translate-x-full",
+          "fixed inset-y-0 left-0 z-[45] max-w-[100vw] overflow-y-auto overscroll-contain border-r border-border bg-background shadow-ambient-lg",
+          compact ? "pt-12" : "pt-16",
+          "motion-safe:transition-[transform,box-shadow] motion-safe:[transition-duration:var(--duration-reveal)] motion-safe:ease-brand",
+          open ? "translate-x-0" : "-translate-x-full shadow-none",
         )}
       >
-        <SiteMenu
-          open={Boolean(open)}
-          pathname={pathname}
-          mailto={mailto}
-          onNavigate={close}
-          onClose={close}
-        />
+        <SiteMenu open={Boolean(open)} pathname={pathname} mailto={mailto} onNavigate={close} />
       </aside>
 
       <SiteSearch open={searching} onOpenChange={setSearching} />
