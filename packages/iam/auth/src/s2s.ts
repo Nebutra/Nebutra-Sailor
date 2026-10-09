@@ -124,3 +124,36 @@ export async function verifyServiceToken(
     return false;
   }
 }
+
+/**
+ * Verify a service token's signature and expiry and return the claims it
+ * carries, or null when it is invalid. Unlike {@link verifyServiceToken} this
+ * does not require the caller to already know the claims: the receiver reads
+ * what the (trusted) signer asserted. Only the holder of SERVICE_SECRET can
+ * mint these, so a claim here is exactly as trustworthy as that signer.
+ */
+export async function readServiceTokenContext(
+  token: string | undefined,
+  options: VerifyServiceTokenOptions | string = {},
+): Promise<ServiceTokenContext | null> {
+  const opts: VerifyServiceTokenOptions =
+    typeof options === "string" ? { secret: options } : options;
+  const secret = opts.secret ?? process.env.SERVICE_SECRET ?? "";
+  if (!token || !secret) return null;
+
+  const verifyOptions: JWTVerifyOptions = { algorithms: [ALG] };
+  if (opts.issuer) verifyOptions.issuer = opts.issuer;
+  if (opts.audience) verifyOptions.audience = opts.audience;
+
+  try {
+    const { payload } = await jwtVerify(token, deriveKey(secret), verifyOptions);
+    const context: ServiceTokenContext = {};
+    for (const key of ["userId", "organizationId", "role", "plan"] as const) {
+      const value = payload[key];
+      if (typeof value === "string" && value) context[key] = value;
+    }
+    return context;
+  } catch {
+    return null;
+  }
+}

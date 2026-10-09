@@ -5,7 +5,12 @@ vi.mock("server-only", () => ({}));
 import { vi } from "vitest";
 
 const { signServiceToken } = await import("@nebutra/auth");
-const { resolveNewApiModel, verifyInternalServiceCaller } = await import("./internal-service");
+const {
+  internalRouteFor,
+  resolveInternalServiceCaller,
+  resolveNewApiModel,
+  verifyInternalServiceCaller,
+} = await import("./internal-service");
 
 function requestWithToken(token?: string) {
   return new Request("https://router.internal/api/internal/v1/chat/completions", {
@@ -70,5 +75,38 @@ describe("resolveNewApiModel", () => {
       },
     ]);
     expect(resolveNewApiModel("claude-sonnet-5")).toBe("claude-sonnet-5");
+  });
+});
+
+describe("resolveInternalServiceCaller / internalRouteFor", () => {
+  it("marks only user + platform staff role tokens as staff", async () => {
+    process.env.SERVICE_SECRET = "test-secret";
+    const staff = await resolveInternalServiceCaller(
+      requestWithToken(await signServiceToken({ userId: "u1", role: "platform_support" })),
+    );
+    expect(staff).toEqual({ staff: true, userId: "u1" });
+    for (const claims of [
+      {},
+      { userId: "u1" },
+      { userId: "u1", role: "owner" },
+      { role: "platform_owner" },
+    ]) {
+      const caller = await resolveInternalServiceCaller(
+        requestWithToken(await signServiceToken(claims)),
+      );
+      expect(caller?.staff).toBe(false);
+    }
+  });
+
+  it("returns null for an invalid token", async () => {
+    process.env.SERVICE_SECRET = "test-secret";
+    expect(await resolveInternalServiceCaller(requestWithToken())).toBeNull();
+  });
+
+  it("does not call the lookup at all for a non-staff caller", async () => {
+    const lookup = vi.fn(async () => "internal");
+    expect(await internalRouteFor({ staff: false }, "m", lookup)).toBeNull();
+    expect(lookup).not.toHaveBeenCalled();
+    expect(await internalRouteFor({ staff: true, userId: "u" }, "m", lookup)).toBe("internal");
   });
 });

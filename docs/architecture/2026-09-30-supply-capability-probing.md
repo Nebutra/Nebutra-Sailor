@@ -549,3 +549,7 @@ through the event payload for operator-facing correlation, not Inngest's interna
 | Bootstrap on empty/unseeded registry | Real, fire-and-forget from Router's own `instrumentation.ts` |
 | Admin run status (`probe.status`) | Real, reads existing columns, no new schema |
 | New-API channel auto-*creation* via its admin API | Still **not implemented** — unchanged stated gap from §7 |
+
+## Addendum 2026-10-09: INTERNAL sources serve staff only
+
+`/api/internal/v1/chat/completions` used to prefer INTERNAL sources for any `SERVICE_SECRET`-signed empty-context token, which includes the gateway's paid AI gateway fallback carrying customer traffic. Now the relay consults INTERNAL sources only when the signed token names a user and a platform staff role (`resolveInternalServiceCaller`, `internalRouteFor`); the signer is the service that verified the person from the `PlatformStaff` table. Empty-context tokens, tokens with a product role, and tokens with a staff role but no user are non-staff and are routed over public supply only (a model that exists only on an INTERNAL source then fails like any unknown model). Tenant-scoped tokens (organizationId/plan) remain rejected. KCQ managed AI is the first staff-aware caller: staff default `deepseek/deepseek-v4.1-flash` on `commandcode`, everyone else `gpt-5.6-luna`.

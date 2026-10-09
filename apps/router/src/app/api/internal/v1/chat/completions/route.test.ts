@@ -137,7 +137,7 @@ describe("POST /api/internal/v1/chat/completions", () => {
     expect(res.status).toBe(503);
   });
 
-  describe("internal-source routing (supply visibility follow-up)", () => {
+  describe("internal-source routing (supply visibility follow-up, staff only)", () => {
     it("routes straight to an AVAILABLE INTERNAL source instead of New-API", async () => {
       process.env.SERVICE_SECRET = "test-secret";
       // Deliberately not configured — proves this path never touches New-API.
@@ -161,7 +161,7 @@ describe("POST /api/internal/v1/chat/completions", () => {
         }),
       );
 
-      const token = await signServiceToken({});
+      const token = await signServiceToken({ userId: "staff_1", role: "platform_operator" });
       const res = await POST(
         request(
           { model: "gpt-5-codex", messages: [{ role: "user", content: "hi" }] },
@@ -202,7 +202,7 @@ describe("POST /api/internal/v1/chat/completions", () => {
         }),
       );
 
-      const token = await signServiceToken({});
+      const token = await signServiceToken({ userId: "staff_1", role: "platform_operator" });
       const res = await POST(
         request(
           { model: "claude-opus-4-anthropic-only", messages: [{ role: "user", content: "hi" }] },
@@ -238,6 +238,97 @@ describe("POST /api/internal/v1/chat/completions", () => {
 
       const [url] = fetchMock.mock.calls[0] as [string, RequestInit];
       expect(url).toBe("https://newapi.example/v1/chat/completions");
+    });
+
+    const INTERNAL_ONLY = {
+      sourceKey: "commandcode",
+      baseUrl: "https://api.commandcode.ai/provider/v1",
+      apiKey: "sk-command-code-goat",
+      upstreamModel: "deepseek-v4.1-flash",
+      supported: true,
+    } as const;
+    const okResponse = () =>
+      new Response(JSON.stringify({ choices: [{ message: { content: "hi" } }] }), {
+        headers: { "content-type": "application/json" },
+        status: 200,
+      });
+    const nonStaffTokens: Record<string, Parameters<typeof signServiceToken>[0]> = {
+      "empty-context service token": {},
+      "customer user token": { userId: "user_1" },
+      "customer with a product role": { userId: "user_1", role: "org:admin" },
+      "staff role claim without a user": { role: "platform_owner" },
+      "user with an unknown role string": { userId: "user_1", role: "platform_god" },
+    };
+
+    for (const [label, claims] of Object.entries(nonStaffTokens)) {
+      it(`never consults or reaches an INTERNAL source for a non-staff caller (${label})`, async () => {
+        process.env.SERVICE_SECRET = "test-secret";
+        process.env.NEW_API_BASE_URL = "https://newapi.example/v1";
+        process.env.NEW_API_ACCESS_TOKEN = "na-token";
+        delete process.env.NEBUTRA_MODEL_ALIASES;
+        vi.mocked(resolveInternalRoute).mockClear();
+        vi.mocked(resolveInternalRoute).mockResolvedValue(INTERNAL_ONLY);
+        const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(okResponse());
+
+        const token = await signServiceToken(claims);
+        const res = await POST(
+          request(
+            { model: "deepseek/deepseek-v4.1-flash", messages: [{ role: "user", content: "hi" }] },
+            { "x-service-token": token },
+          ),
+        );
+
+        expect(res.status).toBe(200);
+        expect(resolveInternalRoute).not.toHaveBeenCalled();
+        const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+        expect(url).toBe("https://newapi.example/v1/chat/completions");
+        expect(url).not.toContain("commandcode");
+        expect((init.headers as Headers).get("authorization")).toBe("Bearer na-token");
+        vi.mocked(resolveInternalRoute).mockResolvedValue(null);
+      });
+    }
+
+    it("a model that exists only on an INTERNAL source errors for non-staff instead of going internal", async () => {
+      process.env.SERVICE_SECRET = "test-secret";
+      process.env.NEW_API_BASE_URL = "https://newapi.example/v1";
+      process.env.NEW_API_ACCESS_TOKEN = "na-token";
+      delete process.env.NEBUTRA_MODEL_ALIASES;
+      vi.mocked(resolveInternalRoute).mockResolvedValue(INTERNAL_ONLY);
+      // Public supply (New-API) does not know the model.
+      const fetchMock = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+        new Response(JSON.stringify({ error: { message: "model not found" } }), {
+          headers: { "content-type": "application/json" },
+          status: 404,
+        }),
+      );
+
+      const token = await signServiceToken({ userId: "user_1" });
+      const res = await POST(
+        request(
+          { model: "deepseek/deepseek-v4.1-flash", messages: [{ role: "user", content: "hi" }] },
+          { "x-service-token": token },
+        ),
+      );
+
+      expect(res.status).toBe(404);
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      expect((fetchMock.mock.calls[0] as [string])[0]).toBe(
+        "https://newapi.example/v1/chat/completions",
+      );
+      vi.mocked(resolveInternalRoute).mockResolvedValue(null);
+    });
+
+    it("rejects a staff-claim token signed with the wrong secret", async () => {
+      process.env.SERVICE_SECRET = "test-secret";
+      const token = await signServiceToken(
+        { userId: "u", role: "platform_owner" },
+        "attacker-secret",
+      );
+      const res = await POST(
+        request({ model: "gpt-5-codex", messages: [] }, { "x-service-token": token }),
+      );
+      expect(res.status).toBe(401);
+      expect(resolveInternalRoute).not.toHaveBeenCalled();
     });
   });
 });

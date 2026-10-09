@@ -1,8 +1,9 @@
 import { z } from "zod";
 import {
+  internalRouteFor,
   relayToInternalSource,
+  resolveInternalServiceCaller,
   resolveNewApiModel,
-  verifyInternalServiceCaller,
 } from "@/lib/internal-service";
 import { proxyOpenAiCompatible, RouterSupplyUnavailableError } from "@/lib/openai-edge";
 import { resolveInternalRoute } from "@/lib/supply/capability";
@@ -29,8 +30,10 @@ export const maxDuration = 180;
  * surface here rather than opening the whole OpenAI-compatible path keeps
  * this endpoint's blast radius to exactly what is used.
  *
- * **Internal-source routing (follow-up to ADR 2026-09-30)**: before falling
- * to New-API, this checks whether the requested model is currently served by
+ * **Internal-source routing (follow-up to ADR 2026-09-30), staff only**: for a
+ * caller whose signed service token carries a user and a platform staff role
+ * (`resolveInternalServiceCaller`), before falling to New-API this checks
+ * whether the requested model is currently served by
  * an `INTERNAL`-visibility supply source (`resolveInternalRoute`) — a source
  * onboarded for Nebutra's own team use only (its terms forbid resale or
  * third-party benefit), never counted toward public shelf availability and
@@ -77,7 +80,8 @@ function unavailable(message: string): Response {
 }
 
 export async function POST(request: Request): Promise<Response> {
-  if (!(await verifyInternalServiceCaller(request))) {
+  const caller = await resolveInternalServiceCaller(request);
+  if (!caller) {
     return unauthenticated();
   }
 
@@ -95,7 +99,10 @@ export async function POST(request: Request): Promise<Response> {
 
   const { model, ...rest } = parsed.data;
 
-  const internalRoute = await resolveInternalRoute(model).catch(() => null);
+  // INTERNAL sources serve verified Nebutra staff only. A token without a
+  // staff identity (customer traffic the gateway relays, or an empty-context
+  // service call) never reaches `resolveInternalRoute` at all.
+  const internalRoute = await internalRouteFor(caller, model, resolveInternalRoute);
   if (internalRoute?.supported) {
     try {
       return await relayToInternalSource(internalRoute, rest);

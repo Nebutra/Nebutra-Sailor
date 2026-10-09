@@ -1,6 +1,7 @@
 import "server-only";
 
-import { verifyServiceToken } from "@nebutra/auth";
+import { readServiceTokenContext } from "@nebutra/auth";
+import { StaffRoleSchema } from "@nebutra/contracts/admin";
 import { openaiCompatibleUrl, parseAliasTableJson, resolveAliases } from "@nebutra/router-supply";
 import type { InternalRoute } from "./supply/capability";
 
@@ -20,12 +21,60 @@ import type { InternalRoute } from "./supply/capability";
  * `x-user-id` / `x-role` alongside the token for the *staff* ladder; this is
  * a different, narrower caller shape with none of that.
  */
-export async function verifyInternalServiceCaller(request: Request): Promise<boolean> {
+export interface InternalServiceCaller {
+  /**
+   * True only when the signed token names a user AND a platform staff role
+   * (`platform_*` ladder, packages/commerce/contracts admin). The signer is the
+   * service that verified the person server-side (the gateway, from the
+   * PlatformStaff table); a client can never set this. An empty-context token
+   * (a service acting for no one) and any token with a product role are NOT
+   * staff.
+   */
+  readonly staff: boolean;
+  readonly userId?: string;
+}
+
+/**
+ * Verify the service token and say who it speaks for. Returns null when the
+ * token is missing, expired, or not signed with SERVICE_SECRET.
+ */
+export async function resolveInternalServiceCaller(
+  request: Request,
+): Promise<InternalServiceCaller | null> {
   // The gateway's upstream loop sends every upstream key as a Bearer token, so
   // accept it there as well as on the dedicated header.
   const bearer = request.headers.get("authorization")?.match(/^Bearer\s+(.+)$/i)?.[1];
   const token = request.headers.get("x-service-token") ?? bearer ?? undefined;
-  return verifyServiceToken(token);
+  const context = await readServiceTokenContext(token);
+  // Tenant-scoped tokens are a different caller shape (the staff ladder and the
+  // tenant API), never this endpoint's. Accepted shapes: empty context, or a
+  // user identity with an optional role.
+  if (!context || context.organizationId || context.plan) return null;
+  const role = StaffRoleSchema.safeParse(context.role);
+  return {
+    staff: Boolean(context.userId) && role.success,
+    ...(context.userId ? { userId: context.userId } : {}),
+  };
+}
+
+export async function verifyInternalServiceCaller(request: Request): Promise<boolean> {
+  return (await resolveInternalServiceCaller(request)) !== null;
+}
+
+/**
+ * The one place that decides whether an INTERNAL supply source may serve a
+ * request. INTERNAL sources (a plan whose terms forbid resale or third-party
+ * benefit) serve Nebutra staff only: any other caller, including a service
+ * token minted on behalf of a customer, gets `null` and must be routed over
+ * public supply. `lookup` is never called for a non-staff caller.
+ */
+export async function internalRouteFor<T>(
+  caller: InternalServiceCaller,
+  model: string,
+  lookup: (model: string) => Promise<T | null>,
+): Promise<T | null> {
+  if (!caller.staff) return null;
+  return lookup(model).catch(() => null);
 }
 
 /**

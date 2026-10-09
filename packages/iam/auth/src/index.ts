@@ -60,7 +60,7 @@ export {
 } from "./providers/better-auth/trusted-origins";
 // Service-to-service HMAC helpers
 export type { ServiceTokenContext } from "./s2s";
-export { signServiceToken, verifyServiceToken } from "./s2s";
+export { readServiceTokenContext, signServiceToken, verifyServiceToken } from "./s2s";
 // Server-side factory
 export { createAuth } from "./server";
 

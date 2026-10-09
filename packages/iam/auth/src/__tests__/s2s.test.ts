@@ -1,7 +1,7 @@
 import { createHmac } from "node:crypto";
 import { decodeJwt } from "jose";
 import { describe, expect, it } from "vitest";
-import { signServiceToken, verifyServiceToken } from "../s2s";
+import { readServiceTokenContext, signServiceToken, verifyServiceToken } from "../s2s";
 
 describe("service-to-service tokens", () => {
   const SECRET = "test-secret-32-bytes-minimum-len";
@@ -143,5 +143,21 @@ describe("service-to-service tokens", () => {
     expect(
       await verifyServiceToken(legacy, undefined, "org_legacy", undefined, undefined, SECRET),
     ).toBe(false);
+  });
+
+  it("reads the signed claims without knowing them in advance", async () => {
+    const token = await signServiceToken({ userId: "u1", role: "platform_operator" }, SECRET);
+    expect(await readServiceTokenContext(token, SECRET)).toEqual({
+      userId: "u1",
+      role: "platform_operator",
+    });
+    expect(await readServiceTokenContext(await signServiceToken({}, SECRET), SECRET)).toEqual({});
+  });
+
+  it("returns null for a forged, wrong-secret or missing token", async () => {
+    const token = await signServiceToken({ role: "platform_owner" }, "other-secret");
+    expect(await readServiceTokenContext(token, SECRET)).toBeNull();
+    expect(await readServiceTokenContext("garbage", SECRET)).toBeNull();
+    expect(await readServiceTokenContext(undefined, SECRET)).toBeNull();
   });
 });
