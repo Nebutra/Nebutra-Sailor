@@ -84,6 +84,7 @@ jobs:
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
         env:
           SUBREPO_MIRROR_TOKEN: ${{ secrets.SUBREPO_MIRROR_TOKEN }}
+          MIRROR_PACKAGE: ${{ inputs.package }}
         run: |
           set -euo pipefail
           if [ -z "${SUBREPO_MIRROR_TOKEN:-}" ]; then
@@ -92,17 +93,19 @@ jobs:
             exit 1
           fi
           args=(--cohort=first-wave --apply)
-          if [ -n "${{ inputs.package }}" ]; then
-            args+=(--package="${{ inputs.package }}")
+          if [ -n "$MIRROR_PACKAGE" ]; then
+            args+=(--package="$MIRROR_PACKAGE")
           fi
           node scripts/create-subrepo-mirrors.mjs "${args[@]}"
 
       - name: Build mirrors
+        env:
+          MIRROR_PACKAGE: ${{ inputs.package }}
         run: |
           set -euo pipefail
           args=(--cohort=first-wave --out=/tmp/nebutra-subrepo-mirrors)
-          if [ -n "${{ inputs.package }}" ]; then
-            args+=(--package="${{ inputs.package }}")
+          if [ -n "$MIRROR_PACKAGE" ]; then
+            args+=(--package="$MIRROR_PACKAGE")
           else
             args+=(--all)
           fi
@@ -112,6 +115,7 @@ jobs:
         if: github.event_name != 'workflow_dispatch' || !inputs.dry_run
         env:
           SUBREPO_MIRROR_TOKEN: ${{ secrets.SUBREPO_MIRROR_TOKEN }}
+          MIRROR_PACKAGE: ${{ inputs.package }}
         run: |
           set -euo pipefail
           if [ -z "${SUBREPO_MIRROR_TOKEN:-}" ]; then
@@ -119,8 +123,8 @@ jobs:
             exit 1
           fi
           args=(--cohort=first-wave --out=/tmp/nebutra-subrepo-mirrors --push)
-          if [ -n "${{ inputs.package }}" ]; then
-            args+=(--package="${{ inputs.package }}")
+          if [ -n "$MIRROR_PACKAGE" ]; then
+            args+=(--package="$MIRROR_PACKAGE")
           else
             args+=(--all)
           fi

@@ -72,6 +72,7 @@ jobs:
         env:
           KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY }}
           KNOWN: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS }}
+          HOST: ${{ vars.VM_HOST || vars.ECS_HOST || secrets.ECS_HOST }}
         run: |
           set -euo pipefail
           if [ -z "${KEY:-}" ]; then
@@ -84,7 +85,6 @@ jobs:
           if [ -n "${KNOWN:-}" ]; then
             printf '%s\n' "$KNOWN" > ~/.ssh/known_hosts
           else
-            HOST="${{ vars.VM_HOST || vars.ECS_HOST || secrets.ECS_HOST }}"
             ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
           fi
 

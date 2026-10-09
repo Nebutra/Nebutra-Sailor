@@ -8,6 +8,8 @@ test("security regressions run independently on main and pull requests with read
   const workflow = parse(readFileSync(workflowFile, "utf8"));
   assert.deepEqual(workflow.on.push.branches, ["main"]);
   assert.deepEqual(workflow.on.pull_request.branches, ["main"]);
+  assert.ok(workflow.on.push.paths.includes(".github/workflows/**"));
+  assert.ok(workflow.on.pull_request.paths.includes(".github/workflows/**"));
   assert.deepEqual(workflow.permissions, { contents: "read" });
   assert.ok(workflow.concurrency.group.startsWith("security-regressions-"));
   assert.ok(workflow.jobs.security["timeout-minutes"] <= 15);

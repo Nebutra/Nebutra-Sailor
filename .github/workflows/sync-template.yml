@@ -170,6 +170,8 @@ jobs:
         run: rm -f ~/.ssh/sailor_template
 
       - name: Summary
+        env:
+          TEMPLATE_PUSHED: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}
         run: |
           {
             echo "### Template sync summary"
@@ -179,5 +181,5 @@ jobs:
             echo "- Immutable tag: \`source-${{ github.sha }}\`"
             echo "- Sailor version: \`${{ steps.sailor.outputs.sailor_version }}\` (converged: ${{ steps.sailor.outputs.sailor_converged }})"
             echo "- Sailor version tag: ${{ steps.push.outputs.sailor_tag || 'not pushed (dry run)' }}"
-            echo "- Pushed: ${{ github.event_name != 'workflow_dispatch' || !inputs.dry_run }}"
+            echo "- Pushed: $TEMPLATE_PUSHED"
           } >> "$GITHUB_STEP_SUMMARY"

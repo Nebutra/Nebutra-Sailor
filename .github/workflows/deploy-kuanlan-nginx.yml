@@ -89,9 +89,11 @@ jobs:
           exit 1
 
       - name: Smoke kuanlan host stays on itself
+        env:
+          DEPLOY_REASON: ${{ github.event.inputs.reason }}
         run: |
           set -euo pipefail
-          echo "reason: ${{ github.event.inputs.reason }}"
+          printf '%s\n' "reason: $DEPLOY_REASON"
           for path in / /create /wardrobe /moments /me; do
             loc=""
             code="000"

@@ -1177,11 +1177,13 @@ jobs:
 
       - name: Check API backward compatibility
         if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: ${{ github.base_ref }}
         run: |
           mkdir -p artifacts/advisory
 
-          git fetch origin ${{ github.base_ref }} --depth=1
-          if git show origin/${{ github.base_ref }}:backends/gateway/openapi.json > openapi-base.json 2>/dev/null; then
+          git fetch --depth=1 origin "$BASE_REF"
+          if git show "origin/${BASE_REF}:backends/gateway/openapi.json" > openapi-base.json 2>/dev/null; then
             echo "oasdiff is not a workspace dependency; skipping breaking-change advisory." \
               | tee artifacts/advisory/openapi-breaking-diff.txt
           else

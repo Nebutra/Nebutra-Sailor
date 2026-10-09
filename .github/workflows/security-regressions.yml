@@ -15,7 +15,7 @@ on:
       - "pnpm-workspace.yaml"
       - "turbo.json"
       - ".github/actions/setup-node-pnpm/**"
-      - ".github/workflows/security-regressions.yml"
+      - ".github/workflows/**"
   pull_request:
     branches: [main]
     paths:
@@ -28,7 +28,7 @@ on:
       - "pnpm-workspace.yaml"
       - "turbo.json"
       - ".github/actions/setup-node-pnpm/**"
-      - ".github/workflows/security-regressions.yml"
+      - ".github/workflows/**"
   workflow_dispatch: {}
 
 permissions:

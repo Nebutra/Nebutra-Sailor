@@ -57,6 +57,19 @@ audit; it is reached through the legacy js-yaml 3 / argparse tooling subtree.
 
 ## Workflow policy
 
+Free-form dispatch inputs, branch names and secrets must enter shell steps
+through `env`, then quoted shell variables. Do not interpolate them into
+`run` source: quotes around an Actions expression do not prevent command
+substitution after GitHub renders the script. Derived step outputs carrying
+these values follow the same rule. Single-line output writers must reject
+CR/LF so inputs cannot forge additional output keys.
+
+`scripts/ci/workflow-input-safety.test.mjs` checks this boundary and executes
+the Lighthouse steps with command-substitution and quote-breaking payloads.
+The independent `security-regressions.yml` workflow runs these regressions,
+the production dependency audit and actual PostgreSQL/PGlite tenant attacks
+without queuing behind the full application build. Full CI keeps its gates.
+
 `pull_request_target` is only allowed for workflows that do not check out or run
 untrusted pull request code. The current allowlist is:
 

@@ -100,12 +100,16 @@ jobs:
           echo "image=ghcr.io/${owner}/nebutra-ai:${tag}" >> "$GITHUB_OUTPUT"
 
       - name: Validate Cloud VM secrets
+        env:
+          SSH_KEY: ${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS: ${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}
+          GATEWAY_SHARED_SECRET: ${{ secrets.GATEWAY_SHARED_SECRET }}
         run: |
           [ -n "${ECS_HOST:-}" ] || { echo "::error::VM_HOST, CLOUD_VM_HOST, or legacy ECS_HOST repository variable is not set"; exit 1; }
           [ -n "${ECS_USER:-}" ] || { echo "::error::VM_USER, CLOUD_VM_USER, or legacy ECS_USER repository variable is not set"; exit 1; }
-          [ -n "${{ secrets.VM_SSH_PRIVATE_KEY || secrets.CLOUD_VM_SSH_PRIVATE_KEY || secrets.ECS_SSH_PRIVATE_KEY }}" ] || { echo "::error::VM_SSH_PRIVATE_KEY, CLOUD_VM_SSH_PRIVATE_KEY, or legacy ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
-          [ -n "${{ secrets.VM_SSH_KNOWN_HOSTS || secrets.CLOUD_VM_SSH_KNOWN_HOSTS || secrets.ECS_SSH_KNOWN_HOSTS }}" ] || { echo "::error::VM_SSH_KNOWN_HOSTS, CLOUD_VM_SSH_KNOWN_HOSTS, or legacy ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
-          [ -n "${{ secrets.GATEWAY_SHARED_SECRET }}" ] || { echo "::error::GATEWAY_SHARED_SECRET secret is not set"; exit 1; }
+          [ -n "$SSH_KEY" ] || { echo "::error::VM_SSH_PRIVATE_KEY, CLOUD_VM_SSH_PRIVATE_KEY, or legacy ECS_SSH_PRIVATE_KEY secret is not set"; exit 1; }
+          [ -n "$KNOWN_HOSTS" ] || { echo "::error::VM_SSH_KNOWN_HOSTS, CLOUD_VM_SSH_KNOWN_HOSTS, or legacy ECS_SSH_KNOWN_HOSTS secret is not set"; exit 1; }
+          [ -n "$GATEWAY_SHARED_SECRET" ] || { echo "::error::GATEWAY_SHARED_SECRET secret is not set"; exit 1; }
           [ -n "${DATABASE_URL:-}" ] || { echo "::error::SUPABASE_DATABASE_URL or DATABASE_URL secret is required for persistent origin tasks"; exit 1; }
           [ -n "${CELERY_BROKER_URL:-}" ] || { echo "::error::CELERY_BROKER_URL, UPSTASH_REDIS_URL, or REDIS_URL secret is required for VM Celery"; exit 1; }
           case "${UPLOAD_STORAGE_PROVIDER:-}" in

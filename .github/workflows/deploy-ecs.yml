@@ -1727,6 +1727,8 @@ jobs:
 
       - name: Summary
         if: always()
+        env:
+          DEPLOY_REASON: ${{ github.event.inputs.reason }}
         # Note: GitHub Actions runs `bash --noprofile --norc -eo pipefail`, so
         # `[ -n "" ] && echo ...` exits 1 when the reason is empty (push events).
         # Use an explicit if-block to keep the step's exit code at 0.
@@ -1738,8 +1740,8 @@ jobs:
             echo "- **AUTH_DEPLOYED=${{ needs.detect-changes.outputs.auth }}** (true = this run built+uploaded auth; false = auth bundle untouched)"
             echo "- Apps: landing=${{ needs.detect-changes.outputs.landing }} / web=${{ needs.detect-changes.outputs.web }} / api=${{ needs.detect-changes.outputs.api }} / auth=${{ needs.detect-changes.outputs.auth }} / idp=${{ needs.detect-changes.outputs.idp }} / forge=${{ needs.detect-changes.outputs.forge }} / router=${{ needs.detect-changes.outputs.router }} / sailor-docs=${{ needs.detect-changes.outputs['sailor-docs'] }} / pebble=${{ needs.detect-changes.outputs.pebble }} / admin=${{ needs.detect-changes.outputs.admin }}"
             echo "- Triggered by: ${{ github.actor }} via ${{ github.event_name }}"
-            if [ -n "${{ github.event.inputs.reason }}" ]; then
-              echo "- Reason: ${{ github.event.inputs.reason }}"
+            if [ -n "$DEPLOY_REASON" ]; then
+              printf '%s\n' "- Reason: $DEPLOY_REASON"
             fi
             echo ""
             echo "Unselected matrix apps are **skipped** (not green). Green Build auth = real build."

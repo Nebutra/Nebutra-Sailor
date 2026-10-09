@@ -37,13 +37,21 @@ jobs:
       - name: Resolve inputs
         id: refs
         shell: bash
+        env:
+          BEFORE_REF: ${{ inputs.before_ref }}
+          AFTER_REF: ${{ inputs.after_ref }}
+          RUNS: ${{ inputs.runs }}
+          TARGET_PATH: ${{ inputs.target_path }}
         run: |
           set -euo pipefail
-
-          BEFORE_REF="${{ inputs.before_ref }}"
-          AFTER_REF="${{ inputs.after_ref }}"
-          RUNS="${{ inputs.runs }}"
-          TARGET_PATH="${{ inputs.target_path }}"
+          # Outputs below use the single-line protocol. Reject CR/LF instead
+          # of allowing an input to create another output key.
+          for value in "$BEFORE_REF" "$AFTER_REF" "$RUNS" "$TARGET_PATH"; do
+            if [[ "$value" == *$'\n'* || "$value" == *$'\r'* ]]; then
+              echo "::error::Lighthouse inputs must be single-line values"
+              exit 1
+            fi
+          done
 
           {
             echo "before_ref=${BEFORE_REF}"
@@ -58,6 +66,10 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.CI_DATABASE_URL || 'postgresql://stub:stub@localhost:5432/stub' }}
           NEXT_TELEMETRY_DISABLED: "1"
+          BEFORE_REF: ${{ steps.refs.outputs.before_ref }}
+          AFTER_REF: ${{ steps.refs.outputs.after_ref }}
+          RUNS: ${{ steps.refs.outputs.runs }}
+          TARGET_PATH: ${{ steps.refs.outputs.target_path }}
         run: |
           set -euo pipefail
 
@@ -65,10 +77,10 @@ jobs:
 
           chmod +x scripts/lighthouse/ci-dashboard-compare.sh
           scripts/lighthouse/ci-dashboard-compare.sh \
-            --before-ref "${{ steps.refs.outputs.before_ref }}" \
-            --after-ref "${{ steps.refs.outputs.after_ref }}" \
-            --runs "${{ steps.refs.outputs.runs }}" \
-            --target-path "${{ steps.refs.outputs.target_path }}" \
+            --before-ref "$BEFORE_REF" \
+            --after-ref "$AFTER_REF" \
+            --runs "$RUNS" \
+            --target-path "$TARGET_PATH" \
             --output-dir "$OUT_DIR"
 
           echo "out_dir=$OUT_DIR" >> "$GITHUB_OUTPUT"
