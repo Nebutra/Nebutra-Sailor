@@ -1,152 +1,81 @@
 "use client";
 
+/**
+ * Menubar — the desktop-app menu row (File / Edit / View…), built on Base UI
+ * Menubar + Menu.
+ *
+ * https://base-ui.com/react/components/menubar ·
+ * https://www.w3.org/WAI/ARIA/apg/patterns/menubar/
+ *
+ * Base UI owns the APG contract, so this file only styles it:
+ *   ← / →         move between top-level triggers (focus loops)
+ *   ↓ / Enter     open the focused menu and focus its first item
+ *   ↑ / ↓         move within a menu; → / ← open / close a submenu
+ *   a–z           typeahead to a matching item
+ *   Esc           close the menu and return focus to its trigger
+ *   hover         once one menu is open, hovering a sibling trigger switches
+ *
+ * Every trigger carries role="menuitem", aria-haspopup and aria-expanded; the
+ * popups are portalled and positioned by the shared overlay layer.
+ */
+
+import { Menu as BaseMenu } from "@base-ui/react/menu";
+import { Menubar as BaseMenubar } from "@base-ui/react/menubar";
 import { Check, ChevronRight, Status as Circle } from "@nebutra/icons";
-import * as React from "react";
+import type * as React from "react";
 
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 import { overlayPrimitiveClassNames } from "./overlay";
 
-function assignRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
-  if (typeof ref === "function") {
-    ref(value);
-    return;
-  }
-
-  if (ref) {
-    ref.current = value;
-  }
-}
-
-const MenubarContext = React.createContext<{
-  activeMenu: string | null;
-  setActiveMenu: (menu: string | null) => void;
-}>({ activeMenu: null, setActiveMenu: () => {} });
+// Base UI marks an open trigger with `data-popup-open`; the shared menubar
+// classes were written against `data-state=open`. Map one onto the other here
+// so the visual contract in overlay.ts stays the single source.
+const OPEN_STATE_CLASSNAME =
+  "data-[popup-open]:bg-accent data-[popup-open]:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground";
 
 const Menubar = ({
   className,
-  children,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
-  const [activeMenu, setActiveMenu] = React.useState<string | null>(null);
-  const rootRef = React.useRef<HTMLDivElement | null>(null);
-  const contextValue = { activeMenu, setActiveMenu };
-
-  React.useEffect(() => {
-    function handlePointerDown(event: PointerEvent) {
-      if (event.target instanceof Node && rootRef.current?.contains(event.target)) return;
-      setActiveMenu(null);
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, []);
-
-  function setRootRef(node: HTMLDivElement | null) {
-    rootRef.current = node;
-    assignRef(ref, node);
-  }
-
-  return (
-    <MenubarContext.Provider value={contextValue}>
-      <div
-        ref={setRootRef}
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.stopPropagation();
-          }
-        }}
-        tabIndex={-1}
-        role="menubar"
-        className={cn(overlayPrimitiveClassNames.menubarRoot, className)}
-        {...props}
-      >
-        {children}
-      </div>
-    </MenubarContext.Provider>
-  );
-};
+}: React.ComponentProps<typeof BaseMenubar> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <BaseMenubar
+    ref={ref}
+    className={cn(overlayPrimitiveClassNames.menubarRoot, className)}
+    {...props}
+  />
+);
 Menubar.displayName = "Menubar";
 
-const MenubarMenuContext = React.createContext<{
-  value: string;
-  isOpen: boolean;
-}>({ value: "", isOpen: false });
+/** One top-level menu: a `MenubarTrigger` and its `MenubarContent`. */
+const MenubarMenu = (props: React.ComponentProps<typeof BaseMenu.Root>) => (
+  <BaseMenu.Root {...props} />
+);
+MenubarMenu.displayName = "MenubarMenu";
 
-const MenubarMenu = ({ children }: { children: React.ReactNode }) => {
-  const { activeMenu } = React.use(MenubarContext);
-  const value = React.useId();
-  const isOpen = activeMenu === value;
-  const contextValue = { value, isOpen };
+const MenubarPortal = BaseMenu.Portal;
 
-  return (
-    <MenubarMenuContext.Provider value={contextValue}>
-      <div className="relative inline-block text-left">{children}</div>
-    </MenubarMenuContext.Provider>
-  );
-};
-
-const MenubarPortal = ({ children }: { children: React.ReactNode }) => <>{children}</>;
-
-const MenubarGroup = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+const MenubarGroup = BaseMenu.Group;
 
 const MenubarTrigger = ({
   className,
-  type = "button",
   ref,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+}: React.ComponentProps<typeof BaseMenu.Trigger> & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
-}) => {
-  const { activeMenu, setActiveMenu } = React.use(MenubarContext);
-  const { value, isOpen } = React.use(MenubarMenuContext);
-
-  return (
-    <button
-      ref={ref}
-      type={type}
-      role="menuitem"
-      tabIndex={0}
-      aria-haspopup="menu"
-      aria-expanded={isOpen}
-      data-state={isOpen ? "open" : "closed"}
-      onClick={() => setActiveMenu(isOpen ? null : value)}
-      onMouseEnter={() => {
-        // Open on hover only if another menu is already active
-        if (activeMenu && activeMenu !== value) {
-          setActiveMenu(value);
-        }
-      }}
-      className={cn(overlayPrimitiveClassNames.menubarTrigger, className)}
-      {...props}
-    />
-  );
-};
+}) => (
+  <BaseMenu.Trigger
+    ref={ref}
+    className={cn(overlayPrimitiveClassNames.menubarTrigger, OPEN_STATE_CLASSNAME, className)}
+    {...props}
+  />
+);
 MenubarTrigger.displayName = "MenubarTrigger";
 
-const MenubarSubContext = React.createContext<{
-  isOpen: boolean;
-  setIsOpen: (o: boolean) => void;
-}>({ isOpen: false, setIsOpen: () => {} });
-
-const MenubarSub = ({ children }: { children: React.ReactNode }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const contextValue = { isOpen, setIsOpen };
-
-  return (
-    <MenubarSubContext.Provider value={contextValue}>
-      <div
-        className="relative"
-        onPointerEnter={() => setIsOpen(true)}
-        onPointerLeave={() => setIsOpen(false)}
-      >
-        {children}
-      </div>
-    </MenubarSubContext.Provider>
-  );
-};
+const MenubarSub = (props: React.ComponentProps<typeof BaseMenu.SubmenuRoot>) => (
+  <BaseMenu.SubmenuRoot {...props} />
+);
+MenubarSub.displayName = "MenubarSub";
 
 const MenubarSubTrigger = ({
   className,
@@ -154,186 +83,115 @@ const MenubarSubTrigger = ({
   children,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { inset?: boolean } & {
+}: React.ComponentProps<typeof BaseMenu.SubmenuTrigger> & { inset?: boolean } & {
   ref?: React.Ref<HTMLDivElement> | undefined;
-}) => {
-  const { isOpen } = React.use(MenubarSubContext);
-  return (
-    <div
-      ref={ref}
-      role="menuitem"
-      tabIndex={0}
-      aria-haspopup="menu"
-      aria-expanded={isOpen}
-      data-state={isOpen ? "open" : "closed"}
-      className={cn(overlayPrimitiveClassNames.menubarSubTrigger, inset && "pl-8", className)}
-      {...props}
-    >
-      {children}
-      <ChevronRight className="ml-auto h-4 w-4" />
-    </div>
-  );
-};
+}) => (
+  <BaseMenu.SubmenuTrigger
+    ref={ref}
+    className={cn(
+      overlayPrimitiveClassNames.menubarSubTrigger,
+      OPEN_STATE_CLASSNAME,
+      inset && "pl-8",
+      className,
+    )}
+    {...props}
+  >
+    {children}
+    <ChevronRight aria-hidden="true" className="ml-auto h-4 w-4" />
+  </BaseMenu.SubmenuTrigger>
+);
 MenubarSubTrigger.displayName = "MenubarSubTrigger";
 
-const MenubarSubContent = ({
-  className,
-  style,
-  ref,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
-  const { isOpen } = React.use(MenubarSubContext);
+type PositionerProps = React.ComponentProps<typeof BaseMenu.Positioner>;
 
-  if (!isOpen) return null;
-
-  return (
-    <div
-      ref={ref}
-      role="menu"
-      className={cn(
-        overlayClassNames.menuSurface,
-        overlayPrimitiveClassNames.menuSurface,
-        "absolute top-0 left-full ml-1 min-w-[8rem]",
-        className,
-      )}
-      style={{ zIndex: overlayZIndex.popover, ...style }}
-      {...props}
-    />
-  );
-};
-MenubarSubContent.displayName = "MenubarSubContent";
+export interface MenubarContentProps extends React.ComponentProps<typeof BaseMenu.Popup> {
+  align?: PositionerProps["align"];
+  alignOffset?: PositionerProps["alignOffset"];
+  side?: PositionerProps["side"];
+  sideOffset?: PositionerProps["sideOffset"];
+}
 
 const MenubarContent = ({
   className,
-  align: _align = "start",
-  alignOffset: _alignOffset = -4,
-  sideOffset: _sideOffset = 8,
+  align = "start",
+  alignOffset = -4,
+  side = "bottom",
+  sideOffset = 8,
   style,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
-  align?: "start" | "center" | "end";
-  alignOffset?: number;
-  sideOffset?: number;
-} & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
-  const { isOpen } = React.use(MenubarMenuContext);
-  const contentRef = React.useRef<HTMLDivElement | null>(null);
-  const [side, setSide] = React.useState<"top" | "bottom">("bottom");
-
-  React.useLayoutEffect(() => {
-    if (!isOpen) {
-      setSide("bottom");
-      return;
-    }
-
-    const content = contentRef.current;
-    if (!content) return;
-
-    const viewportPadding = 8;
-    const rect = content.getBoundingClientRect();
-    const availableAbove = rect.top - content.offsetHeight - viewportPadding;
-    const isBottomClipped = rect.bottom > window.innerHeight - viewportPadding;
-
-    setSide(isBottomClipped && availableAbove >= viewportPadding ? "top" : "bottom");
-  }, [isOpen]);
-
-  function setContentRef(node: HTMLDivElement | null) {
-    contentRef.current = node;
-    assignRef(ref, node);
-  }
-
-  if (!isOpen) return null;
-
-  return (
-    <div
-      ref={setContentRef}
-      role="menu"
-      data-side={side}
-      className={cn(
-        overlayClassNames.menuSurface,
-        overlayPrimitiveClassNames.menuSurface,
-        "absolute left-0 min-w-[12rem]",
-        side === "top" ? "bottom-full mb-[8px]" : "top-full mt-[8px]",
-        className,
-      )}
-      style={{ zIndex: overlayZIndex.popover, ...style }}
-      {...props}
-    />
-  );
-};
+}: MenubarContentProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <BaseMenu.Portal>
+    <BaseMenu.Positioner
+      align={align}
+      alignOffset={alignOffset}
+      side={side}
+      sideOffset={sideOffset}
+      style={{ zIndex: overlayZIndex.popover }}
+    >
+      <BaseMenu.Popup
+        ref={ref}
+        className={cn(
+          overlayClassNames.menuSurface,
+          overlayPrimitiveClassNames.menuSurface,
+          "min-w-[12rem]",
+          className,
+        )}
+        style={{ zIndex: overlayZIndex.popover, ...style }}
+        {...props}
+      />
+    </BaseMenu.Positioner>
+  </BaseMenu.Portal>
+);
 MenubarContent.displayName = "MenubarContent";
+
+const MenubarSubContent = ({
+  className,
+  sideOffset = 4,
+  alignOffset = -4,
+  ...props
+}: MenubarContentProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
+  <MenubarContent
+    side="right"
+    sideOffset={sideOffset}
+    alignOffset={alignOffset}
+    className={cn("min-w-[8rem]", className)}
+    {...props}
+  />
+);
+MenubarSubContent.displayName = "MenubarSubContent";
 
 const MenubarItem = ({
   className,
   inset,
-  disabled,
   asChild,
   children,
+  render,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
+}: React.ComponentProps<typeof BaseMenu.Item> & {
   inset?: boolean;
-  disabled?: boolean;
+  /** Render the child element (e.g. a router Link) as the item. */
   asChild?: boolean;
 } & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
-  const { setActiveMenu } = React.use(MenubarContext);
-
-  const activateMenuItem = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (disabled) {
-      e.preventDefault();
-      return;
-    }
-    setActiveMenu(null);
-    if (props.onClick) props.onClick(e);
-  };
-
-  const closeMenuItem = () => {
-    if (!disabled) {
-      setActiveMenu(null);
-    }
-  };
-
-  if (asChild && React.isValidElement(children)) {
-    const child = children as React.ReactElement<React.ComponentProps<"div">>;
-    return React.cloneElement(child, {
-      ref,
-      role: child.props.role ?? "menuitem",
-      tabIndex: disabled ? -1 : (child.props.tabIndex ?? 0),
-      "aria-disabled": disabled || undefined,
-      "data-disabled": disabled ? "" : undefined,
-      onClick: (e: React.MouseEvent<HTMLDivElement>) => {
-        activateMenuItem(e);
-        if (child.props.onClick) child.props.onClick(e);
-      },
-      className: cn(
-        overlayPrimitiveClassNames.menubarItem,
+  const childElement =
+    asChild && children && typeof children === "object" && "props" in children
+      ? (children as React.ReactElement)
+      : undefined;
+  return (
+    <BaseMenu.Item
+      ref={ref}
+      render={childElement ?? render}
+      className={cn(
+        overlayPrimitiveClassNames.menuItem,
+        "data-[disabled]:opacity-50",
         inset && "pl-8",
         className,
-        child.props.className,
-      ),
-      ...props,
-    } as React.ComponentProps<"div"> & React.RefAttributes<HTMLDivElement>);
-  }
-
-  return (
-    <div
-      ref={ref}
-      role="menuitem"
-      tabIndex={disabled ? -1 : 0}
-      aria-disabled={disabled || undefined}
-      data-disabled={disabled ? "" : undefined}
-      onClick={activateMenuItem}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          closeMenuItem();
-        }
-      }}
-      className={cn(overlayPrimitiveClassNames.menubarItem, inset && "pl-8", className)}
+      )}
       {...props}
     >
-      {children}
-    </div>
+      {childElement ? undefined : children}
+    </BaseMenu.Item>
   );
 };
 MenubarItem.displayName = "MenubarItem";
@@ -341,72 +199,50 @@ MenubarItem.displayName = "MenubarItem";
 const MenubarCheckboxItem = ({
   className,
   children,
-  checked,
-  disabled,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { checked?: boolean; disabled?: boolean } & {
+}: React.ComponentProps<typeof BaseMenu.CheckboxItem> & {
   ref?: React.Ref<HTMLDivElement> | undefined;
 }) => (
-  <div
+  <BaseMenu.CheckboxItem
     ref={ref}
-    role="menuitemcheckbox"
-    tabIndex={disabled ? -1 : 0}
-    aria-checked={checked || false}
-    aria-disabled={disabled || undefined}
-    data-disabled={disabled ? "" : undefined}
-    className={cn(overlayPrimitiveClassNames.menubarCheckboxItem, className)}
+    className={cn(overlayPrimitiveClassNames.menuCheckboxItem, className)}
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      {checked && <Check className="h-4 w-4" />}
+      <BaseMenu.CheckboxItemIndicator>
+        <Check aria-hidden="true" className="h-4 w-4" />
+      </BaseMenu.CheckboxItemIndicator>
     </span>
     {children}
-  </div>
+  </BaseMenu.CheckboxItem>
 );
 MenubarCheckboxItem.displayName = "MenubarCheckboxItem";
+
+const MenubarRadioGroup = BaseMenu.RadioGroup;
 
 const MenubarRadioItem = ({
   className,
   children,
-  checked,
-  disabled,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
-  checked?: boolean;
-  value?: string;
-  disabled?: boolean;
-} & {
+}: React.ComponentProps<typeof BaseMenu.RadioItem> & {
   ref?: React.Ref<HTMLDivElement> | undefined;
 }) => (
-  <div
+  <BaseMenu.RadioItem
     ref={ref}
-    role="menuitemradio"
-    tabIndex={disabled ? -1 : 0}
-    aria-checked={checked || false}
-    aria-disabled={disabled || undefined}
-    data-disabled={disabled ? "" : undefined}
-    className={cn(overlayPrimitiveClassNames.menubarCheckboxItem, className)}
+    className={cn(overlayPrimitiveClassNames.menuCheckboxItem, className)}
     {...props}
   >
     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <Circle className={cn("h-2 w-2 fill-current", checked ? "opacity-100" : "opacity-0")} />
+      <BaseMenu.RadioItemIndicator>
+        <Circle aria-hidden="true" className="h-2 w-2 fill-current" />
+      </BaseMenu.RadioItemIndicator>
     </span>
     {children}
-  </div>
+  </BaseMenu.RadioItem>
 );
 MenubarRadioItem.displayName = "MenubarRadioItem";
-
-const MenubarRadioGroup = ({
-  children,
-  className,
-  ...props
-}: React.FieldsetHTMLAttributes<HTMLFieldSetElement>) => (
-  <fieldset className={cn("m-0 min-w-0 border-0 p-0", className)} {...props}>
-    {children}
-  </fieldset>
-);
 
 const MenubarLabel = ({
   className,
@@ -428,8 +264,10 @@ const MenubarSeparator = ({
   className,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
-  <div ref={ref} className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
+}: React.ComponentProps<typeof BaseMenu.Separator> & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
+  <BaseMenu.Separator ref={ref} className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
 );
 MenubarSeparator.displayName = "MenubarSeparator";
 
