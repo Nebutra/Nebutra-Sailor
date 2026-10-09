@@ -19,7 +19,76 @@
     "paymentNote": "USD card payments are processed by Creem. CNY payments use Alipay or WeChat Pay when available. Applicable taxes and the final total are shown at checkout. Credits and balances belong to the product purchased.",
     "refund": "Refund policy",
     "terms": "Terms of service",
-    "contact": "Billing questions"
+    "contact": "Billing questions",
+    "eyebrow": "Pricing",
+    "heroTitle": "Pay for what you <signature>use</signature>.",
+    "jumpSailor": "Sailor licences",
+    "jumpFaq": "Questions",
+    "altRouter": "Router's API market: a shelf of models by vendor and category, with input and output prices per million tokens.",
+    "altKcq": "The KCQ workbench: a daily candlestick chart of a Shanghai-listed stock, with an AI analyst panel on the right.",
+    "trustCards": "Cards via Creem, our merchant of record",
+    "trustCn": "Alipay and WeChat Pay for CNY",
+    "trustCurrency": "Prices in USD and CNY",
+    "trustOneTime": "One-time payments, no auto-renewal",
+    "usageBased": "Usage-based",
+    "membershipsAndCredits": "Memberships and credits",
+    "payAsYouGo": "Pay as you go",
+    "topUpRange": "Top up any amount",
+    "colCurrency": "Currency",
+    "colMinimum": "Minimum",
+    "colMaximum": "Maximum",
+    "termMonth": "1 month",
+    "termYear": "1 year",
+    "termOther": "{days} days",
+    "perMonth": "/ month",
+    "perYear": "/ year",
+    "yearAsMonthly": "{amount} a month, paid once",
+    "monthlyCreditsShort": "{credits} credits / month",
+    "creditPacks": "Credit packs",
+    "colPack": "Pack",
+    "colPrice": "Price",
+    "colExpires": "Expires",
+    "packCredits": "{credits} credits",
+    "expiresShort": "{days} days",
+    "neverExpires": "Does not expire",
+    "choosePlan": "Choose {name}",
+    "buyPack": "Buy",
+    "billingTitle": "How billing works",
+    "billCardsTitle": "Cards, in USD",
+    "billCardsBody": "Card payments are processed by Creem, the merchant of record.",
+    "billCnTitle": "Alipay and WeChat Pay, in CNY",
+    "billCnBody": "CNY payments use Alipay or WeChat Pay when available.",
+    "billTaxTitle": "Taxes and totals",
+    "billTaxBody": "Applicable taxes and the final total are shown at checkout.",
+    "billWalletTitle": "Balances stay with the product",
+    "billWalletBody": "Credits and balances belong to the product you bought them for.",
+    "privacy": "Privacy policy",
+    "billingEmail": "Billing support",
+    "sailorTitle": "{brandName} Sailor licences",
+    "faqTitle": "Questions",
+    "faqLead": "What people ask before they buy.",
+    "faq": {
+      "f1": {
+        "q": "Do plans renew automatically?",
+        "a": "No. Every offer here is a one-time payment. Top-ups are bought when you need them."
+      },
+      "f2": {
+        "q": "Which currencies and payment methods do you take?",
+        "a": "USD by card through Creem, and CNY through Alipay or WeChat Pay when available. The final total, with any taxes, is shown at checkout."
+      },
+      "f3": {
+        "q": "What does a balance top-up pay for?",
+        "a": "Metered API usage in Router, and managed AI usage in KCQ at Router's model shelf prices. Model rates are listed in Router, and a top-up can be any amount within the range shown."
+      },
+      "f4": {
+        "q": "Do credits expire?",
+        "a": "Purchased credits expire after the number of days shown on each pack. Credits and balances belong to the product you bought them for."
+      },
+      "f5": {
+        "q": "Where do I get billing help?",
+        "a": "The refund policy covers what can be refunded. For anything about a payment, write to the billing address on this page."
+      }
+    }
   },
   "nav": {
     "features": "Özellikler",
