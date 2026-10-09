@@ -38,7 +38,7 @@ export function ConsoleTabs({ tabs }: { tabs: ConsoleTab[] }) {
             <>
               {tab.label}
               {tab.count !== undefined ? (
-                <span className="ml-1.5 rounded-full bg-muted px-1.5 text-[11px] text-muted-foreground leading-4">
+                <span className="ml-1.5 rounded-full bg-muted px-1.5 text-2xs text-muted-foreground leading-4">
                   {tab.count}
                 </span>
               ) : null}

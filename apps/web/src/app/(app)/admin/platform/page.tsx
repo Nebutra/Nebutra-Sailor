@@ -50,11 +50,11 @@ function InboxRow({ item, role, now }: { item: InboxItem; role: string; now: num
         <div className="font-medium text-sm leading-5">
           {item.reading.title ?? item.signal.label}
         </div>
-        <div className="text-muted-foreground text-xs leading-[18px]">
+        <div className="text-muted-foreground text-xs leading-4.5">
           {item.reading.detail ?? (unknown ? "probe failed" : item.signal.label)}
         </div>
       </div>
-      <span className="rounded-full bg-muted px-2 text-[11px] text-muted-foreground leading-4">
+      <span className="rounded-full bg-muted px-2 text-2xs text-muted-foreground leading-4">
         {item.productLabel}
       </span>
       <span className="whitespace-nowrap text-muted-foreground text-xs">

@@ -58,7 +58,7 @@ export function PageTitle({
   return (
     <div className="flex items-end justify-between gap-4">
       <div>
-        <h1 className="font-[450] text-2xl leading-8 tracking-[-0.02em]">{title}</h1>
+        <h1 className="font-[450] text-2xl leading-8 tracking-tight">{title}</h1>
         {subtitle ? (
           <p className="mt-1 text-muted-foreground text-sm leading-5">{subtitle}</p>
         ) : null}

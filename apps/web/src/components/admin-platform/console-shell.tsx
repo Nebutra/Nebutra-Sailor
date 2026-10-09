@@ -23,13 +23,13 @@ export function ConsoleShell({
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <header className="flex h-12 items-center gap-3 border-border border-b bg-card px-6">
-        <span className="flex size-5 items-center justify-center rounded-[5px] bg-foreground font-semibold text-[11px] text-background">
+        <span className="flex size-5 items-center justify-center rounded-[5px] bg-foreground font-semibold text-2xs text-background">
           {brand.name[0]}
         </span>
         <span className="font-medium text-sm">{brand.name}</span>
         <span className="text-border text-sm">/</span>
         <span className="text-sm">Admin</span>
-        <span className="rounded-full border border-border px-1.5 text-[11px] text-muted-foreground leading-4">
+        <span className="rounded-full border border-border px-1.5 text-2xs text-muted-foreground leading-4">
           {environment}
         </span>
         <div className="flex-1" />

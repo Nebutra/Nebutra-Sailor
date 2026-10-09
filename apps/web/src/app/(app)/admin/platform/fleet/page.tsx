@@ -107,7 +107,7 @@ export default async function PlatformFleetPage() {
                     </td>
                     <td className={CELL}>
                       <span className="block font-medium">{row.label}</span>
-                      <span className="block font-mono text-[11px] text-muted-foreground leading-4">
+                      <span className="block font-mono text-2xs text-muted-foreground leading-4">
                         {row.id}
                       </span>
                     </td>
@@ -127,7 +127,7 @@ export default async function PlatformFleetPage() {
                         <span className="inline-flex items-center gap-2">
                           <span className="font-mono text-xs">{row.deployTarget}</span>
                           {row.targetMatchesRuntime === false ? (
-                            <span className="rounded-full bg-warning/12 px-1.5 text-[11px] text-warning-strong leading-4">
+                            <span className="rounded-full bg-warning/12 px-1.5 text-2xs text-warning-strong leading-4">
                               drift
                             </span>
                           ) : null}

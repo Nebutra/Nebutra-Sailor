@@ -259,21 +259,24 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
                   const active = option.id === provider;
                   return (
                     <li key={option.id}>
-                      <button
+                      <Button
                         type="button"
+                        variant="ghost"
                         aria-pressed={active}
                         disabled={step !== "provider"}
                         onClick={() => setProvider(option.id)}
                         className={cn(
-                          "flex w-full flex-col items-start gap-0.5 px-4 py-2 text-left disabled:cursor-default",
-                          active ? "bg-muted" : "hover:bg-muted/60 disabled:hover:bg-transparent",
+                          "h-auto w-full flex-col items-start gap-0.5 whitespace-normal rounded-none px-4 py-2 text-left font-normal hover:text-foreground active:scale-100 disabled:cursor-default disabled:opacity-100",
+                          active
+                            ? "bg-muted hover:bg-muted"
+                            : "hover:bg-muted/60 disabled:hover:bg-transparent",
                         )}
                       >
                         <span className="font-medium leading-5">{option.label}</span>
                         <span className="text-muted-foreground text-xs leading-4">
                           {option.hint}
                         </span>
-                      </button>
+                      </Button>
                     </li>
                   );
                 })}

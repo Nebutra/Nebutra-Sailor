@@ -51,7 +51,7 @@ export async function SignalStrip({
           <div className="flex items-center gap-2">
             <StatusDot tone={toneFor(reading)} />
             <span className="font-medium text-sm leading-5">{reading.title ?? signal.label}</span>
-            <span className="ml-auto font-mono text-[11px] text-muted-foreground">{signal.id}</span>
+            <span className="ml-auto font-mono text-2xs text-muted-foreground">{signal.id}</span>
           </div>
           <p className="text-muted-foreground text-xs leading-4">
             {reading.status === "ok"
@@ -60,7 +60,7 @@ export async function SignalStrip({
                 ? `Unknown · ${reading.detail ?? "probe failed"}`
                 : (reading.detail ?? "Raised")}
           </p>
-          <p className="text-[11px] text-muted-foreground">
+          <p className="text-2xs text-muted-foreground">
             probed {relativeTime(reading.probedAt, now)}
           </p>
         </div>
