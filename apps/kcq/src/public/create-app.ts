@@ -50,6 +50,15 @@ export function createPublicApp(history: RouterHistory, head: Plugin) {
         component: pages.notFound,
         meta: { page: "notFound" as const, locale },
       })),
+      // nginx serves the 404 body at the unknown URL itself; the client must match it there too, or
+      // hydration finds an empty RouterView and mismatches. zh first: it is the more specific prefix.
+      ...[...NOT_FOUND_ROUTES]
+        .sort((a, b) => b.path.length - a.path.length)
+        .map(({ path, locale }) => ({
+          path: `${path.replace(/\/404$/, "")}/:unknown(.*)*`,
+          component: pages.notFound,
+          meta: { page: "notFound" as const, locale },
+        })),
     ],
     scrollBehavior: (to) => (to.hash ? { el: to.hash } : { top: 0 }),
   });

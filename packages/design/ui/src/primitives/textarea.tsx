@@ -38,6 +38,12 @@ type TextareaOwnProps = {
    * than a box inside it.
    */
   tone?: "bordered" | "bare";
+  /**
+   * Opt back into the native drag handle. Off by default: the field grows with
+   * its content (`field-sizing: content`) between the min height and
+   * `--textarea-max-height`, then scrolls — no manual resizing needed.
+   */
+  resizable?: boolean;
 };
 
 export type TextareaProps = NativeTextareaProps &
@@ -50,6 +56,7 @@ type TextareaCssVars = React.CSSProperties & {
   "--textarea-padding-y"?: string;
   "--textarea-font-size"?: string;
   "--textarea-radius"?: string;
+  "--textarea-max-height"?: string;
   "--textarea-focus-ring-width"?: string;
 };
 
@@ -106,6 +113,7 @@ const Textarea = ({
   error,
   fieldClassName,
   tone = "bordered",
+  resizable = false,
   id,
   onChange,
   onValueChange,
@@ -132,7 +140,10 @@ const Textarea = ({
   const control = (
     <textarea
       className={cn(
-        "flex min-h-[var(--textarea-min-height)] w-full resize-y rounded-[var(--textarea-radius)]",
+        "flex min-h-[var(--textarea-min-height)] w-full rounded-[var(--textarea-radius)]",
+        // Content-sized between min and max height (field-sizing: content); older engines keep rows.
+        "[field-sizing:content] max-h-[var(--textarea-max-height,16rem)] overflow-y-auto",
+        resizable ? "resize-y" : "resize-none",
         "px-[var(--textarea-padding-x)] py-[var(--textarea-padding-y)] text-[length:var(--textarea-font-size)] text-foreground",
         "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
         tone === "bordered"

@@ -27,8 +27,11 @@ describe("kcq public surface", () => {
     const allowed = [...group.matchAll(/^Allow:\s*(\S+)$/gm)].map((m) => m[1]);
 
     expect(group).toMatch(/^Disallow:\s*\/\s*$/m);
-    // `$` anchors each page; /assets/ lets crawlers render the prerendered pages.
-    expect(allowed.sort()).toEqual([...PUBLIC_PATHS.map((path) => `${path}$`), "/assets/"].sort());
+    // `$` anchors each page; /assets/ lets crawlers render the prerendered pages; /llms.txt is the
+    // same pages as plain text for agents (apps/kcq/src/public/llms.ts).
+    expect(allowed.sort()).toEqual(
+      [...PUBLIC_PATHS.map((path) => `${path}$`), "/assets/", "/llms.txt$"].sort(),
+    );
     expect(robots).toContain(`Sitemap: ${ORIGIN}/sitemap.xml`);
   });
 

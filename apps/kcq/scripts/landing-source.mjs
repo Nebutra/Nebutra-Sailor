@@ -121,8 +121,11 @@ export function readFacts(source, pin) {
   const tools = [];
   for (const file of walk(resolve(core, "src"))) {
     const text = readFileSync(file, "utf8");
-    for (const match of text.matchAll(/@Tool\(\{\s*name:\s*'([a-z_]+)'/g)) {
-      tools.push({ name: match[1], file: relative(source, file) });
+    // The decorator's own object literal: name first, then (before the closing `})`) its safety.
+    for (const match of text.matchAll(/@Tool\(\{\s*name:\s*'([a-z_]+)'([\s\S]*?)\n\s*\}\)/g)) {
+      const safety = /safety:\s*'(read-only|destructive)'/.exec(match[2])?.[1];
+      if (!safety) throw new Error(`@Tool ${match[1]} declares no safety level`);
+      tools.push({ name: match[1], safety, file: relative(source, file) });
     }
   }
   if (tools.length === 0) throw new Error("No @Tool registrations found in the chart source");
@@ -162,7 +165,13 @@ export function readFacts(source, pin) {
     upstream: pin.upstreamRepository.replace(/\.git$/, ""),
     version: corePackage.version,
     license: rootPackage.license ?? corePackage.license,
-    tools: { count: tools.length, names: tools.map((t) => t.name), href: blob(agentFile) },
+    tools: {
+      count: tools.length,
+      names: tools.map((t) => t.name),
+      /** `@Tool` safety per tool: a read-only agent receives only the read-only ones. */
+      safety: Object.fromEntries(tools.map((t) => [t.name, t.safety])),
+      href: blob(agentFile),
+    },
     backends: { names: backends, href: blob(hostFile) },
     drawingKinds: { count: drawingKinds.length, href: blob(agentFile) },
     bindings: { names: bindings.map(([name]) => name), href: blob("README.md") },

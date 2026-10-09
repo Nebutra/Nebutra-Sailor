@@ -1,146 +1,102 @@
 <!--
-  Rendering you can see (landing-benchmark §6.4). A diagram, labelled as one: what physical-pixel
-  alignment does to a one-pixel wick on a 2× screen. No frame-time claims until /benchmark has
-  measured data (design §6, §11).
+  03 Charts (messaging pillar "crisp and smooth"; research F5, I2). The band's ground is the
+  chart's own grid. The claim is something you can check: a loupe over real candles drawn on this
+  screen (rendering/pixel-loupe.vue). The screen's pixel ratio and refresh rate appear only as a
+  quiet caption, measured here, never claimed; speed numbers live on /benchmark.
 -->
 <script setup lang="ts">
+import { useElementVisibility } from "@vueuse/core";
+import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { RouterLink } from "vue-router";
+import KcqIcon from "../components/kcq-icon.vue";
+import { publicPath } from "../routes";
+import { usePublicLocale } from "../state/use-public-locale";
+import { useVisitorDisplay } from "../state/use-visitor-display";
+import PixelLoupe from "./rendering/pixel-loupe.vue";
 
-const { t, tm, rt } = useI18n();
-const CELLS = 8;
-/** Coverage per column for a 1-device-pixel wick at x = 3 (snapped) and x = 3.5 (unsnapped). */
-const columns = {
-  aligned: Array.from({ length: CELLS }, (_, x) => (x === 3 ? 1 : 0)),
-  blurred: Array.from({ length: CELLS }, (_, x) => (x === 3 || x === 4 ? 0.5 : 0)),
-};
+const { t } = useI18n();
+const { locale } = usePublicLocale();
+const visitor = useVisitorDisplay();
+const section = ref<HTMLElement>();
+const visible = useElementVisibility(section);
+watch(visible, (now) => now && void visitor.measure(), { once: true });
 </script>
 <template>
-  <section id="rendering" class="section" aria-labelledby="rendering-heading">
+  <section id="rendering" ref="section" class="band rendering" aria-labelledby="rendering-heading">
     <div class="container rendering-grid">
-      <p class="eyebrow t-meta"><span class="eyebrow-index t-num">03</span>{{ t("home.rendering.eyebrow") }}</p>
-      <div class="section-head rendering-head">
+      <div class="section-head">
         <h2 id="rendering-heading" class="t-heading">{{ t("home.rendering.heading") }}</h2>
         <p class="t-lede">{{ t("home.rendering.body") }}</p>
+        <RouterLink class="rendering-link" :to="publicPath('benchmark', locale)">
+          {{ t("home.rendering.benchmark") }}
+          <KcqIcon class="button-arrow" name="arrow" />
+        </RouterLink>
       </div>
-
-      <figure class="loupe">
-        <div class="loupe-pair">
-          <div v-for="variant in (['aligned', 'blurred'] as const)" :key="variant" class="loupe-cell">
-            <svg :viewBox="`0 0 ${CELLS} ${CELLS}`" class="loupe-grid" aria-hidden="true">
-              <defs>
-                <pattern :id="`loupe-${variant}`" width="1" height="1" patternUnits="userSpaceOnUse">
-                  <rect x="0.04" y="0.04" width="0.92" height="0.92" class="loupe-pixel" style="--coverage: 0" />
-                </pattern>
-              </defs>
-              <rect :width="CELLS" :height="CELLS" :fill="`url(#loupe-${variant})`" />
-              <template v-for="(coverage, x) in columns[variant]" :key="x">
-                <template v-if="coverage">
-                  <rect
-                    v-for="y in CELLS"
-                    :key="y"
-                    :x="x + 0.04"
-                    :y="y - 1 + 0.04"
-                    width="0.92"
-                    height="0.92"
-                    class="loupe-pixel"
-                    :style="{ '--coverage': coverage }"
-                  />
-                </template>
-              </template>
-            </svg>
-            <p class="t-label">{{ t(`home.rendering.${variant}`) }}</p>
-            <p class="t-copy">{{ t(`home.rendering.${variant}Note`) }}</p>
-          </div>
-        </div>
-        <figcaption class="t-meta">{{ t("home.rendering.diagram") }}</figcaption>
-      </figure>
-
-      <div class="backends">
-        <h3 class="t-title">{{ t("home.rendering.backendsHeading") }}</h3>
-        <p class="t-copy">{{ t("home.rendering.backendsBody") }}</p>
-        <ol class="backend-chain">
-          <li v-for="(backend, index) in tm('home.rendering.backends')" :key="index" class="backend">
-            <span class="t-meta t-num">0{{ index + 1 }}</span>
-            <span class="t-label" translate="no">{{ rt(backend.name) }}</span>
-            <span class="t-copy">{{ rt(backend.note) }}</span>
-          </li>
-        </ol>
-        <p class="t-copy backends-note">{{ t("home.rendering.numbers") }}</p>
+      <div class="rendering-proof">
+        <PixelLoupe />
+        <p class="t-meta t-num rendering-screen" :data-measured="visitor.hz.value !== null || undefined">
+          {{
+            t("home.rendering.loupe.screen", {
+              ratio: visitor.hz.value === null ? "—" : Math.round(visitor.pixelRatio.value * 100) / 100,
+              hz: visitor.hz.value ?? "—",
+            })
+          }}
+        </p>
       </div>
     </div>
   </section>
 </template>
 <style scoped>
+/* The chart's grid as the band's ground (research I2), fading out toward the edges. */
+.rendering::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--kcq-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--kcq-grid) 1px, transparent 1px);
+  background-size: var(--klc-space-96) var(--klc-space-48);
+  background-position: center top;
+  mask-image: radial-gradient(ellipse 70% 60% at 60% 50%, #000 30%, transparent 85%);
+  opacity: 0.7;
+}
 .rendering-grid {
+  position: relative;
   display: grid;
-  --row-gap: var(--klc-space-48);
-  gap: var(--row-gap) var(--kcq-column-gap);
+  gap: var(--klc-space-48) var(--kcq-column-gap);
+  align-items: center;
 }
-.loupe {
-  margin: 0;
-  display: grid;
-  gap: var(--klc-space-16);
-}
-.loupe-pair {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--kcq-column-gap);
-}
-.loupe-cell {
-  display: grid;
+.rendering-link {
+  display: inline-flex;
+  align-items: center;
   gap: var(--klc-space-8);
-  align-content: start;
+  justify-self: start;
+  min-height: var(--klc-density-comfortable);
+  font-size: var(--klc-text-label-14-font-size);
+  font-weight: var(--klc-text-label-14-font-weight);
+  text-decoration: none;
 }
-.loupe-grid {
-  width: 100%;
-  height: auto;
-  margin-bottom: var(--klc-space-8);
-  background: var(--kcq-rule);
-  border: 1px solid var(--kcq-rule);
-}
-/* One device pixel per cell: page colour mixed with ink by the wick's coverage of that pixel. */
-.loupe-pixel {
-  fill: color-mix(in oklab, var(--kcq-ink) calc(var(--coverage) * 100%), var(--kcq-page));
-}
-.backends {
+.rendering-proof {
   display: grid;
   gap: var(--klc-space-12);
-  align-content: start;
+  padding: var(--klc-space-16);
+  border-radius: var(--klc-radius-lg);
+  background: color-mix(in oklab, var(--kcq-page) 86%, transparent);
 }
-.backend-chain {
-  display: grid;
-  margin-top: var(--klc-space-8);
-  border-top: 1px solid var(--kcq-rule);
-}
-.backend {
-  display: grid;
-  grid-template-columns: var(--klc-space-32) minmax(0, 1fr);
-  gap: var(--klc-space-4) var(--klc-space-12);
-  padding-block: var(--klc-space-12);
-  border-bottom: 1px solid var(--kcq-rule);
-}
-.backend .t-copy {
-  grid-column: 2;
-}
-.backends-note {
-  padding-top: var(--klc-space-8);
+.rendering-screen {
+  text-transform: none;
 }
 @media (min-width: 1024px) {
   .rendering-grid {
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
-  .rendering-head {
-    grid-column: 1 / span 6;
-    grid-row: 2;
+  .rendering-grid > .section-head {
+    grid-column: 1 / span 5;
   }
-  .loupe {
-    grid-column: 1 / span 6;
-    grid-row: 3;
-  }
-  .backends {
-    grid-column: 8 / span 5;
-    grid-row: 2 / span 2;
-    align-self: end;
+  .rendering-proof {
+    grid-column: 6 / span 7;
   }
 }
 </style>

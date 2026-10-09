@@ -2,36 +2,41 @@
   The hero instrument (landing-benchmark §6.1; design §6 vgpu selection):
   - First paint is a prerendered poster of the field's opening frame: the KCQ glyph as the only
     light. It is the LCP image and stays as the fallback without WebGPU.
-  - On idle, the real KCQ engine mounts (live-chart.ts, lazy) with bars from /market/tdx; if the
-    feed fails, cached real bars show with a "Delayed" label.
+  - On idle, the real KCQ engine mounts (live-chart.ts, lazy) on the shared market feed
+    (state/use-market-feed.ts): cached real bars at once, live bars from /market/tdx when they land.
   - With WebGPU and motion allowed, the light field (field/renderer.ts, lazy) unfolds the glyph
     into the live candles, then the crisp chart fades in over the dimmed field. The visitor's
-    crosshair is one more light. Pause stops the field.
+    crosshair is one more light. The status chip says why the field is on or off and is the pause
+    control (WCAG 2.2.2). Older history fades into the page (research B3: the past dissolves).
 -->
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, shallowRef, useId, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { useTheme } from "../../use-theme";
+import KcqIcon from "../../components/kcq-icon.vue";
+import { useMarketFeed } from "../../state/use-market-feed";
+import { usePublicLocale } from "../../state/use-public-locale";
+import { useTheme } from "../../state/use-theme";
+import type { HeroField } from "../field/renderer";
+import { type Bar, tradingDate } from "./bars";
+import cachedSeries from "./cached-bars.json";
+import HeroTimeAxis from "./hero-time-axis.vue";
+import type { ChartGeometry, HeroChart } from "./live-chart";
 import posterDark800 from "./poster/poster-dark-800.webp";
 import posterDark1600 from "./poster/poster-dark-1600.webp";
 import posterLight800 from "./poster/poster-light-800.webp";
 import posterLight1600 from "./poster/poster-light-1600.webp";
-import { type Bar, CACHED_BARS, HERO_QUERY, mergeBars, quoteOf, tradingDate } from "./bars";
-import HeroTimeAxis from "./hero-time-axis.vue";
-import cachedSeries from "./cached-bars.json";
-import KcqIcon from "../../components/kcq-icon.vue";
-import type { ChartGeometry, HeroChart } from "./live-chart";
-import type { HeroField } from "../field/renderer";
 
-const { t, locale } = useI18n();
-const { mode } = useTheme();
+const emit = defineEmits<{ shown: [withField: boolean] }>();
+const { t } = useI18n();
+const { locale, intl } = usePublicLocale();
+const { mode, hydrated } = useTheme();
+const feed = useMarketFeed();
+const summaryId = useId();
 
-type Status = "connecting" | "live" | "delayed";
-const status = ref<Status>("connecting");
-const bars = shallowRef<readonly Bar[]>(CACHED_BARS);
-const quote = computed(() => quoteOf(bars.value));
+/** Why the light field is in the state it is in; the chip says it in words. */
+type FieldState = "pending" | "on" | "gpu" | "motion" | "data";
+const fieldState = ref<FieldState>("pending");
 const chartShown = ref(false);
-const fieldState = ref<"off" | "on">("off");
 const paused = ref(false);
 const geometry = shallowRef<ChartGeometry | null>(null);
 const hover = shallowRef<Bar | null>(null);
@@ -48,31 +53,22 @@ const posters = {
 const posterSizes = "(min-width: 1344px) 760px, (min-width: 1280px) 58vw, calc(100vw - 32px)";
 /** After hydration the explicit theme wins over the system one the <picture> media follows. */
 const posterSrcset = computed(() => posters[mode.value]);
-const hydrated = ref(false);
 
 const price = (value: number) =>
-  new Intl.NumberFormat(locale.value === "zh" ? "zh-CN" : "en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
-const signed = (value: number, digits = 2) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(digits)}`;
+  new Intl.NumberFormat(intl.value, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
 const compact = (value: number) =>
-  new Intl.NumberFormat(locale.value === "zh" ? "zh-CN" : "en-US", {
-    notation: "compact",
-    maximumFractionDigits: 2,
-  }).format(value);
-const direction = computed(() => (quote.value && quote.value.change < 0 ? "down" : "up"));
+  new Intl.NumberFormat(intl.value, { notation: "compact", maximumFractionDigits: 2 }).format(value);
+const statusKey = computed(() => (feed.status.value === "idle" ? "connecting" : feed.status.value));
 const statusNote = computed(() =>
-  status.value === "live"
+  feed.status.value === "live"
     ? t("home.chart.liveNote")
-    : t(status.value === "delayed" ? "home.chart.delayedNote" : "home.chart.connectingNote", {
-        date: quote.value?.date ?? "",
+    : t(feed.status.value === "delayed" ? "home.chart.delayedNote" : "home.chart.connectingNote", {
+        date: feed.quote.value?.date ?? "",
       }),
 );
 
 let chart: HeroChart | undefined;
 let field: HeroField | null = null;
-let refreshTimer = 0;
 let disposed = false;
 const cleanups: (() => void)[] = [];
 
@@ -92,41 +88,24 @@ async function readLook() {
   };
 }
 
-function fieldAllowed(): boolean {
+/** The field runs only with WebGPU, motion allowed and no data-saver hint (design §6). */
+function fieldBlocker(): Exclude<FieldState, "pending" | "on"> | null {
   const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-  return (
-    "gpu" in navigator &&
-    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
-    connection?.saveData !== true
-  );
+  if (!("gpu" in navigator)) return "gpu";
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return "motion";
+  if (connection?.saveData === true) return "data";
+  return null;
 }
-
-/** Live bars from the read-only feed; on failure the cached bars stay and say "Delayed". */
-async function loadLive(liveChart: typeof import("./live-chart")): Promise<boolean> {
-  const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), 15_000);
-  try {
-    bars.value = withCache(await liveChart.fetchLiveBars(window.location.origin, controller.signal));
-    status.value = "live";
-    chart?.setBars(bars.value);
-    return true;
-  } catch {
-    status.value = "delayed";
-    return false;
-  } finally {
-    window.clearTimeout(timeout);
-  }
-}
-
-/** Live bars extend the cached ones; never a hole between the two (bars.ts mergeBars). */
-const withCache = (live: readonly Bar[]) => mergeBars(CACHED_BARS, live).slice(-HERO_QUERY.limit);
 
 const wait = (ms: number) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
 async function start() {
+  const blocker = fieldBlocker();
+  if (blocker) fieldState.value = blocker;
+  const live = feed.start();
   const [liveChart, fieldModule] = await Promise.all([
     import("./live-chart"),
-    fieldAllowed() ? import("../field/renderer") : Promise.resolve(null),
+    blocker ? Promise.resolve(null) : import("../field/renderer"),
   ]);
   if (disposed || !chartMount.value) return;
   const fieldReady = fieldModule
@@ -134,9 +113,8 @@ async function start() {
         .then((look) => fieldModule.createHeroField(fieldCanvas.value!, look))
         .catch(() => null)
     : Promise.resolve(null);
-  const live = loadLive(liveChart);
   // The cached bars are real; the chart mounts on them at once and the live bars replace them.
-  chart = await liveChart.mountHeroChart(chartMount.value, { bars: bars.value, mode: mode.value });
+  chart = await liveChart.mountHeroChart(chartMount.value, { bars: feed.bars.value, mode: mode.value });
   cleanups.push(chart.onGeometry((next) => (geometry.value = next)));
   geometry.value = chart.geometry();
   // Let a fast feed land before the unfold, so the light opens onto today's bars.
@@ -146,27 +124,24 @@ async function start() {
   if (field) {
     fieldState.value = "on";
     field.setPaused(paused.value);
-    cleanups.push(chart.onGeometry((geometry) => field?.setGeometry(geometry)));
+    cleanups.push(chart.onGeometry((next) => field?.setGeometry(next)));
     field.setGeometry(chart.geometry());
     await field.unfold();
+  } else if (fieldState.value === "pending") {
+    fieldState.value = "gpu";
   }
   chartShown.value = true;
-  scheduleRefresh(liveChart);
+  // The hero timeline (motion/hero-timeline.ts) owns the handoff animation from here.
+  emit("shown", fieldState.value === "on");
 }
 
-function scheduleRefresh(liveChart: typeof import("./live-chart")) {
-  refreshTimer = window.setInterval(async () => {
-    if (document.hidden || !chart) return;
-    try {
-      const next = withCache(await liveChart.fetchLiveBars(window.location.origin));
-      bars.value = next;
-      status.value = "live";
-      chart.setBars(next);
-    } catch {
-      // Keep the last good bars; the label already says what they are.
-    }
-  }, 60_000);
-}
+// Every later feed update reaches the engine; theme flips reach the engine and the field (both read
+// tokens, not CSS).
+watch(feed.bars, (bars) => chart?.setBars(bars));
+watch(mode, async () => {
+  chart?.setMode(mode.value);
+  if (field) field.setLook(await readLook());
+});
 
 function onPointer(event: PointerEvent) {
   if (!chartHost.value) return;
@@ -185,64 +160,44 @@ function togglePause() {
 }
 
 onMounted(() => {
-  hydrated.value = true;
   const idle = (callback: () => void) =>
     typeof window.requestIdleCallback === "function"
       ? window.requestIdleCallback(callback, { timeout: 2500 })
       : window.setTimeout(callback, 1200);
   // After load and idle: the poster and text own the first paint (web.dev optimize-lcp).
   // A short grace after load keeps the engine chunk off the first-paint network.
-  const begin = () =>
-    window.setTimeout(() => idle(() => void start().catch(() => (status.value = "delayed"))), 1200);
+  const begin = () => window.setTimeout(() => idle(() => void start().catch(() => undefined)), 1200);
   if (document.readyState === "complete") begin();
   else window.addEventListener("load", begin, { once: true });
 });
 
 onBeforeUnmount(() => {
   disposed = true;
-  window.clearInterval(refreshTimer);
   for (const cleanup of cleanups) cleanup();
   field?.dispose();
   void chart?.dispose();
-});
-
-defineExpose({
-  /** Theme flips reach the canvas engine and the field (they read tokens, not CSS). */
-  async applyMode() {
-    chart?.setMode(mode.value);
-    if (field) field.setLook(await readLook());
-  },
 });
 </script>
 <template>
   <figure
     ref="panel"
     class="hero-chart"
-    :data-status="status"
-    :data-field="fieldState"
+    :data-status="feed.status.value"
+    :data-field="fieldState === 'on' ? 'on' : 'off'"
     :data-chart="chartShown ? 'shown' : 'pending'"
     :aria-label="t('home.chart.region', { name: t('home.chart.name') })"
+    :aria-describedby="summaryId"
   >
+    <p :id="summaryId" class="visually-hidden">{{ t("home.chart.summary") }}</p>
     <header class="hero-chart-bar">
       <p class="hero-chart-instrument">
         <span class="t-num">600519</span>
         <span>{{ t("home.chart.name") }}</span>
         <span class="t-meta">{{ t("home.chart.period") }} · GOTDX</span>
       </p>
-      <p class="hero-chart-quote" aria-live="polite">
-        <span class="hero-status t-meta" :data-status="status">
-          <span class="hero-status-dot" aria-hidden="true" />
-          {{ t(`home.chart.${status}`) }}
-        </span>
-        <template v-if="quote">
-          <span class="t-num hero-last">{{ price(quote.last) }}</span>
-          <span class="t-num hero-change" :data-direction="direction">
-            <svg class="hero-change-mark" viewBox="0 0 8 8" width="8" height="8" aria-hidden="true">
-              <path :d="direction === 'up' ? 'M4 1 7.5 7h-7Z' : 'M4 7 .5 1h7Z'" />
-            </svg>
-            {{ signed(quote.change) }} ({{ signed(quote.changePercent) }}%)
-          </span>
-        </template>
+      <p class="hero-status t-meta" :data-status="statusKey" aria-live="polite">
+        <span class="status-dot" aria-hidden="true" />
+        {{ t(`home.chart.${statusKey}`) }}
       </p>
     </header>
     <div class="hero-chart-body">
@@ -263,6 +218,7 @@ defineExpose({
       <div
         ref="chartHost"
         class="hero-chart-host"
+        aria-hidden="true"
         @pointermove="onPointer"
         @pointerleave="onPointerLeave"
       >
@@ -277,21 +233,24 @@ defineExpose({
           <span><abbr :title="t('home.chart.legend.close')">{{ t("home.chart.legend.c") }}</abbr> {{ price(hover.close) }}</span>
           <span><abbr :title="t('home.chart.legend.volume')">{{ t("home.chart.legend.v") }}</abbr> {{ compact(hover.volume) }}</span>
         </p>
+        <p v-else-if="chartShown" class="hero-hint t-meta">{{ t("home.chart.hint") }}</p>
       </div>
     </div>
     <figcaption class="hero-chart-foot">
-      <span class="t-copy">{{ statusNote }}</span>
-      <span class="hero-field-control">
-        <span class="t-copy hero-field-note">{{ fieldState === "on" ? t("home.chart.field") : t("home.chart.fieldOff") }}</span>
+      <span class="t-copy hero-note">{{ statusNote }}</span>
+      <span class="hero-field-chip t-meta" :data-field="fieldState">
+        <span class="hero-field-dot" aria-hidden="true" />
+        {{ t(`home.chart.field.${fieldState}`) }}
         <button
           v-if="fieldState === 'on'"
           type="button"
-          class="button button-quiet hero-pause"
+          class="hero-pause"
           :aria-pressed="paused"
+          :aria-label="paused ? t('home.chart.play') : t('home.chart.pause')"
+          :title="paused ? t('home.chart.play') : t('home.chart.pause')"
           @click="togglePause"
         >
-          <KcqIcon :name="paused ? 'play' : 'pause'" />
-          {{ paused ? t("home.chart.play") : t("home.chart.pause") }}
+          <KcqIcon :name="paused ? 'play' : 'pause'" :size="14" />
         </button>
       </span>
     </figcaption>
@@ -302,7 +261,10 @@ defineExpose({
   min-width: 0;
   margin: 0;
   border: 1px solid var(--kcq-rule);
+  border-radius: var(--klc-radius-md);
+  overflow: hidden;
   background: var(--klc-color-chart-background);
+  box-shadow: var(--klc-elevation-2);
 }
 .hero-chart-bar,
 .hero-chart-foot {
@@ -313,8 +275,22 @@ defineExpose({
   gap: var(--klc-space-8) var(--klc-space-16);
   padding: var(--klc-space-12) var(--klc-space-16);
 }
+/* One line always: the status word changes length ("Connecting…" → "Live"), the bar never
+   re-wraps (that re-wrap was a measured layout shift). The instrument name truncates instead. */
 .hero-chart-bar {
+  flex-wrap: nowrap;
   border-bottom: 1px solid var(--kcq-rule);
+}
+.hero-chart-bar .hero-chart-instrument {
+  flex-wrap: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.hero-chart-bar .hero-status {
+  flex: none;
+  white-space: nowrap;
 }
 .hero-chart-foot {
   border-top: 1px solid var(--kcq-rule);
@@ -333,37 +309,6 @@ defineExpose({
   display: inline-flex;
   align-items: center;
   gap: var(--klc-space-8);
-}
-.hero-status-dot {
-  width: var(--klc-space-8);
-  height: var(--klc-space-8);
-  border-radius: var(--klc-radius-full);
-  background: var(--kcq-ink-2);
-}
-.hero-status[data-status="live"] .hero-status-dot {
-  background: var(--kcq-up);
-}
-.hero-status[data-status="delayed"] .hero-status-dot {
-  background: var(--klc-color-ui-warning);
-}
-.hero-last {
-  font-size: var(--klc-text-label-16-font-size);
-  line-height: var(--klc-text-label-16-line-height);
-  color: var(--kcq-ink);
-}
-/* The sign and the triangle carry direction; colour only repeats it (CP 8). Market colours are
-   below 4.5:1 as text on light presets, so the figures stay ink and the shape takes the colour. */
-.hero-change {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--klc-space-4);
-  color: var(--kcq-ink);
-}
-.hero-change-mark {
-  fill: var(--kcq-up);
-}
-.hero-change[data-direction="down"] .hero-change-mark {
-  fill: var(--kcq-down);
 }
 .hero-chart-body {
   position: relative;
@@ -386,6 +331,11 @@ defineExpose({
 }
 .hero-field {
   opacity: 0;
+}
+/* Older history dissolves into the page; the latest bars stay sharp (research B3). */
+.hero-field,
+.hero-chart-mount :deep(.hero-engine-scroller) {
+  mask-image: linear-gradient(to right, transparent, #000 16%);
 }
 .hero-chart-host {
   opacity: 0;
@@ -449,29 +399,75 @@ defineExpose({
 .hero-chart[data-field="on"] .hero-poster {
   visibility: hidden;
 }
+/* End states only; the hero timeline (GSAP) animates the handoff, so no CSS transition here
+   (one owner per property). Reduced motion lands on these directly. */
 .hero-chart[data-chart="shown"] .hero-chart-host {
   opacity: 1;
-  transition: opacity var(--klc-motion-dur-slow) var(--klc-motion-ease-out);
 }
 .hero-chart[data-chart="shown"] .hero-field {
   opacity: 0.45;
-  transition: opacity var(--klc-motion-dur-slow) var(--klc-motion-ease-out);
 }
 .hero-chart[data-chart="shown"][data-field="off"] .hero-poster {
   opacity: 0.35;
-  transition: opacity var(--klc-motion-dur-slow) var(--klc-motion-ease-out);
 }
-.hero-field-control {
+.hero-hint {
+  position: absolute;
+  bottom: calc(var(--klc-space-24) + var(--klc-space-8));
+  left: var(--klc-space-12);
+  margin: 0;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .hero-hint {
+    display: none;
+  }
+}
+/* The field's state in words, and its pause control (WCAG 2.2.2): one chip, not a sentence. */
+.hero-field-chip {
   display: inline-flex;
   align-items: center;
-  gap: var(--klc-space-12);
+  gap: var(--klc-space-8);
+  min-height: var(--klc-density-default);
+  padding-left: var(--klc-space-8);
+  border: 1px solid var(--kcq-rule);
+  border-radius: var(--klc-radius-full);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.hero-field-chip:not(:has(button)) {
+  padding-right: var(--klc-space-12);
+}
+.hero-field-dot {
+  width: var(--klc-space-8);
+  height: var(--klc-space-8);
+  border-radius: var(--klc-radius-full);
+  border: 1.5px solid var(--kcq-ink-2);
+}
+.hero-field-chip[data-field="on"] .hero-field-dot {
+  border: 0;
+  background: var(--kcq-accent);
+  box-shadow: 0 0 0 3px var(--kcq-accent-wash);
 }
 .hero-pause {
-  min-height: var(--klc-density-default);
-  padding-inline: var(--klc-space-12);
+  display: inline-grid;
+  place-items: center;
+  width: var(--klc-density-default);
+  height: calc(var(--klc-density-default) - 2px);
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--kcq-rule);
+  border-radius: 0 var(--klc-radius-full) var(--klc-radius-full) 0;
+  background: transparent;
+  color: var(--kcq-ink);
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-pause:hover {
+    background: var(--kcq-hover);
+  }
 }
 @media (max-width: 767px) {
-  .hero-field-note {
+  .hero-note {
     display: none;
   }
 }

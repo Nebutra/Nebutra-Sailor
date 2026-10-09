@@ -34,7 +34,7 @@ describe("developer snippets", () => {
     const facts = readFacts(source, pin);
     const replay = readFileSync(new URL("./home-agent.vue", import.meta.url), "utf8");
     const names = [...replay.matchAll(/tool: "([a-z_]+)"/g)].map((m) => m[1]);
-    expect(names).toEqual(["panes_list", "instruments_query_name", "comparison_create", "drawing_create"]);
+    expect(names).toEqual(["panes_list", "drawing_create", "instruments_query_name", "comparison_create"]);
     for (const name of names) expect(facts.tools.names).toContain(name);
   });
 });
