@@ -84,6 +84,9 @@ export interface StaffContext {
 
 // AUDIT(no-tenant): staff grants are platform-scope by definition, same as
 // apps/admin's staff.ts — see that file's note.
+// @seam-exempt: PlatformStaff has no repository yet; these two lookups mirror
+// apps/admin's and apps/web's staff.ts (outside the core-domain seam) so the
+// three copies of the guard resolve standing identically.
 const db = getSystemDb();
 
 async function resolvePlatformUser(email: string) {

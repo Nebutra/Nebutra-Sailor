@@ -7,6 +7,7 @@
  * routes here, never directly in app.ts.
  */
 import type { OpenAPIHono } from "@hono/zod-openapi";
+import { platformSupplyRoutes } from "./admin/platform-supply.js";
 import { agentRuntimeRoutes } from "./agent-runtime/index.js";
 import { kcqAiRoutes } from "./kcq/ai.js";
 import { kcqRoutes } from "./kcq/index.js";
@@ -27,4 +28,14 @@ export function mountProductRoutes(app: OpenAPIHono): void {
   // prefix because the client calls the bare path on api.nebutra.com.
   app.route("/pebble", pebbleRoutes);
   app.route("/api/pebble", pebbleRoutes);
+
+  // Platform control plane's browser-facing CLIProxyAPI console proxy, for
+  // apps/web's /admin/platform (Nebutra's own staff console, stripped from the
+  // template with the rest of admin-platform). Gated by Cloudflare Access +
+  // PlatformStaff, not X-Admin-Key — a browser tab cannot hold that key.
+  // app.ts calls mountProductRoutes() before it mounts adminRoutes on
+  // /api/v1/admin, and this must stay that way: adminRoutes' "*" X-Admin-Key
+  // guard would otherwise also run in front of this path. See
+  // docs/architecture/2026-09-29-admin-into-web.md.
+  app.route("/api/v1/admin/platform/supply", platformSupplyRoutes);
 }

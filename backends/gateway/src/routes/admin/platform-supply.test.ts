@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { Hono } from "hono";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -115,5 +116,43 @@ describe("platform-supply guard", () => {
 
     const body = await res.text();
     expect(body).toContain("Test Brand Admin");
+  });
+});
+
+describe("platform-supply mount order", () => {
+  // adminRoutes guards "*" with X-Admin-Key. In Hono that guard covers every
+  // path under /api/v1/admin for any router mounted after it, so the supply
+  // proxy is only reachable from a browser if it is mounted first. It is
+  // mounted through the product-routes seam (stripped from the template), and
+  // app.ts calls that seam before it mounts adminRoutes.
+  const appSource = readFileSync(new URL("../../app.ts", import.meta.url), "utf8");
+  const seamSource = readFileSync(new URL("../product-routes.ts", import.meta.url), "utf8");
+
+  it("mounts the supply proxy through the product-routes seam, before the X-Admin-Key admin router", () => {
+    expect(seamSource).toContain(
+      'app.route("/api/v1/admin/platform/supply", platformSupplyRoutes)',
+    );
+    expect(appSource).not.toContain("platform-supply");
+    const seam = appSource.indexOf("mountProductRoutes(app)");
+    const admin = appSource.indexOf('app.route("/api/v1/admin", adminRoutes)');
+    expect(seam).toBeGreaterThan(-1);
+    expect(admin).toBeGreaterThan(-1);
+    expect(seam).toBeLessThan(admin);
+  });
+
+  it("is not shadowed by an X-Admin-Key guard on the parent mount when mounted first", async () => {
+    vi.stubEnv("ACCESS_AUD", "test-aud");
+    const { platformSupplyRoutes } = await import("./platform-supply.js");
+    const adminGuard = new Hono();
+    adminGuard.use("*", async (c, next) =>
+      c.req.header("x-admin-key") ? next() : c.json({ error: "Unauthorized" }, 401),
+    );
+    const app = new Hono();
+    app.route("/api/v1/admin/platform/supply", platformSupplyRoutes);
+    app.route("/api/v1/admin", adminGuard);
+
+    // No Access assertion: the supply guard's own 403, not the admin key's 401.
+    const res = await app.request("/api/v1/admin/platform/supply/management.html");
+    expect(res.status).toBe(403);
   });
 });
