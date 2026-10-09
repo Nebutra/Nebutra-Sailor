@@ -48,10 +48,6 @@
       {
         "file": "packages/design/ui/src/primitives/stepper.tsx",
         "count": 1
-      },
-      {
-        "file": "packages/design/ui/src/primitives/tree.tsx",
-        "count": 1
       }
     ]
   },
