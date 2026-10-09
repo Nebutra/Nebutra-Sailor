@@ -66,7 +66,9 @@ export const supplyModelSignal: InngestFunction.Any = inngest.createFunction(
     id: "supply-model-signal",
     name: "Supply Model Signal (debounced targeted re-probe)",
     debounce: {
-      key: "event.data.sourceKey + '-' + (event.data.upstreamModel ?? 'source')",
+      // CEL, not JavaScript: `??` does not exist there and the server refused
+      // to register any function while this expression failed to compile.
+      key: "event.data.sourceKey + '-' + (has(event.data.upstreamModel) ? event.data.upstreamModel : 'source')",
       period: "2m",
       // A source that never stops erroring must still eventually get a
       // re-probe rather than having its debounce extended forever.
