@@ -997,7 +997,7 @@ jobs:
           verify-supply-chain: "true"
 
       - name: Test dependency audit gate
-        run: node --test scripts/ci/dependency-audit.test.mjs
+        run: node --test scripts/ci/dependency-audit.test.mjs scripts/ci/python-dependency-audit.test.mjs
 
       - name: Audit production dependencies
         run: node scripts/ci/dependency-audit.mjs

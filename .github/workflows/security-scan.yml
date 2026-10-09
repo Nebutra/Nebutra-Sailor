@@ -126,21 +126,16 @@ jobs:
 
       - name: Audit Python services
         id: pip-audit
-        run: |
-          FAILED=0
-          for service in backends/python/*/; do
-            if [ -f "$service/pyproject.toml" ]; then
-              echo "Auditing $service..."
-              cd "$service"
-              uv pip compile pyproject.toml -o /tmp/requirements-audit.txt --quiet 2>/dev/null || true
-              if [ -f /tmp/requirements-audit.txt ]; then
-                pip-audit -r /tmp/requirements-audit.txt --format=json \
-                  --output="/tmp/audit-$(basename "$service").json" || FAILED=1
-              fi
-              cd - >/dev/null
-            fi
-          done
-          echo "failed=$FAILED" >> "$GITHUB_OUTPUT"
+        run: bash scripts/ci/python-dependency-audit.sh
+
+      - name: Upload Python audit evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: nightly-python-dependency-audit
+          path: artifacts/security/python/*.json
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Create issue on failure
         if: steps.pip-audit.outputs.failed == '1'

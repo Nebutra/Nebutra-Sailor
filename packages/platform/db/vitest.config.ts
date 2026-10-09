@@ -1,6 +1,15 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
+  // package.json maps these runtime conditions to dist for deployments. Source
+  // tests must run before this package builds, including on a clean CI checkout.
+  resolve: {
+    alias: {
+      "#preview-db": fileURLToPath(new URL("./src/preview-mode.ts", import.meta.url)),
+      "#preview-db-server": fileURLToPath(new URL("./src/preview-server.ts", import.meta.url)),
+    },
+  },
   test: {
     environment: "node",
     globals: true,
