@@ -1,63 +1,56 @@
 <!--
-  For developers (landing-benchmark §6.7, Resend/Vercel code-first): Vue · React · Web Component ·
-  Agent tools, then the architecture in one line. Tabs follow the WAI-ARIA tabs pattern; keyboard
-  switching is instant (CP 31: keyboard actions are not animated).
+  06 Developers (landing-benchmark §6.7; research G1, G2, G4). The snippets are highlighted by
+  Shiki at build time (virtual:kcq-code, scripts/landing-plugin.mjs): spans carry
+  `var(--shiki-token-*)`, mapped below onto KCQ tokens, so code follows the colour mode and the page
+  ships no highlighter. Tabs follow the WAI-ARIA tabs pattern; keyboard switching is instant
+  (CP 31). Copy confirms in place (VueUse useClipboard; icon morphs, label announced).
 -->
 <script setup lang="ts">
-import facts from "virtual:kcq-facts";
-import { onBeforeUnmount, ref } from "vue";
+import { useClipboard } from "@vueuse/core";
+import code from "virtual:kcq-code";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
-import { SNIPPETS } from "./developer-snippets";
+import { LINKS } from "../links";
+import { SNIPPETS as ALL_SNIPPETS } from "./developer-snippets";
+
+/** The deck's three tabs (5.5); the agent-tools snippet is published in /llms.txt instead. */
+const SNIPPETS = ALL_SNIPPETS.filter((snippet) => snippet.id !== "agent");
 
 const { t } = useI18n();
 const active = ref(0);
-const copied = ref(false);
 const tabs = ref<HTMLButtonElement[]>([]);
-let timer = 0;
+const highlighted = new Map(code.map((entry) => [entry.id, entry.html]));
+const { copy, copied } = useClipboard({ copiedDuring: 1500, legacy: true });
 
 function onKey(event: KeyboardEvent) {
   const delta = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
   const target =
-    event.key === "Home" ? 0 : event.key === "End" ? SNIPPETS.length - 1 : delta ? (active.value + delta + SNIPPETS.length) % SNIPPETS.length : -1;
+    event.key === "Home"
+      ? 0
+      : event.key === "End"
+        ? SNIPPETS.length - 1
+        : delta
+          ? (active.value + delta + SNIPPETS.length) % SNIPPETS.length
+          : -1;
   if (target < 0) return;
   event.preventDefault();
   active.value = target;
   tabs.value[target]?.focus();
 }
-async function copy() {
-  try {
-    await navigator.clipboard.writeText(SNIPPETS[active.value]!.code);
-    copied.value = true;
-    window.clearTimeout(timer);
-    timer = window.setTimeout(() => (copied.value = false), 1600);
-  } catch {
-    // Clipboard denied: the code stays selectable.
-  }
-}
-onBeforeUnmount(() => window.clearTimeout(timer));
 </script>
 <template>
-  <section id="developers" class="section" aria-labelledby="developers-heading">
+  <section id="developers" class="band developers" aria-labelledby="developers-heading">
     <div class="container developers-grid">
-      <p class="eyebrow t-meta"><span class="eyebrow-index t-num">06</span>{{ t("home.developers.eyebrow") }}</p>
       <div class="section-head developers-head">
         <h2 id="developers-heading" class="t-heading">{{ t("home.developers.heading") }}</h2>
         <p class="t-lede">{{ t("home.developers.body") }}</p>
-        <p class="architecture t-meta" translate="no">
-          <span>ChartController</span><span aria-hidden="true">→</span><span>readonly signals</span><span aria-hidden="true">→</span><span>StateKernel</span>
-        </p>
-        <ul class="developer-links">
-          <li><a :href="`${facts.upstream}#readme`" rel="noopener">{{ t("home.developers.readme") }}</a></li>
-          <li>
-            <a :href="`${facts.upstream}/blob/main/docs/architecture/architecture.md`" rel="noopener">{{ t("home.developers.architecture") }}</a>
-          </li>
-          <li>
-            <a href="https://www.npmjs.com/package/@363045841yyt/klinechart" rel="noopener">{{ t("home.developers.npm") }}</a>
-          </li>
-        </ul>
+        <a class="developer-link" :href="LINKS.readme" rel="noopener">
+          {{ t("home.developers.readme") }}
+          <KcqIcon class="button-arrow" name="arrow" />
+        </a>
       </div>
-      <div class="code-card">
+      <div class="code-window">
         <div class="code-tabs" role="tablist" :aria-label="t('home.developers.tabs')" @keydown="onKey">
           <button
             v-for="(snippet, index) in SNIPPETS"
@@ -85,12 +78,23 @@ onBeforeUnmount(() => window.clearTimeout(timer));
           class="code-panel"
         >
           <div class="code-bar">
-            <span class="t-meta" translate="no">{{ snippet.file }}</span>
-            <button type="button" class="code-copy" :aria-label="copied ? t('home.developers.copied') : t('home.developers.copy')" @click="copy">
-              <KcqIcon :name="copied && active === index ? 'check' : 'copy'" />
+            <span class="t-meta code-file" translate="no">{{ snippet.file }}</span>
+            <button
+              type="button"
+              class="code-copy t-label"
+              :data-copied="copied || undefined"
+              :aria-label="t('home.developers.copy')"
+              @click="copy(snippet.code)"
+            >
+              <span class="code-copy-icons" aria-hidden="true">
+                <KcqIcon name="copy" class="code-copy-idle" />
+                <KcqIcon name="check" class="code-copy-done" />
+              </span>
             </button>
+            <span class="visually-hidden" aria-live="polite">{{ copied && active === index ? t("home.developers.copied") : "" }}</span>
           </div>
-          <pre tabindex="0" translate="no"><code>{{ snippet.code }}</code></pre>
+          <!-- Build-time Shiki output of our own snippet source (no user input). -->
+          <pre class="code" tabindex="0" translate="no"><code v-html="highlighted.get(snippet.id)" /></pre>
         </div>
       </div>
     </div>
@@ -99,46 +103,56 @@ onBeforeUnmount(() => window.clearTimeout(timer));
 <style scoped>
 .developers-grid {
   display: grid;
-  --row-gap: var(--klc-space-48);
-  gap: var(--row-gap) var(--kcq-column-gap);
+  gap: var(--klc-space-48) var(--kcq-column-gap);
 }
-.architecture {
-  display: flex;
-  flex-wrap: wrap;
+.developer-link {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
   gap: var(--klc-space-8);
-  text-transform: none;
-  color: var(--kcq-ink);
+  min-height: var(--klc-density-comfortable);
+  font-size: var(--klc-text-label-14-font-size);
+  font-weight: var(--klc-text-label-14-font-weight);
+  text-decoration: none;
 }
-.architecture span[aria-hidden] {
-  color: var(--kcq-ink-2);
-}
-.developer-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--klc-space-8) var(--klc-space-24);
-  font-size: var(--klc-text-copy-14-font-size);
-  line-height: var(--klc-text-copy-14-line-height);
-}
-.code-card {
+/* Token colours: only pairs that hold AA on the window ground (ink, ink-2, accent text). */
+.code-window {
+  --shiki-foreground: var(--kcq-ink);
+  --shiki-background: transparent;
+  --shiki-token-keyword: var(--kcq-accent-text);
+  --shiki-token-constant: var(--kcq-accent-text);
+  --shiki-token-string: color-mix(in oklab, var(--kcq-up) 45%, var(--kcq-ink));
+  --shiki-token-string-expression: color-mix(in oklab, var(--kcq-up) 45%, var(--kcq-ink));
+  --shiki-token-comment: var(--kcq-ink-2);
+  --shiki-token-function: var(--kcq-ink);
+  --shiki-token-parameter: var(--kcq-ink);
+  --shiki-token-punctuation: var(--kcq-ink-2);
+  --shiki-token-link: var(--kcq-accent-text);
   min-width: 0;
   border: 1px solid var(--kcq-rule);
-  background: var(--kcq-surface);
+  border-radius: var(--klc-radius-lg);
+  background: var(--kcq-raised);
+  overflow: hidden;
+  box-shadow: var(--klc-elevation-2);
 }
 .code-tabs {
   display: flex;
   overflow-x: auto;
+  padding-inline: var(--klc-space-8);
   border-bottom: 1px solid var(--kcq-rule);
+  scrollbar-width: none;
 }
 .code-tab {
   flex: none;
   min-height: var(--klc-density-touch);
-  padding-inline: var(--klc-space-16);
+  padding-inline: var(--klc-space-12);
   border: 0;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
+  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .code-tab:hover {
@@ -154,7 +168,9 @@ onBeforeUnmount(() => window.clearTimeout(timer));
   align-items: center;
   justify-content: space-between;
   padding: var(--klc-space-4) var(--klc-space-4) var(--klc-space-4) var(--klc-space-16);
-  border-bottom: 1px solid var(--kcq-rule);
+}
+.code-file {
+  text-transform: none;
 }
 .code-copy {
   display: inline-grid;
@@ -167,6 +183,10 @@ onBeforeUnmount(() => window.clearTimeout(timer));
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
+  transition: transform var(--klc-motion-dur-press) var(--klc-motion-ease-out);
+}
+.code-copy:active {
+  transform: scale(0.97);
 }
 @media (hover: hover) and (pointer: fine) {
   .code-copy:hover {
@@ -174,23 +194,70 @@ onBeforeUnmount(() => window.clearTimeout(timer));
     background: var(--kcq-hover);
   }
 }
-pre {
+.code-copy-icons {
+  display: inline-grid;
+}
+.code-copy-icons > * {
+  grid-area: 1 / 1;
+  transition-property: opacity, filter, transform;
+  transition-duration: 130ms;
+  transition-timing-function: var(--klc-motion-ease-out);
+}
+.code-copy-done {
+  opacity: 0;
+  filter: blur(2px);
+  transform: scale(0.98);
+  color: var(--kcq-up);
+}
+[data-copied] .code-copy-idle {
+  opacity: 0;
+  filter: blur(2px);
+  transform: scale(0.98);
+}
+[data-copied] .code-copy-done {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+.code {
   overflow-x: auto;
-  padding: var(--klc-space-16);
+  padding: var(--klc-space-4) var(--klc-space-16) var(--klc-space-24) 0;
   font-size: var(--klc-text-13-font-size);
-  line-height: 20px;
+  line-height: 22px;
   color: var(--kcq-ink);
   tab-size: 2;
+  counter-reset: line;
+}
+/* Line numbers in the gutter, not in the copied text (research G1). */
+.code :deep(.line) {
+  counter-increment: line;
+}
+.code :deep(.line)::before {
+  content: counter(line);
+  display: inline-block;
+  width: var(--klc-space-48);
+  padding-right: var(--klc-space-16);
+  text-align: right;
+  color: var(--kcq-ink-2);
+  opacity: 0.6;
+  user-select: none;
 }
 @media (min-width: 1024px) {
   .developers-grid {
     grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: center;
   }
   .developers-head {
     grid-column: 1 / span 5;
   }
-  .code-card {
+  .code-window {
     grid-column: 6 / span 7;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .code-copy-icons > * {
+    filter: none !important;
+    transform: none !important;
   }
 }
 </style>
