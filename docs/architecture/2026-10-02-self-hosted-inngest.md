@@ -27,7 +27,7 @@ is exactly one new Machine.
 | Image | `inngest/inngest:v1.45.1@sha256:b251...aa92c` | Tag for humans, manifest-list digest for reproducibility. `latest` is not allowed (arch test). |
 | Command | `[processes] app = "inngest start"` | The image's CMD is bare `inngest`. |
 | Config | `INNGEST_*` env only | The CLI maps every flag to an `INNGEST_` variable (flags win over env). Keys never appear in process arguments or `fly machine` output. |
-| Network | `INNGEST_HOST=::`, one TCP service on 8288, no `[[services.ports]]`, no `http_service` | 6PN only. `.internal` resolves to IPv6, so a server bound to localhost or `0.0.0.0` refuses every private connection; `::` is dual-stack on Linux. |
+| Network | `INNGEST_HOST=[::]` (bracketed — inngest concatenates host:port, a bare `::` fails to parse), one TCP service on 8288, no `[[services.ports]]`, no `http_service` | 6PN only. `.internal` resolves to IPv6, so a server bound to localhost or `0.0.0.0` refuses every private connection; `[::]` is dual-stack on Linux. |
 | Config and run history | SQLite in `/data/sqlite` on a 1 GB Fly volume (`inngest_data`) | One Machine, so Postgres buys nothing and costs a second stateful service. |
 | Queue and run state | External `nebutra-redis`, logical db 1, via the `INNGEST_REDIS_URI` secret | See below. |
 | App discovery | `INNGEST_SDK_URL` = the gateway's public `/api/inngest`, `INNGEST_POLL_INTERVAL=15` | See "Direction of each call". |

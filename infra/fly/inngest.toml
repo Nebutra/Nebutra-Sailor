@@ -25,7 +25,9 @@ primary_region = "sin"
 [env]
   # `::` is dual-stack on Linux. Fly .internal names resolve to IPv6 only, so a
   # server bound to localhost or 0.0.0.0 would refuse every private connection.
-  INNGEST_HOST = "::"
+  # Bracketed: inngest joins host and port without brackets, so a bare "::"
+  # became ":::8288" and the API refused to start ("too many colons").
+  INNGEST_HOST = "[::]"
   INNGEST_PORT = "8288"
   # Where the server finds the app. The gateway listens on IPv4 only, so its
   # .internal address refuses connections; use its public host (same reason as

@@ -425,7 +425,7 @@ describe("Deploy substrate governance", () => {
     expect(server).toMatch(/image = "inngest\/inngest:v\d+\.\d+\.\d+@sha256:[0-9a-f]{64}"/);
     expect(server).toContain('app = "inngest start"');
     // dual-stack bind: .internal resolves to IPv6 only
-    expect(server).toContain('INNGEST_HOST = "::"');
+    expect(server).toContain('INNGEST_HOST = "[::]"');
     expect(server).toContain('INNGEST_SQLITE_DIR = "/data/sqlite"');
     expect(server).toContain('source = "inngest_data"');
     // private: no published port, no public http service
