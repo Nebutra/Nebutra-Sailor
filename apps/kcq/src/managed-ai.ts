@@ -14,6 +14,7 @@ import { parseWallet, type WalletState } from "./wallet";
 
 export const MANAGED_AI_BASE_PATH = "/market/ai/v1";
 /** Placeholder bearer value for providers that require a non-empty API key. */
+// @brand-exempt: a stable credential identifier, not a displayed brand name.
 export const MANAGED_AI_CREDENTIAL = "nebutra-session";
 
 /** Name of the managed provider in the Agent settings. */

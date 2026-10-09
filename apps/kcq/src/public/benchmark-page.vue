@@ -5,8 +5,15 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 </script>
 <template>
-  <main class="public-main">
-    <h1>{{ t("benchmark.heading") }}</h1>
-    <p>{{ t("benchmark.pending") }}</p>
+  <main id="main" class="container page-stub">
+    <h1 class="t-heading">{{ t("benchmark.heading") }}</h1>
+    <p class="t-lede">{{ t("benchmark.pending") }}</p>
   </main>
 </template>
+<style scoped>
+.page-stub {
+  display: grid;
+  gap: var(--klc-space-16);
+  padding-block: var(--klc-space-96) 0;
+}
+</style>

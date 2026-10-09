@@ -36,6 +36,15 @@ export const PUBLIC_ROUTES: readonly PublicRoute[] = PUBLIC_PAGES.flatMap((page)
   PUBLIC_LOCALE_IDS.map((locale) => ({ path: publicPath(page, locale), page, locale })),
 );
 
+/**
+ * Real 404 bodies, one per locale (nginx `error_page 404`, picked by path prefix). They are
+ * prerendered like the public pages but are not public routes: never in the sitemap, robots
+ * allowlist or hreflang set, and marked noindex.
+ */
+export const NOT_FOUND_ROUTES: readonly { path: string; locale: PublicLocale }[] = PUBLIC_LOCALE_IDS.map(
+  (locale) => ({ path: PUBLIC_LOCALES[locale].prefix ? `/${PUBLIC_LOCALES[locale].prefix}/404` : "/404", locale }),
+);
+
 export function matchPublicRoute(pathname: string): PublicRoute | undefined {
   const normalized = pathname.replace(/\/+$/, "") || "/";
   return PUBLIC_ROUTES.find((route) => route.path === normalized);

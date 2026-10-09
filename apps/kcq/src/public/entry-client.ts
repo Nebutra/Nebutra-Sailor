@@ -4,6 +4,7 @@ import { createWebHistory } from "vue-router";
 import { installPreloadRecovery } from "../preload-recovery";
 import { createPublicApp } from "./create-app";
 import { browserStorage, readStoredLocale, resolveLocaleRedirect } from "./locale";
+import "virtual:kcq-tokens.css";
 import "./public.css";
 
 const redirect = resolveLocaleRedirect({

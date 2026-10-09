@@ -695,6 +695,9 @@ importers:
       '@fontsource/noto-sans-sc':
         specifier: 5.3.0
         version: 5.3.0
+      '@fontsource/outfit':
+        specifier: 5.3.0
+        version: 5.3.0
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth
@@ -716,6 +719,9 @@ importers:
       '@unhead/vue':
         specifier: 3.4.2
         version: 3.4.2(@oxc-project/types@0.133.0)(esbuild@0.28.1)(lightningcss@1.32.0)(oxc-parser@0.133.0)(rolldown@1.0.3)(rollup@4.59.0)(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))(vue@3.5.32(typescript@5.9.3))(webpack@5.105.4(@swc/core@1.15.18(@swc/helpers@0.5.23))(clean-css@5.3.3)(csso@5.0.5)(esbuild@0.28.1)(html-minifier-terser@7.2.0)(lightningcss@1.32.0)(postcss@8.5.29)(uglify-js@3.19.3))
+      '@vgpu/core':
+        specifier: 0.5.0
+        version: 0.5.0
       geist:
         specifier: 'catalog:'
         version: 1.7.0(next@16.3.8(@babel/core@7.29.6(supports-color@10.2.2))(@opentelemetry/api@1.9.1)(@playwright/test@1.58.2)(@types/node@25.9.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
@@ -744,6 +750,12 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.3
         version: 19.2.3(@types/react@19.2.14)
+      opentype.js:
+        specifier: 2.0.0
+        version: 2.0.0
+      sharp:
+        specifier: '>=0.35.5'
+        version: 0.35.5(@types/node@25.9.1)
       tailwindcss:
         specifier: 'catalog:'
         version: 4.3.0
@@ -7896,6 +7908,9 @@ packages:
   '@fontsource/noto-sans-sc@5.3.0':
     resolution: {integrity: sha512-HeqIlGm0+ohOKxZLuHj1qW6r6avHH0OWdKERAcSDI0RQ+MXrteuLKA+M+5eOA8rYy0MFvOR5AT0fQo2rUkye0Q==}
 
+  '@fontsource/outfit@5.3.0':
+    resolution: {integrity: sha512-0AVHzTTVJSxWDOxPKSfMeHhZeBFDU3cmgrcOb76ZEyhGo0+xgyG3GsLF3h9+X8w0IX7G4jzjJgFQEBiWdX6VgA==}
+
   '@formatjs/ecma402-abstract@3.1.1':
     resolution: {integrity: sha512-jhZbTwda+2tcNrs4kKvxrPLPjx8QsBCLCUgrrJ/S+G9YrGHWLhAyFMMBHJBnBoOwuLHd7L14FgYudviKaxkO2Q==}
 
@@ -14009,6 +14024,20 @@ packages:
   '@vercel/stega@1.1.0':
     resolution: {integrity: sha512-DFOm3Gk78nKDkppQEG5aj8Wj8R8hPKu/xrz4Rtp0AfiaNbZNCoJbxn7VI6iMxqhGeLdUDy/8mTuTWMz/izAtPA==}
 
+  '@vgpu/core@0.5.0':
+    resolution: {integrity: sha512-z80DHRHViv6+FKKkPzggEtT1ZZs/WCKRQbzJuwYdA135DZaSbCMoRK4anhM+I/nOHuDpf7H3xjkwE6rfolWZUw==}
+
+  '@vgpu/wgsl-std@0.5.0':
+    resolution: {integrity: sha512-NjMyJxwy4evFNCSqFQy4EqAbZ7iU+NUyJYyG9tLUhbdDLzBmfZlk1S3PyRZ9olBFFfEiVW2JNVw10maPKLEs1A==}
+
+  '@vgpu/wgsl@0.5.0':
+    resolution: {integrity: sha512-PDlDJem7J28C9bk+vPy2kYZEoW8+nYIx2oN4nu7/WF2V7ETx32BtmWcawwMbhiu/CVsobFafML0h0eqLRBNa3Q==}
+    peerDependencies:
+      '@vgpu/adapter-node': '>=0.1.6 <1.0.0 || ^0.5.0-rc.0'
+    peerDependenciesMeta:
+      '@vgpu/adapter-node':
+        optional: true
+
   '@vitejs/plugin-react-swc@4.3.1':
     resolution: {integrity: sha512-PaeokKjAGraNN+s5SIApgsktnJprIyt3zgEIu7awnEdfn29QiB2crTcCzyi2XGpX9rUnTc0cKU07Wm0N0g7H2w==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -18716,6 +18745,10 @@ packages:
 
   opener@1.5.2:
     resolution: {integrity: sha512-ur5UIdyw5Y7yEj9wLzhqXiy6GZ3Mwx0yGI+5sMn2r0N0v3cKJvUmFH5yPP+WXh9e0xfyzyJX95D8l088DNFj7A==}
+    hasBin: true
+
+  opentype.js@2.0.0:
+    resolution: {integrity: sha512-kCyjv6xdDY1W/jLWZ/L3QhhTlKUqDZMQ5+Jdlw12b3dXkKNpYBqqlMMj0YDQPShWFTMwgZI1hG14kN3XUDSg/A==}
     hasBin: true
 
   ora@9.3.0:
@@ -25322,6 +25355,8 @@ snapshots:
   '@fontsource-variable/work-sans@5.3.0': {}
 
   '@fontsource/noto-sans-sc@5.3.0': {}
+
+  '@fontsource/outfit@5.3.0': {}
 
   '@formatjs/ecma402-abstract@3.1.1':
     dependencies:
@@ -32843,6 +32878,18 @@ snapshots:
 
   '@vercel/stega@1.1.0': {}
 
+  '@vgpu/core@0.5.0':
+    dependencies:
+      '@vgpu/wgsl': 0.5.0
+    transitivePeerDependencies:
+      - '@vgpu/adapter-node'
+
+  '@vgpu/wgsl-std@0.5.0': {}
+
+  '@vgpu/wgsl@0.5.0':
+    dependencies:
+      '@vgpu/wgsl-std': 0.5.0
+
   '@vitejs/plugin-react-swc@4.3.1(@swc/helpers@0.5.23)(vite@8.0.16(@types/node@22.19.15)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
@@ -38536,6 +38583,8 @@ snapshots:
   opencc-js@1.4.1: {}
 
   opener@1.5.2: {}
+
+  opentype.js@2.0.0: {}
 
   ora@9.3.0:
     dependencies:

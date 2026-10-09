@@ -44,6 +44,12 @@ class NginxRoutesTest(unittest.TestCase):
         self.assertIn("return 302 /app$is_args$args;", blocks["= /"])
         self.assertRegex(self.conf, r"\n\s*absolute_redirect off;")
 
+    def test_unknown_paths_get_a_real_404_page_per_locale(self):
+        self.assertIn("error_page 404 $kcq_not_found;", self.conf)
+        self.assertRegex(self.conf, r"map \$uri \$kcq_not_found \{\s*~\^/zh/ /zh/404\.html;\s*default /404\.html;")
+        body = dict(locations(self.conf))["~ ^/(zh/)?404\\.html$"]
+        self.assertIn("internal;", body)
+
 
 if __name__ == "__main__":
     unittest.main()
