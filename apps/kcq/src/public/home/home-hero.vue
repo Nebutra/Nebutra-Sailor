@@ -199,8 +199,10 @@ async function onShown(withField: boolean) {
 }
 .hero-heading {
   max-width: 20ch;
-  font-size: var(--klc-text-48-font-size);
-  line-height: var(--klc-text-48-line-height);
+  /* A sentence-long H1 (the deck's category claim): 48px from tablet up, scaled down on phones so
+     the product name holds one line. */
+  font-size: clamp(var(--klc-text-32-font-size), 9vw, var(--klc-text-48-font-size));
+  line-height: 1.04;
 }
 :lang(zh-Hans) .hero-heading {
   max-width: 13em;
