@@ -49,7 +49,7 @@ describe("POST /api/auth/device-sessions/revoke-others", () => {
   });
 
   it("rejects requests that cannot identify the current web session", async () => {
-    getAuth.mockResolvedValue({ userId: "user_1", orgId: "org_1" });
+    getAuth.mockResolvedValue({ userId: "user_1", authUserId: "user_1", orgId: "org_1" });
 
     const { POST } = await import("../route");
     const response = await POST(
@@ -67,7 +67,7 @@ describe("POST /api/auth/device-sessions/revoke-others", () => {
   });
 
   it("revokes every other web session and all active desktop sessions", async () => {
-    getAuth.mockResolvedValue({ userId: "user_1", orgId: "org_1" });
+    getAuth.mockResolvedValue({ userId: "user_1", authUserId: "user_1", orgId: "org_1" });
     db.authSession.deleteMany.mockResolvedValue({ count: 2 });
     db.desktopAuthSession.updateMany.mockResolvedValue({ count: 1 });
 

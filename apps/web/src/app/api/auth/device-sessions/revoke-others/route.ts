@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     const result = await revokeOtherDeviceSessions({
       currentWebSessionToken,
       db,
-      userId: authState.userId,
+      userId: authState.authUserId,
     });
 
     await auditLogger(request, {
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, revoked: result.total });
   } catch (error) {
     logger.error("[auth:device-sessions:revoke-others] Failed to revoke device sessions", {
-      userId: authState.userId,
+      userId: authState.authUserId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 

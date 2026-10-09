@@ -19,14 +19,14 @@ export async function GET(request: Request) {
 
   try {
     const user = await db.authUser.findUnique({
-      where: { id: authState.userId },
+      where: { id: authState.authUserId },
       select: { twoFactorEnabled: true },
     });
 
     return NextResponse.json({ enabled: user?.twoFactorEnabled ?? false });
   } catch (error) {
     logger.error("[auth:two-factor-status] Failed to load 2FA state", {
-      userId: authState.userId,
+      userId: authState.authUserId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 

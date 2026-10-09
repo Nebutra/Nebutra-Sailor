@@ -53,7 +53,7 @@ describe("POST /api/auth/device-sessions/revoke", () => {
   });
 
   it("rejects invalid request bodies", async () => {
-    getAuth.mockResolvedValue({ userId: "user_1" });
+    getAuth.mockResolvedValue({ userId: "user_1", authUserId: "user_1" });
 
     const { POST } = await import("../route");
     const response = await POST(makeRequest({ sessionId: "web_1", kind: "mobile" }));
@@ -63,7 +63,7 @@ describe("POST /api/auth/device-sessions/revoke", () => {
   });
 
   it("revokes a web device session", async () => {
-    getAuth.mockResolvedValue({ userId: "user_1", orgId: "org_1" });
+    getAuth.mockResolvedValue({ userId: "user_1", authUserId: "user_1", orgId: "org_1" });
     db.authSession.deleteMany.mockResolvedValue({ count: 1 });
 
     const { POST } = await import("../route");
@@ -82,7 +82,7 @@ describe("POST /api/auth/device-sessions/revoke", () => {
   });
 
   it("soft revokes a desktop device session", async () => {
-    getAuth.mockResolvedValue({ userId: "user_1", orgId: "org_1" });
+    getAuth.mockResolvedValue({ userId: "user_1", authUserId: "user_1", orgId: "org_1" });
     db.desktopAuthSession.updateMany.mockResolvedValue({ count: 1 });
 
     const { POST } = await import("../route");
@@ -102,7 +102,7 @@ describe("POST /api/auth/device-sessions/revoke", () => {
   });
 
   it("returns 404 when the device session does not belong to the user", async () => {
-    getAuth.mockResolvedValue({ userId: "user_1", orgId: "org_1" });
+    getAuth.mockResolvedValue({ userId: "user_1", authUserId: "user_1", orgId: "org_1" });
     db.authSession.deleteMany.mockResolvedValue({ count: 0 });
 
     const { POST } = await import("../route");

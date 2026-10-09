@@ -69,7 +69,9 @@ describe("security auth routes", () => {
     });
 
     it("returns serialized accounts for the authenticated user", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      // Canonical app id differs from the auth center's id: Better Auth's
+      // tables are read by the auth center's id, never the canonical one.
+      getAuthMock.mockResolvedValue({ userId: "cms_canonical", authUserId: "user_123" });
       dbMock.authAccount.findMany.mockResolvedValue([
         {
           id: "account_1",
@@ -107,7 +109,7 @@ describe("security auth routes", () => {
     });
 
     it("returns a stable 500 payload when account lookup fails", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
       dbMock.authAccount.findMany.mockRejectedValue(new Error("db offline"));
 
       const { GET } = await loadListAccountsRoute();
@@ -134,7 +136,7 @@ describe("security auth routes", () => {
     });
 
     it("returns serialized sessions for the authenticated user", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
       dbMock.authSession.findMany.mockResolvedValue([
         {
           id: "session_1",
@@ -175,7 +177,7 @@ describe("security auth routes", () => {
     });
 
     it("returns a stable 500 payload when session lookup fails", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
       dbMock.authSession.findMany.mockRejectedValue(new Error("db offline"));
 
       const { GET } = await loadListSessionsRoute();
@@ -208,7 +210,7 @@ describe("security auth routes", () => {
     });
 
     it("rejects invalid request bodies", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
 
       const { POST } = await loadRevokeSessionRoute();
       const response = await POST(
@@ -227,7 +229,7 @@ describe("security auth routes", () => {
     });
 
     it("returns not found when the session does not belong to the user", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
       dbMock.authSession.deleteMany.mockResolvedValue({ count: 0 });
 
       const { POST } = await loadRevokeSessionRoute();
@@ -244,7 +246,7 @@ describe("security auth routes", () => {
     });
 
     it("revokes the session for the authenticated user", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
       dbMock.authSession.deleteMany.mockResolvedValue({ count: 1 });
 
       const { POST } = await loadRevokeSessionRoute();
@@ -267,7 +269,7 @@ describe("security auth routes", () => {
     });
 
     it("returns a stable 500 payload when revoke fails", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
       dbMock.authSession.deleteMany.mockRejectedValue(new Error("db offline"));
 
       const { POST } = await loadRevokeSessionRoute();
@@ -305,7 +307,7 @@ describe("security auth routes", () => {
     });
 
     it("renames only the authenticated user's passkey", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
       dbMock.bAPasskey.updateMany.mockResolvedValue({ count: 1 });
 
       const { POST } = await loadRenamePasskeyRoute();
@@ -330,7 +332,7 @@ describe("security auth routes", () => {
     });
 
     it("returns 404 when the passkey does not belong to the user", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
       dbMock.bAPasskey.updateMany.mockResolvedValue({ count: 0 });
 
       const { POST } = await loadRenamePasskeyRoute();
@@ -346,7 +348,7 @@ describe("security auth routes", () => {
     });
 
     it("validates blank names", async () => {
-      getAuthMock.mockResolvedValue({ userId: "user_123" });
+      getAuthMock.mockResolvedValue({ userId: "user_123", authUserId: "user_123" });
 
       const { POST } = await loadRenamePasskeyRoute();
       const response = await POST(

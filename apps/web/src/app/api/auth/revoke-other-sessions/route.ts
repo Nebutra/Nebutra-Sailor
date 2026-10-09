@@ -21,7 +21,7 @@ export async function POST(request: Request) {
   try {
     const result = await db.authSession.deleteMany({
       where: {
-        userId: authState.userId,
+        userId: authState.authUserId,
         ...(sessionToken ? { NOT: { token: sessionToken } } : {}),
       },
     });
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true, revoked: result.count });
   } catch (error) {
     logger.error("[auth:revoke-other-sessions] Failed to revoke sessions", {
-      userId: authState.userId,
+      userId: authState.authUserId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 

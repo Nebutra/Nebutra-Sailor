@@ -491,6 +491,7 @@ export const ModelName = {
   PebbleFeedback: 'PebbleFeedback',
   DocsFeedback: 'DocsFeedback',
   PlatformStaff: 'PlatformStaff',
+  UserIdentityLink: 'UserIdentityLink',
   StudioPreset: 'StudioPreset'
 } as const
 
@@ -507,7 +508,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "marketDataConnection" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "supplySource" | "supplySourceModel" | "supplyProbeEvent" | "supplyQuotaWindow" | "supplyQuotaSample" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "docsFeedback" | "platformStaff" | "studioPreset"
+    modelProps: "organization" | "tenant" | "tenantTransferJournal" | "aPIKey" | "user" | "organizationMember" | "organizationInvitation" | "notification" | "notificationPreference" | "content" | "contentTranslation" | "contentEmbedding" | "product" | "order" | "orderItem" | "marketDataConnection" | "integration" | "tenantProviderKey" | "automation" | "automationRun" | "paraProject" | "paraWorkspace" | "paraAsset" | "paraThread" | "paraRun" | "paraApproval" | "workflowDefinition" | "workflowRun" | "modelConfig" | "requestLog" | "featureDefinition" | "usageLimitDefinition" | "pricingPlan" | "planFeature" | "planUsageLimit" | "customerPlanVersion" | "customerFeatureOverride" | "customerUsageLimit" | "subscription" | "invoice" | "invoiceItem" | "payment" | "paymentOrder" | "paymentMethod" | "usageLedgerEntry" | "creditBalance" | "creditLot" | "membership" | "creditTransaction" | "routerReservation" | "supplySource" | "supplySourceModel" | "supplyProbeEvent" | "supplyQuotaWindow" | "supplyQuotaSample" | "stripeCustomer" | "retentionPolicy" | "webhookEvent" | "auditLog" | "legalDocument" | "userConsent" | "cookieConsent" | "contactSubmission" | "waitlistEntry" | "task" | "uploadRecord" | "oAuthClient" | "oAuthAuthorization" | "oAuthAccessToken" | "authUser" | "chatSession" | "thread" | "userProfile" | "skill" | "userSkill" | "connector" | "cofounderProfile" | "cofounderInterest" | "accessInviteCode" | "accessInviteRedemption" | "referral" | "redemptionCode" | "codeRedemption" | "feedbackReport" | "authAccount" | "authSession" | "desktopAuthHandoff" | "desktopAuthSession" | "authVerification" | "communityProfile" | "license" | "sleptonsaMemberProfile" | "sleptonsProduct" | "sleptonsUpvote" | "sleptonsConnection" | "sleptonsResume" | "bAOrganization" | "bAMember" | "bAInvitation" | "bAPasskey" | "authDeviceCode" | "atelierCanvas" | "agentRolloutLine" | "pebbleDiagnosticTicket" | "pebbleFeedback" | "docsFeedback" | "platformStaff" | "userIdentityLink" | "studioPreset"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -8413,6 +8414,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserIdentityLink: {
+      payload: Prisma.$UserIdentityLinkPayload<ExtArgs>
+      fields: Prisma.UserIdentityLinkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserIdentityLinkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserIdentityLinkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload>
+        }
+        findFirst: {
+          args: Prisma.UserIdentityLinkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserIdentityLinkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload>
+        }
+        findMany: {
+          args: Prisma.UserIdentityLinkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload>[]
+        }
+        create: {
+          args: Prisma.UserIdentityLinkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload>
+        }
+        createMany: {
+          args: Prisma.UserIdentityLinkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserIdentityLinkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload>[]
+        }
+        delete: {
+          args: Prisma.UserIdentityLinkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload>
+        }
+        update: {
+          args: Prisma.UserIdentityLinkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserIdentityLinkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserIdentityLinkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserIdentityLinkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserIdentityLinkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserIdentityLinkPayload>
+        }
+        aggregate: {
+          args: Prisma.UserIdentityLinkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserIdentityLink>
+        }
+        groupBy: {
+          args: Prisma.UserIdentityLinkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserIdentityLinkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserIdentityLinkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserIdentityLinkCountAggregateOutputType> | number
+        }
+      }
+    }
     StudioPreset: {
       payload: Prisma.$StudioPresetPayload<ExtArgs>
       fields: Prisma.StudioPresetFieldRefs
@@ -10376,6 +10451,18 @@ export const PlatformStaffScalarFieldEnum = {
 export type PlatformStaffScalarFieldEnum = (typeof PlatformStaffScalarFieldEnum)[keyof typeof PlatformStaffScalarFieldEnum]
 
 
+export const UserIdentityLinkScalarFieldEnum = {
+  id: 'id',
+  provider: 'provider',
+  subject: 'subject',
+  userId: 'userId',
+  source: 'source',
+  createdAt: 'createdAt'
+} as const
+
+export type UserIdentityLinkScalarFieldEnum = (typeof UserIdentityLinkScalarFieldEnum)[keyof typeof UserIdentityLinkScalarFieldEnum]
+
+
 export const StudioPresetScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -11603,6 +11690,7 @@ export type GlobalOmitConfig = {
   pebbleFeedback?: Prisma.PebbleFeedbackOmit
   docsFeedback?: Prisma.DocsFeedbackOmit
   platformStaff?: Prisma.PlatformStaffOmit
+  userIdentityLink?: Prisma.UserIdentityLinkOmit
   studioPreset?: Prisma.StudioPresetOmit
 }
 

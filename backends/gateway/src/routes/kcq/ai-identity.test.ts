@@ -43,3 +43,24 @@ describe("resolveKcqAiIdentity staff lookup", () => {
     expect(await resolveKcqAiIdentity(req())).toEqual({ userId: "u1", staffRole: null });
   });
 });
+
+describe("resolveKcqAiIdentity canonical identity", () => {
+  it("looks the grant up by the canonical id and keeps the auth-center id apart", async () => {
+    // The auth provider already mapped ba_owner -> cms_owner (user_identity_links).
+    deps.session.mockResolvedValue({
+      userId: "cms_owner",
+      authUserId: "ba_owner",
+      expiresAt: new Date(Date.now() + 60_000),
+    });
+    deps.grant.mockResolvedValue({ role: "PLATFORM_OWNER", revokedAt: null });
+    expect(await resolveKcqAiIdentity(req())).toEqual({
+      userId: "cms_owner",
+      authUserId: "ba_owner",
+      staffRole: "platform_owner",
+    });
+    expect(deps.grant).toHaveBeenCalledWith({
+      where: { userId: "cms_owner" },
+      select: { role: true, revokedAt: true },
+    });
+  });
+});

@@ -28,6 +28,7 @@
 import type { PrismaClient } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
 import type { BetterAuthPlugin } from "better-auth/types";
+import { type CanonicalUserResolver, getCanonicalUserResolver } from "../canonical-user";
 import { ORGANIZATIONS_UNAVAILABLE_CODE } from "../organization-availability";
 import type {
   AuthCapabilities,
@@ -38,6 +39,7 @@ import type {
   MagicLinkCapability,
   OrganizationCapability,
   PasskeyCapability,
+  Session,
   SignInMethod,
   SignInResult,
   TwoFactorCapability,
@@ -383,6 +385,34 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     return auth;
   }
 
+  // Canonical user identity (see ../canonical-user.ts). Injectable for tests.
+  const resolver: CanonicalUserResolver =
+    (config.options as { canonicalUserResolver?: CanonicalUserResolver } | undefined)
+      ?.canonicalUserResolver ?? getCanonicalUserResolver();
+
+  /** The session exactly as the auth center issued it (raw subject in `userId`). */
+  async function resolveRawSession(request: Request): Promise<Session | null> {
+    const authBase = process.env.BETTER_AUTH_URL?.trim();
+    if (authBase && shouldResolveSessionAtAuthCenter(request.url, authBase)) {
+      try {
+        const remote = await fetchAuthCenterSession(request, authBase);
+        return mapSession(remote);
+      } catch (error) {
+        logger.warn("Auth center getSession failed, falling back to local Prisma", { error });
+      }
+    }
+    try {
+      const auth = await getAuth();
+      const result = await auth.api.getSession({ headers: request.headers });
+      return mapSession(
+        result as { session: Record<string, unknown>; user: Record<string, unknown> } | null,
+      );
+    } catch (error) {
+      logger.error("Better Auth getSession failed", { error });
+      return null;
+    }
+  }
+
   async function getAuth() {
     if (!authInstance) {
       authInstance = await initAuth();
@@ -463,23 +493,15 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         logger.warn("Better Auth getSession: a Request object is required to resolve the session.");
         return null;
       }
-      const authBase = process.env.BETTER_AUTH_URL?.trim();
-      if (authBase && shouldResolveSessionAtAuthCenter(request.url, authBase)) {
-        try {
-          const remote = await fetchAuthCenterSession(request, authBase);
-          return mapSession(remote);
-        } catch (error) {
-          logger.warn("Auth center getSession failed, falling back to local Prisma", { error });
-        }
-      }
+      const raw = await resolveRawSession(request);
+      if (!raw) return null;
+      // The auth center's id is not an app-table key; see canonical-user.ts.
+      // A lookup failure is "no session", never the raw id.
       try {
-        const auth = await getAuth();
-        const result = await auth.api.getSession({ headers: request.headers });
-        return mapSession(
-          result as { session: Record<string, unknown>; user: Record<string, unknown> } | null,
-        );
+        const userId = await resolver.canonical(raw.userId);
+        return { ...raw, userId, authUserId: raw.userId };
       } catch (error) {
-        logger.error("Better Auth getSession failed", { error });
+        logger.error("Better Auth getSession: canonical user lookup failed", { error });
         return null;
       }
     },
@@ -487,13 +509,16 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     async getUser(userId) {
       const auth = await getAuth();
       try {
+        // `userId` is canonical; Better Auth's own table is keyed by the subject.
+        const subject = await resolver.subject(userId);
         const ctx = await auth.$context;
         const adapter = ctx.adapter;
         const raw = await adapter.findOne<Record<string, unknown>>({
           model: "user",
-          where: [{ field: "id", value: userId }],
+          where: [{ field: "id", value: subject }],
         });
-        return mapUser(raw);
+        const user = mapUser(raw);
+        return user ? { ...user, id: userId } : null;
       } catch (error) {
         logger.error("Better Auth getUser failed", { userId, error });
         return null;
@@ -589,7 +614,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
         const listOrgs = api.listOrganizations;
         if (!listOrgs) return [];
         const raw = (await listOrgs({
-          query: { userId },
+          query: { userId: await resolver.subject(userId) },
           ...(request ? { headers: request.headers } : {}),
         })) as unknown;
         const rawRecord = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : null;

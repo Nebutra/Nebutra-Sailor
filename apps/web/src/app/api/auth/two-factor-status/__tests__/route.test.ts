@@ -41,7 +41,7 @@ describe("GET /api/auth/two-factor-status", () => {
   });
 
   it("returns enabled: true when AuthUser.twoFactorEnabled is true", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     findUnique.mockResolvedValue({ twoFactorEnabled: true });
 
     const { GET } = await import("../route");
@@ -56,7 +56,7 @@ describe("GET /api/auth/two-factor-status", () => {
   });
 
   it("returns enabled: false when AuthUser.twoFactorEnabled is false", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     findUnique.mockResolvedValue({ twoFactorEnabled: false });
 
     const { GET } = await import("../route");
@@ -67,7 +67,7 @@ describe("GET /api/auth/two-factor-status", () => {
   });
 
   it("returns enabled: false when AuthUser does not exist (defensive default)", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     findUnique.mockResolvedValue(null);
 
     const { GET } = await import("../route");
@@ -78,7 +78,7 @@ describe("GET /api/auth/two-factor-status", () => {
   });
 
   it("returns 500 when db query throws", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     findUnique.mockRejectedValue(new Error("db down"));
 
     const { GET } = await import("../route");

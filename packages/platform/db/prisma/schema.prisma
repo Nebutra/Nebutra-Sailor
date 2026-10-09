@@ -477,6 +477,7 @@ model User {
   tenant              Tenant?
   platformStaff       PlatformStaff?
   studioPresets       StudioPreset[]
+  identityLinks       UserIdentityLink[]
 
   @@map("users")
   @@schema("public")
@@ -3654,6 +3655,35 @@ model PlatformStaff {
 
   @@index([role, revokedAt])
   @@map("platform_staff")
+  @@schema("public")
+}
+
+/// Which auth-center identity stands for which canonical `users` row.
+///
+/// Better Auth mints its own user id (`auth_users.id`); the platform's tables
+/// (`users`, tenants, staff grants, wallets) are keyed by `users.id`. For anyone
+/// who first signed up through Better Auth the two are the same string and no
+/// link exists. A person who predates it (a Clerk-era `users` row) has two ids:
+/// this table is the one place that says they are one person. Written by the
+/// sign-in hook (verified email only) and by the explicit backfill — never
+/// inferred at read time. Personal, not tenant data: system client only.
+/// @rls deny
+model UserIdentityLink {
+  id        String   @id @default(cuid())
+  /// The identity provider; "better-auth" is the auth center.
+  provider  String   @default("better-auth")
+  /// The provider's own user id (auth_users.id).
+  subject   String
+  userId    String   @map("user_id")
+  /// How the link was made: "sign-in" | "backfill" | "manual".
+  source    String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, subject])
+  @@index([userId])
+  @@map("user_identity_links")
   @@schema("public")
 }
 

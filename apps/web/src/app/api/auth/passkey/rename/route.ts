@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     const result = await db.bAPasskey.updateMany({
       where: {
         id: parsed.data.id,
-        userId: authState.userId,
+        userId: authState.authUserId,
       },
       data: {
         name: parsed.data.name,
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     logger.error("[auth:passkey-rename] Failed to rename passkey", {
-      userId: authState.userId,
+      userId: authState.authUserId,
       passkeyId: parsed.data.id,
       error: error instanceof Error ? error.message : "Unknown error",
     });

@@ -32,4 +32,11 @@ export async function createAuth(config: AuthConfig): Promise<AuthProvider> {
   }
 }
 
+export {
+  type CanonicalUserResolver,
+  canonicalUserId,
+  canonicalUserIdOrNull,
+  createCanonicalUserResolver,
+  getCanonicalUserResolver,
+} from "./canonical-user";
 export { ensureUserRecordForSession } from "./identity-mirror";

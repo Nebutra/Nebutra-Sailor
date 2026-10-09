@@ -62,7 +62,10 @@ const WALLET_USAGE_ROWS = 8;
 export const KCQ_AI_STAFF_MODEL_DEFAULT = "deepseek/deepseek-v4.1-flash";
 
 export interface KcqAiIdentity {
+  /** Canonical `users.id` — what staff grants, tenants and wallets are keyed by. */
   userId: string;
+  /** The auth center's own id; only for Better Auth's tables (org membership). */
+  authUserId?: string;
   /** Present only for an unrevoked PlatformStaff grant. */
   staffRole: PlatformStaffRole | null;
   email?: string | null;
@@ -91,6 +94,7 @@ export async function resolveKcqWalletTenant(
   if (workspace.length > 160) throw new MarketSourceError(400, "请指定当前工作区。");
   const scope = await resolveWorkspaceTenant({
     userId: identity.userId,
+    authUserId: identity.authUserId,
     email: identity.email ?? null,
     workspace,
   });
@@ -117,6 +121,9 @@ export async function resolveKcqAiIdentity(request: Request): Promise<KcqAiIdent
   const auth = await createAuth({ provider: "better-auth" });
   const session = await auth.getSession(request);
   if (!session?.userId || session.expiresAt.getTime() <= Date.now()) return null;
+  // `session.userId` is the canonical users id (the auth provider resolves the
+  // auth-center subject through user_identity_links), so the grant lookup and
+  // the wallet tenant agree with every other app table for the same person.
   // AUDIT(no-tenant): platform staff standing is platform-scope, never tenant data.
   const grant = await getSystemDb().platformStaff.findUnique({
     where: { userId: session.userId },
@@ -124,7 +131,12 @@ export async function resolveKcqAiIdentity(request: Request): Promise<KcqAiIdent
   });
   const staffRole =
     grant && grant.revokedAt === null ? normalizePlatformStaffRole(grant.role) : null;
-  return { userId: session.userId, staffRole, ...(session.email ? { email: session.email } : {}) };
+  return {
+    userId: session.userId,
+    ...(session.authUserId ? { authUserId: session.authUserId } : {}),
+    staffRole,
+    ...(session.email ? { email: session.email } : {}),
+  };
 }
 
 /** Fixed-window per-user limiter; one process is enough for a per-user cost guard. */

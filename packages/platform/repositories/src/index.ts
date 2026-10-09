@@ -174,6 +174,13 @@ export { UsageLedgerRepository } from "./usage-ledger.repository";
 export type { IdentityRecord, UpdateUserData } from "./user.repository";
 // User
 export { UserRepository } from "./user.repository";
+// UserIdentityLink — auth-center subject -> canonical users row
+export type { LinkOutcome, LinkSource } from "./user-identity.repository";
+export {
+  AUTH_CENTER_PROVIDER,
+  getUserIdentityRepository,
+  UserIdentityRepository,
+} from "./user-identity.repository";
 export type {
   JsonValue,
   UpsertWebhookEventData,

@@ -18,7 +18,10 @@ type ServerSessionClaims = Record<string, unknown> & {
 };
 
 interface ServerAuthState {
+  /** Canonical `users.id`: the key of every app table. */
   userId: string | null;
+  /** The auth center's own id: only for Better Auth's tables (auth_sessions, auth_accounts, passkeys). */
+  authUserId: string | null;
   orgId: string | null;
   sessionClaims: ServerSessionClaims;
   isSignedIn: boolean;
@@ -107,6 +110,7 @@ export async function getAuth(request?: Request) {
 
   return {
     userId: session?.userId ?? null,
+    authUserId: session?.authUserId ?? session?.userId ?? null,
     orgId,
     sessionClaims: { org_plan: "FREE", org_role: DEFAULT_ORG_ROLE },
     isSignedIn: !!session?.userId,

@@ -41,7 +41,7 @@ describe("GET /api/auth/current-session", () => {
   });
 
   it("returns sessionId: null when no cookie is present", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
 
     const { GET } = await import("../route");
     const res = await GET(new Request("http://localhost/api/auth/current-session"));
@@ -52,7 +52,7 @@ describe("GET /api/auth/current-session", () => {
   });
 
   it("returns the matching authSession id when cookie token belongs to the user", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     findUnique.mockResolvedValue({ id: "sess_abc", userId: "u1" });
 
     const { GET } = await import("../route");
@@ -71,7 +71,7 @@ describe("GET /api/auth/current-session", () => {
   });
 
   it("returns sessionId: null when the cookie token belongs to another user", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     findUnique.mockResolvedValue({ id: "sess_xyz", userId: "u2" });
 
     const { GET } = await import("../route");
@@ -86,7 +86,7 @@ describe("GET /api/auth/current-session", () => {
   });
 
   it("returns sessionId: null when the cookie token does not match any session", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     findUnique.mockResolvedValue(null);
 
     const { GET } = await import("../route");
@@ -101,7 +101,7 @@ describe("GET /api/auth/current-session", () => {
   });
 
   it("returns 500 when db query throws", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     findUnique.mockRejectedValue(new Error("db down"));
 
     const { GET } = await import("../route");

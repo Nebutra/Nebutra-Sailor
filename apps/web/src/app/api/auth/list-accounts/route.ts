@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
   try {
     const accounts = await db.authAccount.findMany({
-      where: { userId: authState.userId },
+      where: { userId: authState.authUserId },
       orderBy: { createdAt: "asc" },
       select: {
         id: true,
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     logger.error("[auth:list-accounts] Failed to load accounts", {
-      userId: authState.userId,
+      userId: authState.authUserId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 

@@ -1,4 +1,5 @@
 import { fetchAuthCenterSession } from "@nebutra/auth/auth-center-session";
+import { canonicalUserIdOrNull } from "@nebutra/auth/server";
 import { logger } from "@nebutra/logger";
 import type { Context } from "hono";
 import { DOMAINS } from "../config/env.js";
@@ -16,6 +17,11 @@ import { DOMAINS } from "../config/env.js";
  *     ask the auth center, as `nebutra whoami` does;
  *   - from a browser, the auth session cookie on the parent domain.
  *
+ * The auth center answers with ITS user id, which is not the key the platform's
+ * tables use for anyone who predates it (a staff grant, a tenant, a wallet hang
+ * off `users.id`). Both auth-center paths therefore go through the canonical
+ * resolver before returning, so every caller gets the app-table key.
+ *
  * Returns null for every failure. Callers must not distinguish them.
  */
 
@@ -28,10 +34,15 @@ export async function resolveCallerUserId(c: Context<CallerEnv>): Promise<string
   if (fromMiddleware) return fromMiddleware;
   try {
     const authorization = c.req.header("authorization");
-    if (authorization?.startsWith("Bearer ")) return await bearerUserId(authorization);
-    const center = await fetchAuthCenterSession(c.req.raw, DOMAINS.auth);
-    const id = center?.user.id;
-    return typeof id === "string" ? id : null;
+    let subject: string | null;
+    if (authorization?.startsWith("Bearer ")) {
+      subject = await bearerUserId(authorization);
+    } else {
+      const center = await fetchAuthCenterSession(c.req.raw, DOMAINS.auth);
+      const id = center?.user.id;
+      subject = typeof id === "string" ? id : null;
+    }
+    return subject ? await canonicalUserIdOrNull(subject) : null;
   } catch (error) {
     log.warn("auth center unavailable", { error: String(error) });
     return null;

@@ -650,6 +650,20 @@ export type DocsFeedback = Prisma.DocsFeedbackModel
  */
 export type PlatformStaff = Prisma.PlatformStaffModel
 /**
+ * Model UserIdentityLink
+ * Which auth-center identity stands for which canonical `users` row.
+ * 
+ * Better Auth mints its own user id (`auth_users.id`); the platform's tables
+ * (`users`, tenants, staff grants, wallets) are keyed by `users.id`. For anyone
+ * who first signed up through Better Auth the two are the same string and no
+ * link exists. A person who predates it (a Clerk-era `users` row) has two ids:
+ * this table is the one place that says they are one person. Written by the
+ * sign-in hook (verified email only) and by the explicit backfill — never
+ * inferred at read time. Personal, not tenant data: system client only.
+ * @rls deny
+ */
+export type UserIdentityLink = Prisma.UserIdentityLinkModel
+/**
  * Model StudioPreset
  * A Sailor Studio look saved to a person's account: what their agent proposed
  * (`nebutra studio preview` while logged in) or what they saved in Studio, so

@@ -43,7 +43,7 @@ describe("POST /api/auth/revoke-other-sessions", () => {
   });
 
   it("revokes all sessions except current when token cookie present", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     deleteMany.mockResolvedValue({ count: 3 });
 
     const { POST } = await import("../route");
@@ -64,7 +64,7 @@ describe("POST /api/auth/revoke-other-sessions", () => {
   });
 
   it("falls back to revoking ALL user sessions when no cookie", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     deleteMany.mockResolvedValue({ count: 2 });
 
     const { POST } = await import("../route");
@@ -78,7 +78,7 @@ describe("POST /api/auth/revoke-other-sessions", () => {
   });
 
   it("returns 500 when delete throws", async () => {
-    getAuth.mockResolvedValue({ userId: "u1" });
+    getAuth.mockResolvedValue({ userId: "u1", authUserId: "u1" });
     deleteMany.mockRejectedValue(new Error("db down"));
 
     const { POST } = await import("../route");

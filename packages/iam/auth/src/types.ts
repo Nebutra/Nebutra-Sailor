@@ -28,8 +28,19 @@ export interface AuthConfig {
 
 /** A normalised user session returned by any provider. */
 export interface Session {
-  /** The authenticated user's ID. */
+  /**
+   * The authenticated user's CANONICAL id: the `users.id` every app table
+   * (tenants, staff grants, wallets) is keyed by. Resolved through
+   * `user_identity_links`, so it differs from the auth center's own id for
+   * accounts that predate it. Join this to app tables.
+   */
   userId: string;
+
+  /**
+   * The auth center's raw user id (`auth_users.id`). Only for reading Better
+   * Auth's own tables (sessions, accounts, org members); never an app-table key.
+   */
+  authUserId?: string;
 
   /** Active organization ID (multi-tenant). */
   organizationId?: string;

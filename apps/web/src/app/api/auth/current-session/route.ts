@@ -34,14 +34,14 @@ export async function GET(request: Request) {
 
     // Only return the id if the token belongs to the authenticated user;
     // otherwise treat as unknown to avoid leaking session ids across users.
-    if (!session || session.userId !== authState.userId) {
+    if (!session || session.userId !== authState.authUserId) {
       return NextResponse.json({ sessionId: null });
     }
 
     return NextResponse.json({ sessionId: session.id });
   } catch (error) {
     logger.error("[auth:current-session] Failed to resolve current session", {
-      userId: authState.userId,
+      userId: authState.authUserId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 

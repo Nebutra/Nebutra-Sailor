@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       db,
       kind: parsed.data.kind,
       sessionId: parsed.data.sessionId,
-      userId: authState.userId,
+      userId: authState.authUserId,
     });
 
     if (result.count === 0) {
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   } catch (error) {
     logger.error("[auth:device-sessions:revoke] Failed to revoke device session", {
-      userId: authState.userId,
+      userId: authState.authUserId,
       sessionId: parsed.data.sessionId,
       kind: parsed.data.kind,
       error: error instanceof Error ? error.message : "Unknown error",

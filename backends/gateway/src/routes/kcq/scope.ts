@@ -16,6 +16,7 @@ export async function resolveMarketScope(request: Request): Promise<MarketScope 
   if (!workspace || workspace.length > 160) throw new MarketSourceError(400, "请指定当前工作区。");
   return resolveWorkspaceTenant({
     userId: session.userId,
+    authUserId: session.authUserId,
     email: session.email ?? null,
     workspace,
   });
@@ -28,7 +29,10 @@ export async function resolveMarketScope(request: Request): Promise<MarketScope 
  * "this workspace" identically.
  */
 export async function resolveWorkspaceTenant(input: {
+  /** Canonical `users.id` (the personal tenant is keyed by it). */
   userId: string;
+  /** The auth center's id: Better Auth's org membership is keyed by it. Defaults to `userId`. */
+  authUserId?: string | undefined;
   email: string | null;
   workspace: string;
 }): Promise<MarketScope> {
@@ -45,7 +49,12 @@ export async function resolveWorkspaceTenant(input: {
     };
   }
   const member = await system.bAMember.findUnique({
-    where: { userId_organizationId: { userId: input.userId, organizationId: workspace } },
+    where: {
+      userId_organizationId: {
+        userId: input.authUserId ?? input.userId,
+        organizationId: workspace,
+      },
+    },
     include: { organization: true },
   });
   if (!member) throw new MarketSourceError(403, "当前工作区已不可访问。");

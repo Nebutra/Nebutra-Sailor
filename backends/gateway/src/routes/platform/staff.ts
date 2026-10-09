@@ -1,5 +1,6 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { auditLogger } from "@nebutra/audit";
+import { canonicalUserIdOrNull } from "@nebutra/auth/server";
 import { type PlatformStaffRole as DbRole, getSystemDb } from "@nebutra/db";
 import {
   canPlatform,
@@ -53,6 +54,11 @@ export interface StaffRouteDeps {
   repo: () => PlatformStaffRepository;
   caller: (c: Context) => Promise<string | null>;
   audit: typeof auditLogger;
+  /**
+   * Map an id an operator pasted (often the auth center's id, as `nebutra login`
+   * prints it) to the canonical `users.id` staff grants are keyed by.
+   */
+  canonicalize?: (id: string) => Promise<string>;
 }
 
 const defaultDeps: StaffRouteDeps = {
@@ -60,6 +66,7 @@ const defaultDeps: StaffRouteDeps = {
   repo: () => new PlatformStaffRepository(getSystemDb()),
   caller: (c) => resolveCallerUserId(c as Context<{ Variables: { tenant?: { userId?: string } } }>),
   audit: auditLogger,
+  canonicalize: async (id) => (await canonicalUserIdOrNull(id)) ?? id,
 };
 
 export const STAFF_AUDIT = {
@@ -275,7 +282,9 @@ export function createPlatformStaffRoutes(deps: StaffRouteDeps = defaultDeps) {
       }
 
       const target = body.userId
-        ? await repo.findUserById(body.userId)
+        ? await repo.findUserById(
+            await (deps.canonicalize ?? (async (id: string) => id))(body.userId),
+          )
         : await repo.findUserByEmail(body.email as string);
       const targetKey = target?.id ?? body.userId ?? body.email ?? "unknown";
       const attempt = {

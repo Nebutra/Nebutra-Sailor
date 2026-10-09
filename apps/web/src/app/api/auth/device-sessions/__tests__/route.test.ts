@@ -40,7 +40,7 @@ describe("GET /api/auth/device-sessions", () => {
   });
 
   it("returns unified web and desktop device sessions for the authenticated user", async () => {
-    getAuth.mockResolvedValue({ userId: "user_1" });
+    getAuth.mockResolvedValue({ userId: "user_1", authUserId: "user_1" });
     db.authSession.findMany.mockResolvedValue([
       {
         id: "web_current",
@@ -93,7 +93,7 @@ describe("GET /api/auth/device-sessions", () => {
   });
 
   it("returns a stable 500 payload when device session lookup fails", async () => {
-    getAuth.mockResolvedValue({ userId: "user_1" });
+    getAuth.mockResolvedValue({ userId: "user_1", authUserId: "user_1" });
     db.authSession.findMany.mockRejectedValue(new Error("db offline"));
     db.desktopAuthSession.findMany.mockResolvedValue([]);
 

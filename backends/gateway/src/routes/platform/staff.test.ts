@@ -10,7 +10,7 @@ const users = [
   { id: "u_plain", email: "plain@example.com", name: "Not staff" },
 ];
 
-function setup(caller: string | null) {
+function setup(caller: string | null, canonicalize?: (id: string) => Promise<string>) {
   const db = createInMemoryPlatformStaffDb({
     users,
     staff: [
@@ -35,6 +35,7 @@ function setup(caller: string | null) {
     repo: () => new PlatformStaffRepository(db.prisma),
     caller: async () => caller,
     audit: audit as never,
+    ...(canonicalize ? { canonicalize } : {}),
   });
   const post = (path: string, body: unknown) =>
     app.request(path, {
@@ -258,5 +259,30 @@ describe("platform staff: revoke", () => {
     const { post } = setup("u_owner");
     expect((await post("/u_gone/revoke", { note: "again" })).status).toBe(409);
     expect((await post("/u_plain/revoke", { note: "never" })).status).toBe(404);
+  });
+});
+
+describe("platform staff: one canonical identity", () => {
+  it("grants by the auth center's id (as `nebutra login` prints it) to the canonical users row", async () => {
+    const { post, db } = setup("u_owner", async (id) => (id === "ba_plain" ? "u_plain" : id));
+    const res = await post("/", {
+      userId: "ba_plain",
+      role: "platform_support",
+      note: "support rota",
+    });
+    expect(res.status).toBe(201);
+    expect(db.staff.get("u_plain")).toBeDefined();
+    expect(db.staff.get("ba_plain")).toBeUndefined();
+  });
+
+  it("a canonical id passes through unchanged", async () => {
+    const { post, db } = setup("u_owner", async (id) => id);
+    const res = await post("/", {
+      userId: "u_plain",
+      role: "platform_support",
+      note: "support rota",
+    });
+    expect(res.status).toBe(201);
+    expect(db.staff.get("u_plain")).toBeDefined();
   });
 });

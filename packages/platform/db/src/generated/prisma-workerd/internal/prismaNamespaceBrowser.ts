@@ -158,6 +158,7 @@ export const ModelName = {
   PebbleFeedback: 'PebbleFeedback',
   DocsFeedback: 'DocsFeedback',
   PlatformStaff: 'PlatformStaff',
+  UserIdentityLink: 'UserIdentityLink',
   StudioPreset: 'StudioPreset'
 } as const
 
@@ -2025,6 +2026,18 @@ export const PlatformStaffScalarFieldEnum = {
 } as const
 
 export type PlatformStaffScalarFieldEnum = (typeof PlatformStaffScalarFieldEnum)[keyof typeof PlatformStaffScalarFieldEnum]
+
+
+export const UserIdentityLinkScalarFieldEnum = {
+  id: 'id',
+  provider: 'provider',
+  subject: 'subject',
+  userId: 'userId',
+  source: 'source',
+  createdAt: 'createdAt'
+} as const
+
+export type UserIdentityLinkScalarFieldEnum = (typeof UserIdentityLinkScalarFieldEnum)[keyof typeof UserIdentityLinkScalarFieldEnum]
 
 
 export const StudioPresetScalarFieldEnum = {

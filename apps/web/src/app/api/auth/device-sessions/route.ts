@@ -15,13 +15,13 @@ export async function GET(request: Request) {
     const sessions = await getDeviceSessions({
       currentWebSessionToken: readBetterAuthSessionToken(request),
       db,
-      userId: authState.userId,
+      userId: authState.authUserId,
     });
 
     return NextResponse.json(sessions);
   } catch (error) {
     logger.error("[auth:device-sessions] Failed to load device sessions", {
-      userId: authState.userId,
+      userId: authState.authUserId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 

@@ -615,6 +615,9 @@ ALTER TABLE "public"."docs_feedback" ENABLE ROW LEVEL SECURITY;
 -- PlatformStaff
 ALTER TABLE "public"."platform_staff" ENABLE ROW LEVEL SECURITY;
 
+-- UserIdentityLink
+ALTER TABLE "public"."user_identity_links" ENABLE ROW LEVEL SECURITY;
+
 -- StudioPreset
 ALTER TABLE "public"."studio_presets" ENABLE ROW LEVEL SECURITY;
 

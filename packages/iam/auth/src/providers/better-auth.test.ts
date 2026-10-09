@@ -65,7 +65,15 @@ describe("createBetterAuthProvider env validation", () => {
       ),
     );
 
-    const provider = createBetterAuthProvider({ provider: "better-auth" });
+    const provider = createBetterAuthProvider({
+      provider: "better-auth",
+      options: {
+        canonicalUserResolver: {
+          canonical: async (id: string) => (id === "user_1" ? "legacy_1" : id),
+          subject: async (id: string) => id,
+        },
+      },
+    });
     const session = await provider.getSession(
       new Request("https://router.nebutra.com/dashboard", {
         headers: { cookie: "__Secure-better-auth.session_token=t" },
@@ -76,7 +84,39 @@ describe("createBetterAuthProvider env validation", () => {
       "https://auth.nebutra.com/api/auth/get-session?disableCookieCache=true",
       expect.objectContaining({ cache: "no-store" }),
     );
-    expect(session?.userId).toBe("user_1");
+    // userId is the canonical app id; the auth center's own id is kept apart.
+    expect(session?.userId).toBe("legacy_1");
+    expect(session?.authUserId).toBe("user_1");
+    fetchSpy.mockRestore();
+  });
+
+  it("treats a failed canonical lookup as no session, never the raw id", async () => {
+    delete process.env.BETTER_AUTH_SECRET;
+    process.env.BETTER_AUTH_URL = "https://auth.nebutra.com";
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          session: { id: "s", userId: "user_1", expiresAt: "2099-01-01T00:00:00.000Z" },
+          user: { id: "user_1" },
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      ),
+    );
+    const provider = createBetterAuthProvider({
+      provider: "better-auth",
+      options: {
+        canonicalUserResolver: {
+          canonical: async () => {
+            throw new Error("db down");
+          },
+          subject: async (id: string) => id,
+        },
+      },
+    });
+    const session = await provider.getSession(
+      new Request("https://router.nebutra.com/dashboard", { headers: { cookie: "a=b" } }),
+    );
+    expect(session).toBeNull();
     fetchSpy.mockRestore();
   });
 });

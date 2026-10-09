@@ -56,6 +56,26 @@ there. A mirrored identity has no Clerk id and, for a phone-only account, no
 email — both columns are nullable since `20260907000000_users_identity_mirror`
 and stay unique (Postgres allows any number of `NULL`s under a unique index).
 
+### One canonical user id (`user_identity_links`)
+
+`users.id = auth_users.id` holds only for people who first signed up through
+Better Auth. A person with a Clerk-era `users` row (staff grants, tenants,
+wallets hang off it) has two ids, and joining a session's raw id to an app table
+silently misses them (2026-10-09: the platform owner got 403 on every staff
+route and was billed as a customer). `user_identity_links (provider, subject) ->
+user_id` says which `users` row an auth subject is. Rules:
+
+- `Session.userId` from `@nebutra/auth` is the CANONICAL id (resolved through the
+  link table; no link means the subject is the id). `Session.authUserId` is the
+  raw auth-center id, for reading Better Auth's own tables only.
+- Code that holds a raw auth-center id (the auth center's HTTP session) calls
+  `canonicalUserId` / `canonicalUserIdOrNull` from `@nebutra/auth/server`.
+- A lookup failure is "no session", never the raw id.
+- Links are written only for a VERIFIED email owned by exactly one Clerk-era row,
+  at sign-in (`UserIdentityRepository.linkLegacyByVerifiedEmail`) or by the
+  explicit backfill `packages/platform/db/scripts/backfill-identity-links.mjs`
+  (dry-run by default). Never at read time, never for an unverified email.
+
 ## Row Level Security (RLS)
 
 Generated. A model with a `tenant_id` (or `organization_id`) column, or one

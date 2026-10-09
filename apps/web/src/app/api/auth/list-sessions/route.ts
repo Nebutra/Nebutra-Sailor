@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
   try {
     const sessions = await db.authSession.findMany({
-      where: { userId: authState.userId },
+      where: { userId: authState.authUserId },
       orderBy: { updatedAt: "desc" },
       select: {
         id: true,
@@ -36,7 +36,7 @@ export async function GET(request: Request) {
     );
   } catch (error) {
     logger.error("[auth:list-sessions] Failed to load sessions", {
-      userId: authState.userId,
+      userId: authState.authUserId,
       error: error instanceof Error ? error.message : "Unknown error",
     });
 
