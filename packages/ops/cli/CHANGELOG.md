@@ -1,5 +1,11 @@
 # nebutra
 
+## 0.6.3
+
+### Patch Changes
+
+- [`3eda510`](https://github.com/Nebutra/Nebutra-Sailor/commit/3eda51011ea0883488d132f44d238e6b1a8d19d9) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Honour `HTTPS_PROXY` / `HTTP_PROXY` (and `NO_PROXY`) for every request. Node's fetch ignored them, so behind a proxy each command failed with a bare "fetch failed" while curl to the same URL worked.
+
 ## 0.6.2
 
 ### Patch Changes
