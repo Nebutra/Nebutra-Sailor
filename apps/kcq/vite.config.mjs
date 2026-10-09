@@ -118,6 +118,10 @@ export default ({ isSsrBuild }) => ({
         ),
       },
       {
+        find: "kcq-dm-sans.woff2",
+        replacement: resolve(root, "../../packages/design/fonts/generated/dm-sans.woff2"),
+      },
+      {
         find: "kcq-outfit-600.woff2",
         replacement: local.resolve("@fontsource/outfit/files/outfit-latin-600-normal.woff2"),
       },

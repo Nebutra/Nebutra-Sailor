@@ -68,7 +68,7 @@ const columns = computed<{ heading: string; links: Link[] }[]>(() => [
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <BrandMark :endorsed="t('footer.endorsement', { brand: brand.name })" />
+          <BrandMark :endorsed="t('footer.endorsement')" />
           <p class="t-copy">{{ t("footer.credit") }}</p>
           <p class="footer-status t-meta">
             <span class="footer-feed" :data-status="feed.status.value === 'idle' ? undefined : feed.status.value">

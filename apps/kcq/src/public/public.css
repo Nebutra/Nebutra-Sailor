@@ -25,6 +25,25 @@
   descent-override: 27.44%;
   line-gap-override: 0%;
 }
+/* DM Sans, Nebutra's heading face: the same self-hosted variable file nebutra.com serves
+   (@nebutra/fonts generated/dm-sans.woff2), so the family's headings read as one voice. Fallback
+   metrics are the ones next/font computes from that file on nebutra.com. */
+@font-face {
+  font-family: "DM Sans";
+  src: url("kcq-dm-sans.woff2") format("woff2");
+  font-weight: 100 1000;
+  font-style: normal;
+  /* Preloaded (head.ts); never swapped in late, so the headline never reflows. */
+  font-display: optional;
+}
+@font-face {
+  font-family: "DM Sans Fallback";
+  src: local("Arial"), local("ArialMT");
+  size-adjust: 106.22%;
+  ascent-override: 93.39%;
+  descent-override: 29.18%;
+  line-gap-override: 0%;
+}
 @font-face {
   font-family: "Geist";
   src: url("kcq-geist-font.woff2") format("woff2");
@@ -88,6 +107,9 @@
   --kcq-deep: color-mix(in oklab, var(--klc-color-ui-background) 64%, #000);
 }
 :root {
+  /* Headings share Nebutra's heading face; Outfit stays the KLineChartQuant wordmark only (ADR 0001). */
+  --kcq-font-heading: "DM Sans", "DM Sans Fallback", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --kcq-font-heading-weight: 500;
   --kcq-font-display: "Outfit", "Outfit Fallback", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
   --kcq-font-ui: "Geist", "Geist Fallback", "MiSans", "PingFang SC", "Microsoft YaHei", sans-serif;
   --kcq-font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -250,11 +272,11 @@ a {
   padding-inline: var(--kcq-gutter);
 }
 
-/* Type roles (design §3.3 type scale; display per CP 17/45). Outfit is the brand face, used for
-   the wordmark, the hero and the two big-type moments only (research J5); section heads are Geist. */
+/* Type roles (design §3.3 type scale; display per CP 17/45). Display, statement and section heads
+   take Nebutra's heading face (DM Sans 500, as nebutra.com); Outfit is the wordmark only. */
 .t-display {
-  font-family: var(--kcq-font-display);
-  font-weight: var(--klc-text-48-font-weight);
+  font-family: var(--kcq-font-heading);
+  font-weight: var(--kcq-font-heading-weight);
   font-size: var(--klc-text-48-font-size);
   line-height: var(--klc-text-48-line-height);
   letter-spacing: var(--klc-text-48-letter-spacing);
@@ -268,8 +290,8 @@ a {
 }
 /* A one-line statement with nothing under it resets the rhythm (research A3). */
 .t-statement {
-  font-family: var(--kcq-font-display);
-  font-weight: 600;
+  font-family: var(--kcq-font-heading);
+  font-weight: var(--kcq-font-heading-weight);
   font-size: var(--klc-text-48-font-size);
   line-height: 1;
   letter-spacing: -0.04em;
@@ -281,8 +303,8 @@ a {
   }
 }
 .t-heading {
-  font-family: var(--kcq-font-ui);
-  font-weight: var(--klc-text-32-font-weight);
+  font-family: var(--kcq-font-heading);
+  font-weight: var(--kcq-font-heading-weight);
   font-size: var(--klc-text-32-font-size);
   line-height: var(--klc-text-32-line-height);
   letter-spacing: -0.03em;
