@@ -297,7 +297,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     id: "dropzone",
     title: "Dropzone",
     category: "forms",
-    status: "experimental",
+    status: "stable",
     import: "@nebutra/ui/primitives",
     files: ["primitives/dropzone.tsx"],
     demos: ["dropzone-demo"],

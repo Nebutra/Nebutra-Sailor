@@ -9,7 +9,7 @@
  * SOTA-oriented specialized runners: regex highlight, QR live preview, multi-hash.
  */
 import { ArrowDown, Check, Copy } from "@nebutra/icons";
-import { Button, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
+import { Button, Dropzone, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fileToBase64, PdfResultPanel, TextResultActions } from "@/components/result-panels";
@@ -491,17 +491,13 @@ export function PdfTextRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{t("pdfText.file")}</p>
-        <input
-          data-allow-native
-          type="file"
-          accept="application/pdf,.pdf"
-          className="block w-full text-sm"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-        />
-        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
-      </div>
+      <Dropzone
+        size="sm"
+        label={t("pdfText.file")}
+        description={fileName || undefined}
+        accept="application/pdf,.pdf"
+        onFiles={([file]) => void onFile(file ?? null)}
+      />
       <RunnerSelect id="pdf-layout" label={t("pdfText.layout")} value={layout} onChange={setLayout}>
         <option value="layout">layout</option>
         <option value="raw">raw</option>
@@ -596,17 +592,13 @@ export function XlsxTextRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{t("xlsxText.file")}</p>
-        <input
-          data-allow-native
-          type="file"
-          accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          className="block w-full text-sm"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-        />
-        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
-      </div>
+      <Dropzone
+        size="sm"
+        label={t("xlsxText.file")}
+        description={fileName || undefined}
+        accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        onFiles={([file]) => void onFile(file ?? null)}
+      />
       <div className="flex flex-wrap gap-2">
         <Button
           type="button"
@@ -698,17 +690,13 @@ export function DocxTextRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{t("docxText.file")}</p>
-        <input
-          data-allow-native
-          type="file"
-          accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          className="block w-full text-sm"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-        />
-        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
-      </div>
+      <Dropzone
+        size="sm"
+        label={t("docxText.file")}
+        description={fileName || undefined}
+        accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        onFiles={([file]) => void onFile(file ?? null)}
+      />
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading || !base64}>
         {loading ? t("docxText.extracting") : t("docxText.extract")}
       </Button>
@@ -967,12 +955,12 @@ export function ImageCropRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <input
-        data-allow-native
-        type="file"
+      <Dropzone
+        size="sm"
+        label={t("imageCrop.drop")}
         accept="image/*"
-        className="block w-full text-sm"
-        onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
+        paste
+        onFiles={([file]) => void onFile(file ?? null)}
       />
       <p className="text-xs text-neutral-10">{t("imageCrop.dragHint")}</p>
       {preview ? (
@@ -1091,17 +1079,13 @@ export function PptxTextRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{t("pptxText.file")}</p>
-        <input
-          data-allow-native
-          type="file"
-          accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation"
-          className="block w-full text-sm"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-        />
-        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
-      </div>
+      <Dropzone
+        size="sm"
+        label={t("pptxText.file")}
+        description={fileName || undefined}
+        accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        onFiles={([file]) => void onFile(file ?? null)}
+      />
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading || !base64}>
         {loading ? t("pptxText.extracting") : t("pptxText.extract")}
       </Button>

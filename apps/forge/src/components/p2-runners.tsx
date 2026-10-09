@@ -5,7 +5,7 @@
  * P2 specialized runners — unit convert, codec/text leftovers, CN/life, image helpers.
  * @see https://github.com/Nebutra/Nebutra-Sailor/issues/256
  */
-import { Button, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
+import { Button, Dropzone, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { type ChangeEvent, useCallback, useMemo, useState } from "react";
 import {
   RunnerError,
@@ -407,23 +407,13 @@ export function ImageBase64Runner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div
-        className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-background p-6 text-sm text-muted-foreground"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          e.preventDefault();
-          onFile(e.dataTransfer.files?.[0] ?? null);
-        }}
-      >
-        <input
-          type="file"
-          accept="image/*"
-          data-allow-native
-          className="mb-2 text-sm"
-          onChange={(e) => onFile(e.target.files?.[0] ?? null)}
-        />
-        <p>{fileName ? `已选：${fileName}` : "拖拽图片，或粘贴 data URL / Base64"}</p>
-      </div>
+      <Dropzone
+        label={fileName ? `已选：${fileName}` : "拖拽图片，或点击选择"}
+        description="也可以在下方粘贴 data URL / Base64"
+        accept="image/*"
+        paste
+        onFiles={([file]) => onFile(file ?? null)}
+      />
       <Textarea
         id="img64-text"
         label="Base64 / data URL"
