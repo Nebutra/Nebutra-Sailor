@@ -67,7 +67,8 @@ export class UserRepository {
    * up before the hook existed. Both are one upsert keyed by id, so they are
    * idempotent and safe to race.
    *
-   * A login refreshes the email, since that is what the auth provider owns; a
+   * A login refreshes an available email; a legacy identity's email is never
+   * used to link accounts or transfer ownership. Auth identity id is canonical. A
    * name or avatar a person set here is never overwritten by one.
    */
   async ensureFromIdentity(identity: IdentityRecord): Promise<User> {
@@ -80,7 +81,25 @@ export class UserRepository {
     }
     if (name != null) create.name = name;
     if (avatarUrl != null) create.avatarUrl = avatarUrl;
-    return this.prisma.user.upsert({ where: { id }, create, update });
+    try {
+      return await this.prisma.user.upsert({ where: { id }, create, update });
+    } catch (error) {
+      // Clerk-era rows can own the same unique email as a new Better Auth id.
+      // Keep both identities isolated. Account migration is an explicit flow,
+      // never an implicit email match; the auth service retains the email.
+      if (
+        email == null ||
+        !(error instanceof Error) ||
+        !("code" in error) ||
+        error.code !== "P2002"
+      )
+        throw error;
+      const owner = await this.prisma.user.findUnique({ where: { email }, select: { id: true } });
+      if (!owner || owner.id === id) throw error;
+      delete create.email;
+      delete update.email;
+      return this.prisma.user.upsert({ where: { id }, create, update });
+    }
   }
 
   async delete(id: string): Promise<void> {

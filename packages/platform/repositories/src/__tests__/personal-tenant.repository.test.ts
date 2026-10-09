@@ -28,6 +28,7 @@ const DDL = [
   statement('CREATE TYPE "TenantLifecycleState"'),
   statement('CREATE TABLE "users"'),
   statement('CREATE TABLE "tenants"'),
+  'CREATE UNIQUE INDEX "users_email_key" ON "users"("email");',
   'CREATE UNIQUE INDEX "tenants_user_id_key" ON "tenants"("user_id");',
 ].join("\n");
 
@@ -47,6 +48,29 @@ describe("PersonalTenantRepository (real Prisma over PGlite)", () => {
 
   it("has no tenant for someone who never used a personal product", async () => {
     await expect(repository.find("user_nobody")).resolves.toBeNull();
+  });
+
+  it("keeps a new auth identity isolated when a legacy identity owns the same email", async () => {
+    await database.prisma.user.create({
+      data: { id: "legacy-clerk-user", email: "shared@example.com", clerkId: "clerk-legacy" },
+    });
+    const legacyTenant = await repository.ensure({ userId: "legacy-clerk-user" });
+    const currentTenant = await repository.ensure({
+      userId: "better-auth-user",
+      email: "shared@example.com",
+    });
+    expect(currentTenant).not.toBe(legacyTenant);
+    await expect(
+      repository.ensure({ userId: "better-auth-user", email: "shared@example.com" }),
+    ).resolves.toBe(currentTenant);
+    const currentUser = await database.prisma.user.findUnique({
+      where: { id: "better-auth-user" },
+    });
+    expect(currentUser?.email).toBeNull();
+    const legacyUser = await database.prisma.user.findUnique({
+      where: { id: "legacy-clerk-user" },
+    });
+    expect(legacyUser?.email).toBe("shared@example.com");
   });
 
   it("provisions one tenant per person, and returns the same one every time", async () => {
