@@ -78,11 +78,22 @@ describe("UI/UX audit remediation invariants", () => {
 
   // The Sailor marketing home is the template's home (page.for-template.tsx);
   // the Nebutra site's own home at page.tsx is the Journal and loads no sections.
-  it("enables lazy-loaded sections on the localized marketing page", () => {
+  // Since #726 the template home is the server-rendered starter site: its sections are
+  // server components composed in order, so there is nothing to lazy-load on the client.
+  it("composes the localized marketing page from the starter sections", () => {
     const marketingPage = readFromRepo(
       "apps/landing/src/app/[lang]/(marketing)/page.for-template.tsx",
     );
-    expect(marketingPage).toMatch(/dynamic\(/);
+    for (const section of [
+      "StarterHero",
+      "StarterFeatures",
+      "StarterPricing",
+      "StarterFaq",
+      "StarterCta",
+    ]) {
+      expect(marketingPage).toContain(`<${section} locale={lang} />`);
+    }
+    expect(marketingPage).not.toContain('"use client"');
   });
 
   it("defines page-level marketing metadata on localized home route", () => {
@@ -91,7 +102,8 @@ describe("UI/UX audit remediation invariants", () => {
     );
 
     expect(marketingPage).toContain("export async function generateMetadata");
-    expect(marketingPage).toContain('namespace: "metadata"');
+    expect(marketingPage).toContain('namespace: "site.meta"');
+    expect(marketingPage).toContain("buildPageMetadata(");
   });
 
   it("uses fluid hero typography and responsive product grids", () => {
