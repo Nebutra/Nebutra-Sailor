@@ -7,6 +7,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { ArrowLeft } from "@nebutra/icons";
 import { Avatar, Button, ButtonLink, Input, Label } from "@nebutra/ui/primitives/canonical";
 import { type FormEvent, useState } from "react";
+import { APP_PATH } from "./main-route";
 
 export interface ProfilePageProps {
   context: BrowserAuthContext | null;
@@ -57,7 +58,7 @@ export function ProfilePage({ context, auth }: ProfilePageProps) {
   return (
     <div className="profile-page">
       <header className="profile-header">
-        <ButtonLink href="/" variant="ghost" size="sm">
+        <ButtonLink href={APP_PATH} variant="ghost" size="sm">
           <ArrowLeft aria-hidden="true" />
           返回工作台
         </ButtonLink>

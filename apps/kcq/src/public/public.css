@@ -1,0 +1,67 @@
+/* Public skeleton only; the landing task replaces this with the KCQ token pipeline (fork ADR 0004).
+   Values mirror the KCQ light/dark interface themes so the skeleton never flashes another palette. */
+:root {
+  color-scheme: light dark;
+  --kcq-public-background: #f5f5f7;
+  --kcq-public-text: #242426;
+  --kcq-public-muted: #606066;
+  --kcq-public-border: #d8d8de;
+  --kcq-public-focus: #52617b;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --kcq-public-background: #151619;
+    --kcq-public-text: #dce0e8;
+    --kcq-public-muted: #acb2be;
+    --kcq-public-border: #2d3036;
+    --kcq-public-focus: #94a3bc;
+  }
+}
+body {
+  margin: 0;
+  background: var(--kcq-public-background);
+  color: var(--kcq-public-text);
+  font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+  line-height: 1.5;
+}
+a {
+  color: inherit;
+}
+a:focus-visible {
+  outline: 2px solid var(--kcq-public-focus);
+  outline-offset: 2px;
+}
+.public-header {
+  border-bottom: 1px solid var(--kcq-public-border);
+}
+.public-nav,
+.public-main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.public-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3rem;
+}
+.public-locales {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.public-locales a {
+  color: var(--kcq-public-muted);
+}
+.public-locales a[aria-current="page"] {
+  color: var(--kcq-public-text);
+}
+.public-main h1 {
+  margin: 3rem 0 1rem;
+  font-size: 2rem;
+  font-weight: 600;
+}

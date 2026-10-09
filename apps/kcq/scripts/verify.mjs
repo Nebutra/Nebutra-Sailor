@@ -48,3 +48,5 @@ run(["exec", "vitest", "run", "--config", "apps/kcq/vitest.config.ts"]);
 run(["--filter", "@nebutra/kcq", "typecheck"]);
 run(["--filter", "@nebutra/kcq", "build"]);
 if (!existsSync(resolve(app, "dist/index.html"))) throw new Error("KCQ product build is missing.");
+if (!existsSync(resolve(app, "dist/home.html")))
+  throw new Error("KCQ public pages were not prerendered.");

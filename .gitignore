@@ -118,6 +118,7 @@ apps/*/.source/
 /.nebutra/kcq-source/
 /.nebutra/kcq-candidates/
 apps/kcq/.kcq-typecheck.json
+apps/kcq/.kcq-prerender/
 
 # tsup temp bundled configs — auto-generated next to tsup.config.ts on build,
 # safe to delete, never commit

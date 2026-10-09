@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://kcq.nebutra.com/home</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kcq.nebutra.com/home"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kcq.nebutra.com/zh/home"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kcq.nebutra.com/home"/>
+  </url>
+  <url>
+    <loc>https://kcq.nebutra.com/zh/home</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kcq.nebutra.com/home"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kcq.nebutra.com/zh/home"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kcq.nebutra.com/home"/>
+  </url>
+  <url>
+    <loc>https://kcq.nebutra.com/benchmark</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kcq.nebutra.com/benchmark"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kcq.nebutra.com/zh/benchmark"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kcq.nebutra.com/benchmark"/>
+  </url>
+  <url>
+    <loc>https://kcq.nebutra.com/zh/benchmark</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kcq.nebutra.com/benchmark"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kcq.nebutra.com/zh/benchmark"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kcq.nebutra.com/benchmark"/>
+  </url>
+</urlset>
