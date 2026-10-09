@@ -12,7 +12,7 @@ import { db } from "@/lib/db";
 export async function POST(request: Request) {
   const authState = await getAuth(request);
 
-  if (!authState.userId) {
+  if (!authState.userId || !authState.authUserId) {
     return NextResponse.json({ error: "Authentication required." }, { status: 401 });
   }
 

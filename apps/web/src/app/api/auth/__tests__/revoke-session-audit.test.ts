@@ -30,6 +30,7 @@ const mockedDeleteMany = vi.mocked(db.authSession.deleteMany);
 function buildAuth(overrides: Partial<Awaited<ReturnType<typeof getAuth>>> = {}) {
   return {
     userId: "user_1",
+    authUserId: "user_1",
     orgId: "org_1",
     sessionClaims: { org_role: "org:admin" } as Record<string, unknown>,
     isSignedIn: true,
