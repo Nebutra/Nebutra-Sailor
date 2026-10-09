@@ -570,6 +570,8 @@ jobs:
       # 2026-10-02: GET /api/inngest was a 500 (no signing key) behind a green
       # health check, and no Inngest function had ever run. Fail the deploy.
       - name: Register with Inngest and require functions
+        env:
+          INNGEST_APP: nebutra-inngest
         run: bash infra/ops/scripts/verify-inngest-sync.sh https://nebutra-gateway.fly.dev
 
       - name: Cut over grey-cloud origin DNS

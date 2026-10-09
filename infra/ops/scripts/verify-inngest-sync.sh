@@ -24,31 +24,40 @@ fail() { echo "::error::$*" >&2; exit 1; }
 tmp="$(mktemp)"
 trap 'rm -f "$tmp"' EXIT
 
+sync_started="$(date -u +%Y-%m-%dT%H:%M:%S)"
 ok=0
 for i in $(seq 1 "$tries"); do
   code="$(curl -sS -o "$tmp" -w '%{http_code}' --max-time 30 -X PUT "$url" || echo 000)"
+  # inngest-js v4 answers a successful sync with {"message":"Successfully
+  # registered"} and no "status" field; a rejected app (e.g. a function config
+  # the server cannot compile) comes back non-200.
   status="$(python3 -c 'import json,sys
-try: print(json.load(open(sys.argv[1])).get("status",""))
+try:
+    d=json.load(open(sys.argv[1]))
+    print("ok" if "registered" in str(d.get("message","")).lower() else d.get("message",""))
 except Exception: print("")' "$tmp")"
-  echo "PUT $url try $i -> http $code, server status ${status:-?}"
-  if [ "$code" = "200" ] && [ "$status" = "200" ]; then ok=1; break; fi
+  echo "PUT $url try $i -> http $code, ${status:-?}"
+  if [ "$code" = "200" ] && [ "$status" = "ok" ]; then ok=1; break; fi
   sleep 10
 done
 [ "$ok" = "1" ] || fail "Inngest sync failed against $url (last http $code, status ${status:-?}). Check INNGEST_SIGNING_KEY / INNGEST_BASE_URL on the gateway and the nebutra-inngest Machine."
 
-code="$(curl -sS -o "$tmp" -w '%{http_code}' --max-time 30 "$url" || echo 000)"
-[ "$code" = "200" ] || fail "GET $url -> $code (introspection must answer 200)"
-python3 - "$tmp" <<'PY' || exit 1
-import json, sys
-d = json.load(open(sys.argv[1]))
-n = d.get("function_count", 0)
-print(f"mode={d.get('mode')} has_event_key={d.get('has_event_key')} has_signing_key={d.get('has_signing_key')} function_count={n}")
-bad = []
-if not d.get("has_signing_key"): bad.append("INNGEST_SIGNING_KEY is not set")
-if not d.get("has_event_key"): bad.append("INNGEST_EVENT_KEY is not set")
-if not isinstance(n, int) or n < 1: bad.append("function_count is 0")
-if bad:
-    print("::error::Inngest guard: " + "; ".join(bad))
-    sys.exit(1)
-PY
+# An unsigned GET is answered 401 by inngest-js >= 4.2.6 (inngest/inngest-js#1539),
+# so the function list cannot be read from outside. Ask the server instead: a
+# sync it could not apply shows up in its own log as "error registering functions".
+if [ -n "${INNGEST_APP:-}" ]; then
+  sleep 5
+  # Only lines logged after this sync started count; older failures are history.
+  if flyctl logs -a "$INNGEST_APP" --no-tail 2>/dev/null \
+    | python3 -c 'import re,sys
+since=sys.argv[1]
+for line in sys.stdin:
+    plain=re.sub(r"\x1b\[[0-9;]*m","",line)
+    m=re.match(r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})",plain)
+    if m and m.group(1)>=since and "error registering functions" in plain:
+        sys.exit(0)
+sys.exit(1)' "$sync_started"; then
+    fail "nebutra-inngest logged 'error registering functions' after the sync"
+  fi
+fi
 echo "Inngest app synced."
