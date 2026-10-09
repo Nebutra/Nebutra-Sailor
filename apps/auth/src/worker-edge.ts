@@ -110,7 +110,7 @@ const DEFAULT_TRUSTED = [
   `https://${brand.domains.forge}`,
   `https://${brand.domains.router}`,
   `https://${brand.domains.kuanlan}`,
-  `https://kcq.${brand.domains.landing}`,
+  `https://${brand.domains.kcq}`,
   "http://localhost:3130",
 ] as const;
 

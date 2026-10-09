@@ -55,6 +55,7 @@ export const brand = {
     pebble: "pebble.nebutra.com",
     carina: "carina.nebutra.com",
     kuanlan: "kuanlan.nebutra.com",
+    kcq: "kcq.nebutra.com",
     origin: "origin.nebutra.com",
   },
 
