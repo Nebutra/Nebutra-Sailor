@@ -28,9 +28,12 @@ on:
 permissions:
   contents: read
 
+# A running deploy is never cancelled: a newer push queues behind it (GitHub keeps
+# only the newest pending run), so the latest main still ships, and a manual
+# dispatch has its own lane so a push can't displace it.
 concurrency:
-  group: deploy-kcq-fly${{ github.event.inputs.cutover == 'true' && '-cutover' || '' }}
-  cancel-in-progress: ${{ github.event.inputs.cutover != 'true' }}
+  group: deploy-kcq-fly-${{ github.event_name }}${{ github.event.inputs.cutover == 'true' && '-cutover' || '' }}
+  cancel-in-progress: false
 
 jobs:
   diagnostics:
