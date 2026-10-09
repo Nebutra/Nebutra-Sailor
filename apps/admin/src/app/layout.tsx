@@ -37,7 +37,7 @@ async function tabsFor(staff: StaffContext): Promise<ConsoleTab[]> {
     { href: "/fleet", label: "Fleet", count: fleetSize },
     { href: "/supply", label: "Supply" },
     { href: "/tenants", label: "Customers", disabled: true },
-    { href: "/staff", label: "Staff", disabled: true },
+    { href: "/staff", label: "Staff" },
     { href: "/trust", label: "Trust", disabled: true },
   ];
 }

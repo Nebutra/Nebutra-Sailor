@@ -37,3 +37,17 @@ read-only **Fleet** page.
 `infra/iac/ecs/ecosystem.config.cjs` (that file is rendered on the VM with
 envsubst, so it cannot be imported at runtime). `src/lib/__tests__/fleet.test.ts`
 fails if the two drift apart — process names and ports must match exactly.
+
+## Staff
+
+`/staff` lists every `PlatformStaff` grant (revoked ones stay, as tombstones) and,
+for a `platform_owner`, grants and revokes. The page holds no rules: it calls the
+gateway's `/api/v1/platform/staff` endpoints signed as the Access-verified staff
+member, the same endpoints `nebutra admin staff` and the `staff_*` MCP tools use.
+The gateway enforces owner-only, no self-grant, no removing the last owner, and
+writes the audit entry. Set `ADMIN_GATEWAY_URL` to point at another gateway
+(default: the brand `api` origin); `SERVICE_SECRET` signs the call.
+
+This app is instance-only (`.templateignore`). The endpoint, repository, CLI and
+MCP tools ship in the template, so a customer's SaaS has the same platform-owner
+control without this console.
