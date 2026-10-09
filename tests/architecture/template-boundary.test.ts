@@ -12,6 +12,7 @@ import { tmpdir } from "node:os";
 import { basename, dirname, join, relative } from "node:path";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
+import { localImports, moduleReach, resolveSpecifier } from "../../scripts/lib/module-reach.mjs";
 import { getSailorStatus } from "../../scripts/sailor-version.mjs";
 
 /**
@@ -389,6 +390,20 @@ describe("template boundary — .templateignore declares it", () => {
 });
 
 describe("template boundary — the built template", () => {
+  it("keeps reachable landing imports resolvable after stripping instance modules", () => {
+    const app = join(out, "apps/landing");
+    const src = join(app, "src");
+    const missing: string[] = [];
+    for (const rel of moduleReach(app).reachable) {
+      if (!/\.(ts|tsx|js|mjs)$/.test(rel)) continue;
+      const file = join(app, rel);
+      for (const spec of localImports(file)) {
+        if (!resolveSpecifier(src, file, spec)) missing.push(`${rel}: ${spec}`);
+      }
+    }
+    expect(missing, "shipped routes must not import stripped modules").toEqual([]);
+  });
+
   it("stamps the sailor version and its convergence into the marker, so the mirror tag and the tree agree", () => {
     const marker = JSON.parse(readFileSync(join(out, ".sailor-template.json"), "utf8"));
     const status = getSailorStatus(REPO_ROOT);

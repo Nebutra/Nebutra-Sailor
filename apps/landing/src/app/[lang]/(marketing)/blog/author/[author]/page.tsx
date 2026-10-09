@@ -21,9 +21,9 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
 import { type Locale, routing } from "@/i18n/routing";
+import { siteLang } from "@/i18n/site-language";
 import { getAllPosts } from "@/lib/blog";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { siteLang } from "@/nebutra/i18n";
 
 /**
  * Params outside generateStaticParams render on demand as a blocking route

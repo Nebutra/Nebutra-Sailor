@@ -1,8 +1,8 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { siteLang } from "@/i18n/site-language";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { EssayFeature, essays, FEATURED, toCard } from "@/nebutra/home/essay-feature";
 import { EssayGrid } from "@/nebutra/home/essay-grid";
-import { siteLang } from "@/nebutra/i18n";
 import { sitePageMeta } from "@/nebutra/seo";
 import { Band, Intro } from "@/nebutra/ui/page";
 

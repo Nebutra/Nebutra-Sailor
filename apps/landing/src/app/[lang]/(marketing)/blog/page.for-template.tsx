@@ -27,9 +27,9 @@ import {
   RAIL_POST_COUNT,
 } from "@/components/landing/blog-motion-showcase";
 import { type Locale, routing } from "@/i18n/routing";
+import { siteLang } from "@/i18n/site-language";
 import { getAllPosts } from "@/lib/blog";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { siteLang } from "@/nebutra/i18n";
 
 // The motion rail surfaces the RAIL_POST_COUNT most recent posts. When the
 // library is at or below that size, "latest" is just a copy of the grid below —

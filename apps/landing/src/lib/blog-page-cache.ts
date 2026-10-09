@@ -15,6 +15,7 @@ import type { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import { hasLocale } from "next-intl";
 import { type Locale, routing } from "@/i18n/routing";
+import { siteLang } from "@/i18n/site-language";
 import {
   getAllPosts,
   getLocalizedPostForSiblingSlug,
@@ -26,7 +27,6 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 import { localesForPath } from "@/lib/seo/route-registry";
 import { getSiteUrl, type PublicationSet, unpublishedSet } from "@/lib/seo/site-routes";
 import { buildArticleSchema, buildBreadcrumbListSchema } from "@/lib/seo/structured-data";
-import { siteLang } from "@/nebutra/i18n";
 
 export const EMPTY_BLOG_PLACEHOLDER_SLUG = "empty-placeholder-do-not-fetch";
 
