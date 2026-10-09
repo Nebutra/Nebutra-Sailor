@@ -75,8 +75,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     layout: "wide",
     sourceStats: {
       unitCount: 42,
-      sourceFiles: 318,
-      testFiles: 161,
+      sourceFiles: 319,
+      testFiles: 162,
       readmes: 37,
     },
     signature: {
@@ -137,8 +137,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     layout: "standard",
     sourceStats: {
       unitCount: 21,
-      sourceFiles: 369,
-      testFiles: 77,
+      sourceFiles: 371,
+      testFiles: 78,
       readmes: 15,
     },
     signature: {
@@ -411,8 +411,8 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     layout: "full",
     sourceStats: {
       unitCount: 1,
-      sourceFiles: 130,
-      testFiles: 65,
+      sourceFiles: 137,
+      testFiles: 69,
       readmes: 0,
     },
     signature: {
