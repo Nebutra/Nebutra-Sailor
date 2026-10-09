@@ -34,11 +34,16 @@ jobs:
 
       - name: Run pnpm audit
         id: audit
-        run: |
-          pnpm audit --audit-level=moderate --json > audit-report.json || true
-          VULN_COUNT=$(jq '.metadata.vulnerabilities | .moderate + .high + .critical' audit-report.json 2>/dev/null || echo 0)
-          echo "vuln_count=$VULN_COUNT" >> "$GITHUB_OUTPUT"
-          echo "Vulnerability count: $VULN_COUNT"
+        run: node scripts/ci/dependency-audit.mjs --all --out audit-report.json
+
+      - name: Upload audit evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: nightly-dependency-audit
+          path: audit-report.json*
+          if-no-files-found: warn
+          retention-days: 30
 
       - name: Create issue if vulnerabilities found
         if: steps.audit.outputs.vuln_count != '0'
@@ -46,8 +51,8 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const report = JSON.parse(fs.readFileSync('audit-report.json', 'utf8'));
-            const meta = report.metadata?.vulnerabilities ?? {};
+            const evaluation = JSON.parse(fs.readFileSync('audit-report.json.evaluation.json', 'utf8'));
+            const meta = evaluation.activeCounts;
             const body = [
               '## 🔐 Nightly Security Audit — New Vulnerabilities Found',
               '',
@@ -61,9 +66,11 @@ jobs:
               `| High     | ${meta.high ?? 0} |`,
               `| Moderate | ${meta.moderate ?? 0} |`,
               '',
+              `Locally remediated with verified patches: ${evaluation.remediated.length}. Raw findings are retained in the workflow artifact.`,
+              '',
               '### Action Required',
               '- Run `pnpm audit` locally for full details',
-              '- Update affected packages or add overrides to root `package.json`',
+              '- Update affected packages or add overrides to `pnpm-workspace.yaml`',
               '- Close this issue once resolved',
               '',
               `_This issue was automatically created by the [nightly security scan](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})._`,

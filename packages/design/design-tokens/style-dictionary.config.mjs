@@ -1,5 +1,5 @@
 /**
- * Style Dictionary v4 build configuration
+ * Style Dictionary v5 build configuration
  *
  * Three platforms (CSS / TS / Tailwind preset) consume the same DTCG tokens.
  * Output goes to ./build/* for verify:parity against runtime @nebutra/tokens/styles.css

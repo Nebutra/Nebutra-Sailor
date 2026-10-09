@@ -3,6 +3,7 @@ import {
   buildAuthCenterSignInUrl,
   type createAuthCenterBrowserClient,
 } from "@nebutra/auth/browser";
+import { brand } from "@nebutra/brand/metadata";
 import { ArrowLeft } from "@nebutra/icons";
 import { Avatar, Button, ButtonLink, Input, Label } from "@nebutra/ui/primitives/canonical";
 import { type FormEvent, useState } from "react";
@@ -21,7 +22,7 @@ export function ProfilePage({ context, auth }: ProfilePageProps) {
   const trimmed = name.trim();
   const invalid = trimmed.length === 0 || trimmed.length > 64;
   const signInUrl = buildAuthCenterSignInUrl(window.location.origin + "/settings/profile", {
-    NEXT_PUBLIC_AUTH_URL: "https://auth.nebutra.com",
+    NEXT_PUBLIC_AUTH_URL: `https://${brand.domains.auth}`,
   });
 
   async function save(event: FormEvent) {
@@ -107,7 +108,7 @@ export function ProfilePage({ context, auth }: ProfilePageProps) {
           <section className="profile-card profile-signed-out">
             <h2>登录后管理个人资料</h2>
             <ButtonLink href={signInUrl} variant="secondary" size="sm">
-              登录 Nebutra
+              登录 {brand.name}
             </ButtonLink>
           </section>
         )}

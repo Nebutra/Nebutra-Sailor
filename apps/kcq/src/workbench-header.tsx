@@ -1,5 +1,6 @@
 /** Account and workspace navigation inside the canonical chart toolbar. */
 import type { BrowserAuthContext } from "@nebutra/auth/browser";
+import { brand } from "@nebutra/brand/metadata";
 import { ArrowUpRight, Check, ChevronDown, GridSquare, User } from "@nebutra/icons";
 import {
   Avatar,
@@ -90,7 +91,7 @@ export function WorkbenchHeader({
               render={
                 <a href={signInUrl}>
                   <User />
-                  登录 Nebutra
+                  登录 {brand.name}
                   <ArrowUpRight className="ml-auto" />
                 </a>
               }

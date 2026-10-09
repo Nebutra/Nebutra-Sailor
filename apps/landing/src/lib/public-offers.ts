@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 import { z } from "zod";
 
 const positive = z.number().positive();
@@ -49,7 +50,7 @@ export async function loadPublicOffers(apiOrigin: string): Promise<PublicOffer[]
   const response = await fetch(new URL("/api/v1/billing/offers", apiOrigin).toString(), {
     cache: "no-store",
     credentials: "omit",
-    headers: { Accept: "application/json", "User-Agent": "Nebutra-Landing/1.0" },
+    headers: { Accept: "application/json", "User-Agent": `${brand.name}-Landing/1.0` },
     signal: AbortSignal.timeout(10_000),
   });
   if (!response.ok) throw new Error(`Pricing catalog returned HTTP ${response.status}`);

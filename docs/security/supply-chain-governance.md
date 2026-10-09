@@ -20,6 +20,38 @@ or privileged GitHub Actions workflows.
   runtime automatically. `verifyDepsBeforeRun: error` in the workspace blocks
   commands when `node_modules` is stale.
 - CI and nightly security scans run `pnpm supply-chain:verify`.
+- The production dependency gate counts high and critical records from pnpm's
+  structured advisory report. pnpm 11 removes configured ignores from advisory
+  records but leaves the metadata totals unchanged. Neither text summaries nor
+  metadata totals determine the decision. Registry errors retry three times;
+  a missing or malformed report fails the gate. Raw reports and evaluations
+  are uploaded as CI evidence.
+
+The two former image-size audit ignores were removed after updating its
+Fumadocs dependency to the fixed 2.0.3+ line. No GHSA ignore remains in the
+workspace policy.
+
+## Locally patched advisory (2026-10-09)
+
+`braces@3.0.3` has no published fix for
+[GHSA-vfj7-8cjw-p6xm](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm).
+The checked-in pnpm patch limits brace/parenthesis parsing depth and validates
+AST depth, cycles and node count before recursive walkers run. Regular glob,
+range, quoted and escaped input behavior is covered alongside malicious cases
+in `scripts/ci/braces-patch.test.mjs`.
+
+The audit gate recognizes only this exact advisory/version after checking the
+reviewed SHA-256 against the patch file, workspace declaration and lockfile,
+then executing those regression tests against the installed dependency. A
+changed/missing patch, unpatched lock snapshot or failing test blocks CI. This
+is not an `ignoreGhsas` entry: raw npm findings remain in the artifact and a
+separate evaluation identifies the locally remediated record. Replace the
+patch with an upstream fixed version when available.
+
+`sprintf-js` still has no upstream fix for
+[GHSA-hp3w-g68c-fv3c](https://github.com/advisories/GHSA-hp3w-g68c-fv3c)
+(moderate, invalid precision throwing a RangeError). It remains visible in the
+audit; it is reached through the legacy js-yaml 3 / argparse tooling subtree.
 
 ## Workflow policy
 
@@ -49,7 +81,7 @@ Run the policy gate before merging dependency, lockfile, or workflow changes:
 ```bash
 pnpm install --frozen-lockfile
 pnpm supply-chain:verify
-pnpm audit --prod --audit-level=high
+node scripts/ci/dependency-audit.mjs
 ```
 
 If `pnpm supply-chain:verify` reports stale dependencies after a policy change,

@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 /** Verify identity before importing modules that create chart persistence. */
 
 import { configureBrowserPersistenceScope } from "@363045841yyt/klinechart-core/persistence-scope";
@@ -6,12 +7,12 @@ import { createApp, type App as VueApp } from "vue";
 import "./styles.css";
 import { getKcqRoute } from "./main-route";
 
-const auth = createAuthCenterBrowserClient("https://auth.nebutra.com");
+const auth = createAuthCenterBrowserClient(`https://${brand.domains.auth}`);
 async function boot() {
   const context = await auth.getContext();
   const workspace = context?.activeWorkspaceId;
   if (workspace && !context.workspaces.some((org) => org.id === workspace)) {
-    throw new Error("当前工作区已不可访问，请重新登录 Nebutra。");
+    throw new Error(`当前工作区已不可访问，请重新登录 ${brand.name}。`);
   }
   const scope = JSON.stringify([
     "nebutra-kcq",

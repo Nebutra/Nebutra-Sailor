@@ -30,8 +30,7 @@
 //
 // Run: node scripts/lint-arbitrary-typography.mjs
 
-import { execSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { globSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { stripComments as blankSourceComments } from "./lib/strip-comments.mjs";
 
@@ -44,14 +43,6 @@ import { stripComments as blankSourceComments } from "./lib/strip-comments.mjs";
 // include packages/design: a size baked into a library component reaches every page
 // that renders it.
 const SCAN_ROOTS = ["apps", "packages/design"];
-
-function sh(cmd) {
-  try {
-    return execSync(cmd, { encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 }).trim();
-  } catch {
-    return "";
-  }
-}
 
 function loadAllowlist() {
   const cfg = JSON.parse(readFileSync(resolve(process.cwd(), "governance.config.json"), "utf-8"));
@@ -79,7 +70,6 @@ const LEADING_RE = /\bleading-\[(-?[\d.]+(?:px|rem|em|%)?)\]/g;
 function countMatches(re, src) {
   re.lastIndex = 0;
   let n = 0;
-  // biome-ignore lint/suspicious/noAssignInExpressions: iterator idiom
   while (re.exec(src)) n++;
   return n;
 }
@@ -91,13 +81,20 @@ function violationsInFile(file) {
   );
 }
 
-const files = sh(
-  `find ${SCAN_ROOTS.join(" ")} -type f \\( -name '*.ts' -o -name '*.tsx' \\) ` +
-    `-not -path '*/node_modules/*' -not -path '*/dist/*' -not -path '*/.next/*' ` +
-    `-not -path '*/.turbo/*' -not -path '*/storybook-static/*'`,
+// Prune generated directories before traversal. A build changing .next must
+// neither erase the source scan nor hide new violations behind an empty result.
+const files = globSync(
+  SCAN_ROOTS.flatMap((root) => [`${root}/**/*.ts`, `${root}/**/*.tsx`]),
+  {
+    exclude: [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/.turbo/**",
+      "**/storybook-static/**",
+    ],
+  },
 )
-  .split("\n")
-  .filter(Boolean)
   // Stories and tests demonstrate or assert against these strings on purpose.
   .filter((f) => !/\.(test|spec|stories)\.tsx?$/.test(f) && !/\/__tests__\//.test(f));
 

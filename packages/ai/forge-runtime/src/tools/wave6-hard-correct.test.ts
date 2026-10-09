@@ -72,6 +72,8 @@ describe("wave6 hard-correct tools", () => {
     15_000,
   );
 
+  // Cold Mermaid + diagram-parser imports compete with the full CI package graph.
+  // Keep a bounded integration budget on this case only.
   it("mermaid-render parse_only returns diagramType", async () => {
     const out = (await mermaidRenderTool.execute({
       text: "flowchart LR\n  A-->B",
@@ -79,7 +81,7 @@ describe("wave6 hard-correct tools", () => {
     })) as { diagramType: string; svg: null };
     expect(out.diagramType.toLowerCase()).toContain("flow");
     expect(out.svg).toBeNull();
-  });
+  }, 15_000);
 
   it("dns-leak multi-resolver probe returns honesty + edge ip", async () => {
     const out = (await dnsLeakTool.execute({

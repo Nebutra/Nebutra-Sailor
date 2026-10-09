@@ -289,10 +289,10 @@ function factOf(node: yaml.Node): StructuralFact {
   } = {};
   if (node.kind === "alias") fact.alias = node.anchor;
   else if (node.anchor) fact.anchor = node.anchor;
-  if (node.style.tagged && node.tag) fact.explicitTag = node.tag;
+  if (node.kind !== "alias" && node.tagged && node.tag) fact.explicitTag = node.tag;
   if (node.kind === "scalar") {
-    if (node.style.literal) fact.blockStyle = "literal";
-    else if (node.style.folded) fact.blockStyle = "folded";
+    if (node.style === yaml.SCALAR_STYLE.LITERAL_BLOCK) fact.blockStyle = "literal";
+    else if (node.style === yaml.SCALAR_STYLE.FOLDED_BLOCK) fact.blockStyle = "folded";
   }
   return fact;
 }
@@ -319,12 +319,7 @@ function scanAst(documents: readonly yaml.Document[], multiDoc: boolean): AstSca
     if (fact.anchor || fact.alias) usesAnchors = true;
 
     if (node.kind === "scalar") {
-      const plain =
-        !node.style.tagged &&
-        !node.style.singleQuoted &&
-        !node.style.doubleQuoted &&
-        !node.style.literal &&
-        !node.style.folded;
+      const plain = !node.tagged && node.style === yaml.SCALAR_STYLE.PLAIN;
       if (plain && YAML11_BOOL.test(node.value) && ambiguousScalars.length < MAX_NAMED_PATHS) {
         ambiguousScalars.push(path || "(root)");
       }
@@ -378,9 +373,9 @@ function astToValue(node: yaml.Node): unknown {
       return out;
     }
     default: {
-      const definition = SCHEMA.exact.scalar[node.tag];
+      const definition = SCHEMA.lookupScalarTag(node.tag);
       if (!definition) return node.value;
-      const resolved = definition.resolve(node.value, node.style.tagged, node.tag);
+      const resolved = definition.resolve(node.value, node.tagged, node.tag);
       return resolved === yaml.NOT_RESOLVED ? node.value : resolved;
     }
   }

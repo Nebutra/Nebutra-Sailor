@@ -463,3 +463,6 @@ infra/fly/Dockerfile.kcq
 infra/fly/kcq.nginx.conf
 .github/workflows/deploy-kcq-fly.yml
 .github/workflows/deploy-kcq-connectors.yml
+
+# Instance-only KCQ upstream/product compatibility gate
+.github/workflows/kcq-compatibility.yml

@@ -1,3 +1,4 @@
+import { brand } from "@nebutra/brand/metadata";
 /** Account/workspace actions are separate from chart presentation. */
 
 import {
@@ -43,7 +44,7 @@ export function useWorkbench(props: WorkbenchProps) {
   });
   const panelWidthStorage = createAgentPanelWidthStorage();
   const signInUrl = buildAuthCenterSignInUrl(window.location.origin + "/", {
-    NEXT_PUBLIC_AUTH_URL: "https://auth.nebutra.com",
+    NEXT_PUBLIC_AUTH_URL: `https://${brand.domains.auth}`,
   });
   async function switchWorkspace(id: string | null) {
     if (busy.value || id === (props.context?.activeWorkspaceId ?? null)) return;

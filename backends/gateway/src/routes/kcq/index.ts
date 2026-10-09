@@ -1,5 +1,6 @@
 /** Authenticated BYOK APIs and KCQ V1 proxy. No shared-provider fallback. */
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { brand } from "@nebutra/brand/metadata";
 import { logger } from "@nebutra/logger";
 import { bodyLimit } from "hono/body-limit";
 import { mapTenantRoleToPermissionRoles } from "../../middlewares/tenantContext.js";
@@ -48,7 +49,7 @@ export function createKcqRoutes(options: Options = {}) {
     if (!scope)
       return c.json(
         {
-          error: { code: "FETCH_FAILED", message: "请先登录 Nebutra。" },
+          error: { code: "FETCH_FAILED", message: `请先登录 ${brand.name}。` },
           requestId: crypto.randomUUID(),
         },
         401,
