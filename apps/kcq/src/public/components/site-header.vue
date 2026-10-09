@@ -134,17 +134,18 @@ const feedLabel = computed(() =>
   </header>
 </template>
 <style scoped>
+/* Always opaque: at rest it sits on the page ground, so it looks the same as transparent, and
+   content can never show through it while the scroll observer is late (a busy main thread delays
+   IntersectionObserver callbacks). Only the hairline depends on scroll state. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: var(--klc-z-index-sticky);
-  background: transparent;
-  transition-property: background-color, box-shadow;
-  transition-duration: var(--klc-motion-dur-base);
-  transition-timing-function: var(--klc-motion-ease-out);
+  background: var(--kcq-page);
+  box-shadow: 0 1px 0 transparent;
+  transition: box-shadow var(--klc-motion-dur-base) var(--klc-motion-ease-out);
 }
 .site-header[data-scrolled] {
-  background: var(--kcq-page);
   box-shadow: 0 1px 0 var(--kcq-rule);
 }
 .site-header-row {

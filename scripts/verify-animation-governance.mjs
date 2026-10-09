@@ -101,7 +101,10 @@ function isAllowedGsapLayer(file) {
     // TypeLens product shell — dedicated motion runtime (not marketing landing hooks)
     file.startsWith("apps/typelens/src/lib/motion/") ||
     file === "apps/typelens/src/components/type-lens-motion.tsx" ||
-    file === "apps/typelens/src/styles/shell.css"
+    file === "apps/typelens/src/styles/shell.css" ||
+    // KCQ /home — the one GSAP layer (hero timeline + pinned agent story), lazy-loaded and
+    // reduced-motion gated (ADR 2026-10-09 landing-motion-system)
+    file.startsWith("apps/kcq/src/public/home/motion/")
   );
 }
 

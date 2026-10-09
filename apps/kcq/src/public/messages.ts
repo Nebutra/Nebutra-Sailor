@@ -176,7 +176,7 @@ const en = {
     },
   },
   footer: {
-    endorsement: "by {brand}",
+    endorsement: "by",
     product: "Product",
     developers: "Developers",
     agent: "Agent",
@@ -378,7 +378,7 @@ const zh: PublicMessages = {
     },
   },
   footer: {
-    endorsement: "by {brand}",
+    endorsement: "by",
     product: "产品",
     developers: "开发者",
     agent: "Agent",
