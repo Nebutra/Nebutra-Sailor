@@ -181,7 +181,6 @@ export function LanguageSwitcher({
             ) : null}
           </span>
         </div>
-        {/* biome-ignore lint/a11y/useSemanticElements: a radio menu, not a form fieldset — it closes on choice. */}
         <div
           aria-label="Design language"
           className="flex flex-col gap-px"
