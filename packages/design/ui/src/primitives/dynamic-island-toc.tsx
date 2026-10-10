@@ -3,6 +3,7 @@
 import { brandSpring, motionDurationSec } from "@nebutra/brand";
 import { Cross as X } from "@nebutra/icons";
 import { type ReactElement, type RefObject, useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   AnimatePresence,
   domAnimation,
@@ -441,7 +442,7 @@ export function DynamicIslandTOC({
   emptyLabel = "Contents",
   className,
   closeLabel = "Close table of contents",
-}: DynamicIslandTOCProps): ReactElement {
+}: DynamicIslandTOCProps): ReactElement | null {
   const reduceMotion = useReducedMotion() ?? false;
   const menuLabelId = useId();
 
@@ -453,6 +454,12 @@ export function DynamicIslandTOC({
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [pillWidths, setPillWidths] = useState({ closed: PILL_W_CLOSED, open: PILL_W_OPEN });
+  // Rendered into <body>. In place, any ancestor with a transform, filter or
+  // `contain` (an entrance-animation wrapper, say) becomes the containing block
+  // for this position:fixed island, and the "bottom of the screen" pill parked
+  // at the bottom of the article instead — mid-page, above the footer.
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+  useEffect(() => setPortalTarget(document.body), []);
 
   const pillButtonRef = useRef<HTMLButtonElement | null>(null);
   const firstMenuItemRef = useRef<HTMLButtonElement | null>(null);
@@ -594,7 +601,7 @@ export function DynamicIslandTOC({
         borderRadius: isExpanded ? PILL_R_OPEN : PILL_R_CLOSED,
       };
 
-  return (
+  const island = (
     <LazyMotion features={domAnimation} strict>
       <nav
         aria-label={ariaLabel}
@@ -671,4 +678,6 @@ export function DynamicIslandTOC({
       </nav>
     </LazyMotion>
   );
+
+  return portalTarget ? createPortal(island, portalTarget) : null;
 }
