@@ -73,13 +73,13 @@ const items = computed(() =>
   top: 6px;
   width: 11px;
   height: 11px;
+  border: 2px solid var(--kcq-rule-strong);
   border-radius: var(--klc-radius-full);
   background: var(--kcq-page);
-  box-shadow: inset 0 0 0 2px var(--kcq-rule-strong);
 }
 .stop[aria-current] .stop-node {
+  border-color: var(--kcq-accent);
   background: var(--kcq-accent);
-  box-shadow: none;
 }
 .stop-when {
   display: flex;

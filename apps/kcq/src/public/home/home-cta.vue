@@ -55,13 +55,15 @@ const { t } = useI18n();
 /* The light returns: the field's opening frame, cropped to the glyph (at 590 × 175 of the 800px
    frame) and fading out at the edges, so only the candle and its glow show. */
 .cta-light {
+  /* At most 420 × 240: inside the frame on every side of the glyph, so the frame's own ground
+     never shows as an edge; the mask fades the glow out before the box does. */
   width: 100%;
-  max-width: 40rem;
+  max-width: 26.25rem;
   height: 15rem;
   margin-bottom: var(--klc-space-8);
   object-fit: none;
   object-position: calc(50% - 190px) 50%;
-  mask-image: radial-gradient(closest-side, #000 40%, transparent);
+  mask-image: radial-gradient(closest-side, #000 25%, transparent 92%);
 }
 .cta-actions {
   display: flex;

@@ -159,7 +159,7 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
                     v-if="shownPrompt.length < promptText.length"
                     class="caret"
                     aria-hidden="true"
-                  />
+                  /><span class="ghost" aria-hidden="true">{{ promptText.slice(shownPrompt.length) }}</span>
                 </span>
               </p>
               <ol class="transcript-calls" aria-live="polite">
@@ -316,6 +316,11 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
 .transcript-who {
   color: var(--kcq-ink-2);
 }
+/* The rest of the prompt waits as ghost text, so the window never reads empty before it is typed. */
+.ghost {
+  color: var(--kcq-ink-2);
+  opacity: 0.5;
+}
 .caret {
   display: inline-block;
   width: 1px;
@@ -471,9 +476,8 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
 }
 /* The window's input: the example prompts as suggestions, press to copy. */
 .composer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--klc-space-4) var(--klc-space-16);
+  display: grid;
+  gap: 0 var(--klc-space-16);
   padding: var(--klc-space-8) var(--klc-space-16);
   border-top: 1px solid var(--kcq-rule);
 }
@@ -507,6 +511,9 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
 @media (min-width: 768px) {
   .console-body {
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .composer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .console-chart {
     align-self: center;

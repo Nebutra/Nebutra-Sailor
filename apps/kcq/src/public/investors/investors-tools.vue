@@ -135,8 +135,8 @@ const { stop } = useIntersectionObserver(
   height: 11px;
   margin-top: 5px;
   border-radius: var(--klc-radius-full);
+  border: 2px solid var(--kcq-accent);
   background: var(--klc-color-chart-background);
-  box-shadow: inset 0 0 0 2px var(--kcq-accent);
   position: relative;
   z-index: 1;
 }
