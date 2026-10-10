@@ -6,6 +6,7 @@ import {
 } from "@nebutra/brand/metadata-helpers";
 import { CjkFontFace } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
+import { pickMessages } from "@nebutra/i18n/messages";
 import { Toaster } from "@nebutra/ui/primitives";
 import type { Metadata, Viewport } from "next";
 import { cacheLife, cacheTag } from "next/cache";
@@ -166,7 +167,8 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     "siteMap",
     "nav",
     "licenseWizard",
-    "legalPages",
+    // legalPages is NOT here: 34 KB, read on the client only by the contact
+    // form, which gets its own provider in (legal)/contact/page.tsx.
     "monorepoTree",
     "microLanding",
     "landing",
@@ -188,13 +190,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     "site",
   ] as const;
 
-  type Messages = typeof messages;
-  const clientMessages = Object.fromEntries(
-    CLIENT_NAMESPACES.filter((ns) => ns in messages).map((ns) => [
-      ns,
-      messages[ns as keyof Messages],
-    ]),
-  ) as Partial<Messages>;
+  const clientMessages = pickMessages(messages, CLIENT_NAMESPACES);
 
   return (
     <html

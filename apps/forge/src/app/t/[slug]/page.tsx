@@ -4,7 +4,8 @@ import { Card } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getLocale, getTranslations } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { PageFrame } from "@/components/page-frame";
 import { StructuredData } from "@/components/structured-data";
 import { ToolWorkspace } from "@/components/tool-workspace";
@@ -117,7 +118,11 @@ export default async function ToolPage({ params }: Props) {
               {page.id}
             </code>
           </div>
-          <ToolWorkspace slug={page.slug} toolId={page.id} category={page.category} />
+          {/* The root layout leaves `runners` out of the client payload; the
+              workspace is the one subtree that reads it. */}
+          <NextIntlClientProvider locale={locale} messages={await getMessages()}>
+            <ToolWorkspace slug={page.slug} toolId={page.id} category={page.category} />
+          </NextIntlClientProvider>
         </Card>
 
         <Card className="border-neutral-6 bg-neutral-2/40 p-5">

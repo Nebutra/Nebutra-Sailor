@@ -9,6 +9,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin, publicAssetUrl } from "@nebutra/brand/metadata-helpers";
 import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
+import { pickMessages } from "@nebutra/i18n/messages";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -93,7 +94,13 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   }
 
   const locale = await getLocale();
-  const messages = await getMessages();
+  // Everything but `runners`: the tool strings are 97% of the catalog (71 KB in
+  // English) and only /t/[slug] renders a runner — it adds its own provider.
+  const allMessages = await getMessages();
+  const messages = pickMessages(
+    allMessages,
+    Object.keys(allMessages).filter((namespace) => namespace !== "runners"),
+  );
 
   // Server-side auth URLs (process.env is available here even when the client
   // bundle was built without NEXT_PUBLIC_AUTH_URL). Prefer production forge

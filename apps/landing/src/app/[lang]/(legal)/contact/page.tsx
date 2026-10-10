@@ -1,7 +1,8 @@
 import { getBrandEmail } from "@nebutra/brand/metadata-helpers";
+import { pickMessages } from "@nebutra/i18n/messages";
 import type { Metadata } from "next";
-import { hasLocale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { type Locale, routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { SITE_ID } from "@/site.config";
@@ -103,7 +104,14 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
       {/* Contact Form */}
       <section className="rounded-[var(--radius-2xl)] border border-border p-5 sm:p-8">
         <h2 className="text-2xl font-bold text-foreground mb-6">{t("contact.formTitle")}</h2>
-        <ContactForm />
+        {/* The form is the only client reader of legalPages — it gets its own
+            subtree rather than shipping all 34 KB of legal copy to every page. */}
+        <NextIntlClientProvider
+          locale={locale}
+          messages={pickMessages(await getMessages({ locale }), ["legalPages.contact.form"])}
+        >
+          <ContactForm />
+        </NextIntlClientProvider>
       </section>
 
       {/* The upstream company's office and accounts; a customer's site states its own when it has them. */}
