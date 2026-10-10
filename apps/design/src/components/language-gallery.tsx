@@ -23,7 +23,7 @@ import { cn } from "@nebutra/ui/utils";
 import type * as React from "react";
 import { useMounted } from "@/lib/use-mounted";
 
-type Mode = "light" | "dark";
+export type Mode = "light" | "dark";
 
 interface Spec {
   vars: Record<string, string>;
@@ -87,6 +87,38 @@ function packageSpec(id: string, mode: Mode): Spec | null {
 
 function specFor(id: string, mode: Mode): Spec | null {
   return id === "factory" ? factorySpec(mode) : packageSpec(id, mode);
+}
+
+/**
+ * A language's canvas, ink and action fill as three overlapping dots — the
+ * glyph every place on the site uses for "this language", so the gallery card,
+ * the header switcher and its menu all name a language the same way.
+ */
+export function PaletteDots({
+  id,
+  mode,
+  className,
+}: {
+  id: string;
+  mode: Mode;
+  className?: string;
+}) {
+  const palette = specFor(id, mode)?.palette;
+  if (!palette) return null;
+  return (
+    // Spaced, not stacked: overlapped, a canvas-coloured first dot reads as a
+    // toggle switch. The hairline is inset so the canvas dot keeps an edge on
+    // its own canvas.
+    <span aria-hidden className={cn("flex shrink-0 items-center gap-1", className)}>
+      {palette.map((colour, index) => (
+        <span
+          className="size-2.5 rounded-full ring-1 ring-border ring-inset"
+          key={index}
+          style={{ background: colour }}
+        />
+      ))}
+    </span>
+  );
 }
 
 const ROWS = [
@@ -190,15 +222,7 @@ export function LanguageGallery({ className }: { className?: string }) {
                   <span className="truncate text-muted-foreground text-xs">{language.tagline}</span>
                 ) : null}
               </span>
-              <span aria-hidden className="mt-1 flex shrink-0 -space-x-1">
-                {spec.palette.map((colour, index) => (
-                  <span
-                    className="size-3 rounded-full ring-1 ring-border"
-                    key={index}
-                    style={{ background: colour }}
-                  />
-                ))}
-              </span>
+              <PaletteDots className="mt-1" id={language.id} mode={mode} />
             </span>
           </button>
         );

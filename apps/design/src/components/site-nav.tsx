@@ -12,14 +12,10 @@
  * passed down as data. Nothing here is hand-maintained: a component that gains
  * a page appears in this list on the next build.
  *
- * The design-language control sits at the top of the rail. It is the site's
- * signature — the one thing no other docs site has — so it is placed where the
- * eye lands first on every page, the same place every time, instead of being a
- * row of pills in the header on some pages and a picker in the content on one.
+ * The design-language control is not here: it is the last crumb of the header
+ * breadcrumb, on every layout, so the rail starts directly at the inventory.
  *
- * Narrow screens get the same tree in a sheet, opened from the header, and the
- * language control in the page bar under it — still one control, still in one
- * place for that layout.
+ * Narrow screens get the same tree in a sheet, opened from the header.
  */
 
 import { Menu } from "@nebutra/icons";
@@ -28,7 +24,6 @@ import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
-import { LanguageSwitcher } from "@/components/language-switcher";
 
 export interface NavItem {
   href: string;
@@ -121,12 +116,9 @@ function Tree({
 export function SiteNav({ sections }: { sections: NavSection[] }) {
   return (
     <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-64 shrink-0 flex-col border-border border-r lg:flex">
-      <div className="px-4 pt-6 pb-2">
-        <LanguageSwitcher shortcut variant="sidebar" />
-      </div>
       <nav
         aria-label="Design system"
-        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-6 pb-12"
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-8 pb-12"
       >
         <Tree sections={sections} />
       </nav>
@@ -162,8 +154,8 @@ export function SiteNavSheet({ sections }: { sections: NavSection[] }) {
 }
 
 /**
- * Narrow-screen page bar: where you are, and the language control. Sticky under
- * the header so switching never needs a scroll back to the top.
+ * Narrow-screen page bar: where you are. Sticky under the header, which carries
+ * the language control on every width.
  */
 export function MobilePageBar({ sections }: { sections: NavSection[] }) {
   const pathname = usePathname();
@@ -192,7 +184,6 @@ export function MobilePageBar({ sections }: { sections: NavSection[] }) {
           </span>
         )}
       </p>
-      <LanguageSwitcher variant="bar" />
     </div>
   );
 }
