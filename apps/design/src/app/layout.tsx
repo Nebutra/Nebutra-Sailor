@@ -1,5 +1,6 @@
 import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { fontRegistryClassName } from "@nebutra/fonts/next";
 import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistMono } from "geist/font/mono";
@@ -48,6 +49,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 {SITE_NAME}
               </Link>
               <div className="flex items-center gap-3">
+                {/* The way back to the company site — the system is one of its
+                    products, not a dead end. */}
+                <a
+                  className="hidden text-sm text-muted-foreground no-underline transition-colors duration-micro hover:text-foreground sm:inline"
+                  href={getBrandOrigin("landing")}
+                >
+                  {brand.domains.landing}
+                </a>
                 <CommandPalette entries={entries} />
                 <HeaderLanguageSwitcher />
               </div>

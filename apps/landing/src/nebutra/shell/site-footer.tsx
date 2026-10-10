@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { getTranslations } from "next-intl/server";
 import { IcpRecord } from "@/components/icp-record";
 import { MarketLocalePicker } from "@/components/ui/market-locale-picker";
@@ -35,8 +36,9 @@ export async function SiteFooter({ lang }: { lang?: string }) {
         { label: "Sailor", href: ROUTES.sailor },
         { label: pricing("pricing"), href: "/pricing#product-pricing" },
         { label: "GitHub", href: REPO_URL },
+        { label: t("designSystem"), href: getBrandOrigin("design") },
         { label: t("whatWeAreBuilding"), href: ROUTES.building },
-        { label: t("status"), href: `https://status.${brand.domains.landing}` },
+        { label: t("status"), href: getBrandOrigin("status") },
       ],
     },
     {
