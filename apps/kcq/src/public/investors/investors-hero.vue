@@ -23,10 +23,10 @@ const { t } = useI18n();
   <section id="hero" class="band hero" aria-labelledby="hero-heading">
     <div class="container">
       <div class="hero-copy">
-        <h1 id="hero-heading" class="t-display hero-heading">{{ t("investors.heading") }}</h1>
-        <p class="t-lede hero-lede">{{ t("investors.hero.lede") }}</p>
-        <p class="hero-stage">{{ t("investors.hero.stage") }}</p>
-        <div class="hero-actions">
+        <h1 id="hero-heading" class="t-display hero-heading enter-mask">{{ t("investors.heading") }}</h1>
+        <p class="t-lede hero-lede enter-rise">{{ t("investors.hero.lede") }}</p>
+        <p class="hero-stage enter-rise">{{ t("investors.hero.stage") }}</p>
+        <div class="hero-actions enter-rise">
           <a
             class="button button-primary"
             :href="mailtoHref(t('investors.ask.investors.subject'), t('investors.ask.mailBody'))"
@@ -37,7 +37,7 @@ const { t } = useI18n();
           <a class="button button-quiet" :href="APP_PATH">{{ t("investors.hero.secondary") }}</a>
         </div>
       </div>
-      <figure class="session">
+      <figure class="session enter-settle">
         <div class="session-frame product-frame" data-theme="dark">
           <picture>
             <source
@@ -123,5 +123,18 @@ const { t } = useI18n();
   .session-frame img {
     aspect-ratio: 1 / 1;
   }
+}
+/* The shared entrance (public.css `.enter-*`), the same sequence as /home: about a second. */
+.hero-lede {
+  --enter-delay: 120ms;
+}
+.hero-stage {
+  --enter-delay: 190ms;
+}
+.hero-actions {
+  --enter-delay: 260ms;
+}
+.session {
+  --enter-delay: 300ms;
 }
 </style>

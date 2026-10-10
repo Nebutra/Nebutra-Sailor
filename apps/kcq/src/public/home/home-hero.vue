@@ -3,9 +3,10 @@
   (≤ 3 lines at 1440), the sub, two ways in ("Open the workstation", "Embed the chart") and one
   microcopy line; nothing above the headline. GitHub lives in the nav star button and the final CTA.
   Below the text, one live chart frame across the container that breaks the fold: the page's one
-  signature motion lives inside it, the light field's candle glyph unfolding into live candles,
-  choreographed by one GSAP timeline (motion/hero-timeline.ts). First paint is the prerendered text,
-  CTA and poster.
+  signature motion lives inside it, the light field's candle glyph unfolding into live candles.
+  The entrance (≈ 1s, CSS `.enter-*` in public.css) reveals the headline through a mask, then the sub, the actions,
+  the microcopy and the frame; the later handoff to the live chart is one GSAP timeline
+  (motion/hero-timeline.ts). It needs no script and never blocks input; reduced motion shows all.
 -->
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
@@ -30,9 +31,6 @@ let disposed = false;
 const pick = (selector: string) => root.value?.querySelector(selector) ?? null;
 async function create() {
   const created = await createHeroTimeline(() => ({
-    heading: pick(".hero-heading"),
-    lede: pick(".hero-lede"),
-    actions: pick(".hero-actions"),
     chartHost: pick(".hero-chart-host"),
     field: pick(".hero-field"),
     poster: pick(".hero-poster"),
@@ -62,18 +60,18 @@ function onShown(withField: boolean) {
   <section id="hero" ref="root" class="band hero" aria-labelledby="hero-heading">
     <div class="container">
       <div class="hero-copy">
-        <h1 id="hero-heading" class="t-display hero-heading">{{ t("home.heading") }}</h1>
-        <p class="t-lede hero-lede">{{ t("home.hero.lede") }}</p>
-        <div class="hero-actions">
+        <h1 id="hero-heading" class="t-display hero-heading enter-mask">{{ t("home.heading") }}</h1>
+        <p class="t-lede hero-lede enter-rise">{{ t("home.hero.lede") }}</p>
+        <div class="hero-actions enter-rise">
           <a class="button button-primary" :href="APP_PATH">
             {{ t("home.hero.primary") }}
             <KcqIcon class="button-arrow" name="arrow" />
           </a>
           <a class="button button-quiet" href="#developers">{{ t("home.hero.embed") }}</a>
         </div>
-        <p class="hero-micro t-meta">{{ t("home.hero.micro") }}</p>
+        <p class="hero-micro t-meta enter-rise">{{ t("home.hero.micro") }}</p>
       </div>
-      <HeroChart class="hero-instrument" @shown="onShown" />
+      <HeroChart class="hero-instrument enter-settle" @shown="onShown" />
     </div>
   </section>
 </template>
@@ -111,9 +109,18 @@ function onShown(withField: boolean) {
 .hero-instrument {
   margin-top: var(--klc-space-48);
 }
-@media (min-width: 1024px) {
-  .hero-instrument {
-    margin-top: var(--klc-space-64);
-  }
+/* The entrance sequence (public.css `.enter-*`): headline, then 120 / 190 / 260ms for the copy,
+   300ms for the frame; about a second in all. */
+.hero-lede {
+  --enter-delay: 120ms;
+}
+.hero-actions {
+  --enter-delay: 190ms;
+}
+.hero-micro {
+  --enter-delay: 260ms;
+}
+.hero-instrument {
+  --enter-delay: 300ms;
 }
 </style>
