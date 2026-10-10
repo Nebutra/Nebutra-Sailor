@@ -1,8 +1,8 @@
+import { isChineseLocale } from "@nebutra/i18n/locales";
 import { useTranslations } from "next-intl";
-import { isZhUiLocale } from "@/lib/i18n/localized";
 
 export interface IcpFooterProps {
-  /** Current locale; component renders only when this is "zh". */
+  /** Current locale; the footer renders for Chinese locales only. */
   locale: string;
   /** ICP record number — typically `process.env.NEXT_PUBLIC_ICP_NUMBER`. */
   icpNumber?: string | undefined;
@@ -14,7 +14,9 @@ export interface IcpFooterProps {
  * Renders the mandatory mainland-China ICP filing footer.
  *
  * Only renders when:
- *   - `isZhUiLocale(locale)`, AND
+ *   - the locale is Chinese (`isChineseLocale` — route locales are
+ *     `zh-Hans`/`zh-Hant`; this compared against bare "zh", which no route
+ *     emits, so the mandatory footer never rendered), AND
  *   - `icpNumber` is non-empty
  *
  * Both checks happen at render time so a partially-configured deploy
@@ -23,7 +25,7 @@ export interface IcpFooterProps {
 export function IcpFooter({ locale, icpNumber, publicSecurityRecord }: IcpFooterProps) {
   const t = useTranslations("compliance.icp");
 
-  if (locale !== "zh") return null;
+  if (!isChineseLocale(locale)) return null;
   if (!icpNumber || icpNumber.trim().length === 0) return null;
 
   const trimmedIcp = icpNumber.trim();

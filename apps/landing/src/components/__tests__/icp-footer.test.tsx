@@ -54,6 +54,14 @@ describe("IcpFooter", () => {
     expect(screen.queryByText(/公安备案/)).not.toBeInTheDocument();
   });
 
+  it("renders on the real route locales, zh-Hans and zh-Hant", () => {
+    for (const locale of ["zh-Hans", "zh-Hant"]) {
+      const { unmount } = render(<IcpFooter locale={locale} icpNumber="京ICP备12345678号-1" />);
+      expect(screen.getByText("京ICP备12345678号-1")).toBeInTheDocument();
+      unmount();
+    }
+  });
+
   it("renders nothing when locale is not zh", () => {
     const { container } = render(<IcpFooter locale="en" icpNumber="京ICP备12345678号-1" />);
     expect(container.firstChild).toBeNull();
