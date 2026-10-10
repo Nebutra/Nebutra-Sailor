@@ -95,13 +95,15 @@ jobs:
           if [ -n "$CATALOG" ] && [ "$CATALOG" != "all" ]; then ARGS+=(--catalog "$CATALOG"); fi
           for loc in $LOCALES; do ARGS+=(--locale "$loc"); done
           if [ -n "$MAX_BATCHES" ]; then ARGS+=(--max-batches "$MAX_BATCHES"); fi
-          # Exit 1 = refused credential or crash: fail. Exit 2 = nothing could
-          # be translated this run: keep going, whatever sync changed still
-          # deserves the PR.
+          # Exit 1 = refused credential or crash before anything was written:
+          # fail. Exit 2 = nothing could be translated this run; exit 3 = stopped
+          # early with finished locales on disk. Both keep going — what was done
+          # still deserves the PR, and the next run resumes from what is absent.
           code=0
           node scripts/i18n-translate.mjs "${ARGS[@]}" || code=$?
           echo "translate exit=$code"
           if [ "$code" = "1" ]; then exit 1; fi
+          if [ "$code" = "3" ]; then echo "::warning::Translation stopped early; opening a PR with the locales it finished."; fi
 
       # The PR must never carry something the gate would reject.
       - name: Gate the result

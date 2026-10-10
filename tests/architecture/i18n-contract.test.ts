@@ -19,7 +19,12 @@ import { DEFAULT_UI_LABELS } from "../../packages/design/ui/src/primitives/ui-la
 import { PRODUCT_LANGUAGES } from "../../packages/platform/i18n/src/languages";
 import { CATALOGS } from "../../scripts/i18n-catalogs.mjs";
 import { advanceSources, syncLocale } from "../../scripts/i18n-sync.mjs";
-import { collectWork, mintServiceToken, routerEndpoint } from "../../scripts/i18n-translate.mjs";
+import {
+  collectWork,
+  isCredentialRefusal,
+  mintServiceToken,
+  routerEndpoint,
+} from "../../scripts/i18n-translate.mjs";
 import { validateTranslation } from "../../scripts/i18n-translate-helpers.mjs";
 import { flatten, icuMismatch, icuShape } from "../../scripts/lib/i18n-catalog.mjs";
 import { TARGET_LOCALES } from "../../scripts/lib/i18n-registry.mjs";
@@ -159,6 +164,23 @@ describe("i18n:sync", () => {
 });
 
 describe("i18n:translate", () => {
+  // New-API answers 403 when an upstream token's quota runs out. Reading that
+  // as "credential refused" aborted a run and discarded every finished locale.
+  it("aborts only on our own credential failure, not on an upstream 403", () => {
+    expect(isCredentialRefusal(401, "")).toBe(true);
+    expect(
+      isCredentialRefusal(
+        403,
+        '{"error":{"code":"unauthenticated","message":"Missing or invalid service token."}}',
+      ),
+    ).toBe(true);
+    expect(
+      isCredentialRefusal(403, '{"error":{"message":"该令牌额度已用尽","type":"new_api_error"}}'),
+    ).toBe(false);
+    expect(isCredentialRefusal(403, "")).toBe(false);
+    expect(isCredentialRefusal(429, "")).toBe(false);
+  });
+
   it("queues absent and stale keys, never universal values", () => {
     const source = flatten({ a: "Absent string", b: "Translated", c: "GitHub", d: "Edited" });
     const target = flatten({ b: "Übersetzt", d: "Bearbeitet (alt)" });

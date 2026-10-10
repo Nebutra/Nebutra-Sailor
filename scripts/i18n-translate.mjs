@@ -157,6 +157,15 @@ export function buildMessages(targetLocale, entries, styleGuide) {
   ];
 }
 
+/**
+ * Our own credential failed: 401, or Router's 403-shaped `unauthenticated`.
+ * Only this aborts a run; every other refusal is per model.
+ */
+export function isCredentialRefusal(status, bodyText = "") {
+  if (status === 401) return true;
+  return status === 403 && /"code"\s*:\s*"unauthenticated"|invalid service token/i.test(bodyText);
+}
+
 const FAILURE_CAUSES = new Map();
 const noteCause = (cause) => FAILURE_CAUSES.set(cause, (FAILURE_CAUSES.get(cause) ?? 0) + 1);
 
@@ -189,10 +198,20 @@ function createTranslator(endpoint) {
           signal: controller.signal,
         });
         const text = await res.text();
-        if (res.status === 401 || res.status === 403) {
+        if (isCredentialRefusal(res.status, text)) {
           throw Object.assign(new Error(`Router refused the credential (HTTP ${res.status})`), {
             fatal: true,
           });
+        }
+        // Any other 403 is the upstream behind Router (New-API answers 403 when
+        // a token's quota runs out). It says nothing about our credential, so
+        // bench the model and carry on — treating it as fatal threw away a
+        // 45-minute run's finished locales on 2026-10-10.
+        if (res.status === 403) {
+          noteCause(`upstream refused (${model}): ${text.slice(0, 80)}`);
+          pool.markExhausted(model, { cooldownMs: 10 * 60_000 });
+          lastErr = new Error(`[${model}] upstream 403: ${text.slice(0, 160)}`);
+          continue;
         }
         if (res.status === 404 || /model_not_found|unknown model|does not exist/i.test(text)) {
           noteCause(`model ${model} not served`);
@@ -302,6 +321,7 @@ async function translateLocale(ctx, catalog, locale, sourceMap, order) {
 
   // Written per locale, so a run cut short keeps everything it finished.
   writeJson(path, unflatten(targetMap, order));
+  ctx.written += 1;
   const lockStale = (ctx.lock.stale[catalog.id] ??= {});
   lockStale[locale] = [...stale];
   saveLock(ctx.lock);
@@ -328,6 +348,7 @@ async function main() {
     lock: loadLock(),
     confirmed: loadConfirmed(),
     translator: endpoint ? createTranslator(endpoint) : null,
+    written: 0,
   };
   const catalogs = args.catalogs.length
     ? CATALOGS.filter((c) => args.catalogs.includes(c.id))
@@ -364,7 +385,9 @@ async function main() {
   } catch (err) {
     if (err?.fatal) {
       console.error(`Aborted: ${err.message}`);
-      process.exit(1);
+      // Exit 3: stopped early, but the locales finished before the abort are
+      // on disk and belong in the PR. Exit 1 only when nothing was written.
+      process.exit(ctx.written > 0 ? 3 : 1);
     }
     throw err;
   }
