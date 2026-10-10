@@ -286,7 +286,7 @@ const en = {
       portrait: "Portrait of {name}",
       members: [
         { name: "Ye Yangtian", role: "Founder", focus: "Product, core engineering and financial rendering" },
-        { name: "Lu Zikai", role: "Partner", focus: "AI products, enterprise delivery and commercialization" },
+        { name: "Tseka Luk", role: "Partner", focus: "AI products, enterprise delivery and commercialization" },
         { name: "Ma Di", role: "Team lead", focus: "Team organization, algorithms and data analysis" },
         {
           name: "Rao Fangtong",
