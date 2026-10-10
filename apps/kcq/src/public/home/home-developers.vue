@@ -8,9 +8,9 @@
   (CP 31). Copy confirms in place (VueUse useClipboard; icon morphs, label announced).
 -->
 <script setup lang="ts">
-import { useClipboard } from "@vueuse/core";
+import { useClipboard, useResizeObserver } from "@vueuse/core";
 import code from "virtual:kcq-code";
-import { ref } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
 import { LINKS } from "../links";
@@ -24,6 +24,22 @@ const active = ref(0);
 const tabs = ref<HTMLButtonElement[]>([]);
 const highlighted = new Map(code.map((entry) => [entry.id, entry.html]));
 const { copy, copied } = useClipboard({ copiedDuring: 1500, legacy: true });
+
+/**
+ * One indicator for the selected tab (ADR §1 P1 "layout"): it slides and stretches from the old
+ * tab to the new one with transform only (position and width are translate and scale), so the
+ * switch reads as one object moving and never triggers layout. Without script, the selected tab's
+ * own underline stands in (CSS, `.code-tabs:not([data-indicator])`).
+ */
+const tablist = ref<HTMLElement>();
+const indicator = ref<{ x: number; width: number } | null>(null);
+function place() {
+  const tab = tabs.value[active.value];
+  if (tab) indicator.value = { x: tab.offsetLeft, width: tab.offsetWidth };
+}
+onMounted(place);
+watch(active, () => nextTick(place));
+useResizeObserver(tablist, place);
 
 function onKey(event: KeyboardEvent) {
   const delta = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
@@ -53,7 +69,14 @@ function onKey(event: KeyboardEvent) {
         </a>
       </div>
       <div class="code-window section-artifact">
-        <div class="code-tabs" role="tablist" :aria-label="t('home.developers.tabs')" @keydown="onKey">
+        <div
+          ref="tablist"
+          class="code-tabs"
+          role="tablist"
+          :aria-label="t('home.developers.tabs')"
+          :data-indicator="indicator ? '' : undefined"
+          @keydown="onKey"
+        >
           <button
             v-for="(snippet, index) in SNIPPETS"
             :id="`tab-${snippet.id}`"
@@ -69,6 +92,12 @@ function onKey(event: KeyboardEvent) {
           >
             {{ snippet.label }}
           </button>
+          <span
+            v-if="indicator"
+            class="code-tab-indicator"
+            aria-hidden="true"
+            :style="{ '--x': `${indicator.x}px`, '--w': indicator.width }"
+          />
         </div>
         <!-- Every panel sits in one grid cell, so the window is as tall as the longest snippet and a
              tab switch never moves the page (the hidden ones keep their box, out of the a11y tree). -->
@@ -128,6 +157,7 @@ function onKey(event: KeyboardEvent) {
   overflow: hidden;
 }
 .code-tabs {
+  position: relative;
   display: flex;
   overflow-x: auto;
   padding-inline: var(--klc-space-8);
@@ -158,7 +188,21 @@ function onKey(event: KeyboardEvent) {
 }
 .code-tab[aria-selected="true"] {
   color: var(--kcq-ink);
+}
+.code-tabs:not([data-indicator]) .code-tab[aria-selected="true"] {
   border-bottom-color: var(--kcq-accent);
+}
+.code-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  height: 2px;
+  background: var(--kcq-accent);
+  transform: translateX(var(--x)) scaleX(var(--w));
+  transform-origin: left center;
+  transition: transform var(--klc-motion-dur-slow) var(--klc-motion-ease-out);
+  pointer-events: none;
 }
 .code-panels {
   display: grid;
@@ -220,7 +264,7 @@ function onKey(event: KeyboardEvent) {
 .code-copy-done {
   opacity: 0;
   filter: blur(2px);
-  transform: scale(0.98);
+  transform: scale(0.6);
   color: var(--kcq-ink);
 }
 [data-copied] .code-copy-idle {
@@ -228,10 +272,13 @@ function onKey(event: KeyboardEvent) {
   filter: blur(2px);
   transform: scale(0.98);
 }
+/* The check lands on the spring (300 / 30): the one tactile beat of a successful copy. */
 [data-copied] .code-copy-done {
   opacity: 1;
   filter: none;
   transform: none;
+  transition-duration: 130ms, 130ms, var(--kcq-spring-duration);
+  transition-timing-function: var(--klc-motion-ease-out), var(--klc-motion-ease-out), var(--kcq-ease-spring);
 }
 /* Long lines scroll inside the pane only; the page never scrolls sideways. */
 .code {

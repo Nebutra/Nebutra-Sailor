@@ -136,6 +136,9 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
   transform: scale(0.98);
 }
 .copy-icon-done {
+  transform: scale(0.6);
+}
+.copy-icon-done {
   color: var(--kcq-up);
 }
 [data-copied] .copy-icon-idle,
@@ -149,6 +152,11 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
   opacity: 1;
   filter: none;
   transform: none;
+}
+/* The check lands on the spring (300 / 30): the one tactile beat of a successful copy. */
+[data-copied] .copy-icon-done {
+  transition-duration: 130ms, 130ms, var(--kcq-spring-duration);
+  transition-timing-function: var(--klc-motion-ease-out), var(--klc-motion-ease-out), var(--kcq-ease-spring);
 }
 @media (prefers-reduced-motion: reduce) {
   .copy-icons > *,
