@@ -22,8 +22,8 @@
   },
   "scripts": {
     "generate": "tsx scripts/generate.ts",
-    "build": "tsup src/index.ts --format cjs,esm --out-dir dist && tsc -p tsconfig.build.json",
-    "dev": "tsup src/index.ts --format cjs,esm --out-dir dist --watch",
+    "build": "rm -rf dist && tsup && tsc -p tsconfig.build.json",
+    "dev": "tsup --watch",
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {

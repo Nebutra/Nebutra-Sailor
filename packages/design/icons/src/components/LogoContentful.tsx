@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoContentful = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoContentful = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -30,9 +30,9 @@ const LogoContentful = forwardRef<SVGSVGElement, IconProps>(
         d="M11.146 11.177a4.48 4.48 0 0 1-3.171 1.301c-1.184 0-2.33-.47-3.161-1.321a1.763 1.763 0 0 0-2.486-.147 1.764 1.764 0 0 0-.147 2.486c.049.049.088.098.137.137 3.102 3.132 8.152 3.161 11.284.059l.02-.02c.695-.685.695-1.8.01-2.495a1.77 1.77 0 0 0-2.486 0"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoContentful" },
 );
-LogoContentful.displayName = "LogoContentful";
 
 export { LogoContentful };
 export default LogoContentful;

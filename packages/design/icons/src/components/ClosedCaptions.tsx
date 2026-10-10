@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const ClosedCaptions = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const ClosedCaptions = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -24,9 +24,9 @@ const ClosedCaptions = forwardRef<SVGSVGElement, IconProps>(
         clipRule="evenodd"
       />
     </svg>
-  ),
+  )),
+  { displayName: "ClosedCaptions" },
 );
-ClosedCaptions.displayName = "ClosedCaptions";
 
 export { ClosedCaptions };
 export default ClosedCaptions;

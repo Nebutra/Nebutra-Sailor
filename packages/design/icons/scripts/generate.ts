@@ -8,6 +8,7 @@
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { basename, join } from "node:path";
 import { transform } from "@svgr/core";
+import { makeTreeShakeable } from "./tree-shakeable";
 
 const SVG_DIR = join(__dirname, "../src/svg");
 const OUT_DIR = join(__dirname, "../src/components");
@@ -148,6 +149,7 @@ async function main() {
       });
       code = removeDuplicateStyleKeys(code);
       code = normalizeDsColorSteps(code);
+      code = makeTreeShakeable(code, componentName);
     } catch (_err) {
       skipped++;
       continue;

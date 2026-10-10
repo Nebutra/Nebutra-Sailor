@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const Agent = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const Agent = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -22,9 +22,9 @@ const Agent = forwardRef<SVGSVGElement, IconProps>(
         <path d="M12.12 6.256c.914.154 1.79.372 2.382.637.296.132.58.296.803.505.222.21.445.529.445.95 0 .678-.556 1.086-.935 1.298-.44.246-1.03.444-1.693.6-1.338.316-3.149.504-5.122.504s-3.784-.188-5.122-.504c-.663-.156-1.252-.354-1.693-.6-.355-.198-.867-.57-.93-1.174L.25 8.348l.01-.154c.046-.345.24-.612.435-.796.222-.209.507-.373.803-.505.594-.266 1.396-.476 2.31-.63L2.808 8.017a5 5 0 0 0-.696.245q-.1.045-.173.085c.27.145.697.3 1.285.44 1.195.281 2.884.463 4.777.463s3.582-.182 4.777-.464c.587-.138 1.015-.294 1.284-.44a3 3 0 0 0-.172-.084 5.5 5.5 0 0 0-.775-.268z" />
       </g>
     </svg>
-  ),
+  )),
+  { displayName: "Agent" },
 );
-Agent.displayName = "Agent";
 
 export { Agent };
 export default Agent;

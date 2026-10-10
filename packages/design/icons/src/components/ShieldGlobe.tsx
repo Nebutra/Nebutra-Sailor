@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const ShieldGlobe = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const ShieldGlobe = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -39,9 +39,9 @@ const ShieldGlobe = forwardRef<SVGSVGElement, IconProps>(
         d="M8 11.5h7.25M10.75 15a12.74 12.74 0 0 1 0-7M12.25 15a12.74 12.74 0 0 0 0-7"
       />
     </svg>
-  ),
+  )),
+  { displayName: "ShieldGlobe" },
 );
-ShieldGlobe.displayName = "ShieldGlobe";
 
 export { ShieldGlobe };
 export default ShieldGlobe;

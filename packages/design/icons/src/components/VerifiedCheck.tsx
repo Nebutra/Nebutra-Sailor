@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const VerifiedCheck = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const VerifiedCheck = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -30,9 +30,9 @@ const VerifiedCheck = forwardRef<SVGSVGElement, IconProps>(
         d="m5.875 8.531 1.063 1.063 3.187-3.188"
       />
     </svg>
-  ),
+  )),
+  { displayName: "VerifiedCheck" },
 );
-VerifiedCheck.displayName = "VerifiedCheck";
 
 export { VerifiedCheck };
 export default VerifiedCheck;

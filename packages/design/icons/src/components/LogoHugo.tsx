@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoHugo = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoHugo = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -34,9 +34,9 @@ const LogoHugo = forwardRef<SVGSVGElement, IconProps>(
         d="M4.723 12.25V3.681h1.794v3.122h2.976V3.68h1.8v8.57h-1.8V8.503H6.517v3.746z"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoHugo" },
 );
-LogoHugo.displayName = "LogoHugo";
 
 export { LogoHugo };
 export default LogoHugo;

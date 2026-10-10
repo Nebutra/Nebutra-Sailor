@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const UserPlus = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const UserPlus = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -24,9 +24,9 @@ const UserPlus = forwardRef<SVGSVGElement, IconProps>(
         clipRule="evenodd"
       />
     </svg>
-  ),
+  )),
+  { displayName: "UserPlus" },
 );
-UserPlus.displayName = "UserPlus";
 
 export { UserPlus };
 export default UserPlus;

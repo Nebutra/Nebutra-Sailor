@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoVercelApi = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoVercelApi = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -34,9 +34,9 @@ const LogoVercelApi = forwardRef<SVGSVGElement, IconProps>(
         </clipPath>
       </defs>
     </svg>
-  ),
+  )),
+  { displayName: "LogoVercelApi" },
 );
-LogoVercelApi.displayName = "LogoVercelApi";
 
 export { LogoVercelApi };
 export default LogoVercelApi;

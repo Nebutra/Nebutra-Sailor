@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const ToggleOffAltUnread = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const ToggleOffAltUnread = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -25,9 +25,9 @@ const ToggleOffAltUnread = forwardRef<SVGSVGElement, IconProps>(
       />
       <circle cx={13.5} cy={2.5} r={2.5} fill="var(--ds-blue-900)" />
     </svg>
-  ),
+  )),
+  { displayName: "ToggleOffAltUnread" },
 );
-ToggleOffAltUnread.displayName = "ToggleOffAltUnread";
 
 export { ToggleOffAltUnread };
 export default ToggleOffAltUnread;

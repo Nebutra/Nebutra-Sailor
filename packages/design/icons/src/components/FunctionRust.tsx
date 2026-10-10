@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const FunctionRust = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const FunctionRust = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +26,9 @@ const FunctionRust = forwardRef<SVGSVGElement, IconProps>(
         d="M12.336 8.743a3.6 3.6 0 1 1-.002 7.202 3.6 3.6 0 0 1 .002-7.202m-.582 4.406h.62a.05.05 0 0 1 .05.05v.819a.05.05 0 0 1-.05.05h-2.24a2.792 2.792 0 0 0 4.404 0H13.49a.4.4 0 0 1-.233-.07.5.5 0 0 1-.142-.179c-.068-.14-.103-.324-.14-.498-.037-.178-.078-.346-.156-.47a.4.4 0 0 0-.143-.143.45.45 0 0 0-.228-.054h-.694zm-2.016-1.846a2.8 2.8 0 0 0-.082 1.846h.808v-1.834H9.77a.05.05 0 0 1-.032-.012m2.598-1.758c-.789 0-1.5.327-2.008.851h2.939c.468 0 .877.312 1.023.703a.84.84 0 0 1-.004.622c-.077.188-.23.364-.471.51l.02.015q.066.056.14.15c.097.126.195.3.234.496.031.156.19.256.348.248a.3.3 0 0 0 .204-.094c.054-.06.093-.154.093-.293v-.149a.05.05 0 0 1 .05-.05h.221q.009-.105.01-.21a2.8 2.8 0 0 0-2.8-2.8m-.582 2.265h.917c.284 0 .396-.139.396-.248s-.112-.247-.396-.247h-.917z"
       />
     </svg>
-  ),
+  )),
+  { displayName: "FunctionRust" },
 );
-FunctionRust.displayName = "FunctionRust";
 
 export { FunctionRust };
 export default FunctionRust;

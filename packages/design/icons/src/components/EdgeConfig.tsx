@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const EdgeConfig = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const EdgeConfig = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -42,9 +42,9 @@ const EdgeConfig = forwardRef<SVGSVGElement, IconProps>(
         </defs>
       </svg>
     </svg>
-  ),
+  )),
+  { displayName: "EdgeConfig" },
 );
-EdgeConfig.displayName = "EdgeConfig";
 
 export { EdgeConfig };
 export default EdgeConfig;

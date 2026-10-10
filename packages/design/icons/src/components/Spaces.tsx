@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const Spaces = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const Spaces = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -39,9 +39,9 @@ const Spaces = forwardRef<SVGSVGElement, IconProps>(
         d="M5.855 9.5a4.752 4.752 0 0 1 9.395 1A4.75 4.75 0 0 1 8 14.54"
       />
     </svg>
-  ),
+  )),
+  { displayName: "Spaces" },
 );
-Spaces.displayName = "Spaces";
 
 export { Spaces };
 export default Spaces;

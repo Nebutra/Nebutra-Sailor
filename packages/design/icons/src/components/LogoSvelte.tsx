@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoSvelte = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoSvelte = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +26,9 @@ const LogoSvelte = forwardRef<SVGSVGElement, IconProps>(
         d="M6.896 14.088a2.955 2.955 0 0 1-3.173-1.18 2.75 2.75 0 0 1-.475-2.074c.027-.122.055-.23.082-.353l.067-.217.19.136q.672.488 1.465.732l.135.04-.013.136c-.014.19.04.394.149.556a.9.9 0 0 0 .963.366 1.2 1.2 0 0 0 .23-.094l3.715-2.373a.77.77 0 0 0 .353-.516.84.84 0 0 0-.136-.623.89.89 0 0 0-.962-.353c-.082.027-.163.054-.23.095l-1.425.909c-.23.149-.488.257-.759.325A2.955 2.955 0 0 1 3.9 8.42a2.74 2.74 0 0 1-.46-2.074 2.57 2.57 0 0 1 1.165-1.722l3.73-2.373c.23-.15.487-.258.758-.34a2.96 2.96 0 0 1 3.173 1.18c.434.597.597 1.343.475 2.075a3 3 0 0 1-.095.353l-.068.217-.19-.136a5 5 0 0 0-1.464-.732l-.136-.04.014-.136a.9.9 0 0 0-.15-.556.89.89 0 0 0-.962-.353c-.081.027-.163.054-.23.095L5.743 6.251a.77.77 0 0 0-.352.515.84.84 0 0 0 .135.624.89.89 0 0 0 .963.352c.081-.027.163-.054.23-.095l1.424-.908c.23-.15.488-.258.76-.339a2.96 2.96 0 0 1 3.172 1.18c.434.596.597 1.342.475 2.074a2.57 2.57 0 0 1-1.166 1.722L7.655 13.75a3 3 0 0 1-.76.34"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoSvelte" },
 );
-LogoSvelte.displayName = "LogoSvelte";
 
 export { LogoSvelte };
 export default LogoSvelte;
