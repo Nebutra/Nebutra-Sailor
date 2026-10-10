@@ -14,6 +14,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
+import { useFormatLocale } from "./use-format-locale";
 
 type QueueKey = "email" | "billing" | "ai-tasks" | "webhooks";
 type JobStatus = "processing" | "success" | "failed" | "pending";
@@ -76,9 +77,8 @@ type QueueCopy = {
 const JOB_LABEL = "Job";
 
 export function QueueShowcase(props: PackageShowcaseProps) {
-  const { locale, copy } = props;
-  const isZh = locale === "zh";
-  const numLocale = isZh ? "zh-CN" : "en-US";
+  const { copy } = props;
+  const numLocale = useFormatLocale();
   const t = copy as QueueCopy;
 
   return (

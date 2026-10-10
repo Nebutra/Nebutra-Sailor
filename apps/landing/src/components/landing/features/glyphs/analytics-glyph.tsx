@@ -4,26 +4,18 @@ import { ChartActivity, ChartTrendingUp, Clock, Users } from "@nebutra/icons";
 import { Badge, MetricCard } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    activeUsers: "Active users",
-    sessions: "Sessions",
-    avgDuration: "Avg duration",
-    footer: "event.tracked · last 7 days",
-  },
-  zh: {
-    activeUsers: "活跃用户",
-    sessions: "会话数",
-    avgDuration: "平均时长",
-    footer: "event.tracked · 近 7 天",
-  },
-} as const;
+type AnalyticsCopy = {
+  activeUsers: string;
+  sessions: string;
+  avgDuration: string;
+  footer: string;
+};
 
 // 14 bars — varying heights as a percentage of column height
 const BARS = [42, 58, 35, 71, 49, 63, 38, 82, 55, 68, 47, 76, 60, 88] as const;
 
-export function AnalyticsGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function AnalyticsGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as AnalyticsCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>

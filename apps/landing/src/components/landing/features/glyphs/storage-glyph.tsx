@@ -24,29 +24,20 @@ import type { SubpackageGlyphProps } from "./types";
  *    └──────────────────────────────────────────────────┘
 \* -------------------------------------------------------------------------- */
 
-const COPY = {
-  en: {
-    region: "us-east-1",
-    reports: "reports/",
-    reportsSize: "12.4 GB",
-    backups: "backups/",
-    backupsSize: "847 MB",
-    provider: "Provider · S3",
-    encryptedSr: "Encrypted at rest",
-  },
-  zh: {
-    region: "us-east-1",
-    reports: "reports/",
-    reportsSize: "12.4 GB",
-    backups: "backups/",
-    backupsSize: "847 MB",
-    provider: "Provider · S3",
-    encryptedSr: "静态加密",
-  },
+// Bucket paths, sizes, region and provider — data, same on every locale.
+const DATA = {
+  region: "us-east-1",
+  reports: "reports/",
+  reportsSize: "12.4 GB",
+  backups: "backups/",
+  backupsSize: "847 MB",
+  provider: "Provider · S3",
 } as const;
 
-export function StorageGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+type StorageCopy = { encryptedSr: string };
+
+export function StorageGlyph({ copy }: SubpackageGlyphProps) {
+  const t = { ...DATA, ...(copy as StorageCopy) };
 
   return (
     <div

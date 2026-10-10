@@ -4,28 +4,18 @@ import { ChartTrendingUp, CreditCard, Sparkles } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    label: "Monthly Recurring Revenue",
-    amount: "$12,400",
-    trend: "+12%",
-    provider: "Creem",
-    status: "live",
-  },
-  zh: {
-    label: "月度经常性收入",
-    amount: "$12,400",
-    trend: "+12%",
-    provider: "Creem",
-    status: "在线",
-  },
-} as const;
+// Demo figures and the provider name — same on every locale.
+const AMOUNT = "$12,400";
+const TREND = "+12%";
+const PROVIDER = "Creem";
+
+type BillingCopy = { label: string; status: string };
 
 // Sparkline bar heights as percentages (subtly ascending to reinforce growth).
 const BAR_HEIGHTS = [32, 44, 38, 56, 48, 70, 84] as const;
 
-export function BillingGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function BillingGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as BillingCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
@@ -40,9 +30,9 @@ export function BillingGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Big number + trend chip */}
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-semibold tabular-nums text-foreground">{copy.amount}</span>
+          <span className="text-2xl font-semibold tabular-nums text-foreground">{AMOUNT}</span>
           <Badge variant="green-subtle" size="sm" icon={<ChartTrendingUp />}>
-            {copy.trend}
+            {TREND}
           </Badge>
         </div>
 
@@ -61,7 +51,7 @@ export function BillingGlyph({ locale }: SubpackageGlyphProps) {
         <div className="mt-0.5 flex items-center justify-between">
           <span className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
             <CreditCard className="h-3 w-3" />
-            {copy.provider} · {copy.status}
+            {PROVIDER} · {copy.status}
           </span>
           <span className="h-1.5 w-1.5 rounded-full bg-success" />
         </div>

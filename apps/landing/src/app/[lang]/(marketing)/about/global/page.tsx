@@ -5,108 +5,45 @@ import { AnimateIn, AnimateInGroup } from "@/components/landing/AnimateIn";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { bi, GLOBAL_POINTS } from "../_about-data";
 
-// ─── Page-local content (data rows — still dual-authored per row) ────────────
+// ─── Page-local data (copy lives in aboutPages.global.*) ─────────────────────
 
-const LANGUAGES: ReadonlyArray<{
-  code: string;
-  flag: string;
-  name: { zh: string; en: string };
-  region: { zh: string; en: string };
-}> = [
-  {
-    code: "ZH",
-    flag: "🇨🇳",
-    name: { zh: "简体中文", en: "Simplified Chinese" },
-    region: { zh: "中国大陆 · 新加坡", en: "Mainland China · Singapore" },
-  },
-  {
-    code: "EN",
-    flag: "🇺🇸",
-    name: { zh: "英语", en: "English" },
-    region: { zh: "北美 · 英联邦", en: "North America · Commonwealth" },
-  },
-  {
-    code: "JA",
-    flag: "🇯🇵",
-    name: { zh: "日本語", en: "Japanese" },
-    region: { zh: "日本", en: "Japan" },
-  },
-  {
-    code: "KO",
-    flag: "🇰🇷",
-    name: { zh: "한국어", en: "Korean" },
-    region: { zh: "韩国", en: "South Korea" },
-  },
-  {
-    code: "ES",
-    flag: "🇪🇸",
-    name: { zh: "Español", en: "Spanish" },
-    region: { zh: "西班牙 · 拉美", en: "Spain · Latin America" },
-  },
-  {
-    code: "FR",
-    flag: "🇫🇷",
-    name: { zh: "Français", en: "French" },
-    region: { zh: "法国 · 法语区非洲", en: "France · Francophone Africa" },
-  },
-  {
-    code: "DE",
-    flag: "🇩🇪",
-    name: { zh: "Deutsch", en: "German" },
-    region: { zh: "德奥瑞 DACH", en: "DACH Region" },
-  },
-];
+/** The four readiness pillars — `points.<key>.title|desc`. */
+const POINTS = [
+  { key: "languages", icon: "🌍" },
+  { key: "compliance", icon: "📜" },
+  { key: "payments", icon: "💳" },
+  { key: "edge", icon: "⚡" },
+] as const;
+
+/** `languages.items.<code>.name|region`. */
+const LANGUAGES = [
+  { code: "ZH", flag: "🇨🇳" },
+  { code: "EN", flag: "🇺🇸" },
+  { code: "JA", flag: "🇯🇵" },
+  { code: "KO", flag: "🇰🇷" },
+  { code: "ES", flag: "🇪🇸" },
+  { code: "FR", flag: "🇫🇷" },
+  { code: "DE", flag: "🇩🇪" },
+] as const;
 
 type ComplianceStatus = "day1" | "roadmap";
 
-const COMPLIANCE_ROWS: ReadonlyArray<{
-  region: { zh: string; en: string };
-  framework: { zh: string; en: string };
-  status: ComplianceStatus;
-  note: { zh: string; en: string };
-}> = [
-  {
-    region: { zh: "中国大陆", en: "Mainland China" },
-    framework: { zh: "个人信息保护法 (PIPL)", en: "PIPL" },
-    status: "day1",
-    note: { zh: "Day 1 支持", en: "Day 1 Support" },
-  },
-  {
-    region: { zh: "欧盟", en: "European Union" },
-    framework: { zh: "GDPR", en: "GDPR" },
-    status: "day1",
-    note: { zh: "Day 1 支持", en: "Day 1 Support" },
-  },
-  {
-    region: { zh: "美国", en: "United States" },
-    framework: { zh: "CCPA / CPRA", en: "CCPA / CPRA" },
-    status: "day1",
-    note: { zh: "Day 1 支持", en: "Day 1 Support" },
-  },
-  {
-    region: { zh: "数据出境", en: "Cross-border Transfer" },
-    framework: { zh: "数据出境安全评估", en: "Data Export Security Assessment" },
-    status: "day1",
-    note: { zh: "Day 1 支持", en: "Day 1 Support" },
-  },
-  {
-    region: { zh: "企业认证", en: "Enterprise Certification" },
-    framework: { zh: "SOC 2 Type I", en: "SOC 2 Type I" },
-    status: "roadmap",
-    note: { zh: "Roadmap · 2026 Q3", en: "Roadmap · 2026 Q3" },
-  },
-];
+/** `compliance.rows.<key>.region|framework`; the badge is `compliance.status.<status>`. */
+const COMPLIANCE_ROWS = [
+  { key: "pipl", status: "day1" },
+  { key: "gdpr", status: "day1" },
+  { key: "ccpa", status: "day1" },
+  { key: "dataExport", status: "day1" },
+  { key: "soc2", status: "roadmap" },
+] as const satisfies ReadonlyArray<{ key: string; status: ComplianceStatus }>;
 
-const PAYMENT_GATEWAYS: ReadonlyArray<{
-  name: string;
-  region: { zh: string; en: string };
-}> = [
-  { name: "Creem", region: { zh: "全球", en: "Global" } },
-  { name: "WeChat Pay", region: { zh: "中国大陆", en: "Mainland China" } },
-  { name: "Alipay", region: { zh: "中国大陆", en: "Mainland China" } },
-];
+/** Gateway names are brands; the region is `payments.regions.<region>`. */
+const PAYMENT_GATEWAYS = [
+  { name: "Creem", region: "global" },
+  { name: "WeChat Pay", region: "mainlandChina" },
+  { name: "Alipay", region: "mainlandChina" },
+] as const;
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
@@ -178,10 +115,14 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
             stagger="normal"
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           >
-            {GLOBAL_POINTS.map((point, i) => {
-              const p = bi(lang, point);
+            {POINTS.map((point) => {
+              const p = {
+                icon: point.icon,
+                title: t(`points.${point.key}.title`),
+                desc: t(`points.${point.key}.desc`),
+              };
               return (
-                <AnimateIn key={`pillar-${i}`} preset="fadeUp">
+                <AnimateIn key={point.key} preset="fadeUp">
                   <div
                     className="group h-full bg-muted/20 rounded-[var(--radius-card)] p-8 transition-[background-color,border-color,box-shadow,transform] duration-500 flex flex-col"
                     style={{ boxShadow: "var(--ring-hairline)" }}
@@ -238,10 +179,10 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                     </span>
                   </div>
                   <h3 className="text-lg font-bold tracking-tight mb-1 text-foreground">
-                    {bi(lang, lng.name)}
+                    {t(`languages.items.${lng.code}.name`)}
                   </h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    {bi(lang, lng.region)}
+                    {t(`languages.items.${lng.code}.region`)}
                   </p>
                 </div>
               </AnimateIn>
@@ -255,7 +196,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
         <div className="container mx-auto px-4 max-w-6xl">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-              Compliance
+              {t("compliance.eyebrow")}
             </span>
             <h2
               className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
@@ -286,9 +227,9 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                 </span>
               </div>
 
-              {COMPLIANCE_ROWS.map((row, i) => (
+              {COMPLIANCE_ROWS.map((row) => (
                 <div
-                  key={`compliance-${i}`}
+                  key={row.key}
                   className="grid grid-cols-1 md:grid-cols-[1.2fr_1.5fr_1fr] gap-2 md:gap-6 px-6 md:px-8 py-6 border-b border-border/50 last:border-b-0 hover:bg-muted/20 transition-colors"
                 >
                   <div className="flex flex-col md:block">
@@ -296,7 +237,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                       {t("compliance.columns.region")}
                     </span>
                     <span className="text-base font-semibold text-foreground">
-                      {bi(lang, row.region)}
+                      {t(`compliance.rows.${row.key}.region`)}
                     </span>
                   </div>
                   <div className="flex flex-col md:block">
@@ -304,7 +245,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                       {t("compliance.columns.framework")}
                     </span>
                     <span className="text-base text-muted-foreground font-mono">
-                      {bi(lang, row.framework)}
+                      {t(`compliance.rows.${row.key}.framework`)}
                     </span>
                   </div>
                   <div className="flex md:justify-end items-center">
@@ -323,7 +264,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                         }
                         aria-hidden="true"
                       />
-                      {bi(lang, row.note)}
+                      {t(`compliance.status.${row.status}`)}
                     </span>
                   </div>
                 </div>
@@ -338,7 +279,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
         <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
             <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-              Payments
+              {t("payments.eyebrow")}
             </span>
             <h2
               className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
@@ -365,7 +306,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                     {gw.name}
                   </span>
                   <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">
-                    {bi(lang, gw.region)}
+                    {t(`payments.regions.${gw.region}`)}
                   </span>
                 </div>
               </AnimateIn>

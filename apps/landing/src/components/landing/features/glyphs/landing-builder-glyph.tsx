@@ -4,20 +4,12 @@ import { Code, Globe, Sparkles } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    url: "your-site.app",
-    prompts: ['"B2B SaaS for ops teams"', '"Hero · 3-col features · CTA"', '"Match nebutra brand"'],
-    badge: "v0",
-    footer: "v0 · prompt → page · 8s",
-  },
-  zh: {
-    url: "your-site.app",
-    prompts: ['"面向运营团队的 B2B SaaS"', '"Hero · 3 列特性 · CTA"', '"匹配 nebutra 品牌"'],
-    badge: "v0",
-    footer: "v0 · prompt → page · 8s",
-  },
-} as const;
+// Demo URL and engine line — same on every locale.
+const DEMO_URL = "your-site.app";
+const BADGE = "v0";
+const FOOTER = "v0 · prompt → page · 8s";
+
+type LandingBuilderCopy = { prompts: Record<string, string> };
 
 /**
  * LandingBuilderGlyph
@@ -28,8 +20,8 @@ const COPY = {
  * monospace prompt bubbles flowing into the page, capped by a
  * mono footer that names the engine + perf budget.
  */
-export function LandingBuilderGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function LandingBuilderGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const prompts = Object.values((rawCopy as LandingBuilderCopy).prompts);
 
   return (
     <div
@@ -46,7 +38,7 @@ export function LandingBuilderGlyph({ locale }: SubpackageGlyphProps) {
           <span className="h-1.5 w-1.5 rounded-full bg-border" />
           <div className="ml-1 flex min-w-0 flex-1 items-center gap-1 rounded-[var(--radius-sm)] bg-background px-1 py-[1px]">
             <Globe className="h-2 w-2 text-muted-foreground" />
-            <span className="truncate font-mono text-[7px] text-muted-foreground">{copy.url}</span>
+            <span className="truncate font-mono text-[7px] text-muted-foreground">{DEMO_URL}</span>
           </div>
         </div>
         {/* Page body */}
@@ -79,11 +71,11 @@ export function LandingBuilderGlyph({ locale }: SubpackageGlyphProps) {
             prompt
           </span>
           <Badge variant="blue-subtle" size="sm" icon={<Sparkles />}>
-            {copy.badge}
+            {BADGE}
           </Badge>
         </div>
         <div className="flex flex-1 flex-col justify-center gap-1">
-          {copy.prompts.map((prompt) => (
+          {prompts.map((prompt) => (
             <div
               key={prompt}
               className="flex items-center gap-1 rounded-[var(--radius-md)] bg-background px-1.5 py-1 ring-1 ring-border"
@@ -93,7 +85,7 @@ export function LandingBuilderGlyph({ locale }: SubpackageGlyphProps) {
             </div>
           ))}
         </div>
-        <p className="truncate font-mono text-[9px] text-muted-foreground">{copy.footer}</p>
+        <p className="truncate font-mono text-[9px] text-muted-foreground">{FOOTER}</p>
       </div>
     </div>
   );

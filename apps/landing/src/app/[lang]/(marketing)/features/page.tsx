@@ -20,7 +20,6 @@ import {
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { siteLang } from "@/nebutra/i18n";
 import { sitePageMeta } from "@/nebutra/seo";
 import { Band, Intro } from "@/nebutra/ui/page";
 
@@ -75,7 +74,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function FeaturesPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   setRequestLocale(lang);
-  const locale = siteLang(lang);
   const t = await packageCatalogT(lang);
 
   return (
@@ -97,7 +95,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
       </section>
 
       {orderedDomains().map((domain) => (
-        <DomainBand key={domain.slug} domain={domain} locale={locale} t={t} />
+        <DomainBand key={domain.slug} domain={domain} t={t} />
       ))}
 
       <Band>
@@ -114,15 +112,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
   );
 }
 
-function DomainBand({
-  domain,
-  locale,
-  t,
-}: {
-  domain: PackageFeatureEntry;
-  locale: "en" | "zh";
-  t: PackageCatalogTranslator;
-}) {
+function DomainBand({ domain, t }: { domain: PackageFeatureEntry; t: PackageCatalogTranslator }) {
   const folder = folderFor(domain);
   const packages = domain.children
     .map((slug) => getPackageFeatureEntry(slug))
@@ -162,7 +152,7 @@ function DomainBand({
         </div>
 
         <div className="self-start lg:sticky lg:top-24">
-          <GlyphBento entries={lead} locale={locale} t={t} />
+          <GlyphBento entries={lead} t={t} />
         </div>
       </div>
 

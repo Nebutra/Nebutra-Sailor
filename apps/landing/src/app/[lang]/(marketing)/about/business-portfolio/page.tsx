@@ -6,7 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { bi, CAPABILITY_GROUPS } from "../_about-data";
+import { CAPABILITY_GROUPS } from "../_about-data";
 
 // Map group keys to icons for a consistent visual anchor.
 const GROUP_ICONS: Record<string, typeof Boxes> = {
@@ -44,14 +44,11 @@ export default async function BusinessPortfolioPage({
   const t = await getTranslations({ locale: lang, namespace: "aboutPages.businessPortfolio" });
 
   // Stats pulled directly from CAPABILITY_GROUPS — kept in-sync with source data.
-  const stats = CAPABILITY_GROUPS.map((g) => {
-    const meta = bi(lang, g.meta);
-    return {
-      key: g.key,
-      count: g.items.length,
-      label: meta.title,
-    };
-  });
+  const stats = CAPABILITY_GROUPS.map((g) => ({
+    key: g.key,
+    count: g.items.length,
+    label: t(`groups.${g.key}.title`),
+  }));
   const totalCount = stats.reduce((sum, s) => sum + s.count, 0);
 
   return (
@@ -90,7 +87,7 @@ export default async function BusinessPortfolioPage({
                   {s.count}
                 </span>
                 <span className="text-xs md:text-sm font-mono tracking-wider uppercase text-muted-foreground">
-                  {s.label.replace(/^[A-D] · /, "")}
+                  {s.label}
                 </span>
               </div>
             ))}
@@ -104,7 +101,7 @@ export default async function BusinessPortfolioPage({
 
       {/* ─── Section 2 · Group breakdown (one section per group) ──────────── */}
       {CAPABILITY_GROUPS.map((group, groupIdx) => {
-        const meta = bi(lang, group.meta);
+        const letter = String.fromCharCode(65 + groupIdx);
         const Icon = GROUP_ICONS[group.key] ?? Boxes;
         // Alternating bg for visual rhythm without introducing new tokens.
         const altBg = groupIdx % 2 === 1 ? "bg-muted/30" : "bg-background";
@@ -125,7 +122,8 @@ export default async function BusinessPortfolioPage({
                   <div className="inline-flex items-center gap-3 mb-6 px-3 py-1.5 rounded-full border border-border bg-background">
                     <Icon className="h-4 w-4 text-foreground" aria-hidden="true" />
                     <span className="text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
-                      {`Group ${String.fromCharCode(65 + groupIdx)} · `}
+                      {t("groupLabel", { letter })}
+                      {" · "}
                       {t("groupItemsLabel", { count: group.items.length })}
                     </span>
                   </div>
@@ -138,12 +136,12 @@ export default async function BusinessPortfolioPage({
                         lineHeight: "var(--leading-heading)",
                       }}
                     >
-                      {meta.title}
+                      {letter} · {t(`groups.${group.key}.title`)}
                     </h2>
                   </AnimateIn>
 
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                    {meta.subtitle}
+                    {t(`groups.${group.key}.subtitle`)}
                   </p>
                 </div>
 
@@ -155,15 +153,18 @@ export default async function BusinessPortfolioPage({
 
               <div className={`grid grid-cols-1 ${gridCols} gap-5 md:gap-6`}>
                 {group.items.map((item, idx) => {
-                  const cap = bi(lang, item);
+                  const cap = {
+                    category: t(`capabilities.${item}.category`),
+                    description: t(`capabilities.${item}.description`),
+                  };
                   return (
                     <article
-                      key={`${group.key}-${idx}`}
+                      key={item}
                       className="group relative h-full flex flex-col gap-4 p-7 md:p-8 rounded-[var(--radius-2xl)] border border-border bg-background hover:border-foreground/40 hover:shadow-lg transition-[border-color,box-shadow] duration-300"
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
-                          {String.fromCharCode(65 + groupIdx)}.{String(idx + 1).padStart(2, "0")}
+                          {letter}.{String(idx + 1).padStart(2, "0")}
                         </span>
                         <Icon
                           className="h-4 w-4 text-muted-foreground/60 group-hover:text-foreground transition-colors"
@@ -212,7 +213,6 @@ export default async function BusinessPortfolioPage({
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
             {CAPABILITY_GROUPS.map((group, groupIdx) => {
-              const meta = bi(lang, group.meta);
               const Icon = GROUP_ICONS[group.key] ?? Boxes;
               return (
                 <div
@@ -226,21 +226,20 @@ export default async function BusinessPortfolioPage({
                     </span>
                   </div>
                   <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground leading-snug">
-                    {meta.title.replace(/^[A-D] · /, "")}
+                    {t(`groups.${group.key}.title`)}
                   </h3>
                   <ul className="flex flex-col gap-2.5 mt-1">
-                    {group.items.map((item, idx) => {
-                      const cap = bi(lang, item);
+                    {group.items.map((item) => {
                       return (
                         <li
-                          key={`${group.key}-sum-${idx}`}
+                          key={item}
                           className="flex items-start gap-2.5 text-sm text-muted-foreground leading-relaxed"
                         >
                           <span
                             className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-foreground/40"
                             aria-hidden="true"
                           />
-                          <span>{cap.category}</span>
+                          <span>{t(`capabilities.${item}.category`)}</span>
                         </li>
                       );
                     })}

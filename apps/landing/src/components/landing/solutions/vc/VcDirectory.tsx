@@ -4,6 +4,7 @@ import { ArrowUpRight, MagnifyingGlass } from "@nebutra/icons";
 import { EmptyState } from "@nebutra/ui/layout";
 import { Badge, Button, Input } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import type { VcOrg } from "@/lib/constants/vc";
@@ -15,69 +16,21 @@ const SECTOR_PREVIEW = 14;
 type Variant = "deals" | "global";
 type Sort = "total" | "founded" | "name";
 
-interface Copy {
-  searchPlaceholder: string;
-  sectors: string;
-  types: string;
-  more: string;
-  less: string;
-  sortLabel: string;
-  sortTotal: string;
-  sortFounded: string;
-  sortName: string;
-  results: (n: number) => string;
-  loadMore: string;
-  clear: string;
-  visitSite: string;
-  noResults: string;
+/** Card labels, resolved once by the directory from `solutionsCatalog.vcDirectory`. */
+interface CardCopy {
   totalDeals: string;
   founded: string;
+  visitSite: string;
 }
 
-const COPY: Record<"en" | "zh", Copy> = {
-  zh: {
-    searchPlaceholder: "搜索机构名称或简介…",
-    sectors: "赛道",
-    types: "类型",
-    more: "更多",
-    less: "收起",
-    sortLabel: "排序",
-    sortTotal: "总投资数",
-    sortFounded: "成立年份",
-    sortName: "名称",
-    results: (n) => `${n} 家机构`,
-    loadMore: "加载更多",
-    clear: "清除筛选",
-    visitSite: "访问官网",
-    noResults: "没有匹配的机构,试试调整筛选条件。",
-    totalDeals: "总投资",
-    founded: "成立",
-  },
-  en: {
-    searchPlaceholder: "Search institutions or descriptions…",
-    sectors: "Sectors",
-    types: "Types",
-    more: "more",
-    less: "less",
-    sortLabel: "Sort",
-    sortTotal: "Total deals",
-    sortFounded: "Founded",
-    sortName: "Name",
-    results: (n) => `${n} institutions`,
-    loadMore: "Load more",
-    clear: "Clear filters",
-    visitSite: "Website",
-    noResults: "No matching institutions — try adjusting the filters.",
-    totalDeals: "Total",
-    founded: "Founded",
-  },
-};
-
+/**
+ * Reads `solutionsCatalog.vcDirectory` with useTranslations — the server parent
+ * wraps it in a NextIntlClientProvider carrying just that subtree.
+ */
 export interface VcDirectoryProps {
   orgs: VcOrg[];
   sectors: string[];
   types: string[];
-  locale: "en" | "zh";
   variant: Variant;
   /** Base path for per-institution profile links, e.g. "/solutions/china-vc". */
   hrefBase: string;
@@ -119,7 +72,7 @@ function VcCard({
   hrefBase,
 }: {
   org: VcOrg;
-  c: Copy;
+  c: CardCopy;
   variant: Variant;
   logoSrc: string | null;
   hrefBase: string;
@@ -202,8 +155,26 @@ function VcCard({
   );
 }
 
-export function VcDirectory({ orgs, sectors, types, locale, variant, hrefBase }: VcDirectoryProps) {
-  const c = COPY[locale];
+export function VcDirectory({ orgs, sectors, types, variant, hrefBase }: VcDirectoryProps) {
+  const t = useTranslations("solutionsCatalog.vcDirectory");
+  const c = {
+    searchPlaceholder: t("searchPlaceholder"),
+    sectors: t("sectors"),
+    types: t("types"),
+    less: t("less"),
+    sortLabel: t("sortLabel"),
+    sortTotal: t("sortTotal"),
+    sortFounded: t("sortFounded"),
+    sortName: t("sortName"),
+    loadMore: t("loadMore"),
+    clear: t("clear"),
+    noResults: t("noResults"),
+  };
+  const cardCopy: CardCopy = {
+    totalDeals: t("totalDeals"),
+    founded: t("founded"),
+    visitSite: t("visitSite"),
+  };
   const [query, setQuery] = useState("");
   const [activeSectors, setActiveSectors] = useState<Set<string>>(new Set());
   const [activeTypes, setActiveTypes] = useState<Set<string>>(new Set());
@@ -284,7 +255,7 @@ export function VcDirectory({ orgs, sectors, types, locale, variant, hrefBase }:
               onClick={() => setShowAllSectors((v) => !v)}
               className="rounded-full px-3 py-1 text-xs font-medium text-muted-foreground/80 underline-offset-2 hover:underline"
             >
-              {showAllSectors ? c.less : `+${sectors.length - SECTOR_PREVIEW} ${c.more}`}
+              {showAllSectors ? c.less : t("more", { count: sectors.length - SECTOR_PREVIEW })}
             </button>
           ) : null}
         </div>
@@ -308,7 +279,9 @@ export function VcDirectory({ orgs, sectors, types, locale, variant, hrefBase }:
       </div>
 
       <div className="mb-6 flex flex-wrap items-center gap-3 border-y border-border/40 py-3">
-        <span className="text-sm font-medium text-neutral-12">{c.results(filtered.length)}</span>
+        <span className="text-sm font-medium text-neutral-12">
+          {t("results", { count: filtered.length })}
+        </span>
         <div className="ml-auto flex items-center gap-1.5">
           <span className="text-xs text-muted-foreground/70">{c.sortLabel}</span>
           {sortOptions.map(([key, label]) => (
@@ -346,7 +319,7 @@ export function VcDirectory({ orgs, sectors, types, locale, variant, hrefBase }:
               <VcCard
                 key={org.id}
                 org={org}
-                c={c}
+                c={cardCopy}
                 variant={variant}
                 logoSrc={org.logo ?? null}
                 hrefBase={hrefBase}

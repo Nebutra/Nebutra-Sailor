@@ -13,23 +13,15 @@ import type { SubpackageGlyphProps } from "./types";
 
 const LICENSE_KEY = "NB-ULTRA-8472-4F2A-XYZ8";
 
-const COPY = {
-  en: {
-    active: "Active",
-    expires: "expires 2026-12-31",
-    features: ["SSO", "Audit log", "Unlimited seats"],
-    footer: "cust_org_abc123 · Pro tier",
-  },
-  zh: {
-    active: "已激活",
-    expires: "2026-12-31 到期",
-    features: ["SSO", "审计日志", "席位无限"],
-    footer: "cust_org_abc123 · Pro 套餐",
-  },
-} as const;
+type LicenseCopy = {
+  active: string;
+  expires: string;
+  features: Record<string, string>;
+  footer: string;
+};
 
-export function LicenseGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+export function LicenseGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as LicenseCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
@@ -53,7 +45,7 @@ export function LicenseGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Feature chips */}
         <div className="flex flex-wrap items-center gap-1">
-          {t.features.map((feature) => (
+          {Object.values(t.features).map((feature) => (
             <Badge key={feature} variant="outline" size="sm" icon={<Sparkles />}>
               {feature}
             </Badge>

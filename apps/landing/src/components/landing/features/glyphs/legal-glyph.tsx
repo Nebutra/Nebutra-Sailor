@@ -4,26 +4,18 @@ import { BookClosed, Check, FileText, Shield } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    header: "legal · versioned",
-    docs: [
-      { title: "Terms of Service", version: "v2.4", updated: "Updated 12d ago" },
-      { title: "Privacy Policy", version: "v3.1", updated: "Updated 4d ago", tag: "GDPR" },
-      { title: "Refund Policy", version: "v1.2", updated: "Updated 30d ago" },
-    ],
-    footer: "consents tracked · auditable",
-  },
-  zh: {
-    header: "legal · versioned",
-    docs: [
-      { title: "服务条款", version: "v2.4", updated: "12 天前更新" },
-      { title: "隐私政策", version: "v3.1", updated: "4 天前更新", tag: "GDPR" },
-      { title: "退款政策", version: "v1.2", updated: "30 天前更新" },
-    ],
-    footer: "consents tracked · auditable",
-  },
-} as const;
+// Document versions and regulation tags — same on every locale.
+const DOCS: ReadonlyArray<{ version: string; tag?: string }> = [
+  { version: "v2.4" },
+  { version: "v3.1", tag: "GDPR" },
+  { version: "v1.2" },
+];
+
+type LegalCopy = {
+  header: string;
+  docs: Record<string, { title: string; updated: string }>;
+  footer: string;
+};
 
 /**
  * LegalGlyph
@@ -34,8 +26,9 @@ const COPY = {
  * Badge (and a GDPR Badge on the privacy policy), plus a muted relative
  * "Updated" timestamp. Footer hints at consent tracking + auditability.
  */
-export function LegalGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function LegalGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as LegalCopy;
+  const docs = DOCS.map((doc, i) => ({ ...doc, ...copy.docs[i] }));
 
   return (
     <div
@@ -53,13 +46,13 @@ export function LegalGlyph({ locale }: SubpackageGlyphProps) {
 
       {/* Doc rows */}
       <div className="flex flex-1 flex-col justify-between gap-1">
-        {copy.docs.map((doc) => (
+        {docs.map((doc) => (
           <DocRow
-            key={doc.title}
-            title={doc.title}
+            key={doc.version}
+            title={doc.title ?? ""}
             version={doc.version}
-            updated={doc.updated}
-            tag={"tag" in doc ? doc.tag : undefined}
+            updated={doc.updated ?? ""}
+            tag={doc.tag}
           />
         ))}
       </div>

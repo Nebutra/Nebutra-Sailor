@@ -4,30 +4,20 @@ import { Check, Clock, Globe, Shield } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    title: "China compliance",
-    ready: "Ready",
-    rows: [
-      { kind: "ok" as const, label: "ICP filing approved", mono: "京ICP备2024xxxx号" },
-      { kind: "ok" as const, label: "MIIT registration", mono: "工信部备案" },
-      { kind: "ok" as const, label: "In-country DB residency (Beijing region)" },
-      { kind: "pending" as const, label: "Real-name verification pending" },
-    ],
-    footer: "support · gov.cn integrations",
-  },
-  zh: {
-    title: "中国合规",
-    ready: "Ready",
-    rows: [
-      { kind: "ok" as const, label: "ICP 备案已批准", mono: "京ICP备2024xxxx号" },
-      { kind: "ok" as const, label: "工信部登记", mono: "工信部备案" },
-      { kind: "ok" as const, label: "数据境内存储（北京区域）" },
-      { kind: "pending" as const, label: "实名认证待审核" },
-    ],
-    footer: "support · gov.cn integrations",
-  },
-} as const;
+// Regulatory codes are proper names — same on every locale.
+const ROWS: ReadonlyArray<{ kind: "ok" | "pending"; mono?: string }> = [
+  { kind: "ok", mono: "京ICP备2024xxxx号" },
+  { kind: "ok", mono: "工信部备案" },
+  { kind: "ok" },
+  { kind: "pending" },
+];
+
+type ChinaComplianceCopy = {
+  title: string;
+  ready: string;
+  rows: Record<string, { label: string }>;
+  footer: string;
+};
 
 type Row = { kind: "ok" | "pending"; label: string; mono?: string };
 
@@ -40,8 +30,9 @@ type Row = { kind: "ok" | "pending"; label: string; mono?: string };
  * with mono regulatory codes — and one pending real-name verification
  * with amber Clock. Footer hints at gov.cn integration support.
  */
-export function ChinaComplianceGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function ChinaComplianceGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as ChinaComplianceCopy;
+  const rows: Row[] = ROWS.map((row, i) => ({ ...row, label: copy.rows[i]?.label ?? "" }));
 
   return (
     <div
@@ -60,7 +51,7 @@ export function ChinaComplianceGlyph({ locale }: SubpackageGlyphProps) {
 
       {/* Checklist rows */}
       <div className="flex flex-1 flex-col justify-between gap-1">
-        {copy.rows.map((row) => (
+        {rows.map((row) => (
           <ChecklistRow key={row.label} row={row} />
         ))}
       </div>

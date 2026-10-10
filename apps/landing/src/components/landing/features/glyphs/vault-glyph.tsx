@@ -22,21 +22,13 @@ const SECRETS: ReadonlyArray<SecretRow> = [
   { name: "CREEM_WEBHOOK_SECRET", masked: "whsec_•••••a3d2" },
 ];
 
-const COPY = {
-  en: {
-    title: "vault",
-    badge: "KMS-wrapped",
-    footer: "AES-256-GCM · per-tenant DEK",
-  },
-  zh: {
-    title: "vault",
-    badge: "KMS 封装",
-    footer: "AES-256-GCM · 每租户 DEK",
-  },
-} as const;
+// The package name — same on every locale.
+const TITLE = "vault";
 
-export function VaultGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+type VaultGlyphCopy = { badge: string; footer: string };
+
+export function VaultGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as VaultGlyphCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
@@ -45,7 +37,7 @@ export function VaultGlyph({ locale }: SubpackageGlyphProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <Key className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
-            <span className="font-mono text-[11px] text-muted-foreground">{t.title}</span>
+            <span className="font-mono text-[11px] text-muted-foreground">{TITLE}</span>
           </div>
           <Badge variant="green-subtle" size="sm" icon={<Shield />}>
             {t.badge}

@@ -18,13 +18,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import {
-  type Bilingual,
-  bi,
-  HARNESS_TIMELINE,
-  INNOVATION_PILLARS,
-  ORGANIZATION_PRINCIPLES,
-} from "../_about-data";
+import { HARNESS_TIMELINE, ORGANIZATION_PRINCIPLES } from "../_about-data";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -39,199 +33,44 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   });
 }
 
-// Pillar 2A — AI-Native Architecture (Harness layer sub-items)
-const AI_NATIVE_ITEMS: ReadonlyArray<
-  Bilingual<{ name: string; desc: string }> & { icon: typeof Code }
-> = [
-  {
-    icon: Workflow,
-    zh: {
-      name: "MCP/SKILL",
-      desc: "Model Context Protocol + Skill 技能包一等公民。Sailor 内建 MCP server 适配层、SKILL 注册中心与沙箱运行时。",
-    },
-    en: {
-      name: "MCP/Skill",
-      desc: "Model Context Protocol + Skill packages as first-class citizens. Sailor ships an MCP server adapter, Skill registry, and sandboxed runtime.",
-    },
-  },
-  {
-    icon: Network,
-    zh: {
-      name: "A2A 协同",
-      desc: "Agent-to-Agent 协议 — 任务分发、能力广告、跨租户隔离的消息通道。让智能体之间像微服务一样协作。",
-    },
-    en: {
-      name: "A2A Collaboration",
-      desc: "Agent-to-Agent protocol — task routing, capability advertisement, tenant-isolated message bus. Agents collaborate like microservices.",
-    },
-  },
-  {
-    icon: GitBranch,
-    zh: {
-      name: "Workflow Graphs",
-      desc: "声明式工作流图谱 — 有状态节点、可重放、可观测。AI 行为不再是黑盒 prompt，而是可调试的 DAG。",
-    },
-    en: {
-      name: "Workflow Graphs",
-      desc: "Declarative workflow graphs — stateful nodes, replayable, observable. AI behavior is no longer a black-box prompt but a debuggable DAG.",
-    },
-  },
-  {
-    icon: Route,
-    zh: {
-      name: "AI Gateway",
-      desc: "多模型路由 + 算力调度。OpenAI、Anthropic、本地开源模型统一接入，按任务类型、成本配额、SLA 动态切换。",
-    },
-    en: {
-      name: "AI Gateway",
-      desc: "Multi-model routing + compute scheduling. OpenAI, Anthropic, local OSS unified — dynamic switching by task, cost quota, and SLA.",
-    },
-  },
-];
+// ─── Page-local data (copy lives in aboutPages.innovation.*) ─────────────────
 
-const OSS_STATS: ReadonlyArray<Bilingual<{ value: string; label: string }>> = [
-  {
-    zh: { value: "1,500+", label: "GitHub Stars" },
-    en: { value: "1,500+", label: "GitHub Stars" },
-  },
-  { zh: { value: "300+", label: "贡献者" }, en: { value: "300+", label: "Contributors" } },
-  { zh: { value: "42", label: "核心包" }, en: { value: "42", label: "Core Packages" } },
-  { zh: { value: "MIT", label: "许可证" }, en: { value: "MIT", label: "License" } },
-];
+// Pillar 2A — AI-Native Architecture (Harness layer sub-items):
+// `aiNativeItems.<key>.name|desc`.
+const AI_NATIVE_ITEMS = [
+  { key: "mcp", icon: Workflow },
+  { key: "a2a", icon: Network },
+  { key: "workflowGraphs", icon: GitBranch },
+  { key: "aiGateway", icon: Route },
+] as const satisfies ReadonlyArray<{ key: string; icon: typeof Code }>;
 
-// Pillar 2C — Engineering principles
-const ENGINEERING_PRINCIPLES: ReadonlyArray<
-  Bilingual<{ name: string; desc: string }> & { icon: typeof Code }
-> = [
-  {
-    icon: Terminal,
-    zh: { name: "TDD 优先", desc: "测试先行，红→绿→重构。每个 PR 必须伴随 80%+ 覆盖率。" },
-    en: {
-      name: "Test-Driven",
-      desc: "Tests first. Red → Green → Refactor. 80%+ coverage required on every PR.",
-    },
-  },
-  {
-    icon: Zap,
-    zh: {
-      name: "PPR 部分预渲染",
-      desc: "Next.js 16 Cache Components — 静态壳 + 流式动态，首屏即生产级。",
-    },
-    en: {
-      name: "Partial Pre-Rendering",
-      desc: "Next.js 16 Cache Components — static shell + streamed dynamics.",
-    },
-  },
-  {
-    icon: Cpu,
-    zh: { name: "Edge-First", desc: "默认部署到全球 Edge 节点，CDN/数据/计算紧贴用户。" },
-    en: {
-      name: "Edge-First",
-      desc: "Deploy to global Edge nodes by default — CDN, data, and compute near users.",
-    },
-  },
-  {
-    icon: Layers,
-    zh: { name: "类型安全", desc: "TypeScript strict + Zod runtime — 编译期与运行期双重契约。" },
-    en: {
-      name: "Type Safety",
-      desc: "TypeScript strict + Zod runtime — contracts at both compile and runtime.",
-    },
-  },
-  {
-    icon: Sparkles,
-    zh: {
-      name: "可观测性内建",
-      desc: "OpenTelemetry、结构化日志、错误追踪 — 从第一天就绑定,不做「以后补」。",
-    },
-    en: {
-      name: "Built-in Observability",
-      desc: 'OpenTelemetry, structured logs, error tracking — wired from day one, never "later".',
-    },
-  },
-  {
-    icon: GitBranch,
-    zh: {
-      name: "单一 Monorepo 架构",
-      desc: "pnpm workspaces + Turborepo — 跨应用共享品味,避免分叉腐化。",
-    },
-    en: {
-      name: "Single Monorepo",
-      desc: "pnpm workspaces + Turborepo — share taste across apps, avoid divergent rot.",
-    },
-  },
-  {
-    icon: Shield,
-    zh: {
-      name: "代码评审文化",
-      desc: "所有代码双人审阅,Claude + 人类双重把关,架构决策留下 ADR 记录。",
-    },
-    en: {
-      name: "Review Culture",
-      desc: "All code dual-reviewed by Claude + human, architecture decisions recorded as ADRs.",
-    },
-  },
-];
+// `ossStats.<key>.label`; the values are figures.
+const OSS_STATS = [
+  { key: "stars", value: "1,500+" },
+  { key: "contributors", value: "300+" },
+  { key: "packages", value: "42" },
+  { key: "license", value: "MIT" },
+] as const;
 
-// Innovation Timeline
-const MILESTONES: ReadonlyArray<Bilingual<{ date: string; title: string; desc: string }>> = [
-  {
-    zh: {
-      date: "2025 Q3",
-      title: "项目启动",
-      desc: "云毓智能成立,Sailor 架构蓝图敲定 — Harness 工程作为核心技术路线。",
-    },
-    en: {
-      date: "2025 Q3",
-      title: "Project Inception",
-      desc: "Nebutra founded. Sailor architecture blueprint locked — Harness engineering as the core roadmap.",
-    },
-  },
-  {
-    zh: {
-      date: "2025 Q4",
-      title: "Sailor 开源首发",
-      desc: "核心 42 个 package 以 MIT 许可证开源。",
-    },
-    en: {
-      date: "2025 Q4",
-      title: "Sailor Open-Source Launch",
-      desc: "42 core packages open-sourced under MIT.",
-    },
-  },
-  {
-    zh: {
-      date: "2026 Q1",
-      title: "Harness 深度集成",
-      desc: "MCP/SKILL、A2A、工作流图谱一等公民就位,与客户系统原生互通。",
-    },
-    en: {
-      date: "2026 Q1",
-      title: "Harness Deep Integration",
-      desc: "MCP/Skill, A2A, and workflow graphs go first-class — natively interop with customer systems.",
-    },
-  },
-  {
-    zh: {
-      date: "2026 Q2",
-      title: "多模态上线",
-      desc: "图像、语音、视频理解全链路纳入 Harness 工具生态。",
-    },
-    en: {
-      date: "2026 Q2",
-      title: "Multi-Modal GA",
-      desc: "Image, audio, and video understanding integrated into the Harness tool ecosystem end-to-end.",
-    },
-  },
-  {
-    zh: { date: "2026 Q3", title: "全球化 Day-1", desc: "7 语种、跨境支付、GDPR 合规全面就绪。" },
-    en: {
-      date: "2026 Q3",
-      title: "Day-1 Global",
-      desc: "7 languages, cross-border payments, GDPR-ready out of the box.",
-    },
-  },
-];
+// Pillar 2C — Engineering principles: `practices.<key>.name|desc`.
+const ENGINEERING_PRINCIPLES = [
+  { key: "tdd", icon: Terminal },
+  { key: "ppr", icon: Zap },
+  { key: "edgeFirst", icon: Cpu },
+  { key: "typeSafety", icon: Layers },
+  { key: "observability", icon: Sparkles },
+  { key: "monorepo", icon: GitBranch },
+  { key: "review", icon: Shield },
+] as const satisfies ReadonlyArray<{ key: string; icon: typeof Code }>;
+
+// Innovation timeline: `milestones.<key>.title|desc`.
+const MILESTONES = [
+  { key: "inception", date: "2025 Q3" },
+  { key: "openSource", date: "2025 Q4" },
+  { key: "harness", date: "2026 Q1" },
+  { key: "multimodal", date: "2026 Q2" },
+  { key: "global", date: "2026 Q3" },
+] as const;
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -240,9 +79,15 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
   setRequestLocale(lang as Locale);
   const t = await getTranslations({ locale: lang, namespace: "aboutPages.innovation" });
 
-  const [aiNativePillar, ossPillar, bestPracticesPillar] = INNOVATION_PILLARS.map((p) =>
-    bi(lang, p),
-  );
+  const tp = await getTranslations({ locale: lang, namespace: "aboutPages.principles" });
+
+  const pillar = (key: "aiNative" | "oss" | "practices") => ({
+    title: t(`pillarItems.${key}.title`),
+    description: t(`pillarItems.${key}.description`),
+  });
+  const aiNativePillar = pillar("aiNative");
+  const ossPillar = pillar("oss");
+  const bestPracticesPillar = pillar("practices");
 
   return (
     <main id="main-content" className="flex flex-col flex-1 bg-background">
@@ -300,9 +145,10 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
           {/* Nested "Russian doll" — Harness wraps Context wraps Weights.
               HARNESS_TIMELINE is ordered [Weights, Context, Harness] → we render from outside in. */}
           {(() => {
-            const weightsLayer = bi(lang, HARNESS_TIMELINE[0]);
-            const contextLayer = bi(lang, HARNESS_TIMELINE[1]);
-            const harnessLayer = bi(lang, HARNESS_TIMELINE[2]);
+            const [weightsLayer, contextLayer, harnessLayer] = HARNESS_TIMELINE.map((layer) => ({
+              ...layer,
+              layer: t(`layers.${layer.key}`),
+            }));
 
             return (
               <div
@@ -313,7 +159,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 <div className="flex flex-wrap items-baseline justify-between gap-3 mb-5">
                   <div className="flex items-baseline gap-4">
                     <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
-                      Layer 03 · {harnessLayer.year}
+                      {t("layerLabel", { number: "03" })} · {harnessLayer.year}
                     </span>
                     <span className="text-[10px] font-mono tracking-widest uppercase rounded-full border border-foreground bg-foreground text-background px-2.5 py-1">
                       {t("harness.currentTag")}
@@ -347,7 +193,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 <div className="rounded-[var(--radius-card)] border border-border bg-muted/30 p-5 md:p-8 lg:p-10">
                   <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4">
                     <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
-                      Layer 02 · {contextLayer.year}
+                      {t("layerLabel", { number: "02" })} · {contextLayer.year}
                     </span>
                   </div>
                   <h3
@@ -374,7 +220,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   <div className="rounded-[var(--radius-card)] border border-border/70 bg-background p-4 md:p-6">
                     <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
                       <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
-                        Layer 01 · {weightsLayer.year}
+                        {t("layerLabel", { number: "01" })} · {weightsLayer.year}
                       </span>
                     </div>
                     <h3
@@ -411,7 +257,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-5">
               <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                Pillar 01
+                {t("pillarLabel", { number: "01" })}
               </span>
               <AnimateIn preset="fadeUp">
                 <h2
@@ -431,12 +277,15 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
 
             <div className="lg:col-span-7">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {AI_NATIVE_ITEMS.map((itemBi, i) => {
-                  const item = bi(lang, itemBi);
-                  const Icon = itemBi.icon;
+                {AI_NATIVE_ITEMS.map((entry, i) => {
+                  const item = {
+                    name: t(`aiNativeItems.${entry.key}.name`),
+                    desc: t(`aiNativeItems.${entry.key}.desc`),
+                  };
+                  const Icon = entry.icon;
                   return (
                     <div
-                      key={item.name}
+                      key={entry.key}
                       className="h-full rounded-[var(--radius-card)] bg-muted/20 p-6 hover:bg-muted/40 hover:-translate-y-px transition-[background-color,transform] duration-150 motion-reduce:hover:translate-y-0"
                       style={{ boxShadow: "var(--ring-hairline)" }}
                     >
@@ -468,7 +317,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-5 lg:order-2">
               <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                Pillar 02
+                {t("pillarLabel", { number: "02" })}
               </span>
               <AnimateIn preset="fadeUp">
                 <h2
@@ -491,11 +340,11 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
 
             <div className="lg:col-span-7 lg:order-1">
               <div className="grid grid-cols-2 gap-4 md:gap-6">
-                {OSS_STATS.map((statBi) => {
-                  const stat = bi(lang, statBi);
+                {OSS_STATS.map((entry) => {
+                  const stat = { value: entry.value, label: t(`ossStats.${entry.key}.label`) };
                   return (
                     <div
-                      key={stat.label}
+                      key={entry.key}
                       className="rounded-[var(--radius-card)] bg-muted/10 p-8 md:p-10 h-full flex flex-col justify-between"
                       style={{ boxShadow: "var(--ring-hairline)" }}
                     >
@@ -522,7 +371,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16 md:mb-20">
             <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-              Pillar 03
+              {t("pillarLabel", { number: "03" })}
             </span>
             <AnimateIn preset="fadeUp">
               <h2
@@ -541,12 +390,15 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {ENGINEERING_PRINCIPLES.map((principleBi, i) => {
-              const principle = bi(lang, principleBi);
-              const Icon = principleBi.icon;
+            {ENGINEERING_PRINCIPLES.map((entry, i) => {
+              const principle = {
+                name: t(`practices.${entry.key}.name`),
+                desc: t(`practices.${entry.key}.desc`),
+              };
+              const Icon = entry.icon;
               return (
                 <div
-                  key={principle.name}
+                  key={entry.key}
                   className="h-full rounded-[var(--radius-card)] bg-background p-7 hover:-translate-y-px transition-transform duration-150 motion-reduce:hover:translate-y-0"
                   style={{ boxShadow: "var(--ring-hairline)" }}
                 >
@@ -594,8 +446,12 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {ORGANIZATION_PRINCIPLES.map((principleBi) => {
-              const principle = bi(lang, principleBi);
+            {ORGANIZATION_PRINCIPLES.map((entry) => {
+              const principle = {
+                number: entry.number,
+                title: tp(`items.${entry.key}.title`),
+                description: tp(`items.${entry.key}.description`),
+              };
               return (
                 <article
                   key={principle.number}
@@ -610,7 +466,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   </span>
                   <div className="relative">
                     <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-                      Principle {principle.number}
+                      {tp("label", { number: principle.number })}
                     </span>
                     <h3
                       className="text-xl md:text-2xl font-semibold text-foreground mb-4 text-balance"
@@ -657,8 +513,12 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             />
 
             <div className="flex flex-col gap-10 md:gap-14">
-              {MILESTONES.map((msBi) => {
-                const ms = bi(lang, msBi);
+              {MILESTONES.map((entry) => {
+                const ms = {
+                  date: entry.date,
+                  title: t(`milestones.${entry.key}.title`),
+                  desc: t(`milestones.${entry.key}.desc`),
+                };
                 return (
                   <div
                     key={ms.date}

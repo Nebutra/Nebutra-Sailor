@@ -23,25 +23,12 @@ const SCOPES: ReadonlyArray<ScopeRow> = [
   { label: "admin:billing", variant: "red-subtle" },
 ];
 
-const COPY = {
-  en: {
-    appLabel: "third-party app",
-    appName: "Acme CI",
-    scopesHeading: "Requested scopes:",
-    approve: "Approve",
-    token: "Token JWT · 1h TTL",
-  },
-  zh: {
-    appLabel: "第三方应用",
-    appName: "Acme CI",
-    scopesHeading: "请求的权限范围：",
-    approve: "批准",
-    token: "Token JWT · 1h 有效期",
-  },
-} as const;
+const APP_NAME = "Acme CI";
 
-export function OauthServerGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+type OauthServerCopy = { appLabel: string; scopesHeading: string; approve: string; token: string };
+
+export function OauthServerGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as OauthServerCopy;
 
   return (
     <div
@@ -53,7 +40,7 @@ export function OauthServerGlyph({ locale }: SubpackageGlyphProps) {
         <div className="flex min-w-0 items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
           <Key className="h-3 w-3 shrink-0" aria-hidden="true" />
           <span className="truncate">
-            {t.appLabel} · &lsquo;{t.appName}&rsquo;
+            {t.appLabel} · &lsquo;{APP_NAME}&rsquo;
           </span>
         </div>
         <Connection className="h-3 w-3 shrink-0 text-muted-foreground/60" aria-hidden="true" />

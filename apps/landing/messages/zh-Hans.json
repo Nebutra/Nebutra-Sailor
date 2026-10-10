@@ -2848,6 +2848,24 @@
       "indexDescription": "为出海创业者准备的场景手册——出海、增长、架构治理、AI 与融资的最佳实践。",
       "chinaVcProfileTitle": "{name} — 投资机构画像 | {brandName}",
       "chinaVcProfileDescriptionFallback": "{name} 的投资主线、赛道、阶段与代表案例。"
+    },
+    "vcDirectory": {
+      "searchPlaceholder": "搜索机构名称或简介…",
+      "sectors": "赛道",
+      "types": "类型",
+      "more": "+{count} 更多",
+      "less": "收起",
+      "sortLabel": "排序",
+      "sortTotal": "总投资数",
+      "sortFounded": "成立年份",
+      "sortName": "名称",
+      "results": "{count} 家机构",
+      "loadMore": "加载更多",
+      "clear": "清除筛选",
+      "visitSite": "访问官网",
+      "noResults": "没有匹配的机构,试试调整筛选条件。",
+      "totalDeals": "总投资",
+      "founded": "成立"
     }
   },
   "solutionsNav": {
@@ -3715,6 +3733,206 @@
         "footer": "Vercel Sandbox · 安全执行不可信代码",
         "run": "运行",
         "lastExec": "上次执行"
+      },
+      "agent-runtime": {
+        "footer": "持久 · 崩溃可恢复"
+      },
+      "analytics": {
+        "activeUsers": "活跃用户",
+        "sessions": "会话数",
+        "avgDuration": "平均时长",
+        "footer": "event.tracked · 近 7 天"
+      },
+      "auth": {
+        "header": "登录 {brandName}",
+        "email": "使用邮箱继续",
+        "footer": "已启用 MFA · 会话 HMAC 签名"
+      },
+      "billing": {
+        "label": "月度经常性收入",
+        "status": "在线"
+      },
+      "browser-control": {
+        "footer": "Playwright · Chromium · 无头模式"
+      },
+      "cache": {
+        "headerLabel": "命中率",
+        "footerLabel": "Redis · Upstash · 内存"
+      },
+      "china-compliance": {
+        "title": "中国合规",
+        "rows": {
+          "0": {
+            "label": "ICP 备案已批准"
+          },
+          "1": {
+            "label": "工信部登记"
+          },
+          "2": {
+            "label": "数据境内存储（北京区域）"
+          },
+          "3": {
+            "label": "实名认证待审核"
+          }
+        }
+      },
+      "db": {
+        "badge": "RLS · 已启用"
+      },
+      "email": {
+        "delivered": "已送达",
+        "subject": "欢迎加入 {brandName}",
+        "preview": "感谢加入 — 你的工作区已就绪。",
+        "timestamp": "2 分钟前"
+      },
+      "event-log": {
+        "footer": "ClickHouse · 90 天留存 · 可回放"
+      },
+      "execution-policy": {
+        "header": "policy.execution · 4 条规则",
+        "footer": "逐任务评估 · 3ms p50"
+      },
+      "feature-flags": {
+        "audiences": {
+          "pro": "Pro 用户",
+          "all": "全量用户",
+          "internal": "内部员工"
+        },
+        "footer": "边缘评估 · 5ms p50"
+      },
+      "graph-model": {
+        "caption": {
+          "title": "关系型授权",
+          "subtitle": "类型化关系"
+        },
+        "relations": {
+          "owns": "拥有",
+          "member": "成员"
+        }
+      },
+      "identity": {
+        "role": "管理员",
+        "session": "在线"
+      },
+      "integration-vault": {
+        "countSuffix": "3 个集成",
+        "encrypted": "已加密",
+        "footer": "AES-256-GCM · KMS 封装"
+      },
+      "landing-builder": {
+        "prompts": {
+          "0": "\"面向运营团队的 B2B SaaS\"",
+          "1": "\"Hero · 3 列特性 · CTA\"",
+          "2": "\"匹配 nebutra 品牌\""
+        }
+      },
+      "legal": {
+        "docs": {
+          "0": {
+            "title": "服务条款",
+            "updated": "12 天前更新"
+          },
+          "1": {
+            "title": "隐私政策",
+            "updated": "4 天前更新"
+          },
+          "2": {
+            "title": "退款政策",
+            "updated": "30 天前更新"
+          }
+        }
+      },
+      "license": {
+        "active": "已激活",
+        "expires": "2026-12-31 到期",
+        "features": {
+          "1": "审计日志",
+          "2": "席位无限"
+        },
+        "footer": "cust_org_abc123 · Pro 套餐"
+      },
+      "marketing": {
+        "campaign": "Q4 产品发布",
+        "status": "进行中 · 12 天",
+        "sent": "已发送",
+        "opens": "打开率",
+        "clicks": "点击率"
+      },
+      "metering": {
+        "tenant": "tenant_abc123 · Pro 套餐",
+        "footer": "ClickHouse · 实时 · ≤ 800ms"
+      },
+      "oauth": {
+        "appLabel": "第三方应用",
+        "scopesHeading": "请求的权限范围：",
+        "approve": "批准",
+        "token": "Token JWT · 1h 有效期"
+      },
+      "preset": {
+        "labels": {
+          "indie": "独立",
+          "enterprise": "企业",
+          "custom": "自定义"
+        },
+        "meta": {
+          "indie": "4 项能力",
+          "pro": "12 项能力",
+          "enterprise": "12+ · SSO · 审计",
+          "custom": "选择"
+        },
+        "active": "当前"
+      },
+      "rate-limit": {
+        "header": "限速 · 100 req/s · 令牌桶",
+        "footer": "按租户 · 8ms p99"
+      },
+      "repositories": {
+        "footer": "通过 DI 切换实现"
+      },
+      "saga": {
+        "timeout": "saga · 5s 超时",
+        "compensate": "补偿 · 回滚步骤 1-2",
+        "steps": {
+          "0": "预留",
+          "1": "扣款",
+          "2": "履约",
+          "3": "通知"
+        }
+      },
+      "storage": {
+        "encryptedSr": "静态加密"
+      },
+      "support-deflector": {
+        "deflected": "已转移",
+        "avgSolve": "平均解决",
+        "savedHrs": "节省小时",
+        "footer": "AI 优先 · 人工升级 16%"
+      },
+      "theme": {
+        "heading": "主题"
+      },
+      "trace-store": {
+        "header": "trace · 4 spans · 248ms",
+        "footer": "OTLP · 采样 10%"
+      },
+      "vault": {
+        "badge": "KMS 封装",
+        "footer": "AES-256-GCM · 每租户 DEK"
+      },
+      "waitlist": {
+        "yourPosition": "你的位置",
+        "of": "/",
+        "addedToday": "今日新增",
+        "ago": {
+          "0": "2 分钟前",
+          "1": "18 分钟前",
+          "2": "1 小时前"
+        }
+      },
+      "access-gate": {
+        "feature": "高级分析",
+        "cta": "升级 Pro 解锁",
+        "tier": "Pro · $29/月"
       }
     },
     "showcases": {
@@ -3904,6 +4122,180 @@
         "status": "状态",
         "title": "最近投递",
         "when": "时间"
+      },
+      "agent-runtime": {
+        "agentRun": "Agent 执行",
+        "complete": "已完成",
+        "events": {
+          "0": {
+            "label": "用户提问",
+            "detail": "查找最近欧区注册并通知团队"
+          },
+          "1": {
+            "label": "模型推理",
+            "detail": "规划中 · 412 tokens"
+          },
+          "3": {
+            "detail": "→ 23 条 · 184 ms"
+          },
+          "6": {
+            "label": "最终回复",
+            "detail": "已发送欧区注册摘要给团队（23 条）。"
+          }
+        },
+        "metrics": {
+          "steps": "步骤",
+          "latency": "耗时",
+          "toolCalls": "工具调用"
+        }
+      },
+      "audit": {
+        "filterPlaceholder": "按操作者或动作筛选…",
+        "rangeLabel": "近 24 小时",
+        "countLabel": "12 条操作",
+        "viewDiff": "查看差异",
+        "chainLabel": "链",
+        "chainEntries": "12,847 条记录",
+        "chainVerified": "哈希已校验",
+        "times": {
+          "0": "2 分钟前",
+          "1": "14 分钟前",
+          "2": "32 分钟前",
+          "3": "1 小时前",
+          "4": "2 小时前",
+          "5": "3 小时前"
+        }
+      },
+      "billing": {
+        "title": "订阅 · billing",
+        "syncedLabel": "已同步",
+        "metrics": {
+          "1": {
+            "label": "活跃订阅"
+          },
+          "2": {
+            "label": "环比增长",
+            "trendValue": "对比上月"
+          },
+          "3": {
+            "label": "流失率"
+          }
+        },
+        "invoice": {
+          "heading": "下一张账单",
+          "period": " / 月",
+          "nextLabel": "下次扣款",
+          "statusLabel": "进行中"
+        },
+        "trendHeading": "收入 · 最近 7 天",
+        "trendCaption": "本月 $12,400"
+      },
+      "cache": {
+        "title": "缓存可观测性",
+        "hitRate": "命中率",
+        "latP50": "延迟 p50",
+        "latP99": "延迟 p99",
+        "memory": "内存",
+        "gaugeLabel": "命中比",
+        "gaugeSub": "近 5 分钟",
+        "memUsed": "已用内存",
+        "recent": "最近键",
+        "size": "大小"
+      },
+      "knowledge-rag": {
+        "query": "用户提问",
+        "stagesLabel": "检索流水线",
+        "stages": {
+          "0": {
+            "label": "Query 向量化"
+          },
+          "1": {
+            "label": "语料检索"
+          },
+          "2": {
+            "label": "重排序",
+            "detail": "Top 3 命中"
+          }
+        },
+        "retrievedLabel": "检索结果",
+        "retrievedCount": "3 / 5",
+        "chunks": {
+          "0": {
+            "excerpt": "轮换密钥：先生成新 key 并部署，再吊销旧 secret，避免服务中断。"
+          },
+          "1": {
+            "excerpt": "可通过 /v1/keys/rotate 端点排程自动轮换密钥。"
+          },
+          "2": {
+            "excerpt": "审计日志记录所有 key 的创建与吊销事件，满足 SOC 2 合规。"
+          }
+        },
+        "scoreLabel": "相关度",
+        "footer": "12,401 chunks · 1,536 维本地向量 · 118ms 端到端"
+      },
+      "permissions": {
+        "roles": {
+          "admin": "管理员",
+          "member": "成员",
+          "viewer": "只读"
+        },
+        "actions": {
+          "read": "查看",
+          "write": "写入",
+          "delete": "删除",
+          "manage": "管理"
+        },
+        "resources": {
+          "project": "项目",
+          "billing": "账单",
+          "audit": "审计日志",
+          "apikey": "API 密钥",
+          "member": "团队成员"
+        },
+        "resource": "资源",
+        "footer": "由 CASL 驱动 · 服务端校验"
+      },
+      "tokens": {
+        "brandTitle": "品牌与状态",
+        "neutralLabel": "中性色阶",
+        "panelSubtitle": "运行时 CSS 变量，单一事实来源",
+        "panelTitle": "设计 tokens",
+        "radiusTitle": "圆角",
+        "ramp": {
+          "body": "正文以舒适的阅读节奏呈现。",
+          "caption": "标注位于最小的字号层级。",
+          "display": "Aa 展示",
+          "heading": "Aa 标题"
+        },
+        "rampLabels": {
+          "body": "正文",
+          "caption": "标注",
+          "display": "展示",
+          "heading": "标题"
+        },
+        "typeTitle": "字号梯度"
+      },
+      "vault": {
+        "headerTitle": "密钥库",
+        "countBadge": "12 个密钥 · 3 个租户",
+        "reveal": "显示",
+        "chain": {
+          "plaintext": "明文"
+        },
+        "footnote": "AES-256-GCM · 租户级 DEK · KMS 包裹",
+        "secrets": {
+          "0": {
+            "rotated": "3 天前轮换"
+          },
+          "1": {
+            "name": "Creem Webhook 密钥",
+            "rotated": "12 天前轮换"
+          },
+          "2": {
+            "name": "数据库密码",
+            "rotated": "27 天前轮换"
+          }
+        }
       }
     }
   },
@@ -4207,6 +4599,102 @@
         "heading": "想针对某一项能力洽谈落地？",
         "lead": "告诉我们您的场景，我们会匹配专属架构师与工程团队为您做技术对齐。",
         "button": "联系我们"
+      },
+      "groups": {
+        "modality": {
+          "title": "模态维度",
+          "subtitle": "数据生产的原材料覆盖"
+        },
+        "technology": {
+          "title": "技术能力",
+          "subtitle": "数据加工的技术底座"
+        },
+        "platform": {
+          "title": "平台基础设施",
+          "subtitle": "承载数据的工程系统"
+        },
+        "governance": {
+          "title": "数据治理",
+          "subtitle": "数据的管、用、流"
+        }
+      },
+      "capabilities": {
+        "annotation": {
+          "category": "多模态智能标注",
+          "description": "文本/图像/语音/视频/3D"
+        },
+        "govText": {
+          "category": "政务文本自动化标注",
+          "description": "意图分类+实体抽取+情感标注"
+        },
+        "urbanVideo": {
+          "category": "城运视频自动化标注",
+          "description": "事件/违章/人员行为目标检测"
+        },
+        "speech": {
+          "category": "小语种语音标注",
+          "description": "多语种语音标注/合成/转写"
+        },
+        "gaussianSplatting": {
+          "category": "3D 高斯泼溅采集清洗",
+          "description": "3D 高斯泼溅+点云/网格标注"
+        },
+        "qaPairs": {
+          "category": "QA 对数据采集清洗",
+          "description": "政企问答对采集与清洗"
+        },
+        "autoLabeling": {
+          "category": "LLM、VLM 自动化标注",
+          "description": "LLM、VLM 预标+专家复审"
+        },
+        "agenticDataset": {
+          "category": "Agentic Coding 数据集",
+          "description": "多轮对话+工具调用数据集"
+        },
+        "govRag": {
+          "category": "政务 RAG 语料建设",
+          "description": "政策问答向量知识图谱建设"
+        },
+        "agentWorkflow": {
+          "category": "MCP/SKILL Agent 工作流",
+          "description": "定制智能体编排+工具调用"
+        },
+        "labelingPlatform": {
+          "category": "自研标注协同平台",
+          "description": "多租户全流程协同标注"
+        },
+        "saasStack": {
+          "category": "开源 SaaS 全栈底座",
+          "description": "多租户 AI 原生 SaaS 底座"
+        },
+        "aiGateway": {
+          "category": "AI 网关与算力调度",
+          "description": "多模型聚合+弹性算力调度"
+        },
+        "privateDeployment": {
+          "category": "政企私有化部署",
+          "description": "数据不出域本地化方案"
+        },
+        "qualityControl": {
+          "category": "数据质量管控体系",
+          "description": "准确率/召回率+双盲抽检"
+        },
+        "compliance": {
+          "category": "数据合规治理",
+          "description": "分类分级+脱敏+审计日志"
+        },
+        "crossBorder": {
+          "category": "跨境数据合规治理",
+          "description": "多语种+数据出入境合规"
+        },
+        "datasetIncubator": {
+          "category": "场景数据共建孵化",
+          "description": "政企联合数据集共建"
+        },
+        "dataAsset": {
+          "category": "政务数据要素化",
+          "description": "数据资产目录+流通治理"
+        }
       }
     },
     "global": {
@@ -4225,7 +4713,37 @@
       },
       "languages": {
         "title": "7 大主干语种",
-        "lead": "原生国际化（i18n）+ 动态本地化（l10n），覆盖全球约 40 亿人口。"
+        "lead": "原生国际化（i18n）+ 动态本地化（l10n），覆盖全球约 40 亿人口。",
+        "items": {
+          "ZH": {
+            "name": "简体中文",
+            "region": "中国大陆 · 新加坡"
+          },
+          "EN": {
+            "name": "英语",
+            "region": "北美 · 英联邦"
+          },
+          "JA": {
+            "name": "日本語",
+            "region": "日本"
+          },
+          "KO": {
+            "name": "한국어",
+            "region": "韩国"
+          },
+          "ES": {
+            "name": "Español",
+            "region": "西班牙 · 拉美"
+          },
+          "FR": {
+            "name": "Français",
+            "region": "法国 · 法语区非洲"
+          },
+          "DE": {
+            "name": "Deutsch",
+            "region": "德奥瑞 DACH"
+          }
+        }
       },
       "compliance": {
         "title": "合规矩阵",
@@ -4234,16 +4752,60 @@
           "region": "地区",
           "framework": "合规框架",
           "status": "状态"
+        },
+        "rows": {
+          "pipl": {
+            "region": "中国大陆",
+            "framework": "个人信息保护法 (PIPL)"
+          },
+          "gdpr": {
+            "region": "欧盟"
+          },
+          "ccpa": {
+            "region": "美国"
+          },
+          "dataExport": {
+            "region": "数据出境",
+            "framework": "数据出境安全评估"
+          },
+          "soc2": {
+            "region": "企业认证"
+          }
+        },
+        "status": {
+          "day1": "Day 1 支持"
         }
       },
       "payments": {
         "title": "支付：全球 + 中国",
-        "lead": "Creem 作为交易商户（merchant of record）覆盖全球主流卡组织，代收代缴各地销售税/增值税；微信支付与支付宝原生覆盖中国大陆——都在同一套计费契约背后，配好密钥即可上线。"
+        "lead": "Creem 作为交易商户（merchant of record）覆盖全球主流卡组织，代收代缴各地销售税/增值税；微信支付与支付宝原生覆盖中国大陆——都在同一套计费契约背后，配好密钥即可上线。",
+        "regions": {
+          "global": "全球",
+          "mainlandChina": "中国大陆"
+        }
       },
       "cta": {
         "title": "准备在全球启航？",
         "lead": "从本地验证到全球扩张，Sailor 是您最可靠的技术合伙人。",
         "button": "联系我们"
+      },
+      "points": {
+        "languages": {
+          "title": "7 大主干语种",
+          "desc": "中英日韩西法德原生国际化"
+        },
+        "compliance": {
+          "title": "跨境数据合规",
+          "desc": "GDPR、CLOUD Act、数据出境安全评估"
+        },
+        "payments": {
+          "title": "支付：全球 + 中国",
+          "desc": "Creem、微信支付、支付宝"
+        },
+        "edge": {
+          "title": "全球 Edge",
+          "desc": "Cloudflare Workers · 全球 CDN · 毫秒级响应"
+        }
       }
     },
     "innovation": {
@@ -4281,6 +4843,103 @@
         "eyebrow": "加入我们的研发之旅",
         "heading": "与极客并肩,打造下一代 AI 基础设施",
         "button": "探索职业机会"
+      },
+      "layers": {
+        "weights": "Weights 层",
+        "context": "Context 层",
+        "harness": "Harness 层 ← {brandName} 的战场"
+      },
+      "pillarItems": {
+        "aiNative": {
+          "title": "AI 原生架构",
+          "description": "所有产品从第一行代码起即面向 AI 时代设计。MCP Agent 工作流、RAG 向量检索、多模型聚合网关作为一等公民。"
+        },
+        "oss": {
+          "title": "开源基础设施",
+          "description": "Sailor 全栈开源。我们坚信在加速度时代，开放的生态比专有技术更有复利。"
+        },
+        "practices": {
+          "title": "工程最佳实践",
+          "description": "对标硅谷最佳实践 — TDD、PPR、Edge-first、可观测性内建。我们相信工程品味决定产品生死。"
+        }
+      },
+      "aiNativeItems": {
+        "mcp": {
+          "name": "MCP/SKILL",
+          "desc": "Model Context Protocol + Skill 技能包一等公民。Sailor 内建 MCP server 适配层、SKILL 注册中心与沙箱运行时。"
+        },
+        "a2a": {
+          "name": "A2A 协同",
+          "desc": "Agent-to-Agent 协议 — 任务分发、能力广告、跨租户隔离的消息通道。让智能体之间像微服务一样协作。"
+        },
+        "workflowGraphs": {
+          "desc": "声明式工作流图谱 — 有状态节点、可重放、可观测。AI 行为不再是黑盒 prompt，而是可调试的 DAG。"
+        },
+        "aiGateway": {
+          "desc": "多模型路由 + 算力调度。OpenAI、Anthropic、本地开源模型统一接入，按任务类型、成本配额、SLA 动态切换。"
+        }
+      },
+      "ossStats": {
+        "contributors": {
+          "label": "贡献者"
+        },
+        "packages": {
+          "label": "核心包"
+        },
+        "license": {
+          "label": "许可证"
+        }
+      },
+      "practices": {
+        "tdd": {
+          "name": "TDD 优先",
+          "desc": "测试先行，红→绿→重构。每个 PR 必须伴随 80%+ 覆盖率。"
+        },
+        "ppr": {
+          "name": "PPR 部分预渲染",
+          "desc": "Next.js 16 Cache Components — 静态壳 + 流式动态，首屏即生产级。"
+        },
+        "edgeFirst": {
+          "desc": "默认部署到全球 Edge 节点，CDN/数据/计算紧贴用户。"
+        },
+        "typeSafety": {
+          "name": "类型安全",
+          "desc": "TypeScript strict + Zod runtime — 编译期与运行期双重契约。"
+        },
+        "observability": {
+          "name": "可观测性内建",
+          "desc": "OpenTelemetry、结构化日志、错误追踪 — 从第一天就绑定,不做「以后补」。"
+        },
+        "monorepo": {
+          "name": "单一 Monorepo 架构",
+          "desc": "pnpm workspaces + Turborepo — 跨应用共享品味,避免分叉腐化。"
+        },
+        "review": {
+          "name": "代码评审文化",
+          "desc": "所有代码双人审阅,Claude + 人类双重把关,架构决策留下 ADR 记录。"
+        }
+      },
+      "milestones": {
+        "inception": {
+          "title": "项目启动",
+          "desc": "{brandNameCn}成立,Sailor 架构蓝图敲定 — Harness 工程作为核心技术路线。"
+        },
+        "openSource": {
+          "title": "Sailor 开源首发",
+          "desc": "核心 42 个 package 以 MIT 许可证开源。"
+        },
+        "harness": {
+          "title": "Harness 深度集成",
+          "desc": "MCP/SKILL、A2A、工作流图谱一等公民就位,与客户系统原生互通。"
+        },
+        "multimodal": {
+          "title": "多模态上线",
+          "desc": "图像、语音、视频理解全链路纳入 Harness 工具生态。"
+        },
+        "global": {
+          "title": "全球化 Day-1",
+          "desc": "7 语种、跨境支付、GDPR 合规全面就绪。"
+        }
       }
     },
     "whitepaper": {
@@ -4318,6 +4977,116 @@
       "sectionIV": {
         "heading": "组织演进准则 · AI 杠杆对抗人治腐化",
         "intro": "伟大的组织不应在扩张过程中走向平庸与官僚化。当 {brandNameCn}生态及其孵化公司面临规模激增时,以下三条准则不可妥协——它们决定组织是继续复利,还是走向内耗。"
+      },
+      "thesis": {
+        "headline": "受治理 AI 平台生态",
+        "thesis": "{brandName} 的目标不是构建一套夸张叙事，而是沉淀一套能持续赋能产品团队的受治理 AI 平台。我们拒绝靠重复堆人和重复造轮子来扩张，而是把平台基线、升级纪律与运行时能力做成可复用系统。",
+        "paradigm": "更长期的使命，是让高质量创业与产品交付建立在更透明、更轻量、更工程化的系统之上。构建并运营数字产品，不该被平台层重复劳动和不透明协作消耗掉最宝贵的判断力。"
+      },
+      "goals": {
+        "standardize": {
+          "title": "让平台工作标准化",
+          "desc": "用 AI 原生平台基线降低产品启动时的技术重复劳动，让团队不必每次都重搭平台层。"
+        },
+        "lightweight": {
+          "title": "让交付更轻量",
+          "desc": "让精干团队也能在可审计的平台基线之上交付多租户、计费、合规与 AI 能力。"
+        },
+        "verifiable": {
+          "title": "让能力可验证",
+          "desc": "用可验证的工程产出、升级纪律和运行时信号，替代身份标签与模糊叙事。"
+        }
+      },
+      "quote": {
+        "text": "让包括人才、信任、信息、资本、创意、权力、欲望、需求、故事等等等等在内的所有生产要素，以前所未有的效率，去到全世界最适合他们的地方。",
+        "attribution": "— {brandName} 核心生态愿景"
+      },
+      "toc": {
+        "i": "战略定位:平台基线",
+        "ii": "升级路径与协作契约",
+        "iii": "全链路 AI 原生平台层",
+        "iv": "组织演进准则"
+      },
+      "factors": {
+        "substance": {
+          "category": "实体与资本要素",
+          "subtitle": "Substance & Capital",
+          "description": "打破地缘与阶层，让人才与真实需求实现数据驱动的精准对接；消除 VC 信息差，让聪明且高效的资本自动流向具有真实代码产出的项目。"
+        },
+        "trust": {
+          "category": "权力与信任要素",
+          "subtitle": "Power & Trust",
+          "description": "将信任的建立从传统的「大厂背书」与「名校标签」中剥离，重构于不可篡改的工程产出与工作量证明（Proof of Work）之上。"
+        },
+        "drive": {
+          "category": "原动力要素",
+          "subtitle": "Primary Drive",
+          "description": "对创意、欲望、故事与意志进行算法识别与分发，让纯粹的改变世界的冲动，与具备顶级执行力的超级个体发生有效共振。"
+        }
+      },
+      "products": {
+        "builderCore": {
+          "name": "Builder Core 企业级研发基座",
+          "tagline": "将数月企业级基建周期压缩至一周内交付的 AI 原生标准化引擎",
+          "description": "Builder Core 以开源项目 Sailor（云毓万象）为技术内核，将多租户隔离、权限体系、计费结算、合规审计等复杂业务微服务工程化、标准化。结合 AI Agent 结对编程与 Harness 工程（MCP/SKILL、A2A、Workflow Graphs、AI Gateway），为企业级研发交付提供可验证、可审计的工业化产出。",
+          "highlights": {
+            "core": {
+              "title": "Sailor 技术底座",
+              "desc": "开源 AI 原生 SaaS 全栈 · Next.js · 多模型矩阵"
+            },
+            "services": {
+              "title": "标准化微服务",
+              "desc": "租户隔离 · 权限 · 计费 · 审计开箱即用"
+            },
+            "harness": {
+              "title": "Harness 工程",
+              "desc": "AI Gateway · MCP/SKILL · Agent 编排 · A2A 协同"
+            },
+            "delivery": {
+              "title": "企业级交付保证",
+              "desc": "数月周期压缩至周级 · 可验证产出 · 可审计过程"
+            }
+          }
+        },
+        "sleptons": {
+          "name": "Sleptons 人力与资源智能撮合引擎",
+          "tagline": "以代码图谱、技术栈与执行力曲线为基准的多维语义匹配平台",
+          "description": "Sleptons 颠覆传统招聘市场僵化的「中介撮合」与「JD-CV」逻辑，以工作量证明（Proof-of-Contribution）为根基，通过动态权益合约（Slicing Pie）与去中心化身份（DID）构建可追溯的权益体系。子模块 The Launchpad 基于客观业务数据（MRR、代码迭代密度、冷启动验证）进行自动化资源与算法资本倾斜，消除传统创投的 PPT 冗余损耗。",
+          "highlights": {
+            "proof": {
+              "title": "工作量证明",
+              "desc": "代码图谱 · 技术栈组合 · 执行力曲线"
+            },
+            "equity": {
+              "title": "动态权益合约",
+              "desc": "Slicing Pie 股权模型 · 贡献自动清算"
+            },
+            "identity": {
+              "title": "去中心化身份",
+              "desc": "DID 跨平台凭证 · 可携带声誉"
+            },
+            "launchpad": {
+              "title": "The Launchpad 子模块",
+              "desc": "MRR / 代码密度 → 算法资本自动倾斜"
+            }
+          }
+        }
+      }
+    },
+    "principles": {
+      "items": {
+        "automation": {
+          "title": "以 AI 自动化为唯一解法",
+          "description": "坚决抵制通过堆叠人力、增加管理层级来应对业务复杂性。所有规模化问题，都必须回到「提升人效上限」与「AI 自动化程度」这两个唯一可接受的答案。"
+        },
+        "governance": {
+          "title": "代码与系统治理取代人治",
+          "description": "将一切标准化的运营、测试、内部流转交由 AI Agent 执行。从根源上减少复杂低效、利益冲突与内部摩擦，让组织的治理逻辑沉淀为可审计的代码与系统。"
+        },
+        "creativity": {
+          "title": "捍卫创造力的纯粹性",
+          "description": "让人类心智聚焦于最高价值的战略洞察、架构创新与真实交付。组织的稀缺资源保留给不可自动化的判断与创造，保障长期竞争力。"
+        }
       }
     }
   },

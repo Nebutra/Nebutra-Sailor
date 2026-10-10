@@ -14,91 +14,63 @@ import {
 
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
+import { useFormatLocale } from "./use-format-locale";
 
 type Metric = { label: string; value: string; trend?: "up" | "down"; trendValue?: string };
 type SparkBar = { label: string; pct: number };
 type Copy = {
   title: string;
   syncedLabel: string;
-  metrics: [Metric, Metric, Metric, Metric];
+  /** Translatable metric label (and trend note), keyed by metric index. */
+  metrics: Record<string, { label?: string; trendValue?: string }>;
   invoice: {
     heading: string;
-    customer: string;
-    customerSub: string;
-    plan: string;
-    amount: string;
     period: string;
     nextLabel: string;
-    nextDate: string;
     statusLabel: string;
-    provider: string;
   };
   trendHeading: string;
   trendCaption: string;
-  bars: SparkBar[];
 };
+
+// Figures, the customer, plan and provider — demo data, same on every locale.
+const METRICS: ReadonlyArray<Omit<Metric, "label">> = [
+  { value: "$12,400", trend: "up", trendValue: "+12%" },
+  { value: "847", trend: "up", trendValue: "+34" },
+  { value: "+5.2%", trend: "up" },
+  { value: "1.2%", trend: "down", trendValue: "-0.3%" },
+];
+const INVOICE = {
+  customer: "Acme Robotics, Inc.",
+  customerSub: "billing@acme.dev",
+  plan: "Pro",
+  amount: "$249.00",
+  provider: "Creem",
+} as const;
+const NEXT_DATE = Date.UTC(2026, 5, 12);
 
 const BAR_PCTS = [42, 58, 51, 67, 73, 80, 92] as const;
-const EN_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
-const ZH_DAYS = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"] as const;
-const toBars = (days: readonly string[]): SparkBar[] =>
-  days.map((label, i) => ({ label, pct: BAR_PCTS[i]! }));
+// 2024-01-01 was a Monday: seven consecutive days give Mon…Sun in any locale.
+const WEEK_START = Date.UTC(2024, 0, 1);
+const DAY_MS = 86_400_000;
 
-const COPY: Record<"en" | "zh", Copy> = {
-  en: {
-    title: "Subscriptions · billing",
-    syncedLabel: "live",
-    metrics: [
-      { label: "MRR", value: "$12,400", trend: "up", trendValue: "+12%" },
-      { label: "Active subscribers", value: "847", trend: "up", trendValue: "+34" },
-      { label: "MoM growth", value: "+5.2%", trend: "up", trendValue: "vs last" },
-      { label: "Churn", value: "1.2%", trend: "down", trendValue: "-0.3%" },
-    ],
-    invoice: {
-      heading: "Next invoice",
-      customer: "Acme Robotics, Inc.",
-      customerSub: "billing@acme.dev",
-      plan: "Pro",
-      amount: "$249.00",
-      period: "/ month",
-      nextLabel: "Renews",
-      nextDate: "Jun 12, 2026",
-      statusLabel: "active",
-      provider: "Creem",
-    },
-    trendHeading: "Revenue · last 7 days",
-    trendCaption: "$12,400 this month",
-    bars: toBars(EN_DAYS),
-  },
-  zh: {
-    title: "订阅 · billing",
-    syncedLabel: "已同步",
-    metrics: [
-      { label: "MRR", value: "$12,400", trend: "up", trendValue: "+12%" },
-      { label: "活跃订阅", value: "847", trend: "up", trendValue: "+34" },
-      { label: "环比增长", value: "+5.2%", trend: "up", trendValue: "对比上月" },
-      { label: "流失率", value: "1.2%", trend: "down", trendValue: "-0.3%" },
-    ],
-    invoice: {
-      heading: "下一张账单",
-      customer: "Acme Robotics, Inc.",
-      customerSub: "billing@acme.dev",
-      plan: "Pro",
-      amount: "$249.00",
-      period: " / 月",
-      nextLabel: "下次扣款",
-      nextDate: "2026 年 6 月 12 日",
-      statusLabel: "进行中",
-      provider: "Creem",
-    },
-    trendHeading: "收入 · 最近 7 天",
-    trendCaption: "本月 $12,400",
-    bars: toBars(ZH_DAYS),
-  },
-};
+function weekBars(locale: string): SparkBar[] {
+  const fmt = new Intl.DateTimeFormat(locale, { weekday: "short", timeZone: "UTC" });
+  return BAR_PCTS.map((pct, i) => ({ label: fmt.format(WEEK_START + i * DAY_MS), pct }));
+}
 
-export function BillingShowcase({ locale }: PackageShowcaseProps) {
-  const copy = COPY[locale];
+export function BillingShowcase({ copy: rawCopy }: PackageShowcaseProps) {
+  const copy = rawCopy as Copy;
+  const locale = useFormatLocale();
+  const metrics: Metric[] = METRICS.map((metric, i) => ({
+    ...metric,
+    label: "",
+    ...copy.metrics[i],
+  }));
+  const bars = weekBars(locale);
+  const nextDate = new Intl.DateTimeFormat(locale, { dateStyle: "medium", timeZone: "UTC" }).format(
+    NEXT_DATE,
+  );
   return (
     <ShowcaseFrame>
       <Card>
@@ -117,7 +89,7 @@ export function BillingShowcase({ locale }: PackageShowcaseProps) {
         <CardContent className="space-y-5 p-4 pt-0 md:p-5 md:pt-0">
           <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <MetricGrid columns={4} className="gap-3">
-              {copy.metrics.map((metric) => (
+              {metrics.map((metric) => (
                 <MetricCard
                   key={metric.label}
                   size="sm"
@@ -144,19 +116,19 @@ export function BillingShowcase({ locale }: PackageShowcaseProps) {
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-foreground">
-                    {copy.invoice.customer}
+                    {INVOICE.customer}
                   </p>
                   <p className="truncate font-mono text-xs text-muted-foreground">
-                    {copy.invoice.customerSub}
+                    {INVOICE.customerSub}
                   </p>
                 </div>
                 <Badge variant="blue-subtle" size="sm">
-                  {copy.invoice.plan}
+                  {INVOICE.plan}
                 </Badge>
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-semibold tabular-nums tracking-tight text-foreground">
-                  {copy.invoice.amount}
+                  {INVOICE.amount}
                 </span>
                 <span className="text-xs text-muted-foreground">{copy.invoice.period}</span>
               </div>
@@ -164,10 +136,10 @@ export function BillingShowcase({ locale }: PackageShowcaseProps) {
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
                   <span>{copy.invoice.nextLabel}</span>
-                  <span className="font-medium text-foreground">{copy.invoice.nextDate}</span>
+                  <span className="font-medium text-foreground">{nextDate}</span>
                 </div>
                 <Badge variant="outline" size="sm" className="font-mono">
-                  {copy.invoice.provider}
+                  {INVOICE.provider}
                 </Badge>
               </div>
             </div>
@@ -180,7 +152,7 @@ export function BillingShowcase({ locale }: PackageShowcaseProps) {
                 </span>
               </div>
               <ul className="space-y-1.5">
-                {copy.bars.map((bar) => (
+                {bars.map((bar) => (
                   <li key={bar.label} className="flex items-center gap-2">
                     <span className="w-8 shrink-0 font-mono text-[10px] text-muted-foreground">
                       {bar.label}

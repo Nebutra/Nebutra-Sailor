@@ -1,6 +1,8 @@
+import { pickMessages } from "@nebutra/i18n/messages";
 import { Analytics } from "@nebutra/icons";
 import { AnimateIn } from "@nebutra/ui/components";
-import { getTranslations } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, getTranslations } from "next-intl/server";
 import { FeatureHero } from "@/components/landing/features/FeatureHero";
 import {
   DEFAULT_GROUP_TOKENS,
@@ -17,7 +19,6 @@ import {
   chinaVcLogoFor,
 } from "@/lib/constants/china-vc";
 import { getSolution, getSolutionGroup } from "@/lib/constants/solutions-data";
-import { siteLang } from "@/nebutra/i18n";
 
 /** Reads a dynamic dotted path out of `solutionsCatalog` — the slug is data, not a literal key. */
 type CatalogTranslator = (key: string) => string;
@@ -30,7 +31,6 @@ export interface ChinaVcSolutionProps {
 export async function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
   const solution = getSolution("china-vc");
   const group = solution ? getSolutionGroup(solution.groupId) : undefined;
-  const copyLocale: "en" | "zh" = siteLang(locale);
   const t = (await getTranslations({
     locale,
     namespace: "solutionsCatalog",
@@ -75,14 +75,18 @@ export async function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
 
       <section className="pb-20 pt-4 md:pb-28">
         <AnimateIn preset="fadeUp" inView>
-          <VcDirectory
-            orgs={CHINA_VC_ORGS.map((o) => ({ ...o, logo: chinaVcLogoFor(o) }))}
-            sectors={CHINA_VC_SECTORS}
-            types={CHINA_VC_TYPES}
-            locale={copyLocale}
-            variant="deals"
-            hrefBase="/solutions/china-vc"
-          />
+          <NextIntlClientProvider
+            locale={locale}
+            messages={pickMessages(await getMessages({ locale }), ["solutionsCatalog.vcDirectory"])}
+          >
+            <VcDirectory
+              orgs={CHINA_VC_ORGS.map((o) => ({ ...o, logo: chinaVcLogoFor(o) }))}
+              sectors={CHINA_VC_SECTORS}
+              types={CHINA_VC_TYPES}
+              variant="deals"
+              hrefBase="/solutions/china-vc"
+            />
+          </NextIntlClientProvider>
         </AnimateIn>
 
         <p className="mx-auto mt-12 max-w-wide px-4 text-xs leading-relaxed text-muted-foreground/60 md:px-6">

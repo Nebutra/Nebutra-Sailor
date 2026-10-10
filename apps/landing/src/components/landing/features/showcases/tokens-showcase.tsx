@@ -12,40 +12,18 @@ import type { PackageShowcaseProps } from "./types";
  * brand swatches, type ramp, and radius tiles.
  */
 
-type Locale = "en" | "zh";
+type RampKey = "body" | "caption" | "display" | "heading";
 
-const COPY = {
-  en: {
-    brandTitle: "Brand and status",
-    neutralLabel: "Neutral scale",
-    panelSubtitle: "Runtime CSS variables, single source of truth",
-    panelTitle: "Design tokens",
-    radiusTitle: "Radius",
-    ramp: {
-      body: "Body copy renders at a comfortable reading rhythm.",
-      caption: "Captions live at the smallest typographic step.",
-      display: "Aa Display",
-      heading: "Aa Heading",
-    },
-    rampLabels: { body: "body", caption: "caption", display: "display", heading: "heading" },
-    typeTitle: "Type ramp",
-  },
-  zh: {
-    brandTitle: "品牌与状态",
-    neutralLabel: "中性色阶",
-    panelSubtitle: "运行时 CSS 变量，单一事实来源",
-    panelTitle: "设计 tokens",
-    radiusTitle: "圆角",
-    ramp: {
-      body: "正文以舒适的阅读节奏呈现。",
-      caption: "标注位于最小的字号层级。",
-      display: "Aa 展示",
-      heading: "Aa 标题",
-    },
-    rampLabels: { body: "正文", caption: "标注", display: "展示", heading: "标题" },
-    typeTitle: "字号梯度",
-  },
-} satisfies Record<Locale, Record<string, unknown>>;
+type Copy = {
+  brandTitle: string;
+  neutralLabel: string;
+  panelSubtitle: string;
+  panelTitle: string;
+  radiusTitle: string;
+  ramp: Record<RampKey, string>;
+  rampLabels: Record<RampKey, string>;
+  typeTitle: string;
+};
 
 const NEUTRAL_STEPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
 
@@ -66,8 +44,7 @@ const RADIUS_TILES = [
 ] as const;
 
 export function TokensShowcase(props: PackageShowcaseProps) {
-  const { locale } = props;
-  const copy = COPY[locale];
+  const copy = props.copy as Copy;
 
   return (
     <ShowcaseFrame>

@@ -230,22 +230,55 @@ export function getSubpackageGlyph(slug: string): SubpackageGlyph | null {
  * server-side (via `t.raw()` for the nested shapes) and passes it down as a
  * prop instead of putting the whole `packageCatalog` namespace on the client.
  */
+/** Glyphs whose own text lives under `packageCatalog.glyphs.<slug>`. */
+const GLYPH_SLUGS_WITH_COPY = new Set([
+  "access-gate",
+  "agent-runtime",
+  "analytics",
+  "audio-pipeline",
+  "auth",
+  "billing",
+  "browser-control",
+  "cache",
+  "china-compliance",
+  "code-execution",
+  "db",
+  "document-pipeline",
+  "ecosystem-safety",
+  "email",
+  "event-log",
+  "execution-policy",
+  "feature-flags",
+  "graph-model",
+  "identity",
+  "integration-vault",
+  "landing-builder",
+  "legal",
+  "license",
+  "marketing",
+  "metering",
+  "notifications",
+  "oauth",
+  "onboarding",
+  "outreach-engine",
+  "preset",
+  "rate-limit",
+  "repositories",
+  "saga",
+  "sandbox-runtime",
+  "sms",
+  "storage",
+  "support-deflector",
+  "theme",
+  "trace-store",
+  "vault",
+  "waitlist",
+]);
+
 export function getGlyphCopy(
   slug: string,
   t: PackageCatalogTranslator,
 ): Record<string, unknown> | undefined {
-  switch (slug) {
-    case "sms":
-    case "audio-pipeline":
-    case "code-execution":
-    case "document-pipeline":
-    case "ecosystem-safety":
-    case "notifications":
-    case "onboarding":
-    case "outreach-engine":
-    case "sandbox-runtime":
-      return t.raw(`glyphs.${slug}`) as Record<string, unknown>;
-    default:
-      return undefined;
-  }
+  if (!GLYPH_SLUGS_WITH_COPY.has(slug)) return undefined;
+  return t.raw(`glyphs.${slug}`) as Record<string, unknown>;
 }

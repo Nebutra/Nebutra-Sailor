@@ -12,16 +12,7 @@ import type { SubpackageGlyphProps } from "./types";
  * evaluation cadence + latency.
  */
 
-const COPY = {
-  en: {
-    header: "policy.execution · 4 rules",
-    footer: "evaluated per-task · 3ms p50",
-  },
-  zh: {
-    header: "policy.execution · 4 条规则",
-    footer: "逐任务评估 · 3ms p50",
-  },
-} as const;
+type ExecutionPolicyCopy = { header: string; footer: string };
 
 type Rule = {
   condition: string;
@@ -52,8 +43,8 @@ const RULES: readonly Rule[] = [
   },
 ] as const;
 
-export function ExecutionPolicyGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+export function ExecutionPolicyGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as ExecutionPolicyCopy;
 
   return (
     <div

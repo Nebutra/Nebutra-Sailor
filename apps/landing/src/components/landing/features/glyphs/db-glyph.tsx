@@ -25,13 +25,10 @@ const ROWS: ReadonlyArray<ResultRow> = [
   { id: "post_9999", label: "OTHER TENANT", blocked: true },
 ];
 
-const COPY = {
-  en: { badge: "RLS · enforced" },
-  zh: { badge: "RLS · 已启用" },
-} as const;
+type DbGlyphCopy = { badge: string };
 
-export function DbGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+export function DbGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as DbGlyphCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>

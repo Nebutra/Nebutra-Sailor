@@ -19,10 +19,7 @@ const RECENT_EVENTS: readonly CacheEvent[] = [
 
 const HIT_RATE_VALUE = 94.7;
 
-const COPY = {
-  en: { headerLabel: "hit rate", footerLabel: "Redis · Upstash · memory" },
-  zh: { headerLabel: "命中率", footerLabel: "Redis · Upstash · 内存" },
-} as const;
+type CacheCopy = { headerLabel: string; footerLabel: string };
 
 /**
  * CacheGlyph — bespoke thumbnail for the `cache` sub-package.
@@ -31,8 +28,8 @@ const COPY = {
  * on the right so the card communicates "KV cache, HIT/MISS, latency" at a
  * glance — replacing the generic icon + slug identity row.
  */
-export function CacheGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function CacheGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as CacheCopy;
 
   return (
     <div

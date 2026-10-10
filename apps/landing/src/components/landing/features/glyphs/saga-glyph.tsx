@@ -21,24 +21,17 @@ type SagaStep = {
   state: StepState;
 };
 
-const COPY = {
-  en: {
-    timeout: "saga · 5s timeout",
-    compensate: "compensate · rollback steps 1-2",
-    steps: ["reserve", "charge", "fulfill", "notify"] as const,
-  },
-  zh: {
-    timeout: "saga · 5s 超时",
-    compensate: "补偿 · 回滚步骤 1-2",
-    steps: ["预留", "扣款", "履约", "通知"] as const,
-  },
-} as const;
+type SagaCopy = {
+  timeout: string;
+  compensate: string;
+  steps: Record<string, string>;
+};
 
 const STEP_STATES: ReadonlyArray<StepState> = ["done", "done", "active", "queued"];
 
-export function SagaGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
-  const steps: ReadonlyArray<SagaStep> = copy.steps.map((label, i) => ({
+export function SagaGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as SagaCopy;
+  const steps: ReadonlyArray<SagaStep> = Object.values(copy.steps).map((label, i) => ({
     index: i + 1,
     label,
     state: STEP_STATES[i] ?? "queued",

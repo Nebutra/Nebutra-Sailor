@@ -12,25 +12,15 @@ import type { SubpackageGlyphProps } from "./types";
  * requirement, footed by the entitlement check expression.
  */
 
-const COPY = {
-  en: {
-    feature: "Advanced analytics",
-    cta: "Unlock with Pro",
-    tier: "Pro · $29/mo",
-    footer: "requireEntitlement('analytics:advanced')",
-  },
-  zh: {
-    feature: "高级分析",
-    cta: "升级 Pro 解锁",
-    tier: "Pro · $29/月",
-    footer: "requireEntitlement('analytics:advanced')",
-  },
-} as const;
+// The entitlement guard is code — same on every locale.
+const FOOTER = "requireEntitlement('analytics:advanced')";
+
+type AccessGateCopy = { feature: string; cta: string; tier: string; lockedSr: string };
 
 const BAR_WIDTHS = ["78%", "92%", "64%"] as const;
 
-export function AccessGateGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+export function AccessGateGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as AccessGateCopy;
 
   return (
     <div
@@ -50,7 +40,7 @@ export function AccessGateGlyph({ locale }: SubpackageGlyphProps) {
       <div
         className="flex flex-1 flex-col justify-center gap-1.5 rounded-[var(--radius-sm)] border border-dashed border-border bg-background px-2.5 py-2"
         role="img"
-        aria-label="Locked content"
+        aria-label={t.lockedSr}
       >
         {BAR_WIDTHS.map((width, i) => (
           <div
@@ -79,7 +69,7 @@ export function AccessGateGlyph({ locale }: SubpackageGlyphProps) {
       {/* Footer: entitlement guard */}
       <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground/80">
         <LockClosed className="h-2.5 w-2.5" aria-hidden="true" />
-        <span className="truncate">{t.footer}</span>
+        <span className="truncate">{FOOTER}</span>
       </div>
     </div>
   );

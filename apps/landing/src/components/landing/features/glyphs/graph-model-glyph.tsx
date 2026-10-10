@@ -4,15 +4,10 @@ import { ArrowRight, Connection, Users } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const CAPTION = {
-  en: ["ReBAC", "typed relations"],
-  zh: ["关系型授权", "类型化关系"],
-} as const;
-
-const RELATION_LABELS = {
-  en: { owns: "owns", member: "member" },
-  zh: { owns: "拥有", member: "成员" },
-} as const;
+type GraphModelCopy = {
+  caption: { title: string; subtitle: string };
+  relations: { owns: string; member: string };
+};
 
 type NodeTone = "user" | "org";
 
@@ -38,9 +33,9 @@ function Edge({ label }: { label: string }) {
   );
 }
 
-export function GraphModelGlyph({ locale }: SubpackageGlyphProps) {
-  const rel = RELATION_LABELS[locale];
-  const caption = CAPTION[locale];
+export function GraphModelGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as GraphModelCopy;
+  const rel = t.relations;
 
   return (
     <div
@@ -87,8 +82,10 @@ export function GraphModelGlyph({ locale }: SubpackageGlyphProps) {
 
         {/* Caption — bottom-right */}
         <div className="absolute bottom-0 right-0 flex flex-col items-end text-right">
-          <span className="font-mono text-[10px] font-medium text-neutral-12">{caption[0]}</span>
-          <span className="text-[9.5px] text-neutral-10">{caption[1]}</span>
+          <span className="font-mono text-[10px] font-medium text-neutral-12">
+            {t.caption.title}
+          </span>
+          <span className="text-[9.5px] text-neutral-10">{t.caption.subtitle}</span>
         </div>
       </div>
     </div>

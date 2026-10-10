@@ -4,29 +4,19 @@ import { Shield } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    name: "Mira Kondo",
-    handle: "@mira",
-    role: "admin",
-    tenant: "tenant_abc123",
-    session: "active",
-    actorLabel: "actor.id",
-    actorId: "usr_8c41be7",
-  },
-  zh: {
-    name: "Mira Kondo",
-    handle: "@mira",
-    role: "管理员",
-    tenant: "tenant_abc123",
-    session: "在线",
-    actorLabel: "actor.id",
-    actorId: "usr_8c41be7",
-  },
+// The demo identity — a name, handle and ids, same on every locale.
+const IDENTITY = {
+  name: "Mira Kondo",
+  handle: "@mira",
+  tenant: "tenant_abc123",
+  actorLabel: "actor.id",
+  actorId: "usr_8c41be7",
 } as const;
 
-export function IdentityGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+type IdentityCopy = { role: string; session: string };
+
+export function IdentityGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = { ...IDENTITY, ...(rawCopy as IdentityCopy) };
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>

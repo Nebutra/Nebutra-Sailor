@@ -12,24 +12,10 @@ import type { SubpackageGlyphProps } from "./types";
  * progressive delivery / experiment-grade flag platform.
  */
 
-const COPY = {
-  en: {
-    audiences: {
-      pro: "Pro users",
-      all: "All users",
-      internal: "Internal",
-    },
-    footer: "evaluated at edge · 5ms p50",
-  },
-  zh: {
-    audiences: {
-      pro: "Pro 用户",
-      all: "全量用户",
-      internal: "内部员工",
-    },
-    footer: "边缘评估 · 5ms p50",
-  },
-} as const;
+type FeatureFlagsCopy = {
+  audiences: Record<"pro" | "all" | "internal", string>;
+  footer: string;
+};
 
 type Row = {
   name: string;
@@ -44,8 +30,8 @@ const ROWS: readonly Row[] = [
   { name: "payments-redesign", on: false, rollout: 100, audience: "internal" },
 ] as const;
 
-export function FeatureFlagsGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+export function FeatureFlagsGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as FeatureFlagsCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>

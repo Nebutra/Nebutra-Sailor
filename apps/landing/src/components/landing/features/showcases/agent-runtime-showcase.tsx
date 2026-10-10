@@ -35,54 +35,23 @@ type TraceEvent = {
 type Copy = {
   agentRun: string;
   complete: string;
-  events: TraceEvent[];
-  metrics: { label: string; value: string }[];
+  /** Translatable label/detail per trace step, keyed by step index. */
+  events: Record<string, Partial<Pick<TraceEvent, "label" | "detail">>>;
+  metrics: { steps: string; tokens: string; latency: string; toolCalls: string };
 };
 
-const COPY: Record<"en" | "zh", Copy> = {
-  en: {
-    agentRun: "Agent run",
-    complete: "complete",
-    events: [
-      {
-        kind: "prompt",
-        label: "User prompt",
-        detail: "Find recent signups in EU and email the team",
-      },
-      { kind: "think", label: "Model turn", detail: "planning · 412 tokens" },
-      { kind: "tool", label: "tool_call", detail: "search_users({ region: 'eu', since: '7d' })" },
-      { kind: "result", label: "tool_result", detail: "→ 23 rows · 184 ms" },
-      { kind: "tool", label: "tool_call", detail: "send_email({ to: 'team@', body: ... })" },
-      { kind: "result", label: "tool_result", detail: "→ ok · message_id=msg_8f2a" },
-      { kind: "answer", label: "Final answer", detail: "Sent digest to team. 23 EU signups." },
-    ],
-    metrics: [
-      { label: "Steps", value: "7" },
-      { label: "Tokens", value: "1,247" },
-      { label: "Latency", value: "2.3s" },
-      { label: "Tool calls", value: "2" },
-    ],
-  },
-  zh: {
-    agentRun: "Agent 执行",
-    complete: "已完成",
-    events: [
-      { kind: "prompt", label: "用户提问", detail: "查找最近欧区注册并通知团队" },
-      { kind: "think", label: "模型推理", detail: "规划中 · 412 tokens" },
-      { kind: "tool", label: "tool_call", detail: "search_users({ region: 'eu', since: '7d' })" },
-      { kind: "result", label: "tool_result", detail: "→ 23 条 · 184 ms" },
-      { kind: "tool", label: "tool_call", detail: "send_email({ to: 'team@', body: ... })" },
-      { kind: "result", label: "tool_result", detail: "→ ok · message_id=msg_8f2a" },
-      { kind: "answer", label: "最终回复", detail: "已发送欧区注册摘要给团队（23 条）。" },
-    ],
-    metrics: [
-      { label: "步骤", value: "7" },
-      { label: "Tokens", value: "1,247" },
-      { label: "耗时", value: "2.3s" },
-      { label: "工具调用", value: "2" },
-    ],
-  },
-};
+// Tool names, call signatures and ids are code — same on every locale.
+const EVENTS: ReadonlyArray<Pick<TraceEvent, "kind"> & Partial<TraceEvent>> = [
+  { kind: "prompt" },
+  { kind: "think" },
+  { kind: "tool", label: "tool_call", detail: "search_users({ region: 'eu', since: '7d' })" },
+  { kind: "result", label: "tool_result" },
+  { kind: "tool", label: "tool_call", detail: "send_email({ to: 'team@', body: ... })" },
+  { kind: "result", label: "tool_result", detail: "→ ok · message_id=msg_8f2a" },
+  { kind: "answer" },
+];
+
+const METRIC_VALUES = { steps: "7", tokens: "1,247", latency: "2.3s", toolCalls: "2" } as const;
 
 type IconCmp = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -145,8 +114,14 @@ function TraceRow({ event, isLast }: { event: TraceEvent; isLast: boolean }) {
   );
 }
 
-export function AgentRuntimeShowcase({ locale }: PackageShowcaseProps) {
-  const copy = COPY[locale];
+export function AgentRuntimeShowcase({ copy: rawCopy }: PackageShowcaseProps) {
+  const copy = rawCopy as Copy;
+  const events: TraceEvent[] = EVENTS.map((event, i) => ({
+    label: "",
+    detail: "",
+    ...event,
+    ...copy.events[i],
+  }));
 
   return (
     <ShowcaseFrame>
@@ -165,28 +140,24 @@ export function AgentRuntimeShowcase({ locale }: PackageShowcaseProps) {
         </CardHeader>
         <CardContent className="space-y-5 p-4 pt-0 md:p-5 md:pt-0">
           <ol className="space-y-0">
-            {copy.events.map((event, i) => (
-              <TraceRow
-                key={`${event.kind}-${i}`}
-                event={event}
-                isLast={i === copy.events.length - 1}
-              />
+            {events.map((event, i) => (
+              <TraceRow key={`${event.kind}-${i}`} event={event} isLast={i === events.length - 1} />
             ))}
           </ol>
           <div className="rounded-[var(--radius-md)] border border-border/60 bg-muted/30 p-3">
             <MetricGrid columns={4} className="gap-3">
-              <MetricCard size="sm" label={copy.metrics[0]!.label} value={copy.metrics[0]!.value} />
+              <MetricCard size="sm" label={copy.metrics.steps} value={METRIC_VALUES.steps} />
               <MetricCard
                 size="sm"
-                label={copy.metrics[1]!.label}
-                value={copy.metrics[1]!.value}
+                label={copy.metrics.tokens}
+                value={METRIC_VALUES.tokens}
                 icon={<Lightning />}
               />
-              <MetricCard size="sm" label={copy.metrics[2]!.label} value={copy.metrics[2]!.value} />
+              <MetricCard size="sm" label={copy.metrics.latency} value={METRIC_VALUES.latency} />
               <MetricCard
                 size="sm"
-                label={copy.metrics[3]!.label}
-                value={copy.metrics[3]!.value}
+                label={copy.metrics.toolCalls}
+                value={METRIC_VALUES.toolCalls}
                 icon={<MagnifyingGlass />}
               />
             </MetricGrid>

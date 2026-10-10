@@ -33,87 +33,28 @@ type Copy = {
   query: string;
   queryValue: string;
   stagesLabel: string;
-  stages: Stage[];
+  /** Translatable stage label/detail, keyed by stage index. */
+  stages: Record<string, { label?: string; detail?: string }>;
   retrievedLabel: string;
   retrievedCount: string;
-  chunks: Chunk[];
+  /** Translatable chunk excerpt, keyed by chunk index. */
+  chunks: Record<string, { excerpt: string }>;
   scoreLabel: string;
   tokensLabel: string;
   footer: string;
 };
 
-const COPY: Record<"en" | "zh", Copy> = {
-  en: {
-    query: "User query",
-    queryValue: "How do I rotate API keys?",
-    stagesLabel: "Retrieval pipeline",
-    stages: [
-      { Icon: Brain, label: "Embed query", detail: "vector · dim 1536", latency: "12ms" },
-      { Icon: Search, label: "Search corpus", detail: "5 / 12,401 chunks", latency: "84ms" },
-      { Icon: Sparkles, label: "Re-rank", detail: "top 3 surfaced", latency: "22ms" },
-    ],
-    retrievedLabel: "Retrieved chunks",
-    retrievedCount: "3 of 5",
-    chunks: [
-      {
-        excerpt: "To rotate keys, generate a new key, deploy, then revoke the previous secret.",
-        source: "docs/security/api-keys.md",
-        relevance: 94,
-        tokens: 142,
-      },
-      {
-        excerpt: "Programmatic rotation can be scheduled via the /v1/keys/rotate endpoint.",
-        source: "docs/api/keys-endpoint.md",
-        relevance: 88,
-        tokens: 96,
-      },
-      {
-        excerpt: "Audit logs capture every key create/revoke event for SOC 2 compliance.",
-        source: "docs/security/audit-log.md",
-        relevance: 71,
-        tokens: 128,
-      },
-    ],
-    scoreLabel: "Relevance",
-    tokensLabel: "tokens",
-    footer: "12,401 chunks · 1,536-dim local embeddings · 118ms end-to-end",
-  },
-  zh: {
-    query: "用户提问",
-    queryValue: "How do I rotate API keys?",
-    stagesLabel: "检索流水线",
-    stages: [
-      { Icon: Brain, label: "Query 向量化", detail: "vector · dim 1536", latency: "12ms" },
-      { Icon: Search, label: "语料检索", detail: "5 / 12,401 chunks", latency: "84ms" },
-      { Icon: Sparkles, label: "重排序", detail: "Top 3 命中", latency: "22ms" },
-    ],
-    retrievedLabel: "检索结果",
-    retrievedCount: "3 / 5",
-    chunks: [
-      {
-        excerpt: "轮换密钥：先生成新 key 并部署，再吊销旧 secret，避免服务中断。",
-        source: "docs/security/api-keys.md",
-        relevance: 94,
-        tokens: 142,
-      },
-      {
-        excerpt: "可通过 /v1/keys/rotate 端点排程自动轮换密钥。",
-        source: "docs/api/keys-endpoint.md",
-        relevance: 88,
-        tokens: 96,
-      },
-      {
-        excerpt: "审计日志记录所有 key 的创建与吊销事件，满足 SOC 2 合规。",
-        source: "docs/security/audit-log.md",
-        relevance: 71,
-        tokens: 128,
-      },
-    ],
-    scoreLabel: "相关度",
-    tokensLabel: "tokens",
-    footer: "12,401 chunks · 1,536 维本地向量 · 118ms 端到端",
-  },
-};
+// Icons, latencies, sources and scores — demo data, same on every locale.
+const STAGES: ReadonlyArray<Pick<Stage, "Icon" | "latency">> = [
+  { Icon: Brain, latency: "12ms" },
+  { Icon: Search, latency: "84ms" },
+  { Icon: Sparkles, latency: "22ms" },
+];
+const CHUNKS: ReadonlyArray<Omit<Chunk, "excerpt">> = [
+  { source: "docs/security/api-keys.md", relevance: 94, tokens: 142 },
+  { source: "docs/api/keys-endpoint.md", relevance: 88, tokens: 96 },
+  { source: "docs/security/audit-log.md", relevance: 71, tokens: 128 },
+];
 
 function StageRow({ stage }: { stage: Stage }) {
   const { Icon } = stage;
@@ -166,8 +107,17 @@ function ChunkCard({ chunk, scoreLabel, tokensLabel }: ChunkCardProps) {
   );
 }
 
-export function KnowledgeRagShowcase({ locale }: PackageShowcaseProps) {
-  const copy = COPY[locale];
+export function KnowledgeRagShowcase({ copy: rawCopy }: PackageShowcaseProps) {
+  const copy = rawCopy as Copy;
+  const stages: Stage[] = STAGES.map((stage, i) => ({
+    ...stage,
+    label: copy.stages[i]?.label ?? "",
+    detail: copy.stages[i]?.detail ?? "",
+  }));
+  const chunks: Chunk[] = CHUNKS.map((chunk, i) => ({
+    ...chunk,
+    excerpt: copy.chunks[i]?.excerpt ?? "",
+  }));
 
   return (
     <ShowcaseFrame>
@@ -192,7 +142,7 @@ export function KnowledgeRagShowcase({ locale }: PackageShowcaseProps) {
             {copy.stagesLabel}
           </div>
           <ol className="space-y-1.5">
-            {copy.stages.map((stage) => (
+            {stages.map((stage) => (
               <StageRow key={stage.label} stage={stage} />
             ))}
           </ol>
@@ -207,7 +157,7 @@ export function KnowledgeRagShowcase({ locale }: PackageShowcaseProps) {
             </Badge>
           </div>
           <div className="grid gap-2">
-            {copy.chunks.map((chunk) => (
+            {chunks.map((chunk) => (
               <ChunkCard
                 key={chunk.source}
                 chunk={chunk}

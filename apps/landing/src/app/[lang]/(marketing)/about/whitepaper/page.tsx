@@ -13,65 +13,26 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import {
-  type Bilingual,
-  bi,
-  CORE_QUOTE,
-  META_UNICORN_THESIS,
-  OMNI_FACTOR_GROUPS,
-  ORGANIZATION_PRINCIPLES,
-  PRODUCT_BUILDER_CORE,
-  PRODUCT_SLEPTONS,
-} from "../_about-data";
+import { ORGANIZATION_PRINCIPLES } from "../_about-data";
 
-// ─── Page-level data (bilingual list content — still dual-authored per item) ─
+// ─── Page-local data (copy lives in aboutPages.whitepaper.*) ─────────────────
 
-const GOALS: Bilingual<ReadonlyArray<{ title: string; desc: string }>> = {
-  zh: [
-    {
-      title: "让平台工作标准化",
-      desc: "用 AI 原生平台基线降低产品启动时的技术重复劳动，让团队不必每次都重搭平台层。",
-    },
-    {
-      title: "让交付更轻量",
-      desc: "让精干团队也能在可审计的平台基线之上交付多租户、计费、合规与 AI 能力。",
-    },
-    {
-      title: "让能力可验证",
-      desc: "用可验证的工程产出、升级纪律和运行时信号，替代身份标签与模糊叙事。",
-    },
-  ],
-  en: [
-    {
-      title: "Standardize platform work",
-      desc: "Use an AI-native platform baseline to reduce repeated platform setup, so teams do not keep rebuilding the same layer for every product.",
-    },
-    {
-      title: "Make delivery lightweight",
-      desc: "Let lean teams ship multi-tenancy, billing, compliance, and AI capabilities on top of an auditable platform baseline.",
-    },
-    {
-      title: "Make capability verifiable",
-      desc: "Replace identity-driven narratives with verifiable engineering output, upgrade discipline, and observable runtime behavior.",
-    },
-  ],
-};
+/** Core objectives — `goals.<key>.title|desc`. */
+const GOALS = ["standardize", "lightweight", "verifiable"] as const;
 
-// TOC anchors (stable IDs)
-const TOC: Bilingual<ReadonlyArray<{ id: string; label: string; roman: string }>> = {
-  zh: [
-    { id: "section-i", label: "战略定位:平台基线", roman: "Ⅰ" },
-    { id: "section-ii", label: "升级路径与协作契约", roman: "Ⅱ" },
-    { id: "section-iii", label: "全链路 AI 原生平台层", roman: "Ⅲ" },
-    { id: "section-iv", label: "组织演进准则", roman: "Ⅳ" },
-  ],
-  en: [
-    { id: "section-i", label: "Platform Baseline", roman: "Ⅰ" },
-    { id: "section-ii", label: "Upgrade Paths & Contracts", roman: "Ⅱ" },
-    { id: "section-iii", label: "AI-Native Platform Layer", roman: "Ⅲ" },
-    { id: "section-iv", label: "Organizational Principles", roman: "Ⅳ" },
-  ],
-};
+/** TOC anchors (stable IDs) — `toc.<key>`. */
+const TOC = [
+  { key: "i", roman: "Ⅰ" },
+  { key: "ii", roman: "Ⅱ" },
+  { key: "iii", roman: "Ⅲ" },
+  { key: "iv", roman: "Ⅳ" },
+] as const;
+
+/** Omni-factor groups — `factors.<key>.category|subtitle|description`. */
+const FACTORS = ["substance", "trust", "drive"] as const;
+
+const BUILDER_HIGHLIGHTS = ["core", "services", "harness", "delivery"] as const;
+const SLEPTONS_HIGHLIGHTS = ["proof", "equity", "identity", "launchpad"] as const;
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 
@@ -95,12 +56,41 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
   setRequestLocale(lang as Locale);
 
   const t = await getTranslations({ locale: lang, namespace: "aboutPages.whitepaper" });
-  const thesis = bi(lang, META_UNICORN_THESIS);
-  const goals = bi(lang, GOALS);
-  const quote = bi(lang, CORE_QUOTE);
-  const toc = bi(lang, TOC);
-  const builder = bi(lang, PRODUCT_BUILDER_CORE);
-  const sleptons = bi(lang, PRODUCT_SLEPTONS);
+  const tp = await getTranslations({ locale: lang, namespace: "aboutPages.principles" });
+  const thesis = {
+    headline: t("thesis.headline"),
+    thesis: t("thesis.thesis"),
+    paradigm: t("thesis.paradigm"),
+  };
+  const goals = GOALS.map((key) => ({
+    key,
+    title: t(`goals.${key}.title`),
+    desc: t(`goals.${key}.desc`),
+  }));
+  const quote = { text: t("quote.text"), attribution: t("quote.attribution") };
+  const toc = TOC.map((entry) => ({
+    id: `section-${entry.key}`,
+    roman: entry.roman,
+    label: t(`toc.${entry.key}`),
+  }));
+  const builder = {
+    name: t("products.builderCore.name"),
+    tagline: t("products.builderCore.tagline"),
+    description: t("products.builderCore.description"),
+    highlights: BUILDER_HIGHLIGHTS.map((key) => ({
+      title: t(`products.builderCore.highlights.${key}.title`),
+      desc: t(`products.builderCore.highlights.${key}.desc`),
+    })),
+  };
+  const sleptons = {
+    name: t("products.sleptons.name"),
+    tagline: t("products.sleptons.tagline"),
+    description: t("products.sleptons.description"),
+    highlights: SLEPTONS_HIGHLIGHTS.map((key) => ({
+      title: t(`products.sleptons.highlights.${key}.title`),
+      desc: t(`products.sleptons.highlights.${key}.desc`),
+    })),
+  };
 
   return (
     <main id="main-content" className="flex flex-col flex-1 bg-background">
@@ -217,7 +207,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
               {goals.map((goal, idx) => (
                 <article
-                  key={goal.title}
+                  key={goal.key}
                   className="h-full rounded-[var(--radius-2xl)] border border-border/60 bg-background p-6 md:p-7"
                 >
                   <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-4 block">
@@ -276,11 +266,15 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
         {/* Three factor groups — wider container for grid */}
         <div className="container mx-auto px-4 max-w-wide">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-            {OMNI_FACTOR_GROUPS.map((group, idx) => {
-              const content = bi(lang, group);
+            {FACTORS.map((key, idx) => {
+              const content = {
+                category: t(`factors.${key}.category`),
+                subtitle: t(`factors.${key}.subtitle`),
+                description: t(`factors.${key}.description`),
+              };
               return (
                 <article
-                  key={content.subtitle}
+                  key={key}
                   className="group h-full rounded-[var(--radius-card)] border border-border/60 bg-muted/20 p-8 md:p-10 transition-colors duration-500 hover:border-border hover:bg-muted/40"
                 >
                   <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
@@ -483,7 +477,11 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-wide">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {ORGANIZATION_PRINCIPLES.map((principle) => {
-              const content = bi(lang, principle);
+              const content = {
+                number: principle.number,
+                title: tp(`items.${principle.key}.title`),
+                description: tp(`items.${principle.key}.description`),
+              };
               return (
                 <article
                   key={content.number}
@@ -497,7 +495,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                     {content.number}
                   </span>
                   <span className="relative font-mono text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
-                    PRINCIPLE {content.number}
+                    {tp("label", { number: content.number })}
                   </span>
                   <h3 className="relative text-xl md:text-2xl font-bold tracking-tight text-foreground mb-5 leading-snug">
                     {content.title}

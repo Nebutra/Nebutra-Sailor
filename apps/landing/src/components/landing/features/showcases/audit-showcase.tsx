@@ -25,129 +25,37 @@ type Copy = {
   chainLabel: string;
   chainEntries: string;
   chainVerified: string;
-  entries: AuditEntry[];
+  /** Relative time per entry, keyed by entry index. */
+  times: Record<string, string>;
 };
 
-const COPY: Record<"en" | "zh", Copy> = {
-  en: {
-    filterPlaceholder: "filter by actor or action…",
-    rangeLabel: "Last 24h",
-    countLabel: "12 actions",
-    viewDiff: "view diff",
-    chainLabel: "chain",
-    chainEntries: "12,847 entries",
-    chainVerified: "hash-verified",
-    entries: [
-      {
-        time: "2m ago",
-        initials: "MK",
-        actor: "maria.kim",
-        action: "user.invite",
-        target: "alex@example.com",
-        status: "info",
-      },
-      {
-        time: "14m ago",
-        initials: "JL",
-        actor: "j.lopez",
-        action: "billing.cancel",
-        target: "sub_8f2a",
-        status: "warning",
-      },
-      {
-        time: "32m ago",
-        initials: "TS",
-        actor: "tseka",
-        action: "auth.signin",
-        target: "sso/okta",
-        status: "success",
-      },
-      {
-        time: "1h ago",
-        initials: "RP",
-        actor: "r.patel",
-        action: "role.assign",
-        target: "org/admins",
-        status: "info",
-      },
-      {
-        time: "2h ago",
-        initials: "NB",
-        actor: "n.brown",
-        action: "key.rotate",
-        target: "kms/prod",
-        status: "success",
-      },
-      {
-        time: "3h ago",
-        initials: "DH",
-        actor: "d.huang",
-        action: "access.deny",
-        target: "vault/secrets",
-        status: "error",
-      },
-    ],
+// Actors, action names and targets are identifiers — same on every locale.
+const ENTRIES: ReadonlyArray<Omit<AuditEntry, "time">> = [
+  {
+    initials: "MK",
+    actor: "maria.kim",
+    action: "user.invite",
+    target: "alex@example.com",
+    status: "info",
   },
-  zh: {
-    filterPlaceholder: "按操作者或动作筛选…",
-    rangeLabel: "近 24 小时",
-    countLabel: "12 条操作",
-    viewDiff: "查看差异",
-    chainLabel: "链",
-    chainEntries: "12,847 条记录",
-    chainVerified: "哈希已校验",
-    entries: [
-      {
-        time: "2 分钟前",
-        initials: "MK",
-        actor: "maria.kim",
-        action: "user.invite",
-        target: "alex@example.com",
-        status: "info",
-      },
-      {
-        time: "14 分钟前",
-        initials: "JL",
-        actor: "j.lopez",
-        action: "billing.cancel",
-        target: "sub_8f2a",
-        status: "warning",
-      },
-      {
-        time: "32 分钟前",
-        initials: "TS",
-        actor: "tseka",
-        action: "auth.signin",
-        target: "sso/okta",
-        status: "success",
-      },
-      {
-        time: "1 小时前",
-        initials: "RP",
-        actor: "r.patel",
-        action: "role.assign",
-        target: "org/admins",
-        status: "info",
-      },
-      {
-        time: "2 小时前",
-        initials: "NB",
-        actor: "n.brown",
-        action: "key.rotate",
-        target: "kms/prod",
-        status: "success",
-      },
-      {
-        time: "3 小时前",
-        initials: "DH",
-        actor: "d.huang",
-        action: "access.deny",
-        target: "vault/secrets",
-        status: "error",
-      },
-    ],
+  {
+    initials: "JL",
+    actor: "j.lopez",
+    action: "billing.cancel",
+    target: "sub_8f2a",
+    status: "warning",
   },
-};
+  { initials: "TS", actor: "tseka", action: "auth.signin", target: "sso/okta", status: "success" },
+  { initials: "RP", actor: "r.patel", action: "role.assign", target: "org/admins", status: "info" },
+  { initials: "NB", actor: "n.brown", action: "key.rotate", target: "kms/prod", status: "success" },
+  {
+    initials: "DH",
+    actor: "d.huang",
+    action: "access.deny",
+    target: "vault/secrets",
+    status: "error",
+  },
+];
 
 const statusTone: Record<ActionStatus, string> = {
   info: "border-primary/30 bg-primary/10 text-primary",
@@ -201,8 +109,12 @@ function AuditRow({ entry, viewDiff }: { entry: AuditEntry; viewDiff: string }) 
   );
 }
 
-export function AuditShowcase({ locale }: PackageShowcaseProps) {
-  const copy = COPY[locale];
+export function AuditShowcase({ copy: rawCopy }: PackageShowcaseProps) {
+  const copy = rawCopy as Copy;
+  const entries: AuditEntry[] = ENTRIES.map((entry, i) => ({
+    ...entry,
+    time: copy.times[i] ?? "",
+  }));
 
   return (
     <ShowcaseFrame>
@@ -234,7 +146,7 @@ export function AuditShowcase({ locale }: PackageShowcaseProps) {
       </div>
 
       <div className="mt-4 flex flex-col gap-1.5">
-        {copy.entries.map((entry, i) => (
+        {entries.map((entry, i) => (
           <AuditRow key={`${entry.actor}-${i}`} entry={entry} viewDiff={copy.viewDiff} />
         ))}
       </div>

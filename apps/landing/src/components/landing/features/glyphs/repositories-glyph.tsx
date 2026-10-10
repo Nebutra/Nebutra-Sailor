@@ -28,13 +28,10 @@ const METHODS: ReadonlyArray<MethodRow> = [
 
 const PROVIDERS = ["Prisma", "Drizzle", "in-memory"] as const;
 
-const COPY = {
-  en: { footer: "swap impl via DI" },
-  zh: { footer: "通过 DI 切换实现" },
-} as const;
+type RepositoriesCopy = { footer: string };
 
-export function RepositoriesGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+export function RepositoriesGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as RepositoriesCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>

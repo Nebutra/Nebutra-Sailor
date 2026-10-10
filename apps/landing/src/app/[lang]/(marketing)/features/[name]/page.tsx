@@ -213,7 +213,7 @@ function DomainPage({ entry, locale, t }: PageProps) {
             {withGlyph.length > 0 ? (
               <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {withGlyph.map((p) => (
-                  <PackageCard key={p.slug} entry={p} href={hrefFor(p)} locale={locale} t={t} />
+                  <PackageCard key={p.slug} entry={p} href={hrefFor(p)} t={t} />
                 ))}
               </div>
             ) : null}
@@ -230,7 +230,7 @@ function DomainPage({ entry, locale, t }: PageProps) {
 }
 
 /** One package: what it is, what it looks like at work, its code, its neighbours. */
-function PackagePage({ entry, locale, t }: PageProps) {
+function PackagePage({ entry, t }: PageProps) {
   const domain = domainOf(entry);
   const Showcase = getPackageShowcase(entry.slug);
   const Glyph = Showcase ? null : getSubpackageGlyph(entry.slug);
@@ -265,14 +265,14 @@ function PackagePage({ entry, locale, t }: PageProps) {
       {Showcase ? (
         <Band id="showcase">
           <div className="mx-auto w-full max-w-content">
-            <Showcase entry={serializable} locale={locale} copy={getShowcaseCopy(entry.slug, t)} />
+            <Showcase entry={serializable} copy={getShowcaseCopy(entry.slug, t)} />
           </div>
         </Band>
       ) : Glyph ? (
         <Band id="showcase">
           <div className="mx-auto w-full max-w-content">
             <div className="mx-auto max-w-2xl rounded-[var(--radius-card)] border border-border bg-card p-6">
-              <Glyph entry={serializable} locale={locale} copy={getGlyphCopy(entry.slug, t)} />
+              <Glyph entry={serializable} copy={getGlyphCopy(entry.slug, t)} />
             </div>
           </div>
         </Band>

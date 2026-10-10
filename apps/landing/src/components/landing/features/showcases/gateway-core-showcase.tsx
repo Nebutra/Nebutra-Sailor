@@ -15,6 +15,7 @@ import {
 import type { ComponentType, SVGProps } from "react";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
+import { useFormatLocale } from "./use-format-locale";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -51,15 +52,16 @@ const PATH = "/api/v1/posts";
 const ORIGIN = "edge-iad1";
 const STATUS = "200 OK";
 
-function formatMs(ms: number, locale: "en" | "zh"): string {
-  return `${new Intl.NumberFormat(locale === "zh" ? "zh-CN" : "en-US").format(ms)} ms`;
+function formatMs(ms: number, locale: string): string {
+  return `${new Intl.NumberFormat(locale).format(ms)} ms`;
 }
 
 const TOTAL_MS = STOPS.reduce((acc, stop) => acc + stop.ms, 0);
 const MAX_MS = Math.max(...STOPS.map((stop) => stop.ms));
 
-export function GatewayCoreShowcase({ locale, copy }: PackageShowcaseProps) {
+export function GatewayCoreShowcase({ copy }: PackageShowcaseProps) {
   const t = copy as GatewayCoreCopy;
+  const locale = useFormatLocale();
 
   return (
     <ShowcaseFrame className="flex flex-col gap-5">

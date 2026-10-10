@@ -4,16 +4,10 @@ import { ArrowRight, Check, Clock, Globe } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    url: "https://example.com/checkout",
-    footer: "Playwright · Chromium · headless",
-  },
-  zh: {
-    url: "https://example.com/checkout",
-    footer: "Playwright · Chromium · 无头模式",
-  },
-} as const;
+// The demo URL — same on every locale.
+const DEMO_URL = "https://example.com/checkout";
+
+type BrowserControlCopy = { footer: string };
 
 type Action = {
   label: string;
@@ -26,8 +20,8 @@ const ACTIONS: readonly Action[] = [
   { label: "→ wait for [data-testid=confirm]", state: "pending" },
 ] as const;
 
-export function BrowserControlGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function BrowserControlGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as BrowserControlCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
@@ -44,7 +38,7 @@ export function BrowserControlGlyph({ locale }: SubpackageGlyphProps) {
           </div>
           <div className="flex flex-1 items-center gap-1 rounded-[var(--radius-sm)] bg-muted px-1.5 py-0.5">
             <Globe className="h-2.5 w-2.5 text-muted-foreground" />
-            <span className="font-mono text-[9px] text-muted-foreground">{copy.url}</span>
+            <span className="font-mono text-[9px] text-muted-foreground">{DEMO_URL}</span>
           </div>
         </div>
 

@@ -4,6 +4,7 @@ import { Bug, Check, Clock, Connection, RefreshClockwise } from "@nebutra/icons"
 import { Badge, Card, CardHeader, StatusBadge, StatusDot, Table } from "@nebutra/ui/primitives";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
+import { useFormatLocale } from "./use-format-locale";
 
 type DeliveryStatus = "success" | "warning" | "destructive" | "retrying";
 
@@ -101,7 +102,8 @@ function StatusCell({ status, retryLabel }: { status: DeliveryStatus; retryLabel
   );
 }
 
-export function WebhooksShowcase({ locale, copy }: PackageShowcaseProps) {
+export function WebhooksShowcase({ copy }: PackageShowcaseProps) {
+  const locale = useFormatLocale();
   const t = copy as WebhooksCopy;
 
   return (
@@ -177,7 +179,7 @@ export function WebhooksShowcase({ locale, copy }: PackageShowcaseProps) {
                 </span>
               </Table.Cell>
               <Table.Cell numeric className="font-mono text-xs">
-                {d.latency.toLocaleString(locale === "zh" ? "zh-CN" : "en-US")}ms
+                {d.latency.toLocaleString(locale)}ms
               </Table.Cell>
               <Table.Cell className="font-mono text-xs text-muted-foreground">
                 {t.deliveries[String(index)].timestamp}

@@ -50,12 +50,20 @@ export function getPackageShowcase(slug: string): PackageShowcase | null {
 }
 
 const SHOWCASE_SLUGS_WITH_COPY = new Set([
+  "agent-runtime",
+  "audit",
   "auth",
+  "billing",
+  "cache",
   "db",
   "gateway-core",
+  "knowledge-rag",
   "metering",
+  "permissions",
   "queue",
   "search",
+  "tokens",
+  "vault",
   "webhooks",
 ]);
 

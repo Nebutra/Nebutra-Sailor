@@ -2879,6 +2879,24 @@
       "chinaVcProfileDescriptionFallback": "{name}: investment focus, sectors, stages and notable portfolio.",
       "globalVcProfileTitle": "{name} — Investor Profile | {brandName}",
       "globalVcProfileDescriptionFallback": "{name}: focus sectors, stage and region."
+    },
+    "vcDirectory": {
+      "searchPlaceholder": "Search institutions or descriptions…",
+      "sectors": "Sectors",
+      "types": "Types",
+      "more": "+{count} more",
+      "less": "less",
+      "sortLabel": "Sort",
+      "sortTotal": "Total deals",
+      "sortFounded": "Founded",
+      "sortName": "Name",
+      "results": "{count, plural, one {# institution} other {# institutions}}",
+      "loadMore": "Load more",
+      "clear": "Clear filters",
+      "visitSite": "Website",
+      "noResults": "No matching institutions — try adjusting the filters.",
+      "totalDeals": "Total",
+      "founded": "Founded"
     }
   },
   "solutionsNav": {
@@ -3765,6 +3783,214 @@
         "footer": "Vercel Sandbox · safe untrusted",
         "run": "Run",
         "lastExec": "Last exec"
+      },
+      "agent-runtime": {
+        "footer": "durable · resumable on crash"
+      },
+      "analytics": {
+        "activeUsers": "Active users",
+        "sessions": "Sessions",
+        "avgDuration": "Avg duration",
+        "footer": "event.tracked · last 7 days"
+      },
+      "auth": {
+        "header": "Sign in to {brandName}",
+        "email": "Continue with email",
+        "footer": "MFA enforced · session HMAC-signed"
+      },
+      "billing": {
+        "label": "Monthly Recurring Revenue",
+        "status": "live"
+      },
+      "browser-control": {
+        "footer": "Playwright · Chromium · headless"
+      },
+      "cache": {
+        "headerLabel": "hit rate",
+        "footerLabel": "Redis · Upstash · memory"
+      },
+      "china-compliance": {
+        "title": "China compliance",
+        "ready": "Ready",
+        "rows": {
+          "0": {
+            "label": "ICP filing approved"
+          },
+          "1": {
+            "label": "MIIT registration"
+          },
+          "2": {
+            "label": "In-country DB residency (Beijing region)"
+          },
+          "3": {
+            "label": "Real-name verification pending"
+          }
+        },
+        "footer": "support · gov.cn integrations"
+      },
+      "db": {
+        "badge": "RLS · enforced"
+      },
+      "email": {
+        "delivered": "delivered",
+        "subject": "Welcome to {brandName}",
+        "preview": "Thanks for joining — your workspace is ready.",
+        "timestamp": "2m ago"
+      },
+      "event-log": {
+        "rate": "1,247 events / min",
+        "footer": "ClickHouse · 90-day retention · replayable"
+      },
+      "execution-policy": {
+        "header": "policy.execution · 4 rules",
+        "footer": "evaluated per-task · 3ms p50"
+      },
+      "feature-flags": {
+        "audiences": {
+          "pro": "Pro users",
+          "all": "All users",
+          "internal": "Internal"
+        },
+        "footer": "evaluated at edge · 5ms p50"
+      },
+      "graph-model": {
+        "caption": {
+          "title": "ReBAC",
+          "subtitle": "typed relations"
+        },
+        "relations": {
+          "owns": "owns",
+          "member": "member"
+        }
+      },
+      "identity": {
+        "role": "admin",
+        "session": "active"
+      },
+      "integration-vault": {
+        "countSuffix": "3 integrations",
+        "encrypted": "encrypted",
+        "footer": "AES-256-GCM · KMS-wrapped"
+      },
+      "landing-builder": {
+        "prompts": {
+          "0": "\"B2B SaaS for ops teams\"",
+          "1": "\"Hero · 3-col features · CTA\"",
+          "2": "\"Match nebutra brand\""
+        }
+      },
+      "legal": {
+        "header": "legal · versioned",
+        "docs": {
+          "0": {
+            "title": "Terms of Service",
+            "updated": "Updated 12d ago"
+          },
+          "1": {
+            "title": "Privacy Policy",
+            "updated": "Updated 4d ago"
+          },
+          "2": {
+            "title": "Refund Policy",
+            "updated": "Updated 30d ago"
+          }
+        },
+        "footer": "consents tracked · auditable"
+      },
+      "license": {
+        "active": "Active",
+        "expires": "expires 2026-12-31",
+        "features": {
+          "0": "SSO",
+          "1": "Audit log",
+          "2": "Unlimited seats"
+        },
+        "footer": "cust_org_abc123 · Pro tier"
+      },
+      "marketing": {
+        "campaign": "Q4 product launch",
+        "status": "Live · 12 days",
+        "sent": "Sent",
+        "opens": "Opens",
+        "clicks": "Clicks"
+      },
+      "metering": {
+        "tenant": "tenant_abc123 · Pro plan",
+        "footer": "ClickHouse · realtime · ≤ 800ms"
+      },
+      "oauth": {
+        "appLabel": "third-party app",
+        "scopesHeading": "Requested scopes:",
+        "approve": "Approve",
+        "token": "Token JWT · 1h TTL"
+      },
+      "preset": {
+        "labels": {
+          "indie": "Indie",
+          "pro": "Pro",
+          "enterprise": "Enterprise",
+          "custom": "Custom"
+        },
+        "meta": {
+          "indie": "4 features",
+          "pro": "12 features",
+          "enterprise": "12+ · SSO · audit",
+          "custom": "pick"
+        },
+        "active": "active"
+      },
+      "rate-limit": {
+        "header": "rate · 100 req/s · token bucket",
+        "footer": "per-tenant · 8ms p99"
+      },
+      "repositories": {
+        "footer": "swap impl via DI"
+      },
+      "saga": {
+        "timeout": "saga · 5s timeout",
+        "compensate": "compensate · rollback steps 1-2",
+        "steps": {
+          "0": "reserve",
+          "1": "charge",
+          "2": "fulfill",
+          "3": "notify"
+        }
+      },
+      "storage": {
+        "encryptedSr": "Encrypted at rest"
+      },
+      "support-deflector": {
+        "deflected": "Deflected",
+        "avgSolve": "Avg solve",
+        "savedHrs": "Saved hrs",
+        "footer": "AI-first · human escalation 16%"
+      },
+      "theme": {
+        "heading": "Theme"
+      },
+      "trace-store": {
+        "header": "trace · 4 spans · 248ms total",
+        "footer": "OTLP · sampled 10%"
+      },
+      "vault": {
+        "badge": "KMS-wrapped",
+        "footer": "AES-256-GCM · per-tenant DEK"
+      },
+      "waitlist": {
+        "yourPosition": "your position",
+        "of": "of",
+        "addedToday": "added today",
+        "ago": {
+          "0": "2m ago",
+          "1": "18m ago",
+          "2": "1h ago"
+        }
+      },
+      "access-gate": {
+        "feature": "Advanced analytics",
+        "cta": "Unlock with Pro",
+        "tier": "Pro · $29/mo",
+        "lockedSr": "Locked content"
       }
     },
     "showcases": {
@@ -3957,6 +4183,191 @@
         "status": "Status",
         "title": "Recent deliveries",
         "when": "When"
+      },
+      "agent-runtime": {
+        "agentRun": "Agent run",
+        "complete": "complete",
+        "events": {
+          "0": {
+            "label": "User prompt",
+            "detail": "Find recent signups in EU and email the team"
+          },
+          "1": {
+            "label": "Model turn",
+            "detail": "planning · 412 tokens"
+          },
+          "3": {
+            "detail": "→ 23 rows · 184 ms"
+          },
+          "6": {
+            "label": "Final answer",
+            "detail": "Sent digest to team. 23 EU signups."
+          }
+        },
+        "metrics": {
+          "steps": "Steps",
+          "tokens": "Tokens",
+          "latency": "Latency",
+          "toolCalls": "Tool calls"
+        }
+      },
+      "audit": {
+        "filterPlaceholder": "filter by actor or action…",
+        "rangeLabel": "Last 24h",
+        "countLabel": "12 actions",
+        "viewDiff": "view diff",
+        "chainLabel": "chain",
+        "chainEntries": "12,847 entries",
+        "chainVerified": "hash-verified",
+        "times": {
+          "0": "2m ago",
+          "1": "14m ago",
+          "2": "32m ago",
+          "3": "1h ago",
+          "4": "2h ago",
+          "5": "3h ago"
+        }
+      },
+      "billing": {
+        "title": "Subscriptions · billing",
+        "syncedLabel": "live",
+        "metrics": {
+          "0": {
+            "label": "MRR"
+          },
+          "1": {
+            "label": "Active subscribers"
+          },
+          "2": {
+            "label": "MoM growth",
+            "trendValue": "vs last"
+          },
+          "3": {
+            "label": "Churn"
+          }
+        },
+        "invoice": {
+          "heading": "Next invoice",
+          "period": "/ month",
+          "nextLabel": "Renews",
+          "statusLabel": "active"
+        },
+        "trendHeading": "Revenue · last 7 days",
+        "trendCaption": "$12,400 this month"
+      },
+      "cache": {
+        "title": "Cache observability",
+        "hitRate": "Hit rate",
+        "latP50": "Latency p50",
+        "latP99": "Latency p99",
+        "memory": "Memory",
+        "gaugeLabel": "Hit ratio",
+        "gaugeSub": "last 5 min",
+        "memUsed": "Memory used",
+        "recent": "Recent keys",
+        "ttl": "TTL",
+        "size": "Size"
+      },
+      "knowledge-rag": {
+        "query": "User query",
+        "queryValue": "How do I rotate API keys?",
+        "stagesLabel": "Retrieval pipeline",
+        "stages": {
+          "0": {
+            "label": "Embed query",
+            "detail": "vector · dim 1536"
+          },
+          "1": {
+            "label": "Search corpus",
+            "detail": "5 / 12,401 chunks"
+          },
+          "2": {
+            "label": "Re-rank",
+            "detail": "top 3 surfaced"
+          }
+        },
+        "retrievedLabel": "Retrieved chunks",
+        "retrievedCount": "3 of 5",
+        "chunks": {
+          "0": {
+            "excerpt": "To rotate keys, generate a new key, deploy, then revoke the previous secret."
+          },
+          "1": {
+            "excerpt": "Programmatic rotation can be scheduled via the /v1/keys/rotate endpoint."
+          },
+          "2": {
+            "excerpt": "Audit logs capture every key create/revoke event for SOC 2 compliance."
+          }
+        },
+        "scoreLabel": "Relevance",
+        "tokensLabel": "tokens",
+        "footer": "12,401 chunks · 1,536-dim local embeddings · 118ms end-to-end"
+      },
+      "permissions": {
+        "roles": {
+          "owner": "Owner",
+          "admin": "Admin",
+          "member": "Member",
+          "viewer": "Viewer"
+        },
+        "actions": {
+          "read": "read",
+          "write": "write",
+          "delete": "delete",
+          "manage": "manage"
+        },
+        "resources": {
+          "project": "Project",
+          "billing": "Billing",
+          "audit": "Audit log",
+          "apikey": "API key",
+          "member": "Team member"
+        },
+        "resource": "Resource",
+        "footer": "Powered by CASL · evaluated server-side"
+      },
+      "tokens": {
+        "brandTitle": "Brand and status",
+        "neutralLabel": "Neutral scale",
+        "panelSubtitle": "Runtime CSS variables, single source of truth",
+        "panelTitle": "Design tokens",
+        "radiusTitle": "Radius",
+        "ramp": {
+          "body": "Body copy renders at a comfortable reading rhythm.",
+          "caption": "Captions live at the smallest typographic step.",
+          "display": "Aa Display",
+          "heading": "Aa Heading"
+        },
+        "rampLabels": {
+          "body": "body",
+          "caption": "caption",
+          "display": "display",
+          "heading": "heading"
+        },
+        "typeTitle": "Type ramp"
+      },
+      "vault": {
+        "headerTitle": "secrets",
+        "countBadge": "12 secrets · 3 tenants",
+        "reveal": "Reveal",
+        "chain": {
+          "plaintext": "Plaintext"
+        },
+        "footnote": "AES-256-GCM · per-tenant DEK · KMS-wrapped",
+        "secrets": {
+          "0": {
+            "name": "OpenAI API Key",
+            "rotated": "rotated 3 days ago"
+          },
+          "1": {
+            "name": "Creem Webhook Secret",
+            "rotated": "rotated 12 days ago"
+          },
+          "2": {
+            "name": "Database Password",
+            "rotated": "rotated 27 days ago"
+          }
+        }
       }
     }
   },
@@ -4271,6 +4682,103 @@
         "heading": "Want to go deeper on any capability?",
         "lead": "Tell us your scenario — we'll pair you with a dedicated architect and engineering team for technical alignment.",
         "button": "Contact us"
+      },
+      "groupLabel": "Group {letter}",
+      "groups": {
+        "modality": {
+          "title": "Modality Dimensions",
+          "subtitle": "Coverage across raw data modalities"
+        },
+        "technology": {
+          "title": "Technology Stack",
+          "subtitle": "Technical foundations for data processing"
+        },
+        "platform": {
+          "title": "Platform Infrastructure",
+          "subtitle": "Engineering systems hosting data"
+        },
+        "governance": {
+          "title": "Data Governance",
+          "subtitle": "Manage, utilize, and circulate data"
+        }
+      },
+      "capabilities": {
+        "annotation": {
+          "category": "Multi-modal Annotation",
+          "description": "Text / Image / Audio / Video / 3D"
+        },
+        "govText": {
+          "category": "Government Text Annotation",
+          "description": "Intent + Entity + Sentiment"
+        },
+        "urbanVideo": {
+          "category": "Urban Video Annotation",
+          "description": "Event / Violation / Behavior Detection"
+        },
+        "speech": {
+          "category": "Low-resource Speech",
+          "description": "Multi-lingual ASR / TTS / Labeling"
+        },
+        "gaussianSplatting": {
+          "category": "3D Gaussian Splatting",
+          "description": "3DGS + Point Cloud / Mesh Labeling"
+        },
+        "qaPairs": {
+          "category": "QA Pair Curation",
+          "description": "Gov/Enterprise Q&A pair mining"
+        },
+        "autoLabeling": {
+          "category": "LLM/VLM Auto-labeling",
+          "description": "Pre-label + expert review"
+        },
+        "agenticDataset": {
+          "category": "Agentic Coding Dataset",
+          "description": "Multi-turn + tool-call datasets"
+        },
+        "govRag": {
+          "category": "Government RAG Corpus",
+          "description": "Policy QA vector + knowledge graph"
+        },
+        "agentWorkflow": {
+          "category": "MCP/Skill Agent Workflow",
+          "description": "Custom agent orchestration + tools"
+        },
+        "labelingPlatform": {
+          "category": "In-house Labeling Platform",
+          "description": "Multi-tenant collaborative annotation"
+        },
+        "saasStack": {
+          "category": "Open-source SaaS Stack",
+          "description": "Multi-tenant AI-native foundation"
+        },
+        "aiGateway": {
+          "category": "AI Gateway & Compute",
+          "description": "Multi-model aggregation + elastic scheduling"
+        },
+        "privateDeployment": {
+          "category": "Private Deployment",
+          "description": "Data-sovereign on-premise solutions"
+        },
+        "qualityControl": {
+          "category": "Quality Control System",
+          "description": "Precision / Recall + blind sampling"
+        },
+        "compliance": {
+          "category": "Compliance Governance",
+          "description": "Classification + masking + audit trails"
+        },
+        "crossBorder": {
+          "category": "Cross-border Compliance",
+          "description": "Multi-lingual + data export compliance"
+        },
+        "datasetIncubator": {
+          "category": "Co-building Dataset Incubator",
+          "description": "Gov-enterprise joint dataset building"
+        },
+        "dataAsset": {
+          "category": "Data-as-Asset Operation",
+          "description": "Asset catalog + circulation governance"
+        }
       }
     },
     "global": {
@@ -4289,7 +4797,37 @@
       },
       "languages": {
         "title": "7 Primary Languages",
-        "lead": "Native i18n + dynamic l10n, covering ~4 billion people globally."
+        "lead": "Native i18n + dynamic l10n, covering ~4 billion people globally.",
+        "items": {
+          "ZH": {
+            "name": "Simplified Chinese",
+            "region": "Mainland China · Singapore"
+          },
+          "EN": {
+            "name": "English",
+            "region": "North America · Commonwealth"
+          },
+          "JA": {
+            "name": "Japanese",
+            "region": "Japan"
+          },
+          "KO": {
+            "name": "Korean",
+            "region": "South Korea"
+          },
+          "ES": {
+            "name": "Spanish",
+            "region": "Spain · Latin America"
+          },
+          "FR": {
+            "name": "French",
+            "region": "France · Francophone Africa"
+          },
+          "DE": {
+            "name": "German",
+            "region": "DACH Region"
+          }
+        }
       },
       "compliance": {
         "title": "Compliance Matrix",
@@ -4298,17 +4836,67 @@
           "region": "Region",
           "framework": "Framework",
           "status": "Status"
+        },
+        "eyebrow": "Compliance",
+        "rows": {
+          "pipl": {
+            "region": "Mainland China",
+            "framework": "PIPL"
+          },
+          "gdpr": {
+            "region": "European Union",
+            "framework": "GDPR"
+          },
+          "ccpa": {
+            "region": "United States",
+            "framework": "CCPA / CPRA"
+          },
+          "dataExport": {
+            "region": "Cross-border Transfer",
+            "framework": "Data Export Security Assessment"
+          },
+          "soc2": {
+            "region": "Enterprise Certification",
+            "framework": "SOC 2 Type I"
+          }
+        },
+        "status": {
+          "day1": "Day 1 Support",
+          "roadmap": "Roadmap · 2026 Q3"
         }
       },
       "payments": {
         "title": "Payments: Global + China",
-        "lead": "Creem covers global cards as merchant of record — it collects and remits sales tax/VAT so you don't register in every country; WeChat Pay and Alipay cover mainland China natively — both behind one billing contract, live as soon as you add the keys."
+        "lead": "Creem covers global cards as merchant of record — it collects and remits sales tax/VAT so you don't register in every country; WeChat Pay and Alipay cover mainland China natively — both behind one billing contract, live as soon as you add the keys.",
+        "eyebrow": "Payments",
+        "regions": {
+          "global": "Global",
+          "mainlandChina": "Mainland China"
+        }
       },
       "cta": {
         "eyebrow": "Ready to Sail",
         "title": "Ready to set sail globally?",
         "lead": "From local validation to global expansion, Sailor is your most reliable technical co-founder.",
         "button": "Contact Us"
+      },
+      "points": {
+        "languages": {
+          "title": "7 Primary Languages",
+          "desc": "Native i18n across ZH/EN/JA/KO/ES/FR/DE"
+        },
+        "compliance": {
+          "title": "Cross-border Compliance",
+          "desc": "GDPR · CLOUD Act · Data export assessment"
+        },
+        "payments": {
+          "title": "Payments: Global + China",
+          "desc": "Creem · WeChat Pay · Alipay"
+        },
+        "edge": {
+          "title": "Global Edge",
+          "desc": "Cloudflare Workers · Global CDN · ms-level response"
+        }
       }
     },
     "innovation": {
@@ -4346,6 +4934,111 @@
         "eyebrow": "Join our R&D journey",
         "heading": "Build the next generation of AI infrastructure with fellow geeks",
         "button": "Explore careers"
+      },
+      "layers": {
+        "weights": "Weights Layer",
+        "context": "Context Layer",
+        "harness": "Harness Layer ← {brandName}'s battlefield"
+      },
+      "layerLabel": "Layer {number}",
+      "pillarLabel": "Pillar {number}",
+      "pillarItems": {
+        "aiNative": {
+          "title": "AI-Native Architecture",
+          "description": "Every product designed for the AI era from line one. MCP Agent workflows, RAG retrieval, and multi-model gateways as first-class citizens."
+        },
+        "oss": {
+          "title": "Open-source Infrastructure",
+          "description": "Sailor is open-source end-to-end. We believe open ecosystems compound more than proprietary stacks."
+        },
+        "practices": {
+          "title": "Engineering Best Practices",
+          "description": "Benchmarked against Silicon Valley standards — TDD, PPR, Edge-first, built-in observability. Engineering taste is what separates winners from losers."
+        }
+      },
+      "aiNativeItems": {
+        "mcp": {
+          "name": "MCP/Skill",
+          "desc": "Model Context Protocol + Skill packages as first-class citizens. Sailor ships an MCP server adapter, Skill registry, and sandboxed runtime."
+        },
+        "a2a": {
+          "name": "A2A Collaboration",
+          "desc": "Agent-to-Agent protocol — task routing, capability advertisement, tenant-isolated message bus. Agents collaborate like microservices."
+        },
+        "workflowGraphs": {
+          "name": "Workflow Graphs",
+          "desc": "Declarative workflow graphs — stateful nodes, replayable, observable. AI behavior is no longer a black-box prompt but a debuggable DAG."
+        },
+        "aiGateway": {
+          "name": "AI Gateway",
+          "desc": "Multi-model routing + compute scheduling. OpenAI, Anthropic, local OSS unified — dynamic switching by task, cost quota, and SLA."
+        }
+      },
+      "ossStats": {
+        "stars": {
+          "label": "GitHub Stars"
+        },
+        "contributors": {
+          "label": "Contributors"
+        },
+        "packages": {
+          "label": "Core Packages"
+        },
+        "license": {
+          "label": "License"
+        }
+      },
+      "practices": {
+        "tdd": {
+          "name": "Test-Driven",
+          "desc": "Tests first. Red → Green → Refactor. 80%+ coverage required on every PR."
+        },
+        "ppr": {
+          "name": "Partial Pre-Rendering",
+          "desc": "Next.js 16 Cache Components — static shell + streamed dynamics."
+        },
+        "edgeFirst": {
+          "name": "Edge-First",
+          "desc": "Deploy to global Edge nodes by default — CDN, data, and compute near users."
+        },
+        "typeSafety": {
+          "name": "Type Safety",
+          "desc": "TypeScript strict + Zod runtime — contracts at both compile and runtime."
+        },
+        "observability": {
+          "name": "Built-in Observability",
+          "desc": "OpenTelemetry, structured logs, error tracking — wired from day one, never \"later\"."
+        },
+        "monorepo": {
+          "name": "Single Monorepo",
+          "desc": "pnpm workspaces + Turborepo — share taste across apps, avoid divergent rot."
+        },
+        "review": {
+          "name": "Review Culture",
+          "desc": "All code dual-reviewed by Claude + human, architecture decisions recorded as ADRs."
+        }
+      },
+      "milestones": {
+        "inception": {
+          "title": "Project Inception",
+          "desc": "{brandName} founded. Sailor architecture blueprint locked — Harness engineering as the core roadmap."
+        },
+        "openSource": {
+          "title": "Sailor Open-Source Launch",
+          "desc": "42 core packages open-sourced under MIT."
+        },
+        "harness": {
+          "title": "Harness Deep Integration",
+          "desc": "MCP/Skill, A2A, and workflow graphs go first-class — natively interop with customer systems."
+        },
+        "multimodal": {
+          "title": "Multi-Modal GA",
+          "desc": "Image, audio, and video understanding integrated into the Harness tool ecosystem end-to-end."
+        },
+        "global": {
+          "title": "Day-1 Global",
+          "desc": "7 languages, cross-border payments, GDPR-ready out of the box."
+        }
       }
     },
     "whitepaper": {
@@ -4383,6 +5076,117 @@
       "sectionIV": {
         "heading": "Organizational Principles · AI Leverage over Human Corrosion",
         "intro": "Great organizations should not drift toward mediocrity and bureaucracy as they scale. When {brandName}'s ecosystem and its portfolio companies face rapid growth, the following three principles are non-negotiable — they decide whether the organization continues to compound, or begins to erode from within."
+      },
+      "thesis": {
+        "headline": "The Governed AI Platform Ecosystem",
+        "thesis": "{brandName}'s goal is not to manufacture mythology, but to build a governed AI platform that continuously improves how product teams ship. We reject growth through repeated platform rebuilds and expanding headcount for avoidable work; the real leverage is a reusable baseline, upgrade discipline, and stronger runtime capabilities.",
+        "paradigm": "The longer-term mission is to make product building more transparent, lightweight, and engineering-driven. Building and operating software should spend human attention on judgment and differentiation, not on repeated platform work and opaque coordination."
+      },
+      "goals": {
+        "standardize": {
+          "title": "Standardize platform work",
+          "desc": "Use an AI-native platform baseline to reduce repeated platform setup, so teams do not keep rebuilding the same layer for every product."
+        },
+        "lightweight": {
+          "title": "Make delivery lightweight",
+          "desc": "Let lean teams ship multi-tenancy, billing, compliance, and AI capabilities on top of an auditable platform baseline."
+        },
+        "verifiable": {
+          "title": "Make capability verifiable",
+          "desc": "Replace identity-driven narratives with verifiable engineering output, upgrade discipline, and observable runtime behavior."
+        }
+      },
+      "quote": {
+        "text": "Let every factor of production — talent, trust, information, capital, ideas, power, desires, needs, stories, and everything in between — flow to the place on earth most suited to it, at an efficiency never before seen.",
+        "attribution": "— {brandName} Core Ecosystem Vision"
+      },
+      "toc": {
+        "i": "Platform Baseline",
+        "ii": "Upgrade Paths & Contracts",
+        "iii": "AI-Native Platform Layer",
+        "iv": "Organizational Principles"
+      },
+      "factors": {
+        "substance": {
+          "category": "Substance & Capital",
+          "subtitle": "实体与资本要素",
+          "description": "Break through geography and class: match talent with real demand via data. Close the VC information gap: route efficient capital toward projects with verifiable code output."
+        },
+        "trust": {
+          "category": "Power & Trust",
+          "subtitle": "权力与信任要素",
+          "description": "Detach trust from \"big-company pedigree\" and \"elite-school labels,\" and rebuild it on immutable engineering output and Proof of Work."
+        },
+        "drive": {
+          "category": "Primary Drive",
+          "subtitle": "原动力要素",
+          "description": "Algorithmically identify and distribute ideas, desires, stories, and will — pairing the pure impulse to change the world with high-execution super individuals."
+        }
+      },
+      "products": {
+        "builderCore": {
+          "name": "Builder Core · Enterprise R&D Foundation",
+          "tagline": "AI-native standardized engine that compresses months of enterprise build cycles into a week",
+          "description": "Builder Core uses the open-source project Sailor ({productName}) as its technical core, engineering multi-tenant isolation, permission systems, billing, and compliance auditing into standardized business microservices. Combined with AI Agent pair programming and Harness engineering (MCP/Skill, A2A, Workflow Graphs, AI Gateway), it delivers industrial-grade, verifiable, auditable enterprise R&D output.",
+          "highlights": {
+            "core": {
+              "title": "Sailor Technical Core",
+              "desc": "Open-source AI-native SaaS stack · Next.js · Multi-model"
+            },
+            "services": {
+              "title": "Standardized Microservices",
+              "desc": "Tenancy · RBAC · Billing · Audit out-of-the-box"
+            },
+            "harness": {
+              "title": "Harness Engineering",
+              "desc": "AI Gateway · MCP/Skill · Agent orchestration · A2A"
+            },
+            "delivery": {
+              "title": "Enterprise Delivery",
+              "desc": "Month-to-week cycle · Verifiable output · Auditable process"
+            }
+          }
+        },
+        "sleptons": {
+          "name": "Sleptons · Talent & Resource Matching Engine",
+          "tagline": "Multi-dimensional semantic matching based on code graphs, stack composition, and execution curves",
+          "description": "Sleptons overturns the rigid \"intermediary matching\" and \"JD-CV\" logic of traditional hiring markets. Built on Proof-of-Contribution, it establishes traceable equity through Slicing Pie dynamic contracts and Decentralized Identity (DID). The Launchpad submodule directs algorithmic capital based on objective business metrics — MRR, code iteration density, cold-start validation — eliminating the PPT overhead of traditional VC.",
+          "highlights": {
+            "proof": {
+              "title": "Proof-of-Contribution",
+              "desc": "Code graphs · Stack composition · Execution curves"
+            },
+            "equity": {
+              "title": "Dynamic Equity",
+              "desc": "Slicing Pie model · Automatic contribution settlement"
+            },
+            "identity": {
+              "title": "Decentralized Identity",
+              "desc": "DID cross-platform credential · Portable reputation"
+            },
+            "launchpad": {
+              "title": "The Launchpad Submodule",
+              "desc": "MRR / code density → algorithmic capital routing"
+            }
+          }
+        }
+      }
+    },
+    "principles": {
+      "label": "Principle {number}",
+      "items": {
+        "automation": {
+          "title": "AI Automation as the Only Answer",
+          "description": "Refuse to respond to complexity by piling on headcount or management layers. Every scaling problem must return to the two acceptable answers — raising the per-person ceiling, and raising AI automation depth."
+        },
+        "governance": {
+          "title": "Code & System Governance Over Human Rule",
+          "description": "Delegate standardized operations, testing, and internal flows to AI Agents. Reduce inefficiency, conflict of interest, and internal friction at the root by embedding governance logic as auditable code and systems."
+        },
+        "creativity": {
+          "title": "Preserve Creative Purity",
+          "description": "Keep human cognition focused on the highest-value strategic insight, architectural innovation, and real delivery. Reserve scarce organizational resources for judgment and creativity that cannot be automated."
+        }
       }
     }
   },

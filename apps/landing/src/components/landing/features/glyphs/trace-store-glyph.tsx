@@ -4,16 +4,7 @@ import { ChartActivity, Clock, Lightning } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    header: "trace · 4 spans · 248ms total",
-    footer: "OTLP · sampled 10%",
-  },
-  zh: {
-    header: "trace · 4 spans · 248ms",
-    footer: "OTLP · 采样 10%",
-  },
-} as const;
+type TraceStoreCopy = { header: string; footer: string };
 
 type Span = {
   label: string;
@@ -59,8 +50,8 @@ const SPANS: readonly Span[] = [
   },
 ] as const;
 
-export function TraceStoreGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function TraceStoreGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as TraceStoreCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>

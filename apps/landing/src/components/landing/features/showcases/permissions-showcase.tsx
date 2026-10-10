@@ -20,46 +20,13 @@ type RoleKey = "owner" | "admin" | "member" | "viewer";
 type ActionKey = "read" | "write" | "delete" | "manage";
 type ResourceKey = "project" | "billing" | "audit" | "apikey" | "member";
 
-const COPY = {
-  en: {
-    roles: { owner: "Owner", admin: "Admin", member: "Member", viewer: "Viewer" } as Record<
-      RoleKey,
-      string
-    >,
-    actions: { read: "read", write: "write", delete: "delete", manage: "manage" } as Record<
-      ActionKey,
-      string
-    >,
-    resources: {
-      project: "Project",
-      billing: "Billing",
-      audit: "Audit log",
-      apikey: "API key",
-      member: "Team member",
-    } as Record<ResourceKey, string>,
-    resource: "Resource",
-    footer: "Powered by CASL · evaluated server-side",
-  },
-  zh: {
-    roles: { owner: "Owner", admin: "管理员", member: "成员", viewer: "只读" } as Record<
-      RoleKey,
-      string
-    >,
-    actions: { read: "查看", write: "写入", delete: "删除", manage: "管理" } as Record<
-      ActionKey,
-      string
-    >,
-    resources: {
-      project: "项目",
-      billing: "账单",
-      audit: "审计日志",
-      apikey: "API 密钥",
-      member: "团队成员",
-    } as Record<ResourceKey, string>,
-    resource: "资源",
-    footer: "由 CASL 驱动 · 服务端校验",
-  },
-} as const;
+type Copy = {
+  roles: Record<RoleKey, string>;
+  actions: Record<ActionKey, string>;
+  resources: Record<ResourceKey, string>;
+  resource: string;
+  footer: string;
+};
 
 const ROLES: readonly RoleKey[] = ["owner", "admin", "member", "viewer"];
 const ACTIONS: readonly ActionKey[] = ["read", "write", "delete", "manage"];
@@ -141,8 +108,7 @@ function PermissionCell({ state, highlighted }: { state: CellState; highlighted:
 }
 
 export function PermissionsShowcase(_props: PackageShowcaseProps) {
-  const { locale } = _props;
-  const copy = COPY[locale];
+  const copy = _props.copy as Copy;
   const [role, setRole] = useState<RoleKey>("admin");
   const highlight = HIGHLIGHT[role];
 

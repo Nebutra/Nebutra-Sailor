@@ -28,43 +28,18 @@ const PRESETS: ReadonlyArray<PresetCard> = [
   { id: "custom", icon: SettingsGear, tone: "neutral" },
 ];
 
-const COPY = {
-  en: {
-    labels: {
-      indie: "Indie",
-      pro: "Pro",
-      enterprise: "Enterprise",
-      custom: "Custom",
-    },
-    meta: {
-      indie: "4 features",
-      pro: "12 features",
-      enterprise: "12+ · SSO · audit",
-      custom: "pick",
-    },
-    active: "active",
-    footer: "$ nebutra preset:apply pro",
-  },
-  zh: {
-    labels: {
-      indie: "独立",
-      pro: "Pro",
-      enterprise: "企业",
-      custom: "自定义",
-    },
-    meta: {
-      indie: "4 项能力",
-      pro: "12 项能力",
-      enterprise: "12+ · SSO · 审计",
-      custom: "选择",
-    },
-    active: "当前",
-    footer: "$ nebutra preset:apply pro",
-  },
-} as const;
+// The CLI command — same on every locale.
+const FOOTER = "$ nebutra preset:apply pro";
 
-export function PresetGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+type PresetId = PresetCard["id"];
+type PresetCopy = {
+  labels: Record<PresetId, string>;
+  meta: Record<PresetId, string>;
+  active: string;
+};
+
+export function PresetGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as PresetCopy;
 
   return (
     <div
@@ -106,7 +81,7 @@ export function PresetGlyph({ locale }: SubpackageGlyphProps) {
       </ul>
 
       {/* Footer */}
-      <p className="text-center font-mono text-[9px] text-muted-foreground">{t.footer}</p>
+      <p className="text-center font-mono text-[9px] text-muted-foreground">{FOOTER}</p>
     </div>
   );
 }

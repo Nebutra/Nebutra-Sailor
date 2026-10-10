@@ -25,16 +25,7 @@ const DECISIONS: readonly DecisionRow[] = [
   },
 ] as const;
 
-const COPY = {
-  en: {
-    header: "rate · 100 req/s · token bucket",
-    footer: "per-tenant · 8ms p99",
-  },
-  zh: {
-    header: "限速 · 100 req/s · 令牌桶",
-    footer: "按租户 · 8ms p99",
-  },
-} as const;
+type RateLimitCopy = { header: string; footer: string };
 
 /**
  * RateLimitGlyph — bespoke thumbnail for the `rate-limit` sub-package.
@@ -43,8 +34,8 @@ const COPY = {
  * recent decision rows (200 ok, 429 throttled) so the card communicates
  * "token bucket rate limiter, per-tenant decisions" at a glance.
  */
-export function RateLimitGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function RateLimitGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as RateLimitCopy;
 
   return (
     <div

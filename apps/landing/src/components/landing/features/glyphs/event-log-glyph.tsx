@@ -4,16 +4,7 @@ import { Clock, Lightning, Sparkles } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    rate: "1,247 events / min",
-    footer: "ClickHouse · 90-day retention · replayable",
-  },
-  zh: {
-    rate: "1,247 events / min",
-    footer: "ClickHouse · 90 天留存 · 可回放",
-  },
-} as const;
+type EventLogCopy = { rate: string; footer: string };
 
 type Row = {
   time: string;
@@ -29,8 +20,8 @@ const ROWS: readonly Row[] = [
   { time: "12:42:20", event: "agent.turn.end", tone: "blue-subtle" },
 ] as const;
 
-export function EventLogGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function EventLogGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as EventLogCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>

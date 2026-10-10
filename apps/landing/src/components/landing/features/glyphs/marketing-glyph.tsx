@@ -4,24 +4,16 @@ import { ChartTrendingUp, Notification, Sparkles, Users } from "@nebutra/icons";
 import { Badge, Progress } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    campaign: "Q4 product launch",
-    status: "Live · 12 days",
-    sent: "Sent",
-    opens: "Opens",
-    clicks: "Clicks",
-    footer: "audience: pro-tier · sequence_4",
-  },
-  zh: {
-    campaign: "Q4 产品发布",
-    status: "进行中 · 12 天",
-    sent: "已发送",
-    opens: "打开率",
-    clicks: "点击率",
-    footer: "audience: pro-tier · sequence_4",
-  },
-} as const;
+// The audience/sequence line is an identifier — same on every locale.
+const FOOTER = "audience: pro-tier · sequence_4";
+
+type MarketingCopy = {
+  campaign: string;
+  status: string;
+  sent: string;
+  opens: string;
+  clicks: string;
+};
 
 /**
  * MarketingGlyph
@@ -31,8 +23,8 @@ const COPY = {
  * strip (sent / opens / clicks), a determinate progress bar at 68%,
  * and a mono footer revealing the audience + sequence step.
  */
-export function MarketingGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function MarketingGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as MarketingCopy;
 
   return (
     <div
@@ -82,7 +74,7 @@ export function MarketingGlyph({ locale }: SubpackageGlyphProps) {
       {/* Progress + mono footer */}
       <div className="space-y-1">
         <Progress value={68} max={100} size="sm" animated={false} />
-        <p className="truncate font-mono text-[10px] text-muted-foreground">{copy.footer}</p>
+        <p className="truncate font-mono text-[10px] text-muted-foreground">{FOOTER}</p>
       </div>
     </div>
   );

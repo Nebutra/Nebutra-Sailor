@@ -13,16 +13,10 @@ import type { SubpackageGlyphProps } from "./types";
  * powering the oklch theme engine.
  */
 
-const COPY = {
-  en: {
-    heading: "Theme",
-    footer: 'data-theme="nebutra" · oklch',
-  },
-  zh: {
-    heading: "主题",
-    footer: 'data-theme="nebutra" · oklch',
-  },
-} as const;
+// The attribute contract — same on every locale.
+const FOOTER = 'data-theme="nebutra" · oklch';
+
+type ThemeCopy = { heading: string };
 
 type ThemeCard = {
   id: "nebutra" | "dark-dense" | "minimal" | "vibrant" | "ocean";
@@ -66,8 +60,8 @@ const THEMES: readonly ThemeCard[] = [
 
 const ACTIVE_ID = "nebutra";
 
-export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+export function ThemeGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as ThemeCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
@@ -115,7 +109,7 @@ export function ThemeGlyph({ locale }: SubpackageGlyphProps) {
         </div>
 
         {/* Footer */}
-        <div className="font-mono text-[9px] text-muted-foreground">{t.footer}</div>
+        <div className="font-mono text-[9px] text-muted-foreground">{FOOTER}</div>
       </div>
     </div>
   );

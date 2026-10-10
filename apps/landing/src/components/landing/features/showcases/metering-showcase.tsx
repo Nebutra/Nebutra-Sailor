@@ -14,6 +14,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
+import { useFormatLocale } from "./use-format-locale";
 
 type ProgressTone = "warning" | "success" | undefined;
 type TierVariant = "blue-subtle" | "purple-subtle" | "teal-subtle" | "gray-subtle";
@@ -67,8 +68,8 @@ function tone(pct: number): ProgressTone {
   return "success";
 }
 
-function formatNumber(value: number, locale: "en" | "zh", compact = false): string {
-  return new Intl.NumberFormat(locale === "zh" ? "zh-CN" : "en-US", {
+function formatNumber(value: number, locale: string, compact = false): string {
+  return new Intl.NumberFormat(locale, {
     notation: compact ? "compact" : "standard",
     maximumFractionDigits: 1,
   }).format(value);
@@ -78,8 +79,9 @@ function pct(used: number, cap: number): number {
   return Math.round((used / cap) * 100);
 }
 
-export function MeteringShowcase({ locale, copy }: PackageShowcaseProps) {
+export function MeteringShowcase({ copy }: PackageShowcaseProps) {
   const t = copy as MeteringCopy;
+  const locale = useFormatLocale();
   const fmt = (n: number, compact = false) => formatNumber(n, locale, compact);
 
   return (

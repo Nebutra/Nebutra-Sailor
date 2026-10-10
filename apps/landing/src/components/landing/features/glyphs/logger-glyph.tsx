@@ -43,7 +43,7 @@ const LINES: ReadonlyArray<LogLine> = [
   },
 ] as const;
 
-export function LoggerGlyph({ entry: _entry, locale: _locale }: SubpackageGlyphProps) {
+export function LoggerGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       className="relative w-full overflow-hidden rounded-[var(--radius-md)] bg-muted"

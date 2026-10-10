@@ -27,34 +27,19 @@ const ROWS: CacheRow[] = [
   { key: "feed:home:v3", ttl: "—", status: "MISS", size: "0 B" },
 ];
 
-const COPY = {
-  en: {
-    title: "Cache observability",
-    hitRate: "Hit rate",
-    latP50: "Latency p50",
-    latP99: "Latency p99",
-    memory: "Memory",
-    gaugeLabel: "Hit ratio",
-    gaugeSub: "last 5 min",
-    memUsed: "Memory used",
-    recent: "Recent keys",
-    ttl: "TTL",
-    size: "Size",
-  },
-  zh: {
-    title: "缓存可观测性",
-    hitRate: "命中率",
-    latP50: "延迟 p50",
-    latP99: "延迟 p99",
-    memory: "内存",
-    gaugeLabel: "命中比",
-    gaugeSub: "近 5 分钟",
-    memUsed: "已用内存",
-    recent: "最近键",
-    ttl: "TTL",
-    size: "大小",
-  },
-} as const;
+type Copy = {
+  title: string;
+  hitRate: string;
+  latP50: string;
+  latP99: string;
+  memory: string;
+  gaugeLabel: string;
+  gaugeSub: string;
+  memUsed: string;
+  recent: string;
+  ttl: string;
+  size: string;
+};
 
 const HIT_RATIO = 94.7;
 const MEMORY_PCT = (847 / 2048) * 100;
@@ -76,8 +61,8 @@ function StatusPill({ status }: { status: RowStatus }) {
   );
 }
 
-export function CacheShowcase({ locale }: PackageShowcaseProps) {
-  const copy = COPY[locale];
+export function CacheShowcase({ copy: rawCopy }: PackageShowcaseProps) {
+  const copy = rawCopy as Copy;
 
   return (
     <ShowcaseFrame>

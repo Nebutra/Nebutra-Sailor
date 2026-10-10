@@ -19,8 +19,6 @@ import {
  * the server) — these helpers never call next-intl themselves.
  */
 
-type Lang = "en" | "zh";
-
 /** "42 packages, 318 source files and 161 test files in packages/ai." — from the generated, test-checked stats. */
 export function sourceSentence(folder: CapabilityFolder, t: PackageCatalogTranslator): string {
   const { unitCount, sourceFiles, testFiles } = folder.sourceStats;
@@ -73,12 +71,10 @@ export function TopologyList({
 export function PackageCard({
   entry,
   href,
-  locale,
   t,
 }: {
   entry: PackageFeatureEntry;
   href: string;
-  locale: Lang;
   t: PackageCatalogTranslator;
 }) {
   const Glyph = getSubpackageGlyph(entry.slug);
@@ -91,7 +87,6 @@ export function PackageCard({
         <div className="border-b border-border bg-background/40 p-4">
           <Glyph
             entry={toSerializablePackageFeatureEntry(entry)}
-            locale={locale}
             copy={getGlyphCopy(entry.slug, t)}
           />
         </div>
@@ -149,11 +144,9 @@ export function PackageRows({
  */
 export function GlyphBento({
   entries,
-  locale,
   t,
 }: {
   entries: PackageFeatureEntry[];
-  locale: Lang;
   t: PackageCatalogTranslator;
 }) {
   const tiles = entries.filter((e) => getSubpackageGlyph(e.slug)).slice(0, 3);
@@ -173,7 +166,6 @@ export function GlyphBento({
               <div className="w-full">
                 <Glyph
                   entry={toSerializablePackageFeatureEntry(entry)}
-                  locale={locale}
                   copy={getGlyphCopy(entry.slug, t)}
                 />
               </div>

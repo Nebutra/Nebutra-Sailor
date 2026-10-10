@@ -26,73 +26,21 @@ type Copy = {
   headerTitle: string;
   countBadge: string;
   reveal: string;
-  chain: { plaintext: string; dek: string; kek: string };
+  chain: { plaintext: string };
   footnote: string;
-  secrets: Secret[];
+  /** Translatable secret name and rotation age, keyed by secret index. */
+  secrets: Record<string, { name?: string; rotated?: string }>;
 };
 
-const COPY: Record<"en" | "zh", Copy> = {
-  en: {
-    headerTitle: "secrets",
-    countBadge: "12 secrets · 3 tenants",
-    reveal: "Reveal",
-    chain: { plaintext: "Plaintext", dek: "DEK", kek: "KEK (KMS)" },
-    footnote: "AES-256-GCM · per-tenant DEK · KMS-wrapped",
-    secrets: [
-      {
-        name: "OpenAI API Key",
-        masked: "sk-•••••••••••8847",
-        tenant: "acme-prod",
-        kmsKeyId: "kms/9f2a",
-        rotated: "rotated 3 days ago",
-      },
-      {
-        name: "Creem Webhook Secret",
-        masked: "whsec_•••••••••••1c4d",
-        tenant: "acme-prod",
-        kmsKeyId: "kms/9f2a",
-        rotated: "rotated 12 days ago",
-      },
-      {
-        name: "Database Password",
-        masked: "pg://•••••••••••a31f",
-        tenant: "lumen-dev",
-        kmsKeyId: "kms/4b7e",
-        rotated: "rotated 27 days ago",
-      },
-    ],
-  },
-  zh: {
-    headerTitle: "密钥库",
-    countBadge: "12 个密钥 · 3 个租户",
-    reveal: "显示",
-    chain: { plaintext: "明文", dek: "DEK", kek: "KEK (KMS)" },
-    footnote: "AES-256-GCM · 租户级 DEK · KMS 包裹",
-    secrets: [
-      {
-        name: "OpenAI API Key",
-        masked: "sk-•••••••••••8847",
-        tenant: "acme-prod",
-        kmsKeyId: "kms/9f2a",
-        rotated: "3 天前轮换",
-      },
-      {
-        name: "Creem Webhook 密钥",
-        masked: "whsec_•••••••••••1c4d",
-        tenant: "acme-prod",
-        kmsKeyId: "kms/9f2a",
-        rotated: "12 天前轮换",
-      },
-      {
-        name: "数据库密码",
-        masked: "pg://•••••••••••a31f",
-        tenant: "lumen-dev",
-        kmsKeyId: "kms/4b7e",
-        rotated: "27 天前轮换",
-      },
-    ],
-  },
-};
+// Key-hierarchy acronyms — same on every locale.
+const CHAIN = { dek: "DEK", kek: "KEK (KMS)" } as const;
+
+// Masked values, tenants and KMS key ids — demo data, same on every locale.
+const SECRETS: ReadonlyArray<Omit<Secret, "name" | "rotated">> = [
+  { masked: "sk-•••••••••••8847", tenant: "acme-prod", kmsKeyId: "kms/9f2a" },
+  { masked: "whsec_•••••••••••1c4d", tenant: "acme-prod", kmsKeyId: "kms/9f2a" },
+  { masked: "pg://•••••••••••a31f", tenant: "lumen-dev", kmsKeyId: "kms/4b7e" },
+];
 
 function SecretRow({ secret, revealLabel }: { secret: Secret; revealLabel: string }) {
   return (
@@ -145,8 +93,13 @@ function ChainPill({ icon, label }: { icon: React.ReactNode; label: string }) {
   );
 }
 
-export function VaultShowcase({ locale }: PackageShowcaseProps) {
-  const copy = COPY[locale];
+export function VaultShowcase({ copy: rawCopy }: PackageShowcaseProps) {
+  const copy = rawCopy as Copy;
+  const secrets: Secret[] = SECRETS.map((secret, i) => ({
+    ...secret,
+    name: copy.secrets[i]?.name ?? "",
+    rotated: copy.secrets[i]?.rotated ?? "",
+  }));
 
   return (
     <ShowcaseFrame>
@@ -166,8 +119,8 @@ export function VaultShowcase({ locale }: PackageShowcaseProps) {
       </div>
 
       <div className="flex flex-col gap-2.5">
-        {copy.secrets.map((secret) => (
-          <SecretRow key={secret.name} secret={secret} revealLabel={copy.reveal} />
+        {secrets.map((secret) => (
+          <SecretRow key={secret.masked} secret={secret} revealLabel={copy.reveal} />
         ))}
       </div>
 
@@ -175,9 +128,9 @@ export function VaultShowcase({ locale }: PackageShowcaseProps) {
         <div className="flex flex-wrap items-center justify-center gap-1.5">
           <ChainPill icon={<Eye className="h-3 w-3" />} label={copy.chain.plaintext} />
           <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
-          <ChainPill icon={<KeyAsterisk className="h-3 w-3" />} label={copy.chain.dek} />
+          <ChainPill icon={<KeyAsterisk className="h-3 w-3" />} label={CHAIN.dek} />
           <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
-          <ChainPill icon={<Shield className="h-3 w-3" />} label={copy.chain.kek} />
+          <ChainPill icon={<Shield className="h-3 w-3" />} label={CHAIN.kek} />
         </div>
         <p className="text-center font-mono text-[10px] text-muted-foreground">{copy.footnote}</p>
       </div>

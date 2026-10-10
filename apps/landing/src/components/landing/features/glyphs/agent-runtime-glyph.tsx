@@ -4,16 +4,10 @@ import { Brain, Check, Lightning, Sparkles } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    header: "agent.run · claude-sonnet-5",
-    footer: "durable · resumable on crash",
-  },
-  zh: {
-    header: "agent.run · claude-sonnet-5",
-    footer: "持久 · 崩溃可恢复",
-  },
-} as const;
+// The trace header is a span name — same on every locale.
+const HEADER = "agent.run · claude-sonnet-5";
+
+type AgentRuntimeCopy = { footer: string };
 
 type Step = {
   label: string;
@@ -30,8 +24,8 @@ const STEPS: readonly Step[] = [
   { label: "· turn.commit", ms: "8ms", tone: "green-subtle", done: true },
 ] as const;
 
-export function AgentRuntimeGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function AgentRuntimeGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as AgentRuntimeCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
@@ -40,7 +34,7 @@ export function AgentRuntimeGlyph({ locale }: SubpackageGlyphProps) {
         <div className="flex items-center justify-between">
           <span className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
             <Brain className="h-2.5 w-2.5" />
-            {copy.header}
+            {HEADER}
           </span>
           <Sparkles className="h-2.5 w-2.5 text-primary" />
         </div>

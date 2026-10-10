@@ -24,23 +24,12 @@ const SECRETS: ReadonlyArray<SecretRow> = [
   { provider: "Slack OAuth", masked: "xoxb-•••••••92f0", Icon: Shield },
 ];
 
-const COPY = {
-  en: {
-    tenantPrefix: "tenant_abc",
-    countSuffix: "3 integrations",
-    encrypted: "encrypted",
-    footer: "AES-256-GCM · KMS-wrapped",
-  },
-  zh: {
-    tenantPrefix: "tenant_abc",
-    countSuffix: "3 个集成",
-    encrypted: "已加密",
-    footer: "AES-256-GCM · KMS 封装",
-  },
-} as const;
+const TENANT_PREFIX = "tenant_abc";
 
-export function IntegrationVaultGlyph({ locale }: SubpackageGlyphProps) {
-  const t = COPY[locale];
+type IntegrationVaultCopy = { countSuffix: string; encrypted: string; footer: string };
+
+export function IntegrationVaultGlyph({ copy }: SubpackageGlyphProps) {
+  const t = copy as IntegrationVaultCopy;
 
   return (
     <div
@@ -52,7 +41,7 @@ export function IntegrationVaultGlyph({ locale }: SubpackageGlyphProps) {
         <div className="flex items-center gap-1.5 font-mono text-[10px] text-muted-foreground">
           <Key className="h-3 w-3" aria-hidden="true" />
           <span className="truncate">
-            {t.tenantPrefix} · {t.countSuffix}
+            {TENANT_PREFIX} · {t.countSuffix}
           </span>
         </div>
         <Eye className="h-3 w-3 text-muted-foreground/60" aria-hidden="true" />

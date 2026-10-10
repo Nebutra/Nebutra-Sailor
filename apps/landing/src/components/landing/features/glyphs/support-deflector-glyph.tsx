@@ -4,28 +4,20 @@ import { Check, Sparkles, Users } from "@nebutra/icons";
 import { Badge, MetricCard } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    deflected: "Deflected",
-    avgSolve: "Avg solve",
-    savedHrs: "Saved hrs",
-    footer: "AI-first · human escalation 16%",
-  },
-  zh: {
-    deflected: "已转移",
-    avgSolve: "平均解决",
-    savedHrs: "节省小时",
-    footer: "AI 优先 · 人工升级 16%",
-  },
-} as const;
+type SupportDeflectorCopy = {
+  deflected: string;
+  avgSolve: string;
+  savedHrs: string;
+  footer: string;
+};
 
 const TICKETS: ReadonlyArray<{ question: string; resolution: string }> = [
   { question: '"How do I reset MFA?"', resolution: "auto-resolved · linked to article" },
   { question: '"Refund order #1234"', resolution: "auto-resolved · refund issued" },
 ];
 
-export function SupportDeflectorGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function SupportDeflectorGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as SupportDeflectorCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>

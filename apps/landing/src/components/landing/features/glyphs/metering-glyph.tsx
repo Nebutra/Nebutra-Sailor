@@ -4,16 +4,7 @@ import { ChartActivity, Database, Lightning } from "@nebutra/icons";
 import { Progress } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    tenant: "tenant_abc123 · Pro plan",
-    footer: "ClickHouse · realtime · ≤ 800ms",
-  },
-  zh: {
-    tenant: "tenant_abc123 · Pro 套餐",
-    footer: "ClickHouse · 实时 · ≤ 800ms",
-  },
-} as const;
+type MeteringGlyphCopy = { tenant: string; footer: string };
 
 type Row = {
   name: string;
@@ -33,8 +24,8 @@ function fmt(n: number): string {
   return n.toLocaleString("en-US");
 }
 
-export function MeteringGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function MeteringGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as MeteringGlyphCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>

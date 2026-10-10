@@ -4,27 +4,14 @@ import { Check, Clock, Envelope } from "@nebutra/icons";
 import { Badge } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    recipient: "user@example.com",
-    delivered: "delivered",
-    subject: "Welcome to Nebutra",
-    preview: "Thanks for joining — your workspace is ready.",
-    provider: "Resend",
-    timestamp: "2m ago",
-  },
-  zh: {
-    recipient: "user@example.com",
-    delivered: "已送达",
-    subject: "欢迎加入 Nebutra",
-    preview: "感谢加入 — 你的工作区已就绪。",
-    provider: "Resend",
-    timestamp: "2 分钟前",
-  },
-} as const;
+// Demo address and provider name — same on every locale.
+const RECIPIENT = "user@example.com";
+const PROVIDER = "Resend";
 
-export function EmailGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+type EmailCopy = { delivered: string; subject: string; preview: string; timestamp: string };
+
+export function EmailGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as EmailCopy;
 
   return (
     <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
@@ -34,9 +21,7 @@ export function EmailGlyph({ locale }: SubpackageGlyphProps) {
           <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-[var(--radius-md)] bg-muted text-muted-foreground">
             <Envelope className="h-3.5 w-3.5" />
           </span>
-          <span className="truncate font-mono text-[11px] text-muted-foreground">
-            {copy.recipient}
-          </span>
+          <span className="truncate font-mono text-[11px] text-muted-foreground">{RECIPIENT}</span>
           <Badge variant="green-subtle" size="sm" className="ml-auto" icon={<Check />}>
             {copy.delivered}
           </Badge>
@@ -51,7 +36,7 @@ export function EmailGlyph({ locale }: SubpackageGlyphProps) {
         {/* Bottom: provider chip + timestamp */}
         <div className="mt-0.5 flex items-center justify-between">
           <Badge variant="gray-subtle" size="sm">
-            {copy.provider}
+            {PROVIDER}
           </Badge>
           <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
             <Clock className="h-3 w-3" />

@@ -16,6 +16,7 @@ import {
 import { cn } from "@nebutra/ui/utils";
 import { ShowcaseFrame } from "./showcase-frame";
 import type { PackageShowcaseProps } from "./types";
+import { useFormatLocale } from "./use-format-locale";
 
 // =============================================================================
 // Copy
@@ -108,8 +109,8 @@ const posts = await prisma.post.findMany({
 // Helpers
 // =============================================================================
 
-function formatNumber(value: number, locale: "en" | "zh") {
-  return value.toLocaleString(locale === "zh" ? "zh-CN" : "en-US");
+function formatNumber(value: number, locale: string) {
+  return value.toLocaleString(locale);
 }
 
 function tenantBadgeVariant(tenantId: Row["tenantId"]): "blue-subtle" | "gray-subtle" {
@@ -121,7 +122,7 @@ function tenantBadgeVariant(tenantId: Row["tenantId"]): "blue-subtle" | "gray-su
 // =============================================================================
 
 export function DbShowcase(_props: PackageShowcaseProps) {
-  const locale = _props.locale;
+  const locale = useFormatLocale();
   const t = _props.copy as DbCopy;
 
   const visibleCount = 847;

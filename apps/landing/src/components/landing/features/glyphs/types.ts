@@ -15,8 +15,6 @@ import type { SerializablePackageFeatureEntry } from "../package-feature-data";
 export type SubpackageGlyphProps = {
   /** The sub-package entry — plain data only because many glyphs are Client Components. */
   entry: SerializablePackageFeatureEntry;
-  /** UI locale. */
-  locale: "en" | "zh";
   /**
    * Pre-resolved copy for the handful of glyphs that render text beyond the
    * entry summary (e.g. a mock chat bubble, a pipeline step label). Built

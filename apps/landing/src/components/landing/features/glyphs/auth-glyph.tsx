@@ -4,22 +4,7 @@ import { ChevronRight, Envelope, LogoGithub, LogoGoogle, Shield } from "@nebutra
 import { Badge, Separator } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
-const COPY = {
-  en: {
-    header: "Sign in to Nebutra",
-    google: "Google",
-    github: "GitHub",
-    email: "Continue with email",
-    footer: "MFA enforced · session HMAC-signed",
-  },
-  zh: {
-    header: "登录 Nebutra",
-    google: "Google",
-    github: "GitHub",
-    email: "使用邮箱继续",
-    footer: "已启用 MFA · 会话 HMAC 签名",
-  },
-} as const;
+type AuthCopy = { header: string; email: string; footer: string };
 
 type ProviderRow = {
   key: string;
@@ -27,19 +12,19 @@ type ProviderRow = {
   label: string;
 };
 
-export function AuthGlyph({ locale }: SubpackageGlyphProps) {
-  const copy = COPY[locale];
+export function AuthGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
+  const copy = rawCopy as AuthCopy;
 
   const rows: ProviderRow[] = [
     {
       key: "google",
       icon: <LogoGoogle className="h-3.5 w-3.5" />,
-      label: copy.google,
+      label: "Google",
     },
     {
       key: "github",
       icon: <LogoGithub className="h-3.5 w-3.5" />,
-      label: copy.github,
+      label: "GitHub",
     },
     {
       key: "email",

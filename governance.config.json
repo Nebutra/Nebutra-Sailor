@@ -65,7 +65,6 @@
       "apps/forge/src/components/tool-workspace.tsx",
       "apps/forge/src/components/word-count-runner.tsx",
       "apps/idp/src/lib/oidc.ts",
-      "apps/landing/src/app/[lang]/(marketing)/about/_about-data.ts",
       "apps/landing/src/app/[lang]/(marketing)/about/innovation/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/careers/page.tsx",
       "apps/landing/src/app/[lang]/(marketing)/changelog/[version]/page.tsx",
@@ -73,8 +72,6 @@
       "apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx",
       "apps/landing/src/app/[lang]/(marketing)/ideas/page.tsx",
       "apps/landing/src/app/api/og/route.ts",
-      "apps/landing/src/components/landing/features/glyphs/auth-glyph.tsx",
-      "apps/landing/src/components/landing/features/glyphs/email-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/status-glyph.tsx",
       "apps/landing/src/components/landing/features/glyphs/tts-glyph.tsx",
       "apps/landing/src/lib/constants/playbook-data.ts",
@@ -2350,211 +2347,7 @@
         "count": 1
       },
       {
-        "file": "apps/landing/src/app/[lang]/(marketing)/about/_about-data.ts",
-        "count": 107
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/about/business-portfolio/page.tsx",
-        "count": 5
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/about/global/page.tsx",
-        "count": 39
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/about/innovation/page.tsx",
-        "count": 43
-      },
-      {
-        "file": "apps/landing/src/app/[lang]/(marketing)/about/whitepaper/page.tsx",
-        "count": 8
-      },
-      {
         "file": "apps/landing/src/components/landing/blog-portable-text.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/access-gate-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/agent-runtime-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/analytics-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/auth-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/billing-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/browser-control-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/cache-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/china-compliance-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/db-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/email-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/event-log-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/execution-policy-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/feature-flags-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/graph-model-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/identity-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/integration-vault-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/landing-builder-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/legal-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/license-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/marketing-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/metering-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/oauth-server-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/preset-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/rate-limit-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/repositories-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/saga-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/storage-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/support-deflector-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/theme-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/trace-store-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/vault-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/glyphs/waitlist-glyph.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/agent-runtime-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/audit-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/billing-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/cache-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/db-showcase.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/gateway-core-showcase.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/knowledge-rag-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/metering-showcase.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/permissions-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/queue-showcase.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/tokens-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/vault-showcase.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/webhooks-showcase.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/landing/solutions/vc/VcDirectory.tsx",
         "count": 2
       },
       {
@@ -2581,18 +2374,6 @@
       {
         "file": "apps/landing/src/components/landing/features/glyphs/i18n-glyph.tsx",
         "reason": "Decorative illustration of the i18n package — the tags are the picture, not a supported-language list."
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/db-showcase.tsx",
-        "reason": "en/zh number-format branch pending migration to the route locale (inlineI18n)."
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/gateway-core-showcase.tsx",
-        "reason": "en/zh number-format branch pending migration to the route locale (inlineI18n)."
-      },
-      {
-        "file": "apps/landing/src/components/landing/features/showcases/metering-showcase.tsx",
-        "reason": "en/zh number-format branch pending migration to the route locale (inlineI18n)."
       },
       {
         "file": "apps/sailor-docs/src/lib/i18n.ts",
