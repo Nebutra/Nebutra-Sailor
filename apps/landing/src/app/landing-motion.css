@@ -1,0 +1,90 @@
+/*
+ * Landing Motion System — the site's few moving parts, on one set of tokens.
+ * ADR docs/architecture/2026-10-09-landing-motion-system.md.
+ *
+ * Three things move on a landing, and nothing else:
+ *   1. The hero headline: each word rises out of its own mask on first paint
+ *      (`.hero-mask`). CSS, not script, so the words are already in the HTML
+ *      when they move, the page reads in full with JavaScript off, and nothing
+ *      waits on hydration. One choreography, 0.7–1.2s, never blocking input.
+ *   2. The hero's product visual, if the page has one, settles in after the
+ *      headline (`.hero-visual`) — the same timeline, a later start.
+ *   3. Groups of like things (feature cells, plan cards, principles) arrive
+ *      together as they scroll into view (`[data-reveal]`, set by RevealGroup).
+ *      Only groups the visitor has not seen yet are held back, and only once
+ *      script runs — the server HTML is always the finished page.
+ *
+ * Reduced motion: none of it runs; every element is at rest from the start.
+ */
+
+:root {
+  --landing-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --landing-micro: 140ms; /* Micro 100–180: press, focus, colour */
+  --landing-short: 240ms; /* Short 180–300: hover preview, toggles */
+  --landing-medium: 400ms; /* Medium 300–500: drawers, tab indicator */
+  --landing-long: 640ms; /* Long 500–800: grouped reveal, hero visual */
+  --landing-hero: 720ms; /* Hero 700–1200 incl. stagger: the headline */
+  --landing-reveal-y: 24px; /* Reveal Y 16–32 */
+  --landing-stagger: 60ms; /* Stagger 40–90 */
+}
+
+/* 1. The headline. A word sits in a clip just tall enough for its ascenders
+ * and descenders; the padding/negative-margin pair keeps the line box where it
+ * was, so masking never changes layout (CLS 0). */
+.hero-mask {
+  display: inline-block;
+  overflow: clip;
+  overflow-clip-margin: 0.04em;
+  vertical-align: top;
+  padding-block: 0.06em 0.16em;
+  margin-block: -0.06em -0.16em;
+}
+.hero-mask > span {
+  display: inline-block;
+}
+
+/* Headline and visual: first paint only, and never under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-mask > span {
+    animation: landing-word-in var(--landing-hero) var(--landing-ease) both;
+    /* Capped at the 8th word so a long headline still lands inside 1.2s. */
+    animation-delay: calc(min(var(--i, 0), 7) * var(--landing-stagger));
+  }
+  .hero-visual {
+    animation: landing-visual-in var(--landing-long) var(--landing-ease) both;
+    animation-delay: calc(var(--landing-stagger) * 6);
+  }
+}
+@keyframes landing-word-in {
+  from {
+    /* Past the mask's bottom padding too, so the first frame shows nothing. */
+    transform: translateY(calc(100% + 0.3em));
+  }
+}
+@keyframes landing-visual-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--landing-reveal-y));
+  }
+}
+
+/* 3. Grouped reveal. `pending` is only ever set by script, on a group still
+ * below the fold; `in` releases the children one stagger step apart. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal="pending"] > * {
+    opacity: 0;
+    transform: translateY(var(--landing-reveal-y));
+  }
+  [data-reveal="in"] > * {
+    transition:
+      opacity var(--landing-long) var(--landing-ease),
+      transform var(--landing-long) var(--landing-ease);
+    transition-delay: calc(min(var(--i, 0), 6) * var(--landing-stagger));
+  }
+}
+@media print {
+  [data-reveal] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
