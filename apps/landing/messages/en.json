@@ -4645,7 +4645,7 @@
     },
     "direction": {
       "title": "Direction",
-      "lead": "Each line is the founder's, taken as written from the Journal.",
+      "lead": "L1–L4 and L6–L8 are the founder's lines, taken as written from the Journal. L5 is the principle our products follow today.",
       "cn": "方向，L1 到 L8。",
       "essayLink": "Why we are building {brandName} →"
     },
@@ -4673,8 +4673,8 @@
         "also": "The orchestration layer says: we make your tools get used more often."
       },
       "l5": {
-        "line": "We build {brandName} around Plays, tactical workflows that cover complete sub-processes in the startup lifecycle, with clear inputs and outputs.",
-        "also": "Build that foundation once, and each Play becomes a module growing from the same skeleton."
+        "line": "Every product is built on one foundation, Sailor, and stands on its own with real users.",
+        "also": "KCQ's workstation runs on Sailor this way."
       },
       "l6": {
         "line": "They have real domain knowledge, market instinct, and execution energy. But they are not staff-level engineers, ten-year product leaders, or senior growth operators."

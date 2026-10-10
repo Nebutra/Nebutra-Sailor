@@ -6,9 +6,11 @@ import { REPO_URL } from "./repo";
 /**
  * The roadmap, in the founder's nine layers (Journal: "Founder 顶层设计的九层结构").
  *
- * L1–L8 are the direction and change slowly; every line is the founder's own
- * words from "Why we are building Nebutra", never a paraphrase written for
- * this page. L9 is the execution — what landed, Now, Later — and each bet names
+ * L1–L8 are the direction and change slowly. L1–L4 and L6–L8 are the
+ * founder's own words from "Why we are building Nebutra", never a paraphrase
+ * written for this page. L5 (Product) is not a quote: it is the principle
+ * our products follow today, because the essay's product line no longer
+ * holds (founder, #755). L9 is the execution — what landed, Now, Later — and each bet names
  * the layer it answers to, because a bet that serves no layer has no reason to be
  * on the list.
  *
