@@ -80,7 +80,9 @@ export const Default: Story = {
     const fileTrigger = canvas.getByRole("menuitem", { name: "File" });
 
     await userEvent.click(fileTrigger);
-    expect(canvas.getByText("New Tab")).toBeVisible();
+    // Menus are portalled, so look in the document rather than the canvas.
+    const page = within(canvasElement.ownerDocument.body);
+    expect(await page.findByText("New Tab")).toBeVisible();
     expect(fileTrigger).toHaveAttribute("aria-expanded", "true");
   },
 };
@@ -111,8 +113,9 @@ export const WithSubmenu: Story = {
 
 /**
  * `MenubarCheckboxItem` and `MenubarRadioGroup` + `MenubarRadioItem` are
- * uncontrolled here for the demo — wire `checked` / `onCheckedChange` to
- * real state in product code.
+ * uncontrolled here for the demo (`defaultChecked`, `defaultValue`) — wire
+ * `checked` / `onCheckedChange` and `value` / `onValueChange` to real state in
+ * product code.
  */
 export const CheckboxAndRadioItems: Story = {
   render: () => (
@@ -121,14 +124,14 @@ export const CheckboxAndRadioItems: Story = {
         <MenubarTrigger>View</MenubarTrigger>
         <MenubarContent>
           <MenubarLabel>Panels</MenubarLabel>
-          <MenubarCheckboxItem checked>Sidebar</MenubarCheckboxItem>
+          <MenubarCheckboxItem defaultChecked>Sidebar</MenubarCheckboxItem>
           <MenubarCheckboxItem>Terminal</MenubarCheckboxItem>
           <MenubarSeparator />
           <MenubarLabel>Theme</MenubarLabel>
-          <MenubarRadioGroup>
-            <MenubarRadioItem checked>Light</MenubarRadioItem>
-            <MenubarRadioItem>Dark</MenubarRadioItem>
-            <MenubarRadioItem>System</MenubarRadioItem>
+          <MenubarRadioGroup defaultValue="light">
+            <MenubarRadioItem value="light">Light</MenubarRadioItem>
+            <MenubarRadioItem value="dark">Dark</MenubarRadioItem>
+            <MenubarRadioItem value="system">System</MenubarRadioItem>
           </MenubarRadioGroup>
         </MenubarContent>
       </MenubarMenu>

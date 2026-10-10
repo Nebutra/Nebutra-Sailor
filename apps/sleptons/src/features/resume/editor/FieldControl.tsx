@@ -1,7 +1,7 @@
 "use client";
 
 import { Cross, Plus } from "@nebutra/icons";
-import { Button, Field, Input, Select, Textarea } from "@nebutra/ui/primitives";
+import { Button, Field, Input, NumberField, Select, Textarea } from "@nebutra/ui/primitives";
 import { useId, useState } from "react";
 import type { FieldDef } from "./sections";
 
@@ -75,16 +75,14 @@ export function FieldControl({ field, value, error, onChange }: FieldControlProp
 
     case "number":
       return (
-        <Input
+        <NumberField
           id={id}
           label={label}
-          type="number"
-          inputMode="numeric"
-          value={typeof value === "number" ? String(value) : ""}
+          value={typeof value === "number" ? value : null}
           placeholder={field.placeholder}
           description={field.description}
           error={error}
-          onValueChange={(v) => onChange(v === "" ? undefined : Number(v))}
+          onValueChange={(v) => onChange(v ?? undefined)}
         />
       );
 

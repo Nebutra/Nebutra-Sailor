@@ -1,5 +1,6 @@
 "use client";
 
+import { useConfirm } from "@nebutra/ui/primitives";
 import { useState } from "react";
 import { useRevalidate } from "@/lib/navigation/use-revalidate";
 
@@ -21,12 +22,15 @@ export function ImpersonateButton({ userId, userLabel, className }: ImpersonateB
   const revalidate = useRevalidate();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [confirm, confirmDialog] = useConfirm();
 
   async function handleClick() {
     setError(null);
-    const ok = window.confirm(
-      `Impersonate ${userLabel ?? userId}? You will see the app as this user until you stop.`,
-    );
+    const ok = await confirm({
+      title: `Impersonate ${userLabel ?? userId}`,
+      description: "You will see the app as this user until you stop.",
+      confirmLabel: "Start Impersonating",
+    });
     if (!ok) return;
 
     setPending(true);
@@ -68,6 +72,7 @@ export function ImpersonateButton({ userId, userLabel, className }: ImpersonateB
           {error}
         </p>
       ) : null}
+      {confirmDialog}
     </div>
   );
 }

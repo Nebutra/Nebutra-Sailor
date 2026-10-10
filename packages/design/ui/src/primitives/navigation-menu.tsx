@@ -1,5 +1,28 @@
 "use client";
 
+/**
+ * NavigationMenu — site navigation with flyout panels, built on Base UI
+ * NavigationMenu.
+ *
+ * https://base-ui.com/react/components/navigation-menu
+ *
+ * What Base UI gives every call site, and the hand-rolled version did not:
+ *   - click opens and closes; hover opens only after an intent delay
+ *     (`delay`, default 50ms) and closes after `closeDelay`, with a safe
+ *     triangle so a diagonal move into the panel does not close it
+ *   - `aria-expanded` / `aria-controls` on every trigger
+ *   - Esc closes and returns focus to the trigger; outside click dismisses
+ *   - ← / → move between triggers, ↓ / Enter move into the open panel
+ *   - the panel is portalled and positioned by the shared overlay layer, one
+ *     viewport morphs between panels instead of each panel stacking with `z-[1]`
+ *
+ * The public API is unchanged: `value` / `onValueChange` (empty string means
+ * closed), `NavigationMenuItem value`, `NavigationMenuLink asChild | active`.
+ * `NavigationMenuViewport` is rendered by the root and kept as an export for
+ * source compatibility.
+ */
+
+import { NavigationMenu as BaseNavigationMenu } from "@base-ui/react/navigation-menu";
 import { ChevronDown } from "@nebutra/icons";
 import * as React from "react";
 
@@ -7,38 +30,60 @@ import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 import { navigationMenuTriggerStyle } from "./navigation-menu-variants";
 
-const NavigationMenuContext = React.createContext<{
-  value: string;
-  onValueChange: (value: string) => void;
-}>({ value: "", onValueChange: () => {} });
+type BaseRootProps = React.ComponentProps<typeof BaseNavigationMenu.Root>;
+
+export interface NavigationMenuProps
+  extends Omit<BaseRootProps, "value" | "defaultValue" | "onValueChange"> {
+  /** The open item's value; `""` when every panel is closed. */
+  value?: string;
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
+  /** Side offset of the flyout panel from the list, in px. */
+  sideOffset?: number;
+}
 
 const NavigationMenu = ({
   className,
   children,
-  value: controlledValue,
+  value,
+  defaultValue,
   onValueChange,
+  sideOffset = 6,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & {
-  value?: string;
-  onValueChange?: (value: string) => void;
-} & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
-  const [uncontrolledValue, setUncontrolledValue] = React.useState("");
-  const value = controlledValue !== undefined ? controlledValue : uncontrolledValue;
-  const setValue = onValueChange || setUncontrolledValue;
-  const contextValue = { value, onValueChange: setValue };
+}: NavigationMenuProps & { ref?: React.Ref<HTMLElement> | undefined }) => {
+  const controlled = value !== undefined ? { value: value === "" ? null : value } : {};
+  const uncontrolled =
+    defaultValue !== undefined ? { defaultValue: defaultValue === "" ? null : defaultValue } : {};
 
   return (
-    <NavigationMenuContext.Provider value={contextValue}>
-      <div
-        ref={ref}
-        className={cn("relative z-10 flex max-w-max flex-1 items-center justify-center", className)}
-        {...props}
-      >
-        {children}
-        <NavigationMenuViewport />
-      </div>
-    </NavigationMenuContext.Provider>
+    <BaseNavigationMenu.Root
+      ref={ref}
+      className={cn("relative z-10 flex max-w-max flex-1 items-center justify-center", className)}
+      onValueChange={(next: unknown) => onValueChange?.(next == null ? "" : String(next))}
+      {...controlled}
+      {...uncontrolled}
+      {...props}
+    >
+      {children}
+      <BaseNavigationMenu.Portal>
+        <BaseNavigationMenu.Positioner
+          sideOffset={sideOffset}
+          collisionPadding={8}
+          style={{ zIndex: overlayZIndex.popover }}
+          className="h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)]"
+        >
+          <BaseNavigationMenu.Popup
+            className={cn(
+              overlayClassNames.navigationMenuSurface,
+              "relative h-[var(--popup-height)] w-[var(--popup-width)]",
+            )}
+          >
+            <BaseNavigationMenu.Viewport className="relative h-full w-full overflow-hidden" />
+          </BaseNavigationMenu.Popup>
+        </BaseNavigationMenu.Positioner>
+      </BaseNavigationMenu.Portal>
+    </BaseNavigationMenu.Root>
   );
 };
 NavigationMenu.displayName = "NavigationMenu";
@@ -47,8 +92,10 @@ const NavigationMenuList = ({
   className,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLUListElement> & { ref?: React.Ref<HTMLUListElement> | undefined }) => (
-  <ul
+}: React.ComponentProps<typeof BaseNavigationMenu.List> & {
+  ref?: React.Ref<HTMLUListElement> | undefined;
+}) => (
+  <BaseNavigationMenu.List
     ref={ref}
     className={cn("group flex flex-1 list-none items-center justify-center space-x-1", className)}
     {...props}
@@ -56,29 +103,22 @@ const NavigationMenuList = ({
 );
 NavigationMenuList.displayName = "NavigationMenuList";
 
-const NavigationMenuItemContext = React.createContext<{ value: string }>({ value: "" });
-
 const NavigationMenuItem = ({
   className,
   value,
-  children,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLLIElement> & { value?: string } & {
-  ref?: React.Ref<HTMLLIElement> | undefined;
-}) => {
-  const defaultId = React.useId();
-  const itemValue = value || defaultId;
-  const contextValue = { value: itemValue };
-
-  return (
-    <NavigationMenuItemContext.Provider value={contextValue}>
-      <li ref={ref} className={cn("relative", className)} {...props}>
-        {children}
-      </li>
-    </NavigationMenuItemContext.Provider>
-  );
-};
+}: Omit<React.ComponentProps<typeof BaseNavigationMenu.Item>, "value"> & {
+  /** Stable id for controlled `value`. Generated when omitted. */
+  value?: string;
+} & { ref?: React.Ref<HTMLLIElement> | undefined }) => (
+  <BaseNavigationMenu.Item
+    ref={ref}
+    className={cn("relative", className)}
+    {...(value !== undefined ? { value } : {})}
+    {...props}
+  />
+);
 NavigationMenuItem.displayName = "NavigationMenuItem";
 
 const NavigationMenuTrigger = ({
@@ -86,117 +126,76 @@ const NavigationMenuTrigger = ({
   children,
   ref,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+}: React.ComponentProps<typeof BaseNavigationMenu.Trigger> & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
-}) => {
-  const { value: contextValue, onValueChange } = React.use(NavigationMenuContext);
-  const { value: itemValue } = React.use(NavigationMenuItemContext);
-
-  const isOpen = contextValue === itemValue;
-
-  return (
-    <button
-      type="button"
-      ref={ref}
-      data-state={isOpen ? "open" : "closed"}
-      onClick={() => onValueChange(isOpen ? "" : itemValue)}
-      onMouseEnter={() => onValueChange(itemValue)}
-      className={cn(navigationMenuTriggerStyle(), "group", className)}
-      {...props}
+}) => (
+  <BaseNavigationMenu.Trigger
+    ref={ref}
+    className={cn(
+      navigationMenuTriggerStyle(),
+      "group data-[popup-open]:bg-accent/50",
+      className as string | undefined,
+    )}
+    {...props}
+  >
+    {children}{" "}
+    <BaseNavigationMenu.Icon
+      aria-hidden="true"
+      className="relative top-[1px] ml-1 transition-transform duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] data-[popup-open]:rotate-180 motion-reduce:transition-none"
     >
-      {children}{" "}
-      <ChevronDown
-        className="relative top-[1px] ml-1 h-3 w-3 transition-transform duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] group-data-[state=open]:rotate-180 motion-reduce:transition-none"
-        aria-hidden="true"
-      />
-    </button>
-  );
-};
+      <ChevronDown className="h-3 w-3" />
+    </BaseNavigationMenu.Icon>
+  </BaseNavigationMenu.Trigger>
+);
 NavigationMenuTrigger.displayName = "NavigationMenuTrigger";
 
 const NavigationMenuContent = ({
   className,
-  children,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
-  const { value: contextValue } = React.use(NavigationMenuContext);
-  const { value: itemValue } = React.use(NavigationMenuItemContext);
-  const isOpen = contextValue === itemValue;
-
-  if (!isOpen) return null;
-
-  return (
-    <div
-      ref={ref}
-      className={cn("absolute left-0 top-full w-full pt-1.5 md:w-auto", className)}
-      {...props}
-    >
-      <div
-        className={overlayClassNames.navigationMenuSurface}
-        style={{ zIndex: overlayZIndex.popover }}
-      >
-        {children}
-      </div>
-    </div>
-  );
-};
+}: React.ComponentProps<typeof BaseNavigationMenu.Content> & {
+  ref?: React.Ref<HTMLDivElement> | undefined;
+}) => (
+  <BaseNavigationMenu.Content
+    ref={ref}
+    className={cn(
+      "transition-opacity duration-[var(--motion-duration-micro)] ease-out",
+      "data-[starting-style]:opacity-0 data-[ending-style]:opacity-0 motion-reduce:transition-none",
+      className as string | undefined,
+    )}
+    {...props}
+  />
+);
 NavigationMenuContent.displayName = "NavigationMenuContent";
 
 const NavigationMenuLink = ({
   asChild,
-  active,
-  className,
   children,
-  href,
-  onClick,
+  render,
   ref,
   ...props
-}: React.AnchorHTMLAttributes<HTMLAnchorElement> & { asChild?: boolean; active?: boolean } & {
-  ref?: React.Ref<HTMLAnchorElement> | undefined;
-}) => {
-  const { onValueChange } = React.use(NavigationMenuContext);
-
-  if (asChild && React.isValidElement(children)) {
-    const child = children as React.ReactElement<React.ComponentProps<"a">>;
-    return React.cloneElement(child, {
-      ref,
-      "data-active": active ? "" : undefined,
-      onClick: (e: React.MouseEvent<HTMLAnchorElement>) => {
-        onValueChange("");
-        onClick?.(e);
-        if (child.props.onClick) child.props.onClick(e);
-      },
-      className: cn(className, child.props.className),
-      ...props,
-    } as React.ComponentProps<"a"> & React.RefAttributes<HTMLAnchorElement>);
-  }
-
+}: React.ComponentProps<typeof BaseNavigationMenu.Link> & {
+  /** Render the child element (e.g. a router Link) as the link. */
+  asChild?: boolean;
+} & { ref?: React.Ref<HTMLAnchorElement> | undefined }) => {
+  const childElement =
+    asChild && React.isValidElement(children) ? (children as React.ReactElement) : undefined;
   return (
-    <a
-      ref={ref}
-      href={href}
-      data-active={active ? "" : undefined}
-      onClick={(event) => {
-        onValueChange("");
-        onClick?.(event);
-      }}
-      className={className}
-      {...props}
-    >
-      {children}
-    </a>
+    <BaseNavigationMenu.Link ref={ref} render={childElement ?? render} {...props}>
+      {childElement ? undefined : children}
+    </BaseNavigationMenu.Link>
   );
 };
 NavigationMenuLink.displayName = "NavigationMenuLink";
 
-const NavigationMenuViewport = ({
-  ref: _ref,
-}: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
-  return null; // Viewport is handled implicitly by absolute positioning in the Content component for this lightweight implementation
-};
+/**
+ * @deprecated The root renders the viewport. Kept so existing imports compile;
+ * renders nothing.
+ */
+const NavigationMenuViewport = (_props: React.HTMLAttributes<HTMLDivElement>) => null;
 NavigationMenuViewport.displayName = "NavigationMenuViewport";
 
+/** Decorative caret under the open trigger. */
 const NavigationMenuIndicator = ({
   className,
   ref,
@@ -204,7 +203,8 @@ const NavigationMenuIndicator = ({
 }: React.HTMLAttributes<HTMLDivElement> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
   <div
     ref={ref}
-    className={cn("top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden", className)}
+    aria-hidden="true"
+    className={cn("top-full flex h-1.5 items-end justify-center overflow-hidden", className)}
     {...props}
   >
     <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />

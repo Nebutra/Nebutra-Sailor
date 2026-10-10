@@ -6,7 +6,14 @@
  * Patterns: live calculators, WCAG/verdict banners, structured tables,
  * generators with copy+download — no raw JSON walls.
  */
-import { Button, ColorPickerPopover, DatePicker, Input, Textarea } from "@nebutra/ui/primitives";
+import {
+  Button,
+  ColorPickerPopover,
+  DatePicker,
+  Input,
+  NumberField,
+  Textarea,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import {
@@ -247,28 +254,25 @@ export function TipCalculatorRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input
+        <NumberField
           label={t("tip.bill")}
           id="tip-bill"
-          type="number"
           value={bill}
-          onChange={(e) => setBill(e.target.value)}
+          onValueChange={(value) => setBill(value == null ? "" : String(value))}
           className="font-mono"
         />
-        <Input
+        <NumberField
           label={t("tip.percent")}
           id="tip-pct"
-          type="number"
           value={tipPercent}
-          onChange={(e) => setTip(e.target.value)}
+          onValueChange={(value) => setTip(value == null ? "" : String(value))}
           className="font-mono"
         />
-        <Input
+        <NumberField
           label={t("tip.people")}
           id="tip-people"
-          type="number"
           value={people}
-          onChange={(e) => setPeople(e.target.value)}
+          onValueChange={(value) => setPeople(value == null ? "" : String(value))}
           className="font-mono"
         />
       </div>
@@ -304,20 +308,18 @@ export function AspectRatioRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <NumberField
           label="Width"
           id="ar-w"
-          type="number"
           value={width}
-          onChange={(e) => setW(e.target.value)}
+          onValueChange={(value) => setW(value == null ? "" : String(value))}
           className="font-mono"
         />
-        <Input
+        <NumberField
           label="Height"
           id="ar-h"
-          type="number"
           value={height}
-          onChange={(e) => setH(e.target.value)}
+          onValueChange={(value) => setH(value == null ? "" : String(value))}
           className="font-mono"
         />
       </div>
@@ -358,20 +360,18 @@ export function PercentageChangeRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <NumberField
           label="From"
           id="pc-from"
-          type="number"
           value={from}
-          onChange={(e) => setFrom(e.target.value)}
+          onValueChange={(value) => setFrom(value == null ? "" : String(value))}
           className="font-mono"
         />
-        <Input
+        <NumberField
           label="To"
           id="pc-to"
-          type="number"
           value={to}
-          onChange={(e) => setTo(e.target.value)}
+          onValueChange={(value) => setTo(value == null ? "" : String(value))}
           className="font-mono"
         />
       </div>
@@ -459,12 +459,11 @@ export function WordFrequencyRunner({ toolId }: { toolId: string }) {
         rows={8}
         className="font-mono text-sm"
       />
-      <Input
+      <NumberField
         label={t("wordFreq.top")}
         id="wf-top"
-        type="number"
         value={top}
-        onChange={(e) => setTop(e.target.value)}
+        onValueChange={(value) => setTop(value == null ? "" : String(value))}
         className="max-w-xs font-mono"
       />
       <p className="text-xs text-neutral-10">
@@ -905,26 +904,23 @@ export function RandomNumberRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input
+        <NumberField
           label={t("rand.min")}
           id="rn-min"
-          type="number"
           value={min}
-          onChange={(e) => setMin(e.target.value)}
+          onValueChange={(value) => setMin(value == null ? "" : String(value))}
         />
-        <Input
+        <NumberField
           label={t("rand.max")}
           id="rn-max"
-          type="number"
           value={max}
-          onChange={(e) => setMax(e.target.value)}
+          onValueChange={(value) => setMax(value == null ? "" : String(value))}
         />
-        <Input
+        <NumberField
           label={t("rand.count")}
           id="rn-count"
-          type="number"
           value={count}
-          onChange={(e) => setCount(e.target.value)}
+          onValueChange={(value) => setCount(value == null ? "" : String(value))}
         />
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
@@ -967,19 +963,17 @@ export function DiceRollRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <NumberField
           label={t("dice.sides")}
           id="dice-sides"
-          type="number"
           value={sides}
-          onChange={(e) => setSides(e.target.value)}
+          onValueChange={(value) => setSides(value == null ? "" : String(value))}
         />
-        <Input
+        <NumberField
           label={t("dice.count")}
           id="dice-count"
-          type="number"
           value={count}
-          onChange={(e) => setCount(e.target.value)}
+          onValueChange={(value) => setCount(value == null ? "" : String(value))}
         />
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
@@ -1041,12 +1035,11 @@ export function JwtGenerateRunner({ toolId }: { toolId: string }) {
           onChange={(e) => setSecret(e.target.value)}
           className="font-mono"
         />
-        <Input
+        <NumberField
           label={t("jwt.exp")}
           id="jwt-exp"
-          type="number"
           value={expiresInSec}
-          onChange={(e) => setExp(e.target.value)}
+          onValueChange={(value) => setExp(value == null ? "" : String(value))}
           className="font-mono"
         />
       </div>
@@ -1173,20 +1166,18 @@ export function SecretGenerateRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input
+        <NumberField
           label="Bytes"
           id="sg-bytes"
-          type="number"
           value={bytes}
-          onChange={(e) => setBytes(e.target.value)}
+          onValueChange={(value) => setBytes(value == null ? "" : String(value))}
           className="font-mono"
         />
-        <Input
+        <NumberField
           label={t("randomString.count")}
           id="sg-count"
-          type="number"
           value={count}
-          onChange={(e) => setCount(e.target.value)}
+          onValueChange={(value) => setCount(value == null ? "" : String(value))}
           className="font-mono"
         />
         <RunnerSelect
@@ -1314,12 +1305,11 @@ export function LoremWordsRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <Input
+      <NumberField
         label="Count"
         id="lw-count"
-        type="number"
         value={count}
-        onChange={(e) => setCount(e.target.value)}
+        onValueChange={(value) => setCount(value == null ? "" : String(value))}
         className="max-w-xs font-mono"
       />
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>

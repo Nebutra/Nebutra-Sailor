@@ -5,7 +5,7 @@
  * P2 specialized runners — unit convert, codec/text leftovers, CN/life, image helpers.
  * @see https://github.com/Nebutra/Nebutra-Sailor/issues/256
  */
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, CopyButton, Dropzone, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { type ChangeEvent, useCallback, useMemo, useState } from "react";
 import {
   RunnerError,
@@ -173,15 +173,12 @@ export function UnitConvertRunner({
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-[1fr_auto_1fr_auto] sm:items-end">
-        <Input
+        <NumberField
           label="数值"
           id={`unit-${family}-value`}
-          type="number"
           step="any"
           value={value}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setValue(e.target.value)
-          }
+          onValueChange={(value) => setValue(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
         <RunnerSelect label="从" id={`unit-${family}-from`} value={from} onChange={setFrom}>
@@ -275,14 +272,16 @@ export function UnicodeRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "转换中…" : "转换"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制
-        </Button>
+          size="default"
+          value={result}
+          label="复制"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[120px] whitespace-pre-wrap break-all">{result}</RunnerOutput>
@@ -335,14 +334,16 @@ export function QueryStringRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "处理中…" : mode === "parse" ? "解析" : "序列化"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制
-        </Button>
+          size="default"
+          value={result}
+          label="复制"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[100px] whitespace-pre-wrap break-all">{result}</RunnerOutput>
@@ -410,23 +411,13 @@ export function ImageBase64Runner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div
-        className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border bg-background p-6 text-sm text-muted-foreground"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={(e) => {
-          e.preventDefault();
-          onFile(e.dataTransfer.files?.[0] ?? null);
-        }}
-      >
-        <input
-          type="file"
-          accept="image/*"
-          data-allow-native
-          className="mb-2 text-sm"
-          onChange={(e) => onFile(e.target.files?.[0] ?? null)}
-        />
-        <p>{fileName ? `已选：${fileName}` : "拖拽图片，或粘贴 data URL / Base64"}</p>
-      </div>
+      <Dropzone
+        label={fileName ? `已选：${fileName}` : "拖拽图片，或点击选择"}
+        description="也可以在下方粘贴 data URL / Base64"
+        accept="image/*"
+        paste
+        onFiles={([file]) => onFile(file ?? null)}
+      />
       <Textarea
         id="img64-text"
         label="Base64 / data URL"
@@ -611,14 +602,16 @@ export function TextReplaceRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "替换中…" : "替换"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制结果
-        </Button>
+          size="default"
+          value={result}
+          label="复制结果"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[100px] whitespace-pre-wrap">{result}</RunnerOutput>
@@ -697,14 +690,16 @@ export function LinePrefixSuffixRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "处理中…" : "应用"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制
-        </Button>
+          size="default"
+          value={result}
+          label="复制"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[100px] whitespace-pre-wrap">{result}</RunnerOutput>
@@ -755,14 +750,16 @@ export function FullwidthHalfwidthRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "转换中…" : "转换"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={!result}
-          onClick={() => void navigator.clipboard.writeText(result)}
-        >
-          复制
-        </Button>
+          size="default"
+          value={result}
+          label="复制"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="min-h-[80px] whitespace-pre-wrap">{result}</RunnerOutput>
@@ -808,28 +805,22 @@ export function NanoidRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input
+        <NumberField
           label="长度"
           id="nanoid-size"
-          type="number"
           min={4}
           max={64}
           value={size}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setSize(e.target.value)
-          }
+          onValueChange={(value) => setSize(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
-        <Input
+        <NumberField
           label="数量"
           id="nanoid-count"
-          type="number"
           min={1}
           max={100}
           value={count}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setCount(e.target.value)
-          }
+          onValueChange={(value) => setCount(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
         <Input
@@ -847,14 +838,16 @@ export function NanoidRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" disabled={loading} onClick={() => void run()}>
           {loading ? "生成中…" : "生成"}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
           disabled={ids.length === 0}
-          onClick={() => void navigator.clipboard.writeText(ids.join("\n"))}
-        >
-          复制全部
-        </Button>
+          size="default"
+          value={ids.join("\n")}
+          label="复制全部"
+          copiedLabel="已复制"
+          successMessage="已复制"
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       {ids.length > 0 ? (
@@ -923,37 +916,28 @@ export function MortgageRunner({ toolId }: { toolId: string }) {
   return (
     <div className="space-y-4">
       <div className="grid gap-3 sm:grid-cols-2">
-        <Input
+        <NumberField
           label="贷款本金（元）"
           id="mortgage-p"
-          type="number"
           value={principal}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setPrincipal(e.target.value)
-          }
+          onValueChange={(value) => setPrincipal(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
-        <Input
+        <NumberField
           label="年利率 %"
           id="mortgage-rate"
-          type="number"
-          step="0.01"
+          step={0.01}
           value={rate}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setRate(e.target.value)
-          }
+          onValueChange={(value) => setRate(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
-        <Input
+        <NumberField
           label="年限"
           id="mortgage-years"
-          type="number"
           min={1}
           max={50}
           value={years}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setYears(e.target.value)
-          }
+          onValueChange={(value) => setYears(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
         <RunnerSelect label="还款方式" id="mortgage-method" value={method} onChange={setMethod}>
@@ -1046,40 +1030,31 @@ export function LunarRunner({ toolId }: { toolId: string }) {
         <option value="lunar_to_solar">农历 → 公历</option>
       </RunnerSelect>
       <div className="grid gap-3 sm:grid-cols-3">
-        <Input
+        <NumberField
           label="年"
           id="lunar-y"
-          type="number"
           min={1900}
           max={2100}
           value={year}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setYear(e.target.value)
-          }
+          onValueChange={(value) => setYear(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
-        <Input
+        <NumberField
           label="月"
           id="lunar-m"
-          type="number"
           min={1}
           max={12}
           value={month}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setMonth(e.target.value)
-          }
+          onValueChange={(value) => setMonth(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
-        <Input
+        <NumberField
           label="日"
           id="lunar-d"
-          type="number"
           min={1}
           max={31}
           value={day}
-          onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-            setDay(e.target.value)
-          }
+          onValueChange={(value) => setDay(value == null ? "" : String(value))}
           className="font-mono tabular-nums"
         />
       </div>

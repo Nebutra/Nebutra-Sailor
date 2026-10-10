@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -138,7 +138,6 @@ describe("TeamMemberList (react-query integration)", () => {
       return Promise.resolve(jsonResponse({}, { status: 404 }));
     });
     vi.stubGlobal("fetch", fetchMock);
-    vi.spyOn(window, "confirm").mockReturnValue(true);
 
     const user = userEvent.setup();
     renderWithClient(<TeamMemberList orgId={ORG_ID} />);
@@ -149,6 +148,9 @@ describe("TeamMemberList (react-query integration)", () => {
 
     // Remove Vic (admin removing another member).
     await user.click(screen.getByRole("button", { name: /Remove Vic Viewer from organization/i }));
+    // Confirmation is an in-app AlertDialog, not window.confirm.
+    const confirmDialog = await screen.findByRole("alertdialog", { name: "Remove Vic Viewer" });
+    await user.click(within(confirmDialog).getByRole("button", { name: "Remove" }));
 
     // Optimistic update removes the row immediately.
     await waitFor(() => {

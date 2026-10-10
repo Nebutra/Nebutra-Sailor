@@ -199,11 +199,14 @@ describe("overlay primitive focus governance", () => {
     expect(source).not.toMatch(/\bborder-green-/u);
   });
 
-  it("keeps menubar root out of the tab order so the surface cannot show native focus chrome", () => {
+  it("builds menubar on Base UI so roving focus and the root's tab order are not hand-rolled", () => {
     const source = primitiveSourceFor("menubar.tsx");
 
-    expect(source).toMatch(/tabIndex=\{-1\}\s+role="menubar"/u);
-    expect(source).toMatch(/role="menuitem"\s+tabIndex=\{0\}/u);
+    // Behaviour (root out of the tab order, one roving trigger) is asserted in
+    // menubar-keyboard.test.tsx; here we pin that it comes from the headless
+    // base rather than a bespoke tabIndex scheme.
+    expect(source).toMatch(/from "@base-ui\/react\/menubar"/u);
+    expect(source).not.toMatch(/tabIndex=\{/u);
     expect(source).toMatch(/overlayClassNames\.menuSurface/u);
   });
 

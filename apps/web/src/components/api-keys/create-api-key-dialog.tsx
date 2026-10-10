@@ -16,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
   Input,
+  useConfirm,
   useCopyToClipboard,
 } from "@nebutra/ui/primitives";
 import { useEffect, useState } from "react";
@@ -57,6 +58,9 @@ interface CreateApiKeyDialogProps {
     copy?: string;
     copied?: string;
     confirmClose?: string;
+    confirmCloseTitle?: string;
+    confirmCloseAction?: string;
+    confirmCloseCancel?: string;
   };
 }
 
@@ -104,7 +108,11 @@ export function CreateApiKeyDialog({
     copy: labels.copy ?? "Copy",
     copied: labels.copied ?? "Copied",
     confirmClose: labels.confirmClose ?? "Closing hides this key forever. Make sure it is stored.",
+    confirmCloseTitle: labels.confirmCloseTitle ?? "Close Without the Key",
+    confirmCloseAction: labels.confirmCloseAction ?? "Close",
+    confirmCloseCancel: labels.confirmCloseCancel ?? "Keep Open",
   };
+  const [confirm, confirmDialog] = useConfirm();
 
   const submitting = form.formState.isSubmitting;
 
@@ -131,9 +139,17 @@ export function CreateApiKeyDialog({
     await copy(created.key);
   }
 
-  function attemptClose() {
+  async function attemptClose() {
     if (created) {
-      const ok = window.confirm(text.confirmClose);
+      // An AlertDialog nested inside this Dialog: Escape and outside clicks
+      // dismiss only the topmost layer, so the key stays on screen.
+      const ok = await confirm({
+        title: text.confirmCloseTitle,
+        description: text.confirmClose,
+        confirmLabel: text.confirmCloseAction,
+        cancelLabel: text.confirmCloseCancel,
+        tone: "destructive",
+      });
       if (!ok) return;
     }
     onOpenChange(false);
@@ -141,7 +157,7 @@ export function CreateApiKeyDialog({
 
   function handleOpenChange(next: boolean) {
     if (!next) {
-      attemptClose();
+      void attemptClose();
       return;
     }
     onOpenChange(true);
@@ -261,6 +277,7 @@ export function CreateApiKeyDialog({
             </form>
           </Form>
         )}
+        {confirmDialog}
       </DialogContent>
     </Dialog>
   );

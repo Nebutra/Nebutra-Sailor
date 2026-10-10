@@ -4,7 +4,7 @@
  * Processor batch surface UI — shared by tools with `batch` metadata.
  * Polls GET /api/v1/batches/:id; never inlines sibling failure isolation.
  */
-import { Button } from "@nebutra/ui/primitives";
+import { Button, Dropzone } from "@nebutra/ui/primitives";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RunnerError, RunnerNote, RunnerPanel } from "@/components/runner-ui";
 
@@ -165,9 +165,9 @@ export function BatchQueue({
     }
   };
 
-  const onFiles = (list: FileList | null) => {
-    if (!list?.length) return;
-    setPendingFiles(Array.from(list).slice(0, maxItems));
+  const onFiles = (list: File[]) => {
+    if (!list.length) return;
+    setPendingFiles(list.slice(0, maxItems));
   };
 
   const runFiles = () => {
@@ -246,14 +246,14 @@ export function BatchQueue({
 
       {accept === "files" ? (
         <RunnerPanel title="Files">
-          <input
-            data-allow-native
-            type="file"
+          <Dropzone
             multiple
-            className="block w-full text-sm"
-            onChange={(e) => onFiles(e.target.files)}
+            maxFiles={maxItems}
+            paste
+            label="Drop files here or browse"
+            description={`${pendingFiles.length} file(s) selected · up to ${maxItems}`}
+            onFiles={onFiles}
           />
-          <p className="mt-2 text-xs text-neutral-10">{pendingFiles.length} file(s) selected</p>
           <Button
             type="button"
             className="mt-3"

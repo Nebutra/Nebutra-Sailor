@@ -6,8 +6,8 @@
  * without inventing a one-off UI per tool.
  */
 
-import { ArrowDown, ArrowUpRight, Check, Copy } from "@nebutra/icons";
-import { Button } from "@nebutra/ui/primitives";
+import { ArrowDown, ArrowUpRight } from "@nebutra/icons";
+import { Button, CopyButton } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { base64ToBytes } from "@/components/result-panels-utils";
@@ -265,24 +265,21 @@ export function CodeDualPane({
   downloadName?: string;
 }) {
   const t = useTranslations("runners.common");
-  const [copied, setCopied] = useState(false);
-
-  const copy = useCallback(async () => {
-    if (!output) return;
-    await navigator.clipboard.writeText(output);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1200);
-    onCopy?.();
-  }, [output, onCopy]);
 
   return (
     <div className="space-y-2">
       {output ? (
         <div className="flex flex-wrap gap-2">
-          <Button type="button" variant="outline" size="sm" onClick={() => void copy()}>
-            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            {copied ? t("copied") : t("copy")}
-          </Button>
+          <CopyButton
+            variant="outline"
+            size="sm"
+            value={output}
+            label={t("copy")}
+            copiedLabel={t("copied")}
+            successMessage={t("copied")}
+            showToast={false}
+            {...(onCopy ? { onCopied: () => onCopy() } : {})}
+          />
           {onDownload || downloadName ? (
             <Button
               type="button"
@@ -329,23 +326,18 @@ export function TextResultActions({
   contentType?: string;
 }) {
   const t = useTranslations("runners.common");
-  const [copied, setCopied] = useState(false);
   if (!text) return null;
   return (
     <div className="flex flex-wrap gap-2">
-      <Button
-        type="button"
+      <CopyButton
         variant="outline"
         size="sm"
-        onClick={() => {
-          void navigator.clipboard.writeText(text);
-          setCopied(true);
-          window.setTimeout(() => setCopied(false), 1200);
-        }}
-      >
-        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-        {copied ? t("copied") : t("copy")}
-      </Button>
+        value={text}
+        label={t("copy")}
+        copiedLabel={t("copied")}
+        successMessage={t("copied")}
+        showToast={false}
+      />
       {downloadName ? (
         <Button
           type="button"

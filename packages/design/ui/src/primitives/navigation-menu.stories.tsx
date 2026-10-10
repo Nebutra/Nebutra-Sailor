@@ -17,7 +17,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Hover/click-driven top-level site navigation with flyout panels — one `value` is open across the whole menu at a time (uncontrolled by default, or pass `value` + `onValueChange`). Use it for marketing-site primary nav with rich flyout content; for a plain link row with no flyout, a `<nav>` of `Link`s is enough and this component is overkill.",
+          "Click- and hover-intent top-level site navigation with flyout panels (Base UI NavigationMenu: Esc, arrow keys, aria-expanded, portalled viewport) — one `value` is open across the whole menu at a time (uncontrolled by default, or pass `value` + `onValueChange`). Use it for marketing-site primary nav with rich flyout content; for a plain link row with no flyout, a `<nav>` of `Link`s is enough and this component is overkill.",
       },
     },
   },
@@ -95,7 +95,10 @@ export const Default: Story = {
     const trigger = canvas.getByRole("button", { name: /Product/i });
 
     await userEvent.click(trigger);
-    expect(canvas.getByText("Sailor")).toBeVisible();
+    // The flyout is portalled into the shared viewport, outside the canvas.
+    const page = within(canvasElement.ownerDocument.body);
+    expect(await page.findByText("Sailor")).toBeVisible();
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
   },
 };
 

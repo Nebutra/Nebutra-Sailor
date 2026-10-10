@@ -48,10 +48,6 @@
       {
         "file": "packages/design/ui/src/primitives/stepper.tsx",
         "count": 1
-      },
-      {
-        "file": "packages/design/ui/src/primitives/tree.tsx",
-        "count": 1
       }
     ]
   },
@@ -2466,6 +2462,462 @@
       },
       {
         "file": "apps/web/src/components/startup-os/startup-command-center.tsx",
+        "count": 1
+      }
+    ]
+  },
+  "rawNumberFileInputs": {
+    "allowlist": [
+      {
+        "file": "packages/design/ui/src/primitives/input.stories.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/forge/src/components/generic-invoke-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/image-tool-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/journey-shells.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/p1-runners.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/result-panels.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/w3-csv-columns-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/w3-image-rotate-flip-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/kuanlan/src/components/IdPhotoStudio.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/canvas/add-node-menu.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/account/avatar-upload-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/documents/document-task-uploader.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/onboarding/profile-setup-step.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/organizations/organization-logo-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-builder-home.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/catalog/demos/input-with-addons-demo.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/components/ai-prompt-box/prompt-input.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/slider.stories.tsx",
+        "count": 1
+      }
+    ]
+  },
+  "titleTooltips": {
+    "allowlist": [
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/_components/token-rows.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/web/src/components/startup-os/company-tower/field-card.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/patterns/data-table/components/data-table-toolbar.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/primitives/reaction-chip.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/forge/src/components/catalog-converge-runners.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-share-actions.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/para/src/components/home/launch-hero.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/components/auth-actions.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/components/brand-marks.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/router/src/components/market-banner-carousel.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/billing/billing-self-service.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/components/notifications/notification-center.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/patterns/data-table/components/data-table-faceted-filter.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/radio-group.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/admin/src/app/fleet/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/admin/src/app/staff/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/admin/src/components/console-shell.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/admin/src/components/console-tabs.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/admin/src/components/resource-table.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/app/(components)/components/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/_components/primitives.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/color/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/app/(tokens)/tokens/shape/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/components/icon-gallery.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/p0-runners.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/specimens/jwt-token-specimen.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(status)/status/history/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-author-avatar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-code-block.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-copy-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/event-bus-glyph.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/generation-context-glyph.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/vc/VcDirectory.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/status/status-page-view.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/status/uptime-bar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/nebutra/home/sailor-cli.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/canvas/node-config.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/canvas/para-node.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/home/agent-composer.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/shell/app-sidebar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/console-shell.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/market-footer.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/market-home.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/product-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/usage-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/(app)/admin/platform/fleet/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/providers/design-system-shell.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/admin-platform/console-shell.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/admin-platform/console-tabs.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/admin-platform/resource-table.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/audit/audit-log-table.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/command-palette/mode-pills.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/ErrorBoundary.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/notifications/notification-inbox-preview.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/notifications/notification-preference-matrix.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/startup-chat-panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-chart.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/data-table/components/data-table-row.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/sidebar-nav/sidebar-nav.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/avatar-extended.stories.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/code-block-language-icon.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/color-picker.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/copy-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/file-attachment.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/github-calendar.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/status-dot.tsx",
+        "count": 1
+      }
+    ]
+  },
+  "rawClipboardWrites": {
+    "allowlist": [
+      {
+        "file": "apps/web/src/components/startup-os/startup-chat-panel.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/patterns/data-table/hooks/use-data-table.ts",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/code-block.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/admin/src/components/add-account-dialog.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/design/src/components/icon-gallery.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/base64-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/codec-mode-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/dns-leak-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/mermaid-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/text-transform-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-code-block.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-copy-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/blog-share-actions.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/HeroInstallPill.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/InteractiveChangelog.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/refer-waitlist-form.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/copy-field.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/keys-client.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/product-detail.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/page-actions.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/admin-platform/add-account-dialog.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/settings/security/two-factor-block.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/vite-app/routes/welcome.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/catalog/demos/dialog-share-demo.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/data-table/hooks/use-cell-selection.ts",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/kinetic-marketing.tsx",
         "count": 1
       }
     ]

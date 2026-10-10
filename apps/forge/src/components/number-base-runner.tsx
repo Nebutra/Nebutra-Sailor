@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@nebutra/ui/primitives";
+import { Button, Input, NumberField } from "@nebutra/ui/primitives";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerPanel } from "@/components/runner-ui";
 
@@ -75,29 +75,27 @@ export function NumberBaseRunner({ toolId }: { toolId: string }) {
         placeholder="数值"
       />
       <div className="grid grid-cols-2 gap-3">
-        <Input
+        <NumberField
           label="从进制"
           id="number-base-from"
-          type="number"
           min={2}
           max={36}
           value={fromBase}
-          onChange={(e) => {
-            const n = Number(e.target.value);
+          onValueChange={(value) => {
+            const n = value ?? 0;
             setFromBase(n);
             void convert({ fromBase: n });
           }}
           className="font-mono"
         />
-        <Input
+        <NumberField
           label="到进制"
           id="number-base-to"
-          type="number"
           min={2}
           max={36}
           value={toBase}
-          onChange={(e) => {
-            const n = Number(e.target.value);
+          onValueChange={(value) => {
+            const n = value ?? 0;
             setToBase(n);
             void convert({ toBase: n });
           }}

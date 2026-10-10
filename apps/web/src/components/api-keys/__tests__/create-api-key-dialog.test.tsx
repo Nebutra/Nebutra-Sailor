@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { CreateApiKeyDialog } from "@/components/api-keys/create-api-key-dialog";
@@ -120,14 +120,19 @@ describe("CreateApiKeyDialog", () => {
       expect(screen.getByText(/nbk_live_secretvalue123/)).toBeInTheDocument();
     });
 
-    const confirmSpy = vi.spyOn(window, "confirm").mockReturnValue(false);
+    // The guard is an in-app AlertDialog nested in the dialog, not window.confirm.
     await user.click(footerCloseButton());
+    const guard = await screen.findByRole("alertdialog", { name: /close without the key/i });
+    expect(guard).toHaveAccessibleDescription(/hides this key forever/i);
+    await user.click(within(guard).getByRole("button", { name: "Keep Open" }));
 
-    expect(confirmSpy).toHaveBeenCalled();
+    await waitFor(() => expect(screen.queryByRole("alertdialog")).not.toBeInTheDocument());
     expect(onOpenChange).not.toHaveBeenCalledWith(false);
+    expect(screen.getByText(/nbk_live_secretvalue123/)).toBeInTheDocument();
 
-    confirmSpy.mockReturnValue(true);
     await user.click(footerCloseButton());
-    expect(onOpenChange).toHaveBeenCalledWith(false);
+    const again = await screen.findByRole("alertdialog");
+    await user.click(within(again).getByRole("button", { name: "Close" }));
+    await waitFor(() => expect(onOpenChange).toHaveBeenCalledWith(false));
   });
 });

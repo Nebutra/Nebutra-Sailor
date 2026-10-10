@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, Textarea } from "@nebutra/ui/primitives";
+import { Button, Card, CopyButton, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { RunnerError, RunnerNote } from "@/components/runner-ui";
@@ -108,13 +108,15 @@ export function WordCountRunner({ toolId }: { toolId: string }) {
       />
 
       <div className="flex flex-wrap gap-2">
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
-          onClick={() => void navigator.clipboard.writeText(text)}
-        >
-          {t("wordCount.copyText")}
-        </Button>
+          size="default"
+          value={text}
+          label={t("wordCount.copyText")}
+          copiedLabel={t("common.copied")}
+          successMessage={t("common.copied")}
+          showToast={false}
+        />
         <Button type="button" variant="ghost" onClick={() => setText("")}>
           {t("wordCount.clear")}
         </Button>

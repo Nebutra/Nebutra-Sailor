@@ -14,7 +14,7 @@
  * calendar that produced it is a number nobody can reconcile.
  */
 import { ArrowRight, Calendar } from "@nebutra/icons";
-import { Button, Checkbox, DatePicker, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, Checkbox, DatePicker, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import {
@@ -256,13 +256,12 @@ export function W3BusinessDayShiftRunner({ toolId }: { toolId: string }) {
           onValueChange={setStartDate}
         />
         {mode === "shift" ? (
-          <Input
+          <NumberField
             id={`${uid}-days`}
-            type="number"
             step={1}
             label={t("businessDayShift.days")}
             value={days}
-            onChange={(e) => setDays(e.target.value)}
+            onValueChange={(value) => setDays(value == null ? "" : String(value))}
             className="w-40"
           />
         ) : (

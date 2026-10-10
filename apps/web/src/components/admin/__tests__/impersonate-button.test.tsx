@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createQueryWrapper } from "@/test/query-wrapper";
 
@@ -11,15 +11,18 @@ vi.mock("next/navigation", () => ({
 }));
 
 const fetchMock = vi.fn();
-const confirmMock = vi.fn();
 
 beforeEach(() => {
   fetchMock.mockReset();
   refreshMock.mockReset();
-  confirmMock.mockReset();
   globalThis.fetch = fetchMock as unknown as typeof fetch;
-  globalThis.confirm = confirmMock as unknown as typeof confirm;
 });
+
+/** Open the in-app confirmation and answer it. */
+async function answerConfirm(choice: "Start Impersonating" | "Cancel") {
+  const dialog = await screen.findByRole("alertdialog");
+  fireEvent.click(within(dialog).getByRole("button", { name: choice }));
+}
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -33,18 +36,18 @@ describe("ImpersonateButton", () => {
     expect(screen.getByRole("button", { name: /impersonate/i })).toBeTruthy();
   });
 
-  it("does nothing when the user cancels confirm()", () => {
-    confirmMock.mockReturnValue(false);
+  it("asks in an in-app alert dialog and does nothing when cancelled", async () => {
     render(<ImpersonateButton userId="u_1" userLabel="Alice" />, { wrapper: createQueryWrapper() });
 
-    fireEvent.click(screen.getByRole("button", { name: /impersonate/i }));
+    fireEvent.click(screen.getByRole("button", { name: "Impersonate Alice" }));
 
-    expect(confirmMock).toHaveBeenCalled();
+    expect(await screen.findByRole("alertdialog", { name: "Impersonate Alice" })).toBeTruthy();
+    await answerConfirm("Cancel");
+    await waitFor(() => expect(screen.queryByRole("alertdialog")).toBeNull());
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("posts to /api/admin/impersonate and refreshes on success", async () => {
-    confirmMock.mockReturnValue(true);
     fetchMock.mockResolvedValue({
       ok: true,
       status: 200,
@@ -54,7 +57,8 @@ describe("ImpersonateButton", () => {
     render(<ImpersonateButton userId="u_target" userLabel="Bob" />, {
       wrapper: createQueryWrapper(),
     });
-    fireEvent.click(screen.getByRole("button", { name: /impersonate/i }));
+    fireEvent.click(screen.getByRole("button", { name: "Impersonate Bob" }));
+    await answerConfirm("Start Impersonating");
 
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith(
@@ -70,7 +74,6 @@ describe("ImpersonateButton", () => {
   });
 
   it("renders an error message when impersonation fails", async () => {
-    confirmMock.mockReturnValue(true);
     fetchMock.mockResolvedValue({
       ok: false,
       status: 403,
@@ -80,7 +83,8 @@ describe("ImpersonateButton", () => {
     render(<ImpersonateButton userId="u_target" userLabel="Bob" />, {
       wrapper: createQueryWrapper(),
     });
-    fireEvent.click(screen.getByRole("button", { name: /impersonate/i }));
+    fireEvent.click(screen.getByRole("button", { name: "Impersonate Bob" }));
+    await answerConfirm("Start Impersonating");
 
     await waitFor(() => {
       expect(screen.getByRole("alert")).toBeTruthy();
@@ -89,7 +93,6 @@ describe("ImpersonateButton", () => {
   });
 
   it("disables the button while the request is in flight", async () => {
-    confirmMock.mockReturnValue(true);
     let resolveFetch: (val: Response) => void = () => {};
     fetchMock.mockReturnValue(
       new Promise<Response>((res) => {
@@ -100,8 +103,9 @@ describe("ImpersonateButton", () => {
     render(<ImpersonateButton userId="u_target" userLabel="Bob" />, {
       wrapper: createQueryWrapper(),
     });
-    const trigger = screen.getByRole("button", { name: /impersonate/i });
+    const trigger = screen.getByRole("button", { name: "Impersonate Bob" });
     fireEvent.click(trigger);
+    await answerConfirm("Start Impersonating");
 
     await waitFor(() => {
       expect((trigger as HTMLButtonElement).disabled).toBe(true);

@@ -175,6 +175,7 @@ export * from "./dot-pattern";
 export * from "./dotted-map";
 export * from "./drawer";
 export * from "./dropdown-menu";
+export * from "./dropzone";
 /**
  * @registry https://ui.nebutra.com/r/dynamic-island-toc.json
  * @distribution dual-track (npm + shadcn registry) from 2026-05-14.
@@ -314,6 +315,7 @@ export * from "./navigation-menu";
 export { navigationMenuTriggerStyle } from "./navigation-menu-variants";
 export * from "./noise-pattern-card";
 export * from "./notification-message-list";
+export * from "./number-field";
 export * from "./pagination";
 export * from "./popover";
 /**
@@ -440,6 +442,7 @@ export {
   TooltipTrigger,
 } from "./tooltip";
 export * from "./tree";
+export * from "./use-confirm";
 export * from "./warp-background";
 export * from "./wave-animation";
 export * from "./word-fade-in";

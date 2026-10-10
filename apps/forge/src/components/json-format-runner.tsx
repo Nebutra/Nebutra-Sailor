@@ -1,7 +1,6 @@
 "use client";
 
-import { Check, Copy } from "@nebutra/icons";
-import { Button, Textarea } from "@nebutra/ui/primitives";
+import { Button, CopyButton, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { RunnerError, RunnerNote, RunnerSelect } from "@/components/runner-ui";
@@ -49,7 +48,6 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
   const [status, setStatus] = useState("");
   const [valid, setValid] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const charCount = text.length;
   const lineCount = useMemo(() => (text ? text.split(/\r?\n/).length : 0), [text]);
@@ -193,18 +191,15 @@ export function JsonFormatRunner({ toolId }: { toolId: string }) {
         >
           {loading ? t("common.running") : t("jsonFormat.serverVerify")}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="ghost"
-          onClick={() => {
-            void navigator.clipboard.writeText(text);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1200);
-          }}
-        >
-          {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          {copied ? t("common.copied") : t("common.copy")}
-        </Button>
+          size="default"
+          value={text}
+          label={t("common.copy")}
+          copiedLabel={t("common.copied")}
+          successMessage={t("common.copied")}
+          showToast={false}
+        />
         <Button
           type="button"
           variant="ghost"

@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import "@testing-library/jest-dom/vitest";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -342,7 +342,6 @@ describe("DesignSystemShell (react-query integration)", () => {
       return Promise.resolve(jsonResponse({}, { status: 404 }));
     });
     vi.stubGlobal("fetch", fetchMock);
-    vi.spyOn(window, "prompt").mockReturnValue("First Thread");
 
     const user = userEvent.setup();
     renderWithClient(
@@ -360,6 +359,13 @@ describe("DesignSystemShell (react-query integration)", () => {
     });
 
     await user.click(screen.getByRole("button", { name: "newProject" }));
+
+    // The name is collected by an in-app prompt dialog, not window.prompt.
+    const dialog = await screen.findByRole("dialog", { name: "newProject" });
+    const field = within(dialog).getByLabelText("newProjectPlaceholder");
+    await user.clear(field);
+    await user.type(field, "First Thread");
+    await user.click(within(dialog).getByRole("button", { name: "actions.confirm" }));
 
     // POST fired, then the threads query was invalidated → a second GET.
     await waitFor(() => {
