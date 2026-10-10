@@ -4545,7 +4545,9 @@
         "microLanding.architecture.database.title": "9dac92070a9af7135c78a3fc08a08f2d",
         "nav.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "refer.infrastructure.api.eyebrow": "db974238714ca8de634a7ce1d083a14f",
-        "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e"
+        "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e",
+        "roadmapPage.bets.radar.title": "37c5ec076982fd7fe6b8af4e7edc86a5",
+        "roadmapPage.layers.l7.line": "f005ff4db33696cf6769e6926d7be829"
       },
       "zh-Hant": {
         "footer.links.discord": "8f5cc6430613f1c12f36965050bb7197",
@@ -4573,7 +4575,9 @@
         "microLanding.architecture.database.title": "9dac92070a9af7135c78a3fc08a08f2d",
         "nav.github": "d3b7c913cd04ebfec0e9ec32cb6fd58c",
         "refer.infrastructure.api.eyebrow": "db974238714ca8de634a7ce1d083a14f",
-        "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e"
+        "refer.infrastructure.cicd.eyebrow": "a91e4ff4bf49e8de7de911d95062662e",
+        "roadmapPage.bets.radar.title": "37c5ec076982fd7fe6b8af4e7edc86a5",
+        "roadmapPage.layers.l7.line": "f005ff4db33696cf6769e6926d7be829"
       }
     },
     "router": {

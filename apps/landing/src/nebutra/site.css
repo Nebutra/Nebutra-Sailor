@@ -146,3 +146,88 @@ html[data-brand="nebutra-site"] .inv-core {
     linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
     var(--brand-decorative-signature) border-box;
 }
+
+/*
+ * /roadmap — the timeline's progress beam. A 1px signature line over the
+ * hairline track, drawn by a view timeline on `.rm-timeline`: it fills from
+ * the moment the reader's eye line (mid-viewport) meets the first phase to
+ * the moment it leaves the last. No script, off the main thread, reversible
+ * with scroll. It is a progress indicator, not a second signature motion:
+ * linear, no glow, no easing. Unsupported browsers get beam.tsx's observer
+ * fallback (`data-beam="io"`); reduced motion or no script, the beam is
+ * simply drawn in full.
+ */
+html[data-brand="nebutra-site"] .rm-beam {
+  background-image: var(--brand-decorative-signature);
+  transform-origin: center top;
+}
+@keyframes rm-beam-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-brand="nebutra-site"] .rm-timeline {
+      view-timeline: --rm-timeline block;
+    }
+    html[data-brand="nebutra-site"] .rm-beam {
+      animation: rm-beam-fill linear both;
+      animation-timeline: --rm-timeline;
+      animation-range: cover 50vh cover calc(100% - 50vh);
+    }
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-brand="nebutra-site"] .rm-timeline[data-beam="io"] .rm-beam {
+    transform: scaleY(var(--rm-beam, 0));
+    transition: transform var(--duration-reveal) linear;
+  }
+}
+
+/*
+ * /roadmap — pointing at a layer in the stack (hover or keyboard focus)
+ * dims the timeline entries that answer to other layers. Desktop with a real
+ * pointer only; on touch and narrow screens both figures stay static.
+ */
+@media (hover: hover) and (min-width: 1024px) {
+  html[data-brand="nebutra-site"] .rm-layer:is(:hover, :focus-within) {
+    background-color: hsl(var(--muted) / 0.5);
+  }
+  html[data-brand="nebutra-site"] .rm:has(.rm-layer:is(:hover, :focus-within)) .rm-item {
+    opacity: 0.35;
+  }
+  html[data-brand="nebutra-site"]
+    .rm:has([data-layer="l1"]:is(:hover, :focus-within))
+    [data-serves="l1"],
+  html[data-brand="nebutra-site"]
+    .rm:has([data-layer="l2"]:is(:hover, :focus-within))
+    [data-serves="l2"],
+  html[data-brand="nebutra-site"]
+    .rm:has([data-layer="l3"]:is(:hover, :focus-within))
+    [data-serves="l3"],
+  html[data-brand="nebutra-site"]
+    .rm:has([data-layer="l4"]:is(:hover, :focus-within))
+    [data-serves="l4"],
+  html[data-brand="nebutra-site"]
+    .rm:has([data-layer="l5"]:is(:hover, :focus-within))
+    [data-serves="l5"],
+  html[data-brand="nebutra-site"]
+    .rm:has([data-layer="l6"]:is(:hover, :focus-within))
+    [data-serves="l6"],
+  html[data-brand="nebutra-site"]
+    .rm:has([data-layer="l7"]:is(:hover, :focus-within))
+    [data-serves="l7"],
+  html[data-brand="nebutra-site"]
+    .rm:has([data-layer="l8"]:is(:hover, :focus-within))
+    [data-serves="l8"] {
+    opacity: 1;
+  }
+}
+/* A chip on the timeline jumps up to its layer; the layer it lands on is marked. */
+html[data-brand="nebutra-site"] .rm-layer:target {
+  background-color: hsl(var(--muted) / 0.5);
+}
