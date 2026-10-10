@@ -108,6 +108,11 @@ const CASES: Case[] = [
     path: "apps/web/src/__lint_guard_probe.tsx",
   },
   {
+    guard: "lint-ui-hardcoded-labels",
+    violation: 'export const C = () => <button type="button" aria-label="Close panel" />;\n',
+    path: "packages/design/ui/src/__lint_guard_probe.tsx",
+  },
+  {
     guard: "lint-locale-lists",
     violation: 'export const LOCALES = ["en", "ja", "de", "fr"] as const;\n',
   },

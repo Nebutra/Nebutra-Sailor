@@ -2608,6 +2608,199 @@
       }
     ]
   },
+  "uiHardcodedLabels": {
+    "description": "Shrink-only. Hard-coded English labels in @nebutra/ui (label props, aria-label, placeholder, sr-only text). New strings go through the labels contract in primitives/ui-labels.tsx; see scripts/lint-ui-hardcoded-labels.mjs.",
+    "allowlist": [
+      {
+        "file": "packages/design/ui/src/primitives/question-tool.tsx",
+        "count": 7
+      },
+      {
+        "file": "packages/design/ui/src/primitives/dynamic-island-toc.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/primitives/feedback.tsx",
+        "count": 4
+      },
+      {
+        "file": "packages/design/ui/src/layout/app-shell.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/primitives/input.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/primitives/pagination.tsx",
+        "count": 3
+      },
+      {
+        "file": "packages/design/ui/src/primitives/assisted-password-confirmation.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/edit-tool.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/primitives/number-field.tsx",
+        "count": 2
+      },
+      {
+        "file": "packages/design/ui/src/components/ai-prompt-box/file-attachment-zone.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/components/ai-prompt-box/prompt-input.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-author-bio.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-comparison-table.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-key-takeaways.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/editorial/editorial-source-index.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/navigation/StoryProgress.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/consent-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/gallery-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/sidebar-nav/sidebar-nav.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/user-menu.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/workspace-switcher.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/agent-plan.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/alert.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/avatar-extended.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/breadcrumb.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/code-block.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/combobox.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/command-menu-parts.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/confirm-dialog.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/copy-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/data-list.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/date-picker.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/dropzone.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/error-message.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/expandable-tabs.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/github-inline-diff.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/mcp-tool.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/multiple-selector.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/reaction-chip.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/scroller.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/search-tool.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/sheet.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/show-more.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/slider-number-flow.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/subagent-tool.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/toaster.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/todo-tool.tsx",
+        "count": 1
+      }
+    ]
+  },
   "noHardReload": {
     "$description": "scripts/lint-no-hard-reload.mjs — refresh server data in place (useRevalidate / invalidateQueries / router.invalidate), not with location.reload(). Each reload entry states why a full load is required. Shrink-only.",
     "reloadAllowlist": [
