@@ -53,7 +53,6 @@ const items = computed(() =>
   border-radius: var(--klc-radius-sm);
   color: var(--kcq-ink-2);
   text-decoration: none;
-  font-family: var(--kcq-font-mono);
   font-size: var(--klc-text-12-font-size);
   line-height: var(--klc-text-12-line-height);
 }

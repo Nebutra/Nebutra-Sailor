@@ -1,11 +1,11 @@
 <!--
-  Nav (landing-benchmark §6.0; research E1, E2, E4, §3 Nav):
-  - transparent over the first band, then the page ground with a 1px hairline once content scrolls
-    under it (no backdrop blur over the live field);
+  Nav (restraint benchmark rule 12, founder decision): six groups, wordmark · Agent · Developers ·
+  Benchmark · GitHub with its star count · Open workstation. Language, theme and the market-feed
+  status live in the footer. "Charts" and "Open source" stay scroll anchors on /home.
+  - always opaque on the page ground, a 1px hairline once content scrolls under it;
   - on /home, the section in view is `aria-current="location"` and a 2px Cobalt bar slides under it
-    (the one sliding indicator on the page: it shows where you are; it jumps under reduced motion);
-  - one small true count: GitHub stars (a dated build-time snapshot, research E2);
-  - the market-feed dot shares the hero's feed state (it only appears once the hero starts it).
+    (it shows where you are; it jumps under reduced motion);
+  - one small true count: GitHub stars (a dated build-time snapshot, research E2).
 -->
 <script setup lang="ts">
 import { useIntersectionObserver, useResizeObserver } from "@vueuse/core";
@@ -15,17 +15,14 @@ import { useI18n } from "vue-i18n";
 import { RouterLink, useRoute } from "vue-router";
 import activity from "../home/community/activity.json";
 import { APP_PATH, publicPath, type PublicLocale } from "../routes";
-import { useMarketFeed } from "../state/use-market-feed";
 import BrandMark from "./brand-mark.vue";
 import KcqIcon from "./kcq-icon.vue";
-import LocaleSwitch from "./locale-switch.vue";
-import ThemeControl from "./theme-control.vue";
 
 const props = defineProps<{ locale: PublicLocale; onHome: boolean; scrolled: boolean }>();
 const { t } = useI18n();
 const route = useRoute();
 const home = computed(() => publicPath("home", props.locale));
-const SECTIONS = ["agent", "rendering", "developers", "community"] as const;
+const SECTIONS = ["agent", "developers"] as const;
 type SectionId = (typeof SECTIONS)[number];
 const sections = computed(() =>
   SECTIONS.map((id) => ({
@@ -68,11 +65,8 @@ function place() {
 }
 watch(active, () => nextTick(place));
 useResizeObserver(list, place);
-
-const feed = useMarketFeed();
-const lastBar = computed(() => feed.quote.value?.date ?? "");
-const feedLabel = computed(() =>
-  t(`nav.feed.${feed.status.value === "idle" ? "connecting" : feed.status.value}`, { date: lastBar.value }),
+const starsLabel = computed(() =>
+  t("nav.stars", { stars: activity.stars, date: activity.fetchedAt.slice(0, 10) }),
 );
 </script>
 <template>
@@ -95,15 +89,6 @@ const feedLabel = computed(() =>
           <li>
             <RouterLink :to="publicPath('benchmark', props.locale)">{{ t("nav.benchmark") }}</RouterLink>
           </li>
-          <li>
-            <a
-              :href="facts.upstream"
-              rel="noopener"
-              :title="t('nav.stars', { stars: activity.stars, date: activity.fetchedAt.slice(0, 10) })"
-            >
-              {{ t("nav.github") }}<sup class="nav-count t-num">★{{ activity.stars }}</sup>
-            </a>
-          </li>
         </ul>
         <span
           class="nav-indicator"
@@ -113,18 +98,13 @@ const feedLabel = computed(() =>
         />
       </nav>
       <div class="site-tools">
-        <!-- Always in the layout, so the dot appearing never shifts the controls. -->
-        <span
-          class="site-feed t-meta"
-          :data-idle="feed.status.value === 'idle' || undefined"
-          :data-status="feed.status.value"
-          :title="feedLabel"
-        >
-          <span class="status-dot" />
-          <span class="visually-hidden">{{ feedLabel }}</span>
-        </span>
-        <LocaleSwitch :locale="props.locale" />
-        <ThemeControl variant="cycle" />
+        <a class="button button-quiet site-github" :href="facts.upstream" rel="noopener" :title="starsLabel">
+          {{ t("nav.github") }}
+          <span class="site-stars t-num" aria-hidden="true">
+            <KcqIcon name="star" :size="12" />{{ activity.stars }}
+          </span>
+          <span class="visually-hidden">{{ starsLabel }}</span>
+        </a>
         <a class="button button-primary site-cta" :href="APP_PATH">
           {{ t("nav.app") }}
           <KcqIcon class="button-arrow" name="arrow" />
@@ -194,14 +174,6 @@ const feedLabel = computed(() =>
     background: var(--kcq-hover);
   }
 }
-/* Basement-style count: small, tabular, tertiary, nudged to the cap height (research E2, J4). */
-.nav-count {
-  margin-left: 0.2em;
-  font-size: var(--klc-text-11-mono-font-size);
-  line-height: 1;
-  color: var(--kcq-ink-2);
-  translate: 0 -0.15em;
-}
 .nav-indicator {
   position: absolute;
   bottom: 0;
@@ -228,22 +200,33 @@ const feedLabel = computed(() =>
 .site-tools {
   display: flex;
   align-items: center;
-  gap: var(--klc-space-4);
+  gap: var(--klc-space-8);
   margin-left: auto;
 }
-.site-feed[data-idle] {
-  visibility: hidden;
-}
-.site-feed {
-  display: inline-grid;
-  place-items: center;
-  width: var(--klc-density-default);
-  height: var(--klc-density-default);
-}
+/* The GitHub star button: label, then the dated count in a pill (as a symbol's last price). */
+.site-github,
 .site-cta {
-  margin-left: var(--klc-space-8);
   min-height: var(--klc-density-default);
   padding-inline: var(--klc-space-12);
+}
+.site-github {
+  gap: var(--klc-space-8);
+  padding-right: var(--klc-space-4);
+}
+.site-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--klc-space-4);
+  min-height: var(--klc-space-24);
+  padding-inline: var(--klc-space-8);
+  border-radius: var(--klc-radius-full);
+  background: var(--kcq-control);
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-12-font-size);
+  line-height: 1;
+}
+.site-cta {
+  margin-left: var(--klc-space-4);
 }
 @media (min-width: 1024px) {
   .site-nav {
