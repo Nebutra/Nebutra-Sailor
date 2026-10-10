@@ -69,7 +69,7 @@ export async function EssayFeature() {
           alt={cover.alt}
           fill
           priority
-          sizes="(min-width: 1280px) 55vw, 100vw"
+          sizes="(min-width: 1280px) 55vw, calc(100vw - 64px)"
           className="object-cover motion-safe:transition-transform motion-safe:duration-reveal motion-safe:ease-brand group-hover:scale-[1.02]"
         />
       </div>

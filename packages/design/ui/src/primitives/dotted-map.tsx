@@ -59,6 +59,11 @@ export interface DottedMapProps extends React.SVGProps<SVGSVGElement> {
  * <DottedMap dotRadius={0.15} mapSamples={8000} />
  * ```
  */
+/** Two decimals, no trailing zeros: the path's coordinates. */
+function round2(n: number): string {
+  return String(Math.round(n * 100) / 100);
+}
+
 export function DottedMap({
   width = 150,
   height = 75,
@@ -103,6 +108,14 @@ export function DottedMap({
     return { xStep: step || 1, yToRowIndex: rowMap };
   }, [points]);
 
+  const dotsPath = points
+    .map((point) => {
+      const rowIndex = yToRowIndex.get(point.y) ?? 0;
+      const offsetX = stagger && rowIndex % 2 === 1 ? xStep / 2 : 0;
+      return `M${round2(point.x + offsetX)} ${round2(point.y)}h0`;
+    })
+    .join("");
+
   return (
     <svg
       aria-hidden="true"
@@ -110,19 +123,22 @@ export function DottedMap({
       className={cn("text-muted-foreground", className)}
       style={{ width: "100%", height: "100%", ...style }}
     >
-      {points.map((point, index) => {
-        const rowIndex = yToRowIndex.get(point.y) ?? 0;
-        const offsetX = stagger && rowIndex % 2 === 1 ? xStep / 2 : 0;
-        return (
-          <circle
-            cx={point.x + offsetX}
-            cy={point.y}
-            r={dotRadius}
-            fill="currentColor"
-            key={`${point.x}-${point.y}-${index}`}
-          />
-        );
-      })}
+      {/*
+        One path, not a <circle> per dot: every dot is a zero-length subpath
+        drawn with a round cap as wide as the dot (stroke-width = 2r), which
+        paints the same disc. A server-rendered map is markup twice over — in
+        the HTML and again in the RSC payload — and 2,600 circles with
+        full-precision coordinates were ~80 KB of each on /investors; this is
+        ~12 bytes a dot. Coordinates keep two decimals, a hundredth of a
+        viewBox unit (sub-pixel at any size the map is drawn).
+      */}
+      <path
+        d={dotsPath}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={dotRadius * 2}
+        strokeLinecap="round"
+      />
       {processedMarkers.map((marker, index) => {
         const rowIndex = yToRowIndex.get(marker.y) ?? 0;
         const offsetX = stagger && rowIndex % 2 === 1 ? xStep / 2 : 0;

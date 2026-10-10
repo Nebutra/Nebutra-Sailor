@@ -45,6 +45,10 @@ import {
 } from "@nebutra/ui/editorial";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import katex from "katex";
+// Math only renders in blog posts, so its stylesheet (and the @font-face rules
+// for KaTeX's twenty faces) loads with this component, not in globals.css on
+// every page.
+import "katex/dist/katex.min.css";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { prepareBlogPortableTextBlocks } from "@/lib/blog-code-highlighting";
