@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input } from "@nebutra/ui/primitives";
+import { Button, NumberField } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import type { AppearanceState } from "./store";
 import { useAppearance } from "./store";
@@ -30,9 +30,8 @@ export function FontSizeStepper({
   const value = state[valueKey];
   const isTheme = value === "theme";
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const next = Number(event.currentTarget.value);
-    if (!Number.isFinite(next)) return;
+  function handleChange(next: number | null) {
+    if (next == null || !Number.isFinite(next)) return;
     const clamped = Math.min(max, Math.max(min, Math.round(next)));
     update({ [valueKey]: clamped } as Partial<AppearanceState>);
   }
@@ -62,18 +61,18 @@ export function FontSizeStepper({
           </>
         ) : (
           <>
-            <Input
-              type="number"
-              inputMode="numeric"
+            <NumberField
+              size="sm"
               min={min}
               max={max}
               step={1}
               value={value}
-              onChange={handleChange}
-              className="h-8 w-20 text-right tabular-nums"
+              onValueChange={handleChange}
+              suffix="px"
+              className="w-32"
+              inputClassName="text-right"
               aria-label={label}
             />
-            <span className="text-xs text-muted-foreground">px</span>
             <Button
               type="button"
               size="sm"

@@ -3,8 +3,8 @@
 /**
  * PDF compress runner — upload → invoke host qpdf/gs → preview + download.
  */
-import { Check, Copy } from "@nebutra/icons";
-import { Button } from "@nebutra/ui/primitives";
+
+import { Button, CopyButton } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
@@ -27,7 +27,6 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
   const [error, setError] = useState("");
   const [meta, setMeta] = useState<Record<string, unknown> | null>(null);
   const [outBase64, setOutBase64] = useState("");
-  const [copied, setCopied] = useState(false);
 
   const onFile = async (file: File | null) => {
     if (!file) return;
@@ -121,18 +120,15 @@ export function PdfCompressRunner({ toolId }: { toolId: string }) {
           {loading ? t("common.running") : t("common.run")}
         </Button>
         {meta ? (
-          <Button
-            type="button"
+          <CopyButton
             variant="ghost"
-            onClick={() => {
-              void navigator.clipboard.writeText(JSON.stringify(meta, null, 2));
-              setCopied(true);
-              setTimeout(() => setCopied(false), 1200);
-            }}
-          >
-            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            {copied ? t("common.copied") : t("common.copy")}
-          </Button>
+            size="default"
+            value={JSON.stringify(meta, null, 2)}
+            label={t("common.copy")}
+            copiedLabel={t("common.copied")}
+            successMessage={t("common.copied")}
+            showToast={false}
+          />
         ) : null}
       </div>
 

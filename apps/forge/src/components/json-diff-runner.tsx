@@ -7,8 +7,8 @@
  * Side-by-side JSON Diff UX — competitor pattern (jsoncompare / jsondiff).
  * Path table with kind-colored rows + same invoke path as API.
  */
-import { Check, Copy } from "@nebutra/icons";
-import { Button, Textarea } from "@nebutra/ui/primitives";
+
+import { Button, CopyButton, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
@@ -93,7 +93,6 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
   const [raw, setRaw] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [filter, setFilter] = useState<KindFilter>("all");
 
   const filtered = useMemo(() => {
@@ -169,18 +168,15 @@ export function JsonDiffRunner({ toolId }: { toolId: string }) {
           {loading ? t("common.running") : t("common.run")}
         </Button>
         {raw ? (
-          <Button
-            type="button"
+          <CopyButton
             variant="ghost"
-            onClick={() => {
-              void navigator.clipboard.writeText(raw);
-              setCopied(true);
-              setTimeout(() => setCopied(false), 1200);
-            }}
-          >
-            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            {copied ? t("common.copied") : t("common.copy")}
-          </Button>
+            size="default"
+            value={raw}
+            label={t("common.copy")}
+            copiedLabel={t("common.copied")}
+            successMessage={t("common.copied")}
+            showToast={false}
+          />
         ) : null}
         {equal !== null ? (
           <span

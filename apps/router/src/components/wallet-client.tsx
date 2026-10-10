@@ -2,7 +2,7 @@
 
 import { checkoutLink } from "@nebutra/billing/links";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
-import { Button, Input } from "@nebutra/ui/primitives";
+import { Button, NumberField } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useState } from "react";
 import { AsyncSection, RetryButton, Skeleton } from "@/components/console-states";
@@ -112,14 +112,13 @@ export function WalletClient() {
         </div>
         <div className="flex flex-wrap items-end gap-2">
           <div className="w-32">
-            <Input
+            <NumberField
               label={`金额 (${currency})`}
               id="topup-amount"
-              type="number"
               min={MIN_TOP_UP}
               value={amount}
-              onChange={(event) => {
-                setAmount(event.target.value);
+              onValueChange={(value) => {
+                setAmount(value == null ? "" : String(value));
                 setFieldError(null);
               }}
               {...(fieldError ? { error: fieldError } : {})}

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ComponentProps, CSSProperties } from "react";
-
+import { usePendingVisible } from "../hooks/use-pending-visible";
 import {
   type SpinnerSize,
   type SpinnerTone,
@@ -50,6 +50,15 @@ export interface SpinnerProps extends Omit<ComponentProps<"span">, "children" | 
    * tokenized spinner.
    */
   variant?: SpinnerVariant;
+  /**
+   * Paint the spinner on the first frame. By default a mounted Spinner waits
+   * `interaction.pending.showDelayMs` before it becomes visible, so a fast
+   * operation never flashes one (Vercel Web Interface Guidelines). The status
+   * role and label are present from the first frame either way; only the paint
+   * waits. Opt out for spinners that are themselves the content, e.g. a
+   * Storybook swatch or a deliberately-shown "working" glyph.
+   */
+  immediate?: boolean;
 }
 
 function resolveSize(size: SpinnerProps["size"]) {
@@ -94,9 +103,12 @@ export function Spinner({
   label,
   decorative,
   variant = "default",
+  immediate = false,
   "aria-label": ariaLabel,
   ...props
 }: SpinnerProps) {
+  const delayedVisible = usePendingVisible(!immediate);
+  const visible = immediate || delayedVisible;
   const accessibleLabel = ariaLabel ?? label;
   const isDecorative = decorative ?? !accessibleLabel;
   const accessibilityProps = isDecorative
@@ -111,8 +123,13 @@ export function Spinner({
     <span
       data-slot="spinner"
       data-variant={variant}
+      data-visible={visible ? "" : undefined}
       className={cn(
         "relative inline-block shrink-0 align-[-0.125em]",
+        // Delayed paint: the box keeps its size while it waits, so nothing
+        // shifts when the spinner appears.
+        "transition-opacity duration-micro ease-out",
+        visible ? "opacity-100" : "opacity-0",
         "[block-size:var(--spinner-size)] [inline-size:var(--spinner-size)]",
         spinnerTones[tone],
         className,

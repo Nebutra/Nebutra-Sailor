@@ -6,6 +6,7 @@ import {
   Button,
   ConfirmDialog,
   Input,
+  NumberField,
   Table,
   TableBody,
   TableCell,
@@ -367,33 +368,30 @@ function CreateKeyForm({
         placeholder="default"
         {...(errors.name ? { error: errors.name } : {})}
       />
-      <Input
+      <NumberField
         label="速率 (req/s)"
         id="key-rate"
-        type="number"
         min={1}
         value={rate}
-        onChange={(event) => setRate(event.target.value)}
+        onValueChange={(value) => setRate(value == null ? "" : String(value))}
         placeholder="不限"
         {...(errors.rate ? { error: errors.rate } : {})}
       />
-      <Input
+      <NumberField
         label="每日上限 $"
         id="key-daily"
-        type="number"
         min={0}
         value={daily}
-        onChange={(event) => setDaily(event.target.value)}
+        onValueChange={(value) => setDaily(value == null ? "" : String(value))}
         placeholder="不限"
         {...(errors.daily ? { error: errors.daily } : {})}
       />
-      <Input
+      <NumberField
         label="累计上限 $"
         id="key-total"
-        type="number"
         min={0}
         value={total}
-        onChange={(event) => setTotal(event.target.value)}
+        onValueChange={(value) => setTotal(value == null ? "" : String(value))}
         placeholder="不限"
         {...(errors.total ? { error: errors.total } : {})}
       />
@@ -566,32 +564,29 @@ function KeyEditor({
         onChange={(event) => setName(event.target.value)}
         {...(errors.name ? { error: errors.name } : {})}
       />
-      <Input
+      <NumberField
         label="速率 (req/s)"
         id={`edit-rate-${row.id}`}
-        type="number"
         min={1}
         value={rate}
-        onChange={(event) => setRate(event.target.value)}
+        onValueChange={(value) => setRate(value == null ? "" : String(value))}
         {...(errors.rate ? { error: errors.rate } : {})}
       />
-      <Input
+      <NumberField
         label="每日上限 $"
         id={`edit-daily-${row.id}`}
-        type="number"
         min={0}
         value={daily}
-        onChange={(event) => setDaily(event.target.value)}
+        onValueChange={(value) => setDaily(value == null ? "" : String(value))}
         placeholder="不限"
         {...(errors.daily ? { error: errors.daily } : {})}
       />
-      <Input
+      <NumberField
         label="累计上限 $"
         id={`edit-total-${row.id}`}
-        type="number"
         min={0}
         value={total}
-        onChange={(event) => setTotal(event.target.value)}
+        onValueChange={(value) => setTotal(value == null ? "" : String(value))}
         placeholder="不限"
         {...(errors.total ? { error: errors.total } : {})}
       />

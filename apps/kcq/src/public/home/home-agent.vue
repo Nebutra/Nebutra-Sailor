@@ -60,22 +60,19 @@ const chapter = computed(() => {
 });
 const storyActive = ref(false);
 const pinned = ref<HTMLElement>();
+const runway = ref<HTMLElement>();
 let story: AgentStory | undefined;
-let disposed = false;
-onMounted(async () => {
-  const created = await createAgentStory(pinned.value!, {
-    header: 64,
+onMounted(() => {
+  story = createAgentStory(pinned.value!, {
+    runway: () => runway.value,
     onEnable: (active) => {
       storyActive.value = active;
       if (!active) replay.seek(calls.length);
     },
     onProgress: (progress) => replay.scrub(progress),
-  }).catch(() => undefined);
-  if (disposed) created?.revert();
-  else story = created;
+  });
 });
 onBeforeUnmount(() => {
-  disposed = true;
   story?.revert();
 });
 
@@ -215,6 +212,8 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
           <p class="console-note t-copy">{{ t("home.agent.note", { commit: facts.commit.slice(0, 8) }) }}</p>
         </div>
       </div>
+      <!-- The scroll distance the sticky console holds for (motion/agent-story.ts). -->
+      <div v-if="storyActive" ref="runway" class="agent-runway" aria-hidden="true" />
     </div>
   </section>
 </template>
@@ -238,6 +237,14 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
 .agent-grid {
   display: grid;
   gap: var(--klc-space-48) var(--kcq-column-gap);
+}
+/* The pinned story: sticky under the header for the runway's length (compositor-held). */
+.agent-grid[data-story] {
+  position: sticky;
+  top: calc(var(--kcq-header-height) + var(--klc-space-24));
+}
+.agent-runway {
+  height: 140vh;
 }
 .agent-copy {
   display: grid;

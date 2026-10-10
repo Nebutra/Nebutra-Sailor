@@ -4,8 +4,10 @@ import { beforeAll, describe, expect, it } from "vitest";
 import * as avatarExtendedStories from "../avatar-extended.stories";
 import * as commandStories from "../command.stories";
 import * as commandMenuPartsStories from "../command-menu-parts.stories";
+import * as dropzoneStories from "../dropzone.stories";
 import * as fieldStories from "../field.stories";
 import * as formStories from "../form.stories";
+import * as numberFieldStories from "../number-field.stories";
 
 /**
  * Executes the `play` functions of the story files that carry behavioural
@@ -33,6 +35,8 @@ const STORY_MODULES = {
   AvatarExtended: avatarExtendedStories,
   Form: formStories,
   Field: fieldStories,
+  NumberField: numberFieldStories,
+  Dropzone: dropzoneStories,
 } as const;
 
 beforeAll(() => {

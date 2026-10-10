@@ -4,7 +4,7 @@
  * P0 specialized runners for high-traffic tools that previously showed
  *「未配置工作台」— JSON/YAML family, regex, SQL, color, QR, cron, timezone.
  */
-import { Button, ColorPickerPopover, Input, Textarea } from "@nebutra/ui/primitives";
+import { Button, ColorPickerPopover, Dropzone, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { useDebouncedCallback } from "@/components/result-panels";
@@ -462,16 +462,13 @@ export function QrDecodeRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <label className="flex flex-col gap-1.5 text-sm text-neutral-11">
-        <span className="text-xs font-medium">{t("qrDecode.upload")}</span>
-        <input
-          data-allow-native
-          type="file"
-          accept="image/*"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-          className="text-sm"
-        />
-      </label>
+      <Dropzone
+        size="sm"
+        label={t("qrDecode.upload")}
+        accept="image/*"
+        paste
+        onFiles={([file]) => void onFile(file ?? null)}
+      />
       {loading ? <RunnerNote>{t("qrDecode.parsing")}</RunnerNote> : null}
       <RunnerError>{error}</RunnerError>
       <RunnerOutput>{text}</RunnerOutput>

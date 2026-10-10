@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { type Bar, CACHED_BARS, largestGapDays, mergeBars } from "./bars";
+import { type Bar, CACHED_BARS, largestGapDays, mergeBars, sameBars } from "./bars";
 
 /** SSE closures: Golden Week and Spring Festival run up to 9 calendar days between sessions. */
 const MAX_MARKET_GAP_DAYS = 10;
@@ -30,5 +30,15 @@ describe("hero series", () => {
     const merged = mergeBars(CACHED_BARS, live);
     expect(merged).toEqual(live);
     expect(largestGapDays(merged)).toBeLessThanOrEqual(MAX_MARKET_GAP_DAYS);
+  });
+
+  it("treats an unchanged poll as the same series and any changed field as new", () => {
+    const copy = CACHED_BARS.map((b) => ({ ...b }));
+    expect(sameBars(CACHED_BARS, copy)).toBe(true);
+    expect(sameBars(CACHED_BARS, copy.slice(1))).toBe(false);
+    const moved = copy.map((b, index) => (index === copy.length - 1 ? { ...b, close: b.close + 0.01 } : b));
+    expect(sameBars(CACHED_BARS, moved)).toBe(false);
+    const traded = copy.map((b, index) => (index === copy.length - 1 ? { ...b, volume: b.volume + 1 } : b));
+    expect(sameBars(CACHED_BARS, traded)).toBe(false);
   });
 });

@@ -1,6 +1,6 @@
 "use client";
 import { buildAuthCenterSignInUrl, useAuth } from "@nebutra/auth/client";
-import { Button, Input } from "@nebutra/ui/primitives";
+import { Button, NumberField } from "@nebutra/ui/primitives";
 import { useCallback, useEffect, useState } from "react";
 import { RunnerNote, RunnerPanel } from "@/components/runner-ui";
 
@@ -48,12 +48,11 @@ export function WalletPanel() {
         {balance === null ? "…" : balance} <span className="text-base font-normal">{currency}</span>
       </p>
       <div className="flex gap-3">
-        <Input
+        <NumberField
           id="wallet-amount"
-          type="number"
           min={1}
           value={amount}
-          onChange={(e) => setAmount(e.target.value)}
+          onValueChange={(value) => setAmount(value == null ? "" : String(value))}
           className="w-32"
         />
         <Button

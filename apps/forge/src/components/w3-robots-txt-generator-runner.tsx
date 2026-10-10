@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Input, Select } from "@nebutra/ui/primitives";
+import { Button, Input, NumberField, Select } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useId, useMemo, useRef, useState } from "react";
 import {
@@ -209,17 +209,15 @@ export function W3RobotsTxtGeneratorRunner({ toolId }: { toolId: string }) {
           </div>
 
           <div className="space-y-1">
-            <Input
+            <NumberField
               id={`${uid}-delay`}
               label={t("robotsTxt.crawlDelay")}
-              type="number"
-              inputMode="decimal"
               min={0.1}
               max={3600}
               step={0.1}
               value={crawlDelay}
               placeholder={t("robotsTxt.crawlDelayPlaceholder")}
-              onValueChange={setCrawlDelay}
+              onValueChange={(value) => setCrawlDelay(value == null ? "" : String(value))}
             />
             <ShellNote>{t("robotsTxt.crawlDelayNote")}</ShellNote>
           </div>

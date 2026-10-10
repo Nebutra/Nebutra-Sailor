@@ -1,7 +1,7 @@
 "use client";
 
-import { ArrowDown, Check, Copy } from "@nebutra/icons";
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { ArrowDown } from "@nebutra/icons";
+import { Button, CopyButton, Input, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { downloadBase64, downloadText, PdfResultPanel } from "@/components/result-panels";
@@ -109,7 +109,6 @@ export function GenericInvokeRunner({
   );
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const setField = (key: string, value: string | boolean) => {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -268,18 +267,15 @@ export function GenericInvokeRunner({
           {loading ? t("running") : t("run")}
         </Button>
         {result ? (
-          <Button
-            type="button"
+          <CopyButton
             variant="ghost"
-            onClick={() => {
-              void navigator.clipboard.writeText(result);
-              setCopied(true);
-              setTimeout(() => setCopied(false), 1200);
-            }}
-          >
-            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            {copied ? t("copied") : t("copy")}
-          </Button>
+            size="default"
+            value={result}
+            label={t("copy")}
+            copiedLabel={t("copied")}
+            successMessage={t("copied")}
+            showToast={false}
+          />
         ) : null}
         {result && !fileBase64 && !pdfBase64 ? (
           <Button

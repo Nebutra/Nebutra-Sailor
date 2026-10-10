@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nebutra/ui/primitives";
+import { Button, CopyButton } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { RunnerError, RunnerNote, RunnerOutput } from "@/components/runner-ui";
@@ -78,14 +78,16 @@ export function PasswordRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" onClick={() => void generate()}>
           {t("password.generate")}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="outline"
-          onClick={() => void navigator.clipboard.writeText(password)}
           disabled={!password}
-        >
-          {t("common.copy")}
-        </Button>
+          size="default"
+          value={password}
+          label={t("common.copy")}
+          copiedLabel={t("common.copied")}
+          successMessage={t("common.copied")}
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       <RunnerOutput className="text-lg tracking-wide">{password}</RunnerOutput>

@@ -216,6 +216,29 @@ const CASES: Case[] = [
     path: "apps/landing/src/__lint_guard_probe.tsx",
   },
   {
+    // The OS spin-button number input NumberField replaces.
+    guard: "lint-no-raw-number-file-inputs",
+    violation:
+      'import { Input } from "@nebutra/ui/primitives";\nexport const C = () => <Input type="number" value={1} />;\n',
+  },
+  {
+    // The bare OS "Choose file" control Dropzone replaces.
+    guard: "lint-no-raw-number-file-inputs",
+    violation: 'export const C = () => <input data-allow-native type="file" />;\n',
+  },
+  {
+    // A disabled control whose only explanation is a hover-only title.
+    guard: "lint-no-title-tooltips",
+    violation:
+      'export const C = () => <button type="button" disabled title="Upgrade to export">Export</button>;\n',
+  },
+  {
+    // A copy action with no feedback and no failure path.
+    guard: "lint-no-raw-clipboard",
+    violation:
+      'export const C = ({ v }: { v: string }) => (\n  <button type="button" onClick={() => void navigator.clipboard.writeText(v)}>Copy</button>\n);\n',
+  },
+  {
     // Erasing a shared primitive's surface instead of using its variant.
     guard: "lint-primitive-override",
     violation:

@@ -8,8 +8,8 @@
 /**
  * SOTA-oriented specialized runners: regex highlight, QR live preview, multi-hash.
  */
-import { ArrowDown, Check, Copy } from "@nebutra/icons";
-import { Button, Input, Textarea } from "@nebutra/ui/primitives";
+import { ArrowDown } from "@nebutra/icons";
+import { Button, CopyButton, Dropzone, Input, NumberField, Textarea } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fileToBase64, PdfResultPanel, TextResultActions } from "@/components/result-panels";
@@ -366,7 +366,6 @@ export function MultiHashSotaRunner({ toolId }: { toolId: string }) {
   const [digests, setDigests] = useState<Record<string, string>>({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState<string | null>(null);
 
   const run = async () => {
     setLoading(true);
@@ -423,22 +422,13 @@ export function MultiHashSotaRunner({ toolId }: { toolId: string }) {
               <code className="min-w-0 flex-1 truncate font-mono text-xs text-neutral-12">
                 {value}
               </code>
-              <Button
-                type="button"
-                variant="ghost"
+              <CopyButton
+                value={value}
                 className="h-8 px-2"
-                onClick={() => {
-                  void navigator.clipboard.writeText(value);
-                  setCopied(algo);
-                  setTimeout(() => setCopied(null), 1000);
-                }}
-              >
-                {copied === algo ? (
-                  <Check className="h-3.5 w-3.5" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5" />
-                )}
-              </Button>
+                tooltipText={`${t("common.copy")} ${algo}`}
+                successMessage={t("common.copied")}
+                showToast={false}
+              />
             </div>
           ))}
         </div>
@@ -491,17 +481,13 @@ export function PdfTextRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{t("pdfText.file")}</p>
-        <input
-          data-allow-native
-          type="file"
-          accept="application/pdf,.pdf"
-          className="block w-full text-sm"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-        />
-        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
-      </div>
+      <Dropzone
+        size="sm"
+        label={t("pdfText.file")}
+        description={fileName || undefined}
+        accept="application/pdf,.pdf"
+        onFiles={([file]) => void onFile(file ?? null)}
+      />
       <RunnerSelect id="pdf-layout" label={t("pdfText.layout")} value={layout} onChange={setLayout}>
         <option value="layout">layout</option>
         <option value="raw">raw</option>
@@ -596,17 +582,13 @@ export function XlsxTextRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{t("xlsxText.file")}</p>
-        <input
-          data-allow-native
-          type="file"
-          accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          className="block w-full text-sm"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-        />
-        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
-      </div>
+      <Dropzone
+        size="sm"
+        label={t("xlsxText.file")}
+        description={fileName || undefined}
+        accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        onFiles={([file]) => void onFile(file ?? null)}
+      />
       <div className="flex flex-wrap gap-2">
         <Button
           type="button"
@@ -698,17 +680,13 @@ export function DocxTextRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{t("docxText.file")}</p>
-        <input
-          data-allow-native
-          type="file"
-          accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          className="block w-full text-sm"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-        />
-        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
-      </div>
+      <Dropzone
+        size="sm"
+        label={t("docxText.file")}
+        description={fileName || undefined}
+        accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        onFiles={([file]) => void onFile(file ?? null)}
+      />
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading || !base64}>
         {loading ? t("docxText.extracting") : t("docxText.extract")}
       </Button>
@@ -760,13 +738,15 @@ export function SvgOptimizeRunner({ toolId }: { toolId: string }) {
         <Button type="button" variant="ink" onClick={() => void run()} disabled={loading}>
           {loading ? t("common.running") : t("svg.optimize")}
         </Button>
-        <Button
-          type="button"
+        <CopyButton
           variant="ghost"
-          onClick={() => void navigator.clipboard.writeText(text)}
-        >
-          {t("common.copy")}
-        </Button>
+          size="default"
+          value={text}
+          label={t("common.copy")}
+          copiedLabel={t("common.copied")}
+          successMessage={t("common.copied")}
+          showToast={false}
+        />
       </div>
       <RunnerError>{error}</RunnerError>
       {meta ? <RunnerNote>{meta}</RunnerNote> : null}
@@ -967,12 +947,12 @@ export function ImageCropRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <input
-        data-allow-native
-        type="file"
+      <Dropzone
+        size="sm"
+        label={t("imageCrop.drop")}
         accept="image/*"
-        className="block w-full text-sm"
-        onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
+        paste
+        onFiles={([file]) => void onFile(file ?? null)}
       />
       <p className="text-xs text-neutral-10">{t("imageCrop.dragHint")}</p>
       {preview ? (
@@ -1005,33 +985,29 @@ export function ImageCropRunner({ toolId }: { toolId: string }) {
         </p>
       ) : null}
       <div className="grid gap-2 sm:grid-cols-4">
-        <Input
+        <NumberField
           label={t("imageCrop.left")}
           id="c-l"
-          type="number"
           value={String(left)}
-          onChange={(e) => setLeft(Number(e.target.value) || 0)}
+          onValueChange={(value) => setLeft(value || 0)}
         />
-        <Input
+        <NumberField
           label={t("imageCrop.top")}
           id="c-t"
-          type="number"
           value={String(top)}
-          onChange={(e) => setTop(Number(e.target.value) || 0)}
+          onValueChange={(value) => setTop(value || 0)}
         />
-        <Input
+        <NumberField
           label={t("imageCrop.width")}
           id="c-w"
-          type="number"
           value={String(width)}
-          onChange={(e) => setWidth(Math.max(1, Number(e.target.value) || 1))}
+          onValueChange={(value) => setWidth(Math.max(1, value || 1))}
         />
-        <Input
+        <NumberField
           label={t("imageCrop.height")}
           id="c-h"
-          type="number"
           value={String(height)}
-          onChange={(e) => setHeight(Math.max(1, Number(e.target.value) || 1))}
+          onValueChange={(value) => setHeight(Math.max(1, value || 1))}
         />
       </div>
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading || !base64}>
@@ -1095,17 +1071,13 @@ export function PptxTextRunner({ toolId }: { toolId: string }) {
 
   return (
     <div className="space-y-4">
-      <div className="space-y-1">
-        <p className="text-sm font-medium">{t("pptxText.file")}</p>
-        <input
-          data-allow-native
-          type="file"
-          accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation"
-          className="block w-full text-sm"
-          onChange={(e) => void onFile(e.target.files?.[0] ?? null)}
-        />
-        {fileName ? <p className="text-xs text-neutral-11">{fileName}</p> : null}
-      </div>
+      <Dropzone
+        size="sm"
+        label={t("pptxText.file")}
+        description={fileName || undefined}
+        accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        onFiles={([file]) => void onFile(file ?? null)}
+      />
       <Button type="button" variant="ink" onClick={() => void run()} disabled={loading || !base64}>
         {loading ? t("pptxText.extracting") : t("pptxText.extract")}
       </Button>

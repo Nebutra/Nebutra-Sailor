@@ -91,6 +91,31 @@ export function mergeBars(base: readonly Bar[], incoming: readonly Bar[]): Bar[]
   return [...byTime.values()].sort((a, b) => a.timestamp - b.timestamp);
 }
 
+/**
+ * Whether two series draw the same chart. The feed polls every minute and outside trading hours
+ * the answer is the same bars; replacing them anyway re-fits the engine, re-renders the light
+ * field and re-rolls the price digits for nothing (perf audit 2026-10-10).
+ */
+export function sameBars(a: readonly Bar[], b: readonly Bar[]): boolean {
+  if (a === b) return true;
+  if (a.length !== b.length) return false;
+  for (let index = 0; index < a.length; index++) {
+    const x = a[index]!;
+    const y = b[index]!;
+    if (
+      x.timestamp !== y.timestamp ||
+      x.open !== y.open ||
+      x.high !== y.high ||
+      x.low !== y.low ||
+      x.close !== y.close ||
+      x.volume !== y.volume
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
 /** Longest calendar gap between consecutive bars, in days. */
 export function largestGapDays(bars: readonly Bar[]): number {
   let largest = 0;
