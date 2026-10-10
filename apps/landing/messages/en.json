@@ -2106,7 +2106,7 @@
         "talk": "Talk to us"
       },
       "why": {
-        "title": "The year after the demo.",
+        "title": "Tenancy, billing and audit come after the demo.",
         "lead": "Anyone can ask a model for a working demo in a minute. What decides whether a company survives — tenancy, billing, audit, the architecture underneath — still needs a senior team most founders can't hire.",
         "timeline": {
           "label": "The first year of a vibe-coded company",
@@ -2205,7 +2205,7 @@
         }
       },
       "next": {
-        "title": "Next: <signature>{brandName} OS</signature>.",
+        "title": "Next, we're building <signature>{brandName} OS</signature>.",
         "lead": "{brandName} OS is where this goes: describe a company once, and brand, product, code and launch come from one context, with the judgment built in. It is in development, and we will show it when it is real.",
         "vision": "In five years, we want starting a company to mean starting with that judgment already in place."
       },
