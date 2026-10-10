@@ -4,8 +4,9 @@
   biographies stay in the deck. Set in one grey so four different studio backdrops read as one row.
 -->
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useReveal } from "../home/motion/use-reveal";
 import lu320 from "./team/lu-zikai-320.webp";
 import lu640 from "./team/lu-zikai-640.webp";
 import ma320 from "./team/ma-di-320.webp";
@@ -24,6 +25,9 @@ const PORTRAITS = [
 ] as const;
 
 const { t } = useI18n();
+/** Reveal: the four people settle in, a quiet scale with no travel (faces, not features). */
+const people = ref<HTMLElement>();
+const { state } = useReveal(people);
 const members = computed(() =>
   PORTRAITS.map(([small, large], index) => {
     const name = t(`investors.team.members.${index}.name`);
@@ -45,8 +49,8 @@ const members = computed(() =>
         <h2 id="team-heading" class="t-heading">{{ t("investors.team.heading") }}</h2>
         <p class="t-lede">{{ t("investors.team.lede") }}</p>
       </div>
-      <ul class="people">
-        <li v-for="person in members" :key="person.name" class="person">
+      <ul ref="people" class="people" :data-reveal="state">
+        <li v-for="(person, index) in members" :key="person.name" class="person reveal-item" :style="{ '--i': index }">
           <img
             class="person-photo"
             :srcset="person.srcset"
@@ -68,6 +72,9 @@ const members = computed(() =>
 </template>
 <style scoped>
 .people {
+  --reveal-y: 0px;
+  --reveal-scale: 0.98;
+  --reveal-stagger: 60ms;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--klc-space-32) var(--kcq-column-gap);

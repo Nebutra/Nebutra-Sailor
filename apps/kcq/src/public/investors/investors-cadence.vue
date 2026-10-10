@@ -7,11 +7,12 @@
   it stands on the page without a frame (restraint benchmark rule 9).
 -->
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
 import activity from "../home/community/activity.json";
 import { LINKS } from "../links";
+import { useReveal } from "../home/motion/use-reveal";
 import { usePublicLocale } from "../state/use-public-locale";
 
 const { t } = useI18n();
@@ -57,6 +58,12 @@ const summary = computed(() =>
     to: latest ? dayFormat.value.format(latest.at) : "",
   }),
 );
+/**
+ * Data motion on real data (ADR §1 P2 "SVG and data"): on first sight each release tick grows from
+ * the axis in date order, so the cadence reads as time passing. The ticks are the real releases.
+ */
+const plot = ref<HTMLElement>();
+const { state } = useReveal(plot, 0.5);
 </script>
 <template>
   <section id="releases" class="band cadence" aria-labelledby="cadence-heading">
@@ -77,7 +84,9 @@ const summary = computed(() =>
           </span>
         </figcaption>
         <div
+          ref="plot"
           class="timeline-plot"
+          :data-reveal="state"
           role="img"
           :aria-label="t('investors.cadence.label', { date: activity.fetchedAt.slice(0, 10) })"
         >
@@ -89,6 +98,7 @@ const summary = computed(() =>
               class="timeline-tick"
               :data-opens="tick.opens || undefined"
               :data-latest="tick === latest || undefined"
+              :style="{ '--x': tick.x.toFixed(1) }"
               :x1="tick.x"
               :x2="tick.x"
               y1="100"
@@ -160,6 +170,23 @@ const summary = computed(() =>
 .timeline-tick {
   stroke: var(--kcq-ink-2);
   stroke-width: 1.5;
+}
+.timeline-tick {
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+.timeline-plot[data-reveal="armed"] .timeline-tick {
+  transform: scaleY(0);
+}
+/* Up to about 600ms across the year, each tick in the medium duration: time, left to right. */
+.timeline-plot[data-reveal="shown"] .timeline-tick {
+  transition: transform var(--kcq-motion-medium) var(--klc-motion-ease-out);
+  transition-delay: calc(var(--x) * 6ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .timeline-plot[data-reveal="armed"] .timeline-tick {
+    transform: none;
+  }
 }
 .timeline-tick[data-opens] {
   stroke: var(--kcq-ink);
