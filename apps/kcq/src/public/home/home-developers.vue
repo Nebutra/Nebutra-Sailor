@@ -70,33 +70,38 @@ function onKey(event: KeyboardEvent) {
             {{ snippet.label }}
           </button>
         </div>
-        <div
-          v-for="(snippet, index) in SNIPPETS"
-          v-show="active === index"
-          :id="`panel-${snippet.id}`"
-          :key="snippet.id"
-          role="tabpanel"
-          :aria-labelledby="`tab-${snippet.id}`"
-          class="code-panel"
-        >
-          <div class="code-bar">
-            <span class="code-file" translate="no">{{ snippet.file }}</span>
-            <button
-              type="button"
-              class="code-copy t-label"
-              :data-copied="copied || undefined"
-              :aria-label="t('home.developers.copy')"
-              @click="copy(snippet.code)"
-            >
-              <span class="code-copy-icons" aria-hidden="true">
-                <KcqIcon name="copy" class="code-copy-idle" />
-                <KcqIcon name="check" class="code-copy-done" />
-              </span>
-            </button>
-            <span class="visually-hidden" aria-live="polite">{{ copied && active === index ? t("home.developers.copied") : "" }}</span>
+        <!-- Every panel sits in one grid cell, so the window is as tall as the longest snippet and a
+             tab switch never moves the page (the hidden ones keep their box, out of the a11y tree). -->
+        <div class="code-panels">
+          <div
+            v-for="(snippet, index) in SNIPPETS"
+            :id="`panel-${snippet.id}`"
+            :key="snippet.id"
+            role="tabpanel"
+            :aria-labelledby="`tab-${snippet.id}`"
+            class="code-panel"
+            :data-active="active === index || undefined"
+            :inert="active !== index || undefined"
+          >
+            <div class="code-bar">
+              <span class="code-file" translate="no">{{ snippet.file }}</span>
+              <button
+                type="button"
+                class="code-copy t-label"
+                :data-copied="copied || undefined"
+                :aria-label="t('home.developers.copy')"
+                @click="copy(snippet.code)"
+              >
+                <span class="code-copy-icons" aria-hidden="true">
+                  <KcqIcon name="copy" class="code-copy-idle" />
+                  <KcqIcon name="check" class="code-copy-done" />
+                </span>
+              </button>
+              <span class="visually-hidden" aria-live="polite">{{ copied && active === index ? t("home.developers.copied") : "" }}</span>
+            </div>
+            <!-- Build-time Shiki output of our own snippet source (no user input). -->
+            <pre class="code" tabindex="0" translate="no"><code v-html="highlighted.get(snippet.id)" /></pre>
           </div>
-          <!-- Build-time Shiki output of our own snippet source (no user input). -->
-          <pre class="code" tabindex="0" translate="no"><code v-html="highlighted.get(snippet.id)" /></pre>
         </div>
       </div>
     </div>
@@ -131,6 +136,9 @@ function onKey(event: KeyboardEvent) {
 }
 .code-tab {
   flex: none;
+  /* Flush against the tab strip's scroll edge: the ring draws inside. */
+  outline-offset: -2px;
+  border-radius: var(--klc-radius-sm) var(--klc-radius-sm) 0 0;
   min-height: var(--klc-density-touch);
   padding-inline: var(--klc-space-12);
   border: 0;
@@ -139,7 +147,9 @@ function onKey(event: KeyboardEvent) {
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
-  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+  transition-property: color, border-color;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .code-tab:hover {
@@ -149,6 +159,16 @@ function onKey(event: KeyboardEvent) {
 .code-tab[aria-selected="true"] {
   color: var(--kcq-ink);
   border-bottom-color: var(--kcq-accent);
+}
+.code-panels {
+  display: grid;
+}
+.code-panel {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+.code-panel:not([data-active]) {
+  visibility: hidden;
 }
 .code-bar {
   display: flex;
@@ -172,10 +192,15 @@ function onKey(event: KeyboardEvent) {
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
-  transition: transform var(--klc-motion-dur-press) var(--klc-motion-ease-out);
+  transition-property: transform, color, background-color;
+  transition-duration: var(--klc-motion-dur-press);
+  transition-timing-function: var(--klc-motion-ease-out);
+}
+.code-copy[data-copied] {
+  color: var(--kcq-ink);
 }
 .code-copy:active {
-  transform: scale(0.97);
+  transform: scale(var(--kcq-press-icon));
 }
 @media (hover: hover) and (pointer: fine) {
   .code-copy:hover {
@@ -208,8 +233,14 @@ function onKey(event: KeyboardEvent) {
   filter: none;
   transform: none;
 }
+/* Long lines scroll inside the pane only; the page never scrolls sideways. */
 .code {
   overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--kcq-rule-strong) transparent;
+  outline-offset: -2px;
+  border-radius: 0 0 var(--klc-radius-lg) var(--klc-radius-lg);
   padding: var(--klc-space-4) var(--klc-space-16) var(--klc-space-24) 0;
   font-size: var(--klc-text-copy-14-font-size);
   line-height: 22px;
