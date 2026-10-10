@@ -23,6 +23,8 @@ const sizes = "(min-width: 1344px) 1280px, calc(100vw - 64px)";
  */
 const frame = ref<HTMLElement>();
 const near = ref(false);
+/** The capture fades in once decoded (a loading state, ADR §1 P1), over the frame's own ground. */
+const loaded = ref(false);
 const { stop } = useIntersectionObserver(
   frame,
   ([entry]) => {
@@ -55,6 +57,8 @@ const sources = computed(() => (tm("home.workstation.sources") as unknown as str
           width="1440"
           height="852"
           decoding="async"
+          :data-loaded="loaded || undefined"
+          @load="loaded = true"
         />
         <figcaption class="visually-hidden">{{ t("home.workstation.alt") }} {{ facts.version }}</figcaption>
       </figure>
@@ -65,6 +69,13 @@ const sources = computed(() => (tm("home.workstation.sources") as unknown as str
 /* The frame keeps the capture's ratio before the image exists. */
 .shot {
   aspect-ratio: 1440 / 852;
+}
+.shot img {
+  opacity: 0;
+  transition: opacity var(--klc-motion-dur-base) var(--klc-motion-ease-out);
+}
+.shot img[data-loaded] {
+  opacity: 1;
 }
 .shot img {
   display: block;

@@ -8,9 +8,9 @@
   (CP 31). Copy confirms in place (VueUse useClipboard; icon morphs, label announced).
 -->
 <script setup lang="ts">
-import { useClipboard } from "@vueuse/core";
+import { useClipboard, useResizeObserver } from "@vueuse/core";
 import code from "virtual:kcq-code";
-import { ref } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
 import { LINKS } from "../links";
@@ -24,6 +24,22 @@ const active = ref(0);
 const tabs = ref<HTMLButtonElement[]>([]);
 const highlighted = new Map(code.map((entry) => [entry.id, entry.html]));
 const { copy, copied } = useClipboard({ copiedDuring: 1500, legacy: true });
+
+/**
+ * One indicator for the selected tab (ADR §1 P1 "layout"): it slides and stretches from the old
+ * tab to the new one with transform only (position and width are translate and scale), so the
+ * switch reads as one object moving and never triggers layout. Without script, the selected tab's
+ * own underline stands in (CSS, `.code-tabs:not([data-indicator])`).
+ */
+const tablist = ref<HTMLElement>();
+const indicator = ref<{ x: number; width: number } | null>(null);
+function place() {
+  const tab = tabs.value[active.value];
+  if (tab) indicator.value = { x: tab.offsetLeft, width: tab.offsetWidth };
+}
+onMounted(place);
+watch(active, () => nextTick(place));
+useResizeObserver(tablist, place);
 
 function onKey(event: KeyboardEvent) {
   const delta = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
@@ -53,7 +69,14 @@ function onKey(event: KeyboardEvent) {
         </a>
       </div>
       <div class="code-window section-artifact">
-        <div class="code-tabs" role="tablist" :aria-label="t('home.developers.tabs')" @keydown="onKey">
+        <div
+          ref="tablist"
+          class="code-tabs"
+          role="tablist"
+          :aria-label="t('home.developers.tabs')"
+          :data-indicator="indicator ? '' : undefined"
+          @keydown="onKey"
+        >
           <button
             v-for="(snippet, index) in SNIPPETS"
             :id="`tab-${snippet.id}`"
@@ -69,34 +92,45 @@ function onKey(event: KeyboardEvent) {
           >
             {{ snippet.label }}
           </button>
+          <span
+            v-if="indicator"
+            class="code-tab-indicator"
+            aria-hidden="true"
+            :style="{ '--x': `${indicator.x}px`, '--w': indicator.width }"
+          />
         </div>
-        <div
-          v-for="(snippet, index) in SNIPPETS"
-          v-show="active === index"
-          :id="`panel-${snippet.id}`"
-          :key="snippet.id"
-          role="tabpanel"
-          :aria-labelledby="`tab-${snippet.id}`"
-          class="code-panel"
-        >
-          <div class="code-bar">
-            <span class="code-file" translate="no">{{ snippet.file }}</span>
-            <button
-              type="button"
-              class="code-copy t-label"
-              :data-copied="copied || undefined"
-              :aria-label="t('home.developers.copy')"
-              @click="copy(snippet.code)"
-            >
-              <span class="code-copy-icons" aria-hidden="true">
-                <KcqIcon name="copy" class="code-copy-idle" />
-                <KcqIcon name="check" class="code-copy-done" />
-              </span>
-            </button>
-            <span class="visually-hidden" aria-live="polite">{{ copied && active === index ? t("home.developers.copied") : "" }}</span>
+        <!-- Every panel sits in one grid cell, so the window is as tall as the longest snippet and a
+             tab switch never moves the page (the hidden ones keep their box, out of the a11y tree). -->
+        <div class="code-panels">
+          <div
+            v-for="(snippet, index) in SNIPPETS"
+            :id="`panel-${snippet.id}`"
+            :key="snippet.id"
+            role="tabpanel"
+            :aria-labelledby="`tab-${snippet.id}`"
+            class="code-panel"
+            :data-active="active === index || undefined"
+            :inert="active !== index || undefined"
+          >
+            <div class="code-bar">
+              <span class="code-file" translate="no">{{ snippet.file }}</span>
+              <button
+                type="button"
+                class="code-copy t-label"
+                :data-copied="copied || undefined"
+                :aria-label="t('home.developers.copy')"
+                @click="copy(snippet.code)"
+              >
+                <span class="code-copy-icons" aria-hidden="true">
+                  <KcqIcon name="copy" class="code-copy-idle" />
+                  <KcqIcon name="check" class="code-copy-done" />
+                </span>
+              </button>
+              <span class="visually-hidden" aria-live="polite">{{ copied && active === index ? t("home.developers.copied") : "" }}</span>
+            </div>
+            <!-- Build-time Shiki output of our own snippet source (no user input). -->
+            <pre class="code" tabindex="0" translate="no"><code v-html="highlighted.get(snippet.id)" /></pre>
           </div>
-          <!-- Build-time Shiki output of our own snippet source (no user input). -->
-          <pre class="code" tabindex="0" translate="no"><code v-html="highlighted.get(snippet.id)" /></pre>
         </div>
       </div>
     </div>
@@ -123,6 +157,7 @@ function onKey(event: KeyboardEvent) {
   overflow: hidden;
 }
 .code-tabs {
+  position: relative;
   display: flex;
   overflow-x: auto;
   padding-inline: var(--klc-space-8);
@@ -131,6 +166,9 @@ function onKey(event: KeyboardEvent) {
 }
 .code-tab {
   flex: none;
+  /* Flush against the tab strip's scroll edge: the ring draws inside. */
+  outline-offset: -2px;
+  border-radius: var(--klc-radius-sm) var(--klc-radius-sm) 0 0;
   min-height: var(--klc-density-touch);
   padding-inline: var(--klc-space-12);
   border: 0;
@@ -139,7 +177,9 @@ function onKey(event: KeyboardEvent) {
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
-  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+  transition-property: color, border-color;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .code-tab:hover {
@@ -148,7 +188,31 @@ function onKey(event: KeyboardEvent) {
 }
 .code-tab[aria-selected="true"] {
   color: var(--kcq-ink);
+}
+.code-tabs:not([data-indicator]) .code-tab[aria-selected="true"] {
   border-bottom-color: var(--kcq-accent);
+}
+.code-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  height: 2px;
+  background: var(--kcq-accent);
+  transform: translateX(var(--x)) scaleX(var(--w));
+  transform-origin: left center;
+  transition: transform var(--klc-motion-dur-slow) var(--klc-motion-ease-out);
+  pointer-events: none;
+}
+.code-panels {
+  display: grid;
+}
+.code-panel {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+.code-panel:not([data-active]) {
+  visibility: hidden;
 }
 .code-bar {
   display: flex;
@@ -172,10 +236,15 @@ function onKey(event: KeyboardEvent) {
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
-  transition: transform var(--klc-motion-dur-press) var(--klc-motion-ease-out);
+  transition-property: transform, color, background-color;
+  transition-duration: var(--klc-motion-dur-press);
+  transition-timing-function: var(--klc-motion-ease-out);
+}
+.code-copy[data-copied] {
+  color: var(--kcq-ink);
 }
 .code-copy:active {
-  transform: scale(0.97);
+  transform: scale(var(--kcq-press-icon));
 }
 @media (hover: hover) and (pointer: fine) {
   .code-copy:hover {
@@ -195,7 +264,7 @@ function onKey(event: KeyboardEvent) {
 .code-copy-done {
   opacity: 0;
   filter: blur(2px);
-  transform: scale(0.98);
+  transform: scale(0.6);
   color: var(--kcq-ink);
 }
 [data-copied] .code-copy-idle {
@@ -203,13 +272,22 @@ function onKey(event: KeyboardEvent) {
   filter: blur(2px);
   transform: scale(0.98);
 }
+/* The check lands on the spring (300 / 30): the one tactile beat of a successful copy. */
 [data-copied] .code-copy-done {
   opacity: 1;
   filter: none;
   transform: none;
+  transition-duration: 130ms, 130ms, var(--kcq-spring-duration);
+  transition-timing-function: var(--klc-motion-ease-out), var(--klc-motion-ease-out), var(--kcq-ease-spring);
 }
+/* Long lines scroll inside the pane only; the page never scrolls sideways. */
 .code {
   overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--kcq-rule-strong) transparent;
+  outline-offset: -2px;
+  border-radius: 0 0 var(--klc-radius-lg) var(--klc-radius-lg);
   padding: var(--klc-space-4) var(--klc-space-16) var(--klc-space-24) 0;
   font-size: var(--klc-text-copy-14-font-size);
   line-height: 22px;

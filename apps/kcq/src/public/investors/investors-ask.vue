@@ -95,9 +95,17 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
   gap: var(--klc-space-4) var(--klc-space-12);
 }
 .ask-email {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--klc-density-default);
   color: var(--kcq-ink);
   font-size: var(--klc-text-copy-16-font-size);
   line-height: var(--klc-text-copy-16-line-height);
+}
+@media (pointer: coarse) {
+  .ask-email {
+    min-height: var(--klc-density-comfortable);
+  }
 }
 .ask-copy {
   display: inline-grid;
@@ -110,7 +118,12 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
-  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+  transition-property: color, background-color, transform;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
+}
+.ask-copy:active {
+  transform: scale(var(--kcq-press-icon));
 }
 .ask-copy[data-copied] {
   color: var(--kcq-ink);

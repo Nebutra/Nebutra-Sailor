@@ -290,6 +290,12 @@ onBeforeUnmount(() => {
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
+  transition-property: color, background-color, transform;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
+}
+.hero-pause:active {
+  transform: scale(var(--kcq-press-icon));
 }
 @media (hover: hover) and (pointer: fine) {
   .hero-pause:hover {
@@ -398,11 +404,14 @@ onBeforeUnmount(() => {
 .hero-chart[data-chart="shown"] .hero-chart-host {
   opacity: 1;
 }
+/* Restrained light (FIELD_REST / POSTER_REST in motion/hero-timeline.ts): a desaturated glow,
+   so the plot never takes on the candles' red or green and the candles read on the bare surface. */
 .hero-chart[data-chart="shown"] .hero-field {
-  opacity: 0.45;
+  opacity: 0.16;
+  filter: saturate(0.25);
 }
 .hero-chart[data-chart="shown"][data-field="off"] .hero-poster {
-  opacity: 0.35;
+  opacity: 0.14;
 }
 .hero-hint {
   position: absolute;

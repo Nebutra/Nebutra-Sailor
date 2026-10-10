@@ -4,8 +4,9 @@
   no cards (restraint benchmark rules 8, 9).
 -->
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useReveal } from "../home/motion/use-reveal";
 
 const { t, tm } = useI18n();
 const items = computed(() =>
@@ -14,6 +15,9 @@ const items = computed(() =>
     body: t(`investors.shifts.items.${index}.body`),
   })),
 );
+/** Reveal: the three shifts land in reading order, the way the argument builds. */
+const list = ref<HTMLElement>();
+const { state } = useReveal(list);
 </script>
 <template>
   <section id="why-now" class="band shifts" aria-labelledby="shifts-heading">
@@ -21,8 +25,8 @@ const items = computed(() =>
       <div class="section-head">
         <h2 id="shifts-heading" class="t-heading">{{ t("investors.shifts.heading") }}</h2>
       </div>
-      <ol class="shift-list">
-        <li v-for="(item, index) in items" :key="index" class="shift">
+      <ol ref="list" class="shift-list" :data-reveal="state">
+        <li v-for="(item, index) in items" :key="index" class="shift reveal-item" :style="{ '--i': index }">
           <span class="shift-index t-num" aria-hidden="true">{{ index + 1 }}</span>
           <h3 class="t-title">{{ item.title }}</h3>
           <p class="t-copy">{{ item.body }}</p>

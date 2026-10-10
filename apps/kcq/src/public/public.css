@@ -134,6 +134,22 @@
   /* Half the gap between blocks: 128px between blocks on phones, 160 on tablets, 224 on desktops. */
   --kcq-band-space: var(--klc-space-64);
   --kcq-header-height: var(--klc-space-64);
+  /* Press feedback (Emil Kowalski, "Great animations"): text buttons settle 2%, small icon buttons
+     4% so the change is visible at 32px. Both over the 140ms press duration. */
+  --kcq-press: 0.98;
+  --kcq-press-icon: 0.96;
+  /* Motion scale (ADR 2026-10-09 landing motion system §6), mapped onto the KCQ tokens where they
+     exist: micro = --klc-motion-dur-press (140ms), short = --klc-motion-dur-base (200ms). The
+     page-layer additions below cover what the renderer tokens do not: reveals and the hero. The
+     main ease is --klc-motion-ease-out, cubic-bezier(0.23, 1, 0.32, 1), the ADR's ease. */
+  --kcq-motion-medium: 400ms;
+  --kcq-motion-long: 640ms;
+  --kcq-reveal-y: 24px;
+  --kcq-stagger: 70ms;
+  /* Spring 300 / 30 (ζ ≈ 0.87, about 0.4% overshoot), sampled over 400ms: tactile feedback only
+     (a copy confirmation landing), never layout or entrances. */
+  --kcq-ease-spring: linear(0, 0.075, 0.231, 0.404, 0.564, 0.695, 0.797, 0.871, 0.923, 0.957, 0.979, 0.992, 0.999, 1.003, 1.004, 1.004, 1);
+  --kcq-spring-duration: 400ms;
   /* A product frame's edge: none on the light page (the dark surface is the frame, a tonal fill),
      a hairline on the dark page where the two darks would otherwise meet. Declared on :root only,
      so a frame's own data-theme="dark" inherits the page's value. */
@@ -169,6 +185,8 @@ html {
   color: var(--kcq-ink);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* Every control draws its own pressed state; the grey tap flash would double it. */
+  -webkit-tap-highlight-color: transparent;
   scroll-padding-top: calc(var(--kcq-header-height) + var(--klc-space-16));
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -187,6 +205,8 @@ body {
   font-variant-numeric: var(--klc-text-numeric);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Opening quotes and closing stops hang outside the measure where supported (Safari). */
+  hanging-punctuation: first allow-end last;
 }
 h1,
 h2,
@@ -256,6 +276,9 @@ a {
   text-decoration-thickness: max(0.06em, 1px);
   text-underline-offset: 0.2em;
   text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
+  transition-property: color, text-decoration-color, background-color, border-color, transform;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   a:hover {
@@ -263,10 +286,17 @@ a {
   }
 }
 
-/* One focus treatment: Cobalt, ≥3:1 on every preset surface (ADR 0007). */
+/* One focus treatment: Cobalt, ≥3:1 on every preset surface (ADR 0007), 2px with a 2px gap in
+   both themes. Controls flush against a clipping edge (code tabs, the code pane) draw it inset, so
+   it is never cut off. */
 :focus-visible {
   outline: 2px solid var(--kcq-accent);
   outline-offset: 2px;
+}
+/* Anchor targets land below the sticky header (scroll-padding on html covers the scroll; this
+   covers focus moves and :target in engines that ignore it). */
+main [id] {
+  scroll-margin-top: calc(var(--kcq-header-height) + var(--klc-space-16));
 }
 
 .skip-link {
@@ -448,14 +478,26 @@ a {
 /* A product frame: one fixed chart surface in both page themes (the product reads as one object,
    contrast without page bands), radius 12, no shadow. Tonal fill or hairline, never both. */
 .product-frame {
+  position: relative;
   min-width: 0;
   margin-inline: 0;
   margin-bottom: 0;
-  border: 1px solid var(--kcq-frame-edge);
   border-radius: var(--klc-radius-lg);
   overflow: hidden;
   background: var(--klc-color-chart-background);
   color: var(--kcq-ink);
+}
+/* The hairline is an inset ring drawn above the frame's content: it takes no layout, and canvases
+   or screenshots reaching the edge can never paint over it or leave a fringe at the rounded
+   corners, at any device pixel ratio. */
+.product-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--kcq-frame-edge);
+  pointer-events: none;
 }
 
 /* Crop-mark corners instead of a box (research A6): 8px brackets at each corner, no extra DOM. */
@@ -530,8 +572,9 @@ kbd {
     min-height: var(--klc-density-hit-target-touch);
   }
 }
+/* Press: a 2% settle over the press duration (140ms), on every pointer. */
 .button:active {
-  transform: scale(0.97);
+  transform: scale(var(--kcq-press));
 }
 .button-primary {
   background: var(--kcq-ink);
@@ -599,14 +642,74 @@ kbd {
   box-shadow: inset 0 0 0 1.5px var(--kcq-ink-2);
 }
 
-/* Reduced motion keeps opacity and colour changes and drops movement (CP 40); each feature also
-   has its own designed reduced path (research K4). */
+/* Hero entrance (ADR §3 hero row, intensity 3), shared by /home and /investors. Transform and
+   clip only, never opacity: every word and the LCP poster paint in the first frame, so the
+   entrance costs no paint metric. The headline surfaces through a mask at its own baseline (it
+   starts 0.35em low with that strip clipped, then rises into place); copy and actions rise 16px;
+   the product frame settles 24px. Pure CSS in the prerendered
+   stylesheet: no script, no flash of finished text, no hidden painted text, never blocks input.
+   `backwards` holds each start state through its `--enter-delay`. Uses the individual `translate`
+   property, so press transforms on the buttons inside never compete with it. */
+@keyframes kcq-enter-mask {
+  from {
+    clip-path: inset(0 -0.1em 0.35em -0.1em);
+    translate: 0 0.35em;
+  }
+  to {
+    clip-path: inset(0 -0.1em -0.3em -0.1em);
+    translate: 0 0;
+  }
+}
+@keyframes kcq-enter-rise {
+  from {
+    translate: 0 16px;
+  }
+}
+@keyframes kcq-enter-settle {
+  from {
+    translate: 0 var(--kcq-reveal-y);
+  }
+}
+.enter-mask {
+  animation: kcq-enter-mask var(--kcq-motion-long) var(--klc-motion-ease-out) var(--enter-delay, 0ms) backwards;
+}
+.enter-rise {
+  animation: kcq-enter-rise var(--kcq-motion-medium) var(--klc-motion-ease-out) var(--enter-delay, 0ms) backwards;
+}
+.enter-settle {
+  animation: kcq-enter-settle var(--kcq-motion-long) var(--klc-motion-ease-out) var(--enter-delay, 0ms) backwards;
+}
+
+/* Scroll reveal (ADR §3 "value and features", intensity 2): one shared mechanism, armed by
+   motion/use-reveal.ts only for groups still below the fold when the page hydrates, played once
+   on sight. Without script, under reduced motion or above the fold, nothing is ever hidden. Each
+   group picks its own movement through custom properties (offset, scale, step), so sections do
+   not all fade up the same way; items stagger by their --i. */
+[data-reveal="armed"] .reveal-item {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, var(--kcq-reveal-y))) scale(var(--reveal-scale, 1));
+}
+[data-reveal="shown"] .reveal-item {
+  transition-property: opacity, transform;
+  transition-duration: var(--kcq-motion-medium), var(--kcq-motion-long);
+  transition-timing-function: var(--klc-motion-ease-out);
+  transition-delay: calc(var(--i, 0) * var(--reveal-stagger, var(--kcq-stagger)));
+}
+
+/* Reduced motion keeps every piece of content and its colour changes, and drops movement (ADR §6,
+   CP 40): animations end at once with no delay, so nothing waits hidden; each feature also has its
+   own designed reduced path (research K4). */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 1ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-property: opacity, color, background-color, border-color !important;
+  }
+  [data-reveal="armed"] .reveal-item {
+    opacity: 1;
+    transform: none;
   }
 }

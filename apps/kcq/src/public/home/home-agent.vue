@@ -1,8 +1,10 @@
 <!--
   Agent (deck 5.2; restraint benchmark §4 row 2). The section grammar: heading, sub, then one framed
   artifact, the agent's window, kept on the fixed dark chart surface in both page themes. Beside it
-  the deck's three details as a plain numbered list; on desktop the window sticks while the list
-  scrolls past and the scroll types the prompt and lands each call (motion/agent-story.ts).
+  the deck's three details as a plain numbered list. At rest (no script, reduced motion, touch,
+  phones) the whole story is shown finished and stacked; on desktop the scroll types the prompt
+  and lands each call as the window rises, then holds it under the header for a short runway
+  (motion/agent-story.ts).
   It is a scripted replay and says so: the tool names and inputs are real registry entries at the
   pinned commit (virtual:kcq-facts), the drawing colour is the brand token, and the chart draws real
   closes. The deck's example prompts are the window's own input: press one to copy it. Nothing plays
@@ -117,158 +119,197 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
       </div>
 
       <div ref="track" class="agent-story section-artifact" :data-story="storyActive || undefined">
-        <ol class="chapters">
-          <li v-for="(detail, index) in (tm('home.agent.details') as unknown as string[])" :key="index">
-            <button
-              type="button"
-              class="chapter"
-              :aria-current="chapter === index ? 'step' : undefined"
-              @click="replay.seek(CHAPTER_STEPS[index]!)"
-            >
-              <span class="chapter-index t-num">{{ index + 1 }}</span>
-              <span>{{ rt(detail) }}</span>
-            </button>
-          </li>
-        </ol>
-
-        <div ref="pinned" class="agent-console product-frame" data-theme="dark" :data-playing="playing || undefined">
-          <div class="console-bar">
-            <span class="t-ui">{{ t("home.agent.console") }}</span>
-            <svg class="console-glyph" :viewBox="`0 0 ${COLUMNS} ${ROWS}`" role="img" :aria-label="`${t('home.agent.fieldLabel')} ${progress}`">
-              <defs>
-                <pattern id="agent-ground" width="1" height="1" patternUnits="userSpaceOnUse">
-                  <circle class="glyph-dot" cx="0.5" cy="0.5" r="0.16" />
-                </pattern>
-              </defs>
-              <rect :width="COLUMNS" :height="ROWS" fill="url(#agent-ground)" />
-              <path
-                v-for="(band, index) in bands"
-                :key="index"
-                :d="band"
-                :class="['glyph-dot', index < step ? 'is-lit' : 'is-mark']"
-              />
-            </svg>
-          </div>
-          <div class="console-body">
-            <div class="transcript">
-              <p class="transcript-prompt">
-                <span class="t-ui transcript-who">{{ t("home.agent.you") }}</span>
-                <span>
-                  <span class="visually-hidden">{{ promptText }}</span>
-                  <span aria-hidden="true">{{ shownPrompt }}</span><span
-                    v-if="shownPrompt.length < promptText.length"
-                    class="caret"
-                    aria-hidden="true"
-                  /><span class="ghost" aria-hidden="true">{{ promptText.slice(shownPrompt.length) }}</span>
-                </span>
-              </p>
-              <ol class="transcript-calls" aria-live="polite">
-                <li v-for="(call, index) in calls" :key="call.tool" class="call" :data-state="state(index)">
-                  <span class="call-mark" aria-hidden="true">
-                    <KcqIcon v-if="state(index) === 'done'" name="check" :size="12" />
-                  </span>
-                  <span class="call-head">
-                    <span class="call-name" translate="no" :title="format(call.input)">{{ call.tool }}</span>
-                    <span class="call-safety" :data-safety="call.safety">{{ t(`home.agent.safety.${call.safety}`) }}</span>
-                  </span>
-                  <span class="call-result">
-                    <span v-if="state(index) === 'running'" class="shimmer">{{ t("home.agent.running") }}</span>
-                    <template v-else>{{ t("home.agent.returns", { result: rt(tm("home.agent.results")[index]!) }) }}</template>
-                  </span>
-                </li>
-              </ol>
-            </div>
-            <AgentChart class="console-chart" />
-          </div>
-          <div class="scrubber" role="group" :aria-label="t('home.agent.scrub')">
-            <button type="button" class="scrub-button" :aria-label="t('home.agent.back')" :disabled="step === 0" @click="replay.seek(step - 1)">
-              <KcqIcon name="step-back" :size="14" />
-            </button>
-            <button
-              type="button"
-              class="scrub-button scrub-play"
-              :aria-label="playing ? t('home.agent.pause') : step >= calls.length ? t('home.agent.replay') : t('home.agent.play')"
-              @click="replay.toggle()"
-            >
-              <KcqIcon :name="playing ? 'pause' : step >= calls.length ? 'replay' : 'play'" :size="14" />
-            </button>
-            <button type="button" class="scrub-button" :aria-label="t('home.agent.forward')" :disabled="step >= calls.length" @click="replay.seek(step + 1)">
-              <KcqIcon name="step-forward" :size="14" />
-            </button>
-            <ol class="scrub-track">
-              <li v-for="index in calls.length" :key="index">
-                <button
-                  type="button"
-                  class="scrub-tick"
-                  :data-done="index <= step || undefined"
-                  :aria-label="t('home.agent.step', { step: index, total: calls.length })"
-                  :aria-current="index === step ? 'step' : undefined"
-                  @click="replay.seek(index)"
-                />
-              </li>
-            </ol>
-            <button type="button" class="scrub-button scrub-speed t-num" :aria-label="`${t('home.agent.speed')} ${speed}×`" @click="replay.cycleSpeed()">
-              {{ speed }}×
-            </button>
-          </div>
-          <!-- The input: the deck's example prompts, ready to paste into the workstation's agent. -->
-          <ul class="composer" :aria-label="t('home.agent.chipsLabel')">
-            <li v-for="(chip, index) in (tm('home.agent.chips') as unknown as string[])" :key="index">
+        <div ref="pinned" class="agent-stage">
+          <ol class="chapters">
+            <li v-for="(detail, index) in (tm('home.agent.details') as unknown as string[])" :key="index">
               <button
                 type="button"
-                class="suggestion"
-                :data-copied="(copied && copiedText === rt(chip)) || undefined"
-                @click="copy(rt(chip))"
+                class="chapter"
+                :aria-current="chapter === index ? 'step' : undefined"
+                @click="replay.seek(CHAPTER_STEPS[index]!)"
               >
-                <KcqIcon name="prompt" :size="12" />
-                <span>{{ rt(chip) }}</span>
+                <span class="chapter-index t-num">{{ index + 1 }}</span>
+                <span>{{ rt(detail) }}</span>
               </button>
             </li>
-          </ul>
-          <p class="visually-hidden" aria-live="polite">{{ copied ? t("home.agent.chipCopied") : "" }}</p>
-          <p class="console-note t-ui">{{ t("home.agent.note", { commit: facts.commit.slice(0, 8) }) }}</p>
+          </ol>
+
+          <div class="agent-console product-frame" data-theme="dark" :data-playing="playing || undefined">
+            <div class="console-bar">
+              <span class="t-ui">{{ t("home.agent.console") }}</span>
+              <svg class="console-glyph" :viewBox="`0 0 ${COLUMNS} ${ROWS}`" role="img" :aria-label="`${t('home.agent.fieldLabel')} ${progress}`">
+                <defs>
+                  <pattern id="agent-ground" width="1" height="1" patternUnits="userSpaceOnUse">
+                    <circle class="glyph-dot" cx="0.5" cy="0.5" r="0.16" />
+                  </pattern>
+                </defs>
+                <rect :width="COLUMNS" :height="ROWS" fill="url(#agent-ground)" />
+                <path
+                  v-for="(band, index) in bands"
+                  :key="index"
+                  :d="band"
+                  :class="['glyph-dot', index < step ? 'is-lit' : 'is-mark']"
+                />
+              </svg>
+            </div>
+            <div class="console-body">
+              <div class="transcript">
+                <p class="transcript-prompt">
+                  <span class="t-ui transcript-who">{{ t("home.agent.you") }}</span>
+                  <span>
+                    <span class="visually-hidden">{{ promptText }}</span>
+                    <span aria-hidden="true">{{ shownPrompt }}</span><span
+                      v-if="shownPrompt.length < promptText.length"
+                      class="caret"
+                      aria-hidden="true"
+                    /><span class="ghost" aria-hidden="true">{{ promptText.slice(shownPrompt.length) }}</span>
+                  </span>
+                </p>
+                <ol class="transcript-calls" aria-live="polite">
+                  <li v-for="(call, index) in calls" :key="call.tool" class="call" :data-state="state(index)">
+                    <span class="call-mark" aria-hidden="true">
+                      <KcqIcon v-if="state(index) === 'done'" name="check" :size="12" />
+                    </span>
+                    <span class="call-head">
+                      <span class="call-name" translate="no" :title="format(call.input)">{{ call.tool }}</span>
+                      <span class="call-safety" :data-safety="call.safety">{{ t(`home.agent.safety.${call.safety}`) }}</span>
+                    </span>
+                    <span class="call-result">
+                      <span v-if="state(index) === 'running'" class="shimmer">{{ t("home.agent.running") }}</span>
+                      <template v-else>{{ t("home.agent.returns", { result: rt(tm("home.agent.results")[index]!) }) }}</template>
+                    </span>
+                  </li>
+                </ol>
+              </div>
+              <AgentChart class="console-chart" />
+            </div>
+            <div class="scrubber" role="group" :aria-label="t('home.agent.scrub')">
+              <button type="button" class="scrub-button" :aria-label="t('home.agent.back')" :disabled="step === 0" @click="replay.seek(step - 1)">
+                <KcqIcon name="step-back" :size="14" />
+              </button>
+              <button
+                type="button"
+                class="scrub-button scrub-play"
+                :aria-label="playing ? t('home.agent.pause') : step >= calls.length ? t('home.agent.replay') : t('home.agent.play')"
+                @click="replay.toggle()"
+              >
+                <KcqIcon :name="playing ? 'pause' : step >= calls.length ? 'replay' : 'play'" :size="14" />
+              </button>
+              <button type="button" class="scrub-button" :aria-label="t('home.agent.forward')" :disabled="step >= calls.length" @click="replay.seek(step + 1)">
+                <KcqIcon name="step-forward" :size="14" />
+              </button>
+              <ol class="scrub-track">
+                <li v-for="index in calls.length" :key="index">
+                  <button
+                    type="button"
+                    class="scrub-tick"
+                    :data-done="index <= step || undefined"
+                    :aria-label="t('home.agent.step', { step: index, total: calls.length })"
+                    :aria-current="index === step ? 'step' : undefined"
+                    @click="replay.seek(index)"
+                  />
+                </li>
+              </ol>
+              <button type="button" class="scrub-button scrub-speed t-num" :aria-label="`${t('home.agent.speed')} ${speed}×`" @click="replay.cycleSpeed()">
+                {{ speed }}×
+              </button>
+            </div>
+            <!-- The input: the deck's example prompts, ready to paste into the workstation's agent. -->
+            <ul class="composer" :aria-label="t('home.agent.chipsLabel')">
+              <li v-for="(chip, index) in (tm('home.agent.chips') as unknown as string[])" :key="index">
+                <button
+                  type="button"
+                  class="suggestion"
+                  :data-copied="(copied && copiedText === rt(chip)) || undefined"
+                  @click="copy(rt(chip))"
+                >
+                  <KcqIcon name="prompt" :size="12" />
+                  <span>{{ rt(chip) }}</span>
+                </button>
+              </li>
+            </ul>
+            <p class="visually-hidden" aria-live="polite">{{ copied ? t("home.agent.chipCopied") : "" }}</p>
+            <p class="console-note t-ui">{{ t("home.agent.note", { commit: facts.commit.slice(0, 8) }) }}</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </template>
 <style scoped>
+/* Complete at rest: with no script, reduced motion, touch or a short screen, the three details
+   and the finished transcript read as one stacked block. The scroll choreography below only
+   enhances it (motion/agent-story.ts). */
+/* A new formatting context, so the stage's runway margin stays inside the track (the scroll
+   distance) instead of collapsing through it. */
 .agent-story {
+  display: flow-root;
+}
+.agent-stage {
   display: grid;
   gap: var(--klc-space-32) var(--kcq-column-gap);
 }
-/* The deck's details: a plain numbered list; the current chapter reads in full ink. */
+/* The deck's details: a plain numbered list. The current chapter's number turns Cobalt. */
 .chapters {
   display: grid;
   align-content: start;
-  gap: var(--klc-space-8);
+  gap: var(--klc-space-4);
 }
 .chapter {
+  position: relative;
   display: grid;
   grid-template-columns: var(--klc-space-24) minmax(0, 1fr);
   gap: var(--klc-space-8);
   width: 100%;
+  min-height: var(--klc-density-comfortable);
   padding: var(--klc-space-8) 0;
   border: 0;
+  border-radius: var(--klc-radius-sm);
   background: transparent;
-  color: var(--kcq-ink-2);
+  color: var(--kcq-ink);
   font-size: var(--klc-text-copy-16-font-size);
   line-height: var(--klc-text-copy-16-line-height);
   text-align: left;
   cursor: pointer;
-  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+  transition-property: color, background-color, transform;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
 }
-.chapter[aria-current="step"],
-.agent-story:not([data-story]) .chapter {
-  color: var(--kcq-ink);
-}
-@media (hover: hover) and (pointer: fine) {
-  .chapter:hover {
-    color: var(--kcq-ink);
-  }
+.chapter:active {
+  transform: scale(var(--kcq-press));
 }
 .chapter-index {
   color: var(--kcq-ink-2);
+  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+.chapter[aria-current="step"] .chapter-index {
+  color: var(--kcq-accent-text);
+}
+/* While the scroll drives the story, the other chapters step back to the secondary ink (still
+   AA) and a 2px Cobalt rule in the gutter marks the current one. */
+.agent-story[data-story] .chapter:not([aria-current="step"]) {
+  color: var(--kcq-ink-2);
+}
+.chapter::before {
+  content: "";
+  position: absolute;
+  top: var(--klc-space-8);
+  bottom: var(--klc-space-8);
+  left: calc(-1 * var(--klc-space-16));
+  width: 2px;
+  border-radius: var(--klc-radius-full);
+  background: var(--kcq-accent);
+  opacity: 0;
+  transition: opacity var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+.agent-story[data-story] .chapter[aria-current="step"]::before {
+  opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .chapter:hover,
+  .agent-story[data-story] .chapter:not([aria-current="step"]):hover {
+    color: var(--kcq-ink);
+  }
 }
 /* The agent's window: the one framed artifact in this section. */
 .agent-console {
@@ -319,7 +360,6 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
 /* The rest of the prompt waits as ghost text, so the window never reads empty before it is typed. */
 .ghost {
   color: var(--kcq-ink-2);
-  opacity: 0.5;
 }
 .caret {
   display: inline-block;
@@ -340,13 +380,14 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   gap: 0 var(--klc-space-8);
   font-size: var(--klc-text-12-font-size);
   line-height: var(--klc-text-12-line-height);
-  transition: opacity var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
 }
 .call > :not(.call-mark) {
   grid-column: 2;
 }
-.call[data-state="queued"] {
-  opacity: 0.35;
+/* Queued calls wait in the secondary ink (AA on the frame), never faded out: the window reads in
+   full at every step, the check marks and the primary ink say what has run. */
+.call[data-state="queued"] .call-name {
+  color: var(--kcq-ink-2);
 }
 .call-mark {
   grid-row: 1;
@@ -382,6 +423,7 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
 .call-name {
   color: var(--kcq-ink);
   font-weight: 500;
+  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
 }
 .call-safety,
 .call-result {
@@ -433,6 +475,12 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   color: var(--kcq-ink);
   font-size: var(--klc-text-12-font-size);
   cursor: pointer;
+  transition-property: color, background-color, transform;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
+}
+.scrub-button:not(:disabled):active {
+  transform: scale(var(--kcq-press-icon));
 }
 .scrub-button:disabled {
   color: var(--kcq-ink-2);
@@ -494,7 +542,17 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   line-height: var(--klc-text-12-line-height);
   text-align: left;
   cursor: copy;
-  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+  transition-property: color, background-color, transform;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
+}
+.suggestion:active {
+  transform: scale(var(--kcq-press));
+}
+@media (pointer: coarse) {
+  .suggestion {
+    min-height: var(--klc-density-comfortable);
+  }
 }
 .suggestion[data-copied] {
   color: var(--kcq-ink);
@@ -522,7 +580,7 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   }
 }
 @media (min-width: 1024px) {
-  .agent-story {
+  .agent-stage {
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
   .chapters {
@@ -531,18 +589,14 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   .agent-console {
     grid-column: 4 / span 9;
   }
-  /* The pinned story: the console sticks while the chapters, spaced by the scroll, pass by. */
-  .agent-story[data-story] .agent-console {
+  /* The pinned story: the stage (details and window together) sticks under the header for a short
+     runway, its bottom margin; the choreography starts as the window rises into view, so most of
+     it plays on the way in and the page grows by a fifth of a screen, not a full one. Sticky keeps
+     the stage inside the track: it never overlaps the next section. */
+  .agent-story[data-story] .agent-stage {
     position: sticky;
     top: calc(var(--kcq-header-height) + var(--klc-space-24));
-  }
-  /* The chapter column is the scroll distance: 90% of a screen tall, about a quarter of a screen more than
-     the console, its three lines spread from the console's top to the track's end. */
-  .agent-story[data-story] .chapters {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 90vh;
+    margin-bottom: 20vh;
   }
 }
 @media (prefers-reduced-motion: reduce) {

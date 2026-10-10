@@ -71,6 +71,13 @@ function onKey(event: KeyboardEvent) {
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
+  transition-property: color, background-color, transform;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
+}
+.theme-cycle:active,
+.theme-option:active {
+  transform: scale(var(--kcq-press-icon));
 }
 @media (hover: hover) and (pointer: fine) {
   .theme-cycle:hover,

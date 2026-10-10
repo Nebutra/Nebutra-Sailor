@@ -4,8 +4,9 @@
   one top edge (restraint benchmark rule 9). No prices: those are in the deck, and the note says so.
 -->
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useReveal } from "../home/motion/use-reveal";
 
 const { t, tm } = useI18n();
 const tiers = computed(() =>
@@ -15,6 +16,9 @@ const tiers = computed(() =>
     body: t(`investors.model.tiers.${index}.body`),
   })),
 );
+/** Reveal: the tiers step up one after another, a staircase from free to paid support. */
+const stairs = ref<HTMLElement>();
+const { state } = useReveal(stairs);
 </script>
 <template>
   <section id="model" class="band model" aria-labelledby="model-heading">
@@ -22,8 +26,8 @@ const tiers = computed(() =>
       <div class="section-head">
         <h2 id="model-heading" class="t-heading">{{ t("investors.model.heading") }}</h2>
       </div>
-      <ol class="stairs">
-        <li v-for="tier in tiers" :key="tier.name" class="step">
+      <ol ref="stairs" class="stairs" :data-reveal="state">
+        <li v-for="(tier, index) in tiers" :key="tier.name" class="step reveal-item" :style="{ '--i': index, '--reveal-y': `${16 + index * 8}px` }">
           <h3 class="t-title">{{ tier.name }}</h3>
           <p class="t-meta step-term">{{ tier.term }}</p>
           <p class="t-copy">{{ tier.body }}</p>

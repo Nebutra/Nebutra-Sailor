@@ -25,4 +25,17 @@ describe("agent story progress", () => {
   it("treats a track no taller than the console as finished", () => {
     expect(storyProgress(PIN, HEIGHT, 0, HEIGHT)).toBe(1);
   });
+
+  it("starts a lead before the pin line and spreads it over the lead and the runway", () => {
+    // Lead 400px: starts with the track's top at 488px, ends 400px of runway past the pin.
+    expect(storyProgress(PIN, HEIGHT, PIN + 400, TRACK, 400)).toBe(0);
+    expect(storyProgress(PIN, HEIGHT, PIN + 600, TRACK, 400)).toBe(0);
+    expect(storyProgress(PIN, HEIGHT, PIN, TRACK, 400)).toBeCloseTo(0.5);
+    expect(storyProgress(PIN, HEIGHT, PIN - 400, TRACK, 400)).toBe(1);
+  });
+
+  it("can play entirely on the way in when the track has no runway", () => {
+    expect(storyProgress(PIN, HEIGHT, PIN + 300, HEIGHT, 600)).toBeCloseTo(0.5);
+    expect(storyProgress(PIN, HEIGHT, PIN, HEIGHT, 600)).toBe(1);
+  });
 });

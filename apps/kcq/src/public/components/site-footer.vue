@@ -141,6 +141,11 @@ const columns = computed<{ heading: string; links: Link[] }[]>(() => [
     color var(--klc-motion-dur-fast) var(--klc-motion-ease-out),
     text-decoration-color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
 }
+@media (pointer: coarse) {
+  .footer-link {
+    min-height: var(--klc-density-comfortable);
+  }
+}
 @media (hover: hover) and (pointer: fine) {
   .footer-link:hover {
     color: var(--kcq-ink);
