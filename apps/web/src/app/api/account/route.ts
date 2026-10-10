@@ -5,31 +5,16 @@ import { z } from "zod";
 import { getAuth } from "@/lib/auth";
 import { db } from "@/lib/db";
 
-const SUPPORTED_LANGUAGES = [
-  "en",
-  "en-US",
-  "zh",
-  "zh-Hans",
-  "zh-CN",
-  "zh-Hans-CN",
-  "de",
-  "de-DE",
-  "es",
-  "es-ES",
-  "fr",
-  "fr-FR",
-  "ja",
-  "ja-JP",
-  "ko",
-  "ko-KR",
-] as const;
-
 const patchSchema = z
   .object({
     name: z.string().trim().min(1).max(120).optional(),
+    // Any tag the product language wheel resolves (`ja`, `zh-TW`, `pt-BR`),
+    // stored canonical. This used to be a 7-language list, so 27 of the 34
+    // languages the switcher offers could not be saved.
     language: z
-      .enum(SUPPORTED_LANGUAGES)
-      .transform((locale) => canonicalizeLocale(locale) ?? locale)
+      .string()
+      .refine((locale) => canonicalizeLocale(locale) !== undefined, "Unsupported language")
+      .transform((locale) => canonicalizeLocale(locale) as string)
       .optional(),
   })
   .refine((value) => value.name !== undefined || value.language !== undefined, {

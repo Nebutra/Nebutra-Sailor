@@ -2,7 +2,12 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUser } from "@nebutra/auth/client";
-import { CANONICAL_LOCALES, type CanonicalLocale, canonicalizeLocale } from "@nebutra/i18n/locales";
+import {
+  CANONICAL_LOCALES,
+  type CanonicalLocale,
+  canonicalizeLocale,
+  localeEndonym,
+} from "@nebutra/i18n/locales";
 import {
   Form,
   FormControl,
@@ -23,15 +28,6 @@ import { z } from "zod";
 
 const SUPPORTED_LOCALES = CANONICAL_LOCALES;
 type LocaleCode = CanonicalLocale;
-const LOCALE_LABELS: Record<LocaleCode, string> = {
-  "en-US": "English",
-  "zh-Hans-CN": "中文",
-  "de-DE": "Deutsch",
-  "es-ES": "Español",
-  "fr-FR": "Français",
-  "ja-JP": "日本語",
-  "ko-KR": "한국어",
-};
 
 const emailSchema = z.string().trim().email("errorInvalidEmail");
 
@@ -245,7 +241,7 @@ export function ProfileForm({
               <SelectContent>
                 {SUPPORTED_LOCALES.map((code) => (
                   <SelectItem key={code} value={code}>
-                    {LOCALE_LABELS[code]}
+                    {localeEndonym(code)}
                   </SelectItem>
                 ))}
               </SelectContent>

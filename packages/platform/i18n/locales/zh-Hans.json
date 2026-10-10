@@ -107,7 +107,6 @@
       "namePlaceholder": "例如：极光实验室",
       "nameRequired": "请输入工作空间名称。",
       "urlLabel": "工作空间地址",
-      "slugPlaceholder": "my-workspace",
       "slugError": "3–48 个字符，仅限小写字母、数字和连字符。",
       "submit": "创建工作空间",
       "submitting": "创建中…",
@@ -433,7 +432,6 @@
       "signInLink": "登录",
       "signUpFailed": "注册失败",
       "inviteLabel": "邀请码",
-      "invitePlaceholder": "neb_...",
       "inviteHint": "冷启动期间仅支持邀请注册。",
       "inviteRequired": "注册需要有效邀请码。",
       "inviteInvalid": "邀请码无效、已过期或不可用。",
@@ -536,6 +534,26 @@
       "providerNotSupported": "此操作由你的认证服务提供商管理。",
       "networkError": "网络错误，请检查连接后重试。",
       "unknown": "发生错误，请重试。"
+    },
+    "phone": {
+      "title": "使用手机号登录",
+      "subtitle": "选择国家或地区，然后输入手机号码。",
+      "country": "国家或地区",
+      "phone": "手机号码",
+      "send": "发送验证码",
+      "sending": "正在发送...",
+      "code": "验证码",
+      "codeSent": "请输入发送至 {phone} 的 6 位验证码。",
+      "verify": "验证并登录",
+      "verifying": "正在验证...",
+      "resend": "重新发送验证码",
+      "resendIn": "{seconds} 秒后可重新发送",
+      "change": "更换手机号",
+      "back": "返回登录",
+      "invalidPhone": "请输入所选国家或地区的有效手机号码。",
+      "captcha": "发送验证码前请先完成安全验证。",
+      "sendFailed": "暂时无法发送验证码，请稍后重试。",
+      "invalidCode": "验证码无效或已过期，请重新获取后再试。"
     }
   },
   "chat": {

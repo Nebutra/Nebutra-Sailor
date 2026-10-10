@@ -135,6 +135,20 @@ describe("PATCH /api/account", () => {
     expect(mockedUserUpdate).not.toHaveBeenCalled();
   });
 
+  it("accepts every language the switcher offers, not a short list", async () => {
+    mockedGetAuth.mockResolvedValue(buildAuth());
+    const { PATCH } = await loadRoute();
+    const response = await PATCH(
+      new Request("https://app.example/api/account", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ language: "pt" }),
+      }),
+    );
+    expect(response.status).toBe(200);
+    expect(((await response.json()) as { language: string }).language).toBe("pt-BR");
+  });
+
   it("rejects an unsupported language value", async () => {
     mockedGetAuth.mockResolvedValue(buildAuth());
     const { PATCH } = await loadRoute();
@@ -142,7 +156,7 @@ describe("PATCH /api/account", () => {
       new Request("https://app.example/api/account", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ language: "pt-BR" }),
+        body: JSON.stringify({ language: "tlh-KL" }),
       }),
     );
     expect(response.status).toBe(400);

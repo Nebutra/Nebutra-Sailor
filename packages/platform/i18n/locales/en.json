@@ -536,6 +536,26 @@
       "providerNotSupported": "This action is managed by your authentication provider.",
       "networkError": "Network error. Check your connection and try again.",
       "unknown": "Something went wrong. Please try again."
+    },
+    "phone": {
+      "title": "Sign in with your phone",
+      "subtitle": "Choose your country or region, then enter your mobile number.",
+      "country": "Country or region",
+      "phone": "Phone number",
+      "send": "Send verification code",
+      "sending": "Sending...",
+      "code": "Verification code",
+      "codeSent": "Enter the 6-digit code sent to {phone}.",
+      "verify": "Verify and sign in",
+      "verifying": "Verifying...",
+      "resend": "Send a new code",
+      "resendIn": "A new code can be sent in {seconds}s",
+      "change": "Use a different number",
+      "back": "Back to sign in",
+      "invalidPhone": "Enter a valid mobile number for the selected country or region.",
+      "captcha": "Complete the security check before requesting a code.",
+      "sendFailed": "We could not send a code right now. Please try again.",
+      "invalidCode": "That code is invalid or expired. Request a new code and try again."
     }
   },
   "chat": {
@@ -973,6 +993,39 @@
         "system": "System",
         "on": "On"
       }
+    },
+    "organization": {
+      "members": {
+        "heading": "Members",
+        "description": "Invite, promote, and remove members of this organization.",
+        "invite": "Invite member",
+        "empty": "No members yet",
+        "loading": "Loading members…",
+        "errorLoad": "Could not load members.",
+        "columnMember": "Member",
+        "columnRole": "Role",
+        "columnJoined": "Joined",
+        "columnActions": "Actions",
+        "role": {
+          "owner": "Owner",
+          "admin": "Admin",
+          "member": "Member",
+          "viewer": "Viewer"
+        },
+        "remove": "Remove",
+        "confirmRemove": "Remove this member?",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "changeRole": "Change role"
+      },
+      "invite": {
+        "title": "Invite a new member",
+        "emailLabel": "Email address",
+        "roleLabel": "Role",
+        "send": "Send invitation",
+        "success": "Invitation sent.",
+        "error": "Could not send invitation."
+      }
     }
   },
   "legal": {
@@ -1303,6 +1356,17 @@
     "default": {
       "emptyTitle": "The first workspace begins here.",
       "emptyDescription": "Create a workspace to begin."
+    }
+  },
+  "navigation": {
+    "orgSwitcher": {
+      "ariaLabel": "Switch organization",
+      "current": "Current",
+      "empty": "No organizations",
+      "selectOrg": "Select organization",
+      "create": "Create organization",
+      "switching": "Switching...",
+      "error": "Could not switch organization. Try again."
     }
   }
 }
