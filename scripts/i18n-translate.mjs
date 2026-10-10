@@ -66,7 +66,8 @@ const ROUTER = (process.env.I18N_ROUTER_URL || `https://${brand.domains.router}`
 );
 const SERVICE_SECRET = process.env.SERVICE_SECRET || "";
 const ROUTER_API_KEY = process.env.ROUTER_API_KEY || "";
-export const DEFAULT_MODELS = ["deepseek-v4-flash", "gemini-3.6-flash", "gpt-5.6-luna"];
+// deepseek-v4.1-flash is the current DeepSeek flash (v4 is legacy); gpt-5.6-luna is the verified public fallback.
+export const DEFAULT_MODELS = ["deepseek/deepseek-v4.1-flash", "gpt-5.6-luna"];
 const MODELS = (process.env.I18N_TRANSLATE_MODELS || DEFAULT_MODELS.join(","))
   .split(/[,\s]+/)
   .filter(Boolean);
