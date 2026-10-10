@@ -2,12 +2,12 @@
 
 import { isChineseProductLanguage } from "@nebutra/i18n/languages";
 import { Check } from "@nebutra/icons";
-import { AnimateIn, AnimateInGroup } from "@nebutra/ui/components";
 import { Button, ToggleGroup, ToggleGroupItem } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { type Currency, type Plan, SITE, type SiteTranslator } from "@/content/site";
+import { RevealGroup } from "@/shared/animation/reveal-group";
 import { SectionHeading } from "./section-heading";
 import { StarterLink } from "./starter-link";
 
@@ -44,16 +44,10 @@ export function StarterPricing({
     <section
       id="pricing"
       aria-labelledby="pricing-title"
-      className="scroll-mt-20 px-4 py-20 md:px-6 md:py-28"
+      className="scroll-mt-20 px-4 py-16 md:px-6 md:py-28"
     >
       <div className="mx-auto max-w-content">
-        <SectionHeading
-          id="pricing-title"
-          level={level}
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          lead={t("lead")}
-        />
+        <SectionHeading id="pricing-title" level={level} title={t("title")} lead={t("lead")} />
 
         <div className="mt-10 flex justify-center">
           <ToggleGroup
@@ -73,13 +67,18 @@ export function StarterPricing({
           </ToggleGroup>
         </div>
 
-        <AnimateInGroup stagger="fast" className="mt-10 grid gap-4 lg:grid-cols-3">
+        <RevealGroup className="mt-10 grid gap-4 lg:grid-cols-3">
           {pricing.plans.map((plan) => (
-            <AnimateIn key={plan.id} preset="fadeUp" className="h-full">
-              <PlanCard plan={plan} period={period} currency={currency} locale={locale} t={t} />
-            </AnimateIn>
+            <PlanCard
+              key={plan.id}
+              plan={plan}
+              period={period}
+              currency={currency}
+              locale={locale}
+              t={t}
+            />
           ))}
-        </AnimateInGroup>
+        </RevealGroup>
       </div>
     </section>
   );
@@ -106,14 +105,14 @@ function PlanCard({
       aria-labelledby={`plan-${plan.id}`}
       data-plan={plan.id}
       className={cn(
+        // A hairline, never a hairline and a shadow; the plan to pick is the
+        // one with the heavier rule.
         "flex h-full flex-col rounded-[var(--radius-xl)] bg-card p-6 md:p-8",
-        highlighted
-          ? "shadow-ambient-lg ring-2 ring-foreground"
-          : "shadow-ambient-sm ring-1 ring-border",
+        highlighted ? "ring-2 ring-foreground" : "ring-1 ring-border",
       )}
     >
       <div className="flex items-center justify-between gap-3">
-        <h3 id={`plan-${plan.id}`} className="text-base font-semibold text-foreground">
+        <h3 id={`plan-${plan.id}`} className="text-base font-medium text-foreground">
           {t(`plans.${plan.id}.name`)}
         </h3>
         {plan.highlight ? (
@@ -124,7 +123,7 @@ function PlanCard({
       </div>
       <p className="mt-2 text-sm text-muted-foreground">{t(`plans.${plan.id}.blurb`)}</p>
       <p className="mt-6 flex items-baseline gap-2">
-        <span className="text-4xl font-semibold tracking-tight text-foreground tabular-nums">
+        <span className="font-heading text-4xl font-medium tracking-tight text-foreground tabular-nums">
           {price ? formatPrice(price[currency], currency, locale) : t("onRequest")}
         </span>
         <span className="text-sm text-muted-foreground">{t(`plans.${plan.id}.unit`)}</span>
