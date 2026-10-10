@@ -125,10 +125,11 @@ export const SITE = {
     secondary: { href: "/contact" } satisfies Href,
   },
 
+  // Four links: with the brand, language, Sign in and Get started that is the
+  // eight groups a calm top bar holds. FAQ stays one click away in the footer.
   nav: [
     { id: "features", href: "/#features" },
     { id: "pricing", href: "/pricing" },
-    { id: "faq", href: "/faq" },
     { id: "blog", href: "/blog" },
     { id: "contact", href: "/contact" },
   ] satisfies Link[],

@@ -57,10 +57,10 @@ export function StarterNav() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-flow",
-        scrolled || open
-          ? "border-border bg-background/85 backdrop-blur-md"
-          : "border-transparent bg-transparent",
+        // Always opaque: the page never shows through the bar. Scrolling only
+        // adds the hairline that separates it from the content under it.
+        "fixed inset-x-0 top-0 z-50 border-b bg-background transition-[border-color] duration-flow",
+        scrolled || open ? "border-border" : "border-transparent",
       )}
     >
       <div className="mx-auto flex h-16 max-w-wide items-center gap-6 px-4 md:px-6">
@@ -74,7 +74,7 @@ export function StarterNav() {
             <StarterLink
               key={link.href}
               href={link.href}
-              className="rounded-[var(--radius-sm)] px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="inline-flex min-h-10 items-center rounded-[var(--radius-sm)] px-3 text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground"
             >
               {t(link.id)}
             </StarterLink>
@@ -109,7 +109,7 @@ export function StarterNav() {
               <StarterLink
                 key={link.href}
                 href={link.href}
-                className="border-b border-border py-3 text-base text-foreground"
+                className="flex min-h-12 items-center border-b border-border text-base text-foreground"
               >
                 {t(link.id)}
               </StarterLink>

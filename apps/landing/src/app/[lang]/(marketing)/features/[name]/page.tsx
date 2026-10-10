@@ -144,6 +144,7 @@ function DomainPage({ entry, locale, t }: PageProps) {
           <BackLink href={`/features`} label={t("page.allPackages")} />
           <Intro
             level={1}
+            lang={locale}
             className="mt-8"
             title={titleOf(entry, t)}
             lead={folder ? t(`folders.${folder.id}.summary`) : getFeatureSummary(entry, t)}

@@ -2,7 +2,7 @@
 
 // @brand-exempt: a verbatim recording of a real create-sailor run; its output names the upstream repository.
 
-import { AnimatedSpan, Terminal, TypingAnimation } from "@nebutra/ui/primitives";
+import { AnimatedSpan, CopyButton, Terminal, TypingAnimation } from "@nebutra/ui/primitives";
 
 /**
  * A real run of the published CLI, replayed — not a mock. Recorded 2026-09-27
@@ -13,6 +13,7 @@ import { AnimatedSpan, Terminal, TypingAnimation } from "@nebutra/ui/primitives"
 /** The deployed template: what `npm dev` shows on localhost, live. */
 const ACME_SITE = "https://acme.nebutra.com";
 const LOCAL_URL = "http://localhost:3000";
+const COMMAND = "npx create-sailor@latest acme";
 
 const OUTPUT: { text: string; tone?: "muted" | "strong" }[] = [
   { text: "Sailor v2.0.0", tone: "strong" },
@@ -36,9 +37,18 @@ const OUTPUT: { text: string; tone?: "muted" | "strong" }[] = [
 
 export function SailorCli() {
   return (
-    <figure>
+    <figure className="relative">
+      {/* The one thing a visitor would take from the recording. The check that
+          replaces the icon for two seconds is the confirmation. */}
+      <CopyButton
+        value={COMMAND}
+        showToast={false}
+        tooltipText="Copy command"
+        successMessage="Command copied"
+        className="absolute top-0 right-1 z-10"
+      />
       <Terminal className="w-full max-w-4xl max-h-none">
-        <TypingAnimation>npx create-sailor@latest acme</TypingAnimation>
+        <TypingAnimation>{COMMAND}</TypingAnimation>
         {OUTPUT.map((l) => (
           <AnimatedSpan
             key={l.text}

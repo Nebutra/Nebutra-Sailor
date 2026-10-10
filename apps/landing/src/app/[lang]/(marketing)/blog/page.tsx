@@ -24,7 +24,13 @@ export default async function JournalPage({ params }: { params: Promise<{ lang: 
   return (
     <main id="main-content">
       <section className="px-8 pt-28 pb-16 xl:px-16">
-        <Intro level={1} title={t("title")} lead={t("lead")} cn={zh ? undefined : t("cn")} />
+        <Intro
+          level={1}
+          lang={lang}
+          title={t("title")}
+          lead={t("lead")}
+          cn={zh ? undefined : t("cn")}
+        />
       </section>
       <Band>
         <EssayFeature />

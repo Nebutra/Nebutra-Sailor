@@ -83,6 +83,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ lang:
         <div className="relative z-10">
           <Intro
             level={1}
+            lang={lang}
             title={t.rich("page.heroTitle", {
               signature: (chunks) => <span className="signature">{chunks}</span>,
             })}

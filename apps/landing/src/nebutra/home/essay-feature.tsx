@@ -68,12 +68,14 @@ export async function EssayFeature() {
           fill
           priority
           sizes="(min-width: 1280px) 55vw, 100vw"
-          className="object-cover transition-transform duration-cinematic ease-brand group-hover:scale-[1.02]"
+          className="object-cover motion-safe:transition-transform motion-safe:duration-reveal motion-safe:ease-brand group-hover:scale-[1.02]"
         />
       </div>
       <div>
-        <p className="text-sm text-muted-foreground">Essay · {post.date?.slice(0, 10)}</p>
-        <p className="mt-3 font-heading text-4xl font-medium text-foreground text-balance">
+        <p className="text-sm tabular-nums text-muted-foreground">
+          Essay · {post.date?.slice(0, 10)}
+        </p>
+        <p className="mt-3 font-heading text-4xl font-medium text-foreground text-balance md:text-5xl">
           {post.title}
         </p>
         <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>
