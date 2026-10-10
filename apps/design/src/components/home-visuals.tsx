@@ -79,39 +79,103 @@ export function ComponentsVisual() {
 }
 
 /**
- * Semantic fills as Geist draws its scales: a capsule per role. Utilities, not
- * `var()`, because these tokens are bare HSL channels — a bare channel in a
- * colour slot voids the declaration — and so a language re-points each one.
+ * The palette as it is built: three twelve-step scales and the status fills,
+ * as flush strips on the card — no per-swatch chrome. Full class names, not
+ * built strings, so Tailwind emits every one; each is the scale variable, so
+ * a language that re-points a scale re-paints its strip.
  */
-const CAPSULES = [
-  { label: "foreground", fill: "bg-foreground" },
-  { label: "neutral", fill: "bg-neutral-9" },
-  { label: "ring", fill: "bg-ring" },
-  { label: "accent", fill: "bg-brand-accent" },
-  { label: "success", fill: "bg-success" },
-  { label: "warning", fill: "bg-warning" },
-  { label: "destructive", fill: "bg-destructive" },
+const STRIPS: ReadonlyArray<{ label: string; steps: readonly string[] }> = [
+  {
+    label: "Neutral",
+    steps: [
+      "bg-neutral-1",
+      "bg-neutral-2",
+      "bg-neutral-3",
+      "bg-neutral-4",
+      "bg-neutral-5",
+      "bg-neutral-6",
+      "bg-neutral-7",
+      "bg-neutral-8",
+      "bg-neutral-9",
+      "bg-neutral-10",
+      "bg-neutral-11",
+      "bg-neutral-12",
+    ],
+  },
+  {
+    label: "Blue",
+    steps: [
+      "bg-blue-1",
+      "bg-blue-2",
+      "bg-blue-3",
+      "bg-blue-4",
+      "bg-blue-5",
+      "bg-blue-6",
+      "bg-blue-7",
+      "bg-blue-8",
+      "bg-blue-9",
+      "bg-blue-10",
+      "bg-blue-11",
+      "bg-blue-12",
+    ],
+  },
+  {
+    label: "Cyan",
+    steps: [
+      "bg-cyan-1",
+      "bg-cyan-2",
+      "bg-cyan-3",
+      "bg-cyan-4",
+      "bg-cyan-5",
+      "bg-cyan-6",
+      "bg-cyan-7",
+      "bg-cyan-8",
+      "bg-cyan-9",
+      "bg-cyan-10",
+      "bg-cyan-11",
+      "bg-cyan-12",
+    ],
+  },
 ];
+
+const STATUS = ["bg-success", "bg-warning", "bg-destructive", "bg-info"] as const;
 
 export function ColourVisual() {
   return (
-    <ul aria-label="Semantic fills" className="m-0 flex list-none items-center gap-3 p-0" inert>
-      {CAPSULES.map((capsule) => (
-        <li
-          className="flex h-24 w-8 rounded-full border border-border bg-card p-[11px]"
-          key={capsule.label}
-        >
-          <span className={`w-full flex-1 rounded-full ${capsule.fill}`} />
-        </li>
+    <div
+      aria-label="Colour scales"
+      className="flex w-full max-w-md flex-col gap-2"
+      inert
+      role="img"
+    >
+      {STRIPS.map((strip) => (
+        <div className="grid grid-cols-[3.5rem_1fr] items-center gap-3" key={strip.label}>
+          <span className="text-muted-foreground text-xs">{strip.label}</span>
+          {/* One rounded strip; the steps meet without gaps, so the ramp reads
+              as a ramp. The inset hairline keeps the pale end off the card. */}
+          <span className="relative grid h-7 grid-cols-12 overflow-hidden rounded-[var(--radius-sm)] after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:ring-1 after:ring-border after:ring-inset">
+            {strip.steps.map((fill) => (
+              <span className={fill} key={fill} />
+            ))}
+          </span>
+        </div>
       ))}
-    </ul>
+      <div className="grid grid-cols-[3.5rem_1fr] items-center gap-3">
+        <span className="text-muted-foreground text-xs">Status</span>
+        <span className="grid h-7 grid-cols-4 overflow-hidden rounded-[var(--radius-sm)]">
+          {STATUS.map((fill) => (
+            <span className={fill} key={fill} />
+          ))}
+        </span>
+      </div>
+    </div>
   );
 }
 
 /** The lockup on its construction lines — drawn in the border ink, so they read in every language. */
 export function BrandVisual() {
   return (
-    <div className="relative flex h-full w-full items-center justify-center" inert>
+    <div className="relative flex h-40 w-full items-center justify-center" inert>
       <svg
         aria-hidden
         role="presentation"

@@ -70,7 +70,12 @@ export function State({
         {note ? <p className="m-0 max-w-3xl text-base text-neutral-11">{note}</p> : null}
       </div>
       <div className="overflow-hidden rounded-lg border border-border bg-card">
-        <div className="p-6">{children}</div>
+        {/* The card clips to its corners, so the stage itself scrolls: an
+            overflow state (a long label that grows its button) stays whole
+            and reachable at 390 instead of being cropped by the frame. */}
+        <div className="overflow-x-auto p-4 sm:p-6" data-stage>
+          {children}
+        </div>
         {/* What the state is here to catch, in the strip under the stage —
             where Geist puts "Show code": metadata about the specimen, kept off
             the specimen and out of the reading column above it. */}

@@ -12,7 +12,7 @@ import {
   IconsVisual,
   TypeVisual,
 } from "@/components/home-visuals";
-import { LanguageStrip } from "@/components/language-switcher";
+import { LanguageGallery } from "@/components/language-gallery";
 import { coveredNames, GROUPS } from "@/lib/components/registry";
 import { componentExports } from "@/lib/components/ui-source";
 import switchability from "@/lib/generated/switchability.json";
@@ -141,7 +141,7 @@ export default function HomePage() {
           press is answered on the same screen. */}
       <section
         aria-labelledby="languages-heading"
-        className={`${BAND} flex flex-col gap-5 border-border border-t py-8`}
+        className={`${BAND} flex flex-col gap-6 border-border border-t py-10`}
       >
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
           <h2
@@ -154,7 +154,7 @@ export default function HomePage() {
             {m.live} of {m.dimensions} dimensions move · press <Kbd small>L</Kbd> anywhere
           </p>
         </div>
-        <LanguageStrip />
+        <LanguageGallery />
       </section>
 
       <section
@@ -168,7 +168,7 @@ export default function HomePage() {
                 {cell.stat(m)}
               </p>
             ) : null}
-            <div className="flex h-44 items-center justify-center overflow-hidden px-8 pt-10">
+            <div className="flex min-h-52 items-center justify-center px-8 pt-10 pb-2">
               {cell.visual}
             </div>
             <div className="flex flex-col gap-1 px-8 pt-6 pb-8">

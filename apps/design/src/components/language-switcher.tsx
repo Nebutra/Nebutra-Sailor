@@ -1,5 +1,5 @@
 "use client";
-// @primitive-exempt: the language tiles are swatches painted in each language's own colours, not action buttons.
+// @primitive-exempt: the trigger is a two-line control (label over value with a swatch), not an action button.
 
 /**
  * The site's one design-language control.
@@ -206,60 +206,5 @@ export function ActiveLanguageCaption({ className }: { className?: string }) {
         ) : null}
       </span>
     </span>
-  );
-}
-
-/**
- * The home page's switch: every language as a tile you can press, painted in
- * its own canvas, ink and action fill. Pressing one re-skins the whole site —
- * the grid under it is the same live components, so the strip and what it
- * changes are on one screen.
- */
-export function LanguageStrip({ className }: { className?: string }) {
-  const { active, select } = useDesignLanguage();
-  return (
-    <div className={cn("grid grid-cols-5 gap-1.5 sm:gap-2 md:grid-cols-9", className)}>
-      {LANGUAGES.map((language) => {
-        const swatch = SWATCHES[language.id] ?? SWATCHES.factory;
-        const checked = language.id === active;
-        if (!swatch) return null;
-        return (
-          <button
-            aria-label={`${language.name} design language`}
-            aria-pressed={checked}
-            className={cn(
-              "group/tile flex flex-col gap-2 rounded-lg p-1 text-left transition-colors duration-micro",
-              checked ? "bg-accent" : "hover:bg-accent",
-            )}
-            key={language.id}
-            onClick={() => select(language.id)}
-            type="button"
-          >
-            <span
-              aria-hidden
-              className={cn(
-                "flex aspect-[4/3] w-full flex-col justify-between rounded-[var(--radius-md)] p-2.5 ring-1 ring-inset",
-                checked ? "ring-foreground" : "ring-border",
-              )}
-              style={{ background: swatch.canvas }}
-            >
-              <span className="font-medium text-lg leading-none" style={{ color: swatch.ink }}>
-                Aa
-              </span>
-              <span className="flex items-center gap-1">
-                <span
-                  className="h-1 flex-1 rounded-full opacity-30"
-                  style={{ background: swatch.ink }}
-                />
-                <span className="h-3 w-5 rounded-full" style={{ background: swatch.action }} />
-              </span>
-            </span>
-            <span className="truncate px-1 pb-0.5 text-foreground text-xs">
-              {language.shortName}
-            </span>
-          </button>
-        );
-      })}
-    </div>
   );
 }

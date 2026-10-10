@@ -593,7 +593,7 @@ html.dark[data-brand="linear"] {
   --role-quiet: 223 9% 15%;
   --role-quiet-fg: 218 21% 85%;
   --role-muted: 210 4% 9%;
-  --role-muted-fg: 218 5% 41%;
+  --role-muted-fg: 218 6% 57%;
   --role-border: 223 9% 15%;
   --role-input: 223 9% 15%;
   --role-ring: 64 89% 54%;
@@ -610,7 +610,7 @@ html.dark[data-brand="linear"] {
   --secondary: 223 9% 15%;
   --secondary-foreground: 218 21% 85%;
   --muted: 210 4% 9%;
-  --muted-foreground: 218 5% 41%;
+  --muted-foreground: 218 6% 57%;
   --accent: 223 9% 15%;
   --accent-foreground: 218 21% 85%;
   --destructive: 0 79% 63%;
@@ -647,10 +647,10 @@ html.dark[data-brand="linear"] {
   --neutral-5: color-mix(in oklab, hsl(223 9% 15%) 60%, hsl(210 6% 6%));
   --neutral-6: color-mix(in oklab, hsl(223 9% 15%) 80%, hsl(210 6% 6%));
   --neutral-7: hsl(223 9% 15%);
-  --neutral-8: color-mix(in oklab, hsl(218 5% 41%) 25%, hsl(223 9% 15%));
-  --neutral-9: color-mix(in oklab, hsl(218 5% 41%) 50%, hsl(223 9% 15%));
-  --neutral-10: color-mix(in oklab, hsl(218 5% 41%) 75%, hsl(223 9% 15%));
-  --neutral-11: hsl(218 5% 41%);
+  --neutral-8: color-mix(in oklab, hsl(218 6% 57%) 25%, hsl(223 9% 15%));
+  --neutral-9: color-mix(in oklab, hsl(218 6% 57%) 50%, hsl(223 9% 15%));
+  --neutral-10: color-mix(in oklab, hsl(218 6% 57%) 75%, hsl(223 9% 15%));
+  --neutral-11: hsl(218 6% 57%);
   --neutral-12: hsl(0 0% 100%);
 }
 

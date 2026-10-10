@@ -74,10 +74,15 @@ footer with no alignment to anything; a "Catches:" paragraph sitting between hea
   The header is title, lead, an import code card with a copy button, a provenance strip
   (source / story / import sites), and the derived axes as chips. The light/dark/split control is
   a sticky toolbar band.
-- **Home.** Name and one sentence. Then the signature: nine language tiles, each painted in its own
-  canvas, ink and action colour; one press re-skins the site. Then a Geist bento of six live
+- **Home.** Name and one sentence. Then the signature, modelled on ray.so's theme gallery: nine
+  cards, each a working miniature (a list with a selected row, a primary action) drawn with that
+  language's own canvas, card, ink, fills, radii and heading face. The values are read from the
+  Brand Package as inline custom properties, because skins are scoped to `html` and can't be
+  applied to a subtree. The miniatures follow the site's light/dark mode; one press re-skins the
+  site. Then a Geist bento of six live
   foundation cells: real `@nebutra/ui` controls, semantic-fill capsules, the lockup on its
-  construction lines, 24 real glyphs, the display and mono faces, and three cards on the shadow
+  construction lines, 24 real glyphs. The colour cell shows the neutral, blue and cyan
+  twelve-step scales and the status fills as flush strips, with no per-swatch chrome, the display and mono faces, and three cards on the shadow
   ramp. Each cell carries its build-time stat in the corner. Visuals are `inert` and the title is a
   stretched link, so no controls sit inside an anchor. The mock dashboard (`live-specimen.tsx`) is
   deleted.
@@ -88,11 +93,24 @@ footer with no alignment to anything; a "Catches:" paragraph sitting between hea
   catalog because the header imports it. Twelve arbitrary-typography allowlist entries shrank or
   were removed.
 
+- **Linear's dark muted ink.** It was `218 5% 41%` (`#63676e`) on `#090a0b`, about 3.6:1. It is
+  now `218 6% 57%` (`#8a8f98`, the value linear.app uses), set in `brands/linear/brand.json`
+  (top-level semantic, `roles`, `modes.dark`). Light mode is unchanged at 41% on white. Skins were
+  regenerated.
+- **Stages.** The home stage now grows with its content instead of having a fixed height. A
+  component stage scrolls horizontally at narrow widths instead of cropping. A Playwright audit
+  (every home cell and every component stage on all 33 component pages; Factory, Linear and Stripe;
+  light and dark; 1440 and 390) flags any element extending past its stage and any stage that has
+  to scroll. Before trusting it, I forced a clip to confirm it catches one. The home is clean
+  everywhere.
+
 ## Left open
 
-- **Linear's muted ink.** The Linear skin sets `--muted-foreground` / `--neutral-11` to `#63676e`
-  on `#090a0b` (about 3.6:1), so secondary copy under Linear reads dim. This is a skin token, not
-  this site; Linear itself uses `#8a8f98` for secondary text.
+- **Alert at 390.** In the `/components/alert` composition, the toolbar overflows the Alert's own
+  box: a long description plus two actions leaves the action rail 23–33px too wide. This is a
+  responsive defect in the `Alert` primitive (it has no stacked mode), not the stage. The remaining
+  audit hits are the deliberate long-label overflow states on badge, button and switch, which now
+  scroll inside their stage.
 - **Pages not yet brought to the band style.** The traps, layers and tokens-overview pages still
   carry mono-uppercase eyebrows inside their own figures. The pattern pages' specimens keep their
   own tonal panels.
