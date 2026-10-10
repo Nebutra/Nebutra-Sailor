@@ -24,6 +24,8 @@
  *   I18N_ROUTER_URL      → Router origin, default https://<brand.domains.router>
  *   I18N_TRANSLATE_MODELS → csv model pool, rotated on rate limits
  *
+ * Time budget: --deadline-minutes N (or I18N_DEADLINE_MINUTES) stops starting
+ * batches after N minutes so a CI job ends before its own timeout.
  * Throughput knobs: LOCALE_CONCURRENCY (2) · CONCURRENCY (4 batches per locale) ·
  * BATCH_SIZE (16 strings per request) · MAX_RETRIES (4) · REQUEST_TIMEOUT_MS.
  */
@@ -115,10 +117,12 @@ function parseArgs(argv) {
   const locales = [];
   const catalogs = [];
   let maxBatches = Number.POSITIVE_INFINITY;
+  let deadlineMinutes = Number(process.env.I18N_DEADLINE_MINUTES) || Number.POSITIVE_INFINITY;
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === "--locale" && argv[i + 1]) locales.push(argv[++i]);
     if (argv[i] === "--catalog" && argv[i + 1]) catalogs.push(argv[++i]);
     if (argv[i] === "--max-batches" && argv[i + 1]) maxBatches = Number(argv[++i]);
+    if (argv[i] === "--deadline-minutes" && argv[i + 1]) deadlineMinutes = Number(argv[++i]);
   }
   return {
     force: argv.includes("--force"),
@@ -126,6 +130,7 @@ function parseArgs(argv) {
     locales,
     catalogs,
     maxBatches,
+    deadlineMinutes,
   };
 }
 
@@ -308,6 +313,13 @@ async function translateLocale(ctx, catalog, locale, sourceMap, order) {
   await Promise.all(
     batches.map((batch) =>
       limit(async () => {
+        // Past the time budget: start no new batch. The locale still writes
+        // what it finished, and the run exits 3 so the PR step runs — a job
+        // killed by its own timeout-minutes never reaches that step.
+        if (Date.now() >= ctx.deadline) {
+          ctx.hitDeadline = true;
+          return;
+        }
         const accepted = await ctx.translator.translate(locale, batch, catalog.styleGuide);
         for (const [key, value] of accepted) {
           targetMap.set(key, value);
@@ -349,6 +361,8 @@ async function main() {
     confirmed: loadConfirmed(),
     translator: endpoint ? createTranslator(endpoint) : null,
     written: 0,
+    deadline: Date.now() + args.deadlineMinutes * 60_000,
+    hitDeadline: false,
   };
   const catalogs = args.catalogs.length
     ? CATALOGS.filter((c) => args.catalogs.includes(c.id))
@@ -396,7 +410,12 @@ async function main() {
   for (const [cause, n] of [...FAILURE_CAUSES].sort((a, b) => b[1] - a[1])) {
     process.stdout.write(`  ${String(n).padStart(6)}  ${cause}\n`);
   }
-  if (!args.dryRun && pending > 0 && translated === 0) process.exitCode = 2;
+  if (ctx.hitDeadline) {
+    process.stdout.write(
+      `Time budget of ${args.deadlineMinutes} min reached; the next run resumes.\n`,
+    );
+    process.exitCode = translated > 0 ? 3 : 2;
+  } else if (!args.dryRun && pending > 0 && translated === 0) process.exitCode = 2;
 }
 
 if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href) {

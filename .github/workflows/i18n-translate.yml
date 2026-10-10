@@ -89,6 +89,10 @@ jobs:
           CATALOG: ${{ github.event.inputs.catalog || 'all' }}
           LOCALES: ${{ github.event.inputs.locales }}
           MAX_BATCHES: ${{ github.event.inputs.max_batches }}
+          # Stop starting batches at 200 min: the job cap is 240, and gate + PR
+          # must still run. A run cut off by timeout-minutes loses everything.
+          I18N_DEADLINE_MINUTES: "200"
+          LOCALE_CONCURRENCY: "4"
         run: |
           set -uo pipefail
           ARGS=()
