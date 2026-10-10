@@ -1,3 +1,4 @@
+// @copy-exempt: replaces the root layout when it crashes, so no message catalog or intl provider is mounted; the copy is a last-resort fallback.
 "use client";
 
 // @primitive-exempt: renders in place of the root layout, so the Button primitive's styles are not loaded.

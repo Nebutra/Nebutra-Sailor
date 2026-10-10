@@ -1,3 +1,4 @@
+// @copy-exempt: replaces the root layout when it crashes, so no message catalog or intl provider is mounted; the copy is a last-resort fallback.
 // @brand-exempt: renders outside root layout; CSS vars unavailable — colours come
 // from @nebutra/tokens/values as literal strings instead.
 "use client";

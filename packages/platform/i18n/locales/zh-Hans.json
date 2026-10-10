@@ -52,6 +52,11 @@
       "previous": "上一页",
       "next": "下一页",
       "pageOf": "第 {page} 页 / 共 {total} 页"
+    },
+    "forbidden": {
+      "title": "你没有管理后台的访问权限",
+      "description": "管理后台仅对工作空间所有者和管理员开放。请联系所有者调整你的角色。",
+      "back": "返回工作空间"
     }
   },
   "Common": {

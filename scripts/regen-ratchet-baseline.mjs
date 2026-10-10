@@ -19,6 +19,7 @@ const GUARDS = {
   titleTooltips: "scripts/lint-no-title-tooltips.mjs",
   rawClipboardWrites: "scripts/lint-no-raw-clipboard.mjs",
   uiHardcodedLabels: "scripts/lint-ui-hardcoded-labels.mjs",
+  hardcodedCopy: "scripts/lint-hardcoded-copy.mjs",
 };
 
 const key = process.argv[2];

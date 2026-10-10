@@ -41,6 +41,14 @@ type Case = {
 
 const CASES: Case[] = [
   {
+    // English typed into JSX renders in English for every locale (2026-10-10
+    // web review: 690 such strings). JSX text and a copy attribute, each once.
+    guard: "lint-hardcoded-copy",
+    violation:
+      'export function Probe() {\n  return <input aria-label="Search projects" />;\n}\nexport function Probe2() {\n  return <p>Save your changes</p>;\n}\n',
+    path: "apps/web/src/components/__lint_guard_probe.tsx",
+  },
+  {
     // A business endpoint in apps/web instead of the gateway (ADR 2026-09-24
     // Sailor convergence §6). The probe path is under api/ but not auth/, so
     // no intrinsic pattern excuses it.
