@@ -51,5 +51,36 @@ class NginxRoutesTest(unittest.TestCase):
         self.assertIn("internal;", body)
 
 
+    def test_only_prerendered_public_files_are_edge_cacheable(self):
+        snippet = (HERE / "kcq.security-headers.conf").read_text()
+        self.assertIn("add_header Cloudflare-CDN-Cache-Control $kcq_edge_cache always;", snippet)
+        body = re.search(r"map \$uri \$kcq_edge_cache \{(.*?)\n\}", self.conf, re.S).group(1)
+        rules = [(pattern.lstrip("~"), value.strip('"')) for pattern, value in re.findall(r"^\s*(\S+)\s+(\"[^\"]*\");", body, re.M)]
+        self.assertEqual(rules[0], ("default", ""))
+
+        def edge(uri):
+            # nginx regex maps: first match in order wins.
+            return next((value for pattern, value in rules[1:] if re.search(pattern, uri)), "")
+
+        # try_files has already rewritten /home to /home.html when headers are sent.
+        for uri in ("/home.html", "/zh/home.html", "/benchmark.html", "/investors.html", "/zh/investors.html",
+                    "/llms.txt", "/robots.txt", "/sitemap.xml", "/docs/guides/themes.html", "/zh/docs.html"):
+            self.assertRegex(edge(uri), r"^max-age=\d+, stale-while-revalidate=\d+, stale-if-error=\d+$", uri)
+        for uri in ("/index.html", "/404.html", "/zh/404.html", "/docs/404.html", "/app", "/settings/profile",
+                    "/market/byok/connections", "/market/tdx/api/v1/market-data/sources/gotdx/stream",
+                    "/assets/index-abc123.js", "/docs/_next/static/chunk.js", "/og/home.png", "/health"):
+            self.assertEqual(edge(uri), "", uri)
+
+        blocks = dict(locations(self.conf))
+        browser = 'add_header Cache-Control "public, max-age=0, must-revalidate" always;'
+        self.assertIn(browser, blocks["~ ^/(zh/)?(home|benchmark|investors)$"])
+        self.assertIn(browser, blocks["/"])
+        for matcher in ("~ ^/app(/.*)?$", "~ ^/settings/profile/?$"):
+            self.assertIn('add_header Cache-Control "no-cache" always;', blocks[matcher])
+        for matcher, block in blocks.items():
+            if matcher.startswith(("~ ^/market", "/market/")) and "proxy_pass" in block:
+                self.assertRegex(block, r'Cache-Control "(private, )?no-store"', matcher)
+            self.assertNotIn("Set-Cookie", block, matcher)
+
 if __name__ == "__main__":
     unittest.main()
