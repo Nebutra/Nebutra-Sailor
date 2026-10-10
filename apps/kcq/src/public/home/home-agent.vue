@@ -1,13 +1,12 @@
 <!--
-  03 Agent = user, the signature section (landing-benchmark §6.3; research §3 Agent; design §6:
-  the dot-matrix KCQ glyph is the agent's field, not Vercel's 10-dot mark). An inverted band that
-  opens on one big line (research A3), then a console: the transcript streams call by call, the
-  pending call shimmers (C3) until it resolves, each call carries its registry safety level (L4),
-  and the chart beside it changes as each call lands. A Bar-Replay-style scrubber (TradingView's own
-  metaphor) plays, pauses, steps and seeks; any manual move takes over from playback (K3).
+  Agent (deck 5.2; restraint benchmark §4 row 2). The section grammar: heading, sub, then one framed
+  artifact, the agent's window, kept on the fixed dark chart surface in both page themes. Beside it
+  the deck's three details as a plain numbered list; on desktop the window sticks while the list
+  scrolls past and the scroll types the prompt and lands each call (motion/agent-story.ts).
   It is a scripted replay and says so: the tool names and inputs are real registry entries at the
-  pinned commit (virtual:kcq-facts), the drawing colour is the brand token, and the chart draws
-  real closes. The section CTA copies a prompt for your own agent (G3) and links the agent view.
+  pinned commit (virtual:kcq-facts), the drawing colour is the brand token, and the chart draws real
+  closes. The deck's example prompts are the window's own input: press one to copy it. Nothing plays
+  on its own; a Bar-Replay-style scrubber plays, pauses, steps and seeks (K3).
 -->
 <script setup lang="ts">
 import facts from "virtual:kcq-facts";
@@ -60,18 +59,30 @@ const chapter = computed(() => {
 });
 const storyActive = ref(false);
 const pinned = ref<HTMLElement>();
-const runway = ref<HTMLElement>();
+const track = ref<HTMLElement>();
+/** How much of the prompt is typed: the first slice of the story's scroll types it. */
+const typed = ref(1);
 let story: AgentStory | undefined;
 onMounted(() => {
   story = createAgentStory(pinned.value!, {
-    runway: () => runway.value,
+    track: () => track.value,
     onEnable: (active) => {
       storyActive.value = active;
+      typed.value = 1;
       if (!active) replay.seek(calls.length);
     },
-    onProgress: (progress) => replay.scrub(progress),
+    onProgress: (progress) => {
+      typed.value = Math.min(1, progress * (calls.length + 1));
+      replay.scrub(progress);
+    },
   });
 });
+const promptText = computed(() => t("home.agent.prompt"));
+const shownPrompt = computed(() =>
+  storyActive.value && step.value === 0 && !playing.value
+    ? promptText.value.slice(0, Math.round(promptText.value.length * typed.value))
+    : promptText.value,
+);
 onBeforeUnmount(() => {
   story?.revert();
 });
@@ -94,45 +105,35 @@ const bands = calls.map((_, band) =>
 const progress = computed(() => t("home.agent.progress", { done: step.value, total: calls.length }));
 const state = (index: number) => (index < step.value ? "done" : index === running.value ? "running" : "queued");
 const format = (input: object) => JSON.stringify(input);
-/** Example prompts copy on press: paste them into the workstation's agent (deck 5.2 chips). */
+/** Example prompts copy on press: paste them into the workstation's agent (deck 5.2). */
 const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, legacy: true });
 </script>
 <template>
-  <section id="agent" class="band band-inverted agent" data-theme="dark" aria-labelledby="agent-heading">
+  <section id="agent" class="band agent" aria-labelledby="agent-heading">
     <div class="container">
-      <h2 id="agent-heading" class="t-statement agent-statement">{{ t("home.agent.heading") }}</h2>
-      <p class="t-lede agent-lede">{{ t("home.agent.body") }}</p>
+      <div class="section-head">
+        <h2 id="agent-heading" class="t-heading">{{ t("home.agent.heading") }}</h2>
+        <p class="t-lede">{{ t("home.agent.body") }}</p>
+      </div>
 
-      <ul class="chips" :aria-label="t('home.agent.chipsLabel')">
-        <li v-for="(chip, index) in (tm('home.agent.chips') as unknown as string[])" :key="index">
-          <button type="button" class="chip" :data-copied="(copied && copiedText === rt(chip)) || undefined" @click="copy(rt(chip))">
-            <KcqIcon name="prompt" :size="14" />
-            <span>{{ rt(chip) }}</span>
-          </button>
-        </li>
-      </ul>
-      <p class="visually-hidden" aria-live="polite">{{ copied ? t("home.agent.chipCopied") : "" }}</p>
+      <div ref="track" class="agent-story section-artifact" :data-story="storyActive || undefined">
+        <ol class="chapters">
+          <li v-for="(detail, index) in (tm('home.agent.details') as unknown as string[])" :key="index">
+            <button
+              type="button"
+              class="chapter"
+              :aria-current="chapter === index ? 'step' : undefined"
+              @click="replay.seek(CHAPTER_STEPS[index]!)"
+            >
+              <span class="chapter-index t-num">{{ index + 1 }}</span>
+              <span>{{ rt(detail) }}</span>
+            </button>
+          </li>
+        </ol>
 
-      <div ref="pinned" class="agent-grid" :data-story="storyActive || undefined">
-        <div class="agent-copy">
-          <ol class="chapters">
-            <li v-for="(detail, index) in (tm('home.agent.details') as unknown as string[])" :key="index">
-              <button
-                type="button"
-                class="chapter"
-                :aria-current="chapter === index ? 'step' : undefined"
-                @click="replay.seek(CHAPTER_STEPS[index]!)"
-              >
-                <span class="chapter-index t-num">{{ index + 1 }}</span>
-                <span class="chapter-title t-title">{{ rt(detail) }}</span>
-              </button>
-            </li>
-          </ol>
-        </div>
-
-        <div class="agent-console" :data-playing="playing || undefined">
+        <div ref="pinned" class="agent-console product-frame" data-theme="dark" :data-playing="playing || undefined">
           <div class="console-bar">
-            <span class="t-meta">{{ t("home.agent.console") }}</span>
+            <span class="t-ui">{{ t("home.agent.console") }}</span>
             <svg class="console-glyph" :viewBox="`0 0 ${COLUMNS} ${ROWS}`" role="img" :aria-label="`${t('home.agent.fieldLabel')} ${progress}`">
               <defs>
                 <pattern id="agent-ground" width="1" height="1" patternUnits="userSpaceOnUse">
@@ -151,25 +152,25 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
           <div class="console-body">
             <div class="transcript">
               <p class="transcript-prompt">
-                <span class="t-meta">{{ t("home.agent.you") }}</span>
-                <span>{{ t("home.agent.prompt") }}</span>
+                <span class="t-ui transcript-who">{{ t("home.agent.you") }}</span>
+                <span class="transcript-text" :aria-label="promptText">
+                  <span aria-hidden="true">{{ shownPrompt }}</span><span
+                    v-if="shownPrompt.length < promptText.length"
+                    class="caret"
+                    aria-hidden="true"
+                  />
+                </span>
               </p>
               <ol class="transcript-calls" aria-live="polite">
-                <li
-                  v-for="(call, index) in calls"
-                  :key="call.tool"
-                  class="call"
-                  :data-state="state(index)"
-                >
+                <li v-for="(call, index) in calls" :key="call.tool" class="call" :data-state="state(index)">
                   <span class="call-mark" aria-hidden="true">
-                    <KcqIcon v-if="state(index) === 'done'" name="check" :size="14" />
+                    <KcqIcon v-if="state(index) === 'done'" name="check" :size="12" />
                   </span>
                   <span class="call-head">
-                    <code class="call-name" translate="no">{{ call.tool }}</code>
-                    <span class="call-safety t-meta" :data-safety="call.safety">{{ t(`home.agent.safety.${call.safety}`) }}</span>
+                    <span class="call-name" translate="no" :title="format(call.input)">{{ call.tool }}</span>
+                    <span class="call-safety" :data-safety="call.safety">{{ t(`home.agent.safety.${call.safety}`) }}</span>
                   </span>
-                  <code class="call-input" translate="no">{{ format(call.input) }}</code>
-                  <span class="call-result t-copy">
+                  <span class="call-result">
                     <span v-if="state(index) === 'running'" class="shimmer">{{ t("home.agent.running") }}</span>
                     <template v-else>{{ t("home.agent.returns", { result: rt(tm("home.agent.results")[index]!) }) }}</template>
                   </span>
@@ -209,84 +210,56 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
               {{ speed }}×
             </button>
           </div>
-          <p class="console-note t-copy">{{ t("home.agent.note", { commit: facts.commit.slice(0, 8) }) }}</p>
+          <!-- The input: the deck's example prompts, ready to paste into the workstation's agent. -->
+          <ul class="composer" :aria-label="t('home.agent.chipsLabel')">
+            <li v-for="(chip, index) in (tm('home.agent.chips') as unknown as string[])" :key="index">
+              <button
+                type="button"
+                class="suggestion"
+                :data-copied="(copied && copiedText === rt(chip)) || undefined"
+                @click="copy(rt(chip))"
+              >
+                <KcqIcon name="prompt" :size="12" />
+                <span>{{ rt(chip) }}</span>
+              </button>
+            </li>
+          </ul>
+          <p class="visually-hidden" aria-live="polite">{{ copied ? t("home.agent.chipCopied") : "" }}</p>
+          <p class="console-note t-ui">{{ t("home.agent.note", { commit: facts.commit.slice(0, 8) }) }}</p>
         </div>
       </div>
-      <!-- The scroll distance the sticky console holds for (motion/agent-story.ts). -->
-      <div v-if="storyActive" ref="runway" class="agent-runway" aria-hidden="true" />
     </div>
   </section>
 </template>
 <style scoped>
-.agent-statement {
-  max-width: 16ch;
-  font-size: var(--klc-text-48-font-size);
-  line-height: var(--klc-text-48-line-height);
-  letter-spacing: -0.035em;
-}
-@media (min-width: 1024px) {
-  .agent-statement {
-    font-size: var(--klc-text-72-font-size);
-    line-height: var(--klc-text-72-line-height);
-  }
-}
-.agent-lede {
-  max-width: 40rem;
-  margin: var(--klc-space-24) 0 var(--klc-space-32);
-}
-.agent-grid {
+.agent-story {
   display: grid;
-  gap: var(--klc-space-48) var(--kcq-column-gap);
+  gap: var(--klc-space-32) var(--kcq-column-gap);
 }
-/* The pinned story: sticky under the header for the runway's length (compositor-held). */
-.agent-grid[data-story] {
-  position: sticky;
-  top: calc(var(--kcq-header-height) + var(--klc-space-24));
-}
-.agent-runway {
-  height: 140vh;
-}
-.agent-copy {
-  display: grid;
-  align-content: start;
-  gap: var(--klc-space-32);
-}
-/* Chapters: a progress rail on the left, like a time axis; the current one reads in full ink. */
+/* The deck's details: a plain numbered list; the current chapter reads in full ink. */
 .chapters {
   display: grid;
-  border-left: 1px solid var(--kcq-rule);
+  align-content: start;
+  gap: var(--klc-space-8);
 }
 .chapter {
-  position: relative;
   display: grid;
   grid-template-columns: var(--klc-space-24) minmax(0, 1fr);
-  gap: var(--klc-space-4) var(--klc-space-8);
+  gap: var(--klc-space-8);
   width: 100%;
-  padding: var(--klc-space-12) 0 var(--klc-space-12) var(--klc-space-16);
+  padding: var(--klc-space-8) 0;
   border: 0;
   background: transparent;
   color: var(--kcq-ink-2);
+  font-size: var(--klc-text-copy-16-font-size);
+  line-height: var(--klc-text-copy-16-line-height);
   text-align: left;
   cursor: pointer;
-  transition: color var(--klc-motion-dur-base) var(--klc-motion-ease-out);
+  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
 }
-.chapter::before {
-  content: "";
-  position: absolute;
-  left: -1px;
-  top: var(--klc-space-12);
-  bottom: var(--klc-space-12);
-  width: 2px;
-  background: var(--kcq-accent);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform var(--klc-motion-dur-slow) var(--klc-motion-ease-out);
-}
-.chapter[aria-current="step"] {
+.chapter[aria-current="step"],
+.agent-story:not([data-story]) .chapter {
   color: var(--kcq-ink);
-}
-.chapter[aria-current="step"]::before {
-  transform: scaleY(1);
 }
 @media (hover: hover) and (pointer: fine) {
   .chapter:hover {
@@ -294,61 +267,12 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   }
 }
 .chapter-index {
-  grid-row: 1 / span 2;
-  font-size: var(--klc-text-12-font-size);
-  line-height: var(--klc-text-20-line-height);
+  color: var(--kcq-ink-2);
 }
-.chapter-title {
-  color: inherit;
-}
-/* Example prompts as chips (deck 5.2): press to copy, the chip confirms in place. */
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--klc-space-8);
-  margin-bottom: var(--klc-space-48);
-}
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--klc-space-8);
-  min-height: var(--klc-density-comfortable);
-  padding-inline: var(--klc-space-12) var(--klc-space-16);
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-full);
-  background: var(--kcq-surface);
-  color: var(--kcq-ink);
-  font-size: var(--klc-text-label-14-font-size);
-  line-height: var(--klc-text-label-14-line-height);
-  text-align: left;
-  cursor: copy;
-  transition:
-    border-color var(--klc-motion-dur-fast) var(--klc-motion-ease-out),
-    transform var(--klc-motion-dur-press) var(--klc-motion-ease-out);
-}
-.chip .kcq-icon {
-  color: var(--kcq-accent-text);
-}
-.chip:active {
-  transform: scale(0.97);
-}
-.chip[data-copied] {
-  border-color: var(--kcq-up);
-}
-@media (hover: hover) and (pointer: fine) {
-  .chip:hover {
-    border-color: var(--kcq-accent);
-  }
-}
-/* The console: the one framed surface in this band, because it is a product window. */
+/* The agent's window: the one framed artifact in this section. */
 .agent-console {
   display: grid;
-  min-width: 0;
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-md);
-  background: var(--kcq-page);
-  overflow: hidden;
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--kcq-accent) 10%, transparent), var(--klc-elevation-3);
+  align-self: start;
 }
 .console-bar {
   display: flex;
@@ -356,14 +280,15 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   justify-content: space-between;
   padding: var(--klc-space-8) var(--klc-space-12) var(--klc-space-8) var(--klc-space-16);
   border-bottom: 1px solid var(--kcq-rule);
+  color: var(--kcq-ink-2);
 }
 .console-glyph {
-  width: var(--klc-space-32);
-  height: var(--klc-space-32);
+  width: var(--klc-space-24);
+  height: var(--klc-space-24);
 }
 .glyph-dot {
   fill: var(--kcq-rule);
-  transition: fill var(--klc-motion-dur-slow) var(--klc-motion-ease-out);
+  transition: fill var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
 }
 .glyph-dot.is-mark {
   fill: var(--kcq-rule-strong);
@@ -377,26 +302,39 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
 .transcript {
   display: grid;
   align-content: start;
-  border-bottom: 1px solid var(--kcq-rule);
+  gap: var(--klc-space-12);
+  padding: var(--klc-space-16);
 }
 .transcript-prompt {
   display: grid;
   gap: var(--klc-space-4);
-  padding: var(--klc-space-16);
-  border-bottom: 1px solid var(--kcq-rule);
+  min-height: calc(var(--klc-text-copy-14-line-height) * 2 + var(--klc-space-24));
   font-size: var(--klc-text-copy-14-font-size);
   line-height: var(--klc-text-copy-14-line-height);
+}
+.transcript-who {
+  color: var(--kcq-ink-2);
+}
+.caret {
+  display: inline-block;
+  width: 1px;
+  height: 1.1em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: var(--kcq-accent);
+}
+/* Tool calls: quiet log lines, no inner cards; each call's real input is its name's tooltip. */
+.transcript-calls {
+  display: grid;
+  gap: var(--klc-space-8);
 }
 .call {
   display: grid;
   grid-template-columns: var(--klc-space-16) minmax(0, 1fr);
-  gap: var(--klc-space-4) var(--klc-space-8);
-  padding: var(--klc-space-12) var(--klc-space-16);
-  border-bottom: 1px solid var(--kcq-rule);
-  transition: opacity var(--klc-motion-dur-base) var(--klc-motion-ease-out);
-}
-.call:last-child {
-  border-bottom: 0;
+  gap: 0 var(--klc-space-8);
+  font-size: var(--klc-text-12-font-size);
+  line-height: var(--klc-text-12-line-height);
+  transition: opacity var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
 }
 .call > :not(.call-mark) {
   grid-column: 2;
@@ -408,12 +346,12 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   grid-row: 1;
   display: grid;
   place-items: center;
-  width: var(--klc-space-16);
-  height: var(--klc-space-16);
-  margin-top: 1px;
-  border: 1.5px solid var(--kcq-rule-strong);
+  width: var(--klc-space-12);
+  height: var(--klc-space-12);
+  margin-top: 2px;
+  border: 1px solid var(--kcq-rule-strong);
   border-radius: var(--klc-radius-full);
-  color: var(--kcq-up);
+  color: var(--kcq-ink);
 }
 .call[data-state="done"] .call-mark {
   border-color: transparent;
@@ -436,25 +374,11 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   gap: var(--klc-space-8);
 }
 .call-name {
-  font-size: var(--klc-text-13-font-size);
-  line-height: var(--klc-text-13-line-height);
   color: var(--kcq-ink);
+  font-weight: 500;
 }
-.call-safety {
-  padding: 0 var(--klc-space-4);
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-xs);
-  font-size: var(--klc-text-11-mono-font-size);
-  text-transform: none;
-}
-.call-safety[data-safety="read-only"] {
-  color: var(--kcq-accent-text);
-  border-color: color-mix(in oklab, var(--kcq-accent) 40%, transparent);
-}
-.call-input {
-  overflow-wrap: anywhere;
-  font-size: var(--klc-text-12-font-size);
-  line-height: var(--klc-text-12-line-height);
+.call-safety,
+.call-result {
   color: var(--kcq-ink-2);
 }
 /* "Working" without a spinner on the words: a gradient sweeps the label (research C3). */
@@ -482,14 +406,14 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   }
 }
 .console-chart {
-  border-bottom: 1px solid var(--kcq-rule);
+  border-top: 1px solid var(--kcq-rule);
 }
 .scrubber {
   display: flex;
   align-items: center;
   gap: var(--klc-space-4);
   padding: var(--klc-space-8) var(--klc-space-12);
-  border-bottom: 1px solid var(--kcq-rule);
+  border-top: 1px solid var(--kcq-rule);
 }
 .scrub-button {
   display: inline-grid;
@@ -501,11 +425,8 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   border-radius: var(--klc-radius-sm);
   background: transparent;
   color: var(--kcq-ink);
+  font-size: var(--klc-text-12-font-size);
   cursor: pointer;
-  transition: transform var(--klc-motion-dur-press) var(--klc-motion-ease-out);
-}
-.scrub-button:active {
-  transform: scale(0.97);
 }
 .scrub-button:disabled {
   color: var(--kcq-ink-2);
@@ -519,9 +440,6 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   .scrub-button:not(:disabled):hover {
     background: var(--kcq-hover);
   }
-}
-.scrub-speed {
-  font-size: var(--klc-text-12-font-size);
 }
 .scrub-track {
   display: flex;
@@ -538,7 +456,7 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   height: var(--klc-density-default);
   padding: 0;
   border: 0;
-  background: linear-gradient(var(--kcq-rule-strong), var(--kcq-rule-strong)) center / 100% 3px no-repeat;
+  background: linear-gradient(var(--kcq-rule-strong), var(--kcq-rule-strong)) center / 100% 2px no-repeat;
   cursor: pointer;
 }
 .scrub-tick[data-done] {
@@ -550,38 +468,73 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
     height: var(--klc-density-hit-target-touch);
   }
 }
+/* The window's input: the example prompts as suggestions, press to copy. */
+.composer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--klc-space-4) var(--klc-space-16);
+  padding: var(--klc-space-8) var(--klc-space-16);
+  border-top: 1px solid var(--kcq-rule);
+}
+.suggestion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--klc-space-8);
+  min-height: var(--klc-density-default);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-12-font-size);
+  line-height: var(--klc-text-12-line-height);
+  text-align: left;
+  cursor: copy;
+  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+.suggestion[data-copied] {
+  color: var(--kcq-ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .suggestion:hover {
+    color: var(--kcq-ink);
+  }
+}
 .console-note {
-  padding: var(--klc-space-12) var(--klc-space-16);
+  padding: 0 var(--klc-space-16) var(--klc-space-12);
+  color: var(--kcq-ink-2);
 }
 @media (min-width: 768px) {
   .console-body {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  }
-  .transcript {
-    border-bottom: 0;
-    border-right: 1px solid var(--kcq-rule);
-  }
-  .console-body {
-    background: var(--klc-color-chart-background);
-  }
-  .transcript {
-    background: var(--kcq-page);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
   }
   .console-chart {
     align-self: center;
-    border-bottom: 0;
+    border-top: 0;
+    border-left: 1px solid var(--kcq-rule);
   }
 }
 @media (min-width: 1024px) {
-  .agent-grid {
+  .agent-story {
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
-  .agent-copy {
-    grid-column: 1 / span 4;
+  .chapters {
+    grid-column: 1 / span 3;
   }
   .agent-console {
-    grid-column: 5 / span 8;
-    align-self: start;
+    grid-column: 4 / span 9;
+  }
+  /* The pinned story: the console sticks while the chapters, spaced by the scroll, pass by. */
+  .agent-story[data-story] .agent-console {
+    position: sticky;
+    top: calc(var(--kcq-header-height) + var(--klc-space-24));
+  }
+  /* The chapter column is the scroll distance: 90% of a screen tall, about a quarter of a screen more than
+     the console, its three lines spread from the console's top to the track's end. */
+  .agent-story[data-story] .chapters {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 90vh;
   }
 }
 @media (prefers-reduced-motion: reduce) {

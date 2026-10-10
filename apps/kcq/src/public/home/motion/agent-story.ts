@@ -1,16 +1,16 @@
 /**
  * The one pinned, scrubbed product story (founder motion spec), desktop only: the agent console
- * pins under the header and the scroll position drives the replay step, chapter by chapter
- * (ask → the agent reads and reaches → the chart answers → every step on the record). Scrolling
- * back reverses it; the scrubber buttons still take over at any time. Mobile, touch, short screens
- * and reduced motion get no pin: the chapters are tap-through steps instead.
+ * sticks under the header while the chapter list beside it scrolls past, and the scroll position
+ * drives the replay (the prompt is typed, then each call lands, chapter by chapter). Scrolling back
+ * reverses it; the scrubber buttons still take over at any time. Mobile, touch, short screens and
+ * reduced motion get no pin: the chapters are tap-through steps instead.
  *
- * The pin is CSS `position: sticky` over a runway (home-agent.vue), so the compositor holds it in
- * place while scrolling: no main-thread pin switch, no pin-spacer reflow. Progress is read from
- * the runway's box at most once per frame, from a passive scroll listener that exists only while
- * the story is near the viewport. This replaced the GSAP scroll plugin, which keeps a
- * requestAnimationFrame loop running for the whole visit once registered (perf audit 2026-10-10:
- * 60–120 callbacks a second at rest, so a main-thread frame on every vsync).
+ * The pin is CSS `position: sticky` inside the story track (home-agent.vue): the chapter column is
+ * the scroll distance, so the page has no empty runway. The compositor holds the console in place:
+ * no main-thread pin switch, no pin-spacer reflow. Progress is read from the track's box at most
+ * once per frame, from a passive scroll listener that exists only while the story is near the
+ * viewport. This replaced the GSAP scroll plugin, which keeps a requestAnimationFrame loop running
+ * for the whole visit once registered (perf audit 2026-10-10: 60–120 callbacks a second at rest).
  */
 
 const STORY =
@@ -21,16 +21,17 @@ export interface AgentStory {
 }
 
 export interface AgentStoryOptions {
-  /** The scroll distance the pin holds for, placed right after the pinned element. */
-  runway(): HTMLElement | null | undefined;
+  /** The track the console sticks inside; its extra height over the console is the scroll distance. */
+  track(): HTMLElement | null | undefined;
   onEnable(active: boolean): void;
   onProgress(progress: number): void;
 }
 
-/** 0 when the pin starts, 1 once the runway has scrolled past (all in viewport pixels). */
-export function storyProgress(pinTop: number, pinnedHeight: number, runwayTop: number, runwayHeight: number) {
-  if (runwayHeight <= 0) return 1;
-  return Math.min(1, Math.max(0, (pinTop + pinnedHeight - runwayTop) / runwayHeight));
+/** 0 when the track's top reaches the pin line, 1 when its bottom meets the console's (viewport px). */
+export function storyProgress(pinTop: number, pinnedHeight: number, trackTop: number, trackHeight: number) {
+  const distance = trackHeight - pinnedHeight;
+  if (distance <= 0) return 1;
+  return Math.min(1, Math.max(0, (pinTop - trackTop) / distance));
 }
 
 export function createAgentStory(pinned: HTMLElement, options: AgentStoryOptions): AgentStory {
@@ -46,10 +47,10 @@ export function createAgentStory(pinned: HTMLElement, options: AgentStoryOptions
     let last = Number.NaN;
     const update = () => {
       frame = 0;
-      const runway = options.runway();
-      if (!runway) return;
+      const track = options.track();
+      if (!track) return;
       const pinTop = Number.parseFloat(getComputedStyle(pinned).top) || 0;
-      const box = runway.getBoundingClientRect();
+      const box = track.getBoundingClientRect();
       const progress = storyProgress(pinTop, pinned.offsetHeight, box.top, box.height);
       if (progress === last) return;
       last = progress;

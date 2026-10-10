@@ -84,10 +84,10 @@ const price = computed(() =>
         :data-on="done >= 2 || undefined"
       />
     </svg>
-    <span class="agent-chip agent-pane t-meta" :data-on="done >= 1 || undefined">main · 600519</span>
-    <span class="agent-chip agent-search t-meta" :data-on="done >= 3 || undefined">{{ t("home.agent.chart.search") }}</span>
+    <span class="agent-chip agent-pane t-ui" :data-on="done >= 1 || undefined">main · 600519</span>
+    <span class="agent-chip agent-search t-ui" :data-on="done >= 3 || undefined">{{ t("home.agent.chart.search") }}</span>
     <span
-      class="agent-chip agent-comparison-label t-meta"
+      class="agent-chip agent-comparison-label t-ui"
       :data-on="done >= 4 || undefined"
       :style="{ top: pct(y(comparisonEnd), H) }"
     >{{ t("home.agent.chart.comparison") }}</span>
@@ -171,7 +171,7 @@ const price = computed(() =>
 .agent-chip {
   padding: var(--klc-space-2) var(--klc-space-8);
   border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-xs);
+  border-radius: var(--klc-radius-sm);
   background: color-mix(in oklab, var(--klc-color-chart-background) 86%, transparent);
   color: var(--kcq-ink);
   text-transform: none;
@@ -197,10 +197,10 @@ const price = computed(() =>
   right: var(--klc-space-4);
   translate: 0 -50%;
   padding: var(--klc-space-2) var(--klc-space-4);
-  border-radius: var(--klc-radius-xs);
+  border-radius: var(--klc-radius-sm);
   background: var(--kcq-accent-strong);
   color: #fff;
-  font-size: var(--klc-text-11-mono-font-size);
+  font-size: var(--klc-text-12-font-size);
   line-height: var(--klc-text-11-mono-line-height);
 }
 .agent-price[data-on] {
