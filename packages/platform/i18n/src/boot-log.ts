@@ -1,4 +1,5 @@
 import { toMessageLocale } from "./locales";
+import { loadMessages } from "./messages";
 
 /**
  * Copy for the boot-log archive shown on the auth-center sign-in panel.
@@ -30,7 +31,7 @@ export interface BootLogCatalog {
 }
 
 /**
- * Read the archive's copy for a locale, falling back to the English source.
+ * Read the archive's copy for a locale, layered over the English source.
  *
  * The relative template import is the same shape request.ts uses — a bundler
  * can enumerate the directory, which it cannot do through a package export.
@@ -38,10 +39,9 @@ export interface BootLogCatalog {
 export async function loadBootLogCatalog(
   locale: null | string | undefined,
 ): Promise<BootLogCatalog> {
-  const messageLocale = toMessageLocale(locale);
-  try {
-    return (await import(`../boot-log/${messageLocale}.json`)).default as BootLogCatalog;
-  } catch {
-    return (await import("../boot-log/en.json")).default as BootLogCatalog;
-  }
+  // Entry by entry: a record not yet translated reads in English, not blank.
+  return (await loadMessages(
+    toMessageLocale(locale),
+    (l) => import(`../boot-log/${l}.json`),
+  )) as unknown as BootLogCatalog;
 }

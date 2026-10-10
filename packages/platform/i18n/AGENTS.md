@@ -166,7 +166,6 @@ picker business logic but shares `LocalePanel`.
 
 ## Generated And Derived Files
 
-- `src/product-locales.generated.ts` — from `pnpm --filter @nebutra/i18n sync:product-locales`
 - Compiled app bundles that inline locale messages are derived from
   `locales/*.json`, `src/request.ts`, and `src/routing.ts`.
 - Compiler caches and temporary build artifacts are derived files.

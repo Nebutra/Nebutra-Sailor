@@ -180,6 +180,11 @@ export function toOpenGraphLocale(locale: null | string | undefined): string {
   return OPEN_GRAPH_LOCALE_BY_CANONICAL[canonicalizeLocaleOrDefault(locale)] ?? "en_US";
 }
 
+/** The language's own name for any locale tag (`ja-JP` → 日本語). */
+export function localeEndonym(locale: null | string | undefined): string {
+  return PRODUCT_LANGUAGE_META[toMessageLocale(locale)].endonym;
+}
+
 export function isChineseLocale(locale: null | string | undefined): boolean {
   const msg = toMessageLocale(locale);
   return isChineseProductLanguage(msg);

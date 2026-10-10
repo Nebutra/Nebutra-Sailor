@@ -6,12 +6,16 @@ import { useCallback, useMemo, useTransition } from "react";
 import { setLocaleCookie } from "./cookies";
 import {
   compactLanguageTriggerLabel,
-  PRODUCT_LANGUAGE_META,
   type ProductLanguage,
   productLanguageEndonymLabels,
 } from "./languages";
 import { LocalePanel } from "./locale-panel";
-import { canonicalizeLocale, canonicalizeLocaleOrDefault, toMessageLocale } from "./locales";
+import {
+  canonicalizeLocale,
+  canonicalizeLocaleOrDefault,
+  localeEndonym,
+  toMessageLocale,
+} from "./locales";
 import { pinScrollPosition } from "./scroll-pin";
 
 // ---------------------------------------------------------------------------
@@ -79,10 +83,7 @@ export function buildCanonicalLocaleLabels(
   canonicalLocales: readonly string[],
 ): Record<string, string> {
   const out: Record<string, string> = {};
-  for (const c of canonicalLocales) {
-    const key = toMessageLocale(c);
-    out[c] = PRODUCT_LANGUAGE_META[key]?.endonym ?? c;
-  }
+  for (const c of canonicalLocales) out[c] = localeEndonym(c);
   return out;
 }
 

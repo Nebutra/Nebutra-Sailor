@@ -526,7 +526,6 @@ describe("CLAUDE.md — commands", () => {
  *                                                         src/built-in-packages.generated.ts)
  *   scripts/brand-apply.ts                              packages/design/brand/src/metadata.ts
  *   packages/design/icons/scripts/generate.ts           packages/design/icons/src/index.ts
- *   scripts/i18n-seed-product-locales.mjs               product-locales.generated.ts
  *   apps/landing/scripts/gen-ai-showcase.ts             ai-showcase.generated.ts
  *
  * Re-derive with:
@@ -542,7 +541,6 @@ const GENERATED_FILES = [
   "packages/design/theme/src/built-in-packages.generated.ts",
   "packages/design/brand/src/metadata.ts",
   "packages/design/icons/src/index.ts",
-  "packages/platform/i18n/src/product-locales.generated.ts",
   "apps/landing/src/components/landing/features/glyphs/ai-showcase.generated.ts",
   "apps/landing/src/lib/seo/route-lastmod.generated.ts",
 ];

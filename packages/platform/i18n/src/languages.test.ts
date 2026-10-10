@@ -9,7 +9,6 @@ import {
   toShippedMessageKey,
 } from "./languages";
 import { ROUTE_LOCALES, toMessageLocale } from "./locales";
-import { PRODUCT_MESSAGE_LOCALES } from "./product-locales.generated";
 
 describe("PRODUCT_LANGUAGES wheel SSOT", () => {
   it("is a global wheel (not a 7-locale stopgap)", () => {
@@ -57,12 +56,5 @@ describe("PRODUCT_LANGUAGES wheel SSOT", () => {
     expect(targets).toContain("zh-Hans");
     expect(targets).toContain("zh-Hant");
     expect(targets.length).toBe(PRODUCT_LANGUAGES.length - 1);
-  });
-
-  it("keeps generated PRODUCT_MESSAGE_LOCALES free of bare zh", () => {
-    expect(PRODUCT_MESSAGE_LOCALES.includes("zh" as never)).toBe(false);
-    expect(PRODUCT_MESSAGE_LOCALES).toContain("zh-Hans");
-    expect(PRODUCT_MESSAGE_LOCALES).toContain("zh-Hant");
-    expect(PRODUCT_MESSAGE_LOCALES).toContain("en");
   });
 });
