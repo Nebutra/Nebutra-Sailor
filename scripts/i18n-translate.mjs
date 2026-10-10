@@ -43,7 +43,6 @@ import {
 } from "./i18n-translate-helpers.mjs";
 import {
   catalogDir,
-  confirmedFor,
   fingerprint,
   flatten,
   isUniversalValue,
