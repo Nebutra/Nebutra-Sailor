@@ -60,7 +60,12 @@ export function StarterPricing({
             aria-label={`${t("monthly")} / ${t("yearly")}`}
           >
             {(["monthly", "yearly"] as const).map((value) => (
-              <ToggleGroupItem key={value} value={value} className="rounded-full px-4">
+              <ToggleGroupItem
+                key={value}
+                value={value}
+                // The inactive label sat at 4.3:1 on the track; AA wants 4.5.
+                className="rounded-full px-4 data-[state=off]:text-foreground/80"
+              >
                 {t(value)}
               </ToggleGroupItem>
             ))}
