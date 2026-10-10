@@ -236,7 +236,6 @@
     "scripts/generate-cli-docs.ts",
     "scripts/generate-skeletons.js",
     "scripts/governance/lint-brand-literals.mjs",
-    "scripts/i18n-translate-helpers.test.mjs",
     "scripts/list-external-contributors.mjs",
     "scripts/register-admin-oidc-client.ts",
     "scripts/register-confidential-oidc-client.ts",

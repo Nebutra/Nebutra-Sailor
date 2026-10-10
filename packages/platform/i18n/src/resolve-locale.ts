@@ -4,7 +4,7 @@ import { type CanonicalLocale, canonicalizeLocale, DEFAULT_LOCALE } from "./loca
  * Which language a cookie-mode product request renders in.
  *
  *   1. `NEXT_LOCALE` — the person chose it (the switcher writes it on
- *      `.nebutra.com`, so a choice made on one product holds on the others)
+ *      the brand cookie domain, so a choice made on one product holds on the others)
  *   2. `Accept-Language` — what the browser asks for, best match first
  *   3. English
  *
