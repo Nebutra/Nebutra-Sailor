@@ -24,19 +24,23 @@ export function SettingsNav() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Settings navigation" className="w-44 shrink-0">
-      <ul className="space-y-0.5">
+    <nav
+      aria-label="Settings navigation"
+      className="-mx-4 overflow-x-auto px-4 md:mx-0 md:w-44 md:shrink-0 md:overflow-visible md:px-0"
+    >
+      {/* Responsive: Scroll — a horizontal strip below md, a rail from md up. */}
+      <ul className="flex gap-1 md:block md:space-y-0.5">
         {NAV_ITEMS.map(({ href, label }) => {
           const isActive =
             href === "/settings" ? /\/settings$/.test(pathname) : pathname.includes(href);
           return (
-            <li key={href}>
+            <li key={href} className="shrink-0">
               <Link
                 href={href}
                 aria-current={isActive ? "page" : undefined}
-                className={`block rounded-[var(--radius-md)] px-3 py-2 text-sm transition-colors ${
+                className={`block whitespace-nowrap rounded-md px-3 py-2 text-sm transition-colors ${
                   isActive
-                    ? "bg-neutral-2 font-medium text-neutral-12"
+                    ? "bg-neutral-3 font-medium text-neutral-12"
                     : "font-medium text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12"
                 }`}
               >

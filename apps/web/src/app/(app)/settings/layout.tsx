@@ -7,7 +7,7 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
     <div className="mx-auto max-w-4xl">
       <PageHeader title="Settings" description="Manage your organization and account settings" />
 
-      <div className="mt-8 flex gap-8">
+      <div className="mt-6 flex flex-col gap-6 md:mt-8 md:flex-row md:gap-8">
         <SettingsNav />
 
         {/* Page content */}
