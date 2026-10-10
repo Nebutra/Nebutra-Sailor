@@ -24,7 +24,8 @@ const catalog = (locale: string): BootLogCatalog =>
   JSON.parse(readFileSync(join(CATALOG_DIR, `${locale}.json`), "utf8"));
 
 const en = catalog("en");
-const zh = catalog("zh");
+// zh-Hans is hand-authored (scripts/i18n-catalogs.mjs authoredLocales); bare zh is not a product language.
+const zh = catalog("zh-Hans");
 
 describe("boot log structure", () => {
   it("gives every entry at least one resolvable citation", () => {
