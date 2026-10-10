@@ -1790,15 +1790,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} inajenga tabaka la utendaji kwa kampuni zinazotegemea AI. Kwa wawekezaji na washirika wa kimkakati: dhana, yale yaliyopo leo, na jinsi ya kufanya ombi la deck.",
       "hero": {
         "kicker": "Kwa wawekezaji na washirika",
         "title": "AI imewapa kila msingi mikono. Tunaajenga <signature>heshima</signature>.",
-        "lead": "{brandName} ni mfumo wa biashara wa AI-native: Sailor, jukwaa la source-available ambapo bidhaa na agents huanza na uamuzi wa uhandisi uliojengwa ndani; mazoezi yanayobeba bidhaa za AI kutoka R&D hadi masoko duniani kote; na bidhaa tunazozitoa kwenye yote mawili.",
         "stage": "Tunapata mzunguko wetu wa angel na tunaongea na idadi ndogo ya wawekezaji na washirika wa kimkakati.",
         "primary": "Omba deck",
-        "secondary": "Weka simu",
-        "reelLabel": "Bidhaa zilizopo kwenye jukwaa"
+        "secondary": "Weka simu"
       },
       "chapters": {
         "label": "Kwenye ukurasa huu",
@@ -1841,16 +1838,6 @@
       },
       "built": {
         "title": "Msingi mmoja. Kila kitu kingine hukuza juu yake.",
-        "lead": "Mifumo mitatu ya biashara hushiriki jukwaa moja, mfumo mmoja wa akaunti na seti moja ya kanuni.",
-        "sailor": {
-          "role": "Jukwaa",
-          "body": "OS ya bidhaa na agent ya source-available chini ya Functional Source License (FSL): tenancy, auth, billing, audit na mfumo wa muundo, yaliyodhibitiwa kwa kodi."
-        },
-        "products": {
-          "name": "Bidhaa",
-          "role": "Zilizojengwa juu yake",
-          "body": "Bidhaa hai kwa waandishi, wabuni na wabunifu, kila moja ikikua juu ya Sailor."
-        },
         "practice": {
           "name": "Enterprise AI & kupeleka nje",
           "role": "Shughuli",
@@ -1858,21 +1845,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor anampa kila msingi msingi ambao timu ya juu ingekuunda.",
         "lead": "Amri moja huunda bidhaa ya multi-tenant yenye ukaguzi wa utambulisho, malipo, ukaguzi na mfumo wa muundo uliowekwa tayari. Watoa huduma hubadilisha kati ya mifumo ya kimataifa na ya China kwa muundo, na watoa huduma huchukua kanuni zilizofanana na ambazo msimbo unashikiliwa.",
         "acme": "Templeti kama inavyotumwa, imetumwa.",
         "source": "Soma chanzo",
         "more": "Zaidi kuhusu Sailor"
       },
       "products": {
-        "title": "Zimetumwa, si slaidi.",
-        "lead": "Bidhaa tulizounda kwenye msingi mmoja. Kila moja iko hai — fungua.",
-        "caption": "Picha za tovuti hai, zilizochukuliwa tarehe 9 Oktoba 2026.",
-        "router": "Soko moja na API moja kwa models, apps na zana.",
-        "forge": "Zana 184 kwenye kivinjari, na injini ileile kama API na MCP.",
-        "typelens": "Mchanganyiko halisi wa aina za type kwa wabuni na watoa huduma wa muundo.",
-        "kcq": "Mwanga wa utafiti wa grafu na quant, na agent mstari.",
-        "also": "Pia kwenye jukwaa",
         "open": "Fungua {name}"
       },
       "practice": {
@@ -1907,11 +1885,6 @@
           "title": "Jenga kwa wazi.",
           "body": "Chanzo cha Sailor ni cha umma, na kila kitu kwenye ukurasa huu ni hai. Uchambuzi huanza na kiungo."
         }
-      },
-      "next": {
-        "title": "Sentensi moja, <signature>kampuni nzima</signature>.",
-        "lead": "{brandName} OS ndiko hii inavyoenda: eleza kampuni mara moja, na brand, bidhaa, msimbo na uzinduzi hutoka kwenye muktadha mmoja, na uamuzi umejengwa ndani. Inaendelea, na tutaitaonyesha inapokuwa halisi.",
-        "vision": "Baada ya miaka mitano, tunataka kuanzisha kampuni kumaanisha kuanza ukiwa na uamuzi huo tayari."
       },
       "talk": {
         "title": "Tusikumbuke.",

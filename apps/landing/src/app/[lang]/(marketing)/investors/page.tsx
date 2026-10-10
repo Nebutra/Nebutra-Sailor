@@ -4,18 +4,19 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { offering } from "@/nebutra/data/offerings";
 import { REPO_URL } from "@/nebutra/data/repo";
 import { SailorCli } from "@/nebutra/home/sailor-cli";
 import { BrowserFrame } from "@/nebutra/investors/browser-frame";
 import { EcosystemMap } from "@/nebutra/investors/ecosystem-map";
 import { FirstYear } from "@/nebutra/investors/first-year";
 import { Practice } from "@/nebutra/investors/practice";
-import { ProductGallery } from "@/nebutra/investors/product-gallery";
 import { ACME_SHOT, SHOWCASE } from "@/nebutra/investors/showcase";
 import { type TalkCopy, TalkForm } from "@/nebutra/investors/talk-form";
 import { ACME_SITE, ROUTES } from "@/nebutra/routes";
 import { sitePageMeta } from "@/nebutra/seo";
-import { Band, Intro } from "@/nebutra/ui/page";
+import { LayerTags } from "@/nebutra/ui/layer-tags";
+import { Band, Intro, More } from "@/nebutra/ui/page";
 import { RevealGroup } from "@/shared/animation/reveal-group";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
@@ -62,9 +63,12 @@ export default async function InvestorsPage({ params }: { params: Promise<{ lang
     note: f("note"),
   };
   const founderMail = `tseka@${brand.domains.landing}`;
+  // The two live artifacts: Sailor's template, and KCQ, incubated on Sailor.
+  // Router, Forge and the rest are in the footer's "More" (owner, 2026-10-10).
+  const kcq = SHOWCASE.find((p) => p.id === "kcq");
   const reel = [
     { domain: new URL(ACME_SITE).host, shot: ACME_SHOT, alt: "Sailor template" },
-    ...SHOWCASE.map((p) => ({ domain: p.domain, shot: p.shot, alt: p.name })),
+    ...(kcq ? [{ domain: kcq.domain, shot: kcq.shot, alt: kcq.name }] : []),
   ];
 
   return (
@@ -179,10 +183,39 @@ export default async function InvestorsPage({ params }: { params: Promise<{ lang
         </div>
       </Band>
 
-      <Band>
-        <Intro title={t("products.title")} />
-        <ProductGallery lang={lang} />
-      </Band>
+      {/* Incubated on Sailor: KCQ, smaller than the businesses — the proof that the platform carries a live product. */}
+      {kcq ? (
+        <Band id="incubated">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+            <div>
+              <Intro title={t("products.title")} lead={t("products.kcq")} />
+              <LayerTags lang={lang} serves={offering("kcq").serves} className="mt-6" />
+              <a
+                href={kcq.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex min-h-10 items-center gap-2 text-sm text-secondary-foreground transition-colors duration-micro hover:text-foreground"
+              >
+                {t("products.open", { name: kcq.name })}
+                <span aria-hidden>↗</span>
+              </a>
+            </div>
+            <figure>
+              <a href={kcq.href} target="_blank" rel="noopener noreferrer" className="group block">
+                <BrowserFrame
+                  domain={kcq.domain}
+                  shot={kcq.shot}
+                  alt={kcq.name}
+                  sizes="(min-width: 1024px) 55vw, 100vw"
+                />
+              </a>
+              <figcaption className="mt-4 text-sm text-muted-foreground">
+                {t("products.caption")}
+              </figcaption>
+            </figure>
+          </div>
+        </Band>
+      ) : null}
 
       {/* 03 — Going global: the second line of business. */}
       <Band id="practice">
@@ -191,7 +224,8 @@ export default async function InvestorsPage({ params }: { params: Promise<{ lang
 
       {/* 04 — How we work: beliefs, stated as sentences someone could repeat. */}
       <Band id="work">
-        <Intro title={t("work.title")} />
+        <Intro title={t("work.title")} lead={t("work.lead")} />
+        <More href="/about#layers">{t("work.layers")}</More>
         <RevealGroup as="ol" className="mt-14 grid grid-cols-1 gap-x-16 gap-y-12 lg:grid-cols-2">
           {PRINCIPLES.map((k) => (
             <li key={k} className="border-t border-border pt-6">
@@ -206,20 +240,10 @@ export default async function InvestorsPage({ params }: { params: Promise<{ lang
         </RevealGroup>
       </Band>
 
-      {/* 05 — Where it goes. The vision, named as in development. */}
-      <Band id="next" className="relative isolate overflow-hidden">
-        <div aria-hidden className="site-hero-glow" />
-        <div className="relative z-10 mx-auto max-w-4xl text-center">
-          <Heading level={2} display className="text-balance">
-            {t.rich("next.title", { signature })}
-          </Heading>
-          <p className="mx-auto mt-8 max-w-2xl text-lg text-muted-foreground text-pretty">
-            {t("next.lead")}
-          </p>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-foreground text-pretty">
-            {t("next.vision")}
-          </p>
-        </div>
+      {/* 05 — Where it goes: one line. The vision is in the Journal, not on the stage. */}
+      <Band id="next">
+        <p className="max-w-2xl text-base text-muted-foreground text-pretty">{t("next.line")}</p>
+        <More href={ROUTES.journal}>{t("next.cta")}</More>
       </Band>
 
       {/* 06 — The ask. The deck goes out after an intro; it is never on the page. */}

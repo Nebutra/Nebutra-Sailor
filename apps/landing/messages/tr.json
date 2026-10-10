@@ -1790,15 +1790,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName}, yapay zekâ odaklı şirketler için işletim katmanını inşa ediyor. Yatırımcılar ve stratejik ortaklar için: tezimiz, bugün canlı olanlar ve sunumu nasıl talep edebileceğiniz.",
       "hero": {
         "kicker": "Yatırımcılar ve ortaklar için",
         "title": "Yapay zekâ her kurucuya eller verdi. Biz <signature>yargıyı</signature> inşa ediyoruz.",
-        "lead": "{brandName}, yapay zekâ odaklı bir şirket ekosistemi: Ürünlerin ve ajanların mühendislik yargısıyla doğduğu, kaynak kodu erişime açık platform Sailor; yapay zekâ ürünlerini Ar-Ge'den dünya genelindeki pazarlara taşıyan uygulama pratiğimiz; ve her ikisinde de sunduğumuz ürünler.",
         "stage": "Melek turumuzu topluyoruz ve küçük bir yatırımcı ve stratejik ortak grubuyla görüşüyoruz.",
         "primary": "Sunumu talep et",
-        "secondary": "Görüşme ayarla",
-        "reelLabel": "Platformda canlı ürünler"
+        "secondary": "Görüşme ayarla"
       },
       "chapters": {
         "label": "Bu sayfada",
@@ -1841,16 +1838,6 @@
       },
       "built": {
         "title": "Tek bir temel. Geri kalan her şey bunun üzerine büyüyor.",
-        "lead": "Üç iş hattı tek bir platformu, tek bir hesap sistemini ve tek bir kural setini paylaşıyor.",
-        "sailor": {
-          "role": "Platform",
-          "body": "Functional Source License (FSL) kapsamında kaynak kodu erişime açık bir ürün ve ajan işletim sistemi: çok kiracılılık, kimlik doğrulama, faturalandırma, denetim ve tasarım sistemi — hepsi kodla yönetilir."
-        },
-        "products": {
-          "name": "Ürünler",
-          "role": "Üzerinde inşa edildi",
-          "body": "Geliştiriciler, tasarımcılar ve içerik üreticileri için canlı ürünler; her biri Sailor üzerinde büyütüldü."
-        },
         "practice": {
           "name": "Kurumsal Yapay Zeka ve Küresel Genişleme",
           "role": "Pratik",
@@ -1858,21 +1845,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor, her kurucuya kıdemli bir ekibin inşa edeceği temeli sunar.",
         "lead": "Tek komutla kimlik doğrulama, faturalandırma, denetim ve hazır bir tasarım sistemi içeren çok kiracılı bir ürün iskeleti oluşturulur. Sağlayıcılar, yapılandırmayla küresel ve Çin altyapıları arasında geçiş yapar; ajanlar, kodun tabi tutulduğu aynı kuralları okur.",
         "acme": "Şablon, dağıtıldığı haliyle.",
         "source": "Kaynağı oku",
         "more": "Sailor hakkında daha fazla bilgi"
       },
       "products": {
-        "title": "Sunum değil, teslim edilmiş ürünler.",
-        "lead": "Aynı temelin üzerine inşa ettiğimiz ürünler. Her biri yayında — açın.",
-        "caption": "9 Ekim 2026'da canlı sitelerden alınmış ekran görüntüleri.",
-        "router": "Modeller, uygulamalar ve araçlar için tek pazar ve tek API.",
-        "forge": "Tarayıcıda 184 araç ve API ile MCP için aynı motor.",
-        "typelens": "Tasarımcılar ve tasarım ajanları için gerçek dünya tipografi eşleştirmeleri.",
-        "kcq": "Yanında bir ajanla grafik ve kantitatif araştırma çalışma istasyonu.",
-        "also": "Platformda ayrıca",
         "open": "{name} aç"
       },
       "practice": {
@@ -1907,11 +1885,6 @@
           "title": "Açık şekilde geliştirin.",
           "body": "Sailor'ın kaynağı herkese açık ve bu sayfadaki her şey canlı. Due diligence bir bağlantıyla başlar."
         }
-      },
-      "next": {
-        "title": "Tek cümle, <signature>bir şirket</signature>.",
-        "lead": "{brandName} OS bunun gideceği yer: bir şirketi bir kez tanımlayın; marka, ürün, kod ve lansman tek bir bağlamdan gelsin ve yargı gücü hazır olsun. Geliştirme aşamasında ve gerçek olduğunda göstereceğiz.",
-        "vision": "Beş yıl içinde, bir şirket kurmanın o yargı gücüyle başlamayı ifade etmesini istiyoruz."
       },
       "talk": {
         "title": "Konuşalım.",

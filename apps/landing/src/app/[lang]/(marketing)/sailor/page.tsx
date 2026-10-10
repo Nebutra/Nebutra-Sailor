@@ -26,7 +26,10 @@ export default async function SailorPage({ params }: { params: Promise<{ lang: s
         <Intro
           level={1}
           lang={lang}
-          title="Sailor"
+          className="max-w-4xl"
+          title={t.rich("hero.title", {
+            signature: (chunks) => <span className="signature">{chunks}</span>,
+          })}
           lead={t("hero.lead")}
           cn={zh ? undefined : t("hero.cn")}
         />

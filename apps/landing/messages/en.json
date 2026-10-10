@@ -1918,11 +1918,10 @@
       "back": "Back"
     },
     "footer": {
-      "tagline": "An AI-native company builder. No company should be hard to start.",
+      "tagline": "{brandName} helps teams build AI products and sell them worldwide.",
       "read": "Read",
       "journal": "Journal",
       "changelog": "Changelog",
-      "build": "Build",
       "whatWeAreBuilding": "What we're building",
       "designSystem": "Design system",
       "status": "Status",
@@ -1932,16 +1931,21 @@
       "privacy": "Privacy",
       "terms": "Terms",
       "credits": "Credits",
-      "investors": "Investors"
+      "investors": "Investors",
+      "offer": "Offer",
+      "consulting": "Consulting",
+      "more": "More",
+      "roadmap": "Roadmap",
+      "openPlatform": "Open platform"
     }
   },
   "sitePages": {
     "home": {
-      "metaDescription": "No company should be hard to start. {brandName} builds the platform, the products and the network that make it so.",
+      "metaDescription": "{brandName} helps teams build AI products and sell them worldwide, with Sailor, the Startup OS for AI products, and consulting for enterprise AI and going global.",
       "hero": {
-        "title": "No company should be hard to <signature>start.</signature>",
-        "titleCn": "让世界上没有难创的业。",
-        "lead": "Founders rarely die of bad ideas. They die of the Founder Tax — a dozen brilliant tools, each seeing one slice, none knowing you are building a company. {brandName} is building the system that does, and writing down what we learn on the way."
+        "title": "{brandName} helps teams build AI products and sell them <signature>worldwide.</signature>",
+        "titleCn": "{brandName} 帮团队做出 AI 产品，并卖到全球。",
+        "lead": "Sailor, our Startup OS, gives a team sign-in, billing, multi-tenancy and a design system from one command, with source you can read. Our consulting team builds AI products for companies and takes them to markets outside China."
       },
       "latest": {
         "title": "Latest",
@@ -1952,20 +1956,38 @@
         "title": "Read it as it's written.",
         "lead": "New essays on agents, the layer after them, and the founder's craft — when they are ready, not on a schedule."
       },
-      "sailor": {
-        "lead": "The open-source platform we build everything on. Usable today: npx create-sailor.",
-        "cta": "The platform"
+      "offer": {
+        "sailor": {
+          "alt": "The Sailor template, deployed",
+          "body": "The Startup OS for AI products. Today: a template with sign-in and organizations, billing by card worldwide or WeChat Pay and Alipay in China, Postgres tenant isolation, and a design system you set up in Sailor Studio. Source-available under the FSL, with paid plans for teams.",
+          "cta": "About Sailor"
+        },
+        "consulting": {
+          "title": "Consulting",
+          "caption": "Based in Wuxi. This site is served in {count} languages.",
+          "body": "We build AI into companies' products and the systems they already run, and take AI products from China to overseas markets: localization, payments, compliance and the launch itself.",
+          "cta": "Work with us"
+        },
+        "incubated": {
+          "label": "Incubated on Sailor",
+          "kcq": "An open-source (Apache-2.0) K-line chart engine, and a browser workstation an AI agent can operate. The workstation runs on Sailor."
+        }
       },
-      "building": {
-        "title": "What we're building",
-        "lead": "{brandName} OS, the Sleptons network, and the early products growing on the platform.",
-        "cta": "In progress"
+      "decide": {
+        "title": "How we decide what to build",
+        "lead": "The founder wrote {brandName} down in nine layers, from why it exists to what ships this week. Each offering above names the layers it answers to; work that answers to none stays off the roadmap.",
+        "cta": "The nine layers"
+      },
+      "later": {
+        "line": "Further out, we write about Sleptons, a network for builders, and the company planner coming to Sailor. Both are early, and the essays are in the Journal.",
+        "cta": "What we're building"
       }
     },
     "sailor": {
       "hero": {
-        "lead": "The open-source platform we build everything on: auth, billing, tenancy, AI routing and the guards that keep a fast-moving codebase honest. Start a company on it with one command.",
-        "cn": "我们自己在用的开源地基，今天就能用。"
+        "lead": "Start from a working template with sign-in and organizations, billing by card worldwide or WeChat Pay and Alipay in China, Postgres tenant isolation, and a design system you set up in Sailor Studio. The company planner, which compiles your company into nine layers of context, is in development.",
+        "cn": "Sailor 是给做 AI 产品的团队用的创业操作系统。",
+        "title": "Sailor is the <signature>Startup OS</signature> for teams building AI products."
       },
       "install": {
         "copyLabel": "Copy",
@@ -2020,9 +2042,9 @@
     },
     "about": {
       "hero": {
-        "title": "Where chaos becomes a company.",
-        "lead": "{brandName} is an AI-native company builder. We exist because founders rarely die of bad ideas — they die of the Founder Tax: a dozen brilliant tools, each seeing one slice, none knowing you are building a company.",
-        "cn": "让世界上没有难创的业。",
+        "title": "{brandName} is an AI product company.",
+        "lead": "We run two businesses: Sailor, the source-available Startup OS for AI products, and consulting that builds AI products for companies and takes them overseas. KCQ is the first product we incubated on Sailor. The company is registered in Wuxi, China.",
+        "cn": "{brandName} 是一家 AI 产品公司。",
         "cta": "Why we are building {brandName}"
       },
       "name": {
@@ -2042,6 +2064,54 @@
       "contact": {
         "founderTitle": "Write to the founder",
         "companyTitle": "The company"
+      },
+      "layers": {
+        "title": "How we decide",
+        "lead": "The founder wrote {brandName} down in nine layers. The first eight change slowly; the ninth is this month's work. Whatever we choose to build has to answer to at least one layer, and each offering names the ones it serves.",
+        "answersTo": "Answers to",
+        "answeredBy": "Answered by",
+        "essay": "The nine layers, in the founder's words",
+        "roadmap": "The roadmap, layer by layer",
+        "journal": "Journal",
+        "theName": "The name",
+        "roadmapLabel": "Roadmap",
+        "consulting": "Consulting",
+        "l1": {
+          "name": "Purpose",
+          "decides": "Why the company exists. Every other layer has to trace back to it."
+        },
+        "l2": {
+          "name": "Future",
+          "decides": "The change we are betting on: starting a company keeps getting cheaper, and products sell across borders from day one."
+        },
+        "l3": {
+          "name": "Principles",
+          "decides": "What we keep when speed pushes against it, starting with architecture."
+        },
+        "l4": {
+          "name": "Strategy",
+          "decides": "Where we compete, and what we leave to the tools teams already use."
+        },
+        "l5": {
+          "name": "Product",
+          "decides": "What we build, and in what order."
+        },
+        "l6": {
+          "name": "Users",
+          "decides": "Who we build for: people with domain knowledge and drive who are not senior engineers."
+        },
+        "l7": {
+          "name": "Narrative",
+          "decides": "How we talk about the work: plain words and real screenshots."
+        },
+        "l8": {
+          "name": "Identity",
+          "decides": "The name and the look, and what they promise."
+        },
+        "l9": {
+          "name": "Execution",
+          "decides": "This month's work. Each item names the layer it answers to."
+        }
       }
     },
     "aboutProducts": {
@@ -2086,15 +2156,15 @@
       "cn": "我们对这个时代的判断。"
     },
     "investors": {
-      "metaDescription": "{brandName} is building the operating layer for AI-native companies. For investors and strategic partners: the thesis, what is live today, and how to request the deck.",
+      "metaDescription": "{brandName} runs two businesses, Sailor, the Startup OS for AI products, and AI consulting, and incubates products on Sailor. For investors and strategic partners: what is live today, and how to request the deck.",
       "hero": {
         "kicker": "For investors and partners",
         "title": "We're building the <signature>judgment</signature> AI coding leaves out.",
-        "lead": "{brandName} is an AI-native company ecosystem: Sailor, the source-available platform where products and agents start with engineering judgment built in; a practice that takes AI products from R&D to markets worldwide; and the products we ship on both.",
+        "lead": "{brandName} has two businesses. Sailor is the source-available Startup OS: AI products and agents start on it with tenancy, billing and audit already decided. Our consulting practice builds AI products for companies and takes them to markets worldwide. KCQ is the first product we incubated on Sailor.",
         "stage": "We're raising our angel round and talking with a small number of investors and strategic partners.",
         "primary": "Request the deck",
         "secondary": "Book a call",
-        "reelLabel": "Products live on the platform"
+        "reelLabel": "Sailor, and a product incubated on it"
       },
       "chapters": {
         "label": "On this page",
@@ -2137,15 +2207,15 @@
       },
       "built": {
         "title": "How the company fits together.",
-        "lead": "Three lines of business share one platform, one account system and one set of rules.",
+        "lead": "Two businesses share one platform, one account system and one set of rules. The products we incubate run on the same platform.",
         "sailor": {
-          "role": "The platform",
-          "body": "A source-available product and agent OS under the Functional Source License (FSL): tenancy, auth, billing, audit and a design system, governed in code."
+          "role": "The Startup OS",
+          "body": "Source-available under the Functional Source License (FSL): tenancy, auth, billing, audit and a design system, governed in code, with a company planner in development."
         },
         "products": {
-          "name": "Products",
-          "role": "Built on it",
-          "body": "Live products for developers, designers and creators, each grown on Sailor."
+          "name": "Incubated",
+          "role": "Grown on Sailor",
+          "body": "Products we start on Sailor, each one a live check that the platform carries a real product. KCQ, an open-source chart workstation, is the first."
         },
         "practice": {
           "name": "Enterprise AI & go-global",
@@ -2154,21 +2224,16 @@
         }
       },
       "sailor": {
-        "title": "Sailor hands every founder the foundation a senior team would build.",
+        "title": "Sailor is the Startup OS for teams building AI products.",
         "lead": "One command scaffolds a multi-tenant product with auth, billing, audit and a design system already decided. Providers switch between global and China stacks by configuration, and agents read the same rules the code is held to.",
         "acme": "The template as it ships, deployed.",
         "source": "Read the source",
         "more": "More on Sailor"
       },
       "products": {
-        "title": "Every product here is live.",
-        "lead": "Products we built on the same foundation. Every one is live — open it.",
-        "caption": "Screenshots of the live sites, taken on 9 October 2026.",
-        "router": "One market and one API for models, apps and tools.",
-        "forge": "184 tools in the browser, and the same engine as API and MCP.",
-        "typelens": "Real-world type pairings for designers and design agents.",
-        "kcq": "A chart and quant research workbench, with an agent alongside.",
-        "also": "Also on the platform",
+        "title": "KCQ, incubated on Sailor.",
+        "caption": "Screenshot of the live site, taken on 9 October 2026.",
+        "kcq": "An open-source (Apache-2.0) K-line chart engine and a browser workstation an AI agent can operate. The workstation runs on Sailor.",
         "open": "Open {name}"
       },
       "practice": {
@@ -2202,12 +2267,13 @@
         "open": {
           "title": "Build in the open.",
           "body": "Sailor's source is public, and everything on this page is live. Diligence starts with a link."
-        }
+        },
+        "lead": "We decide with nine layers, from why the company exists to what ships this week. Sailor answers to purpose, principles and product; consulting to future, strategy and users.",
+        "layers": "The nine layers"
       },
       "next": {
-        "title": "Next, we're building <signature>{brandName} OS</signature>.",
-        "lead": "{brandName} OS is where this goes: describe a company once, and brand, product, code and launch come from one context, with the judgment built in. It is in development, and we will show it when it is real.",
-        "vision": "In five years, we want starting a company to mean starting with that judgment already in place."
+        "line": "Next for Sailor is the company planner: describe a company once, compile it into nine layers of context, and let agents work from it. It is in development, and the thinking is in the Journal.",
+        "cta": "Read the Journal"
       },
       "talk": {
         "title": "Let's talk.",
@@ -2247,13 +2313,26 @@
         },
         "direct": "Prefer email? Write to the founder at"
       }
+    },
+    "consulting": {
+      "metaDescription": "{brandName} consulting builds AI products for companies and takes AI products from China to markets worldwide.",
+      "hero": {
+        "title": "We build AI products for companies and take them <signature>overseas.</signature>",
+        "lead": "The engineers and the platform behind Sailor and our own products. We work inside the systems you already run, and hand it over in working order.",
+        "primary": "Tell us about your product",
+        "secondary": "Write to the founder"
+      },
+      "talk": {
+        "title": "Tell us what you are building.",
+        "lead": "Write with the product and the market you have in mind."
+      }
     }
   },
   "siteMap": {
     "sections": {
       "home": {
         "title": "Home",
-        "is": "The manifesto, led by the Journal."
+        "is": "What we offer, and how we decide."
       },
       "journal": {
         "title": "Journal",
@@ -2261,7 +2340,7 @@
       },
       "sailor": {
         "title": "Sailor",
-        "is": "The open-source platform everything is built on, usable today."
+        "is": "The Startup OS for AI products, source-available and usable today."
       },
       "sleptons": {
         "title": "Sleptons",
@@ -2272,7 +2351,7 @@
         "is": "The founder OS, and the products grown on the platform along the way."
       },
       "company": {
-        "title": "Company",
+        "title": "About",
         "is": "Who we are, how we work, how to reach us, and the legal pages."
       }
     },
@@ -2446,6 +2525,9 @@
       },
       "investors": {
         "title": "Investors"
+      },
+      "consulting": {
+        "title": "Consulting"
       }
     }
   },

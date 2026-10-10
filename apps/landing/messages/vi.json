@@ -1789,15 +1789,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} đang xây dựng lớp vận hành cho các công ty AI-native. Dành cho nhà đầu tư và đối tác chiến lược: luận điểm, những gì đang hoạt động hôm nay và cách yêu cầu bộ hồ sơ.",
       "hero": {
         "kicker": "Dành cho nhà đầu tư và đối tác",
         "title": "AI đã trao cho mọi founder đôi tay. Chúng tôi đang xây dựng <signature>phán đoán</signature>.",
-        "lead": "{brandName} là hệ sinh thái doanh nghiệp AI-native: Sailor, nền tảng source-available nơi các sản phẩm và agent bắt đầu với tư duy kỹ thuật được tích hợp sẵn; một thực hành đưa sản phẩm AI từ R&D ra thị trường toàn cầu; và các sản phẩm mà chúng tôi phát hành trên cả hai.",
         "stage": "Chúng tôi đang gọi vốn vòng angel và trao đổi với một số ít nhà đầu tư và đối tác chiến lược.",
         "primary": "Yêu cầu bộ hồ sơ",
-        "secondary": "Đặt lịch gọi",
-        "reelLabel": "Sản phẩm đang hoạt động trên nền tảng"
+        "secondary": "Đặt lịch gọi"
       },
       "chapters": {
         "label": "Trên trang này",
@@ -1840,16 +1837,6 @@
       },
       "built": {
         "title": "Một nền tảng. Mọi thứ khác mọc lên trên đó.",
-        "lead": "Ba mảng kinh doanh dùng chung một nền tảng, một hệ thống tài khoản và một bộ quy tắc.",
-        "sailor": {
-          "role": "Nền tảng",
-          "body": "Một hệ điều hành sản phẩm và agent source-available theo Functional Source License (FSL): tenancy, auth, billing, audit và design system, được quản trị bằng code."
-        },
-        "products": {
-          "name": "Sản phẩm",
-          "role": "Xây trên đó",
-          "body": "Sản phẩm đang vận hành cho lập trình viên, nhà thiết kế và người sáng tạo, mỗi sản phẩm đều phát triển trên Sailor."
-        },
         "practice": {
           "name": "AI doanh nghiệp & mở rộng toàn cầu",
           "role": "Thực hành",
@@ -1857,21 +1844,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor trao cho mỗi nhà sáng lập nền tảng mà một đội ngũ cấp cao sẽ xây dựng.",
         "lead": "Chỉ một lệnh tạo khung một sản phẩm đa thuê bao với xác thực, thanh toán, kiểm toán và hệ thống thiết kế đã được quyết định. Các nhà cung cấp chuyển đổi giữa các stack toàn cầu và Trung Quốc bằng cấu hình, và các agent đọc cùng các quy tắc mà mã nguồn phải tuân theo.",
         "acme": "Mẫu như khi phát hành, đã triển khai.",
         "source": "Đọc mã nguồn",
         "more": "Tìm hiểu thêm về Sailor"
       },
       "products": {
-        "title": "Đã phát hành, không phải slide.",
-        "lead": "Các sản phẩm chúng tôi xây dựng trên cùng nền tảng. Tất cả đều đang hoạt động — hãy mở ra.",
-        "caption": "Ảnh chụp màn hình các trang web đang hoạt động, chụp ngày 9 tháng 10 năm 2026.",
-        "router": "Một thị trường và một API cho models, apps và tools.",
-        "forge": "184 công cụ trong trình duyệt, cùng engine như API và MCP.",
-        "typelens": "Các cặp font thực tế cho nhà thiết kế và design agents.",
-        "kcq": "Bàn làm việc nghiên cứu biểu đồ và định lượng, với một agent đồng hành.",
-        "also": "Cũng trên nền tảng",
         "open": "Mở {name}"
       },
       "practice": {
@@ -1906,11 +1884,6 @@
           "title": "Xây dựng công khai.",
           "body": "Mã nguồn của Sailor là công khai, và mọi thứ trên trang này đều đang hoạt động. Kiểm tra bắt đầu từ một liên kết."
         }
-      },
-      "next": {
-        "title": "Một câu, một <signature>toàn bộ công ty</signature>.",
-        "lead": "{brandName} OS là nơi hướng tới: mô tả một công ty một lần, và thương hiệu, sản phẩm, code và ra mắt đều đến từ một ngữ cảnh duy nhất, với phán đoán được xây dựng sẵn. Nó đang trong giai đoạn phát triển, và chúng tôi sẽ công bố khi nó thực sự hoàn thiện.",
-        "vision": "Trong năm năm tới, chúng tôi muốn việc khởi nghiệp nghĩa là bắt đầu với phán đoán đó đã sẵn sàng."
       },
       "talk": {
         "title": "Hãy trò chuyện.",
