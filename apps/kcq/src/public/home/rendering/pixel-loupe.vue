@@ -8,13 +8,17 @@
 -->
 <script setup lang="ts">
 import { useElementVisibility, useResizeObserver } from "@vueuse/core";
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { usePublicLocale } from "../../state/use-public-locale";
 import { useTheme } from "../../state/use-theme";
 import { CACHED_BARS } from "../hero/bars";
 
 const { t } = useI18n();
 const { mode } = useTheme();
+const { locale } = usePublicLocale();
+/** Han text takes the full-width colon with no space after it; Latin, the colon and a space. */
+const colon = computed(() => (locale.value === "zh" ? "：" : ": "));
 const root = ref<HTMLElement>();
 const strip = ref<HTMLCanvasElement>();
 const lens = ref<HTMLCanvasElement>();
@@ -196,8 +200,7 @@ watch(at, () => visible.value && drawLens());
     <figcaption class="loupe-bar t-copy">
       <!-- One text toggle: the alignment the strip is drawn with. -->
       <button type="button" role="switch" class="loupe-toggle" :aria-checked="snapped" @click="snapped = !snapped">
-        {{ t("home.rendering.loupe.toggle") }}:
-        <span class="loupe-state">{{ snapped ? t("home.rendering.loupe.on") : t("home.rendering.loupe.off") }}</span>
+        {{ t("home.rendering.loupe.toggle") }}{{ colon }}<span class="loupe-state">{{ snapped ? t("home.rendering.loupe.on") : t("home.rendering.loupe.off") }}</span>
       </button>
       <span aria-live="polite">{{ snapped ? t("home.rendering.loupe.onNote") : t("home.rendering.loupe.offNote") }}</span>
     </figcaption>
@@ -260,6 +263,11 @@ watch(at, () => visible.value && drawLens());
   font-size: inherit;
   line-height: inherit;
   cursor: pointer;
+}
+@media (pointer: coarse) {
+  .loupe-toggle {
+    min-height: var(--klc-density-comfortable);
+  }
 }
 .loupe-state {
   color: var(--kcq-accent-text);

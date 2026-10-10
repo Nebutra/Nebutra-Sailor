@@ -163,7 +163,9 @@ const starsLabel = computed(() =>
   line-height: var(--klc-text-label-14-line-height);
   letter-spacing: var(--klc-text-label-14-letter-spacing);
   font-weight: var(--klc-text-label-14-font-weight);
-  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+  transition-property: color, background-color;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
 }
 .site-nav a[aria-current="location"] {
   color: var(--kcq-ink);
@@ -213,7 +215,11 @@ const starsLabel = computed(() =>
   gap: var(--klc-space-8);
   padding-right: var(--klc-space-4);
 }
+/* The count pill follows the button: it lifts to the hover fill and the full ink on hover. */
 .site-stars {
+  transition-property: background-color, color;
+  transition-duration: var(--klc-motion-dur-fast);
+  transition-timing-function: var(--klc-motion-ease-out);
   display: inline-flex;
   align-items: center;
   gap: var(--klc-space-4);
@@ -225,8 +231,22 @@ const starsLabel = computed(() =>
   font-size: var(--klc-text-12-font-size);
   line-height: 1;
 }
+@media (hover: hover) and (pointer: fine) {
+  .site-github:hover .site-stars {
+    background: var(--kcq-raised);
+    color: var(--kcq-ink);
+  }
+}
 .site-cta {
   margin-left: var(--klc-space-4);
+}
+/* Touch: the header's two buttons keep a 40px target (the bar is 64px tall). */
+@media (pointer: coarse) {
+  .site-github,
+  .site-cta,
+  .site-home {
+    min-height: var(--klc-density-comfortable);
+  }
 }
 @media (min-width: 1024px) {
   .site-nav {

@@ -124,6 +124,11 @@ const rows = computed(() => [
   font-size: var(--klc-text-copy-16-font-size);
   line-height: var(--klc-text-copy-16-line-height);
 }
+@media (pointer: coarse) {
+  .fact-value {
+    min-height: var(--klc-density-comfortable);
+  }
+}
 @media (hover: hover) and (pointer: fine) {
   .fact-value:hover {
     text-decoration-color: color-mix(in oklab, currentColor 50%, transparent);

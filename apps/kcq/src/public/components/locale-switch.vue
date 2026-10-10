@@ -56,6 +56,9 @@ const items = computed(() =>
   font-size: var(--klc-text-12-font-size);
   line-height: var(--klc-text-12-line-height);
 }
+.locale-switch a:active {
+  transform: scale(var(--kcq-press-icon));
+}
 .locale-switch a[aria-current="true"] {
   color: var(--kcq-ink);
 }

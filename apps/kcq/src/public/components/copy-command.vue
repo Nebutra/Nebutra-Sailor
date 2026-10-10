@@ -75,10 +75,12 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
   background: transparent;
   color: var(--kcq-ink-2);
   cursor: pointer;
-  transition: transform var(--klc-motion-dur-press) var(--klc-motion-ease-out);
+  transition-property: color, background-color, transform;
+  transition-duration: var(--klc-motion-dur-fast), var(--klc-motion-dur-fast), var(--klc-motion-dur-press);
+  transition-timing-function: var(--klc-motion-ease-out);
 }
 .copy-button:active {
-  transform: scale(0.97);
+  transform: scale(var(--kcq-press));
 }
 .copy-command .copy-button {
   justify-content: center;

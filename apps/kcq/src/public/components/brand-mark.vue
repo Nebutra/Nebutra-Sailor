@@ -58,9 +58,18 @@ const path = glyphPath();
   text-decoration: none;
   transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
 }
-.brand-endorse:hover,
 .brand-endorse:focus-visible {
   color: var(--kcq-ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .brand-endorse:hover {
+    color: var(--kcq-ink);
+  }
+}
+@media (pointer: coarse) {
+  .brand-endorse {
+    min-height: var(--klc-density-comfortable);
+  }
 }
 .brand-endorse :deep(.nebutra-wordmark) {
   /* Optical match to the 13px label: the wordmark's cap height sits on the text's x-height band. */

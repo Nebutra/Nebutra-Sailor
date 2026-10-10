@@ -76,6 +76,11 @@ const facts = computed(() => (tm("home.trust.facts") as unknown as string[]).map
   align-items: center;
   min-height: var(--klc-density-hit-target);
 }
+@media (pointer: coarse) {
+  .channels a {
+    min-height: var(--klc-density-comfortable);
+  }
+}
 .channel-sep {
   color: var(--kcq-ink-2);
 }
