@@ -5230,7 +5230,7 @@
       "sitePages.investors.hero.title": "9d91af14",
       "sitePages.investors.metaDescription": "e6ca7e40",
       "sitePages.investors.next.lead": "c199be0a",
-      "sitePages.investors.next.title": "d3fdded3",
+      "sitePages.investors.next.title": "fb679d94",
       "sitePages.investors.next.vision": "eaadd184",
       "sitePages.investors.practice.global.body": "a87b5b64",
       "sitePages.investors.practice.global.title": "bc9d1f3e",
@@ -5295,7 +5295,7 @@
       "sitePages.investors.why.timeline.essay": "45e18571",
       "sitePages.investors.why.timeline.label": "53d0d8bc",
       "sitePages.investors.why.timeline.source": "16bdb401",
-      "sitePages.investors.why.title": "bee5f11f",
+      "sitePages.investors.why.title": "6453959a",
       "sitePages.investors.work.architecture.body": "a88c0eff",
       "sitePages.investors.work.architecture.title": "74dc102e",
       "sitePages.investors.work.open.body": "9205cf71",
@@ -5334,6 +5334,7 @@
       "siteShell.footer.changelog": "c49182dc",
       "siteShell.footer.company": "1c76cbfe",
       "siteShell.footer.credits": "948a2e35",
+      "siteShell.footer.designSystem": "62bdaca9",
       "siteShell.footer.investors": "801d0ba3",
       "siteShell.footer.journal": "6b2b5614",
       "siteShell.footer.privacy": "c5f29bb3",
@@ -7133,6 +7134,14 @@
         "sitePages.investors.work.architecture.title",
         "sitePages.investors.work.rules.title",
         "sitePages.investors.work.tools.title"
+      ],
+      "zh-Hans": [
+        "sitePages.investors.next.title",
+        "sitePages.investors.why.title"
+      ],
+      "zh-Hant": [
+        "sitePages.investors.next.title",
+        "sitePages.investors.why.title"
       ]
     }
   }
