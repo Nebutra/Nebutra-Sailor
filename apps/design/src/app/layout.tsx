@@ -1,17 +1,18 @@
 import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
-import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { fontRegistryClassName } from "@nebutra/fonts/next";
 import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { CommandPalette } from "@/components/command-palette";
-import { HeaderLanguageSwitcher } from "@/components/header-language-switcher";
 import { PageToc } from "@/components/page-toc";
-import { SiteNav, SiteNavCompact } from "@/components/site-nav";
+import { Providers } from "@/components/providers";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { MobilePageBar, SiteNav, SiteNavSheet } from "@/components/site-nav";
+import { THEME_BOOT_SCRIPT } from "@/lib/boot-script";
 import { commandEntries, navSections } from "@/lib/nav";
 import { SITE_NAME } from "@/lib/site";
 
@@ -36,44 +37,44 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="en"
       suppressHydrationWarning
     >
+      <head>
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: a constant, server-rendered boot script — no input reaches it. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         <CjkFontFace />
+        <Providers>
+          <a
+            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-[var(--radius-md)] focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground focus:text-sm"
+            href="#content"
+          >
+            Skip to content
+          </a>
 
-        {/* The header carries identity and the language switch only. Navigation
-            moved into the sidebar, where the whole inventory is visible at once
-            rather than five representatives of it. */}
-        <header className="sticky top-0 z-20 bg-background/85 backdrop-blur">
-          <div className="mx-auto flex max-w-wide flex-col gap-3 px-6 py-3 md:px-10">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <Link className="font-semibold text-[15px] tracking-tight" href="/">
-                {SITE_NAME}
-              </Link>
-              <div className="flex items-center gap-3">
-                {/* The way back to the company site — the system is one of its
-                    products, not a dead end. */}
-                <a
-                  className="hidden text-sm text-muted-foreground no-underline transition-colors duration-micro hover:text-foreground sm:inline"
-                  href={getBrandOrigin("landing")}
-                >
-                  {brand.domains.landing}
-                </a>
-                <CommandPalette entries={entries} />
-                <HeaderLanguageSwitcher />
+          <SiteHeader
+            menu={<SiteNavSheet sections={sections} />}
+            search={<CommandPalette entries={entries} />}
+          />
+          <MobilePageBar sections={sections} />
+
+          {/* Full-bleed shell: the inventory rail on the left edge, the article
+              centred in what remains with a real measure, and on-this-page
+              beside it at xl. No slab, no dead gutters — the canvas is the page. */}
+          <div className="flex">
+            <SiteNav sections={sections} />
+            <div className="min-w-0 flex-1 px-4 md:px-8 xl:px-12">
+              <div className="mx-auto flex max-w-content gap-12">
+                <main className="min-w-0 flex-1 pt-8 pb-8 lg:pt-12" id="content">
+                  {children}
+                </main>
+                <PageToc />
+              </div>
+              <div className="mx-auto max-w-content">
+                <SiteFooter />
               </div>
             </div>
-            <SiteNavCompact sections={sections} />
           </div>
-        </header>
-
-        {/* Three rails at xl: inventory, article, on-this-page. The right one
-            removes itself when a page has fewer than two sections, so short
-            pages keep the full measure instead of reserving a column for a
-            list of one. */}
-        <div className="mx-auto grid max-w-wide gap-8 px-6 pb-16 md:px-10 lg:grid-cols-[224px_minmax(0,1fr)] xl:grid-cols-[224px_minmax(0,1fr)_180px]">
-          <SiteNav sections={sections} />
-          <main className="min-w-0 py-8">{children}</main>
-          <PageToc />
-        </div>
+        </Providers>
       </body>
     </html>
   );

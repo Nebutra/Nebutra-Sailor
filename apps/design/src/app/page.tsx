@@ -1,5 +1,7 @@
-import { DesignLanguageSwitcher } from "@nebutra/theme/language-switcher";
+import { ArrowRight } from "@nebutra/icons";
+import { Button, Kbd } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { ActiveLanguageCaption } from "@/components/language-switcher";
 import { LiveSpecimen } from "@/components/live-specimen";
 import { coveredNames, GROUPS } from "@/lib/components/registry";
 import { componentExports } from "@/lib/components/ui-source";
@@ -104,49 +106,67 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="flex flex-col gap-14">
+    <div className="flex flex-col gap-16">
       {/* The first screen is the system running, not a description of it. The
-          picker sits directly above the surface it rewrites, so the causal link
-          is visible in one glance instead of requiring a trip to the header. */}
-      <section className="flex flex-col gap-8">
-        <header className="max-w-4xl">
+          language control lives in the sidebar on every page; here the hero
+          names the active language live, so the link between that control and
+          the surface below is stated where the surface starts. */}
+      <section className="flex flex-col gap-10">
+        <header className="flex max-w-text flex-col gap-6">
+          <p className="m-0 font-mono text-muted-foreground text-xs">
+            @nebutra/ui · @nebutra/tokens · @nebutra/theme
+          </p>
           {/* text-balance so the two clauses stay on their own lines instead of
-              breaking mid-phrase at the container edge. */}
-          <h1 className="text-balance font-semibold text-4xl text-foreground tracking-tight sm:text-[52px] sm:leading-[1.05]">
-            One switch, <span className="text-primary">the whole language</span>.
+              breaking mid-phrase at the container edge. Two inks rather than a
+              colour: the claim in foreground, its object in the secondary
+              ink, so the line reads the same under every language. */}
+          <h1 className="m-0 text-balance font-semibold text-4xl text-foreground tracking-tight sm:text-5xl">
+            One switch, <span className="text-muted-foreground">the whole language.</span>
           </h1>
-          <p className="mt-5 max-w-3xl text-[16px] text-muted-foreground leading-relaxed">
+          <p className="m-0 max-w-2xl text-base text-muted-foreground leading-relaxed">
             {SITE_NAME} is a verification surface, not a documentation site. It imports the real
             packages and renders them — so a token that breaks a component breaks this page, and
-            changing the design language below changes an actual product screen rather than a
-            picture of one.
+            changing the design language changes an actual product screen rather than a picture of
+            one.
           </p>
+          <div className="flex flex-wrap items-center gap-3">
+            <Button asChild>
+              <Link href="/components">Browse components</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/tokens">Foundations</Link>
+            </Button>
+          </div>
         </header>
 
-        <DesignLanguageSwitcher caption variant="picker" />
-
-        <LiveSpecimen />
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-ui">
+            <ActiveLanguageCaption />
+            <span className="hidden items-center gap-1.5 text-muted-foreground text-xs lg:inline-flex">
+              Switch from the sidebar, or press <Kbd small>L</Kbd>
+            </span>
+          </div>
+          <LiveSpecimen />
+        </div>
       </section>
 
       {/* Four numbers, all counted from source at build time. They sit after
           the demonstration rather than before it: the panel above is the claim,
-          and these are the receipts. The gap-px over a tinted backdrop draws
-          the cell divisions as seams in the background, not as borders. */}
+          and these are the receipts. The gap-px over the border colour draws
+          the cell divisions as hairlines without doubling any edge. */}
       <section className="flex flex-col gap-4">
-        <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-panel bg-border/40 sm:grid-cols-4">
+        <dl className="m-0 grid grid-cols-2 gap-px overflow-hidden rounded-panel border border-border bg-border sm:grid-cols-4">
           {proof.map((cell) => (
-            <div className="bg-card px-5 py-4" key={cell.key}>
-              <dt className="text-[11px] text-muted-foreground uppercase tracking-wide">
-                {cell.key}
-              </dt>
-              <dd className="mt-2 font-semibold text-2xl text-foreground tabular-nums tracking-tight">
+            <div className="bg-card px-5 py-5" key={cell.key}>
+              <dt className="text-muted-foreground text-xs">{cell.key}</dt>
+              <dd className="m-0 mt-2 font-semibold text-2xl text-foreground tabular-nums tracking-tight">
                 {cell.value}
               </dd>
-              <p className="mt-1 text-[12px] text-muted-foreground leading-snug">{cell.note}</p>
+              <p className="m-0 mt-1 text-muted-foreground text-xs">{cell.note}</p>
             </div>
           ))}
         </dl>
-        <p className="max-w-3xl text-[13px] text-muted-foreground leading-relaxed">
+        <p className="m-0 max-w-3xl text-muted-foreground text-ui leading-relaxed">
           {m.readers.toLocaleString()} files across the product read the dimensions that switch
           moves. None of the figures above is typed in — each is counted from the token source and
           the component barrels at build time.
@@ -156,22 +176,28 @@ export default function HomePage() {
       {/* Five entries in a two-column grid leave the last one beside a hole.
           The odd card takes the full row instead, which reads as a closing band
           rather than a gap where a sixth thing was meant to go. */}
-      <section className="grid gap-4 sm:grid-cols-2">
+      <section className="grid gap-3 sm:grid-cols-2">
         {SECTIONS.map((section, index) => (
           <Link
-            className={`flex flex-col rounded-panel bg-card p-5 shadow-ambient-sm transition-shadow duration-flow ease-out hover:shadow-ambient-md${
+            className={`group flex flex-col rounded-panel border border-border bg-card p-5 no-underline transition-[border-color,box-shadow] duration-flow ease-out hover:border-input hover:shadow-ambient-sm${
               index === SECTIONS.length - 1 && SECTIONS.length % 2 === 1 ? " sm:col-span-2" : ""
             }`}
             href={section.href}
             key={section.href}
           >
             <div className="flex items-baseline justify-between gap-4">
-              <p className="font-medium text-[15px] text-foreground">{section.title}</p>
-              <p className="shrink-0 text-[12px] text-muted-foreground tabular-nums">
+              <p className="m-0 inline-flex items-center gap-1.5 font-medium text-foreground text-sm">
+                {section.title}
+                <ArrowRight
+                  aria-hidden
+                  className="size-3.5 text-muted-foreground opacity-0 transition-[opacity,transform] duration-flow group-hover:translate-x-0.5 group-hover:opacity-100"
+                />
+              </p>
+              <p className="m-0 shrink-0 text-muted-foreground text-xs tabular-nums">
                 {section.stat(m)}
               </p>
             </div>
-            <p className="mt-2 text-[13px] text-muted-foreground leading-relaxed">{section.body}</p>
+            <p className="m-0 mt-2 text-muted-foreground text-ui leading-relaxed">{section.body}</p>
           </Link>
         ))}
       </section>

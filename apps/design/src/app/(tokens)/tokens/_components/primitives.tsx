@@ -19,14 +19,28 @@ export function PageHeader({
   title: string;
   children?: ReactNode;
 }) {
+  // Written lower-case at the call sites as a path; shown as a sentence-case
+  // trail. Hidden under lg, where the sticky page bar already says where you are.
+  const trail = eyebrow.split(" / ").map((part) => part.charAt(0).toUpperCase() + part.slice(1));
   return (
     <header className="mb-12 max-w-3xl">
-      <p className="mb-3 font-mono text-muted-foreground text-xs uppercase tracking-widest">
-        {eyebrow}
+      <p className="mb-3 hidden items-center gap-1.5 text-muted-foreground text-ui lg:flex">
+        {trail.map((part, index) => (
+          <span className="inline-flex items-center gap-1.5" key={part}>
+            {index > 0 ? (
+              <span aria-hidden className="text-muted-foreground">
+                /
+              </span>
+            ) : null}
+            <span className={index === trail.length - 1 ? "text-foreground" : undefined}>
+              {part}
+            </span>
+          </span>
+        ))}
       </p>
       <h1 className="font-semibold text-3xl text-foreground tracking-tight sm:text-4xl">{title}</h1>
       {children ? (
-        <div className="mt-5 space-y-4 text-[15px] text-muted-foreground leading-relaxed">
+        <div className="mt-5 space-y-4 text-base text-muted-foreground leading-relaxed">
           {children}
         </div>
       ) : null}
@@ -61,7 +75,7 @@ export function Section({
 }) {
   const id = sectionId(title);
   return (
-    <section className="mb-16 scroll-mt-24" id={id}>
+    <section className="mb-16 scroll-mt-28" id={id}>
       <h2
         className="mb-2 font-semibold text-foreground text-xl tracking-tight"
         id={`${id}-heading`}
@@ -69,7 +83,7 @@ export function Section({
         {title}
       </h2>
       {note ? (
-        <div className="mb-6 max-w-3xl space-y-3 text-[14px] text-muted-foreground leading-relaxed">
+        <div className="mb-6 max-w-3xl space-y-3 text-muted-foreground text-sm leading-relaxed">
           {note}
         </div>
       ) : (

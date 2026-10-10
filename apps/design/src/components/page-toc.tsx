@@ -67,25 +67,29 @@ export function PageToc() {
   return (
     <nav
       aria-label="On this page"
-      className="sticky top-16 hidden max-h-[calc(100vh-5rem)] flex-col overflow-y-auto pb-16 xl:flex"
+      className="sticky top-14 hidden max-h-[calc(100dvh-3.5rem)] w-52 shrink-0 flex-col self-start overflow-y-auto pt-12 pb-16 xl:flex"
     >
-      <span className="px-2 pb-2 font-medium text-[11px] text-foreground uppercase tracking-wider">
-        On this page
-      </span>
-      {headings.map((heading) => (
-        <a
-          className={cn(
-            "rounded-[var(--radius-sm)] px-2 py-[5px] text-[13px] no-underline transition-colors duration-micro",
-            active === heading.id
-              ? "bg-muted font-medium text-foreground"
-              : "text-muted-foreground hover:text-foreground",
-          )}
-          href={`#${heading.id}`}
-          key={heading.id}
-        >
-          {heading.text}
-        </a>
-      ))}
+      <span className="pb-3 font-medium text-foreground text-xs">On this page</span>
+      {/* A hairline rail with the current section marked on it — position in
+          the article, not a second menu competing with the sidebar. */}
+      <ul className="m-0 flex list-none flex-col border-border border-l p-0">
+        {headings.map((heading) => (
+          <li key={heading.id}>
+            <a
+              aria-current={active === heading.id ? "location" : undefined}
+              className={cn(
+                "-ml-px block border-l py-1 pl-3 text-xs leading-snug no-underline transition-colors duration-micro",
+                active === heading.id
+                  ? "border-foreground text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground",
+              )}
+              href={`#${heading.id}`}
+            >
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
     </nav>
   );
 }

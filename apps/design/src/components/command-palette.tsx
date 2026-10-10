@@ -14,6 +14,8 @@
  * missing, because both come from the same call the sidebar renders.
  */
 
+import { MagnifyingGlass } from "@nebutra/icons";
+import { Kbd } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useRouter } from "next/navigation";
 import * as React from "react";
@@ -105,14 +107,18 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
     <>
       <button
         aria-keyshortcuts="Meta+K Control+K"
-        className="flex items-center gap-2 rounded-[var(--radius-md)] bg-muted/60 px-2.5 py-1.5 text-[12px] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        aria-label="Search the design system"
+        className="flex h-8 items-center gap-2 rounded-[var(--radius-md)] text-muted-foreground transition-[background-color,border-color,color] duration-micro ease-out hover:text-foreground max-lg:w-8 max-lg:justify-center max-lg:hover:bg-accent lg:w-full lg:border lg:border-border lg:bg-card lg:pr-1.5 lg:pl-2.5 lg:hover:border-input"
         onClick={() => setOpen(true)}
         type="button"
       >
-        Search
-        <kbd className="rounded-[var(--radius-sm)] bg-background px-1.5 py-0.5 font-mono text-[10px]">
-          ⌘K
-        </kbd>
+        <MagnifyingGlass aria-hidden className="size-4 shrink-0" />
+        <span className="hidden flex-1 text-left text-ui lg:inline">
+          Search tokens, components…
+        </span>
+        <Kbd className="hidden lg:inline-flex" meta small>
+          K
+        </Kbd>
       </button>
 
       {open ? (
@@ -132,11 +138,11 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
           <div
             aria-label="Search the design system"
             aria-modal="true"
-            className="w-full max-w-xl overflow-hidden rounded-[var(--radius-lg)] bg-background shadow-ambient-lg"
+            className="w-full max-w-xl overflow-hidden rounded-[var(--radius-lg)] bg-popover shadow-ambient-lg ring-1 ring-border"
             role="dialog"
           >
             <input
-              className="w-full bg-transparent px-4 py-3.5 text-[15px] text-foreground outline-none placeholder:text-muted-foreground"
+              className="w-full border-border border-b bg-transparent px-4 py-3.5 text-base text-foreground outline-none placeholder:text-muted-foreground"
               data-allow-native
               onChange={(event) => {
                 setQuery(event.target.value);
@@ -161,9 +167,9 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
               value={query}
             />
 
-            <div className="max-h-[52vh] overflow-y-auto bg-muted/40 p-1.5">
+            <div className="max-h-[52vh] overflow-y-auto p-1.5">
               {results.length === 0 ? (
-                <p className="px-3 py-6 text-center text-[13px] text-muted-foreground">
+                <p className="px-3 py-6 text-center text-ui text-muted-foreground">
                   Nothing matches “{query}”.
                 </p>
               ) : (
@@ -171,17 +177,15 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
                   <button
                     className={cn(
                       "flex w-full items-baseline justify-between gap-4 rounded-[var(--radius-md)] px-3 py-2 text-left transition-colors",
-                      index === active ? "bg-card text-foreground" : "text-muted-foreground",
+                      index === active ? "bg-accent text-foreground" : "text-muted-foreground",
                     )}
                     key={entry.href}
                     onClick={() => go(entry)}
                     onMouseEnter={() => setActive(index)}
                     type="button"
                   >
-                    <span className="text-[14px]">{entry.label}</span>
-                    <span className="shrink-0 text-[11px] text-muted-foreground uppercase tracking-wide">
-                      {entry.group}
-                    </span>
+                    <span className="text-sm">{entry.label}</span>
+                    <span className="shrink-0 text-muted-foreground text-xs">{entry.group}</span>
                   </button>
                 ))
               )}

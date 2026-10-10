@@ -326,7 +326,7 @@
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/_components/primitives.tsx",
-        "count": 9
+        "count": 7
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/page.tsx",
@@ -334,10 +334,6 @@
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/traps/page.tsx",
-        "count": 9
-      },
-      {
-        "file": "apps/design/src/app/page.tsx",
         "count": 9
       },
       {
@@ -497,10 +493,6 @@
         "count": 4
       },
       {
-        "file": "apps/design/src/components/command-palette.tsx",
-        "count": 6
-      },
-      {
         "file": "apps/forge/src/components/site-footer.tsx",
         "count": 6
       },
@@ -570,10 +562,6 @@
       },
       {
         "file": "apps/design/src/app/(patterns)/patterns/[slug]/page.tsx",
-        "count": 5
-      },
-      {
-        "file": "apps/design/src/components/site-nav.tsx",
         "count": 5
       },
       {
@@ -1057,10 +1045,6 @@
         "count": 2
       },
       {
-        "file": "apps/design/src/components/page-toc.tsx",
-        "count": 2
-      },
-      {
         "file": "apps/design/src/lib/components/demo-kit.tsx",
         "count": 2
       },
@@ -1318,10 +1302,6 @@
       },
       {
         "file": "apps/design/src/app/(showcase)/showcase/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/app/layout.tsx",
         "count": 1
       },
       {

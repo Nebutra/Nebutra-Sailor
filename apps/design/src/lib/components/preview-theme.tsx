@@ -17,15 +17,15 @@
  *   dark  — document dark, one pane
  *   split — document light, second pane wrapped in `.dark`
  *
- * The document class is set directly rather than through next-themes so the
- * control works regardless of what the app shell provides, and the original
- * class is restored on unmount so a page visit does not leave the site's theme
- * changed behind it.
+ * Light and dark go through the site's ThemeProvider, so this control and the
+ * header toggle are one preference; split pins the document light locally.
  */
 
 import { Moon, Sun } from "@nebutra/icons";
+import { useTheme } from "@nebutra/tokens";
 import { cn } from "@nebutra/ui/utils";
 import * as React from "react";
+import { useMounted } from "@/lib/use-mounted";
 
 export type PreviewMode = "light" | "dark" | "split";
 
@@ -35,22 +35,40 @@ const MODES: { id: PreviewMode; label: string }[] = [
   { id: "split", label: "Split" },
 ];
 
-function useDocumentTheme(mode: PreviewMode) {
+/**
+ * Light and dark are the site's own theme now — the header toggle and this
+ * control are the same preference, so a component page no longer forces light
+ * on arrival or leaves the theme changed behind it. Split is the one local
+ * mode: it pins the document light while it is on (so the left pane is light)
+ * and hands the document back to the site theme when it is turned off or the
+ * page is left.
+ */
+function useSplitPin(split: boolean, resolved: "light" | "dark") {
   React.useEffect(() => {
+    if (!split) return;
     const root = document.documentElement;
-    const had = root.classList.contains("dark");
-
-    root.classList.toggle("dark", mode === "dark");
-
+    root.classList.remove("dark");
     return () => {
-      root.classList.toggle("dark", had);
+      root.classList.toggle("dark", resolved === "dark");
     };
-  }, [mode]);
+  }, [split, resolved]);
 }
 
 export function PreviewTheme({ children }: { children: React.ReactNode }) {
-  const [mode, setMode] = React.useState<PreviewMode>("light");
-  useDocumentTheme(mode);
+  const { resolvedTheme, setTheme } = useTheme();
+  const [split, setSplit] = React.useState(false);
+  const mounted = useMounted();
+  const mode: PreviewMode | null = split ? "split" : mounted ? resolvedTheme : null;
+  useSplitPin(split, resolvedTheme);
+
+  function setMode(next: PreviewMode) {
+    if (next === "split") {
+      setSplit(true);
+      return;
+    }
+    setSplit(false);
+    setTheme(next);
+  }
 
   return (
     <div className="flex flex-col gap-6">

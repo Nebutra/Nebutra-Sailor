@@ -5,19 +5,30 @@
  *
  * Before this existed the site had five links in a header, so every page was
  * reached from a top-level list and no page told you what else the system
- * contained. That is what makes a design system read as a set of documents
- * rather than as one product: you are never *inside* it, you are always at an
- * index of it. The sidebar puts the full inventory — every foundation page and
+ * contained. The sidebar puts the full inventory — every foundation page and
  * every documented export — on screen at all times, and marks where you are.
  *
  * The tree is built on the server from the same registry the pages read and
  * passed down as data. Nothing here is hand-maintained: a component that gains
  * a page appears in this list on the next build.
+ *
+ * The design-language control sits at the top of the rail. It is the site's
+ * signature — the one thing no other docs site has — so it is placed where the
+ * eye lands first on every page, the same place every time, instead of being a
+ * row of pills in the header on some pages and a picker in the content on one.
+ *
+ * Narrow screens get the same tree in a sheet, opened from the header, and the
+ * language control in the page bar under it — still one control, still in one
+ * place for that layout.
  */
 
+import { Menu } from "@nebutra/icons";
+import { Button, Sheet, SheetContent, SheetTitle, SheetTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import * as React from "react";
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 export interface NavItem {
   href: string;
@@ -29,93 +40,159 @@ export interface NavSection {
   label: string;
   /** Shown after the label — the count is the point, not decoration. */
   meta?: string;
+  /** 2 nests the section under the one before it (the library's groups). */
+  level?: 1 | 2;
   items: NavItem[];
 }
 
-function Section({ section, pathname }: { section: NavSection; pathname: string }) {
+function Section({
+  section,
+  pathname,
+  onNavigate,
+}: {
+  section: NavSection;
+  pathname: string;
+  onNavigate?: (() => void) | undefined;
+}) {
+  const nested = section.level === 2;
   return (
-    <div className="flex flex-col gap-0.5">
-      <div className="flex items-baseline gap-2 px-2 pt-5 pb-1">
-        <span className="font-medium text-[11px] text-foreground uppercase tracking-wider">
+    <div className={cn("flex flex-col", nested ? "pt-4" : "pt-6 first:pt-0")}>
+      <div className="flex items-baseline justify-between gap-2 px-2.5 pb-1.5">
+        <span
+          className={cn(
+            "font-medium",
+            nested ? "text-muted-foreground text-xs" : "text-foreground text-ui",
+          )}
+        >
           {section.label}
         </span>
         {section.meta ? (
-          <span className="text-[10px] text-muted-foreground tabular-nums">{section.meta}</span>
+          <span className="text-2xs text-muted-foreground tabular-nums">{section.meta}</span>
         ) : null}
       </div>
-      {section.items.map((item) => {
-        const active = pathname === item.href;
-        return (
-          <Link
-            aria-current={active ? "page" : undefined}
-            className={cn(
-              "rounded-[var(--radius-sm)] px-2 py-[5px] text-[13px] no-underline transition-colors duration-micro",
-              active
-                ? "bg-muted font-medium text-foreground"
-                : "font-medium text-muted-foreground hover:bg-muted/60 hover:text-foreground",
-            )}
-            href={item.href}
-            key={item.href}
-          >
-            {item.label}
-          </Link>
-        );
-      })}
+      <ul className="m-0 flex list-none flex-col gap-px p-0">
+        {section.items.map((item) => {
+          const active = pathname === item.href;
+          return (
+            <li key={item.href}>
+              <Link
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "relative flex items-center rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui no-underline transition-colors duration-micro",
+                  // The current page carries ink, a tint and a 2px ink rule on its
+                  // leading edge: three cues, so it reads in any language,
+                  // including the ones whose hover tint is barely off-canvas.
+                  // Weight stays put — a bolder label would reflow the row.
+                  active
+                    ? "bg-accent text-foreground before:absolute before:inset-y-1.5 before:left-0 before:w-0.5 before:rounded-full before:bg-foreground"
+                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                )}
+                href={item.href}
+                {...(onNavigate ? { onClick: onNavigate } : {})}
+              >
+                {item.label}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
 
-export function SiteNav({ sections }: { sections: NavSection[] }) {
+function Tree({
+  sections,
+  onNavigate,
+}: {
+  sections: NavSection[];
+  onNavigate?: (() => void) | undefined;
+}) {
   const pathname = usePathname();
-
   return (
-    <nav
-      aria-label="Design system"
-      /* Sticky rather than page-scrolled: the inventory is what you navigate
-         by, and a list that scrolls away with the article stops being one. */
-      className="sticky top-16 hidden max-h-[calc(100vh-5rem)] flex-col overflow-y-auto pr-4 pb-16 lg:flex"
-    >
+    <>
       {sections.map((section) => (
-        <Section key={section.id} pathname={pathname} section={section} />
+        <Section key={section.id} onNavigate={onNavigate} pathname={pathname} section={section} />
       ))}
-    </nav>
+    </>
+  );
+}
+
+/** Desktop rail. Sticky: the inventory is what you navigate by. */
+export function SiteNav({ sections }: { sections: NavSection[] }) {
+  return (
+    <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-64 shrink-0 flex-col border-border border-r lg:flex">
+      <div className="px-3 pt-5 pb-2">
+        <LanguageSwitcher shortcut variant="sidebar" />
+      </div>
+      <nav
+        aria-label="Design system"
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 pt-4 pb-12"
+      >
+        <Tree sections={sections} />
+      </nav>
+    </aside>
+  );
+}
+
+/** The same tree in a sheet, for viewports too narrow for the rail. */
+export function SiteNavSheet({ sections }: { sections: NavSection[] }) {
+  const [open, setOpen] = React.useState(false);
+  const close = React.useCallback(() => setOpen(false), []);
+  return (
+    <Sheet onOpenChange={setOpen} open={open}>
+      <SheetTrigger asChild>
+        <Button
+          aria-label="Open navigation"
+          className="-ml-1 text-muted-foreground lg:hidden"
+          iconSize="sm"
+          shape="square"
+          variant="ghost"
+        >
+          <Menu aria-hidden className="size-4" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="flex flex-col gap-0 p-0" side="left">
+        <SheetTitle className="px-5 pt-5 pb-3 text-sm">Design system</SheetTitle>
+        <nav aria-label="Design system" className="min-h-0 flex-1 overflow-y-auto px-3 pb-10">
+          <Tree onNavigate={close} sections={sections} />
+        </nav>
+      </SheetContent>
+    </Sheet>
   );
 }
 
 /**
- * The same tree as a horizontal strip, for viewports too narrow for the
- * sidebar. It keeps the section headings — a flat run of ninety links with no
- * grouping is worse than the five-link header it replaces.
+ * Narrow-screen page bar: where you are, and the language control. Sticky under
+ * the header so switching never needs a scroll back to the top.
  */
-export function SiteNavCompact({ sections }: { sections: NavSection[] }) {
+export function MobilePageBar({ sections }: { sections: NavSection[] }) {
   const pathname = usePathname();
+  const here = React.useMemo(() => {
+    for (const section of sections) {
+      const item = section.items.find((entry) => entry.href === pathname);
+      if (item) return { section: section.label, label: item.label };
+    }
+    return null;
+  }, [pathname, sections]);
 
   return (
-    <nav aria-label="Design system" className="lg:hidden">
-      <div className="-mx-6 flex gap-5 overflow-x-auto px-6 pb-1">
-        {sections.map((section) => (
-          <div className="flex shrink-0 items-baseline gap-2.5" key={section.id}>
-            <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
-              {section.label}
+    <div className="sticky top-14 z-20 flex h-12 items-center justify-between gap-3 border-border border-b bg-background/80 px-4 backdrop-blur-md md:px-6 lg:hidden">
+      <p className="m-0 min-w-0 truncate text-ui">
+        {here ? (
+          <>
+            <span className="text-muted-foreground">{here.section}</span>
+            <span aria-hidden className="px-1.5 text-muted-foreground">
+              /
             </span>
-            {section.items.slice(0, 6).map((item) => (
-              <Link
-                aria-current={pathname === item.href ? "page" : undefined}
-                className={cn(
-                  "whitespace-nowrap text-[13px] no-underline transition-colors",
-                  pathname === item.href
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-                href={item.href}
-                key={item.href}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        ))}
-      </div>
-    </nav>
+            <span className="font-medium text-foreground">{here.label}</span>
+          </>
+        ) : (
+          <span className="font-medium text-foreground">
+            {pathname === "/" ? "Home" : "Overview"}
+          </span>
+        )}
+      </p>
+      <LanguageSwitcher variant="bar" />
+    </div>
   );
 }
