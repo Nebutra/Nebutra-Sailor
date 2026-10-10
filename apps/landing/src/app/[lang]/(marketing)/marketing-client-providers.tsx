@@ -2,7 +2,6 @@
 
 import type { ReactNode } from "react";
 import { GoogleOneTap } from "@/components/auth/google-one-tap";
-import { MarketingMotionProvider } from "@/components/landing/AnimateIn";
 import { usePathname } from "@/i18n/navigation";
 import { shouldMountMarketingGoogleOneTap } from "./marketing-google-one-tap-policy";
 
@@ -24,8 +23,11 @@ export function MarketingClientProviders({
   const pathname = usePathname();
   const shouldMountOneTap = shouldMountMarketingGoogleOneTap(pathname, googleOneTapEnabled);
 
+  // No motion provider here: AnimateIn registers GSAP on first use, and
+  // importing it from this layout put GSAP + ScrollTrigger (~50 KB gzip) into
+  // the first load of every marketing page, including pages that never move.
   return (
-    <MarketingMotionProvider>
+    <>
       {children}
       <GoogleOneTap
         appUrl={appUrl}
@@ -33,6 +35,6 @@ export function MarketingClientProviders({
         clientId={googleClientId}
         enabled={shouldMountOneTap}
       />
-    </MarketingMotionProvider>
+    </>
   );
 }

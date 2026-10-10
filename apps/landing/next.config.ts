@@ -245,6 +245,12 @@ const nextConfig: NextConfig = {
       "@nebutra/ui/primitives",
       "@nebutra/ui/components",
       "@nebutra/ui/editorial",
+      // Client-side, an unoptimised barrel is a first-load cost, not only a
+      // build-time one: app/error.tsx imports FullPageStatus from ./layout, and
+      // without this the whole layout barrel (AppShell → Sheet → the dialog and
+      // floating-ui runtime, ~25 KB gzip) loaded on every page.
+      "@nebutra/ui/layout",
+      "@nebutra/ui/patterns",
       "@nebutra/icons",
       "@nebutra/brand",
     ],
