@@ -17,6 +17,14 @@ have its appearance altered. Licence text: `vendor/misans/LICENSE.txt`.
 This software uses the **DM Sans** typeface, licensed under the SIL Open Font
 License 1.1. Licence text: `vendor/dm-sans/OFL.txt`.
 
+## Geist Sans
+
+This software uses the **Geist** typeface (Vercel, in collaboration with
+basement.studio), licensed under the SIL Open Font License 1.1. Licence text:
+`vendor/geist/OFL.txt`. `generated/geist-sans/` holds the upright variable face
+from the `geist` npm package split into two subsets by `scripts/subset-geist.mjs`
+(glyphs removed, none altered), loaded by `src/next-geist.ts`.
+
 ## Theme / DESIGN.md registry faces
 
 `src/next.ts` loads 19 faces from woff2 files vendored under
