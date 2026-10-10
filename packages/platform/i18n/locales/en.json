@@ -369,7 +369,7 @@
     },
     "signIn": {
       "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
+      "subtitle": "Welcome back. Sign in to continue.",
       "continueWith": "Continue with",
       "continueWithProvider": "Continue with {provider}",
       "providers": {

@@ -1,7 +1,7 @@
 // @brand-exempt: health payload defaults for production hostnames
 import { isAuthFeatureEnabledSync, isTurnstileConfigured } from "@nebutra/auth";
+import { detectEnabledOAuthProviders } from "@nebutra/auth/sign-in/providers";
 import { probeGoogleOAuthPairing } from "@/lib/google-oauth-probe";
-import { detectEnabledOAuthProviders } from "@/lib/oauth-providers";
 
 export const dynamic = "force-dynamic";
 

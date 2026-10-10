@@ -15,6 +15,7 @@ import {
   sanitizeReturnUrl,
 } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
+import { isOAuthProvider, type OAuthProvider } from "@nebutra/auth/sign-in/providers";
 import {
   accessGateOauthDisabledResponse,
   enforceAccessGatePreflight,
@@ -25,7 +26,6 @@ import {
 } from "@/lib/access-gate";
 import { applyCloudflareAuthSecrets, applyCloudflareDatabaseEnv } from "@/lib/cloudflare-env";
 import { applyAuthCors } from "@/lib/cors";
-import { isOAuthProvider, type OAuthProvider } from "@/lib/oauth-providers";
 import { resolveAppOrigin } from "@/lib/return-to";
 import { applySessionHint } from "@/lib/session-hint";
 

@@ -68,9 +68,7 @@ export function AuthBanner({ className }: AuthBannerProps) {
           </p>
         </div>
 
-        <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-          © {new Date().getFullYear()} Nebutra
-        </div>
+        <div className="text-xs text-muted-foreground">© {new Date().getFullYear()} Nebutra</div>
       </div>
     </aside>
   );

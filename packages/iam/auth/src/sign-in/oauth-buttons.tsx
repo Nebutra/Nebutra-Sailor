@@ -2,13 +2,13 @@
 
 import { Button } from "@nebutra/ui/primitives";
 import { AUTH_OAUTH_BUTTON_CLASS, AUTH_OAUTH_GRID_CLASS, cn } from "@nebutra/ui/utils";
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import {
   buildOAuthStartPath,
   OAUTH_PROVIDER_LABEL,
+  OAUTH_PROVIDERS,
   type OAuthProvider,
-} from "@/lib/oauth-providers";
+} from "./oauth-providers";
 
 function GoogleIcon() {
   return (
@@ -96,10 +96,21 @@ const PROVIDER_ICON: Record<OAuthProvider, () => React.ReactElement> = {
   feishu: FeishuIcon,
 };
 
-interface OAuthButtonsProps {
+export interface OAuthButtonsLabels {
+  /** "Continue with" — prefixes the provider in each button's accessible name. */
+  continueWith: string;
+  /** Shown in the pressed button while the browser leaves for the IdP. */
+  providerLoading: string;
+  /** Localized provider names; falls back to OAUTH_PROVIDER_LABEL. */
+  providers?: Partial<Record<OAuthProvider, string>>;
+}
+
+export interface OAuthButtonsProps {
   providers: readonly OAuthProvider[];
-  /** Sanitized absolute return URL after OAuth. */
+  /** Sanitized return URL after OAuth. */
   returnTo: string;
+  /** Copy comes from the host app's catalog (`auth.signIn`), so the package needs no i18n runtime. */
+  labels: OAuthButtonsLabels;
 }
 
 /**
@@ -113,8 +124,7 @@ interface OAuthButtonsProps {
  *
  * `onClick` only flips loading chrome; navigation is the anchor's job.
  */
-export function OAuthButtons({ providers, returnTo }: OAuthButtonsProps) {
-  const t = useTranslations("auth.signIn");
+export function OAuthButtons({ providers, returnTo, labels }: OAuthButtonsProps) {
   const [loadingProvider, setLoadingProvider] = useState<OAuthProvider | null>(null);
 
   // Back/forward cache and failed navigations leave loading stuck — reset.
@@ -134,8 +144,7 @@ export function OAuthButtons({ providers, returnTo }: OAuthButtonsProps) {
     <div className={AUTH_OAUTH_GRID_CLASS}>
       {providers.map((provider) => {
         const Icon = PROVIDER_ICON[provider];
-        const label =
-          t(`providers.${provider}` as "providers.google") || OAUTH_PROVIDER_LABEL[provider];
+        const label = labels.providers?.[provider] || OAUTH_PROVIDER_LABEL[provider];
         const href = buildOAuthStartPath(provider, returnTo);
         const isLoading = loadingProvider === provider;
         const isBlocked = loadingProvider !== null && loadingProvider !== provider;
@@ -151,14 +160,28 @@ export function OAuthButtons({ providers, returnTo }: OAuthButtonsProps) {
             <a
               href={href}
               onClick={() => setLoadingProvider(provider)}
-              aria-label={`${t("continueWith")} ${label}`}
+              aria-label={`${labels.continueWith} ${label}`}
             >
               <Icon />
-              {isLoading ? t("providerLoading") : label}
+              {isLoading ? labels.providerLoading : label}
             </a>
           </Button>
         );
       })}
     </div>
   );
+}
+
+/**
+ * Labels from an `auth.signIn` translator (next-intl's `useTranslations("auth.signIn")`),
+ * so both apps read the same keys.
+ */
+export function oauthButtonsLabels(t: (key: string) => string): OAuthButtonsLabels {
+  return {
+    continueWith: t("continueWith"),
+    providerLoading: t("providerLoading"),
+    providers: Object.fromEntries(
+      OAUTH_PROVIDERS.map((provider) => [provider, t(`providers.${provider}`)]),
+    ),
+  };
 }

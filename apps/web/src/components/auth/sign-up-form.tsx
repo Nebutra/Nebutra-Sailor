@@ -1,6 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { OAuthButtons, oauthButtonsLabels } from "@nebutra/auth/sign-in";
+import type { OAuthProvider } from "@nebutra/auth/sign-in/providers";
 import {
   Button,
   Form,
@@ -14,11 +16,10 @@ import {
 } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import type { OAuthProvider } from "@/lib/auth/oauth-providers";
-import { OAuthButtons } from "./oauth-buttons";
 
 type Phase = "details" | "verify";
 
@@ -66,6 +67,7 @@ function extractSignUpError(payload: unknown): string {
 }
 
 export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps) {
+  const tSignIn = useTranslations("auth.signIn");
   const router = useRouter();
   const searchParams = useSearchParams();
   const accessGateEnabled = process.env.NEXT_PUBLIC_ACCESS_GATE_MODE === "invite";
@@ -250,7 +252,11 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
         </p>
       ) : shouldRenderOAuth ? (
         <>
-          <OAuthButtons mode="signUp" providers={enabledOAuthProviders} returnUrl={returnUrl} />
+          <OAuthButtons
+            providers={enabledOAuthProviders}
+            returnTo={returnUrl ?? "/onboarding"}
+            labels={oauthButtonsLabels(tSignIn)}
+          />
 
           <div className="relative">
             <Separator />

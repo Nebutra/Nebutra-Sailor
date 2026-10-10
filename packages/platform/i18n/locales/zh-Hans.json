@@ -368,7 +368,7 @@
     },
     "signIn": {
       "title": "登录 Nebutra",
-      "subtitle": "选择你想用的登录方式。",
+      "subtitle": "欢迎回来，登录后继续。",
       "continueWith": "使用",
       "continueWithProvider": "使用 {provider} 继续",
       "providers": {

@@ -140,7 +140,8 @@ vi.mock("@/lib/auth/passkey-client", () => ({
   signInWithPasskey: vi.fn(),
 }));
 
-vi.mock("../oauth-buttons", () => ({
+vi.mock("@nebutra/auth/sign-in", () => ({
+  oauthButtonsLabels: () => ({ continueWith: "Continue with", providerLoading: "Redirecting" }),
   OAuthButtons: () => <div data-testid="oauth-buttons" />,
 }));
 

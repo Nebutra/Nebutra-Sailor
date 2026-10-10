@@ -1,5 +1,7 @@
 "use client";
 
+import { OAuthButtons, oauthButtonsLabels } from "@nebutra/auth/sign-in";
+import type { OAuthProvider } from "@nebutra/auth/sign-in/providers";
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import {
@@ -17,7 +19,6 @@ import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { type AuthSignInOauthMessageKey, resolveOauthErrorMessageKey } from "@/lib/oauth-errors";
-import type { OAuthProvider } from "@/lib/oauth-providers";
 import {
   enablePasskeyConditionalUI,
   isPasskeySupported,
@@ -25,7 +26,6 @@ import {
   signInWithPasskey,
 } from "@/lib/passkey-client";
 import { challengePath, writePendingAuth } from "@/lib/pending-auth";
-import { OAuthButtons } from "./oauth-buttons";
 import { useCapsLock } from "./use-caps-lock";
 import { WeChatLoginButton } from "./wechat-login-button";
 
@@ -296,7 +296,11 @@ export function CredentialsForm({
 
       {showOAuth ? (
         <>
-          <OAuthButtons providers={enabledOAuthProviders} returnTo={returnTo} />
+          <OAuthButtons
+            providers={enabledOAuthProviders}
+            returnTo={returnTo}
+            labels={oauthButtonsLabels(tSignIn)}
+          />
           <WeChatLoginButton appId={wechatAppId} className="mt-3" />
           <div className="relative my-6">
             <div className="h-px w-full bg-border" aria-hidden />

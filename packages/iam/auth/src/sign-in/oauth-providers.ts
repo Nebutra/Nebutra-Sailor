@@ -1,4 +1,4 @@
-/** OAuth providers configured for the auth-center (mirrors apps/web). */
+/** OAuth providers — the one list both sign-in surfaces (apps/auth, apps/web) read. */
 
 export const OAUTH_PROVIDERS = ["google", "github", "apple", "microsoft", "feishu"] as const;
 

@@ -1,8 +1,8 @@
 import { isAuthFeatureEnabled } from "@nebutra/auth";
+import { detectEnabledOAuthProviders } from "@nebutra/auth/sign-in/providers";
 import { AuthSplitLayout } from "@/components/auth-split-layout";
 import { CredentialsForm } from "@/components/credentials-form";
 import { isAccessGateEnabled } from "@/lib/access-gate-mode";
-import { detectEnabledOAuthProviders } from "@/lib/oauth-providers";
 import { detectEnabledPhoneProviders } from "@/lib/phone-login";
 import { resolvePostLoginReturnTo } from "@/lib/return-to";
 
