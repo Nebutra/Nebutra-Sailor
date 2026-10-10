@@ -1,0 +1,106 @@
+---
+title: Layouts and persistence
+description: Save named chart layouts, keep K-line and intraday setups apart, and isolate stored data per account and workspace.
+---
+
+A trader keeps one layout for swing trading and another for intraday work. Switching between them brings back the symbol, indicators, panes, drawings, settings and scroll position. Nothing needs to be rebuilt by hand. This page covers what a layout stores, where it is kept, and how a multi-tenant host keeps one user's data out of another's.
+
+## What a layout stores
+
+A `LayoutDocument` is the single persisted record of everything the user controls on the chart. Its contract lives in `packages/core/src/engine/layout/types.ts`.
+
+| Field | Contents |
+| --- | --- |
+| `version` | Document version, used to migrate older documents. |
+| `currentSymbol` | The main `SymbolSpec`: source, period, adjustment and routing. When omitted, the current symbol is kept. |
+| `workspaces` | Indicators, pane specs, ratios and scale types for the K-line and intraday views. |
+| `panePriceAxisModes` | Auto or manual range mode per pane. |
+| `settings` | A whitelisted subset of chart settings. |
+| `drawings` | Committed drawings with their time/price anchors, styles and labels. |
+| `viewport` | Scroll anchor, offset and zoom level per symbol, period, adjustment and view. |
+
+Some things are deliberately left out: device preferences (renderer backend, cache limit, profiler switch), the watchlist, aggregated sources, agent settings, market data and transient interaction state. Selection, the active tool and undo history are runtime state and are not saved either.
+
+## Manage layouts from code
+
+`ChartController` implements the layout API. Every method takes a single object argument.
+
+```ts title="layouts.ts"
+import type { ChartController } from '@363045841yyt/klinechart-core'
+
+export async function setUpLayouts(chart: ChartController) {
+  const intraday = await chart.createLayout({ name: 'Intraday' })
+  await chart.switchLayout({ id: intraday })
+  await chart.setLayoutAutoSave({ enabled: true })
+
+  const snapshot = chart.exportLayout() // a plain LayoutDocument
+  await chart.applyLayout(snapshot) // loads referenced indicators, then restores atomically
+}
+```
+
+The remaining methods are `saveLayout({ name, id? })`, `renameLayout`, `duplicateLayout`, `deleteLayout` and `listLayouts`. Reactive state is exposed through the `layouts`, `activeLayoutId`, `layoutAutoSave`, `layoutDirty` and `layoutSaveError` signals.
+
+A few rules keep the archive consistent:
+
+- The first document is `default`. Neither the default layout nor the active one can be deleted.
+- A new layout starts from default settings and a single main pane, and keeps the current symbol. A duplicate carries the source's symbol and drawings.
+- Auto-save groups changes made within 600 ms and writes them before a switch, on page hide and before the chart is destroyed. Changes caused by a restore are not written back.
+- A restore replaces drawings and viewport positions completely, so nothing carries over from the previous layout.
+
+Layouts are stored in IndexedDB under `@363045841yyt/klinechart-layouts`. The layout menu in the toolbar uses the same API. Layout management is not exposed as an agent tool.
+
+## K-line and intraday views keep separate setups
+
+Indicators and panes are kept per view workspace. `kline` has its own instances, panes, ratios and scale types. Intraday and five-day intraday share the `timeshare` workspace. Switching views activates that workspace's snapshot in one batch, and nothing is copied, deleted or synced between the two. Calculations started before a switch cannot overwrite the new view, because results must match the current configuration revision. Both workspaces are saved inside `LayoutDocument.workspaces`. See [view workspaces](/docs/architecture/notes/view-workspaces).
+
+## Settings persistence
+
+Chart settings resolve key by key, in this order:
+
+1. Keys you pass explicitly in the `settings` prop.
+2. Values stored in `localStorage` under `kline-chart-settings`.
+3. Built-in defaults.
+
+```vue
+<KlineChart :settings="{ theme: 'dark' }" />
+```
+
+Here `theme` is fixed by the prop, while every other key falls back to what the user saved last. Changes the user makes after mount are written back to storage. Values you push through the prop are not, so the prop never overwrites a stored preference it did not set. A layout also carries the chart-level subset of settings, excluding `rendererBackend`, `marketDataCacheMaxMiB` and `enableCanvasProfiler`.
+
+## Isolate storage per account and workspace
+
+A SaaS host has to keep layouts, watchlists, settings and agent data separate for each account and workspace. Call `configureBrowserPersistenceScope` from the dedicated subpath before you dynamically import the chart. The subpath imports no chart code and creates no storage.
+
+```ts title="main.ts"
+import { configureBrowserPersistenceScope } from '@363045841yyt/klinechart-core/persistence-scope'
+
+const scope = JSON.stringify(['my-app', userId ?? 'guest', workspaceId ?? 'personal'])
+configureBrowserPersistenceScope(scope)
+
+const { default: App } = await import('./App.vue') // chart modules load after the scope is set
+```
+
+Every Core `localStorage` and IndexedDB store captures the scope when it is created. In a scoped page, `kline-chart-settings` becomes `kcq:<encoded scope>:kline-chart-settings`. The agent's session database is separate, so give it a scoped name too:
+
+```ts
+import { scopedPersistenceName } from '@363045841yyt/klinechart-core/persistence-scope'
+import type { RedactionOptions } from '@363045841yyt/klinechart-agent-runtime'
+import { createBrowserRuntimeSessions } from '@363045841yyt/klinechart-agent-runtime/browser'
+
+const createSessions = (redaction: RedactionOptions) =>
+  createBrowserRuntimeSessions({ databaseName: scopedPersistenceName('agent-sessions'), redaction })
+```
+
+<Callout type="warn" title="Reload to change scope">
+Once the first store has been created, the scope cannot change: `configureBrowserPersistenceScope` throws `Reload the page before changing persistence scope`. When the user signs out or switches workspace, tear the page down and reload. Module-level caches and late async writes must never cross tenants.
+</Callout>
+
+This is why the hosted workstation reloads on every account or workspace change. It builds the scope from the product name, user id and active workspace before any chart module loads. It closes the agent bridge, then calls `window.location.reload()`. It also rechecks the session when the window regains focus and every 60 seconds, and reloads if the user or workspace has changed.
+
+A scope partitions browser data. It is not a permission boundary: same-origin scripts can still read other partitions, so cloud data must always be checked against the signed-in session and workspace membership. A page with no scope configured keeps the original storage names.
+
+<Cards>
+  <Card title="Layout document note" href="/docs/architecture/notes/layout-document" description="Archive shape, ordering and viewport rules." />
+  <Card title="Persistence scope note" href="/docs/architecture/notes/browser-persistence-scope" description="The design decision behind scoped storage." />
+  <Card title="Agent integration" href="/docs/guides/agent-integration" description="Scoped durable sessions for the agent." />
+</Cards>

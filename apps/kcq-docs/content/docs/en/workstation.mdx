@@ -1,0 +1,67 @@
+---
+title: Open the workstation
+description: Use KLineChartQuant in the browser at kcq.nebutra.com/app, with your Nebutra account, workspaces, market connections and a managed agent.
+---
+
+If you want to read charts rather than build an app, open the hosted workstation at [kcq.nebutra.com/app](https://kcq.nebutra.com/app). It is the KLineChartQuant chart with a thin Nebutra shell around it: your account, your workspaces, hosted market data and a managed AI agent.
+
+The chart itself is the same open-source library described in these docs. Toolbar, drawing tools, indicators and the agent panel behave exactly as they do when you embed it.
+
+## Sign in
+
+The workstation uses your Nebutra account. Before you sign in, the account menu offers a sign-in link; workspaces, your own provider keys and the managed agent all need a signed-in session. Identity and workspace membership come from the Nebutra auth center, and the workstation creates no separate user store. Account settings live at `/settings/profile` on the same host.
+
+The workstation checks your session again when the window regains focus and once a minute. If you sign out elsewhere or lose access to the active workspace, the page reloads.
+
+## Workspaces
+
+The account menu sits at the start of the chart toolbar. From there you see who you are signed in as and switch between your personal workspace and team workspaces.
+
+Layouts, watchlists, chart preferences and agent sessions are kept per account and per workspace, so switching workspace gives you that workspace's charts. Switching reloads the page to drop cached state from the previous one.
+
+These preferences are stored in your browser. They are not synced to the cloud, and they do not follow you to another device.
+
+## Market data
+
+The workstation hosts two connectors alongside the app:
+
+- **GOTDX:** A shares, indices and extended markets.
+- **TradingView:** historical bars for global instruments.
+
+Both appear in the chart's source list without any setup. BaoStock, FinShare and MT5 exist in the library but are not provided on the hosted workstation.
+
+### Your own provider key
+
+You can connect your own Twelve Data key to chart US equities, ETFs and crypto from your own subscription. Open the data-source panel from the toolbar or the chart settings, then connect, test, replace or disconnect a key.
+
+- **Personal connections** are visible only to you.
+- **Team connections** are usable by members of the workspace; only owners and admins can add or change the key.
+
+The key never reaches the browser after you save it. It is encrypted on the Nebutra gateway, the browser only sees a label and a masked suffix, and chart requests go through the gateway, which calls Twelve Data on your behalf. Requests made with your key count against your Twelve Data plan, and a failure on your connection does not fall back to Nebutra's own data. The [data feeds guide](/docs/guides/data-feeds#host-managed-connections-byok) explains how this is wired.
+
+## The agent
+
+The agent panel opens on the right of the chart. On the workstation it is preconfigured with Nebutra's managed model, so it works as soon as you sign in. No API key is stored in the browser, and your session is the only credential.
+
+Managed agent usage is paid from the active workspace's KCQ wallet. The wallet chip in the account navigation shows the balance, recent calls and a top-up link. If the balance runs out, a notice above the chart offers a top-up.
+
+You can also add your own model provider in the agent settings, as in the open-source chart.
+
+## Workstation or library
+
+| You want to | Use |
+| --- | --- |
+| Read charts, try the agent, or share a workspace with a team | The workstation |
+| Put a chart inside your own product, under your own login | The library: [Installation](/docs/installation) |
+| Control where data comes from, or run your own connectors | The library with your own [providers](/docs/guides/data-feeds) |
+| Change chart behaviour or add indicators | The library, and contributions upstream |
+
+Workspaces, connection management and the wallet belong to the Nebutra product. Everything that happens on the chart belongs to the library, so what you learn on the workstation carries over when you embed it.
+
+## Next
+
+<Cards>
+  <Card title="Your first chart" href="/docs/quickstart" description="Embed the same chart in your own app." />
+  <Card title="Data feeds and BYOK" href="/docs/guides/data-feeds" description="How sources, providers and keys fit together." />
+  <Card title="Agent" href="/docs/agent" description="What the agent can do on the chart." />
+</Cards>

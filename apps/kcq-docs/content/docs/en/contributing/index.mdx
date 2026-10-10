@@ -1,0 +1,107 @@
+---
+title: Contributing
+description: Set up the repository, run the checks CI runs, and know where a change to the code or these docs belongs.
+---
+
+KLineChartQuant is open source under Apache-2.0. Fixes, indicators, connectors and documentation are all welcome. This page gets you from a fresh clone to a pull request that passes CI.
+
+## The repository
+
+Work happens in [TsekaLuk/KLineChartQuant](https://github.com/TsekaLuk/KLineChartQuant), a fork of the original [363045841/KLineChartQuant](https://github.com/363045841/KLineChartQuant). The license is [Apache-2.0](https://github.com/TsekaLuk/KLineChartQuant/blob/main/LICENSE); keep the `NOTICE` file intact when you redistribute.
+
+## Set up
+
+You need Node `^22.19.0` or `>=24.11.0` and pnpm. CI runs pnpm 12 on Node 22 and 24.
+
+<Steps>
+<Step>
+
+### Install
+
+```bash
+git clone https://github.com/TsekaLuk/KLineChartQuant.git
+cd KLineChartQuant
+pnpm install
+```
+
+</Step>
+<Step>
+
+### Start the dev server
+
+```bash
+pnpm dev
+```
+
+This starts the Vite preview of the Vue package. The built-in `mock` source needs no backend, so you can render a chart before any connector is running.
+
+</Step>
+<Step>
+
+### Add real data (optional)
+
+```bash
+pnpm setup:backends    # clone the connectors next to this repository
+pnpm dev -c all        # dev server + gotdx, binance and baostock
+```
+
+See [Connectors](/docs/market-data/connectors) for each source, its port and its requirements.
+
+</Step>
+</Steps>
+
+## Before you open a pull request
+
+Run the same checks CI runs:
+
+```bash
+pnpm lint              # Biome
+pnpm lint:ui           # ESLint + stylelint on packages/vue/src
+pnpm build:packages    # core → agent-runtime → vue
+pnpm type-check        # source and tests
+pnpm test:packages     # vitest in every workspace
+pnpm lint:types        # are-the-types-wrong on publishable packages
+```
+
+`type-check` and `lint:types` resolve workspace packages through their built `dist/*.d.ts`, so build first. If you touched indicators, also run `pnpm indicators:check`.
+
+Required gates (unit tests, type checks, type resolution, the UI lint ratchet, indicator discovery) fail the build. Bundle size budgets, `publint` and the recursive `pnpm -r build` currently only warn. The full matrix, and what blocks each warning from becoming required, is in [CI gates](/docs/contributing/ci-gates).
+
+`lint:ui` is a ratchet. Existing violations are recorded in suppression files and CI fails only when a file gains new ones. After paying down debt, run `pnpm lint:ui:prune` so the baseline shrinks.
+
+The root `README.md` and `README_CN.md` are generated. Edit the fragments in `docs/fragments`, then run `pnpm docs:generate`; `pnpm docs:check` verifies they are in sync.
+
+## Common contributions
+
+### Add an indicator
+
+Indicators are registered with the `@Indicator` decorator and discovered automatically, so there is no registry to edit by hand. The [indicator authoring template](/docs/contributing/indicators) lists the files to change, in dependency order, and the tests each one needs.
+
+### Add a data source
+
+Implement the [HTTP API](/docs/market-data/http-api) in your service and register a provider for it, or write an in-process provider against the [Provider API](/docs/market-data/provider-api). New built-in sources also belong in `dataSourceRegistry` and in the README data-source fragment.
+
+### Record a decision
+
+Decisions that shape the product live in `docs/adr` as `NNNN-kebab-title.md`, one per file and never renumbered. Status moves from `Proposed` to `Accepted`, then to `Superseded by NNNN` or `Deprecated`. Supersede an accepted ADR rather than editing its decision. For examples, see [0005: renderer freeze](/docs/architecture/adr/0005-renderer-freeze) and [0006: settings apply instantly](/docs/architecture/adr/0006-settings-instant-apply).
+
+### Releases
+
+Maintainers release by pushing a version tag. GitHub Actions builds and publishes `@363045841yyt/klinechart-core`, `@363045841yyt/klinechart-agent-runtime` and `@363045841yyt/klinechart` to npm through trusted publishing, with no stored npm token. The steps are in the [release guide](/docs/contributing/releases).
+
+## How these docs are built
+
+This site has two kinds of pages, and a fix goes to a different place for each.
+
+- **Hand-written pages**, like this one, live in the [Nebutra-Sailor](https://github.com/Nebutra/Nebutra-Sailor) repository under `apps/kcq-docs/content/docs/en` and `/zh`. Edit them there.
+- **Generated pages** are built from the chart source at the commit pinned in `apps/kcq/chart-source.json`. That covers the component and package reference, the Agent tool reference, the HTTP API and live-bars contracts, the changelog, and the imported architecture documents, design notes, ADRs and contributor guides. They are regenerated on every docs build and are not committed.
+
+So a correction to a generated page is a correction to the chart source: the document under `docs/`, the JSDoc on a component prop, the tool description on a `@Tool` method. Open the pull request against KLineChartQuant. Once it merges and the pin moves to a commit that includes it, the page updates on the next build.
+
+## Next
+
+<Cards>
+  <Card title="CI gates" href="/docs/contributing/ci-gates" description="Every quality gate and its enforcement state." />
+  <Card title="Indicators" href="/docs/contributing/indicators" description="The authoring template for a new indicator." />
+  <Card title="Architecture" href="/docs/architecture" description="Packages and boundaries before you change them." />
+</Cards>

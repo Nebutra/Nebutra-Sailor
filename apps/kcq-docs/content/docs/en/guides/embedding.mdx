@@ -1,0 +1,172 @@
+---
+title: Embedding in an app
+description: Size the chart, drive it with controlled props, fill its slots, listen to events and call the ChartController from your app.
+---
+
+When the chart lives inside your product, your app decides which instrument is open, which indicators are on and where account controls go. This guide covers the parts of `KlineChart` you use for that. The Vue component is the source of truth; the Web Component exposes the same props and events.
+
+## Size
+
+The chart fills its container and redraws whenever the container resizes. Give the container a height, either fixed or from a flex or grid layout.
+
+```vue
+<template>
+  <main class="layout">
+    <header>…</header>
+    <div class="chart">
+      <KlineChart :symbols="symbols" />
+    </div>
+  </main>
+</template>
+
+<style>
+.layout { display: flex; flex-direction: column; height: 100vh; }
+.chart { flex: 1; min-height: 0; }
+</style>
+```
+
+For `<kline-chart>`, set `display: block` and a height on the element itself.
+
+## Controlled props
+
+Pass these props and the component keeps the chart in sync with them. Leave them out and the chart manages that state on its own, including what it restores from the browser.
+
+| Prop | Type | Behaviour |
+| --- | --- | --- |
+| `symbols` | `SymbolSpec[]` | The first entry is the main instrument, the rest are comparisons. On mount it is applied only when the chart has no restored instrument; later changes always apply. |
+| `indicators` | `{ definitionId, role, enabled, params? }[]` | Replaces all indicator instances. `role` is `'main'` or `'sub'`. Implementations load on demand before the first data arrives. |
+| `customMarkers` | `CustomMarkerEntity[]` | Replaces all custom markers. An empty array clears them. |
+| `customData` | `CustomDataSource` | Inline bars. Takes precedence over `symbols` and bypasses data providers. |
+| `settings` | `Partial<ChartSettings>` | Merged per key; see below. |
+| `timezone` | `string` | Time zone for dates on the chart. Defaults to `'Asia/Shanghai'`. |
+| `isFullscreen` | `boolean` | Controlled fullscreen; see below. |
+
+Changes are watched deeply, so you can mutate a reactive array or replace it.
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { KlineChart } from '@363045841yyt/klinechart'
+
+const symbols = ref([{ symbol: '000001', market: 'CN', source: 'gotdx', period: 'daily' }])
+const indicators = ref([
+  { definitionId: 'ma', role: 'main' as const, enabled: true },
+  { definitionId: 'macd', role: 'sub' as const, enabled: true },
+])
+</script>
+
+<template>
+  <KlineChart :symbols="symbols" :indicators="indicators" />
+</template>
+```
+
+### Settings merge
+
+`settings` does not replace the user's preferences wholesale. Each key resolves in this order:
+
+1. A key you pass in `settings`.
+2. The value the user saved in the browser.
+3. The default.
+
+So `:settings="{ theme: 'dark' }"` pins the theme and leaves grid lines, axis type and every other preference to the user. Settings the user changes in the chart's settings dialog are saved in the browser.
+
+### Fullscreen
+
+Leave `isFullscreen` unbound and the component handles fullscreen itself: the toolbar button calls the browser Fullscreen API on the chart and emits `update:isFullscreen` when it changes.
+
+Bind it and the component only reports. The button emits `toggleFullscreen`, and your app decides what fullscreen means, such as hiding its own sidebar.
+
+```vue
+<KlineChart :is-fullscreen="focused" @toggle-fullscreen="focused = !focused" />
+```
+
+## Slots
+
+| Slot | Scope | Use it for |
+| --- | --- | --- |
+| `toolbar-start` | — | Account or workspace controls at the start of the toolbar |
+| `toolbar-end` | — | App actions at the end of the toolbar |
+| `source-management` | — | Your own UI for connecting market-data accounts. The chart never holds the credentials. |
+| `legend` | `LegendTemplateContext` | Replaces the main-pane legend |
+| `kline-tooltip` | `hoverData`, `hoveredIndex`, `data`, `upColor`, `downColor` | Replaces the candle tooltip |
+| `marker-tooltip` | `marker`, `tooltipStyle` | Replaces the marker tooltip |
+
+Toolbar slots inherit the chart theme and stay outside the scrolling chart controls.
+
+```vue
+<KlineChart>
+  <template #toolbar-start><AccountMenu /></template>
+  <template #kline-tooltip="{ hoverData, upColor, downColor }">
+    <div :style="{ color: hoverData.close >= hoverData.open ? upColor : downColor }">
+      {{ hoverData.close.toFixed(2) }}
+    </div>
+  </template>
+</KlineChart>
+```
+
+Slots are a Vue feature. The React wrapper and the Web Component do not expose them.
+
+## Events and the controller
+
+| Event | Payload |
+| --- | --- |
+| `controllerReady` | `ChartController` |
+| `themeChange` | `'light' \| 'dark'` |
+| `kLineLevelChange` | period, such as `'daily'` |
+| `kLineAdjustChange` | `'qfq' \| 'hfq' \| 'splits' \| 'none'` |
+| `zoomLevelChange` | `level`, `kWidth` |
+| `toggleFullscreen` | — |
+| `update:isFullscreen` | `boolean` |
+
+`controllerReady` fires once the chart is mounted and gives you the `ChartController`, the same object the toolbar and the agent use. Keep it for imperative calls.
+
+```vue
+<script setup lang="ts">
+import { shallowRef } from 'vue'
+import { KlineChart, type ChartController, type KLineData } from '@363045841yyt/klinechart'
+
+const controller = shallowRef<ChartController | null>(null)
+
+function pushBar(bar: KLineData) {
+  controller.value?.updateBars([bar])
+}
+</script>
+
+<template>
+  <KlineChart @controller-ready="controller = $event" />
+</template>
+```
+
+A template ref works too: the component exposes `getController()`, `zoomIn()`, `zoomOut()` and `zoomToLevel()`.
+
+On `<kline-chart>`, events are `CustomEvent`s named in kebab case, and `detail` is the array of arguments:
+
+```ts
+el.addEventListener('controller-ready', (event) => {
+  const [controller] = (event as CustomEvent).detail
+})
+```
+
+## Server rendering
+
+The chart needs a browser. The Vue and React adapters are safe to import on the server and only create the chart after mount, in `onMounted` and `useEffect`.
+
+The Web Component calls `customElements.define` when its module loads, so import it on the client only. The React wrapper already does this with a dynamic `import()` inside an effect. In your own code, do the same:
+
+```ts
+onMounted(async () => {
+  await import('@363045841yyt/klinechart/web-component')
+})
+```
+
+## Accounts and workspaces
+
+Saved preferences, layouts and watchlists are stored in the browser. If your app has accounts or workspaces, call `configureBrowserPersistenceScope` from `@363045841yyt/klinechart-core/persistence-scope` before the chart loads, so each one keeps its own. See [browser persistence scope](/docs/architecture/notes/browser-persistence-scope).
+
+## Next
+
+<Cards>
+  <Card title="Data feeds and BYOK" href="/docs/guides/data-feeds" description="Where symbols get their data." />
+  <Card title="Themes" href="/docs/guides/themes" description="Theme, presets and CSS variables." />
+  <Card title="Vue reference" href="/docs/reference/vue" description="Every prop, event and slot." />
+</Cards>

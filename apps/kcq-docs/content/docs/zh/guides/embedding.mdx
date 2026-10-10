@@ -1,0 +1,172 @@
+---
+title: 嵌入应用
+description: 设置图表尺寸，用受控属性驱动它，填充插槽、监听事件，并在应用中调用 ChartController。
+---
+
+当图表成为你产品的一部分时，打开哪个品种、启用哪些指标、账户控件放在哪里，都应由你的应用决定。本指南介绍 `KlineChart` 中与此相关的部分。以 Vue 组件为准；Web Component 暴露的是同一套属性和事件。
+
+## 尺寸
+
+图表会撑满容器，并在容器尺寸变化时自动重绘。请给容器一个高度，可以是固定值，也可以来自 flex 或 grid 布局。
+
+```vue
+<template>
+  <main class="layout">
+    <header>…</header>
+    <div class="chart">
+      <KlineChart :symbols="symbols" />
+    </div>
+  </main>
+</template>
+
+<style>
+.layout { display: flex; flex-direction: column; height: 100vh; }
+.chart { flex: 1; min-height: 0; }
+</style>
+```
+
+使用 `<kline-chart>` 时，直接在元素上设置 `display: block` 和高度。
+
+## 受控属性
+
+传入下列属性后，组件会让图表与它们保持同步。不传时，图表自行管理对应状态，包括从浏览器中恢复的内容。
+
+| 属性 | 类型 | 行为 |
+| --- | --- | --- |
+| `symbols` | `SymbolSpec[]` | 第一项是主品种，其余为对比品种。挂载时，仅当图表没有恢复出品种才会应用；之后的变化始终生效。 |
+| `indicators` | `{ definitionId, role, enabled, params? }[]` | 整体替换所有指标实例。`role` 为 `'main'` 或 `'sub'`。指标实现会在首批数据到达前按需加载。 |
+| `customMarkers` | `CustomMarkerEntity[]` | 整体替换所有自定义标记，传空数组即清空。 |
+| `customData` | `CustomDataSource` | 内联 K 线。优先级高于 `symbols`，并绕过行情 Provider。 |
+| `settings` | `Partial<ChartSettings>` | 按 key 合并，见下文。 |
+| `timezone` | `string` | 图表上日期使用的时区，默认 `'Asia/Shanghai'`。 |
+| `isFullscreen` | `boolean` | 受控全屏，见下文。 |
+
+这些属性会被深度监听，修改响应式数组或直接替换都可以。
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { KlineChart } from '@363045841yyt/klinechart'
+
+const symbols = ref([{ symbol: '000001', market: 'CN', source: 'gotdx', period: 'daily' }])
+const indicators = ref([
+  { definitionId: 'ma', role: 'main' as const, enabled: true },
+  { definitionId: 'macd', role: 'sub' as const, enabled: true },
+])
+</script>
+
+<template>
+  <KlineChart :symbols="symbols" :indicators="indicators" />
+</template>
+```
+
+### settings 的合并规则
+
+`settings` 不会整体覆盖用户的偏好，而是逐个 key 按以下顺序取值：
+
+1. 你在 `settings` 中传入的 key。
+2. 用户保存在浏览器中的值。
+3. 默认值。
+
+所以 `:settings="{ theme: 'dark' }"` 只固定主题，网格线、坐标轴类型等其他偏好仍由用户决定。用户在图表设置弹窗中做的修改会保存在浏览器里。
+
+### 全屏
+
+不绑定 `isFullscreen` 时，组件自己处理全屏：工具栏按钮会对图表调用浏览器的 Fullscreen API，状态变化时触发 `update:isFullscreen`。
+
+绑定之后，组件只负责通知。按钮触发 `toggleFullscreen`，全屏意味着什么由你的应用决定，比如隐藏应用自己的侧边栏。
+
+```vue
+<KlineChart :is-fullscreen="focused" @toggle-fullscreen="focused = !focused" />
+```
+
+## 插槽
+
+| 插槽 | 作用域 | 用途 |
+| --- | --- | --- |
+| `toolbar-start` | — | 工具栏最前端的账户或工作区控件 |
+| `toolbar-end` | — | 工具栏末端的应用操作 |
+| `source-management` | — | 你自己的行情账户连接界面。图表从不持有凭据。 |
+| `legend` | `LegendTemplateContext` | 替换主图图例 |
+| `kline-tooltip` | `hoverData`、`hoveredIndex`、`data`、`upColor`、`downColor` | 替换 K 线提示框 |
+| `marker-tooltip` | `marker`、`tooltipStyle` | 替换标记提示框 |
+
+工具栏插槽会继承图表主题，并位于可滚动的图表控件之外。
+
+```vue
+<KlineChart>
+  <template #toolbar-start><AccountMenu /></template>
+  <template #kline-tooltip="{ hoverData, upColor, downColor }">
+    <div :style="{ color: hoverData.close >= hoverData.open ? upColor : downColor }">
+      {{ hoverData.close.toFixed(2) }}
+    </div>
+  </template>
+</KlineChart>
+```
+
+插槽是 Vue 的能力，React 封装和 Web Component 都不提供。
+
+## 事件与控制器
+
+| 事件 | 参数 |
+| --- | --- |
+| `controllerReady` | `ChartController` |
+| `themeChange` | `'light' \| 'dark'` |
+| `kLineLevelChange` | 周期，例如 `'daily'` |
+| `kLineAdjustChange` | `'qfq' \| 'hfq' \| 'splits' \| 'none'` |
+| `zoomLevelChange` | `level`、`kWidth` |
+| `toggleFullscreen` | — |
+| `update:isFullscreen` | `boolean` |
+
+图表挂载完成后会触发 `controllerReady`，并传入 `ChartController`，也就是工具栏和 Agent 使用的同一个对象。保存它，用于命令式调用。
+
+```vue
+<script setup lang="ts">
+import { shallowRef } from 'vue'
+import { KlineChart, type ChartController, type KLineData } from '@363045841yyt/klinechart'
+
+const controller = shallowRef<ChartController | null>(null)
+
+function pushBar(bar: KLineData) {
+  controller.value?.updateBars([bar])
+}
+</script>
+
+<template>
+  <KlineChart @controller-ready="controller = $event" />
+</template>
+```
+
+也可以用模板 ref：组件暴露了 `getController()`、`zoomIn()`、`zoomOut()` 和 `zoomToLevel()`。
+
+在 `<kline-chart>` 上，事件是 kebab-case 命名的 `CustomEvent`，`detail` 是参数数组：
+
+```ts
+el.addEventListener('controller-ready', (event) => {
+  const [controller] = (event as CustomEvent).detail
+})
+```
+
+## 服务端渲染
+
+图表需要浏览器环境。Vue 和 React 适配层可以安全地在服务端导入，只会在挂载后（`onMounted`、`useEffect` 中）创建图表。
+
+Web Component 在模块加载时就会调用 `customElements.define`，因此只能在客户端导入。React 封装已经在 effect 中用动态 `import()` 处理了这一点；在你自己的代码里也照此处理：
+
+```ts
+onMounted(async () => {
+  await import('@363045841yyt/klinechart/web-component')
+})
+```
+
+## 账户与工作区
+
+保存的偏好、布局和自选都存放在浏览器中。如果你的应用有账户或工作区，请在图表加载前调用 `@363045841yyt/klinechart-core/persistence-scope` 中的 `configureBrowserPersistenceScope`，让每个账户或工作区各自独立保存。详见[浏览器持久化作用域](/zh/docs/architecture/notes/browser-persistence-scope)。
+
+## 下一步
+
+<Cards>
+  <Card title="行情数据与 BYOK" href="/zh/docs/guides/data-feeds" description="symbols 的数据从哪里来。" />
+  <Card title="主题" href="/zh/docs/guides/themes" description="主题、预设与 CSS 变量。" />
+  <Card title="Vue 参考" href="/zh/docs/reference/vue" description="全部属性、事件与插槽。" />
+</Cards>

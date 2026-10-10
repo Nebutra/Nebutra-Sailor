@@ -1,0 +1,172 @@
+---
+title: Your first chart
+description: Render a K-line chart from your own data in Vue, React or plain HTML, with no data backend.
+---
+
+The fastest way to see a chart is to hand it data directly. In this page you pass a few hundred bars through `customData` and the chart draws them, with no market-data service involved.
+
+## Prepare some bars
+
+The chart reads `KLineData`: a millisecond `timestamp` plus `open`, `high`, `low` and `close`. `volume` is optional. Any array in that shape works; this helper generates a smooth series to start with.
+
+```ts title="bars.ts"
+import type { KLineData } from '@363045841yyt/klinechart-core'
+
+export function makeBars(count: number): KLineData[] {
+  const day = 86_400_000
+  const start = Date.UTC(2026, 0, 1)
+  let close = 100
+  return Array.from({ length: count }, (_, i) => {
+    const open = close
+    close = open + Math.sin(i / 8) * 1.5 + Math.cos(i / 3) * 0.6
+    return {
+      timestamp: start + i * day,
+      open,
+      high: Math.max(open, close) + 0.8,
+      low: Math.min(open, close) - 0.8,
+      close,
+      volume: 10_000 + Math.round(Math.abs(Math.sin(i / 5)) * 8_000),
+    }
+  })
+}
+```
+
+`customData` wraps the bars with a little context. `market` and `data` are required; `symbol` and `period` label the series.
+
+```ts
+const customData = {
+  market: 'CN',
+  symbol: 'DEMO',
+  period: 'daily',
+  data: makeBars(240),
+}
+```
+
+## Render it
+
+The chart fills its parent. Give the parent, or the `<kline-chart>` element itself, an explicit height.
+
+<Tabs groupId="framework" persist items={["Vue", "React", "Web Component"]}>
+<Tab value="Vue">
+
+```vue title="App.vue"
+<script setup lang="ts">
+import { KlineChart, type CustomDataSource } from '@363045841yyt/klinechart'
+import { makeBars } from './bars'
+
+const customData: CustomDataSource = {
+  market: 'CN',
+  symbol: 'DEMO',
+  period: 'daily',
+  data: makeBars(240),
+}
+</script>
+
+<template>
+  <div class="chart-host">
+    <KlineChart :custom-data="customData" />
+  </div>
+</template>
+
+<style>
+.chart-host {
+  height: 480px;
+}
+</style>
+```
+
+Remember to import `@363045841yyt/klinechart/style.css` once in your entry file.
+
+</Tab>
+<Tab value="React">
+
+`KLineChartWC` forwards layout props such as `zoomLevels` as attributes. Objects like `customData` are not forwarded, so set them as a JavaScript property on the element through the ref.
+
+```tsx title="Chart.tsx"
+'use client'
+
+import { useEffect, useRef } from 'react'
+import { KLineChartWC, type KLineChartWCHandle } from '@363045841yyt/klinechart-react'
+import type { CustomDataSource } from '@363045841yyt/klinechart-core'
+import { makeBars } from './bars'
+
+const customData: CustomDataSource = {
+  market: 'CN',
+  symbol: 'DEMO',
+  period: 'daily',
+  data: makeBars(240),
+}
+
+type ChartElement = KLineChartWCHandle & { customData?: CustomDataSource }
+
+export function Chart() {
+  const ref = useRef<KLineChartWCHandle>(null)
+
+  useEffect(() => {
+    const el = ref.current as ChartElement | null
+    if (!el) return
+    // The wrapper registers <kline-chart> lazily on the client.
+    void customElements.whenDefined('kline-chart').then(() => {
+      el.customData = customData // [!code highlight]
+    })
+  }, [])
+
+  return <KLineChartWC ref={ref} style={{ display: 'block', height: 480 }} />
+}
+```
+
+The `'use client'` line is for frameworks with server components, such as the Next.js App Router.
+
+</Tab>
+<Tab value="Web Component">
+
+```html title="index.html"
+<kline-chart id="chart" style="display: block; height: 480px"></kline-chart>
+
+<script type="module">
+  import '@363045841yyt/klinechart/web-component'
+
+  const day = 86_400_000
+  const start = Date.UTC(2026, 0, 1)
+  let close = 100
+  const data = Array.from({ length: 240 }, (_, i) => {
+    const open = close
+    close = open + Math.sin(i / 8) * 1.5
+    return {
+      timestamp: start + i * day,
+      open,
+      high: Math.max(open, close) + 0.8,
+      low: Math.min(open, close) - 0.8,
+      close,
+    }
+  })
+
+  const el = document.getElementById('chart')
+  el.customData = { market: 'CN', symbol: 'DEMO', period: 'daily', data } // [!code highlight]
+</script>
+```
+
+Objects and arrays go in as properties. Only primitive props, such as `zoom-levels` or `timezone`, can be set as attributes.
+
+</Tab>
+</Tabs>
+
+You should see 240 daily candles, the toolbar across the top and the drawing tools on the left. Scroll to zoom and drag to pan.
+
+## Update the data
+
+`customData` is reactive. Replace it with a new object and the chart redraws from the new bars. Inline data is not paged: the chart does not request older bars beyond what you passed.
+
+To stream bars into an existing series instead of replacing it, take the `ChartController` from the `controllerReady` event and call `updateBars` or `appendData`. See [Embedding in an app](/docs/guides/embedding).
+
+## Connect a data source
+
+Inline data is good for a first look and for data you already hold. For search, paging and live updates, register a market-data provider and pass `symbols` instead. [Data feeds and BYOK](/docs/guides/data-feeds) walks through the model, and the [HTTP API](/docs/market-data/http-api) and [live bars](/docs/market-data/live-bars) pages describe the connector contract.
+
+## Next
+
+<Cards>
+  <Card title="Embedding in an app" href="/docs/guides/embedding" description="Controlled props, slots, events and the controller." />
+  <Card title="Data feeds and BYOK" href="/docs/guides/data-feeds" description="Connect built-in sources or your own provider." />
+  <Card title="Themes" href="/docs/guides/themes" description="Light and dark, five presets and design tokens." />
+</Cards>
