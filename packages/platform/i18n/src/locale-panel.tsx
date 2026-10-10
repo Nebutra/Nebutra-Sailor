@@ -107,6 +107,8 @@ export function LocalePanel({
    */
   const [desktopLeft, setDesktopLeft] = useState<number | null>(null);
   const [desktopTop, setDesktopTop] = useState<number | null>(null);
+  /** Set when the panel opens upward: distance from the viewport bottom. */
+  const [desktopBottom, setDesktopBottom] = useState<number | null>(null);
   const [desktopRight, setDesktopRight] = useState<number>(12);
 
   useEffect(() => {
@@ -125,15 +127,23 @@ export function LocalePanel({
     };
   }, [open, isMobile]);
 
-  // Desktop: keep the panel inside the remaining viewport below the trigger.
+  // Desktop: keep the panel inside the viewport, below the trigger or — when
+  // the trigger sits low, as in a page footer — above it.
   useLayoutEffect(() => {
     if (!open || isMobile || !triggerRef.current) return;
     const measure = () => {
       const rect = triggerRef.current?.getBoundingClientRect();
       if (!rect) return;
       const spaceBelow = window.innerHeight - rect.bottom - 16;
-      const cap = Math.max(200, Math.min(560, spaceBelow, window.innerHeight * 0.7));
+      const spaceAbove = rect.top - 16;
+      // Open downward unless that leaves less than a usable list and there is
+      // more room above. Downward-only put the footer switcher's panel below
+      // the fold: only its title row showed, the languages were off-screen.
+      const openUp = spaceBelow < 320 && spaceAbove > spaceBelow;
+      const room = openUp ? spaceAbove : spaceBelow;
+      const cap = Math.max(200, Math.min(560, room, window.innerHeight * 0.7));
       setDesktopMaxHeight(`${Math.floor(cap)}px`);
+      setDesktopBottom(openUp ? Math.round(window.innerHeight - rect.top + 8) : null);
 
       // Which side the panel opens toward is a property of where the trigger
       // sits, not something a caller should have to know. Anchoring it to the
@@ -178,6 +188,7 @@ export function LocalePanel({
     if (!open) {
       setDesktopLeft(null);
       setDesktopTop(null);
+      setDesktopBottom(null);
     }
   }, [open]);
 
@@ -209,7 +220,7 @@ export function LocalePanel({
         // known, else right-aligned to the trigger; hidden only for the frame
         // before the trigger itself is measured.
         ...(desktopLeft === null ? { right: desktopRight } : { left: desktopLeft }),
-        top: desktopTop ?? 0,
+        ...(desktopBottom === null ? { top: desktopTop ?? 0 } : { bottom: desktopBottom }),
         visibility: desktopTop === null ? "hidden" : "visible",
         // A dropdown: the popover tier, so it clears form chrome and page layers.
         zIndex: "var(--layer-popover)",
