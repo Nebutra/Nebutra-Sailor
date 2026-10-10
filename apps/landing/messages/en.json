@@ -4645,19 +4645,104 @@
     },
     "direction": {
       "title": "Direction",
-      "lead": "Each line is the founder's, taken as written from the Journal.",
-      "cn": "方向，L1 到 L8。"
+      "lead": "L1–L4 and L6–L8 are the founder's lines, taken as written from the Journal. L5 is the principle our products follow today.",
+      "cn": "方向，L1 到 L8。",
+      "essayLink": "Why we are building {brandName} →"
+    },
+    "stack": {
+      "label": "The nine layers",
+      "l9": "Execution",
+      "l9Alt": "执行",
+      "l9Line": "What landed, what we are doing now, and what comes later — the timeline below.",
+      "count": "{count, plural, one {# item} other {# items}} on the timeline"
+    },
+    "layers": {
+      "l1": {
+        "line": "We are building a place where creating a company no longer has to be impossibly hard."
+      },
+      "l2": {
+        "line": "The deeper shift is that the threshold for founding a company is being reset.",
+        "also": "{brandName} wants to lower that threshold to the point where an ordinary person with an idea and execution energy can build."
+      },
+      "l3": {
+        "line": "Good architecture means you can go far.",
+        "also": "We are not challenging existing SaaS products. We are not challenging existing startup workflows."
+      },
+      "l4": {
+        "line": "{brandName} is the central nervous system that makes all of those organs act toward the same purpose.",
+        "also": "The orchestration layer says: we make your tools get used more often."
+      },
+      "l5": {
+        "line": "Every product is built on one foundation, Sailor, and stands on its own with real users.",
+        "also": "KCQ's workstation runs on Sailor this way."
+      },
+      "l6": {
+        "line": "They have real domain knowledge, market instinct, and execution energy. But they are not staff-level engineers, ten-year product leaders, or senior growth operators."
+      },
+      "l7": {
+        "line": "{brandName}: where chaos becomes a company.",
+        "also": "We call what {brandName} is building the Generative Company: a company whose media-ready artifacts are coherently generated from one agent and one context."
+      },
+      "l8": {
+        "line": "Nurture the nebula into an ultra future."
+      }
     },
     "execution": {
       "title": "Execution",
       "lead": "L9. Every bet names the layer it answers to; a bet that serves none does not go on the list.",
-      "cn": "执行：现在、接下来、更远。"
+      "cn": "执行：已落地、现在、更远。"
+    },
+    "status": {
+      "done": "Landed",
+      "active": "In progress",
+      "exploring": "Exploring"
+    },
+    "horizons": {
+      "now": {
+        "label": "Now",
+        "is": "In the repository this month."
+      },
+      "later": {
+        "label": "Later",
+        "is": "Where the essays point."
+      }
+    },
+    "serves": "Answers to L{n} · {name}",
+    "pr": "Pull request {n}",
+    "bets": {
+      "studio": {
+        "title": "Your site, from Sailor Studio",
+        "what": "Pick a look in Studio; the site a new project starts as wears it, deployed, and follows when you change your mind."
+      },
+      "template": {
+        "title": "One command to make the template yours",
+        "what": "Name, domain and scope set once; every package, email and page follows."
+      },
+      "wallet": {
+        "title": "A balance per product",
+        "what": "Each product on the platform keeps its own wallet and its own offers, paid by card or, in mainland China, WeChat Pay and Alipay."
+      },
+      "ecosystem": {
+        "title": "From tool to ecosystem",
+        "what": "In the short term, {brandName} is a tool. In the medium term, it is an ecosystem. In the long term, it is a redefinition."
+      },
+      "teams": {
+        "title": "Teams, then companies",
+        "what": "Sleptons' long route: year one is people and creativity, year two is teams, year three is companies."
+      }
     },
     "landed": {
-      "title": "Landed",
-      "lead": "What moved out of Now, with the work it took. The release notes have the rest.",
-      "cn": "已经落地的。",
-      "releaseNotes": "Release notes →"
+      "releaseNotes": "Release notes →",
+      "items": {
+        "open": "The open platform at open.{domain}",
+        "kuanlan": "Kuanlan 观澜 on the platform: pay before a shoot, consent before a face",
+        "router": "Router: one key, every protocol, and a priced ledger",
+        "tokens": "One token source and the House design language",
+        "database": "One database source: row-level security generated, deploys migrate first",
+        "payments": "Payment orders, a card rail, and a balance per product",
+        "site": "{domain} rebuilt around the Journal; Sailor Studio with presets; one UI catalog",
+        "status": "A status page on its own core, with email subscriptions"
+      }
     }
   },
   "aboutPages": {

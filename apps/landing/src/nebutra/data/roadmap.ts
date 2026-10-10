@@ -1,18 +1,27 @@
-// @brand-exempt: every "Nebutra" here is the founder's own word from the
-// Journal, quoted verbatim (see comment below) — narrative content, not a
-// config value a rebrand could substitute. Same pattern as _about-data.ts.
+// @brand-exempt: the essays named below are the founder's Journal posts about
+// Nebutra — narrative content, not a config value a rebrand could substitute.
+// Same pattern as _about-data.ts.
 import { REPO_URL } from "./repo";
 
 /**
  * The roadmap, in the founder's nine layers (Journal: "Founder 顶层设计的九层结构").
  *
- * L1–L8 are the direction and change slowly; every line is the founder's own
- * words from the Journal, never a paraphrase written for this page. L9 is the
- * execution — Now, Next, Later — and each bet names the layer it answers to,
- * because a bet that serves no layer has no reason to be on the list.
+ * L1–L8 are the direction and change slowly. L1–L4 and L6–L8 are the
+ * founder's own words from "Why we are building Nebutra", never a paraphrase
+ * written for this page. L5 (Product) is not a quote: it is the principle
+ * our products follow today, because the essay's product line no longer
+ * holds (founder, #755). L9 is the execution — what landed, Now, Later — and each bet names
+ * the layer it answers to, because a bet that serves no layer has no reason to be
+ * on the list.
  *
  * `LANDED` is what moved out of Now. It links the work itself, not a count of
  * it: the site does not show maintenance cadence (nebutra/DESIGN.md).
+ *
+ * This file holds the shape — which layers, which bets, what each serves,
+ * where it links. The words live in the catalogs under `roadmapPage`: en.json
+ * as written in the English essay; zh-Hans and zh-Hant quote the Chinese
+ * edition (为什么我们要做 Nebutra) where it says the same thing, and translate
+ * plainly where it does not. Every other locale reads the English.
  */
 
 export type LayerId = "l1" | "l2" | "l3" | "l4" | "l5" | "l6" | "l7" | "l8";
@@ -26,204 +35,88 @@ export interface Layer {
    * lists this file in its allowlist on purpose.
    */
   name: { en: string; zh: string };
-  /** The line, verbatim from the essay. */
-  line: string;
-  /** A second line from the same essay, when the first needs it. */
-  also?: string;
+  /** The essay gives this layer a second line (`roadmapPage.layers.<id>.also`). */
+  also?: true;
 }
 
 /** Where L1–L8 are argued in full. */
-export const DIRECTION_ESSAY = {
-  title: "Why we are building Nebutra",
-  href: "/blog/why-we-build-nebutra",
-} as const;
+export const DIRECTION_ESSAY = "/blog/why-we-build-nebutra";
 
 export const NINE_LAYERS_ESSAY = "/blog/founder-top-design-nine-layers";
 
+/**
+ * Two essays publish their Chinese edition under a slug of its own; the rest
+ * serve both languages from one slug. A Chinese reader is sent to the Chinese
+ * edition directly.
+ */
+const ZH_EDITION: Readonly<Record<string, string>> = {
+  [DIRECTION_ESSAY]: "/blog/why-we-build-nebutra-zh",
+  "/blog/sleptons-project": "/blog/sleptons-project-zh",
+};
+
+export const essayHref = (href: string, zh: boolean) => (zh ? (ZH_EDITION[href] ?? href) : href);
+
 export const LAYERS: readonly Layer[] = [
-  {
-    id: "l1",
-    name: { zh: "本质", en: "Purpose" },
-    line: "We are building a place where creating a company no longer has to be impossibly hard.",
-  },
-  {
-    id: "l2",
-    name: { zh: "未来", en: "Future" },
-    line: "The deeper shift is that the threshold for founding a company is being reset.",
-    also: "Nebutra wants to lower that threshold to the point where an ordinary person with an idea and execution energy can build.",
-  },
-  {
-    id: "l3",
-    name: { zh: "原则", en: "Principles" },
-    line: "Good architecture means you can go far.",
-    also: "We are not challenging existing SaaS products. We are not challenging existing startup workflows.",
-  },
-  {
-    id: "l4",
-    name: { zh: "战略", en: "Strategy" },
-    line: "Nebutra is the central nervous system that makes all of those organs act toward the same purpose.",
-    also: "The orchestration layer says: we make your tools get used more often.",
-  },
-  {
-    id: "l5",
-    name: { zh: "产品", en: "Product" },
-    line: "We build Nebutra around Plays, tactical workflows that cover complete sub-processes in the startup lifecycle, with clear inputs and outputs.",
-    also: "Build that foundation once, and each Play becomes a module growing from the same skeleton.",
-  },
-  {
-    id: "l6",
-    name: { zh: "用户", en: "Users" },
-    line: "They have real domain knowledge, market instinct, and execution energy. But they are not staff-level engineers, ten-year product leaders, or senior growth operators.",
-  },
-  {
-    id: "l7",
-    name: { zh: "表达", en: "Narrative" },
-    line: "Nebutra: where chaos becomes a company.",
-    also: "We call what Nebutra is building the Generative Company: a company whose media-ready artifacts are coherently generated from one agent and one context.",
-  },
-  {
-    id: "l8",
-    name: { zh: "身份", en: "Identity" },
-    line: "Nurture the nebula into an ultra future.",
-  },
+  { id: "l1", name: { zh: "本质", en: "Purpose" } },
+  { id: "l2", name: { zh: "未来", en: "Future" }, also: true },
+  { id: "l3", name: { zh: "原则", en: "Principles" }, also: true },
+  { id: "l4", name: { zh: "战略", en: "Strategy" }, also: true },
+  { id: "l5", name: { zh: "产品", en: "Product" }, also: true },
+  { id: "l6", name: { zh: "用户", en: "Users" } },
+  { id: "l7", name: { zh: "表达", en: "Narrative" }, also: true },
+  { id: "l8", name: { zh: "身份", en: "Identity" } },
 ];
 
-export type Horizon = "now" | "next" | "later";
+/**
+ * Now is this month's work; Later is where the essays point. There is no
+ * Next while nothing is designed-but-unstarted: an empty phase would be a
+ * placeholder, not a plan.
+ */
+export type Horizon = "now" | "later";
 
-export const HORIZONS: readonly { id: Horizon; en: string; zh: string; is: string }[] = [
-  { id: "now", en: "Now", zh: "正在做", is: "In the repository this month." },
-  { id: "next", en: "Next", zh: "接下来", is: "Designed, not started." },
-  { id: "later", en: "Later", zh: "更远", is: "Where the essays point." },
-];
+export const HORIZONS: readonly Horizon[] = ["now", "later"];
 
 export interface Bet {
+  /** Key under `roadmapPage.bets` (title, what). */
+  id: string;
   horizon: Horizon;
-  title: string;
-  what: string;
   /** The layer this bet answers to. */
   serves: LayerId;
   href?: string;
 }
 
-export const BETS: readonly Bet[] = [
-  {
-    horizon: "now",
-    title: "Your site, from Sailor Studio",
-    what: "Pick a look in Studio; the site a new project starts as wears it, deployed, and follows when you change your mind.",
-    serves: "l5",
-    href: "/sailor/studio",
-  },
-  {
-    horizon: "now",
-    title: "One command to make the template yours",
-    what: "Name, domain and scope set once; every package, email and page follows.",
-    serves: "l1",
-  },
-  {
-    horizon: "now",
-    title: "A balance per product",
-    what: "Each product on the platform keeps its own wallet and its own offers, paid by card or, in mainland China, WeChat Pay and Alipay.",
-    serves: "l2",
-  },
-  {
-    horizon: "next",
-    title: "The first Play: a 60-second brand film",
-    what: "One sentence describing an idea in; a complete brand system and a launch film out, all from one context.",
-    serves: "l7",
-    href: DIRECTION_ESSAY.href,
-  },
-  {
-    horizon: "next",
-    title: "The OS underneath every Play",
-    what: "A local daemon, a semantic file system, an agent process control protocol, and state you can roll back.",
-    serves: "l3",
-  },
-  {
-    horizon: "next",
-    title: "Sleptons Radar",
-    what: "Find the builders ordinary search misses — the first step of a network where people, ideas and capital meet.",
-    serves: "l4",
-    href: "/blog/sleptons-project",
-  },
-  {
-    horizon: "later",
-    title: "Plays along the whole path",
-    what: "From idea to launchable MVP, from MVP to customer discovery loops, and on toward a company.",
-    serves: "l5",
-  },
-  {
-    horizon: "later",
-    title: "From tool to ecosystem",
-    what: "In the short term, Nebutra is a tool. In the medium term, it is an ecosystem. In the long term, it is a redefinition.",
-    serves: "l2",
-  },
-  {
-    horizon: "later",
-    title: "Teams, then companies",
-    what: "Sleptons' long route: year one is people and creativity, year two is teams, year three is companies.",
-    serves: "l6",
-    href: "/blog/sleptons-project",
-  },
-];
+export const BETS = [
+  { id: "studio", horizon: "now", serves: "l5", href: "/sailor/studio" },
+  { id: "template", horizon: "now", serves: "l1" },
+  { id: "wallet", horizon: "now", serves: "l2" },
+  { id: "ecosystem", horizon: "later", serves: "l2" },
+  { id: "teams", horizon: "later", serves: "l6", href: "/blog/sleptons-project" },
+] as const satisfies readonly Bet[];
+
+export type BetId = (typeof BETS)[number]["id"];
 
 export interface Landed {
+  /** Key under `roadmapPage.landed.items`. */
+  id: string;
   /** YYYY-MM */
   month: string;
-  title: string;
   serves: LayerId;
   /** Pull requests on the Sailor repository. */
   prs: readonly number[];
 }
 
-export const LANDED: readonly Landed[] = [
-  {
-    month: "2026-09",
-    title: "nebutra.com rebuilt around the Journal; Sailor Studio with presets; one UI catalog",
-    serves: "l7",
-    prs: [664],
-  },
-  {
-    month: "2026-09",
-    title: "A status page on its own core, with email subscriptions",
-    serves: "l3",
-    prs: [672, 674],
-  },
-  {
-    month: "2026-09",
-    title: "Payment orders, a card rail, and a balance per product",
-    serves: "l2",
-    prs: [650, 654],
-  },
-  {
-    month: "2026-09",
-    title: "One database source: row-level security generated, deploys migrate first",
-    serves: "l3",
-    prs: [640],
-  },
-  {
-    month: "2026-09",
-    title: "One token source and the House design language",
-    serves: "l8",
-    prs: [629, 634],
-  },
-  {
-    month: "2026-09",
-    title: "Router: one key, every protocol, and a priced ledger",
-    serves: "l4",
-    prs: [545, 552],
-  },
-  {
-    month: "2026-09",
-    title: "Kuanlan 观澜 on the platform: pay before a shoot, consent before a face",
-    serves: "l6",
-    prs: [469, 523, 533],
-  },
-  {
-    month: "2026-08",
-    title: "The open platform at open.nebutra.com",
-    serves: "l4",
-    prs: [450],
-  },
-];
+/** Oldest first: the timeline reads down, from what landed to what comes next. */
+export const LANDED = [
+  { id: "open", month: "2026-08", serves: "l4", prs: [450] },
+  { id: "kuanlan", month: "2026-09", serves: "l6", prs: [469, 523, 533] },
+  { id: "router", month: "2026-09", serves: "l4", prs: [545, 552] },
+  { id: "tokens", month: "2026-09", serves: "l8", prs: [629, 634] },
+  { id: "database", month: "2026-09", serves: "l3", prs: [640] },
+  { id: "payments", month: "2026-09", serves: "l2", prs: [650, 654] },
+  { id: "site", month: "2026-09", serves: "l7", prs: [664] },
+  { id: "status", month: "2026-09", serves: "l3", prs: [672, 674] },
+] as const satisfies readonly Landed[];
+
+export type LandedId = (typeof LANDED)[number]["id"];
 
 export const prUrl = (n: number) => `${REPO_URL}/pull/${n}`;
