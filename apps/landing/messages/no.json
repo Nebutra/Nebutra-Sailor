@@ -2049,7 +2049,11 @@
     "pricing": {
       "plans": {
         "free": {
-          "features": ["Up to 3 members", "1 workspace", "Community support"]
+          "features": [
+            "Up to 3 members",
+            "1 workspace",
+            "Community support"
+          ]
         },
         "pro": {
           "features": [
