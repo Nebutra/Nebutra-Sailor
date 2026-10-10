@@ -1,6 +1,7 @@
 <!--
   Why now (research §4.2, Sequoia's "why now"): three shifts, one line of claim and one sentence
-  each, read left to right like three bars on an axis. The index is the chart's price-label chip.
+  each, read left to right like three bars on an axis. Plain numbered text on a hairline: no chips,
+  no cards (restraint benchmark rules 8, 9).
 -->
 <script setup lang="ts">
 import { computed } from "vue";
@@ -15,15 +16,14 @@ const items = computed(() =>
 );
 </script>
 <template>
-  <section id="why-now" class="band band-raised shifts" aria-labelledby="shifts-heading">
+  <section id="why-now" class="band shifts" aria-labelledby="shifts-heading">
     <div class="container">
       <div class="section-head">
         <h2 id="shifts-heading" class="t-heading">{{ t("investors.shifts.heading") }}</h2>
-        <p class="t-lede">{{ t("investors.shifts.lede") }}</p>
       </div>
       <ol class="shift-list">
         <li v-for="(item, index) in items" :key="index" class="shift">
-          <span class="shift-index t-num" aria-hidden="true">{{ String(index + 1).padStart(2, "0") }}</span>
+          <span class="shift-index t-num" aria-hidden="true">{{ index + 1 }}</span>
           <h3 class="t-title">{{ item.title }}</h3>
           <p class="t-copy">{{ item.body }}</p>
         </li>
@@ -40,23 +40,12 @@ const items = computed(() =>
 .shift {
   display: grid;
   align-content: start;
-  justify-items: start;
-  gap: var(--klc-space-12);
+  gap: var(--klc-space-8);
   padding-top: var(--klc-space-24);
-  border-top: 1px solid var(--kcq-rule-strong);
+  border-top: 1px solid var(--kcq-rule);
 }
-/* The chart's price-label chip; Cobalt deep enough for white 11px text. */
 .shift-index {
-  display: inline-grid;
-  place-items: center;
-  min-width: var(--klc-space-24);
-  height: var(--klc-space-16);
-  padding-inline: var(--klc-space-4);
-  border-radius: var(--klc-radius-xs);
-  background: var(--kcq-accent-strong);
-  color: #fff;
-  font-size: var(--klc-text-11-mono-font-size);
-  line-height: 1;
+  color: var(--kcq-ink-2);
 }
 .shift .t-copy {
   max-width: 24rem;
@@ -64,6 +53,10 @@ const items = computed(() =>
 @media (min-width: 768px) {
   .shift-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .shift-list {
     margin-top: var(--klc-space-64);
   }
 }

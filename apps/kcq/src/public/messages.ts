@@ -3,6 +3,8 @@
  * ADR 0003). The home page uses the approved deck verbatim (.trellis/tasks/10-09-kcq-landing-craft/
  * research-a16z-copy.md §5, Option 1, founder 2026-10-09): product name and category in the H1,
  * a verb or concrete noun in every H2, no eyebrow numerals, no invented numbers or speed claims.
+ * Founder copy sweep (2026-10-10): lines with AI tells (staged journeys, "not X but Y", couplets,
+ * subheads that echo the heading, the product personified) were replaced by plain statements.
  * Trust lines state only what the code does (see home.trust.detail and the PR's BYOK notes).
  * vue-i18n treats `@` and `|` as syntax, so a literal `@` is written `{'@'}`.
  * The company name is never typed here: `{brand}` is filled from @nebutra/brand/metadata.
@@ -72,7 +74,7 @@ const en = {
     },
     agent: {
       heading: "Hand the chart work to your agent",
-      body: "Tell it what you want to see. It adds the indicators, draws the lines and lines up the symbols while you decide what the chart is saying.",
+      body: "Tell it what you want to see, and it adds indicators, draws lines and compares symbols on the chart.",
       chips: [
         "Add MACD and RSI below the price",
         "Draw a support level at the last swing low",
@@ -169,7 +171,7 @@ const en = {
       disclaimer: "Not investment advice.",
     },
     cta: {
-      heading: "Open a chart and ask it something",
+      heading: "Open a chart and ask the agent",
       body: "Free in your browser. No account needed.",
       primary: "Open the workstation",
       github: "View on GitHub",
@@ -196,18 +198,17 @@ const en = {
     },
     shifts: {
       heading: "Agents are moving into financial software",
-      lede: "Three changes put the chart in the middle of that move.",
       items: [
         {
           title: "Agents use software now",
-          body: "Assistants have moved from answering in a chat window to calling tools inside the apps people already work in.",
+          body: "Assistants now call tools inside the apps people already work in.",
         },
         {
           title: "Financial work happens on the chart",
-          body: "Traders and analysts draw levels, stack indicators and compare symbols on a chart before they decide anything.",
+          body: "Traders and analysts draw levels, stack indicators and compare symbols on a chart.",
         },
         {
-          title: "One product ships everywhere",
+          title: "One chart on web, desktop and phone",
           body: "Teams want one chart core they can carry from the browser to the desktop app and the phone.",
         },
       ],
@@ -239,8 +240,7 @@ const en = {
       changelog: "Read the changelog",
     },
     model: {
-      heading: "Free to adopt, paid once a team depends on it",
-      body: "Teams start with the open-source engine. They pay when the chart becomes part of a product they have to support.",
+      heading: "The engine is free and open source. Pro modules and support are paid per team.",
       tiers: [
         { name: "Community", term: "Free · Apache-2.0", body: "The chart engine, the indicators and the agent tools." },
         {
@@ -297,7 +297,7 @@ const en = {
     },
     ask: {
       heading: "We're raising our seed round",
-      body: "Write to us for the deck. It has the round, the plan and the numbers we keep off this page.",
+      body: "Write to us for the deck. It has the round details and the financial plan.",
       investors: {
         title: "Investors",
         body: "Ask for the deck, or for a call with the founding team.",
@@ -306,7 +306,7 @@ const en = {
       },
       partners: {
         title: "Design partners",
-        body: "Bring one real chart page from your product, and we'll build it with you.",
+        body: "We build one real chart page of your product together with your team.",
         cta: "Become a design partner",
         subject: "KLineChartQuant: design partner",
       },
@@ -425,7 +425,7 @@ const zh: PublicMessages = {
     },
     agent: {
       heading: "把画图的活交给智能体",
-      body: "你说想看什么，它来加指标、画线、对齐标的；你只管判断行情。",
+      body: "说出想看的内容，它会在图上加指标、画线、对比标的。",
       chips: ["在价格下方加上 MACD 和 RSI", "在最近的波段低点画一条支撑线", "对比 BTC 和 ETH 今年以来的走势", "把成交量放到单独的窗格"],
       chipsLabel: "示例指令",
       chipCopied: "已复制，粘贴到工作台的智能体里即可。",
@@ -460,7 +460,7 @@ const zh: PublicMessages = {
       promptDone: "已复制",
     },
     rendering: {
-      heading: "数据再密，K\u00a0线也清晰",
+      heading: "密集数据下依然清晰的 K\u00a0线图表引擎",
       body: "K\u00a0线、影线和指标线都按屏幕的实际像素绘制，拖动多年历史也保持流畅。测试方法见基准页。",
       benchmark: "查看基准测试",
       loupe: {
@@ -513,7 +513,7 @@ const zh: PublicMessages = {
       disclaimer: "不构成投资建议。",
     },
     cta: {
-      heading: "打开一张图，问它点什么",
+      heading: "打开一张图，向智能体提问",
       body: "浏览器里免费使用，无需注册。",
       primary: "打开工作台",
       github: "GitHub",
@@ -539,18 +539,17 @@ const zh: PublicMessages = {
     },
     shifts: {
       heading: "智能体正在进入金融软件",
-      lede: "三个变化，让图表站到了这件事的中心。",
       items: [
         {
           title: "智能体开始用软件了",
-          body: "助手不再只在对话框里回答问题，而是直接在人们常用的应用里调用工具。",
+          body: "助手已经在人们常用的应用里直接调用工具。",
         },
         {
           title: "金融工作在图上发生",
-          body: "交易员和分析师先在图上画线、叠指标、对比标的，然后才做判断。",
+          body: "交易员和分析师在图上画线、叠指标、对比标的。",
         },
         {
-          title: "一个产品，处处都要跑",
+          title: "网页、桌面和手机用同一套图表",
           body: "团队希望同一套图表内核，从浏览器带到桌面应用，再带到手机上。",
         },
       ],
@@ -578,8 +577,7 @@ const zh: PublicMessages = {
       changelog: "查看更新日志",
     },
     model: {
-      heading: "免费上手，团队离不开时再付费",
-      body: "团队先用开源引擎做起来，等图表成了要长期维护的产品，再付费。",
+      heading: "引擎开源免费，专业模块和支持按团队收费",
       tiers: [
         { name: "社区版", term: "免费 · Apache-2.0", body: "图表引擎、指标和智能体工具。" },
         { name: "专业版", term: "团队订阅", body: "专业模块、稳定版本、迁移工具和优先支持。" },
@@ -593,8 +591,8 @@ const zh: PublicMessages = {
       items: [
         { title: "券商 App", body: "用券商自己的品牌和数据，做一套交易终端。" },
         { title: "行情终端", body: "给已经有用户的终端，加上 AI 助手。" },
-        { title: "量化与投研工具", body: "把信号和回测，画在分析师本来就在看的图上。" },
-        { title: "金融科技 App", body: "手机上和网页上，是同一张图。" },
+        { title: "量化与投研工具", body: "把信号和回测画在分析师正在看的图上。" },
+        { title: "金融科技 App", body: "手机和网页用同一张图。" },
       ],
     },
     roadmap: {
@@ -620,7 +618,7 @@ const zh: PublicMessages = {
     },
     ask: {
       heading: "种子轮融资进行中",
-      body: "来信索取商业计划书。融资安排、计划和具体数字都在里面，不放在这个页面上。",
+      body: "来信索取商业计划书，融资安排和财务计划都在其中。",
       investors: {
         title: "投资人",
         body: "索取商业计划书，或约创始团队聊一聊。",
@@ -629,7 +627,7 @@ const zh: PublicMessages = {
       },
       partners: {
         title: "设计伙伴",
-        body: "带上你们产品里一个真实的图表页面，我们一起把它做出来。",
+        body: "我们和你的团队一起，做出你们产品里的一个真实图表页面。",
         cta: "成为设计伙伴",
         subject: "KLineChartQuant：设计伙伴",
       },

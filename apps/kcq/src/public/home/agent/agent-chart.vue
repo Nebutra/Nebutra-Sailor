@@ -1,11 +1,12 @@
 <!--
-  The chart the agent is working on, reacting to each completed call (research §3 Agent): the real
+  The chart the agent is working on (drawn after hydration), reacting to each completed call (research §3 Agent): the real
   last 60 daily bars of 600519; after `instruments_query_name` the CSI 300 result appears as a
   chip, after `comparison_create` the real CSI 300 closes draw in, rebased to 600519's first close,
   and after `drawing_create` a Cobalt horizontal line marks the last close with a price-label chip,
   in the chart's own drawing language. Labels are HTML over the SVG so they stay crisp at any size.
 -->
 <script setup lang="ts">
+import { useMounted } from "@vueuse/core";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { usePublicLocale } from "../../state/use-public-locale";
@@ -16,6 +17,9 @@ import { useReplay } from "./replay";
 const { t } = useI18n();
 const { intl } = usePublicLocale();
 const replay = useReplay()!;
+/** The candles draw after hydration: the figure holds its ratio, and the 60 bars stay out of the
+ *  prerendered HTML every visitor downloads before the first paint (the frame is below the fold). */
+const mounted = useMounted();
 
 const COUNT = 60;
 const W = 600;
@@ -67,7 +71,7 @@ const price = computed(() =>
     role="img"
     :aria-label="t('home.agent.chart.label', { done, total: replay.total })"
   >
-    <svg :viewBox="`0 0 ${W} ${H}`" aria-hidden="true">
+    <svg v-if="mounted" :viewBox="`0 0 ${W} ${H}`" aria-hidden="true">
       <line v-for="gy in grid" :key="gy" class="agent-grid" :x1="0" :x2="W" :y1="gy" :y2="gy" />
       <g v-for="(candle, index) in candles" :key="index" :class="candle.up ? 'is-up' : 'is-down'">
         <line class="agent-wick" :x1="candle.x" :x2="candle.x" :y1="candle.high" :y2="candle.low" />
@@ -84,10 +88,10 @@ const price = computed(() =>
         :data-on="done >= 2 || undefined"
       />
     </svg>
-    <span class="agent-chip agent-pane t-meta" :data-on="done >= 1 || undefined">main · 600519</span>
-    <span class="agent-chip agent-search t-meta" :data-on="done >= 3 || undefined">{{ t("home.agent.chart.search") }}</span>
+    <span class="agent-chip agent-pane t-ui" :data-on="done >= 1 || undefined">main · 600519</span>
+    <span class="agent-chip agent-search t-ui" :data-on="done >= 3 || undefined">{{ t("home.agent.chart.search") }}</span>
     <span
-      class="agent-chip agent-comparison-label t-meta"
+      class="agent-chip agent-comparison-label t-ui"
       :data-on="done >= 4 || undefined"
       :style="{ top: pct(y(comparisonEnd), H) }"
     >{{ t("home.agent.chart.comparison") }}</span>
@@ -171,7 +175,7 @@ const price = computed(() =>
 .agent-chip {
   padding: var(--klc-space-2) var(--klc-space-8);
   border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-xs);
+  border-radius: var(--klc-radius-sm);
   background: color-mix(in oklab, var(--klc-color-chart-background) 86%, transparent);
   color: var(--kcq-ink);
   text-transform: none;
@@ -197,10 +201,10 @@ const price = computed(() =>
   right: var(--klc-space-4);
   translate: 0 -50%;
   padding: var(--klc-space-2) var(--klc-space-4);
-  border-radius: var(--klc-radius-xs);
+  border-radius: var(--klc-radius-sm);
   background: var(--kcq-accent-strong);
   color: #fff;
-  font-size: var(--klc-text-11-mono-font-size);
+  font-size: var(--klc-text-12-font-size);
   line-height: var(--klc-text-11-mono-line-height);
 }
 .agent-price[data-on] {

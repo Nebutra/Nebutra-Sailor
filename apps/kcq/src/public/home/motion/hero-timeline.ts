@@ -1,9 +1,9 @@
 /**
  * The hero's one timeline (founder motion spec: "ONE GSAP timeline, no scattered delays"):
  *
- *   eyebrow → H1 (masked reveal) → lede → actions   [only when it can run before first paint]
+ *   H1 (masked reveal) → lede → actions   [only when it can run before first paint]
  *   ── (waits) until the live chart is ready ──
- *   product visual: chart fades in over the light field, field dims (or poster dims) → scroll cue
+ *   product visual: chart fades in over the light field, field dims (or poster dims)
  *
  * The prerendered page shows text, CTA and the poster at first paint with no JS: nothing waits on
  * script at opacity 0. If the browser has already painted the text when hydration runs (the common
@@ -14,14 +14,12 @@
 import { EASE_OUT, loadGsap, MOTION_OK } from "./gsap";
 
 export interface HeroTimelineTargets {
-  eyebrow: Element | null;
   heading: Element | null;
   lede: Element | null;
   actions: Element | null;
   chartHost: Element | null;
   field: Element | null;
   poster: Element | null;
-  cue: Element | null;
 }
 
 export interface HeroTimeline {
@@ -39,9 +37,8 @@ export async function createHeroTimeline(targets: () => HeroTimelineTargets): Pr
     const t = targets();
     const painted = performance.getEntriesByName("first-contentful-paint").length > 0;
     const tl = gsap.timeline({ defaults: { ease: EASE_OUT } });
-    if (!painted && t.eyebrow && t.heading && t.lede && t.actions) {
-      tl.from(t.eyebrow, { y: 16, autoAlpha: 0, duration: 0.36 })
-        .from(t.heading, { clipPath: "inset(0 0 100% 0)", y: 24, duration: 0.6 }, "-=0.24")
+    if (!painted && t.heading && t.lede && t.actions) {
+      tl.from(t.heading, { clipPath: "inset(0 0 100% 0)", y: 24, duration: 0.6 })
         .from(t.lede, { y: 16, autoAlpha: 0, duration: 0.4 }, "-=0.42")
         .from(t.actions, { y: 16, autoAlpha: 0, duration: 0.4 }, "-=0.32");
     }
@@ -49,13 +46,11 @@ export async function createHeroTimeline(targets: () => HeroTimelineTargets): Pr
     // it knows whether the field or the poster is the ground to dim.
     resume = (withField) => {
       resume = undefined;
-      // Resolve again: the cue only exists once the product is ready.
       const now = targets();
       const ground = withField ? now.field : now.poster;
       tl.addLabel("visual")
         .fromTo(now.chartHost, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5 }, "visual")
         .fromTo(ground, { opacity: 1 }, { opacity: withField ? 0.45 : 0.35, duration: 0.5 }, "visual");
-      if (now.cue) tl.fromTo(now.cue, { y: 8, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.3 }, "visual+=0.35");
       tl.play();
     };
     if (pending !== undefined) resume(pending);

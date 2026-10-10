@@ -25,13 +25,19 @@
   descent-override: 27.44%;
   line-gap-override: 0%;
 }
-/* DM Sans, Nebutra's heading face: the same self-hosted variable file nebutra.com serves
-   (@nebutra/fonts generated/dm-sans.woff2), so the family's headings read as one voice. Fallback
-   metrics are the ones next/font computes from that file on nebutra.com. */
+/* DM Sans, Nebutra's heading face: the file nebutra.com serves (@nebutra/fonts
+   generated/dm-sans.woff2), instanced at the one weight KCQ's headings use (500, optical size 40)
+   and the Latin the page sets: 13 KB instead of 69 KB on the critical path. Regenerate with
+     fonttools varLib.instancer dm-sans.woff2 wght=500 opsz=40 -o dm.ttf
+     pyftsubset dm.ttf --unicodes="U+0020-007E,U+00A0-00FF,U+0131,U+0152-0153,U+02C6,U+02DA,
+       U+02DC,U+2013-2014,U+2018-201A,U+201C-201E,U+2022,U+2026,U+2032-2033,U+20AC,U+2122,
+       U+2190-2193,U+2212,U+00D7" --layout-features=kern,liga,calt,ccmp,locl,mark,mkmk,tnum,case
+       --flavor=woff2 --output-file=src/public/brand/kcq-dm-sans-500.woff2
+   Fallback metrics are the ones next/font computes from the full file on nebutra.com. */
 @font-face {
   font-family: "DM Sans";
   src: url("kcq-dm-sans.woff2") format("woff2");
-  font-weight: 100 1000;
+  font-weight: 500;
   font-style: normal;
   /* Preloaded (head.ts); never swapped in late, so the headline never reflows. */
   font-display: optional;
@@ -44,10 +50,17 @@
   descent-override: 29.18%;
   line-gap-override: 0%;
 }
+/* Geist for the public pages: the variable file limited to the weights they set (400–600) and the
+   Latin they use (18 KB instead of 69 KB; Han text falls through to the system face). The
+   workstation keeps the full file. Regenerate with
+     fonttools varLib.instancer Geist-Variable.woff2 wght=400:600 -o geist.ttf
+     pyftsubset geist.ttf --unicodes=<the DM Sans list above, plus U+00B7>
+       --layout-features=kern,liga,calt,ccmp,locl,mark,mkmk,tnum,zero,case,ss01 --flavor=woff2
+       --output-file=src/public/brand/kcq-geist-latin.woff2 */
 @font-face {
   font-family: "Geist";
-  src: url("kcq-geist-font.woff2") format("woff2");
-  font-weight: 100 900;
+  src: url("./brand/kcq-geist-latin.woff2") format("woff2");
+  font-weight: 400 600;
   font-style: normal;
   font-display: swap;
 }
@@ -61,7 +74,11 @@
 }
 @font-face {
   font-family: "Geist Mono";
-  src: url("kcq-geist-mono-font.woff2") format("woff2");
+  /* Latin only (13 KB instead of 49 KB): code, tool names and chart figures. Regenerate with
+     pyftsubset GeistMono-Regular.woff2 --unicodes="U+0020-007E,U+00A0-00FF,U+2013-2014,
+       U+2018-201D,U+2026,U+2190-2193,U+00D7" --layout-features=kern,liga,calt,ccmp,locl,tnum,zero
+       --flavor=woff2 --output-file=src/public/brand/kcq-geist-mono-latin.woff2 */
+  src: url("./brand/kcq-geist-mono-latin.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -79,7 +96,8 @@
 [data-theme] {
   /* Page roles, each one KCQ interface token (Radix-style fixed jobs, CP 1). Declared on every
      [data-theme] element too: custom properties resolve where they are declared, so a band that
-     sets data-theme="dark" (agent, final CTA, footer) re-derives every role from the dark tokens. */
+     sets data-theme="dark" (product frames, final CTA, footer) re-derives every role from the dark
+     tokens. */
   --kcq-page: var(--klc-color-ui-background);
   --kcq-surface: var(--klc-color-ui-surface);
   --kcq-raised: var(--klc-color-ui-card);
@@ -102,9 +120,6 @@
   --kcq-down: var(--klc-color-candle-down-body);
   --kcq-warning: var(--klc-color-ui-warning-strong);
   --kcq-grid: var(--klc-color-grid-major);
-  /* The inverted bands' ground: the dark page pulled toward black, so it stays a distinct band
-     when the whole page is dark too. */
-  --kcq-deep: color-mix(in oklab, var(--klc-color-ui-background) 64%, #000);
 }
 :root {
   /* Headings share Nebutra's heading face; Outfit stays the KLineChartQuant wordmark only (ADR 0001). */
@@ -116,18 +131,31 @@
   /* Basement page grid: 4 columns with 16px gutters, 12 from lg (CP 26). */
   --kcq-gutter: var(--klc-space-16);
   --kcq-column-gap: var(--klc-space-12);
+  /* Half the gap between blocks: 128px between blocks on phones, 160 on tablets, 224 on desktops. */
   --kcq-band-space: var(--klc-space-64);
   --kcq-header-height: var(--klc-space-64);
+  /* A product frame's edge: none on the light page (the dark surface is the frame, a tonal fill),
+     a hairline on the dark page where the two darks would otherwise meet. Declared on :root only,
+     so a frame's own data-theme="dark" inherits the page's value. */
+  --kcq-frame-edge: transparent;
+}
+:root[data-theme="dark"] {
+  --kcq-frame-edge: var(--klc-color-ui-border);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --kcq-frame-edge: var(--klc-color-ui-border);
+  }
 }
 @media (min-width: 768px) {
   :root {
     --kcq-gutter: var(--klc-space-32);
-    --kcq-band-space: var(--klc-space-96);
+    --kcq-band-space: var(--klc-space-80);
   }
 }
 @media (min-width: 1280px) {
   :root {
-    --kcq-band-space: var(--klc-space-160);
+    --kcq-band-space: calc(var(--klc-space-96) + var(--klc-space-16));
   }
 }
 
@@ -272,71 +300,66 @@ a {
   padding-inline: var(--kcq-gutter);
 }
 
-/* Type roles (design §3.3 type scale; display per CP 17/45). Display, statement and section heads
-   take Nebutra's heading face (DM Sans 500, as nebutra.com); Outfit is the wordmark only. */
+/* Type roles: six sizes on the whole page (restraint benchmark §4 Global): 56 display · 40 section
+   heading · 20 lede and sub-heading · 16 body · 14 captions and controls · 12 legal and product UI.
+   Han text: 48 · 36 · 18. Phones: 36 · 28 (Han 30 · 26). Headings are Nebutra's heading face
+   (DM Sans 500); Outfit is the KLineChartQuant wordmark only. One H2 size everywhere; the final CTA
+   reuses the display size and never exceeds the hero. */
 .t-display {
   font-family: var(--kcq-font-heading);
   font-weight: var(--kcq-font-heading-weight);
-  font-size: var(--klc-text-48-font-size);
-  line-height: var(--klc-text-48-line-height);
-  letter-spacing: var(--klc-text-48-letter-spacing);
-}
-@media (min-width: 1024px) {
-  .t-display {
-    font-size: var(--klc-text-72-font-size);
-    line-height: var(--klc-text-72-line-height);
-    letter-spacing: var(--klc-text-72-letter-spacing);
-  }
-}
-/* A one-line statement with nothing under it resets the rhythm (research A3). */
-.t-statement {
-  font-family: var(--kcq-font-heading);
-  font-weight: var(--kcq-font-heading-weight);
-  font-size: var(--klc-text-48-font-size);
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-@media (min-width: 1024px) {
-  .t-statement {
-    font-size: calc(var(--klc-text-72-font-size) * 1.34);
-    line-height: 0.92;
-  }
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
 }
 .t-heading {
   font-family: var(--kcq-font-heading);
   font-weight: var(--kcq-font-heading-weight);
-  font-size: var(--klc-text-32-font-size);
-  line-height: var(--klc-text-32-line-height);
-  letter-spacing: -0.03em;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
+  .t-display {
+    font-size: 56px;
+    line-height: 1.05;
+  }
   .t-heading {
-    font-size: var(--klc-text-48-font-size);
-    line-height: var(--klc-text-48-line-height);
-    letter-spacing: -0.04em;
+    font-size: 40px;
+    line-height: 1.1;
   }
 }
 .t-title {
-  font-family: var(--kcq-font-ui);
-  font-weight: var(--klc-text-20-font-weight);
+  font-family: var(--kcq-font-heading);
+  font-weight: var(--kcq-font-heading-weight);
   font-size: var(--klc-text-20-font-size);
-  line-height: var(--klc-text-20-line-height);
-  letter-spacing: var(--klc-text-20-letter-spacing);
+  line-height: 28px;
+  letter-spacing: -0.01em;
 }
-/* Han glyphs need air the Latin display tracking takes away; keep phrases whole. (`:root` for the
-   same order-independence as below.) */
-:root:lang(zh-Hans) :is(.t-display, .t-heading, .t-statement) {
+/* Han glyphs need air the Latin display tracking takes away; keep phrases whole. `:root` lifts
+   specificity above the sections' scoped rules, so the result never depends on stylesheet order. */
+:root:lang(zh-Hans) :is(.t-display, .t-heading, .t-title) {
   letter-spacing: 0;
-  line-height: 1.15;
+  line-height: 1.25;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
-/* Han display on phones: sized so a nine-character phrase fits one line without breaking inside it.
-   `:root` lifts specificity above the sections' scoped sizes, so the result never depends on
-   stylesheet order (prerender inlines styles; the client re-links them after hydration). */
-@media (max-width: 767px) {
-  :root:lang(zh-Hans) :is(.t-display, .t-statement) {
-    font-size: min(var(--klc-text-48-font-size), 9.2vw);
+:root:lang(zh-Hans) .t-display {
+  font-size: 30px;
+}
+:root:lang(zh-Hans) .t-heading {
+  font-size: 26px;
+}
+:root:lang(zh-Hans) .t-title {
+  font-size: 18px;
+}
+@media (min-width: 768px) {
+  :root:lang(zh-Hans) .t-display {
+    font-size: 48px;
+    line-height: 1.2;
+  }
+  :root:lang(zh-Hans) .t-heading {
+    font-size: 36px;
   }
 }
 .t-lede {
@@ -347,9 +370,14 @@ a {
 }
 @media (min-width: 768px) {
   .t-lede {
-    font-size: var(--klc-text-copy-20-font-size);
-    line-height: var(--klc-text-copy-20-line-height);
-    letter-spacing: var(--klc-text-copy-20-letter-spacing);
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -0.012em;
+  }
+  :root:lang(zh-Hans) .t-lede {
+    font-size: 18px;
+    line-height: 30px;
+    letter-spacing: 0;
   }
 }
 .t-copy {
@@ -364,79 +392,70 @@ a {
   letter-spacing: var(--klc-text-label-14-letter-spacing);
   font-weight: var(--klc-text-label-14-font-weight);
 }
-/* Uppercase mono micro-labels as the page's voice (CP 23). */
+/* A caption: 14px sans in the secondary colour. No uppercase mono labels on the marketing layer;
+   mono is for product UI and code only (restraint rule 8). */
 .t-meta {
-  font-family: var(--kcq-font-mono);
+  font-size: var(--klc-text-copy-14-font-size);
+  line-height: var(--klc-text-copy-14-line-height);
+  color: var(--kcq-ink-2);
+}
+/* Product UI text inside chart and console frames: 12px, the only place it appears besides legal. */
+.t-ui {
   font-size: var(--klc-text-12-font-size);
   line-height: var(--klc-text-12-line-height);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--kcq-ink-2);
 }
 .t-num {
-  font-family: var(--kcq-font-mono);
-  font-synthesis-weight: none;
   font-variant-numeric: tabular-nums slashed-zero;
 }
-/* Units read after the value (research C2): ×, Hz, ms, %, ¥. */
-.unit {
-  color: var(--kcq-ink-2);
-  font-size: 0.62em;
-  letter-spacing: 0;
-  margin-left: 0.12em;
+.t-code {
+  font-family: var(--kcq-font-mono);
+  font-synthesis-weight: none;
 }
 
-/* Bands (research A4): full-bleed, abutting, and spaced by their own padding, so the band edge is
-   the divider. `band-inverted` re-themes its subtree dark (the token aliases re-resolve there). */
+/* Sections (restraint rules 4, 5, 11): every block sits on the page surface and keeps one grammar,
+   a heading, a sub of at most two sentences on a 640px measure, an optional text link, then one
+   artifact. The padding is the rhythm: two paddings make the gap between blocks, 128 / 160 / 224px. */
 .band {
   position: relative;
   padding-block: var(--kcq-band-space);
-  background: var(--kcq-band, var(--kcq-page));
+  background: var(--kcq-page);
   color: var(--kcq-ink);
 }
-.band-raised {
-  --kcq-band: var(--kcq-raised);
-}
-.band-inverted {
-  --kcq-band: var(--kcq-deep);
-}
-.band + .band {
-  /* Two bands of the same ground meet on a hairline instead of a gap. */
-  box-shadow: inset 0 1px 0 var(--kcq-rule);
-}
-.band-raised + .band,
-.band + .band-raised,
-.band-inverted + .band,
-.band + .band-inverted {
-  box-shadow: none;
-}
-
-/* Section head: index chip styled as the chart's price label, then the label (research §3 rhythm
-   map, sections numbered from the hero as 01). */
 .section-head {
   display: grid;
   align-content: start;
   gap: var(--klc-space-16);
-  max-width: 44rem;
+  max-width: 40rem;
 }
-.eyebrow {
+.section-link {
   display: inline-flex;
   align-items: center;
+  justify-self: start;
   gap: var(--klc-space-8);
-  margin-bottom: var(--klc-space-8);
+  min-height: var(--klc-density-comfortable);
+  font-size: var(--klc-text-label-14-font-size);
+  font-weight: var(--klc-text-label-14-font-weight);
+  text-decoration: none;
 }
-.eyebrow-index {
-  display: inline-grid;
-  place-items: center;
-  min-width: var(--klc-space-24);
-  height: var(--klc-space-16);
-  padding-inline: var(--klc-space-4);
-  border-radius: var(--klc-radius-xs);
-  background: var(--kcq-accent);
-  color: #fff;
-  font-size: var(--klc-text-11-mono-font-size);
-  line-height: 1;
-  letter-spacing: 0;
+.section-artifact {
+  margin-top: var(--klc-space-48);
+}
+@media (min-width: 1024px) {
+  .section-artifact {
+    margin-top: var(--klc-space-64);
+  }
+}
+/* A product frame: one fixed chart surface in both page themes (the product reads as one object,
+   contrast without page bands), radius 12, no shadow. Tonal fill or hairline, never both. */
+.product-frame {
+  min-width: 0;
+  margin-inline: 0;
+  margin-bottom: 0;
+  border: 1px solid var(--kcq-frame-edge);
+  border-radius: var(--klc-radius-lg);
+  overflow: hidden;
+  background: var(--klc-color-chart-background);
+  color: var(--kcq-ink);
 }
 
 /* Crop-mark corners instead of a box (research A6): 8px brackets at each corner, no extra DOM. */
@@ -478,7 +497,7 @@ kbd {
   padding: 0 var(--klc-space-4);
   border: 1px solid var(--kcq-rule);
   border-bottom-width: 2px;
-  border-radius: var(--klc-radius-xs);
+  border-radius: var(--klc-radius-sm);
   font-size: var(--klc-text-12-font-size);
   line-height: 1.4;
   color: var(--kcq-ink);

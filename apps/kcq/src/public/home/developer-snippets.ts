@@ -1,6 +1,7 @@
 /**
- * Integration snippets for the developers section. Each one uses only API the pinned chart source
- * exports: the Vue example is the README's, React wraps the `<kline-chart>` element
+ * Integration snippets for the developers section, each the shortest working mount (restraint
+ * benchmark: code stays a small share of the page). Each one uses only API the pinned chart source
+ * exports: the Vue example is the README's, reduced to its data prop; React wraps the `<kline-chart>` element
  * (packages/react/src/KLineChartWC.tsx), and the agent example mirrors how the Vue workbench adapts
  * the registry (packages/vue/src/features/agent/browser-agent/tools/impl/browser-tool-registry.ts).
  * developer-snippets.test.ts checks every imported name against the source. Code is not translated.
@@ -10,18 +11,13 @@ export const SNIPPETS = [
     id: "vue",
     label: "Vue",
     file: "Chart.vue",
-    code: `<script setup lang="ts">
-import { ref } from 'vue'
-import { KlineChart, type CustomDataSource } from '@363045841yyt/klinechart'
-import '@363045841yyt/klinechart/style.css'
+    code: `<script setup>
+import { KlineChart } from '@363045841yyt/klinechart'
 import bars from './bars.json'
-
-const theme = ref<'light' | 'dark'>('dark')
-const data = ref<CustomDataSource>(bars as CustomDataSource)
 </script>
 
 <template>
-  <KlineChart v-model:theme="theme" :custom-data="data" />
+  <KlineChart :custom-data="bars" />
 </template>`,
   },
   {
@@ -30,26 +26,17 @@ const data = ref<CustomDataSource>(bars as CustomDataSource)
     file: "Chart.tsx",
     code: `import { KLineChartWC } from '@363045841yyt/klinechart-react'
 
-export function Chart() {
-  return (
-    <KLineChartWC
-      style={{ height: 480 }}
-      initialZoomLevel={3}
-      onZoomLevelChange={({ level }) => console.log('zoom', level)}
-    />
-  )
-}`,
+export const Chart = () => <KLineChartWC style={{ height: 480 }} />`,
   },
   {
     id: "web-component",
     label: "Web Component",
     file: "index.html",
     code: `<script type="module">
-  // Registers <kline-chart> (bundled from the Vue package).
   import '@363045841yyt/klinechart/web-component'
 </script>
 
-<kline-chart initial-zoom-level="3" style="display:block;height:480px"></kline-chart>`,
+<kline-chart style="display:block;height:480px"></kline-chart>`,
   },
   {
     id: "agent",

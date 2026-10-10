@@ -84,11 +84,12 @@ function onKey(event: KeyboardEvent) {
   gap: var(--klc-space-2);
   padding: var(--klc-space-2);
   border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-md);
+  border-radius: var(--klc-radius-full);
 }
 .theme-option {
   width: var(--klc-density-default);
   height: var(--klc-density-default);
+  border-radius: var(--klc-radius-full);
 }
 .theme-option[aria-checked="true"] {
   color: var(--kcq-ink);

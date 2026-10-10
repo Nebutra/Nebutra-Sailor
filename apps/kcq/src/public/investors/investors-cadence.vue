@@ -3,7 +3,8 @@
   release of the open-source engine on one date axis, from the same build-time GitHub snapshot the
   /home community band reads (home/community/activity.json). The first release of each minor
   version stands taller, like a session's opening bar; the latest is Cobalt. Labels are HTML over
-  the SVG so they keep their size on phones.
+  the SVG so they keep their size on phones. It is a chart of our own releases, not the product, so
+  it stands on the page without a frame (restraint benchmark rule 9).
 -->
 <script setup lang="ts">
 import { computed } from "vue";
@@ -58,19 +59,17 @@ const summary = computed(() =>
 );
 </script>
 <template>
-  <section id="releases" class="band band-raised cadence" aria-labelledby="cadence-heading">
+  <section id="releases" class="band cadence" aria-labelledby="cadence-heading">
     <div class="container">
-      <div class="cadence-head">
-        <div class="section-head">
-          <h2 id="cadence-heading" class="t-heading">{{ t("investors.cadence.heading") }}</h2>
-          <p class="t-lede">{{ t("investors.cadence.body") }}</p>
-        </div>
-        <a class="button button-quiet" :href="LINKS.releases" rel="noopener">
+      <div class="section-head">
+        <h2 id="cadence-heading" class="t-heading">{{ t("investors.cadence.heading") }}</h2>
+        <p class="t-lede">{{ t("investors.cadence.body") }}</p>
+        <a class="section-link" :href="LINKS.releases" rel="noopener">
           {{ t("investors.cadence.changelog") }}
           <KcqIcon name="external" :size="14" />
         </a>
       </div>
-      <figure class="timeline">
+      <figure class="timeline section-artifact">
         <figcaption class="timeline-caption">
           <span class="t-label t-num">{{ summary }}</span>
           <span v-if="latest" class="t-meta timeline-latest" translate="no">
@@ -116,20 +115,9 @@ const summary = computed(() =>
   </section>
 </template>
 <style scoped>
-.cadence-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--klc-space-24);
-  margin-bottom: var(--klc-space-48);
-}
 .timeline {
-  margin: 0;
-  padding: var(--klc-space-24);
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-lg);
-  background: var(--kcq-page);
+  margin-inline: 0;
+  margin-bottom: 0;
 }
 .timeline-caption {
   display: flex;
@@ -204,9 +192,6 @@ const summary = computed(() =>
 }
 /* Phones: version labels would collide; the months and the latest tag carry the axis. */
 @media (max-width: 767px) {
-  .timeline {
-    padding: var(--klc-space-16);
-  }
   .timeline-plot {
     height: 6rem;
   }

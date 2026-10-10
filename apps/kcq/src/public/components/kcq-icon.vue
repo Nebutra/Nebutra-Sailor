@@ -30,6 +30,7 @@ const PATHS: Record<IconName, readonly Part[]> = {
     },
   ],
   dark: [{ d: "M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5Z" }],
+  star: [{ d: "M8 2.25l1.75 3.6 3.95.55-2.87 2.77.7 3.93L8 11.25 4.47 13.1l.7-3.93L2.3 6.4l3.95-.55Z" }],
 };
 
 defineProps<{ name: IconName; size?: number }>();
@@ -48,7 +49,8 @@ export type IconName =
   | "prompt"
   | "system"
   | "light"
-  | "dark";
+  | "dark"
+  | "star";
 </script>
 <template>
   <svg

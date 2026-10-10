@@ -121,7 +121,8 @@ export default ({ isSsrBuild }) => ({
       },
       {
         find: "kcq-dm-sans.woff2",
-        replacement: resolve(root, "../../packages/design/fonts/generated/dm-sans.woff2"),
+        // Nebutra's DM Sans, instanced at the one heading weight (see the @font-face note in public.css).
+        replacement: resolve(root, "src/public/brand/kcq-dm-sans-500.woff2"),
       },
       {
         find: "kcq-outfit-600.woff2",
