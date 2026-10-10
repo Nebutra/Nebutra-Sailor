@@ -7,7 +7,9 @@
   - With WebGPU and motion allowed, the light field (field/renderer.ts, lazy) unfolds the glyph
     into the live candles, then the crisp chart fades in over the dimmed field. The visitor's
     crosshair is one more light. The status chip says why the field is on or off and is the pause
-    control (WCAG 2.2.2). Older history fades into the page (research B3: the past dissolves).
+    control (WCAG 2.2.2), a 24px icon in the frame's corner. Older history fades into the frame.
+  - The frame keeps one fixed dark chart surface in both page themes (restraint benchmark rule 4,
+    the Vela technique): the product reads as one object, and the light reads on its own ground.
 -->
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, useId, watch } from "vue";
@@ -15,7 +17,6 @@ import { useI18n } from "vue-i18n";
 import KcqIcon from "../../components/kcq-icon.vue";
 import { useMarketFeed } from "../../state/use-market-feed";
 import { usePublicLocale } from "../../state/use-public-locale";
-import { useTheme } from "../../state/use-theme";
 import type { HeroField } from "../field/renderer";
 import { type Bar, tradingDate } from "./bars";
 import cachedSeries from "./cached-bars.json";
@@ -23,13 +24,12 @@ import HeroTimeAxis from "./hero-time-axis.vue";
 import type { ChartGeometry, HeroChart } from "./live-chart";
 import posterDark800 from "./poster/poster-dark-800.webp";
 import posterDark1600 from "./poster/poster-dark-1600.webp";
-import posterLight800 from "./poster/poster-light-800.webp";
-import posterLight1600 from "./poster/poster-light-1600.webp";
 
 const emit = defineEmits<{ shown: [withField: boolean] }>();
 const { t } = useI18n();
 const { locale, intl } = usePublicLocale();
-const { mode, hydrated } = useTheme();
+/** The frame is always the dark chart surface, whatever the page theme. */
+const MODE = "dark" as const;
 const feed = useMarketFeed();
 const summaryId = useId();
 
@@ -46,13 +46,8 @@ const chartHost = ref<HTMLDivElement>();
 const chartMount = ref<HTMLDivElement>();
 const fieldCanvas = ref<HTMLCanvasElement>();
 
-const posters = {
-  dark: `${posterDark800} 800w, ${posterDark1600} 1600w`,
-  light: `${posterLight800} 800w, ${posterLight1600} 1600w`,
-};
-const posterSizes = "(min-width: 1344px) 760px, (min-width: 1280px) 58vw, calc(100vw - 32px)";
-/** After hydration the explicit theme wins over the system one the <picture> media follows. */
-const posterSrcset = computed(() => posters[mode.value]);
+const posterSrcset = `${posterDark800} 800w, ${posterDark1600} 1600w`;
+const posterSizes = "(min-width: 1344px) 1280px, calc(100vw - 32px)";
 
 const price = (value: number) =>
   new Intl.NumberFormat(intl.value, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
@@ -84,7 +79,7 @@ async function readLook() {
       accent: hexToLinear(token("--klc-brand-accent")),
     },
     ground: hexToLinear(token("--klc-color-chart-background")),
-    mode: mode.value,
+    mode: MODE,
   };
 }
 
@@ -114,7 +109,7 @@ async function start() {
         .catch(() => null)
     : Promise.resolve(null);
   // The cached bars are real; the chart mounts on them at once and the live bars replace them.
-  chart = await liveChart.mountHeroChart(chartMount.value, { bars: feed.bars.value, mode: mode.value });
+  chart = await liveChart.mountHeroChart(chartMount.value, { bars: feed.bars.value, mode: MODE });
   cleanups.push(chart.onGeometry((next) => (geometry.value = next)));
   geometry.value = chart.geometry();
   // Let a fast feed land before the unfold, so the light opens onto today's bars.
@@ -135,13 +130,8 @@ async function start() {
   emit("shown", fieldState.value === "on");
 }
 
-// Every later feed update reaches the engine; theme flips reach the engine and the field (both read
-// tokens, not CSS).
+// Every later feed update reaches the engine. Page theme flips do not: the frame stays dark.
 watch(feed.bars, (bars) => chart?.setBars(bars));
-watch(mode, async () => {
-  chart?.setMode(mode.value);
-  if (field) field.setLook(await readLook());
-});
 
 function onPointer(event: PointerEvent) {
   if (!chartHost.value) return;
@@ -181,7 +171,8 @@ onBeforeUnmount(() => {
 <template>
   <figure
     ref="panel"
-    class="hero-chart"
+    class="hero-chart product-frame"
+    data-theme="dark"
     :data-status="feed.status.value"
     :data-field="fieldState === 'on' ? 'on' : 'off'"
     :data-chart="chartShown ? 'shown' : 'pending'"
@@ -193,20 +184,31 @@ onBeforeUnmount(() => {
       <p class="hero-chart-instrument">
         <span class="t-num">600519</span>
         <span>{{ t("home.chart.name") }}</span>
-        <span class="t-meta">{{ t("home.chart.period") }} · GOTDX</span>
+        <span class="hero-chart-period">{{ t("home.chart.period") }} · GOTDX</span>
       </p>
-      <p class="hero-status t-meta" :data-status="statusKey" aria-live="polite">
+      <p class="hero-status" :data-status="statusKey" aria-live="polite">
         <span class="status-dot" aria-hidden="true" />
         {{ t(`home.chart.${statusKey}`) }}
+        <span class="visually-hidden">{{ statusNote }}</span>
       </p>
+      <button
+        v-if="fieldState === 'on'"
+        type="button"
+        class="hero-pause"
+        :aria-pressed="paused"
+        :aria-label="`${paused ? t('home.chart.play') : t('home.chart.pause')} · ${t('home.chart.field.on')}`"
+        :title="paused ? t('home.chart.play') : t('home.chart.pause')"
+        @click="togglePause"
+      >
+        <KcqIcon :name="paused ? 'play' : 'pause'" :size="14" />
+      </button>
     </header>
     <div class="hero-chart-body">
       <picture class="hero-poster">
-        <source v-if="!hydrated" media="(prefers-color-scheme: dark)" :srcset="posters.dark" :sizes="posterSizes" />
         <img
-          :srcset="hydrated ? posterSrcset : posters.light"
+          :srcset="posterSrcset"
           :sizes="posterSizes"
-          :src="posterLight1600"
+          :src="posterDark1600"
           alt=""
           width="1600"
           height="700"
@@ -233,86 +235,80 @@ onBeforeUnmount(() => {
           <span><abbr :title="t('home.chart.legend.close')">{{ t("home.chart.legend.c") }}</abbr> {{ price(hover.close) }}</span>
           <span><abbr :title="t('home.chart.legend.volume')">{{ t("home.chart.legend.v") }}</abbr> {{ compact(hover.volume) }}</span>
         </p>
-        <p v-else-if="chartShown" class="hero-hint t-meta">{{ t("home.chart.hint") }}</p>
+        <p v-else-if="chartShown" class="hero-hint">{{ t("home.chart.hint") }}</p>
       </div>
     </div>
-    <figcaption class="hero-chart-foot">
-      <span class="t-copy hero-note">{{ statusNote }}</span>
-      <span class="hero-field-chip t-meta" :data-field="fieldState">
-        <span class="hero-field-dot" aria-hidden="true" />
-        {{ t(`home.chart.field.${fieldState}`) }}
-        <button
-          v-if="fieldState === 'on'"
-          type="button"
-          class="hero-pause"
-          :aria-pressed="paused"
-          :aria-label="paused ? t('home.chart.play') : t('home.chart.pause')"
-          :title="paused ? t('home.chart.play') : t('home.chart.pause')"
-          @click="togglePause"
-        >
-          <KcqIcon :name="paused ? 'play' : 'pause'" :size="14" />
-        </button>
-      </span>
-    </figcaption>
   </figure>
 </template>
 <style scoped>
-.hero-chart {
-  min-width: 0;
-  margin: 0;
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-md);
-  overflow: hidden;
-  background: var(--klc-color-chart-background);
-  box-shadow: var(--klc-elevation-2);
-}
-.hero-chart-bar,
-.hero-chart-foot {
+.hero-chart-bar {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--klc-space-8) var(--klc-space-16);
-  padding: var(--klc-space-12) var(--klc-space-16);
+  gap: var(--klc-space-16);
+  min-height: var(--klc-space-48);
+  padding: var(--klc-space-8) var(--klc-space-12) var(--klc-space-8) var(--klc-space-16);
+  border-bottom: 1px solid var(--kcq-rule);
 }
 /* One line always: the status word changes length ("Connecting…" → "Live"), the bar never
    re-wraps (that re-wrap was a measured layout shift). The instrument name truncates instead. */
-.hero-chart-bar {
-  flex-wrap: nowrap;
-  border-bottom: 1px solid var(--kcq-rule);
-}
-.hero-chart-bar .hero-chart-instrument {
-  flex-wrap: nowrap;
+.hero-chart-instrument {
+  display: flex;
+  align-items: baseline;
+  gap: var(--klc-space-12);
   min-width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-.hero-chart-bar .hero-status {
-  flex: none;
-  white-space: nowrap;
-}
-.hero-chart-foot {
-  border-top: 1px solid var(--kcq-rule);
-}
-.hero-chart-instrument,
-.hero-chart-quote {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--klc-space-12);
   font-size: var(--klc-text-label-14-font-size);
   line-height: var(--klc-text-label-14-line-height);
   font-weight: var(--klc-text-label-14-font-weight);
 }
+.hero-chart-period,
+.hero-status,
+.hero-hint {
+  font-size: var(--klc-text-12-font-size);
+  line-height: var(--klc-text-12-line-height);
+  font-weight: 400;
+  color: var(--kcq-ink-2);
+}
 .hero-status {
   display: inline-flex;
+  flex: none;
   align-items: center;
   gap: var(--klc-space-8);
+  margin-left: auto;
+  white-space: nowrap;
+}
+/* The light's pause control (WCAG 2.2.2): a 24px icon in the frame's corner. */
+.hero-pause {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--klc-space-24);
+  height: var(--klc-space-24);
+  padding: 0;
+  border: 0;
+  border-radius: var(--klc-radius-sm);
+  background: transparent;
+  color: var(--kcq-ink-2);
+  cursor: pointer;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-pause:hover {
+    color: var(--kcq-ink);
+    background: var(--kcq-hover);
+  }
+}
+@media (pointer: coarse) {
+  .hero-pause {
+    width: var(--klc-density-hit-target-touch);
+    height: var(--klc-density-hit-target-touch);
+    margin-block: calc(-1 * var(--klc-space-8));
+  }
 }
 .hero-chart-body {
   position: relative;
-  height: clamp(20rem, 40vw, 34rem);
+  height: clamp(20rem, 38vw, 32rem);
   overflow: hidden;
 }
 .hero-poster,
@@ -332,7 +328,7 @@ onBeforeUnmount(() => {
 .hero-field {
   opacity: 0;
 }
-/* Older history dissolves into the page; the latest bars stay sharp (research B3). */
+/* Older history dissolves into the frame; the latest bars stay sharp (research B3). */
 .hero-field,
 .hero-chart-mount :deep(.hero-engine-scroller) {
   mask-image: linear-gradient(to right, transparent, #000 16%);
@@ -381,7 +377,7 @@ onBeforeUnmount(() => {
   max-width: calc(100% - var(--klc-space-64) - var(--klc-space-24));
   margin: 0;
   padding: var(--klc-space-4) var(--klc-space-8);
-  border-radius: var(--klc-radius-xs);
+  border-radius: var(--klc-radius-sm);
   background: color-mix(in oklab, var(--klc-color-chart-background) 88%, transparent);
   font-size: var(--klc-text-12-font-size);
   line-height: var(--klc-text-12-line-height);
@@ -419,55 +415,6 @@ onBeforeUnmount(() => {
 }
 @media (hover: none) {
   .hero-hint {
-    display: none;
-  }
-}
-/* The field's state in words, and its pause control (WCAG 2.2.2): one chip, not a sentence. */
-.hero-field-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--klc-space-8);
-  min-height: var(--klc-density-default);
-  padding-left: var(--klc-space-8);
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-full);
-  text-transform: none;
-  letter-spacing: 0;
-}
-.hero-field-chip:not(:has(button)) {
-  padding-right: var(--klc-space-12);
-}
-.hero-field-dot {
-  width: var(--klc-space-8);
-  height: var(--klc-space-8);
-  border-radius: var(--klc-radius-full);
-  border: 1.5px solid var(--kcq-ink-2);
-}
-.hero-field-chip[data-field="on"] .hero-field-dot {
-  border: 0;
-  background: var(--kcq-accent);
-  box-shadow: 0 0 0 3px var(--kcq-accent-wash);
-}
-.hero-pause {
-  display: inline-grid;
-  place-items: center;
-  width: var(--klc-density-default);
-  height: calc(var(--klc-density-default) - 2px);
-  padding: 0;
-  border: 0;
-  border-left: 1px solid var(--kcq-rule);
-  border-radius: 0 var(--klc-radius-full) var(--klc-radius-full) 0;
-  background: transparent;
-  color: var(--kcq-ink);
-  cursor: pointer;
-}
-@media (hover: hover) and (pointer: fine) {
-  .hero-pause:hover {
-    background: var(--kcq-hover);
-  }
-}
-@media (max-width: 767px) {
-  .hero-note {
     display: none;
   }
 }
