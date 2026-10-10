@@ -36,6 +36,11 @@ export function createCookieRequestConfig(
     return {
       locale: options.locale === "message" ? messageLocale : canonical,
       messages: await loadMessages(messageLocale, load),
+      // The request's clock, inherited by NextIntlClientProvider. Without it
+      // every `format.relativeTime(date)` on the client logs an
+      // ENVIRONMENT_FALLBACK error (≈100 per render of /settings/security)
+      // and server and client can disagree on "2 minutes ago".
+      now: new Date(),
     };
   });
 }
