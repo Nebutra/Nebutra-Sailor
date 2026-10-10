@@ -2,7 +2,7 @@
  * Expected contents of public/robots.txt and public/sitemap.xml, derived from the route table.
  * The files stay static and reviewable; seo-files.test.ts fails when they drift.
  */
-import { KCQ_ORIGIN, PUBLIC_PAGES, PUBLIC_ROUTES, publicAlternates } from "./routes";
+import { DOCS_PATHS, KCQ_ORIGIN, PUBLIC_PAGES, PUBLIC_ROUTES, publicAlternates } from "./routes";
 
 export function renderRobotsTxt(): string {
   return [
@@ -13,9 +13,13 @@ export function renderRobotsTxt(): string {
     "Allow: /assets/",
     "# The agent-readable view of these pages (src/public/llms.ts).",
     "Allow: /llms.txt$",
+    "# The documentation (apps/kcq-docs), with its own sitemap.",
+    `Allow: ${DOCS_PATHS.en}`,
+    `Allow: ${DOCS_PATHS.zh}`,
     "Disallow: /",
     "",
     `Sitemap: ${KCQ_ORIGIN}/sitemap.xml`,
+    `Sitemap: ${KCQ_ORIGIN}${DOCS_PATHS.en}/sitemap.xml`,
     "",
   ].join("\n");
 }

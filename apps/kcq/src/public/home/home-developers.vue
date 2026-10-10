@@ -13,13 +13,14 @@ import code from "virtual:kcq-code";
 import { nextTick, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
-import { LINKS } from "../links";
+import { docsPath } from "../links";
+import type { PublicLocale } from "../routes";
 import { SNIPPETS as ALL_SNIPPETS } from "./developer-snippets";
 
 /** The deck's three tabs (5.5); the agent-tools snippet is published in /llms.txt instead. */
 const SNIPPETS = ALL_SNIPPETS.filter((snippet) => snippet.id !== "agent");
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const active = ref(0);
 const tabs = ref<HTMLButtonElement[]>([]);
 const highlighted = new Map(code.map((entry) => [entry.id, entry.html]));
@@ -63,7 +64,7 @@ function onKey(event: KeyboardEvent) {
       <div class="section-head">
         <h2 id="developers-heading" class="t-heading">{{ t("home.developers.heading") }}</h2>
         <p class="t-lede">{{ t("home.developers.body") }}</p>
-        <a class="section-link" :href="LINKS.readme" rel="noopener">
+        <a class="section-link" :href="docsPath(locale as PublicLocale)">
           {{ t("home.developers.readme") }}
           <KcqIcon class="button-arrow" name="arrow" />
         </a>

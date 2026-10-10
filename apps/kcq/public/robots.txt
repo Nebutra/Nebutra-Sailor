@@ -10,6 +10,10 @@ Allow: /zh/investors$
 Allow: /assets/
 # The agent-readable view of these pages (src/public/llms.ts).
 Allow: /llms.txt$
+# The documentation (apps/kcq-docs), with its own sitemap.
+Allow: /docs
+Allow: /zh/docs
 Disallow: /
 
 Sitemap: https://kcq.nebutra.com/sitemap.xml
+Sitemap: https://kcq.nebutra.com/docs/sitemap.xml
