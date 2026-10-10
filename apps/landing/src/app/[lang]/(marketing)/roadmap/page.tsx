@@ -59,6 +59,7 @@ export default async function RoadmapPage({ params }: { params: Promise<{ lang: 
       <section className="px-8 pt-28 pb-20 xl:px-16">
         <Intro
           level={1}
+          lang={lang}
           title={t("hero.title")}
           lead={t("hero.lead")}
           cn={zh ? undefined : t("hero.cn")}

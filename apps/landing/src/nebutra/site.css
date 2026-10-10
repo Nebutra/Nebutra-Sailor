@@ -31,37 +31,14 @@ html[data-brand="nebutra-site"] .hero-motion-video {
 }
 
 /*
- * The hero reel: the six live products drift left, one loop per 40s. The list
- * is rendered twice so the loop has no seam; the second copy is aria-hidden.
- * Hover pauses it; reduced motion stops it and lets the row scroll by hand.
+ * The hero reel: the live products in one row that holds still. It used to
+ * drift left forever (a 40s marquee), the only thing on the page moving at
+ * rest; now it scrolls sideways by hand. The edges fade so the row reads as
+ * continuing past the gutter.
  */
-@keyframes site-reel {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-html[data-brand="nebutra-site"] .site-reel-track {
-  animation: site-reel 40s linear infinite;
-}
-@media (hover: hover) {
-  html[data-brand="nebutra-site"] .site-reel:hover .site-reel-track {
-    animation-play-state: paused;
-  }
-}
 html[data-brand="nebutra-site"] .site-reel {
   -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
   mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
-}
-@media (prefers-reduced-motion: reduce) {
-  html[data-brand="nebutra-site"] .site-reel-track {
-    animation: none;
-  }
-  html[data-brand="nebutra-site"] .site-reel {
-    overflow-x: auto;
-  }
 }
 
 /*
@@ -137,12 +114,9 @@ html[data-brand="nebutra-site"] .inv-track-fill-y {
 
 /*
  * /investors — the one node of the company map that carries the signature:
- * Sailor, the platform the other lines stand on. A 1px gradient edge drawn as
- * a border-box background, so the card keeps its own surface underneath.
+ * Sailor, the platform the other lines stand on. Its top rule is drawn in the
+ * signature gradient; the other nodes' rules are the plain hairline.
  */
-html[data-brand="nebutra-site"] .inv-core {
-  border-color: transparent;
-  background:
-    linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
-    var(--brand-decorative-signature) border-box;
+html[data-brand="nebutra-site"] .inv-core-rule {
+  background-image: var(--brand-decorative-signature);
 }

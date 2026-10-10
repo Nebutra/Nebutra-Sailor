@@ -40,6 +40,7 @@ export default async function SiteHome({ params }: { params: Promise<{ lang: str
         <div className="relative z-10">
           <Intro
             level={1}
+            lang={lang}
             title={t.rich("hero.title", {
               signature: (chunks) => <span className="signature">{chunks}</span>,
             })}

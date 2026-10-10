@@ -71,7 +71,7 @@ export async function SiteFooter({ lang }: { lang?: string }) {
           {cols.map((c) => (
             <div key={c.k}>
               <p className="text-sm text-foreground">{c.k}</p>
-              <ul className="mt-4 flex flex-col gap-2.5">
+              <ul className="mt-2 flex flex-col md:mt-4 md:gap-2.5">
                 {c.links.map((l) => (
                   <li key={l.label}>
                     {/^https?:/.test(l.href) ? (
@@ -79,14 +79,14 @@ export async function SiteFooter({ lang }: { lang?: string }) {
                         href={l.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground"
+                        className="inline-flex min-h-10 items-center text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground md:min-h-0"
                       >
                         {l.label}
                       </a>
                     ) : (
                       <Link
                         href={l.href}
-                        className="text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground"
+                        className="inline-flex min-h-10 items-center text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground md:min-h-0"
                       >
                         {l.label}
                       </Link>

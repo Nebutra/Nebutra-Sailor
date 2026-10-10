@@ -27,7 +27,7 @@ export default async function SleptonsPage({ params }: { params: Promise<{ lang:
   return (
     <main id="main-content">
       <section className="px-8 pt-28 pb-20 xl:px-16">
-        <Intro level={1} title="Sleptons" lead={t("hero.lead")} cn={t("hero.cn")} />
+        <Intro level={1} lang={lang} title="Sleptons" lead={t("hero.lead")} cn={t("hero.cn")} />
       </section>
       <Band>
         <div className="grid grid-cols-1 gap-14 md:grid-cols-3">

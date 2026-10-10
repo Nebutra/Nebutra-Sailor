@@ -23,7 +23,13 @@ export default async function SailorPage({ params }: { params: Promise<{ lang: s
   return (
     <main id="main-content">
       <section className="px-8 pt-28 pb-20 xl:px-16">
-        <Intro level={1} title="Sailor" lead={t("hero.lead")} cn={zh ? undefined : t("hero.cn")} />
+        <Intro
+          level={1}
+          lang={lang}
+          title="Sailor"
+          lead={t("hero.lead")}
+          cn={zh ? undefined : t("hero.cn")}
+        />
         <div className="mt-10 flex flex-col items-start gap-5">
           <CommandInstallBox
             command="npx create-sailor@latest"

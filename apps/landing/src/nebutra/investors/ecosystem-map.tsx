@@ -6,7 +6,7 @@ import { SHOWCASE } from "./showcase";
 /**
  * The company as a structure: one parent, three lines of business, drawn as a
  * tree rather than told in a paragraph. Sailor sits in the middle because the
- * other two stand on it; it is the one node that wears the signature edge.
+ * other two stand on it; it is the one node whose rule wears the signature.
  *
  * Responsive: Stack. Three columns hanging off one rule from md up; below md
  * the columns stack under a single vertical rule.
@@ -58,28 +58,24 @@ export async function EcosystemMap({ lang }: { lang: string }) {
               aria-hidden
               className="absolute top-0 left-1/2 hidden h-10 w-px bg-border md:block"
             />
-            <div
-              className={
-                n.core
-                  ? "inv-core flex h-full flex-col rounded-[var(--radius-lg)] border border-border bg-card p-6"
-                  : "flex h-full flex-col rounded-[var(--radius-lg)] border border-border p-6"
-              }
-            >
+            {/* No box around a node: a hairline on top, the core's in the signature
+                gradient. The map is one figure, not three cards (restraint rule 9). */}
+            <div className="flex h-full flex-col pt-6">
+              <span
+                aria-hidden
+                className={
+                  n.core
+                    ? "inv-core-rule absolute inset-x-0 top-0 h-px md:top-10"
+                    : "absolute inset-x-0 top-0 h-px bg-border md:top-10"
+                }
+              />
               <p className="text-sm text-muted-foreground">{n.role}</p>
               <p className="mt-2 font-heading text-2xl text-foreground">{n.name}</p>
               <p className="mt-3 text-base text-muted-foreground text-pretty">{n.body}</p>
               {n.items.length ? (
-                <ul className="mt-auto flex flex-wrap gap-2 pt-6">
-                  {n.items.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-full border border-border px-3 py-1 text-sm text-secondary-foreground"
-                      translate="no"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <p className="mt-auto pt-6 text-sm text-secondary-foreground" translate="no">
+                  {n.items.join(" · ")}
+                </p>
               ) : null}
             </div>
           </li>
