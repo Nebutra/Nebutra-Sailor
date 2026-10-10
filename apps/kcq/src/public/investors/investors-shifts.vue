@@ -20,7 +20,6 @@ const items = computed(() =>
     <div class="container">
       <div class="section-head">
         <h2 id="shifts-heading" class="t-heading">{{ t("investors.shifts.heading") }}</h2>
-        <p class="t-lede">{{ t("investors.shifts.lede") }}</p>
       </div>
       <ol class="shift-list">
         <li v-for="(item, index) in items" :key="index" class="shift">
