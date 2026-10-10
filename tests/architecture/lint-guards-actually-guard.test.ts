@@ -77,9 +77,39 @@ const CASES: Case[] = [
     path: "apps/landing/src/__lint_guard_probe.tsx",
   },
   {
-    guard: "lint-landing-inline-i18n",
+    guard: "lint-inline-i18n",
     violation: 'export const copy = { en: "Hello", zh: "你好" };\n',
     path: "apps/landing/src/__lint_guard_probe.tsx",
+  },
+  {
+    // The shape the first version of this guard missed: a copy table keyed by
+    // language, values nested one level down.
+    guard: "lint-inline-i18n",
+    violation: 'export const COPY = {\n  en: { title: "Hello" },\n  zh: { title: "你好" },\n};\n',
+    path: "apps/web/src/__lint_guard_probe.tsx",
+  },
+  {
+    // No route locale is bare "zh"; this branch can never be taken.
+    guard: "lint-inline-i18n",
+    violation: 'export const isZh = (locale: string) => locale === "zh";\n',
+    path: "apps/forge/src/__lint_guard_probe.tsx",
+  },
+  {
+    guard: "lint-i18n-keys",
+    violation:
+      'import { useTranslations } from "next-intl";\nexport function P() {\n  const t = useTranslations("nav");\n  return t("__no_such_key__");\n}\n',
+    path: "apps/landing/src/__lint_guard_probe.tsx",
+  },
+  {
+    // A namespace the catalog does not have at all.
+    guard: "lint-i18n-keys",
+    violation:
+      'import { useTranslations } from "next-intl";\nexport function P() {\n  const t = useTranslations("__noSuchNamespace__");\n  return t("title");\n}\n',
+    path: "apps/web/src/__lint_guard_probe.tsx",
+  },
+  {
+    guard: "lint-locale-lists",
+    violation: 'export const LOCALES = ["en", "ja", "de", "fr"] as const;\n',
   },
   {
     guard: "lint-no-raw-inputs",

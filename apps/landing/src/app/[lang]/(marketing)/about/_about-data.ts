@@ -7,7 +7,7 @@ export type Bilingual<T> = { zh: T; en: T };
  * Select the per-item field for this data row's own language — About's
  * business-portfolio/overview content is dual-authored (zh + en sit together
  * on every row), not next-intl UI chrome, so there is no message key to read.
- * Named `bi`, not `pick`: scripts/lint-landing-inline-i18n.mjs flags a
+ * Named `bi`, not `pick`: scripts/lint-inline-i18n.mjs flags a
  * `pick(<word>,` call as the deprecated cross-file picker from
  * lib/i18n/localized.ts — this is a different, page-local helper over
  * already-authored bilingual data rows.

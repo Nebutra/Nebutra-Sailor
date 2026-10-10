@@ -2318,16 +2318,40 @@
       "sailor-cli.tsx": "a verbatim recording of the published CLI; re-record after create-sailor ships its new banner."
     }
   },
-  "landingInlineI18n": {
-    "description": "Shrink-only. Inline two-language copy in apps/landing (pick(), isZhUiLocale(), { en: ... } pairs). Copy belongs in apps/landing/messages/en.json; see scripts/lint-landing-inline-i18n.mjs.",
+  "inlineI18n": {
+    "description": "Shrink-only. Inline two-language copy in every surface that renders translated UI (pick(), isZhUiLocale(), { en: ... } pairs, en/zh-keyed copy tables, branches on bare \"zh\", Forge pickBilingual). Copy belongs in the surface's catalog en.json; see scripts/lint-inline-i18n.mjs.",
     "allowlist": [
+      {
+        "file": "apps/forge/src/app/r/[root]/page.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/forge/src/app/t/[slug]/page.tsx",
+        "count": 6
+      },
+      {
+        "file": "apps/forge/src/components/home-search.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/forge/src/components/tool-card.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/forge/src/components/w3-license-chooser-runner.tsx",
+        "count": 5
+      },
+      {
+        "file": "apps/forge/src/components/w3-unified-social-credit-code-runner.tsx",
+        "count": 83
+      },
       {
         "file": "apps/landing/src/app/[lang]/(legal)/credits/page.tsx",
         "count": 1
       },
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/_about-data.ts",
-        "count": 1
+        "count": 107
       },
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/business-portfolio/page.tsx",
@@ -2339,19 +2363,248 @@
       },
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/innovation/page.tsx",
-        "count": 9
+        "count": 43
       },
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/whitepaper/page.tsx",
         "count": 8
       },
       {
-        "file": "apps/landing/src/lib/i18n/localized.ts",
+        "file": "apps/landing/src/components/landing/blog-portable-text.tsx",
         "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/access-gate-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/agent-runtime-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/analytics-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/auth-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/billing-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/browser-control-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/cache-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/china-compliance-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/db-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/email-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/event-log-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/execution-policy-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/feature-flags-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/graph-model-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/identity-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/integration-vault-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/landing-builder-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/legal-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/license-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/marketing-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/metering-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/oauth-server-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/preset-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/rate-limit-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/repositories-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/saga-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/storage-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/support-deflector-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/theme-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/trace-store-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/vault-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/waitlist-glyph.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/agent-runtime-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/audit-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/billing-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/cache-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/db-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/gateway-core-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/knowledge-rag-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/metering-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/permissions-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/queue-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/tokens-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/vault-showcase.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/webhooks-showcase.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/solutions/vc/VcDirectory.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/lib/i18n/localized.ts",
+        "count": 3
       },
       {
         "file": "apps/landing/src/nebutra/data/roadmap.ts",
         "count": 8
+      },
+      {
+        "file": "apps/web/src/app/(public)/page.tsx",
+        "count": 2
+      }
+    ]
+  },
+  "localeLists": {
+    "description": "Shrink-only. Files outside @nebutra/i18n that enumerate four or more language tags, each with the reason it is not the registry. See scripts/lint-locale-lists.mjs.",
+    "allowlist": [
+      {
+        "file": "apps/landing/src/components/landing/blog-comments.tsx",
+        "reason": "Blog posts are authored in en and zh only; this maps the post's content language to a date-format tag."
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/glyphs/i18n-glyph.tsx",
+        "reason": "Decorative illustration of the i18n package — the tags are the picture, not a supported-language list."
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/db-showcase.tsx",
+        "reason": "en/zh number-format branch pending migration to the route locale (inlineI18n)."
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/gateway-core-showcase.tsx",
+        "reason": "en/zh number-format branch pending migration to the route locale (inlineI18n)."
+      },
+      {
+        "file": "apps/landing/src/components/landing/features/showcases/metering-showcase.tsx",
+        "reason": "en/zh number-format branch pending migration to the route locale (inlineI18n)."
+      },
+      {
+        "file": "apps/sailor-docs/src/lib/i18n.ts",
+        "reason": "Docs content is authored in en and zh only (Fumadocs i18n); the docs are a static export outside next-intl."
+      },
+      {
+        "file": "packages/ai/forge-runtime/src/tools/w3-encoding-detect.ts",
+        "reason": "Tool data: languages an encoding detector reports, not UI locales."
+      },
+      {
+        "file": "scripts/i18n-translate-helpers.mjs",
+        "reason": "Locales that use CJK full-width punctuation — a property of the script, used to reject leaked punctuation."
       }
     ]
   },

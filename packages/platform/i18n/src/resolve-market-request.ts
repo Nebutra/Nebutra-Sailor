@@ -1,5 +1,5 @@
 import { getCurrencyForCountry } from "./currency";
-import { isProductLanguage, type ProductLanguage } from "./languages";
+import { isProductLanguage, PRODUCT_LANGUAGE_META, type ProductLanguage } from "./languages";
 import { createMarketLocale, type MarketLocale, resolveMarketLocale } from "./market-locale";
 import { isMarketCountry } from "./markets";
 
@@ -8,43 +8,6 @@ export type MarketRequestHints = {
   geoCountry?: null | string;
   pathLanguage?: null | string;
   acceptLanguage?: null | string;
-};
-
-const DEFAULT_COUNTRY_FOR_LANGUAGE: Partial<Record<ProductLanguage, string>> = {
-  en: "US",
-  "zh-Hans": "CN",
-  "zh-Hant": "TW",
-  ja: "JP",
-  ko: "KR",
-  de: "DE",
-  fr: "FR",
-  es: "ES",
-  pt: "BR",
-  it: "IT",
-  nl: "NL",
-  sv: "SE",
-  da: "DK",
-  fi: "FI",
-  no: "NO",
-  pl: "PL",
-  cs: "CZ",
-  ro: "RO",
-  hu: "HU",
-  el: "GR",
-  ru: "RU",
-  uk: "UA",
-  tr: "TR",
-  ar: "SA",
-  he: "IL",
-  fa: "IR",
-  hi: "IN",
-  bn: "BD",
-  ur: "PK",
-  th: "TH",
-  vi: "VN",
-  id: "ID",
-  ms: "MY",
-  sw: "KE",
 };
 
 export function resolveCountryFromRequest(hints: MarketRequestHints): string {
@@ -56,7 +19,8 @@ export function resolveCountryFromRequest(hints: MarketRequestHints): string {
 
   const lang = hints.pathLanguage;
   if (lang && isProductLanguage(lang)) {
-    const fallback = DEFAULT_COUNTRY_FOR_LANGUAGE[lang];
+    // The registry's default region for the language — not a second table.
+    const fallback = PRODUCT_LANGUAGE_META[lang].defaultRegion;
     if (fallback && isMarketCountry(fallback)) return fallback;
   }
   return "US";
