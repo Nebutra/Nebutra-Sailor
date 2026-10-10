@@ -1789,15 +1789,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} bouwt de operationele laag voor AI-native bedrijven. Voor investeerders en strategische partners: de thesis, wat vandaag live is en hoe je de deck aanvraagt.",
       "hero": {
         "kicker": "Voor investeerders en partners",
         "title": "AI gaf elke oprichter handen. Wij bouwen het <signature>oordeel</signature>.",
-        "lead": "{brandName} is een AI-native bedrijfseco-systeem: Sailor, het source-available platform waar producten en agents starten met ingebouwde engineering-judgment; een practice die AI-producten van R&D naar markten over de hele wereld brengt; en de producten die we op beide leveren.",
         "stage": "Wij verzamelen onze angel round en spreken met een klein aantal investeerders en strategische partners.",
         "primary": "Vraag de deck aan",
-        "secondary": "Plan een gesprek",
-        "reelLabel": "Producten live op het platform"
+        "secondary": "Plan een gesprek"
       },
       "chapters": {
         "label": "Op deze pagina",
@@ -1840,16 +1837,6 @@
       },
       "built": {
         "title": "Eén fundament. Alles andere groeit erop.",
-        "lead": "Drie businesslijnen delen één platform, één accountsysteem en één set regels.",
-        "sailor": {
-          "role": "Het platform",
-          "body": "Een source-available product- en agent-OS onder de Functional Source License (FSL): tenancy, auth, billing, audit en een design system, beheerd in code."
-        },
-        "products": {
-          "name": "Producten",
-          "role": "Gebouwd erop",
-          "body": "Live producten voor ontwikkelaars, ontwerpers en creators, elk op Sailor gekweekt."
-        },
         "practice": {
           "name": "Enterprise AI & wereldwijde uitrol",
           "role": "De praktijk",
@@ -1857,21 +1844,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor geeft elke oprichter de basis die een senior team zou bouwen.",
         "lead": "Met één commando scaffold je een multi-tenant product met auth, facturatie, audit en een al vastgelegd design system. Providers schakelen via configuratie tussen wereldwijde en Chinese stacks, en agents volgen dezelfde regels waaraan de code wordt gehouden.",
         "acme": "Het template zoals het wordt geleverd, al ingezet.",
         "source": "Bekijk de broncode",
         "more": "Meer over Sailor"
       },
       "products": {
-        "title": "Geleverd, geen presentaties.",
-        "lead": "Producten die we op dezelfde basis hebben gebouwd. Elk ervan is live — open het.",
-        "caption": "Screenshots van de live sites, genomen op 9 oktober 2026.",
-        "router": "Eén markt en één API voor modellen, apps en tools.",
-        "forge": "184 tools in de browser, en dezelfde engine als API en MCP.",
-        "typelens": "Echte typecombinaties voor designers en design agents.",
-        "kcq": "Een werkbank voor chart- en quantonderzoek, met een agent ernaast.",
-        "also": "Ook op het platform",
         "open": "Openen {name}"
       },
       "practice": {
@@ -1906,11 +1884,6 @@
           "title": "Bouw in het open.",
           "body": "De broncode van Sailor is openbaar en alles op deze pagina is live. Due diligence begint met een link."
         }
-      },
-      "next": {
-        "title": "Eén zin, een <signature>hele bedrijf</signature>.",
-        "lead": "{brandName} OS is waar dit naartoe gaat: beschrijf een bedrijf één keer, en merk, product, code en lancering komen uit één context, met het oordeel ingebouwd. Het is in ontwikkeling en we tonen het zodra het echt is.",
-        "vision": "Over vijf jaar willen we dat een bedrijf starten betekent dat je begint met dat oordeel al op zijn plek."
       },
       "talk": {
         "title": "Laten we praten.",

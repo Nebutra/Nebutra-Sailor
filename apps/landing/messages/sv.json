@@ -1787,15 +1787,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} bygger operativt lager för AI-inativa företag. För investerare och strategiska partners: tesen, vad som är live idag och hur man begär presentationen.",
       "hero": {
         "kicker": "För investerare och partners",
         "title": "AI gav varje grundare händer. Vi bygger <signature>dömeskapaciteten</signature>.",
-        "lead": "{brandName} är ett AI-inhämtat företagsökosystem: Sailor, den källtillgängliga plattformen där produkter och agenter startar med inbyggd teknisk bedömningsförmåga; en praxis som tar AI-produkter från R&D till marknader världen över; samt de produkter vi levererar på båda.",
         "stage": "Vi samlar in vår ängelrunda och pratar med ett litet antal investerare och strategiska partners.",
         "primary": "Begär presentationen",
-        "secondary": "Boka ett samtal",
-        "reelLabel": "Produkter live på plattformen"
+        "secondary": "Boka ett samtal"
       },
       "chapters": {
         "label": "På denna sida",
@@ -1838,16 +1835,6 @@
       },
       "built": {
         "title": "En grund. Allt annat växer på den.",
-        "lead": "Tre affärsområden delar en plattform, ett kontosystem och en uppsättning regler.",
-        "sailor": {
-          "role": "Plattformen",
-          "body": "Ett källtillgängligt produkt- och agent-OS under Functional Source License (FSL): tenancy, auth, billing, audit och ett designsystem, styrda i kod."
-        },
-        "products": {
-          "name": "Produkter",
-          "role": "Byggt på den",
-          "body": "Aktiva produkter för utvecklare, designers och skapare, var och en växt på Sailor."
-        },
         "practice": {
           "name": "Enterprise AI & global expansion",
           "role": "Praktiken",
@@ -1855,21 +1842,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor ger varje grundare grunden som ett senior team skulle bygga.",
         "lead": "Ett kommando skapar en produkt med flera hyresgäster, med autentisering, fakturering, revision och ett designsystem redan bestämt. Leverantörer växlar mellan globala och kinesiska stackar via konfiguration, och agenter följer samma regler som koden hålls till.",
         "acme": "Mallen som den levereras, deployad.",
         "source": "Läs källkoden",
         "more": "Mer om Sailor"
       },
       "products": {
-        "title": "Levererat, inte presentationsskivor.",
-        "lead": "Produkter vi byggt på samma grund. Alla är live — öppna dem.",
-        "caption": "Skärmdumpar från de live-sajter, tagna 9 oktober 2026.",
-        "router": "En marknad och en API för modeller, appar och verktyg.",
-        "forge": "184 verktyg i webbläsaren, och samma motor som API och MCP.",
-        "typelens": "Verkliga typkombinationer för designers och designagenter.",
-        "kcq": "Ett arbetsbord för chart och kvantresearch, med en agent vid sidan.",
-        "also": "Även på plattformen",
         "open": "Öppna {name}"
       },
       "practice": {
@@ -1904,11 +1882,6 @@
           "title": "Bygg öppet.",
           "body": "Sailors källa är offentlig, och allt på denna sida är live. Due diligence börjar med en länk."
         }
-      },
-      "next": {
-        "title": "En mening, ett <signature>helt företag</signature>.",
-        "lead": "{brandName} OS är dit detta går: beskriv ett företag en gång, så kommer varumärke, produkt, kod och lansering från en gemensam kontext, med omdöme inbyggt. Det är under utveckling, och vi visar det när det är verkligt.",
-        "vision": "Om fem år vill vi att att starta ett företag betyder att starta med det omdömet redan på plats."
       },
       "talk": {
         "title": "Låt oss prata.",

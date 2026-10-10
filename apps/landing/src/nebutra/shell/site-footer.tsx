@@ -5,6 +5,7 @@ import { IcpRecord } from "@/components/icp-record";
 import { MarketLocalePicker } from "@/components/ui/market-locale-picker";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
+import { PRODUCTS } from "@/nebutra/data/products";
 import { REPO_URL } from "@/nebutra/data/repo";
 import { ROUTES } from "@/nebutra/routes";
 import { ThemedLogo } from "@/nebutra/shell/themed-logo";
@@ -17,28 +18,32 @@ import { ThemedLogo } from "@/nebutra/shell/themed-logo";
  * to reading request headers — runtime data in every prerender, which failed
  * the production build on the first route it reached (/blog, /refer).
  */
+/** KCQ first: it is the product incubated on Sailor; the rest follow as listed. */
+const MORE_PRODUCTS = [...PRODUCTS].sort((a, b) => Number(b.id === "kcq") - Number(a.id === "kcq"));
+
 export async function SiteFooter({ lang }: { lang?: string }) {
   // An explicit locale: this renders in a layout that never sets the request
   // locale, and reading it from the request is runtime data in a prerender.
   const t = await getTranslations({ locale: lang ?? "en", namespace: "siteShell.footer" });
   const pricing = await getTranslations({ locale: lang ?? "en", namespace: "nav" });
+  // Offer: the two businesses. More: everything that is not one of them — the
+  // incubated products, the vision pages, the platform's own pages (owner, 2026-10-10).
   const cols = [
+    {
+      k: t("offer"),
+      links: [
+        { label: "Sailor", href: ROUTES.sailor },
+        { label: pricing("pricing"), href: "/pricing#product-pricing" },
+        { label: t("consulting"), href: "/consulting" },
+        { label: "GitHub", href: REPO_URL },
+      ],
+    },
     {
       k: t("read"),
       links: [
         { label: t("journal"), href: ROUTES.journal },
         { label: t("changelog"), href: "/changelog" },
-      ],
-    },
-    {
-      k: t("build"),
-      links: [
-        { label: "Sailor", href: ROUTES.sailor },
-        { label: pricing("pricing"), href: "/pricing#product-pricing" },
-        { label: "GitHub", href: REPO_URL },
-        { label: t("designSystem"), href: getBrandOrigin("design") },
-        { label: t("whatWeAreBuilding"), href: ROUTES.building },
-        { label: t("status"), href: getBrandOrigin("status") },
+        { label: t("roadmap"), href: "/roadmap" },
       ],
     },
     {
@@ -56,17 +61,29 @@ export async function SiteFooter({ lang }: { lang?: string }) {
         { label: t("credits"), href: "/credits" },
       ],
     },
+    {
+      k: t("more"),
+      links: [
+        ...MORE_PRODUCTS.map((p) => ({ label: p.name, href: p.href })),
+        { label: "Sleptons", href: ROUTES.sleptons },
+        { label: t("whatWeAreBuilding"), href: ROUTES.building },
+        { label: t("openPlatform"), href: "/open" },
+        { label: t("designSystem"), href: getBrandOrigin("design") },
+        { label: t("status"), href: getBrandOrigin("status") },
+      ],
+    },
   ];
+
   return (
     <footer data-testid="site-footer" className="border-t border-border px-8 pt-16 pb-10 xl:px-16">
-      <div className="grid grid-cols-2 gap-10 md:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))]">
+      <div className="grid grid-cols-2 gap-10 md:grid-cols-[minmax(0,1.4fr)_repeat(4,minmax(0,1fr))]">
         <div className="col-span-2 md:col-span-1">
           <ThemedLogo size={112} />
           <p className="mt-2 max-w-xs text-sm text-muted-foreground">{t("tagline")}</p>
         </div>
         <nav
           aria-label="Footer"
-          className="col-span-2 grid grid-cols-2 gap-10 md:col-span-3 md:grid-cols-subgrid"
+          className="col-span-2 grid grid-cols-2 gap-10 md:col-span-4 md:grid-cols-subgrid"
         >
           {cols.map((c) => (
             <div key={c.k}>

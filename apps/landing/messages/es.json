@@ -1791,15 +1791,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} está construyendo la capa operativa para empresas nativas de IA. Para inversores y socios estratégicos: la tesis, lo que está en vivo hoy y cómo solicitar la presentación.",
       "hero": {
         "kicker": "Para inversores y socios",
         "title": "La IA le dio manos a cada fundador. Estamos construyendo el <signature>juicio</signature>.",
-        "lead": "{brandName} es un ecosistema de empresas nativas de IA: Sailor, la plataforma con código fuente disponible donde los productos y agentes nacen con criterio de ingeniería integrado; una práctica que lleva los productos de IA desde I+D hasta mercados de todo el mundo; y los productos que lanzamos en ambos.",
         "stage": "Estamos levantando nuestra ronda angel y conversando con un pequeño número de inversores y socios estratégicos.",
         "primary": "Solicitar la presentación",
-        "secondary": "Agendar una llamada",
-        "reelLabel": "Productos en vivo en la plataforma"
+        "secondary": "Agendar una llamada"
       },
       "chapters": {
         "label": "En esta página",
@@ -1842,16 +1839,6 @@
       },
       "built": {
         "title": "Una base. Todo lo demás crece sobre ella.",
-        "lead": "Tres líneas de negocio comparten una plataforma, un sistema de cuentas y un mismo conjunto de reglas.",
-        "sailor": {
-          "role": "La plataforma",
-          "body": "Un sistema operativo de productos y agentes con código fuente disponible bajo la Functional Source License (FSL): tenencia, autenticación, facturación, auditoría y un sistema de diseño, todo gobernado en código."
-        },
-        "products": {
-          "name": "Productos",
-          "role": "Construido sobre ello",
-          "body": "Productos en vivo para desarrolladores, diseñadores y creadores, cada uno desarrollado sobre Sailor."
-        },
         "practice": {
           "name": "IA empresarial y expansión global",
           "role": "La práctica",
@@ -1859,21 +1846,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor entrega a cada fundador la base que construiría un equipo senior.",
         "lead": "Un solo comando crea un producto multiinquilino con autenticación, facturación, auditoría y un sistema de diseño ya definido. Los proveedores se cambian entre stacks globales y chinos mediante configuración, y los agentes leen las mismas reglas a las que se somete el código.",
         "acme": "La plantilla tal como se entrega, desplegada.",
         "source": "Leer el código fuente",
         "more": "Más sobre Sailor"
       },
       "products": {
-        "title": "Producto entregado, no diapositivas.",
-        "lead": "Productos que construimos sobre la misma base. Todos están en producción: ábrelos.",
-        "caption": "Capturas de pantalla de los sitios en vivo, tomadas el 9 de octubre de 2026.",
-        "router": "Un mercado y una API para modelos, aplicaciones y herramientas.",
-        "forge": "184 herramientas en el navegador, y el mismo motor como API y MCP.",
-        "typelens": "Combinaciones tipográficas reales para diseñadores y agentes de diseño.",
-        "kcq": "Un banco de trabajo para gráficos e investigación cuantitativa, con un agente a su lado.",
-        "also": "También en la plataforma",
         "open": "Abrir {name}"
       },
       "practice": {
@@ -1908,11 +1886,6 @@
           "title": "Construye en abierto.",
           "body": "El código fuente de Sailor es público y todo en esta página está en vivo. La diligencia empieza con un enlace."
         }
-      },
-      "next": {
-        "title": "Una frase, una <signature>empresa completa</signature>.",
-        "lead": "{brandName} OS es hacia donde va esto: describe una empresa una sola vez, y la marca, el producto, el código y el lanzamiento surgen de un solo contexto, con el criterio ya integrado. Está en desarrollo y lo mostraremos cuando sea real.",
-        "vision": "En cinco años, queremos que empezar una empresa signifique empezar con ese criterio ya en su lugar."
       },
       "talk": {
         "title": "Hablemos.",

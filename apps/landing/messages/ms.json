@@ -1790,15 +1790,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} sedang membina lapisan pengoperasian untuk syarikat AI-native. Untuk pelabur dan rakan strategik: tesis kami, apa yang sudah aktif hari ini, dan cara memohon deck.",
       "hero": {
         "kicker": "Untuk pelabur dan rakan",
         "title": "AI memberi setiap pengasas tangan. Kami membina <signature>kebijaksanaan</signature>.",
-        "lead": "{brandName} ialah ekosistem syarikat asli AI: Sailor, platform sumber tersedia di mana produk dan ejen bermula dengan penilaian kejuruteraan terbina dalam; satu amalan yang membawa produk AI daripada R&D ke pasaran di seluruh dunia; dan produk-produk yang kami lancarkan di kedua-duanya.",
         "stage": "Kami sedang mengumpulkan pusingan malaikat dan berbincang dengan sejumlah kecil pelabur dan rakan strategik.",
         "primary": "Minta deck",
-        "secondary": "Tempah panggilan",
-        "reelLabel": "Produk aktif di platform"
+        "secondary": "Tempah panggilan"
       },
       "chapters": {
         "label": "Di halaman ini",
@@ -1841,16 +1838,6 @@
       },
       "built": {
         "title": "Satu asas. Segala-galanya lain tumbuh di atasnya.",
-        "lead": "Tiga garis perniagaan berkongsi satu platform, satu sistem akaun dan satu set peraturan.",
-        "sailor": {
-          "role": "Platform",
-          "body": "OS produk dan ejen sumber tersedia di bawah Functional Source License (FSL): penyewaan, pengesahan, pengebilan, audit dan sistem reka bentuk, diuruskan dalam kod."
-        },
-        "products": {
-          "name": "Produk",
-          "role": "Dibina di atasnya",
-          "body": "Produk langsung untuk pembangun, pereka dan pencipta, setiap satunya dibangunkan di atas Sailor."
-        },
         "practice": {
           "name": "AI Perusahaan & go-global",
           "role": "Amalan ini",
@@ -1858,21 +1845,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor memberikan setiap pengasas asas yang akan dibina oleh pasukan kanan.",
         "lead": "Satu perintah membina rangka produk multi-tenant dengan pengesahan, pengebilan, audit dan sistem reka bentuk yang sudah ditetapkan. Penyedia boleh bertukar antara stack global dan China melalui konfigurasi, dan ejen membaca peraturan yang sama yang digunakan untuk kod.",
         "acme": "Templat seperti yang dihantar, telah dipasang.",
         "source": "Baca sumber",
         "more": "Lagi tentang Sailor"
       },
       "products": {
-        "title": "Telah dihantar, bukan slaid.",
-        "lead": "Produk yang kami bina di atas asas yang sama. Setiap satunya aktif — buka ia.",
-        "caption": "Tangkapan skrin laman web langsung, diambil pada 9 Oktober 2026.",
-        "router": "Satu pasaran dan satu API untuk model, aplikasi dan alat.",
-        "forge": "184 alat dalam pelayar, dan enjin yang sama sebagai API dan MCP.",
-        "typelens": "Jodoh pasangan jenis huruf dunia nyata untuk pereka dan ejen reka bentuk.",
-        "kcq": "Meja kerja penyelidikan carta dan kuant, dengan ejen di sisi.",
-        "also": "Juga di platform",
         "open": "Buka {name}"
       },
       "practice": {
@@ -1907,11 +1885,6 @@
           "title": "Bina secara terbuka.",
           "body": "Kod sumber Sailor adalah awam, dan semua kandungan di halaman ini berfungsi secara langsung. Penyiasatan bermula dengan satu pautan."
         }
-      },
-      "next": {
-        "title": "Satu ayat, satu <signature>syarikat penuh</signature>.",
-        "lead": "{brandName} OS adalah arah tuju ini: huraikan sebuah syarikat sekali, dan jenama, produk, kod serta pelancaran datang daripada satu konteks, dengan pertimbangan terbina di dalamnya. Ia sedang dalam pembangunan, dan kami akan mempamerkannya apabila ia menjadi realiti.",
-        "vision": "Dalam lima tahun, kami mahu bermulanya sebuah syarikat bermakna bermula dengan pertimbangan itu sudah sedia ada."
       },
       "talk": {
         "title": "Mari berbincang.",

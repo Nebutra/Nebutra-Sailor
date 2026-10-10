@@ -4,9 +4,11 @@ import { ThemedLogo } from "@/nebutra/shell/themed-logo";
 import { SHOWCASE } from "./showcase";
 
 /**
- * The company as a structure: one parent, three lines of business, drawn as a
- * tree rather than told in a paragraph. Sailor sits in the middle because the
- * other two stand on it; it is the one node whose rule wears the signature.
+ * The company as a structure: one parent, two businesses (Sailor, the
+ * consulting practice) and the products incubated on Sailor, drawn as a tree
+ * rather than told in a paragraph. Sailor comes first because the rest stand on
+ * it; it is the one node whose rule wears the signature. The incubated node is
+ * set a step smaller: KCQ is a product, not a third business (owner, 2026-10-10).
  *
  * Responsive: Stack. Three columns hanging off one rule from md up; below md
  * the columns stack under a single vertical rule.
@@ -19,18 +21,11 @@ export async function EcosystemMap({ lang }: { lang: string }) {
   });
   const nodes = [
     {
-      key: "products",
-      name: t("products.name"),
-      role: t("products.role"),
-      body: t("products.body"),
-      items: SHOWCASE.map((s) => s.name),
-    },
-    {
       key: "sailor",
       name: "Sailor",
       role: t("sailor.role"),
       body: t("sailor.body"),
-      items: ["create-sailor", "Sailor Studio", "Open Platform"],
+      items: ["create-sailor", "Sailor Studio"],
       core: true,
     },
     {
@@ -40,7 +35,16 @@ export async function EcosystemMap({ lang }: { lang: string }) {
       body: t("practice.body"),
       items: [practice("rnd.title"), practice("global.title")],
     },
+    {
+      key: "products",
+      name: t("products.name"),
+      role: t("products.role"),
+      body: t("products.body"),
+      items: SHOWCASE.filter((s) => s.id === "kcq").map((s) => s.name),
+      incubated: true,
+    },
   ];
+
   return (
     <div className="mt-16">
       <div className="flex justify-start md:justify-center" role="img" aria-label={brand.name}>
@@ -70,7 +74,15 @@ export async function EcosystemMap({ lang }: { lang: string }) {
                 }
               />
               <p className="text-sm text-muted-foreground">{n.role}</p>
-              <p className="mt-2 font-heading text-2xl text-foreground">{n.name}</p>
+              <p
+                className={
+                  n.incubated
+                    ? "mt-2 font-heading text-xl text-secondary-foreground"
+                    : "mt-2 font-heading text-2xl text-foreground"
+                }
+              >
+                {n.name}
+              </p>
               <p className="mt-3 text-base text-muted-foreground text-pretty">{n.body}</p>
               {n.items.length ? (
                 <p className="mt-auto pt-6 text-sm text-secondary-foreground" translate="no">
