@@ -272,7 +272,7 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   text-align: left;
   cursor: pointer;
   transition-property: color, background-color, transform;
-  transition-duration: var(--klc-motion-dur-fast), var(--klc-motion-dur-fast), var(--klc-motion-dur-press);
+  transition-duration: var(--klc-motion-dur-fast);
   transition-timing-function: var(--klc-motion-ease-out);
 }
 .chapter:active {
@@ -476,7 +476,7 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   font-size: var(--klc-text-12-font-size);
   cursor: pointer;
   transition-property: color, background-color, transform;
-  transition-duration: var(--klc-motion-dur-fast), var(--klc-motion-dur-fast), var(--klc-motion-dur-press);
+  transition-duration: var(--klc-motion-dur-fast);
   transition-timing-function: var(--klc-motion-ease-out);
 }
 .scrub-button:not(:disabled):active {
@@ -543,7 +543,7 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
   text-align: left;
   cursor: copy;
   transition-property: color, background-color, transform;
-  transition-duration: var(--klc-motion-dur-fast), var(--klc-motion-dur-fast), var(--klc-motion-dur-press);
+  transition-duration: var(--klc-motion-dur-fast);
   transition-timing-function: var(--klc-motion-ease-out);
 }
 .suggestion:active {

@@ -291,7 +291,7 @@ onBeforeUnmount(() => {
   color: var(--kcq-ink-2);
   cursor: pointer;
   transition-property: color, background-color, transform;
-  transition-duration: var(--klc-motion-dur-fast), var(--klc-motion-dur-fast), var(--klc-motion-dur-press);
+  transition-duration: var(--klc-motion-dur-fast);
   transition-timing-function: var(--klc-motion-ease-out);
 }
 .hero-pause:active {

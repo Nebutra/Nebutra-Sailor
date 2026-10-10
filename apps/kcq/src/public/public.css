@@ -277,9 +277,7 @@ a {
   text-underline-offset: 0.2em;
   text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
   transition-property: color, text-decoration-color, background-color, border-color, transform;
-  transition-duration:
-    var(--klc-motion-dur-fast), var(--klc-motion-dur-fast), var(--klc-motion-dur-fast), var(--klc-motion-dur-fast),
-    var(--klc-motion-dur-press);
+  transition-duration: var(--klc-motion-dur-fast);
   transition-timing-function: var(--klc-motion-ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -644,16 +642,17 @@ kbd {
   box-shadow: inset 0 0 0 1.5px var(--kcq-ink-2);
 }
 
-/* Hero entrance (ADR §3 hero row, intensity 3), shared by /home and /investors. The headline
-   rises through a mask (the clip travels with it, so it reads as a line surfacing); copy and
-   actions rise 16px from transparent; the product frame only settles, it never fades, because its
-   image is the LCP element and must paint with the first frame. Pure CSS in the prerendered
+/* Hero entrance (ADR §3 hero row, intensity 3), shared by /home and /investors. Transform and
+   clip only, never opacity: every word and the LCP poster paint in the first frame, so the
+   entrance costs no paint metric. The headline surfaces through a mask at its own baseline (it
+   starts 0.35em low with that strip clipped, then rises into place); copy and actions rise 16px;
+   the product frame settles 24px. Pure CSS in the prerendered
    stylesheet: no script, no flash of finished text, no hidden painted text, never blocks input.
    `backwards` holds each start state through its `--enter-delay`. Uses the individual `translate`
    property, so press transforms on the buttons inside never compete with it. */
 @keyframes kcq-enter-mask {
   from {
-    clip-path: inset(0 -0.1em 100% -0.1em);
+    clip-path: inset(0 -0.1em 0.35em -0.1em);
     translate: 0 0.35em;
   }
   to {
@@ -663,7 +662,6 @@ kbd {
 }
 @keyframes kcq-enter-rise {
   from {
-    opacity: 0;
     translate: 0 16px;
   }
 }
