@@ -119,6 +119,7 @@ string kept its old translation forever.
 | Client payload | landing 66.8 → 32.5 KB (en), 126.4 → 52.6 KB (hi); forge non-tool pages 74.2 → 2.7 KB (en), 131.8 → 4.4 KB (hi). |
 | Translation | `scripts/i18n-translate.mjs` through **Router**: a 5-minute service token minted from `SERVICE_SECRET` against Router's internal relay (or a Router consume key). Absent + stale keys only; `i18n.lock.json` tracks the English each translation came from. Every leaf ICU-validated before it is written. Workflow: sync → translate → gate → PR, on any `en.json` reaching main. SenseNova, lingo.dev, the seeder, the post-processor and the orphan report are gone. |
 | UI library | `UiLabelsProvider` / `useUiLabels` / `DEFAULT_UI_LABELS` in `@nebutra/ui`; a `ui` catalog (`packages/platform/i18n/ui-labels`, zh-Hans hand-written) loaded by `loadUiLabels`, mounted in all five next-intl apps. ColorPicker, DataTable, PromptInputBox, ThemeToggle, GithubInlineDiff and the shared Dialog/Carousel/Breadcrumb/Avatar strings read it. |
+| Inline copy | landing 303 → 14 (40 glyphs/showcases, four about pages, VcDirectory moved into the catalog; 416 English keys, 385 hand-written zh-Hans kept); all surfaces 407 → 118, of which 102 are Forge's registry fields by design. |
 | Fixes found on the way | ICP footer, org switcher / members keys, account route, profile labels, phone sign-in copy, 4 invalid English messages, DataTable `{{count}}`. |
 
 ### Guards (each probed against a planted violation)
@@ -137,7 +138,7 @@ Before the first Router run. This is the honest number the copies used to hide.
 
 | Catalog | Average | Lowest |
 | --- | ---: | --- |
-| landing | 47% | cs, ro, hu 39% |
+| landing | 40% (2 897 strings after the migration) | cs, ro, hu 34% |
 | web | 91% | pt, it, nl 90% |
 | forge | 84% | cs, ro, hu 14% |
 | boot-log | 87% | cs, ro, hu 0% |
