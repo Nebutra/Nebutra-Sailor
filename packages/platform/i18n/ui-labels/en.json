@@ -1,0 +1,69 @@
+{
+  "common": {
+    "close": "Close",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "more": "More",
+    "loadingAvatar": "Loading avatar"
+  },
+  "colorPicker": {
+    "area": "Saturation and brightness",
+    "saturation": "Saturation",
+    "brightness": "Brightness",
+    "hue": "Hue",
+    "alpha": "Opacity",
+    "input": "Colour value",
+    "invalid": "Not a valid colour",
+    "eyeDropper": "Pick a colour from the screen",
+    "format": "Colour format",
+    "swatches": "Preset colours",
+    "trigger": "Pick a colour"
+  },
+  "themeToggle": {
+    "light": "Switch to light theme",
+    "dark": "Switch to dark theme"
+  },
+  "githubInlineDiff": {
+    "diff": "Diff of {fileName}",
+    "addComment": "Add inline comment",
+    "closeThread": "Close thread"
+  },
+  "promptInput": {
+    "upload": "Upload image",
+    "search": "Search",
+    "think": "Think",
+    "canvas": "Canvas",
+    "searchPlaceholder": "Search the web...",
+    "thinkPlaceholder": "Think deeply...",
+    "canvasPlaceholder": "Create on canvas...",
+    "stopGeneration": "Stop generation",
+    "stopRecording": "Stop recording",
+    "sendMessage": "Send message",
+    "voiceMessage": "Voice message"
+  },
+  "dataTable": {
+    "allFields": "All fields",
+    "cellCopyError": "Couldn't copy the cell",
+    "cellCopySuccess": "Cell copied",
+    "clearFilters": "Clear filters",
+    "clearSelection": "Clear selection",
+    "columns": "Columns",
+    "columnSummary": "{count} columns",
+    "copyCellTooltip": "Click to copy",
+    "copyError": "Couldn't copy",
+    "copySuccess": "Copied",
+    "copyUnavailable": "Clipboard unavailable",
+    "copyView": "Copy view",
+    "coreFields": "Core fields",
+    "filterPlaceholder": "Filter {title}…",
+    "multiCellCopySuccess": "Copied {count} cells",
+    "noMatches": "No matches",
+    "pinLeft": "Pin left",
+    "pinRight": "Pin right",
+    "resizeColumn": "Resize column",
+    "presets": "Presets",
+    "selectAll": "Select all",
+    "summary": "{visible} of {total} rows",
+    "tip": "Drag across cells to select, then copy"
+  }
+}

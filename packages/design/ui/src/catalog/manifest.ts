@@ -65,6 +65,8 @@ export const INTERNAL_FILES: readonly string[] = [
   "primitives/control-glyph.tsx",
   "primitives/form-control.ts",
   "primitives/overlay.ts",
+  // The labels contract (provider + defaults), not a component with a demo.
+  "primitives/ui-labels.tsx",
 ];
 
 export const CATALOG: readonly CatalogEntry[] = [

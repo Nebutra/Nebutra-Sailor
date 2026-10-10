@@ -1,0 +1,69 @@
+{
+  "common": {
+    "close": "关闭",
+    "previousSlide": "上一张",
+    "nextSlide": "下一张",
+    "more": "更多",
+    "loadingAvatar": "正在加载头像"
+  },
+  "colorPicker": {
+    "area": "饱和度与亮度",
+    "saturation": "饱和度",
+    "brightness": "亮度",
+    "hue": "色相",
+    "alpha": "不透明度",
+    "input": "颜色值",
+    "invalid": "不是有效的颜色",
+    "eyeDropper": "从屏幕取色",
+    "format": "颜色格式",
+    "swatches": "预设颜色",
+    "trigger": "选择颜色"
+  },
+  "themeToggle": {
+    "light": "切换到浅色主题",
+    "dark": "切换到深色主题"
+  },
+  "githubInlineDiff": {
+    "diff": "{fileName} 的差异",
+    "addComment": "添加行内评论",
+    "closeThread": "关闭讨论"
+  },
+  "promptInput": {
+    "upload": "上传图片",
+    "search": "搜索",
+    "think": "深度思考",
+    "canvas": "画布",
+    "searchPlaceholder": "搜索网络…",
+    "thinkPlaceholder": "深入思考…",
+    "canvasPlaceholder": "在画布上创作…",
+    "stopGeneration": "停止生成",
+    "stopRecording": "停止录音",
+    "sendMessage": "发送消息",
+    "voiceMessage": "语音消息"
+  },
+  "dataTable": {
+    "allFields": "全部字段",
+    "cellCopyError": "无法复制该单元格",
+    "cellCopySuccess": "已复制单元格",
+    "clearFilters": "清除筛选",
+    "clearSelection": "清除选择",
+    "columns": "列",
+    "columnSummary": "{count} 列",
+    "copyCellTooltip": "点击复制",
+    "copyError": "无法复制",
+    "copySuccess": "已复制",
+    "copyUnavailable": "剪贴板不可用",
+    "copyView": "复制视图",
+    "coreFields": "核心字段",
+    "filterPlaceholder": "筛选{title}…",
+    "multiCellCopySuccess": "已复制 {count} 个单元格",
+    "noMatches": "无匹配结果",
+    "pinLeft": "固定在左侧",
+    "pinRight": "固定在右侧",
+    "resizeColumn": "调整列宽",
+    "presets": "预设",
+    "selectAll": "全选",
+    "summary": "共 {total} 行，显示 {visible} 行",
+    "tip": "拖动选择单元格，然后复制"
+  }
+}

@@ -25,6 +25,7 @@
     "./request": "./src/request.ts",
     "./request-config": "./src/request-config.ts",
     "./messages": "./src/messages.ts",
+    "./ui-labels": "./src/ui-labels.ts",
     "./resolve-locale": "./src/resolve-locale.ts",
     "./routing": "./src/routing.ts",
     "./locale-switcher": "./src/locale-switcher.tsx",

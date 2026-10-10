@@ -15,6 +15,11 @@ import { Button } from "../../primitives/button";
 import { Textarea } from "../../primitives/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../primitives/tooltip";
 import {
+  DEFAULT_UI_LABELS,
+  type PromptInputBoxLabels,
+  useUiLabels,
+} from "../../primitives/ui-labels";
+import {
   AnimatePresence,
   domAnimation,
   LazyMotion,
@@ -470,34 +475,10 @@ function PromptSubmitAction({
 }
 
 // PromptInputBox — State & Reducer
-/** Every visible and accessible string the prompt box renders. */
-export interface PromptInputBoxLabels {
-  upload: string;
-  search: string;
-  think: string;
-  canvas: string;
-  searchPlaceholder: string;
-  thinkPlaceholder: string;
-  canvasPlaceholder: string;
-  stopGeneration: string;
-  stopRecording: string;
-  sendMessage: string;
-  voiceMessage: string;
-}
+export type { PromptInputBoxLabels };
 
-export const DEFAULT_PROMPT_INPUT_BOX_LABELS: PromptInputBoxLabels = {
-  upload: "Upload image",
-  search: "Search",
-  think: "Think",
-  canvas: "Canvas",
-  searchPlaceholder: "Search the web...",
-  thinkPlaceholder: "Think deeply...",
-  canvasPlaceholder: "Create on canvas...",
-  stopGeneration: "Stop generation",
-  stopRecording: "Stop recording",
-  sendMessage: "Send message",
-  voiceMessage: "Voice message",
-};
+/** @deprecated read DEFAULT_UI_LABELS.promptInput from @nebutra/ui/primitives */
+export const DEFAULT_PROMPT_INPUT_BOX_LABELS = DEFAULT_UI_LABELS.promptInput;
 
 export interface PromptInputBoxProps {
   onSend?: (message: string, files?: File[]) => void;
@@ -595,7 +576,7 @@ export const PromptInputBox: React.FC<PromptInputBoxProps> = (props) => {
     className,
     ref,
   } = props;
-  const labels = { ...DEFAULT_PROMPT_INPUT_BOX_LABELS, ...props.labels };
+  const labels = useUiLabels("promptInput", props.labels);
   const [state, dispatch] = React.useReducer(promptInputBoxReducer, promptInputBoxInitialState);
   const {
     input,

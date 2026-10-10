@@ -14,6 +14,7 @@ import type { CSSProperties } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useDebounceValue } from "usehooks-ts";
+import { useUiLabels } from "../../../primitives/ui-labels";
 import { createDataTableTranslator } from "../labels";
 import type { DataTableProps } from "../types";
 import { getFilterValue, getPinnedStyles } from "../utils";
@@ -39,7 +40,9 @@ export function useDataTable<TData>(props: DataTableProps<TData>) {
     enableCellSelection = false,
   } = props;
 
-  const t = useMemo(() => createDataTableTranslator(props.labels), [props.labels]);
+  // English ← the app's UiLabelsProvider ← this table's own labels prop.
+  const labels = useUiLabels("dataTable", props.labels);
+  const t = useMemo(() => createDataTableTranslator(labels), [labels]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearchQuery] = useDebounceValue(searchQuery, 300);

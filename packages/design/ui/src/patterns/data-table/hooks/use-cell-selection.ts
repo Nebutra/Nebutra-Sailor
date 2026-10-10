@@ -17,7 +17,7 @@ export interface SelectionRect {
 
 export interface UseCellSelectionOptions<TData> {
   table: Table<TData>;
-  t: (key: string) => string;
+  t: (key: string, values?: Record<string, string | number>) => string;
   enabled?: boolean;
 }
 
@@ -197,7 +197,7 @@ export function useCellSelection<TData>({
       await navigator.clipboard.writeText(text);
       const cellCount =
         (selectionRect.endRow - selectionRect.startRow + 1) * selectionRect.colIds.length;
-      toast.success(t("common.table.multiCellCopySuccess").replace("{{count}}", String(cellCount)));
+      toast.success(t("common.table.multiCellCopySuccess", { count: cellCount }));
     } catch (error) {
       console.error(error);
       toast.error(t("common.table.cellCopyError"));

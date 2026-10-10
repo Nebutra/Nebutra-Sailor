@@ -24,7 +24,7 @@ on:
   workflow_dispatch:
     inputs:
       catalog:
-        description: "Catalog id (landing|web|forge|boot-log|router) or all"
+        description: "Catalog id (landing|web|forge|boot-log|ui|router) or all"
         required: false
         default: "all"
       locales:
@@ -41,6 +41,7 @@ on:
       - "apps/landing/messages/en.json"
       - "packages/platform/i18n/locales/en.json"
       - "packages/platform/i18n/boot-log/en.json"
+      - "packages/platform/i18n/ui-labels/en.json"
       - "apps/forge/messages/en.json"
       - "apps/router/messages/en.json"
 

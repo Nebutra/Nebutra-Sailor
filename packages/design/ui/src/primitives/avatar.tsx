@@ -4,6 +4,7 @@ import { Avatar as BaseAvatar } from "@base-ui/react/avatar";
 import * as React from "react";
 import { type AvatarSize as AvatarPresetSize, avatarTokens } from "../tokens/components/avatar";
 import { cn } from "../utils/cn";
+import { UiLabelText } from "./ui-labels";
 
 export type AvatarSize = AvatarPresetSize | number;
 
@@ -162,7 +163,13 @@ const Avatar = ({
           <>
             {src && <AvatarImage src={src} alt={label} />}
             <AvatarFallback size={size} delay={fallbackDelayMs}>
-              {placeholder ? <span className="sr-only">Loading avatar</span> : fallback}
+              {placeholder ? (
+                <span className="sr-only">
+                  <UiLabelText section="common" name="loadingAvatar" />
+                </span>
+              ) : (
+                fallback
+              )}
             </AvatarFallback>
           </>
         ) : (

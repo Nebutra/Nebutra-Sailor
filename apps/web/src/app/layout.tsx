@@ -22,6 +22,8 @@ import { getNonce } from "@/lib/nonce";
 import { QueryProvider } from "./providers";
 import { ThemeShell } from "./providers/theme-provider";
 import "./globals.css";
+import { loadUiLabels } from "@nebutra/i18n/ui-labels";
+import { UiLabelsProvider } from "@nebutra/ui/primitives";
 
 // GeistSans → --font-geist-sans (variable font, 100–900)
 // GeistMono → --font-geist-mono (variable font, 100–900)
@@ -118,15 +120,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <AuthProvider provider={authProvider} config={authProviderConfig}>
           <ThemeShell nonce={nonce}>
             <NextIntlClientProvider messages={messages}>
-              <DesignSystemProvider>
-                <QueryProvider>
-                  <PostHogProvider>
-                    <ErrorBoundary>{children}</ErrorBoundary>
-                  </PostHogProvider>
-                </QueryProvider>
-              </DesignSystemProvider>
-              {/* Global toast outlet — every app surface can call `toast.*` */}
-              <Toaster />
+              <UiLabelsProvider labels={await loadUiLabels(locale)}>
+                <DesignSystemProvider>
+                  <QueryProvider>
+                    <PostHogProvider>
+                      <ErrorBoundary>{children}</ErrorBoundary>
+                    </PostHogProvider>
+                  </QueryProvider>
+                </DesignSystemProvider>
+                {/* Global toast outlet — every app surface can call `toast.*` */}
+                <Toaster />
+              </UiLabelsProvider>
             </NextIntlClientProvider>
           </ThemeShell>
         </AuthProvider>

@@ -442,6 +442,7 @@ export {
   TooltipTrigger,
 } from "./tooltip";
 export * from "./tree";
+export * from "./ui-labels";
 export * from "./use-confirm";
 export * from "./warp-background";
 export * from "./wave-animation";

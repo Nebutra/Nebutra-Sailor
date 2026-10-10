@@ -6,6 +6,7 @@ import { motion } from "../shared/animation/motion";
 import { type ThemeToggleSize, themeToggleTokens } from "../tokens/components/theme-toggle";
 import { cn } from "../utils/cn";
 import { asPlainStyle } from "../utils/primitive-props";
+import { useUiLabels } from "./ui-labels";
 
 type MotionButtonProps = React.ComponentProps<typeof motion.button>;
 type MotionStyle = NonNullable<MotionButtonProps["style"]>;
@@ -49,11 +50,6 @@ export interface ThemeToggleProps extends NativeButtonProps {
   /** Action labels. `dark` is announced while the control is in light mode, and vice versa. */
   labels?: Partial<Record<ThemeToggleValue, string>>;
 }
-
-const DEFAULT_LABELS = {
-  light: "Switch to light theme",
-  dark: "Switch to dark theme",
-} as const satisfies Record<ThemeToggleValue, string>;
 
 let themeToggleAudioContext: AudioContext | null = null;
 let themeToggleAudioBuffer: AudioBuffer | null = null;
@@ -161,6 +157,7 @@ export const ThemeToggle = ({
   ref,
   ...props
 }: ThemeToggleProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const resolvedLabels = useUiLabels("themeToggle", labels);
   const rawId = React.useId();
   const maskId = `theme-toggle-mask-${rawId.replace(/:/g, "")}`;
   const shouldReduceMotion = useReducedMotion();
@@ -179,9 +176,7 @@ export const ThemeToggle = ({
 
   const currentValue = value ?? internalValue;
   const isDark = currentValue === "dark";
-  const actionLabel = isDark
-    ? (labels?.light ?? DEFAULT_LABELS.light)
-    : (labels?.dark ?? DEFAULT_LABELS.dark);
+  const actionLabel = isDark ? resolvedLabels.light : resolvedLabels.dark;
   const transition: MotionTransition =
     shouldReduceMotion || !mounted
       ? themeToggleTokens.motion.instant

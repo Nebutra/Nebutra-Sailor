@@ -74,6 +74,15 @@ export const CATALOGS = [
     ],
   },
   {
+    id: "ui",
+    messagesDir: "packages/platform/i18n/ui-labels",
+    source: "en",
+    targets: GLOBAL_TARGETS,
+    // en.json mirrors DEFAULT_UI_LABELS in @nebutra/ui (primitives/ui-labels.tsx);
+    // tests/architecture/i18n-contract.test.ts keeps them equal.
+    description: "@nebutra/ui component labels (close buttons, colour picker, data table…)",
+  },
+  {
     id: "router",
     messagesDir: "apps/router/messages",
     source: "en",

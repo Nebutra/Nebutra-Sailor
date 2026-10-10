@@ -3,6 +3,7 @@ import { ChevronRight, MoreHorizontal } from "@nebutra/icons";
 import type * as React from "react";
 import { cn } from "../utils";
 import { Slot } from "../utils/slot";
+import { UiLabelText } from "./ui-labels";
 // =============================================================================
 // Types
 // =============================================================================
@@ -211,7 +212,9 @@ const BreadcrumbEllipsis = ({ className, ...props }: BreadcrumbEllipsisProps) =>
     {...props}
   >
     <MoreHorizontal className="h-4 w-4" />
-    <span className="sr-only">More</span>
+    <span className="sr-only">
+      <UiLabelText section="common" name="more" />
+    </span>
   </span>
 );
 BreadcrumbEllipsis.displayName = "BreadcrumbEllipsis";

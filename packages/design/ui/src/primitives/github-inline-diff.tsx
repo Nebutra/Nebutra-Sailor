@@ -13,6 +13,12 @@ import { Button } from "./button";
 import { Separator } from "./separator";
 import { Textarea } from "./textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
+import {
+  DEFAULT_UI_LABELS,
+  formatLabel,
+  type GithubInlineDiffLabels,
+  useUiLabels,
+} from "./ui-labels";
 
 // =============================================================================
 // Types
@@ -55,17 +61,10 @@ export interface GithubInlineDiffProps {
   className?: string;
 }
 
-export interface GithubInlineDiffLabels {
-  diff: (fileName: string) => string;
-  addComment: string;
-  closeThread: string;
-}
+export type { GithubInlineDiffLabels };
 
-export const DEFAULT_GITHUB_INLINE_DIFF_LABELS: GithubInlineDiffLabels = {
-  diff: (fileName) => `Diff of ${fileName}`,
-  addComment: "Add inline comment",
-  closeThread: "Close thread",
-};
+/** @deprecated read DEFAULT_UI_LABELS.githubInlineDiff from ./ui-labels */
+export const DEFAULT_GITHUB_INLINE_DIFF_LABELS = DEFAULT_UI_LABELS.githubInlineDiff;
 
 // =============================================================================
 // InlineThread Component
@@ -259,7 +258,7 @@ export function GithubInlineDiff({
   labels: labelOverrides,
   className,
 }: GithubInlineDiffProps) {
-  const labels = { ...DEFAULT_GITHUB_INLINE_DIFF_LABELS, ...labelOverrides };
+  const labels = useUiLabels("githubInlineDiff", labelOverrides);
   const rows = Array.isArray(diff) ? diff : ([] as readonly DiffLine[]);
 
   const [openThreadAt, setOpenThreadAt] = useState<number | null>(null);
@@ -285,7 +284,11 @@ export function GithubInlineDiff({
       {/* biome-ignore lint/a11y/useSemanticElements: ARIA custom grid */}
       <div
         role="table"
-        aria-label={labels.diff(fileName)}
+        aria-label={
+          typeof labels.diff === "function"
+            ? labels.diff(fileName)
+            : formatLabel(labels.diff, { fileName })
+        }
         className={cn("rounded-[var(--radius-md)] border bg-card", className)}
       >
         <div className="flex items-center justify-between border-b px-2 py-1">

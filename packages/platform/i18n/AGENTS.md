@@ -22,8 +22,12 @@ This package owns:
 | Canonical BCP-47 tags | `src/locales.ts` → `CANONICAL_LOCALES` |
 | Locale cookie name | `src/cookies.ts` → `NEXT_LOCALE` (`LOCALE_COOKIE`) |
 | Routing helpers | `src/routing.ts` |
-| Request-time locale + messages | `src/request.ts` |
-| Message catalogs | `locales/*.json` |
+| Request-time locale + messages | `src/request-config.ts` → `createCookieRequestConfig` (cookie → Accept-Language → en); `src/request.ts` is the shared catalog's instance |
+| Message loading (every app) | `src/messages.ts` → `loadMessages` (English underneath, translations on top), `pickMessages` (client payload pruning) |
+| Locale resolution | `src/resolve-locale.ts` → `resolveRequestLocale`, `negotiateAcceptLanguage` |
+| @nebutra/ui label translations | `ui-labels/*.json` + `src/ui-labels.ts` → `loadUiLabels` (feeds `<UiLabelsProvider>`) |
+| Message catalogs | `locales/*.json` (web/auth), `boot-log/*.json`, `ui-labels/*.json` |
+| Catalog contract, sync, gate, translator | `scripts/lib/i18n-catalog.mjs`, `scripts/i18n-sync.mjs`, `scripts/verify-i18n-keys.mjs`, `scripts/i18n-translate.mjs` — see `docs/i18n/message-catalogs.md` |
 | Shared panel shell (internal) | `src/locale-panel.tsx` → `LocalePanel` |
 | Product language switcher | `./locale-switcher` → `createLocaleSwitcher` |
 | Marketing market×language picker | `./market-locale-picker` → `createMarketLocalePicker` |
@@ -154,9 +158,9 @@ picker business logic but shares `LocalePanel`.
 - Treat `src/request.ts` as the canonical request-side fallback and dynamic
   message-loading behavior. Cookie mode depends on `NEXT_LOCALE` matching
   canonicalized BCP-47 values written by the switcher.
-- Treat `locales/*.json` as the checked-in source for shared messages. Do not
-  hand-edit compiled message output or duplicate messages into app code when the
-  package catalog should change instead.
+- Treat `locales/en.json` as the source for shared messages. Other locale files
+  hold translations only — never copy English into them (the gate rejects it);
+  an untranslated key is absent and renders English via `loadMessages`.
 - Keep product-specific marketing copy in next-intl message catalogs (app or
   package), not in new TypeScript branching.
 - Preserve export compatibility for `./request`, `./routing`,

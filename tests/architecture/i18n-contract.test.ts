@@ -15,6 +15,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { jwtVerify } from "jose";
 import { afterAll, describe, expect, it } from "vitest";
+import { DEFAULT_UI_LABELS } from "../../packages/design/ui/src/primitives/ui-labels";
 import { PRODUCT_LANGUAGES } from "../../packages/platform/i18n/src/languages";
 import { CATALOGS } from "../../scripts/i18n-catalogs.mjs";
 import { advanceSources, syncLocale } from "../../scripts/i18n-sync.mjs";
@@ -211,6 +212,26 @@ describe("one registry, one loader", () => {
       icuMismatch("{count, plural, one {# user} other {# users}}", "共 {count} 个用户"),
     ).toBeNull();
     expect(icuShape("{n, plural, one {#}}").ok).toBe(false);
+  });
+
+  it("the ui catalog's English is @nebutra/ui's DEFAULT_UI_LABELS, key for key", () => {
+    const en = JSON.parse(
+      readFileSync(join(ROOT, "packages/platform/i18n/ui-labels/en.json"), "utf8"),
+    );
+    expect(en).toEqual(JSON.parse(JSON.stringify(DEFAULT_UI_LABELS)));
+  });
+
+  it("every next-intl app mounts the ui labels provider", () => {
+    for (const layout of [
+      "apps/landing/src/app/[lang]/layout.tsx",
+      "apps/web/src/app/layout.tsx",
+      "apps/auth/src/app/layout.tsx",
+      "apps/forge/src/app/layout.tsx",
+      "apps/router/src/app/layout.tsx",
+    ]) {
+      const source = readFileSync(join(ROOT, layout), "utf8");
+      expect(source, layout).toMatch(/<UiLabelsProvider labels=\{await loadUiLabels\(/);
+    }
   });
 
   it("every next-intl request config goes through @nebutra/i18n", () => {

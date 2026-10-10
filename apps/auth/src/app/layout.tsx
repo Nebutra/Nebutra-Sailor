@@ -5,6 +5,8 @@ import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
 import { CjkFontFace } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
+import { loadUiLabels } from "@nebutra/i18n/ui-labels";
+import { UiLabelsProvider } from "@nebutra/ui/primitives";
 
 export const metadata: Metadata = {
   title: `${brand.name} Auth`,
@@ -22,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <CjkFontFace />
 
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <UiLabelsProvider labels={await loadUiLabels(locale)}>{children}</UiLabelsProvider>
         </NextIntlClientProvider>
       </body>
     </html>

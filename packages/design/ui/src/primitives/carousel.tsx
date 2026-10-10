@@ -5,6 +5,7 @@ import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-reac
 import * as React from "react";
 import { cn } from "../utils/cn";
 import { Button } from "./button";
+import { UiLabelText } from "./ui-labels";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -210,7 +211,9 @@ const CarouselPrevious = ({
       {...props}
     >
       <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-      <span className="sr-only">Previous slide</span>
+      <span className="sr-only">
+        <UiLabelText section="common" name="previousSlide" />
+      </span>
     </Button>
   );
 };
@@ -242,7 +245,9 @@ const CarouselNext = ({
       {...props}
     >
       <ArrowRight className="h-4 w-4" aria-hidden="true" />
-      <span className="sr-only">Next slide</span>
+      <span className="sr-only">
+        <UiLabelText section="common" name="nextSlide" />
+      </span>
     </Button>
   );
 };

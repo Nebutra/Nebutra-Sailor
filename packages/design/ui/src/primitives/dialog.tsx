@@ -7,6 +7,7 @@ import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
+import { UiLabelText } from "./ui-labels";
 
 // We keep these standard export names so the rest of the application using Nebutra UI doesn't break.
 const Dialog = BaseDialog.Root;
@@ -105,7 +106,9 @@ const DialogContent = ({
       {children}
       <DialogClose className={overlayClassNames.closeButton}>
         <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
+        <span className="sr-only">
+          <UiLabelText section="common" name="close" />
+        </span>
       </DialogClose>
     </BaseDialog.Popup>
   </DialogPortal>

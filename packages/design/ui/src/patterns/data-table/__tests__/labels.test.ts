@@ -12,6 +12,6 @@ describe("DataTable labels", () => {
     const t = createDataTableTranslator({ columns: "列", filterPlaceholder: "筛选 {title}" });
     expect(t("common.table.columns")).toBe("列");
     expect(t("common.table.filterPlaceholder", { title: "状态" })).toBe("筛选 状态");
-    expect(t("common.table.multiCellCopySuccess")).toContain("{{count}}");
+    expect(t("common.table.multiCellCopySuccess", { count: 3 })).toBe("Copied 3 cells");
   });
 });

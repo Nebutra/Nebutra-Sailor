@@ -21,6 +21,7 @@ import {
 import { Input } from "./input";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { ToggleGroup, ToggleGroupItem } from "./toggle-group";
+import { type ColorPickerLabels, useUiLabels } from "./ui-labels";
 
 /* -------------------------------------------------------------------------- */
 /* Public API                                                                  */
@@ -37,33 +38,7 @@ export interface ColorPickerDetails {
   hsva: Hsva;
 }
 
-export interface ColorPickerLabels {
-  area: string;
-  saturation: string;
-  brightness: string;
-  hue: string;
-  alpha: string;
-  input: string;
-  invalid: string;
-  eyeDropper: string;
-  format: string;
-  swatches: string;
-  trigger: string;
-}
-
-const DEFAULT_LABELS: ColorPickerLabels = {
-  area: "Saturation and brightness",
-  saturation: "Saturation",
-  brightness: "Brightness",
-  hue: "Hue",
-  alpha: "Opacity",
-  input: "Colour value",
-  invalid: "Not a valid colour",
-  eyeDropper: "Pick a colour from the screen",
-  format: "Colour format",
-  swatches: "Preset colours",
-  trigger: "Pick a colour",
-};
+export type { ColorPickerLabels };
 
 export interface ColorPickerProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "onChange" | "defaultValue"> {
@@ -428,7 +403,7 @@ function ColorPicker({
   className,
   ...props
 }: ColorPickerProps) {
-  const labels = { ...DEFAULT_LABELS, ...labelOverrides };
+  const labels = useUiLabels("colorPicker", labelOverrides);
   const [hsva, setHsvaState] = React.useState<Hsva>(() => toHsva(value ?? defaultValue, alpha));
   const hsvaRef = React.useRef(hsva);
   const [formatState, setFormatState] = React.useState<ColorFormat>(defaultFormat);
@@ -703,7 +678,7 @@ function ColorPickerPopover({
   className,
   ...pickerProps
 }: ColorPickerPopoverProps) {
-  const labels = { ...DEFAULT_LABELS, ...labelOverrides };
+  const labels = useUiLabels("colorPicker", labelOverrides);
   // The default trigger shows the live colour, so it tracks it even when uncontrolled.
   const [tracked, setTracked] = React.useState(value ?? defaultValue);
   const shown = value ?? tracked;

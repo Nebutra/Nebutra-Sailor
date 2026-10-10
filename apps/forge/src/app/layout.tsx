@@ -10,6 +10,8 @@ import { getBrandOrigin, publicAssetUrl } from "@nebutra/brand/metadata-helpers"
 import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { pickMessages } from "@nebutra/i18n/messages";
+import { loadUiLabels } from "@nebutra/i18n/ui-labels";
+import { UiLabelsProvider } from "@nebutra/ui/primitives";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
@@ -140,13 +142,15 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <CjkFontFace />
 
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <AuthProvider provider={authProvider} config={authProviderConfig}>
-            <SiteHeader signInHref={signInHref} signUpHref={signUpHref} />
-            <main id="main" className="flex-1">
-              {children}
-            </main>
-            <SiteFooter />
-          </AuthProvider>
+          <UiLabelsProvider labels={await loadUiLabels(locale)}>
+            <AuthProvider provider={authProvider} config={authProviderConfig}>
+              <SiteHeader signInHref={signInHref} signUpHref={signUpHref} />
+              <main id="main" className="flex-1">
+                {children}
+              </main>
+              <SiteFooter />
+            </AuthProvider>
+          </UiLabelsProvider>
         </NextIntlClientProvider>
       </body>
     </html>

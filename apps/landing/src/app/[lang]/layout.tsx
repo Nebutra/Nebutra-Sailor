@@ -7,7 +7,8 @@ import {
 import { CjkFontFace } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { pickMessages } from "@nebutra/i18n/messages";
-import { Toaster } from "@nebutra/ui/primitives";
+import { loadUiLabels } from "@nebutra/i18n/ui-labels";
+import { Toaster, UiLabelsProvider } from "@nebutra/ui/primitives";
 import type { Metadata, Viewport } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
@@ -231,28 +232,30 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
         <Providers>
           <ErrorBoundary>
             <NextIntlClientProvider locale={locale} messages={clientMessages}>
-              {/*
-               * No <Suspense> around the page. React 19 streams any completed
-               * boundary larger than ~12.8 KB of document out of line: the
-               * fallback stays in place and the page arrives in a
-               * `<div hidden>` that an inline script swaps in. A reader that
-               * runs no JavaScript — GPTBot, ClaudeBot, PerplexityBot, most
-               * HTML-to-text extractors — saw "Loading…" on every page. Page
-               * content belongs in the shell; only request-time islands get a
-               * boundary of their own. Guarded by scripts/verify-landing-ssr.mjs.
-               */}
-              {children}
-              {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
-                <IcpFooter
-                  locale={locale}
-                  icpNumber={process.env.NEXT_PUBLIC_ICP_NUMBER}
-                  publicSecurityRecord={process.env.NEXT_PUBLIC_PUBLIC_SECURITY_RECORD}
-                />
-              ) : null}
-              {/* Global toast outlet — landing surfaces (e.g. changelog) can call `toast.*` */}
-              <Toaster />
-              <CookieConsentBanner />
-              {PRESET_PREVIEW ? <PresetPreview /> : null}
+              <UiLabelsProvider labels={await loadUiLabels(locale)}>
+                {/*
+                 * No <Suspense> around the page. React 19 streams any completed
+                 * boundary larger than ~12.8 KB of document out of line: the
+                 * fallback stays in place and the page arrives in a
+                 * `<div hidden>` that an inline script swaps in. A reader that
+                 * runs no JavaScript — GPTBot, ClaudeBot, PerplexityBot, most
+                 * HTML-to-text extractors — saw "Loading…" on every page. Page
+                 * content belongs in the shell; only request-time islands get a
+                 * boundary of their own. Guarded by scripts/verify-landing-ssr.mjs.
+                 */}
+                {children}
+                {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
+                  <IcpFooter
+                    locale={locale}
+                    icpNumber={process.env.NEXT_PUBLIC_ICP_NUMBER}
+                    publicSecurityRecord={process.env.NEXT_PUBLIC_PUBLIC_SECURITY_RECORD}
+                  />
+                ) : null}
+                {/* Global toast outlet — landing surfaces (e.g. changelog) can call `toast.*` */}
+                <Toaster />
+                <CookieConsentBanner />
+                {PRESET_PREVIEW ? <PresetPreview /> : null}
+              </UiLabelsProvider>
             </NextIntlClientProvider>
           </ErrorBoundary>
         </Providers>
