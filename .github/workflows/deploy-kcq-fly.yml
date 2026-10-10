@@ -252,14 +252,16 @@ jobs:
       # the missing permission; the origin headers are correct either way.
       - name: Apply Cloudflare edge cache rules
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # A dedicated least-privilege token (Zone: Cache Rules Edit, Cache Purge, Zone Settings
+          # Edit, Zone Read on nebutra.com) when present; the general deploy token otherwise.
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           bash infra/ops/scripts/apply-kcq-edge-cache.sh rules
           bash infra/ops/scripts/apply-kcq-edge-cache.sh tiered
 
       - name: Purge public pages from the Cloudflare edge
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           HTML_ROOT: ${{ env.STAGE }}/html
         run: bash infra/ops/scripts/apply-kcq-edge-cache.sh purge
 
