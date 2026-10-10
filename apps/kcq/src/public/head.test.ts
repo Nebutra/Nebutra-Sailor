@@ -22,10 +22,10 @@ describe("publicHead", () => {
   });
 
   it("keeps every page title and description distinct per locale", () => {
-    const titles = (["home", "benchmark"] as const).flatMap((page) =>
+    const titles = (["home", "benchmark", "investors"] as const).flatMap((page) =>
       (["en", "zh"] as const).map((locale) => publicHead(page, locale).title),
     );
-    expect(new Set(titles).size).toBe(4);
+    expect(new Set(titles).size).toBe(6);
   });
 
   it("points OG and Twitter at the 1200 × 630 card of the page's locale", () => {
@@ -38,6 +38,13 @@ describe("publicHead", () => {
     expect(meta("og:image:alt")).toBeTruthy();
     expect(meta("twitter:card")).toBe("summary_large_image");
     expect(ogImageUrl("en")).not.toBe(ogImageUrl("zh"));
+  });
+
+  it("gives /investors its own card and the benchmark the home card", () => {
+    const image = (page: "investors" | "benchmark") =>
+      publicHead(page, "en").meta.find((tag) => "property" in tag && tag.property === "og:image")?.content;
+    expect(image("investors")).toMatch(/\/og\/investors-en\.png\?v=/);
+    expect(image("benchmark")).toBe(ogImageUrl("en"));
   });
 
   it("keeps 404 pages out of the index with no canonical", () => {

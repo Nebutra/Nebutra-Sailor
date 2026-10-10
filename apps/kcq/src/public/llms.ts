@@ -6,8 +6,9 @@
  */
 import facts from "virtual:kcq-facts";
 import { SNIPPETS } from "./home/developer-snippets";
+import { INVESTOR_EMAIL } from "./investors/contact";
 import { INSTALL_COMMAND, LINKS } from "./links";
-import { APP_PATH, KCQ_ORIGIN, PUBLIC_ROUTES } from "./routes";
+import { APP_PATH, KCQ_ORIGIN, PUBLIC_ROUTES, publicPath } from "./routes";
 
 export function renderLlmsTxt(): string {
   const tools = facts.tools.names.map(
@@ -45,6 +46,11 @@ export function renderLlmsTxt(): string {
     "## Pages",
     "",
     ...PUBLIC_ROUTES.map((route) => `- ${KCQ_ORIGIN}${route.path} (${route.page}, ${route.locale})`),
+    "",
+    "## Investors and partners",
+    "",
+    "KLineChartQuant is raising its seed round and looking for design partners. The business plan is",
+    `sent on request: write to ${INVESTOR_EMAIL}. Overview: ${KCQ_ORIGIN}${publicPath("investors", "en")}`,
     "",
     "## Notes",
     "",

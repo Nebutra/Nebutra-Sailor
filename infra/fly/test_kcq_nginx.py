@@ -40,7 +40,7 @@ class NginxRoutesTest(unittest.TestCase):
 
     def test_public_pages_and_root_redirect(self):
         blocks = dict(locations(self.conf))
-        self.assertIn("try_files $uri.html =404;", blocks["~ ^/(zh/)?(home|benchmark)$"])
+        self.assertIn("try_files $uri.html =404;", blocks["~ ^/(zh/)?(home|benchmark|investors)$"])
         self.assertIn("return 302 /app$is_args$args;", blocks["= /"])
         self.assertRegex(self.conf, r"\n\s*absolute_redirect off;")
 

@@ -34,6 +34,7 @@ const columns = computed<{ heading: string; links: Link[] }[]>(() => [
     links: [
       { label: t("footer.workstation"), href: APP_PATH },
       { label: t("footer.benchmark"), href: publicPath("benchmark", props.locale), route: true },
+      { label: t("footer.investors"), href: publicPath("investors", props.locale), route: true },
       { label: t("footer.changelog"), href: LINKS.releases, external: true },
       { label: brand.name, href: nebutra, external: true },
     ],

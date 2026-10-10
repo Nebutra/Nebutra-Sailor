@@ -2,12 +2,14 @@ import { describe, expect, it } from "vitest";
 import { KCQ_ORIGIN, matchPublicRoute, PUBLIC_ROUTES, publicAlternates } from "./routes";
 
 describe("public routes", () => {
-  it("serves exactly the four indexed pages", () => {
+  it("serves exactly the six indexed pages", () => {
     expect(PUBLIC_ROUTES.map((route) => route.path)).toEqual([
       "/home",
       "/zh/home",
       "/benchmark",
       "/zh/benchmark",
+      "/investors",
+      "/zh/investors",
     ]);
     expect(KCQ_ORIGIN).toBe("https://kcq.nebutra.com");
   });

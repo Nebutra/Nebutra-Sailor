@@ -175,6 +175,147 @@ const en = {
       github: "View on GitHub",
     },
   },
+  investors: {
+    title: "Investors and partners · KLineChartQuant",
+    description:
+      "KLineChartQuant is building the chart engine that AI agents can operate. We're raising our seed round and looking for design partners. Write to us for the deck.",
+    ogAlt: "KLineChartQuant is building the chart engine that AI agents can operate.",
+    heading: "KLineChartQuant is building the chart engine that AI agents can operate.",
+    hero: {
+      kicker: "Investors and partners",
+      lede: "Brokerage apps, market terminals and quant tools are adding AI agents. KLineChartQuant gives the agent the chart the user is already looking at: it looks up a symbol, queries the bars and draws on the chart through tools with a declared safety level.",
+      stage: "We're raising our seed round and looking for design partners. We send the deck on request.",
+      primary: "Request the deck",
+      secondary: "Open the workstation",
+    },
+    session: {
+      label: "601360 · real session · September 2026",
+      caption:
+        "Asked for every consolidation range on 601360 over the past year, the agent looked up the symbol, read a year of daily bars and boxed each range on the chart.",
+      alt: "The KLineChartQuant workstation: a 601360 daily chart with blue boxes around its price ranges, and the agent panel listing the tool calls that drew them.",
+    },
+    shifts: {
+      heading: "Agents are moving into financial software",
+      lede: "Three changes put the chart in the middle of that move.",
+      items: [
+        {
+          title: "Agents use software now",
+          body: "Assistants have moved from answering in a chat window to calling tools inside the apps people already work in.",
+        },
+        {
+          title: "Financial work happens on the chart",
+          body: "Traders and analysts draw levels, stack indicators and compare symbols on a chart before they decide anything.",
+        },
+        {
+          title: "One product ships everywhere",
+          body: "Teams want one chart core they can carry from the browser to the desktop app and the phone.",
+        },
+      ],
+    },
+    tools: {
+      heading: "The agent works the chart through tools",
+      body: "It calls the same chart methods the interface calls. Each tool has a JSON Schema and a declared safety level, so a read-only agent can query the chart but not draw on it.",
+      log: "Tool calls from the 601360 session",
+      steps: [
+        "Resolved 601360 to 360 Security Technology on the Shanghai exchange.",
+        "Read a year of daily bars, one page at a time.",
+        "Drew a box around each consolidation range.",
+      ],
+      safety: { "read-only": "Reads", destructive: "Draws" },
+      note: "Calls from a real session on real market data. Not investment advice.",
+    },
+    product: {
+      heading: "The workstation is live in the browser",
+      body: "Open it without an account. A-shares come through GOTDX, global markets through the TradingView feed and crypto depth from Binance.",
+      open: "Open the workstation",
+      facts: { bindings: "Ships as", backends: "Draws with", license: "License" },
+    },
+    cadence: {
+      heading: "Every release ships in public",
+      body: "The engine, its indicators and the agent tools are built on GitHub, and every version is tagged there the day it ships.",
+      count: "{count} tagged releases from {from} to {to}",
+      latest: "Latest",
+      label: "Tagged releases of the open-source engine by date, read from GitHub on {date}. Taller marks are minor versions.",
+      changelog: "Read the changelog",
+    },
+    model: {
+      heading: "Free to adopt, paid once a team depends on it",
+      body: "Teams start with the open-source engine. They pay when the chart becomes part of a product they have to support.",
+      tiers: [
+        { name: "Community", term: "Free · Apache-2.0", body: "The chart engine, the indicators and the agent tools." },
+        {
+          name: "Pro",
+          term: "Team subscription",
+          body: "Professional modules, stable releases, migration tools and priority support.",
+        },
+        {
+          name: "Enterprise",
+          term: "Annual contract",
+          body: "White-label builds, private distribution, long-term support and security reviews.",
+        },
+        {
+          name: "Solutions",
+          term: "Per project",
+          body: "Integration work for one product, with the reusable parts folded back into the engine.",
+        },
+      ],
+      note: "Prices and plans are in the deck.",
+    },
+    audience: {
+      heading: "Built for teams whose product is a chart",
+      items: [
+        { title: "Brokerage apps", body: "A trading terminal in the broker's own brand, on the broker's own data." },
+        { title: "Market-data terminals", body: "An AI assistant added to a terminal that already has users." },
+        { title: "Quant and research tools", body: "Signals and backtests drawn where the analyst already looks." },
+        { title: "Fintech apps", body: "The same chart on the phone as on the web." },
+      ],
+    },
+    roadmap: {
+      heading: "Where it goes next",
+      here: "We're here",
+      items: [
+        { when: "Now", body: "The open-source engine and agent tools, with alpha releases on GitHub." },
+        { when: "Next", body: "Design partners in production and a stable Pro release." },
+        { when: "Then", body: "Enterprise delivery: private distribution and long-term support." },
+        { when: "Later", body: "A standard way for agents to read and act on financial charts." },
+      ],
+    },
+    team: {
+      heading: "The team",
+      lede: "Four people across the chart engine, AI products, enterprise delivery and data.",
+      portrait: "Portrait of {name}",
+      members: [
+        { name: "Ye Yangtian", role: "Founder", focus: "Product, core engineering and financial rendering" },
+        { name: "Tseka Luk", role: "Partner", focus: "AI products, enterprise delivery and commercialization" },
+        { name: "Ma Di", role: "Team lead", focus: "Team organization, algorithms and data analysis" },
+        {
+          name: "Rao Fangtong",
+          role: "Project partner",
+          focus: "International collaboration and cloud-native engineering",
+        },
+      ],
+    },
+    ask: {
+      heading: "We're raising our seed round",
+      body: "Write to us for the deck. It has the round, the plan and the numbers we keep off this page.",
+      investors: {
+        title: "Investors",
+        body: "Ask for the deck, or for a call with the founding team.",
+        cta: "Request the deck",
+        subject: "KLineChartQuant: deck request",
+      },
+      partners: {
+        title: "Design partners",
+        body: "Bring one real chart page from your product, and we'll build it with you.",
+        cta: "Become a design partner",
+        subject: "KLineChartQuant: design partner",
+      },
+      mailBody: "Name:\nFirm:\nWhat you'd like to talk about:\n",
+      direct: "Or write to",
+      copy: "Copy the email address",
+      copied: "Email address copied",
+    },
+  },
   footer: {
     endorsement: "by",
     product: "Product",
@@ -183,6 +324,7 @@ const en = {
     community: "Community",
     workstation: "Workstation",
     benchmark: "Benchmark",
+    investors: "Investors",
     changelog: "Changelog",
     readme: "Documentation",
     architecture: "Architecture",
@@ -377,6 +519,126 @@ const zh: PublicMessages = {
       github: "GitHub",
     },
   },
+  investors: {
+    title: "投资人与合作伙伴 · KLineChartQuant",
+    description:
+      "KLineChartQuant 正在打造一款 AI 智能体可以直接操作的 K 线图表引擎。我们正在进行种子轮融资，也在寻找首批设计伙伴，欢迎来信索取商业计划书。",
+    ogAlt: "KLineChartQuant 正在打造一款 AI 智能体可以直接操作的 K 线图表引擎。",
+    heading: "KLineChartQuant 正在打造一款 AI 智能体可以直接操作的 K 线图表引擎。",
+    hero: {
+      kicker: "投资人与合作伙伴",
+      lede: "券商 App、行情终端和量化工具，都在接入 AI 智能体。KLineChartQuant 让智能体和用户看同一张图：查标的、读 K 线、在图上画框，每一步都通过标明读写级别的工具完成。",
+      stage: "我们正在进行种子轮融资，也在寻找首批设计伙伴。商业计划书按需发送。",
+      primary: "索取商业计划书",
+      secondary: "打开工作台",
+    },
+    session: {
+      label: "601360 · 真实会话 · 2026.09",
+      caption: "让智能体标出 601360 近一年的所有箱体区间：它查询标的、读取一年日线，再在图上逐个框出。",
+      alt: "KLineChartQuant 工作台：601360 日线图上，几个价格区间被蓝框标出，右侧智能体面板列出了画出这些框的工具调用。",
+    },
+    shifts: {
+      heading: "智能体正在进入金融软件",
+      lede: "三个变化，让图表站到了这件事的中心。",
+      items: [
+        {
+          title: "智能体开始用软件了",
+          body: "助手不再只在对话框里回答问题，而是直接在人们常用的应用里调用工具。",
+        },
+        {
+          title: "金融工作在图上发生",
+          body: "交易员和分析师先在图上画线、叠指标、对比标的，然后才做判断。",
+        },
+        {
+          title: "一个产品，处处都要跑",
+          body: "团队希望同一套图表内核，从浏览器带到桌面应用，再带到手机上。",
+        },
+      ],
+    },
+    tools: {
+      heading: "智能体通过工具操作图表",
+      body: "它调用的，就是界面本身调用的图表方法。每个工具都带 JSON Schema 和读写级别：设为只读的智能体，可以查询图表，但不能在图上画。",
+      log: "601360 会话中的工具调用",
+      steps: ["把 601360 识别为上交所的三六零。", "分页读取一年的日线数据。", "在每个箱体区间上画出方框。"],
+      safety: { "read-only": "只读", destructive: "画图" },
+      note: "来自真实会话与真实行情数据。不构成投资建议。",
+    },
+    product: {
+      heading: "打开浏览器就能用",
+      body: "无需注册即可打开。A 股走 GOTDX，全球市场走 TradingView 数据源，加密货币深度来自 Binance。",
+      open: "打开工作台",
+      facts: { bindings: "提供形式", backends: "渲染后端", license: "开源协议" },
+    },
+    cadence: {
+      heading: "每个版本都公开发布",
+      body: "引擎、指标和智能体工具都在 GitHub 上开发，每个版本发布当天就打上标签。",
+      count: "{count} 个版本，{from} 至 {to}",
+      latest: "最新",
+      label: "开源引擎每次发布的日期，于 {date} 读取自 GitHub。较高的刻度是次版本。",
+      changelog: "查看更新日志",
+    },
+    model: {
+      heading: "免费上手，团队离不开时再付费",
+      body: "团队先用开源引擎做起来，等图表成了要长期维护的产品，再付费。",
+      tiers: [
+        { name: "社区版", term: "免费 · Apache-2.0", body: "图表引擎、指标和智能体工具。" },
+        { name: "专业版", term: "团队订阅", body: "专业模块、稳定版本、迁移工具和优先支持。" },
+        { name: "企业版", term: "年度合同", body: "白标构建、私有分发、长期支持和安全评审。" },
+        { name: "解决方案", term: "按项目", body: "为单个产品做集成，可复用的部分回流到引擎。" },
+      ],
+      note: "价格与方案详见商业计划书。",
+    },
+    audience: {
+      heading: "为把图表当作产品核心的团队而做",
+      items: [
+        { title: "券商 App", body: "用券商自己的品牌和数据，做一套交易终端。" },
+        { title: "行情终端", body: "给已经有用户的终端，加上 AI 助手。" },
+        { title: "量化与投研工具", body: "把信号和回测，画在分析师本来就在看的图上。" },
+        { title: "金融科技 App", body: "手机上和网页上，是同一张图。" },
+      ],
+    },
+    roadmap: {
+      heading: "接下来往哪走",
+      here: "当前阶段",
+      items: [
+        { when: "现在", body: "开源引擎与智能体工具，alpha 版本持续在 GitHub 发布。" },
+        { when: "下一步", body: "设计伙伴上线生产环境，发布稳定的专业版。" },
+        { when: "之后", body: "企业交付：私有分发与长期支持。" },
+        { when: "更远", body: "成为智能体读取和操作金融图表的标准方式。" },
+      ],
+    },
+    team: {
+      heading: "团队",
+      lede: "四个人：图表引擎、AI 产品、企业交付和数据。",
+      portrait: "{name}的照片",
+      members: [
+        { name: "叶阳天", role: "创始人", focus: "产品、核心工程与金融渲染" },
+        { name: "陆子凯", role: "合伙人", focus: "AI 产品、企业交付与商业化" },
+        { name: "马迪", role: "总负责人", focus: "团队组织、算法与数据分析" },
+        { name: "饶方瞳", role: "项目合伙人", focus: "国际协作与云原生工程" },
+      ],
+    },
+    ask: {
+      heading: "种子轮融资进行中",
+      body: "来信索取商业计划书。融资安排、计划和具体数字都在里面，不放在这个页面上。",
+      investors: {
+        title: "投资人",
+        body: "索取商业计划书，或约创始团队聊一聊。",
+        cta: "索取商业计划书",
+        subject: "KLineChartQuant：索取商业计划书",
+      },
+      partners: {
+        title: "设计伙伴",
+        body: "带上你们产品里一个真实的图表页面，我们一起把它做出来。",
+        cta: "成为设计伙伴",
+        subject: "KLineChartQuant：设计伙伴",
+      },
+      mailBody: "姓名：\n机构：\n想聊的内容：\n",
+      direct: "也可以直接写信到",
+      copy: "复制邮箱地址",
+      copied: "邮箱地址已复制",
+    },
+  },
   footer: {
     endorsement: "by",
     product: "产品",
@@ -385,6 +647,7 @@ const zh: PublicMessages = {
     community: "社区",
     workstation: "工作台",
     benchmark: "基准测试",
+    investors: "投资人",
     changelog: "更新日志",
     readme: "文档",
     architecture: "架构",

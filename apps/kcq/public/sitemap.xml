@@ -24,4 +24,16 @@
     <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kcq.nebutra.com/zh/benchmark"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://kcq.nebutra.com/benchmark"/>
   </url>
+  <url>
+    <loc>https://kcq.nebutra.com/investors</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kcq.nebutra.com/investors"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kcq.nebutra.com/zh/investors"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kcq.nebutra.com/investors"/>
+  </url>
+  <url>
+    <loc>https://kcq.nebutra.com/zh/investors</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://kcq.nebutra.com/investors"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://kcq.nebutra.com/zh/investors"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://kcq.nebutra.com/investors"/>
+  </url>
 </urlset>

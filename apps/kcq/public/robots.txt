@@ -5,6 +5,8 @@ Allow: /home$
 Allow: /zh/home$
 Allow: /benchmark$
 Allow: /zh/benchmark$
+Allow: /investors$
+Allow: /zh/investors$
 Allow: /assets/
 # The agent-readable view of these pages (src/public/llms.ts).
 Allow: /llms.txt$
