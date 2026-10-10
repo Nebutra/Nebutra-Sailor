@@ -80,13 +80,10 @@ function IconCard({
           aria-label={`Copy options for ${name}`}
         >
           <div className="flex-1 flex items-center justify-center min-h-0 mb-2">
-            <Icon
-              size={24}
-              className="text-foreground transition-transform group-hover:scale-110 motion-reduce:group-hover:scale-100 shrink-0"
-            />
+            <Icon size={24} className="shrink-0" />
           </div>
           <span
-            className="text-2xs text-muted-foreground text-center px-1 font-medium truncate w-full"
+            className="text-2xs text-muted-foreground text-center px-1 font-medium truncate w-full transition-colors group-hover:text-current"
             title={name}
           >
             {name}

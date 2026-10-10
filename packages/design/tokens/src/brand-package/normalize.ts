@@ -108,8 +108,12 @@ export function rolesFromSemantic(
 
 /** roles → shadcn semantic: primary ALWAYS tracks action (CTA), never brand mark. */
 export function semanticFromRoles(r: BrandColorRoles): BrandSemanticColors {
-  const accent = r.brand ?? r.quiet;
-  const accentFg = r.brandForeground ?? r.quietForeground;
+  // accent is the shadcn hover surface, not the identity mark: mapping
+  // roles.brand here filled every hover with Stripe midnight / Vanta indigo.
+  // The mark already has its own slot (--brand-mark). The emitter still checks
+  // the result is a quiet, legible surface (hover-surface.ts).
+  const accent = r.quiet;
+  const accentFg = r.quietForeground;
   const semantic: BrandSemanticColors = {
     background: r.canvas,
     foreground: r.canvasForeground,

@@ -7,6 +7,7 @@
 // emit-skins at build time, and depending on another package's dist made the
 // skin pipeline fail whenever turbo scheduled the two builds side by side.
 import { withNearestRegistryFont } from "@nebutra/fonts/registry";
+import { hoverSurface } from "./hover-surface";
 import { isDualModeBrand, normalizeBrandPackage } from "./normalize";
 import type {
   BrandColorRoles,
@@ -428,6 +429,8 @@ function neutralRamp(s: BrandSemanticColors, r: BrandColorRoles | undefined): st
 }
 
 function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): string[] {
+  // --accent is the hover surface, never a brand hue — see hover-surface.ts.
+  const hover = hoverSurface(s.accent, s.accentForeground, s.background, s.foreground);
   const roleLines: string[] = [
     `  /* ── Color roles (carrier) ── */`,
     `  --role-canvas: ${r?.canvas ?? s.background};`,
@@ -470,8 +473,8 @@ function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): 
     `  --secondary-foreground: ${s.secondaryForeground};`,
     `  --muted: ${s.muted};`,
     `  --muted-foreground: ${s.mutedForeground};`,
-    `  --accent: ${s.accent};`,
-    `  --accent-foreground: ${s.accentForeground};`,
+    `  --accent: ${hover.accent};`,
+    `  --accent-foreground: ${hover.accentForeground};`,
     `  --destructive: ${s.destructive};`,
     `  --destructive-foreground: ${s.destructiveForeground};`,
     `  --border: ${s.border};`,
@@ -495,8 +498,8 @@ function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): 
     `  --sidebar-foreground: ${s.foreground};`,
     `  --sidebar-primary: ${s.primary};`,
     `  --sidebar-primary-foreground: ${s.primaryForeground};`,
-    `  --sidebar-accent: ${s.accent};`,
-    `  --sidebar-accent-foreground: ${s.accentForeground};`,
+    `  --sidebar-accent: ${hover.accent};`,
+    `  --sidebar-accent-foreground: ${hover.accentForeground};`,
     `  --sidebar-border: ${s.border};`,
     `  --sidebar-ring: ${s.ring};`,
     // The identity aliases, taken over by the language.

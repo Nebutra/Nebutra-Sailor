@@ -39,8 +39,8 @@ html[data-brand="cosmos"] {
   --secondary-foreground: 0 0% 5%;
   --muted: 30 20% 96%;
   --muted-foreground: 12 2% 42%;
-  --accent: 0 0% 5%;
-  --accent-foreground: 30 20% 96%;
+  --accent: 0 0% 100%;
+  --accent-foreground: 0 0% 5%;
   --destructive: 4 76% 40%;
   --destructive-foreground: 0 0% 100%;
   --border: 30 5% 85%;
@@ -54,8 +54,8 @@ html[data-brand="cosmos"] {
   --sidebar-foreground: 0 0% 5%;
   --sidebar-primary: 0 0% 5%;
   --sidebar-primary-foreground: 30 20% 96%;
-  --sidebar-accent: 0 0% 5%;
-  --sidebar-accent-foreground: 30 20% 96%;
+  --sidebar-accent: 0 0% 100%;
+  --sidebar-accent-foreground: 0 0% 5%;
   --sidebar-border: 30 5% 85%;
   --sidebar-ring: 0 0% 5%;
   --brand-primary: hsl(0 0% 5%);
@@ -195,8 +195,8 @@ html.dark[data-brand="cosmos"] {
   --secondary-foreground: 30 20% 96%;
   --muted: 0 0% 11%;
   --muted-foreground: 15 2% 60%;
-  --accent: 30 20% 96%;
-  --accent-foreground: 0 0% 5%;
+  --accent: 0 0% 14%;
+  --accent-foreground: 30 20% 96%;
   --destructive: 4 76% 40%;
   --destructive-foreground: 0 0% 100%;
   --border: 0 1% 18%;
@@ -210,8 +210,8 @@ html.dark[data-brand="cosmos"] {
   --sidebar-foreground: 30 20% 96%;
   --sidebar-primary: 30 20% 96%;
   --sidebar-primary-foreground: 0 0% 5%;
-  --sidebar-accent: 30 20% 96%;
-  --sidebar-accent-foreground: 0 0% 5%;
+  --sidebar-accent: 0 0% 14%;
+  --sidebar-accent-foreground: 30 20% 96%;
   --sidebar-border: 0 1% 18%;
   --sidebar-ring: 30 20% 96%;
   --brand-primary: hsl(30 20% 96%);

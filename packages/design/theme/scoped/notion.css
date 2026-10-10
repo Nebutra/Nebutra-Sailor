@@ -39,8 +39,8 @@ html[data-brand="notion"] {
   --secondary-foreground: 208 100% 44%;
   --muted: 208 92% 95%;
   --muted-foreground: 0 0% 43%;
-  --accent: 0 0% 0%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 30 3.9% 90.2%;
+  --accent-foreground: 0 0% 0%;
   --destructive: 7 92% 58%;
   --destructive-foreground: 0 0% 100%;
   --border: 30 5% 88%;
@@ -54,8 +54,8 @@ html[data-brand="notion"] {
   --sidebar-foreground: 0 0% 0%;
   --sidebar-primary: 208 100% 44%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 0 0% 0%;
-  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-accent: 30 3.9% 90.2%;
+  --sidebar-accent-foreground: 0 0% 0%;
   --sidebar-border: 30 5% 88%;
   --sidebar-ring: 208 100% 44%;
   --brand-primary: hsl(0 0% 0%);

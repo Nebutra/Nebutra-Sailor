@@ -39,8 +39,8 @@ html[data-brand="vanta"] {
   --secondary-foreground: 272 100% 14%;
   --muted: 240 20% 93%;
   --muted-foreground: 238 11% 48%;
-  --accent: 272 100% 14%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 250 100% 92%;
+  --accent-foreground: 272 100% 14%;
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 240 17% 11%;
@@ -54,8 +54,8 @@ html[data-brand="vanta"] {
   --sidebar-foreground: 240 17% 11%;
   --sidebar-primary: 268 95% 39%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 272 100% 14%;
-  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-accent: 250 100% 92%;
+  --sidebar-accent-foreground: 272 100% 14%;
   --sidebar-border: 240 17% 11%;
   --sidebar-ring: 268 95% 39%;
   --brand-primary: hsl(272 100% 14%);

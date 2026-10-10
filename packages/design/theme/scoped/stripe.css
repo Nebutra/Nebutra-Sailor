@@ -39,8 +39,8 @@ html[data-brand="stripe"] {
   --secondary-foreground: 248 98% 61%;
   --muted: 216 56% 98%;
   --muted-foreground: 217 17% 47%;
-  --accent: 211 78% 11%;
-  --accent-foreground: 0 0% 100%;
+  --accent: 237 100% 95%;
+  --accent-foreground: 248 98% 61%;
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 210 44% 93%;
@@ -52,8 +52,8 @@ html[data-brand="stripe"] {
   --sidebar-foreground: 211 78% 11%;
   --sidebar-primary: 248 98% 61%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 211 78% 11%;
-  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-accent: 237 100% 95%;
+  --sidebar-accent-foreground: 248 98% 61%;
   --sidebar-border: 210 44% 93%;
   --sidebar-ring: 248 98% 61%;
   --brand-primary: hsl(211 78% 11%);
