@@ -2446,9 +2446,6 @@ importers:
       '@nebutra/3d-pipeline':
         specifier: workspace:*
         version: link:../3d-pipeline
-      '@nebutra/audio-pipeline':
-        specifier: workspace:*
-        version: link:../audio-pipeline
       '@nebutra/capability-kit':
         specifier: workspace:*
         version: link:../../platform/capability-kit
@@ -2470,12 +2467,6 @@ importers:
       '@nebutra/play-loader':
         specifier: workspace:*
         version: link:../play-loader
-      '@nebutra/video-pipeline':
-        specifier: workspace:*
-        version: link:../video-pipeline
-      '@nebutra/voice-realtime':
-        specifier: workspace:*
-        version: link:../voice-realtime
     devDependencies:
       '@types/node':
         specifier: 'catalog:'
