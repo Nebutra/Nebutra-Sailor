@@ -75,7 +75,7 @@ export async function EssayFeature() {
         <p className="text-sm tabular-nums text-muted-foreground">
           Essay · {post.date?.slice(0, 10)}
         </p>
-        <p className="mt-3 font-heading text-4xl font-medium text-foreground text-balance">
+        <p className="mt-3 font-heading text-4xl font-medium text-foreground text-balance md:text-5xl">
           {post.title}
         </p>
         <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>

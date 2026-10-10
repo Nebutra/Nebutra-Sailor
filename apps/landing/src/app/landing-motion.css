@@ -46,12 +46,12 @@
 /* Headline and visual: first paint only, and never under reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   .hero-mask > span {
-    animation: landing-word-in var(--landing-hero) var(--landing-ease) both;
+    animation: landing-word-in var(--landing-hero) var(--landing-ease) backwards;
     /* Capped at the 8th word so a long headline still lands inside 1.2s. */
     animation-delay: calc(min(var(--i, 0), 7) * var(--landing-stagger));
   }
   .hero-visual {
-    animation: landing-visual-in var(--landing-long) var(--landing-ease) both;
+    animation: landing-visual-in var(--landing-long) var(--landing-ease) backwards;
     animation-delay: calc(var(--landing-stagger) * 6);
   }
 }
