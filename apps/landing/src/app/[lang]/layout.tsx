@@ -4,20 +4,19 @@ import {
   buildSoftwareApplicationJsonLd,
   buildWebSiteJsonLd,
 } from "@nebutra/brand/metadata-helpers";
-import { CjkFontFace } from "@nebutra/fonts/next/cjk";
-import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
+import { CjkFontFace, misansFontFaceCss } from "@nebutra/fonts/next/cjk";
+import { isChineseLocale, toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { pickMessages } from "@nebutra/i18n/messages";
 import { loadUiLabels } from "@nebutra/i18n/ui-labels";
-import { Toaster, UiLabelsProvider } from "@nebutra/ui/primitives";
+import { UiLabelsProvider } from "@nebutra/ui/primitives";
 import type { Metadata, Viewport } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { ConsentGatedTelemetry } from "@/components/consent-gated-telemetry";
-import { CookieConsentBanner } from "@/components/cookie-consent-banner";
+import { DeferredChrome, DeferredTelemetry } from "@/components/deferred-chrome";
+import { DeferredCjkFontFace } from "@/components/deferred-cjk-font-face";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { PresetPreview } from "@/components/preset-preview";
 import { type Locale, routing } from "@/i18n/routing";
 import { PRESET_PREVIEW } from "@/lib/preset-preview-flag";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -91,6 +90,9 @@ const jsonLd = [
   },
   buildSiteNavigationSchema(getPublicNavigationItems()),
 ];
+
+/** Non-Chinese languages whose own text uses the ideographs MiSans covers (kanji). */
+const CJK_PAGE_LOCALES: ReadonlySet<string> = new Set(["ja"]);
 
 function toSafeJsonLd(value: unknown): string {
   return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -171,15 +173,13 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     // form, which gets its own provider in (legal)/contact/page.tsx.
     "monorepoTree",
     "microLanding",
-    "landing",
+    // landing / blogShowcase / stats / features / compliance are NOT here: no
+    // client component reads them (they render on the server), and they were
+    // ~10 KB of every page's HTML in every locale.
     "designSystem",
     "cta",
     "footer",
-    "blogShowcase",
     "useCases",
-    "stats",
-    "features",
-    "compliance",
     // Market × language picker (Navbar chrome) — client-only
     "MarketLocalePicker",
     // Navbar mega-menu / mobile drawer (template chrome) — client-only, small
@@ -207,7 +207,13 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
           // The visitor's Sailor Studio look, from their cookie, in the first paint.
           <link rel="stylesheet" href="/preset-preview.css" precedence="high" />
         ) : null}
-        <CjkFontFace />
+        {/* MiSans: in the first paint where the page's language is CJK; after
+            load elsewhere, where it only sets the Chinese sub-lines. */}
+        {CJK_PAGE_LOCALES.has(locale) || isChineseLocale(locale) ? (
+          <CjkFontFace />
+        ) : (
+          <DeferredCjkFontFace css={misansFontFaceCss()} />
+        )}
 
         <a
           href="#main-content"
@@ -243,15 +249,13 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
                  * boundary of their own. Guarded by scripts/verify-landing-ssr.mjs.
                  */}
                 {children}
-                {/* Global toast outlet — landing surfaces (e.g. changelog) can call `toast.*` */}
-                <Toaster />
-                <CookieConsentBanner />
-                {PRESET_PREVIEW ? <PresetPreview /> : null}
+                {/* Toasts, consent card, Studio preset bar: loaded after hydration. */}
+                <DeferredChrome />
               </UiLabelsProvider>
             </NextIntlClientProvider>
           </ErrorBoundary>
         </Providers>
-        <ConsentGatedTelemetry />
+        <DeferredTelemetry />
       </body>
     </html>
   );

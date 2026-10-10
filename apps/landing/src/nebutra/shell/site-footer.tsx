@@ -2,11 +2,11 @@ import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { getTranslations } from "next-intl/server";
 import { IcpRecord } from "@/components/icp-record";
-import { MarketLocalePicker } from "@/components/ui/market-locale-picker";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
 import { REPO_URL } from "@/nebutra/data/repo";
 import { ROUTES } from "@/nebutra/routes";
+import { FooterLocalePicker } from "@/nebutra/shell/footer-locale-picker";
 import { ThemedLogo } from "@/nebutra/shell/themed-logo";
 
 /**
@@ -104,7 +104,7 @@ export async function SiteFooter({ lang }: { lang?: string }) {
         </span>
         <span className="flex flex-wrap items-center gap-4">
           <IcpRecord />
-          <MarketLocalePicker />
+          <FooterLocalePicker />
           <ThemeSwitcher />
         </span>
       </div>
