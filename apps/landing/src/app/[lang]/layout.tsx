@@ -17,7 +17,6 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { ConsentGatedTelemetry } from "@/components/consent-gated-telemetry";
 import { CookieConsentBanner } from "@/components/cookie-consent-banner";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { IcpFooter } from "@/components/icp-footer";
 import { PresetPreview } from "@/components/preset-preview";
 import { type Locale, routing } from "@/i18n/routing";
 import { PRESET_PREVIEW } from "@/lib/preset-preview-flag";
@@ -244,13 +243,6 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
                  * boundary of their own. Guarded by scripts/verify-landing-ssr.mjs.
                  */}
                 {children}
-                {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
-                  <IcpFooter
-                    locale={locale}
-                    icpNumber={process.env.NEXT_PUBLIC_ICP_NUMBER}
-                    publicSecurityRecord={process.env.NEXT_PUBLIC_PUBLIC_SECURITY_RECORD}
-                  />
-                ) : null}
                 {/* Global toast outlet — landing surfaces (e.g. changelog) can call `toast.*` */}
                 <Toaster />
                 <CookieConsentBanner />

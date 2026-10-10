@@ -8,6 +8,7 @@ import {
 } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
 import { useTranslations } from "next-intl";
+import { IcpRecord } from "@/components/icp-record";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { useMount } from "@/hooks/useMount";
 import { Link } from "@/i18n/navigation";
@@ -199,17 +200,7 @@ function DefaultFooter() {
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 md:flex-row">
           <div className="flex flex-col items-center gap-1 md:items-start">
             <p className="text-xs text-muted-foreground">{t("copyright")}</p>
-            {/* ICP 备案 — required for websites operated in mainland China */}
-            {process.env.NEXT_PUBLIC_ICP_NUMBER && (
-              <a
-                href="https://beian.miit.gov.cn/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {process.env.NEXT_PUBLIC_ICP_NUMBER}
-              </a>
-            )}
+            <IcpRecord className="text-xs text-muted-foreground" />
           </div>
 
           <div className="flex items-center gap-4">

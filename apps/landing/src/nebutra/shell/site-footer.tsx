@@ -1,5 +1,6 @@
 import { brand } from "@nebutra/brand/metadata";
 import { getTranslations } from "next-intl/server";
+import { IcpRecord } from "@/components/icp-record";
 import { MarketLocalePicker } from "@/components/ui/market-locale-picker";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { Link } from "@/i18n/navigation";
@@ -100,17 +101,7 @@ export async function SiteFooter({ lang }: { lang?: string }) {
           © 2026 {brand.nameFullEn} · {brand.nameFull}
         </span>
         <span className="flex flex-wrap items-center gap-4">
-          {/* ICP 备案 — required for a site operated in mainland China */}
-          {process.env.NEXT_PUBLIC_ICP_NUMBER ? (
-            <a
-              href="https://beian.miit.gov.cn/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-foreground"
-            >
-              {process.env.NEXT_PUBLIC_ICP_NUMBER}
-            </a>
-          ) : null}
+          <IcpRecord />
           <MarketLocalePicker />
           <ThemeSwitcher />
         </span>

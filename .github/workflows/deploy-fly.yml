@@ -185,6 +185,9 @@ jobs:
           # *_ORIGIN_* alias); both used to come from apps/landing/vercel.json.
           DOCS_ORIGIN_URL: "https://nebutra.com/docs"
           NEXT_PUBLIC_DOCS_URL: "https://nebutra.com/docs"
+          # MIIT site record for nebutra.com (无锡云毓智能科技有限公司). Public; rendered
+          # by IcpRecord in the landing footer, linked to beian.miit.gov.cn.
+          NEXT_PUBLIC_ICP_NUMBER: "苏ICP备2026020707号-1"
           # Public One Tap client id; vercel.json carried it as a checked-in
           # default, so the Fly build keeps the same value.
           NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ vars.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '470784717517-g1rcks9d8ud342e1b0g8i6qeth96h41u.apps.googleusercontent.com' }}
