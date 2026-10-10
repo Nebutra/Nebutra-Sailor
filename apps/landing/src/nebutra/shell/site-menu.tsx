@@ -9,7 +9,7 @@ import { Link } from "@/i18n/navigation";
 import { REPO_URL } from "@/nebutra/data/repo";
 import type { SiteMapTranslator } from "@/nebutra/i18n";
 import { SECTION_PATH } from "@/nebutra/routes";
-import { pageAt, SECTIONS, SERVED_PAGES, type SectionId } from "@/site-map";
+import { NAV, pageAt, SERVED_PAGES, type SectionId, SITE_MAP } from "@/site-map";
 
 /**
  * The site's index, drawn the way an editorial site draws it (a16z's menu is
@@ -17,13 +17,21 @@ import { pageAt, SECTIONS, SERVED_PAGES, type SectionId } from "@/site-map";
  * section with pages opens a second panel beside it — its line from the site
  * map, then its pages — instead of an accordion in place. The section you are
  * in reads at full ink, the rest a step back; the page you are on carries a
- * dot. Everything comes from site-map.ts, so the menu cannot drift from it.
+ * dot. A page in the navigation (Consulting, Investors) is a plain link.
+ * Everything comes from site-map.ts, so the menu cannot drift from it.
  */
 
 const within = (pathname: string, path: string) =>
   pathname === path || pathname.startsWith(`${path}/`);
 
-const NAV_SECTIONS = SECTIONS.filter((s) => s.nav);
+const NAV_SECTIONS = NAV.flatMap((n) => ("section" in n ? [n.section] : []));
+const pageEntry = (path: string) => {
+  const entry = SITE_MAP.find((p) => p.path === path);
+  if (!entry) throw new Error(`NAV names ${path}, which is not in the site map`);
+  return entry;
+};
+/** A navigation page (Consulting, Investors) lights itself, not its section. */
+const onNavPage = (pathname: string) => NAV.some((n) => "page" in n && within(pathname, n.page));
 const pagesOf = (id: SectionId) => SERVED_PAGES.filter((p) => p.section === id && p.rail);
 
 /** Items rise in one after another when the menu opens (globals.css `site-menu-in`). */
@@ -50,7 +58,7 @@ export function SiteMenu({
     if (!open) setPanel(null);
   }, [open]);
 
-  const shown = panel ? NAV_SECTIONS.find((s) => s.id === panel) : undefined;
+  const shown = panel && NAV_SECTIONS.includes(panel) ? { id: panel } : undefined;
   const shownPages = shown ? pagesOf(shown.id) : [];
 
   return (
@@ -63,48 +71,65 @@ export function SiteMenu({
         )}
       >
         <ul className="mt-6 flex flex-col gap-2">
-          {NAV_SECTIONS.map((s, i) => {
-            const hasPages = pagesOf(s.id).length > 0;
-            const lit = panel ? panel === s.id : here === s.id;
-            const row = cn(
-              "group flex w-full items-baseline justify-between gap-4 py-2.5 text-left font-heading text-3xl tracking-tight transition-colors duration-micro",
-              lit ? "text-foreground" : "text-muted-foreground hover:text-foreground",
-              open && "site-menu-in",
-            );
-            const label = <span>{tMap(`sections.${s.id}.title`)}</span>;
+          {NAV.map((item, i) => {
+            const row = (lit: boolean) =>
+              cn(
+                "group flex w-full items-baseline justify-between gap-4 py-2.5 text-left font-heading text-3xl tracking-tight transition-colors duration-micro",
+                lit ? "text-foreground" : "text-muted-foreground hover:text-foreground",
+                open && "site-menu-in",
+              );
+            if ("page" in item) {
+              const entry = pageEntry(item.page);
+              return (
+                <li key={entry.path}>
+                  <Link
+                    href={entry.path}
+                    className={row(!panel && within(pathname, entry.path))}
+                    style={rise(i)}
+                    onClick={onNavigate}
+                  >
+                    <span>{tMap(`pages.${entry.key}.title`)}</span>
+                  </Link>
+                </li>
+              );
+            }
+            const id = item.section;
+            const hasPages = pagesOf(id).length > 0;
+            const lit = panel ? panel === id : here === id && !onNavPage(pathname);
+            const label = <span>{tMap(`sections.${id}.title`)}</span>;
             return (
-              <li key={s.id}>
+              <li key={id}>
                 {hasPages ? (
                   <Button
                     type="button"
                     variant="ghost"
                     className={cn(
-                      row,
+                      row(lit),
                       "h-auto rounded-none px-0 hover:bg-transparent active:translate-y-0",
                     )}
                     style={rise(i)}
-                    aria-expanded={panel === s.id}
+                    aria-expanded={panel === id}
                     // Opening only: a pointer that rested on the row has already opened it,
                     // and a toggle would close it again on the click that follows.
-                    onClick={() => setPanel(s.id)}
+                    onClick={() => setPanel(id)}
                     onMouseEnter={(e) => {
                       // Pointer devices preview a section by resting on it.
                       if (window.matchMedia("(hover: hover)").matches && e.buttons === 0)
-                        setPanel(s.id);
+                        setPanel(id);
                     }}
                   >
                     {label}
                     <ChevronRight
                       className={cn(
                         "size-4 shrink-0 self-center transition-transform duration-flow ease-brand",
-                        panel === s.id && "translate-x-1",
+                        panel === id && "translate-x-1",
                       )}
                     />
                   </Button>
                 ) : (
                   <Link
-                    href={SECTION_PATH[s.id]}
-                    className={row}
+                    href={SECTION_PATH[id]}
+                    className={row(lit)}
                     style={rise(i)}
                     onClick={onNavigate}
                   >
@@ -121,7 +146,7 @@ export function SiteMenu({
             "mt-auto flex flex-col gap-3 text-sm text-muted-foreground",
             open && "site-menu-in",
           )}
-          style={rise(NAV_SECTIONS.length)}
+          style={rise(NAV.length)}
         >
           <a href={mailto} className="transition-colors hover:text-foreground">
             {t("menu.writeToFounder")}
