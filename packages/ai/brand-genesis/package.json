@@ -1,7 +1,7 @@
 {
   "name": "@nebutra/brand-genesis",
   "version": "0.2.7",
-  "description": "BrandContext-first flagship play for creating a complete brand package from one idea",
+  "description": "BrandContext-first play for creating a brand kit from one idea",
   "private": false,
   "license": "MIT",
   "type": "module",
@@ -14,17 +14,16 @@
       "@nebutra/play-loader for SKILL.md play parsing",
       "@nebutra/generation-context for BrandContext",
       "@nebutra/content-store for BrandContext materialization",
-      "@nebutra/image-pipeline, @nebutra/video-pipeline, @nebutra/audio-pipeline, @nebutra/voice-realtime, and @nebutra/3d-pipeline for generated assets",
+      "@nebutra/image-pipeline and @nebutra/3d-pipeline for generated visual assets",
       "@nebutra/event-log for Time Machine checkpoints"
     ],
     "gaps": [
       "Generated media uses deterministic local fallbacks until model-backed providers are configured",
-      "Storyboard editing is represented as an orchestration checkpoint, not yet a GUI step",
       "Landing page handoff is minimal inside Brand Genesis; @nebutra/landing-builder owns the standalone site Play"
     ],
     "featureId": "brand-genesis",
     "category": "ai",
-    "summary": "Flagship play that distills an idea into BrandContext and orchestrates lower generation capabilities"
+    "summary": "Play that distills an idea into BrandContext and orchestrates lower generation capabilities"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -42,16 +41,13 @@
   },
   "dependencies": {
     "@nebutra/3d-pipeline": "workspace:*",
-    "@nebutra/audio-pipeline": "workspace:*",
     "@nebutra/capability-kit": "workspace:*",
     "@nebutra/content-store": "workspace:*",
     "@nebutra/errors": "workspace:*",
     "@nebutra/event-log": "workspace:*",
     "@nebutra/generation-context": "workspace:*",
     "@nebutra/image-pipeline": "workspace:*",
-    "@nebutra/play-loader": "workspace:*",
-    "@nebutra/video-pipeline": "workspace:*",
-    "@nebutra/voice-realtime": "workspace:*"
+    "@nebutra/play-loader": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "catalog:",

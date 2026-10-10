@@ -46,27 +46,23 @@ describe("brand-genesis", () => {
     expect(markdown).toContain("Debug like it is a conversation");
   });
 
-  it("runs the brand_film_60s play through lower capabilities and writes checkpoints", async () => {
+  it("runs the brand_kit play through lower capabilities and writes checkpoints", async () => {
     const runtime = await open("tenant_a");
 
     const result = await runtime.run({
       idea: "AI debugging for indie devs called Loop",
       visualDirectionHint: "cyberpunk",
-      founderVoiceId: "founder_voice",
     });
 
     expect(result.brand.name).toBe("Loop");
     expect(result.logo.brandId).toBe(result.brand.brandId);
     expect(result.mesh.brandId).toBe(result.brand.brandId);
-    expect(result.film.kind).toBe("video");
-    expect(result.bgm.license.status).toBe("commercial-ok");
-    expect(result.narration.voiceProfileId).toBe("founder_voice");
+    expect(result.play).toBe("brand_kit");
     expect(result.checkpoints).toEqual([
       "brand_distillation",
       "visual_direction",
       "assets_generated",
-      "video_rendered",
-      "final_compose",
+      "landing_handoff",
     ]);
     await expect(readBrandGenesisDebug(root)).resolves.toEqual(expect.any(Array));
   });
@@ -83,28 +79,20 @@ describe("brand-genesis", () => {
   });
 
   it("keeps the flagship Play as SKILL.md instead of a new workflow format", async () => {
-    const skill = await readFile(join(process.cwd(), "plays", "brand_film_60s", "SKILL.md"), {
+    const skill = await readFile(join(process.cwd(), "plays", "brand_kit", "SKILL.md"), {
       encoding: "utf8",
     }).catch(async () =>
       readFile(
-        join(
-          process.cwd(),
-          "packages",
-          "ai",
-          "brand-genesis",
-          "plays",
-          "brand_film_60s",
-          "SKILL.md",
-        ),
+        join(process.cwd(), "packages", "ai", "brand-genesis", "plays", "brand_kit", "SKILL.md"),
         "utf8",
       ),
     );
     const play = parsePlayMarkdown(skill);
 
     expect(play.meta).toMatchObject({
-      name: "brand_film_60s",
+      name: "brand_kit",
       kind: "play",
-      version: "1.0.0",
+      version: "2.0.0",
     });
     expect(play.requiredSkills).toContain("image_pipeline.generate");
     expect(play.requiredSkills).toContain("content_store.write");
@@ -117,7 +105,7 @@ describe("brand-genesis", () => {
     await expect(runtime.doctor()).resolves.toMatchObject({
       capability: "brand-genesis",
       ok: true,
-      play: { ok: true, name: "brand_film_60s" },
+      play: { ok: true, name: "brand_kit" },
     });
   });
 });
