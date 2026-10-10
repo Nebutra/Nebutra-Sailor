@@ -1,8 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { createTranslator } from "next-intl";
+import { mergeMessages } from "../../../../packages/platform/i18n/src/messages";
 import en from "../../../landing/messages/en.json";
-import zh from "../../../landing/messages/zh-Hans.json";
+import zhOverlay from "../../../landing/messages/zh-Hans.json";
 import { ProductOfferList } from "../../../landing/src/components/landing/product-offer-list";
+
+// A locale catalog holds real translations only; what it lacks renders English,
+// exactly as the app's loader does.
+const zh = mergeMessages(en, zhOverlay);
 
 const meta = {
   title: "Landing/Product pricing",
