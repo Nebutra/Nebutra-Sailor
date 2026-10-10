@@ -1,6 +1,6 @@
 <!--
   Roadmap, phase names only (research §4.9): budgets and dated KPIs are in the deck. Four nodes on
-  one line, the current one filled in Cobalt with a price-label chip; static.
+  one line, the current one filled in Cobalt and marked in words; static.
 -->
 <script setup lang="ts">
 import { computed } from "vue";
@@ -45,6 +45,11 @@ const items = computed(() =>
   gap: var(--klc-space-32);
   margin-top: var(--klc-space-48);
 }
+@media (min-width: 1024px) {
+  .road {
+    margin-top: var(--klc-space-64);
+  }
+}
 .stop {
   position: relative;
   display: grid;
@@ -74,7 +79,7 @@ const items = computed(() =>
 }
 .stop[aria-current] .stop-node {
   background: var(--kcq-accent);
-  box-shadow: 0 0 0 4px var(--kcq-accent-wash);
+  box-shadow: none;
 }
 .stop-when {
   display: flex;
@@ -83,12 +88,7 @@ const items = computed(() =>
   gap: var(--klc-space-8);
 }
 .stop-here {
-  padding: 0 var(--klc-space-8);
-  border-radius: var(--klc-radius-xs);
-  background: var(--kcq-accent-strong);
-  color: #fff;
-  text-transform: none;
-  letter-spacing: 0;
+  color: var(--kcq-accent-text);
 }
 .stop .t-copy {
   max-width: 22rem;

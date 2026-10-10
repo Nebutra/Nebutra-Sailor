@@ -39,7 +39,7 @@ const members = computed(() =>
 );
 </script>
 <template>
-  <section id="team" class="band band-raised team" aria-labelledby="team-heading">
+  <section id="team" class="band team" aria-labelledby="team-heading">
     <div class="container">
       <div class="section-head">
         <h2 id="team-heading" class="t-heading">{{ t("investors.team.heading") }}</h2>
@@ -73,6 +73,11 @@ const members = computed(() =>
   gap: var(--klc-space-32) var(--kcq-column-gap);
   margin-top: var(--klc-space-48);
 }
+@media (min-width: 1024px) {
+  .people {
+    margin-top: var(--klc-space-64);
+  }
+}
 .person {
   display: grid;
   align-content: start;
@@ -84,12 +89,12 @@ const members = computed(() =>
   aspect-ratio: 4 / 5;
   object-fit: cover;
   margin-bottom: var(--klc-space-12);
-  border-radius: var(--klc-radius-md);
+  border-radius: var(--klc-radius-lg);
   background: var(--kcq-control);
   filter: grayscale(1) contrast(1.04);
 }
 .person-role {
-  color: var(--kcq-accent-ink);
+  color: var(--kcq-ink-2);
 }
 @media (min-width: 1024px) {
   .people {

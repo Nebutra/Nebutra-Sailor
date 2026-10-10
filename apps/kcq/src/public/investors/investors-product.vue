@@ -1,29 +1,40 @@
 <!--
   Proof by showing (research §4.3): the workstation as it ships today, the same capture /home uses
-  (scripts/capture-workstation.mjs, per colour mode), and three plain facts read from the pinned
-  chart source rather than typed here: how it ships, what it draws with, its licence.
+  (scripts/capture-workstation.mjs), the dark capture in both page themes as on /home, and three
+  plain facts read from the pinned chart source rather than typed here: how it ships, what it draws
+  with, its licence.
 -->
 <script setup lang="ts">
 import facts from "virtual:kcq-facts";
-import { computed } from "vue";
+import { useIntersectionObserver } from "@vueuse/core";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
 import shotDark1200 from "../home/workstation/workstation-dark-1200.webp";
 import shotDark2400 from "../home/workstation/workstation-dark-2400.webp";
-import shotLight1200 from "../home/workstation/workstation-light-1200.webp";
-import shotLight2400 from "../home/workstation/workstation-light-2400.webp";
 import { LINKS } from "../links";
 import { APP_PATH } from "../routes";
-import { useTheme } from "../state/use-theme";
 
 const { t } = useI18n();
-const { mode, hydrated } = useTheme();
-const shots = {
-  dark: `${shotDark1200} 1200w, ${shotDark2400} 2400w`,
-  light: `${shotLight1200} 1200w, ${shotLight2400} 2400w`,
-};
+const srcset = `${shotDark1200} 1200w, ${shotDark2400} 2400w`;
 const sizes = "(min-width: 1344px) 1280px, calc(100vw - 64px)";
 
+/**
+ * The capture loads when its frame is within a screen of the viewport, not at page load: the
+ * browser's own lazy loading starts 1250–2500px early, which on phones is the first view's network.
+ * The frame holds the capture's ratio, so nothing shifts; the caption carries the alt text.
+ */
+const frame = ref<HTMLElement>();
+const near = ref(false);
+const { stop } = useIntersectionObserver(
+  frame,
+  ([entry]) => {
+    if (!entry?.isIntersecting) return;
+    near.value = true;
+    stop();
+  },
+  { rootMargin: "100% 0px" },
+);
 const BACKEND_NAMES: Record<string, string> = { webgpu: "WebGPU", webgl: "WebGL", canvas: "Canvas 2D" };
 /** The bindings /home names (home.developers.body); the Angular adapter is not published yet. */
 const SHIPPED_BINDINGS = new Set(["Vue", "React", "Web Component"]);
@@ -40,30 +51,26 @@ const rows = computed(() => [
 <template>
   <section id="product" class="band product" aria-labelledby="product-heading">
     <div class="container">
-      <div class="product-head">
-        <div class="section-head">
-          <h2 id="product-heading" class="t-heading">{{ t("investors.product.heading") }}</h2>
-          <p class="t-lede">{{ t("investors.product.body") }}</p>
-        </div>
-        <a class="button button-quiet" :href="APP_PATH">
+      <div class="section-head">
+        <h2 id="product-heading" class="t-heading">{{ t("investors.product.heading") }}</h2>
+        <p class="t-lede">{{ t("investors.product.body") }}</p>
+        <a class="section-link" :href="APP_PATH">
           {{ t("investors.product.open") }}
           <KcqIcon class="button-arrow" name="arrow" />
         </a>
       </div>
-      <figure class="shot">
-        <picture>
-          <source v-if="!hydrated" media="(prefers-color-scheme: dark)" :srcset="shots.dark" :sizes="sizes" />
-          <img
-            :srcset="hydrated ? shots[mode] : shots.light"
-            :sizes="sizes"
-            :src="shotLight1200"
-            :alt="t('home.workstation.alt')"
-            width="1440"
-            height="852"
-            loading="lazy"
-            decoding="async"
-          />
-        </picture>
+      <figure ref="frame" class="shot product-frame section-artifact" data-theme="dark">
+        <img
+          v-if="near"
+          :srcset="srcset"
+          :sizes="sizes"
+          :src="shotDark1200"
+          :alt="t('home.workstation.alt')"
+          width="1440"
+          height="852"
+          decoding="async"
+        />
+        <figcaption class="visually-hidden">{{ t("home.workstation.alt") }}</figcaption>
       </figure>
       <dl class="facts">
         <div v-for="row in rows" :key="row.label" class="fact">
@@ -77,21 +84,9 @@ const rows = computed(() => [
   </section>
 </template>
 <style scoped>
-.product-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--klc-space-24);
-  margin-bottom: var(--klc-space-48);
-}
+/* The frame keeps the capture's ratio before the image exists. */
 .shot {
-  margin: 0;
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-lg);
-  overflow: hidden;
-  background: var(--klc-color-chart-background);
-  box-shadow: var(--klc-elevation-3);
+  aspect-ratio: 1440 / 852;
 }
 .shot img {
   display: block;
@@ -100,6 +95,9 @@ const rows = computed(() => [
   user-select: none;
 }
 @media (max-width: 767px) {
+  .shot {
+    aspect-ratio: 1 / 1;
+  }
   .shot img {
     aspect-ratio: 1 / 1;
     object-fit: cover;

@@ -6,6 +6,8 @@
   The page's one signature motion: when the log first scrolls into view, the rail fills and the
   three calls land in order, the way the agent panel showed them. CSS transitions only, armed
   after hydration, so the prerendered page (and no-JS, and reduced motion) shows the finished log.
+  The section sits on the page surface; the log is the one framed artifact, a product window on
+  the fixed dark chart surface (restraint benchmark rules 4, 9).
 -->
 <script setup lang="ts">
 import { useIntersectionObserver, usePreferredReducedMotion } from "@vueuse/core";
@@ -45,20 +47,21 @@ const { stop } = useIntersectionObserver(
 );
 </script>
 <template>
-  <section id="tools" class="band band-inverted tools" data-theme="dark" aria-labelledby="tools-heading">
+  <section id="tools" class="band tools" aria-labelledby="tools-heading">
     <div class="container tools-grid">
       <div class="section-head">
         <h2 id="tools-heading" class="t-heading">{{ t("investors.tools.heading") }}</h2>
         <p class="t-lede">{{ t("investors.tools.body") }}</p>
-        <p class="t-meta tools-note">{{ t("investors.tools.note") }}</p>
+        <p class="t-meta">{{ t("investors.tools.note") }}</p>
       </div>
       <figure
         ref="log"
-        class="log"
+        class="log product-frame"
+        data-theme="dark"
         :data-armed="armed || undefined"
         :data-seen="seen || undefined"
       >
-        <figcaption class="t-meta log-head">
+        <figcaption class="log-head">
           <span class="status-dot" aria-hidden="true" />{{ t("investors.tools.log") }}
         </figcaption>
         <ol class="log-list">
@@ -66,7 +69,7 @@ const { stop } = useIntersectionObserver(
             <span class="call-node" aria-hidden="true" />
             <div class="call-line">
               <code class="call-tool" translate="no">{{ step.tool }}</code>
-              <span class="call-safety t-meta" :data-safety="step.safety">{{ step.label }}</span>
+              <span class="call-safety" :data-safety="step.safety">{{ step.label }}</span>
             </div>
             <p class="t-copy call-what">{{ step.what }}</p>
           </li>
@@ -80,10 +83,6 @@ const { stop } = useIntersectionObserver(
   display: grid;
   gap: var(--klc-space-48) var(--kcq-column-gap);
   align-items: center;
-}
-.tools-note {
-  text-transform: none;
-  letter-spacing: 0;
 }
 @media (min-width: 1024px) {
   .tools-grid {
@@ -99,11 +98,7 @@ const { stop } = useIntersectionObserver(
 /* The log, drawn like the agent panel: a quiet card, a rail of nodes, one row per call. */
 .log {
   position: relative;
-  margin: 0;
   padding: var(--klc-space-24);
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-lg);
-  background: var(--kcq-surface);
 }
 .log-head {
   display: flex;
@@ -112,8 +107,9 @@ const { stop } = useIntersectionObserver(
   padding-bottom: var(--klc-space-16);
   margin-bottom: var(--klc-space-8);
   border-bottom: 1px solid var(--kcq-rule);
-  text-transform: none;
-  letter-spacing: 0;
+  font-size: var(--klc-text-12-font-size);
+  line-height: var(--klc-text-12-line-height);
+  color: var(--kcq-ink-2);
 }
 .log-head .status-dot {
   background: var(--kcq-up);
@@ -139,7 +135,7 @@ const { stop } = useIntersectionObserver(
   height: 11px;
   margin-top: 5px;
   border-radius: var(--klc-radius-full);
-  background: var(--kcq-surface);
+  background: var(--klc-color-chart-background);
   box-shadow: inset 0 0 0 2px var(--kcq-accent);
   position: relative;
   z-index: 1;
@@ -157,16 +153,9 @@ const { stop } = useIntersectionObserver(
   overflow-wrap: anywhere;
 }
 .call-safety {
-  padding: 0 var(--klc-space-8);
-  border: 1px solid var(--kcq-rule-strong);
-  border-radius: var(--klc-radius-full);
-  text-transform: none;
-  letter-spacing: 0;
-}
-.call-safety[data-safety="destructive"] {
-  border-color: transparent;
-  background: var(--kcq-accent-strong);
-  color: #fff;
+  font-size: var(--klc-text-12-font-size);
+  line-height: var(--klc-text-12-line-height);
+  color: var(--kcq-ink-2);
 }
 .call-what {
   grid-column: 2;

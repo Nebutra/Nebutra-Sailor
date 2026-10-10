@@ -4,6 +4,8 @@
   the team's own screenshot of the 601360 session (BP asset agent-box-range-601360, 2026-09-04),
   where an agent boxed a year of consolidation ranges on the chart. Static: the page's one motion
   is the tool-call log further down. On phones the shot crops to the chart, the part that reads.
+  Restraint (benchmark rules 1, 8, 9): nothing above the headline, one stacked column, then one
+  product frame on the fixed dark chart surface; no shadow.
 -->
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
@@ -20,28 +22,23 @@ const { t } = useI18n();
 <template>
   <section id="hero" class="band hero" aria-labelledby="hero-heading">
     <div class="container">
-      <div class="hero-grid">
-        <p class="t-meta hero-kicker">
-          <span class="hero-kicker-mark" aria-hidden="true" />{{ t("investors.hero.kicker") }}
-        </p>
+      <div class="hero-copy">
         <h1 id="hero-heading" class="t-display hero-heading">{{ t("investors.heading") }}</h1>
         <p class="t-lede hero-lede">{{ t("investors.hero.lede") }}</p>
-        <div class="hero-ask">
-          <p class="t-copy hero-stage">{{ t("investors.hero.stage") }}</p>
-          <div class="hero-actions">
-            <a
-              class="button button-primary"
-              :href="mailtoHref(t('investors.ask.investors.subject'), t('investors.ask.mailBody'))"
-            >
-              {{ t("investors.hero.primary") }}
-              <KcqIcon class="button-arrow" name="arrow" />
-            </a>
-            <a class="button button-quiet" :href="APP_PATH">{{ t("investors.hero.secondary") }}</a>
-          </div>
+        <p class="hero-stage">{{ t("investors.hero.stage") }}</p>
+        <div class="hero-actions">
+          <a
+            class="button button-primary"
+            :href="mailtoHref(t('investors.ask.investors.subject'), t('investors.ask.mailBody'))"
+          >
+            {{ t("investors.hero.primary") }}
+            <KcqIcon class="button-arrow" name="arrow" />
+          </a>
+          <a class="button button-quiet" :href="APP_PATH">{{ t("investors.hero.secondary") }}</a>
         </div>
       </div>
       <figure class="session">
-        <div class="session-frame">
+        <div class="session-frame product-frame" data-theme="dark">
           <picture>
             <source
               media="(max-width: 767px)"
@@ -55,12 +52,13 @@ const { t } = useI18n();
               :alt="t('investors.session.alt')"
               width="1920"
               height="930"
+              fetchpriority="high"
               decoding="async"
             />
           </picture>
         </div>
         <figcaption class="session-caption">
-          <span class="t-meta session-label" translate="no">{{ t("investors.session.label") }}</span>
+          <span class="t-label session-label" translate="no">{{ t("investors.session.label") }}</span>
           <span class="t-copy">{{ t("investors.session.caption") }}</span>
         </figcaption>
       </figure>
@@ -69,73 +67,32 @@ const { t } = useI18n();
 </template>
 <style scoped>
 .hero {
-  padding-block: var(--klc-space-32) var(--kcq-band-space);
+  padding-block: var(--klc-space-48) var(--kcq-band-space);
 }
 @media (min-width: 1024px) {
   .hero {
-    padding-top: var(--klc-space-64);
+    padding-top: var(--klc-space-96);
   }
 }
-.hero-grid {
+.hero-copy {
   display: grid;
+  justify-items: start;
   gap: var(--klc-space-24);
 }
-.hero-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--klc-space-8);
-}
-/* The candle-body mark the chart uses for a price label, as the kicker's bullet. */
-.hero-kicker-mark {
-  width: var(--klc-space-4);
-  height: var(--klc-space-12);
-  border-radius: 1px;
-  background: var(--kcq-accent);
-}
 .hero-heading {
-  max-width: 20ch;
-}
-/* Phones: the product name is one unbreakable word; keep it inside the gutter. */
-@media (max-width: 767px) {
-  :root:not(:lang(zh-Hans)) .hero-heading {
-    font-size: min(var(--klc-text-48-font-size), 10.6vw);
-  }
+  max-width: 47.5rem;
 }
 .hero-lede {
-  max-width: 42rem;
-}
-.hero-ask {
-  display: grid;
-  gap: var(--klc-space-16);
-  align-content: start;
+  max-width: 40rem;
 }
 .hero-stage {
-  max-width: 30rem;
+  max-width: 40rem;
   color: var(--kcq-ink);
 }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--klc-space-12);
-}
-/* From lg the lede and the ask sit side by side under the headline, the ask on the right edge. */
-@media (min-width: 1024px) {
-  .hero-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    column-gap: var(--kcq-column-gap);
-    row-gap: var(--klc-space-32);
-  }
-  .hero-kicker,
-  .hero-heading {
-    grid-column: 1 / -1;
-  }
-  .hero-lede {
-    grid-column: 1 / span 6;
-  }
-  .hero-ask {
-    grid-column: 8 / span 5;
-    padding-top: var(--klc-space-4);
-  }
 }
 .session {
   margin: var(--klc-space-48) 0 0;
@@ -145,13 +102,6 @@ const { t } = useI18n();
     margin-top: var(--klc-space-64);
   }
 }
-.session-frame {
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-lg);
-  overflow: hidden;
-  background: var(--kcq-deep);
-  box-shadow: var(--klc-elevation-3);
-}
 .session-frame img {
   display: block;
   width: 100%;
@@ -160,35 +110,18 @@ const { t } = useI18n();
 }
 .session-caption {
   display: grid;
-  gap: var(--klc-space-8);
-  max-width: 48rem;
+  gap: var(--klc-space-4);
+  max-width: 40rem;
   margin-top: var(--klc-space-16);
 }
-.session-label {
-  color: var(--kcq-accent-text);
-}
-@media (min-width: 1024px) {
-  .session-caption {
-    grid-template-columns: max-content minmax(0, 1fr);
-    align-items: baseline;
-    gap: var(--klc-space-24);
-    max-width: 64rem;
-  }
+.session-caption .t-copy {
+  color: var(--kcq-ink-2);
 }
 /* Phones get a square crop of the chart with its boxes (the <source> above): the whole window is
    too small to read there. The box is square before the image arrives, so nothing shifts. */
 @media (max-width: 767px) {
   .session-frame img {
     aspect-ratio: 1 / 1;
-  }
-  /* The caption leads on phones: it names the session before the crop shows it. */
-  .session {
-    display: flex;
-    flex-direction: column;
-  }
-  .session-caption {
-    order: -1;
-    margin: 0 0 var(--klc-space-16);
   }
 }
 </style>

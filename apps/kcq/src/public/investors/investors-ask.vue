@@ -1,8 +1,9 @@
 <!--
   The ask (research §4.11, §2.4): intent, not numbers. Two tracks, investors and design partners,
   each one prefilled email to the founders' inbox (contact.ts); the address itself stays on the
-  page with a copy button for anyone whose browser has no mail client. An inverted band that the
-  footer continues, as on /home.
+  page with a copy button for anyone whose browser has no mail client. The page's one dark block,
+  which the footer continues, as /home's final CTA; one H2 size, and the tracks are plain columns,
+  not cards (restraint benchmark rules 2, 4, 9).
 -->
 <script setup lang="ts">
 import { useClipboard } from "@vueuse/core";
@@ -24,10 +25,10 @@ const tracks = computed(() =>
 const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy: true });
 </script>
 <template>
-  <section id="contact" class="band band-inverted ask" data-theme="dark" aria-labelledby="ask-heading">
+  <section id="contact" class="band ask" data-theme="dark" aria-labelledby="ask-heading">
     <div class="container ask-grid">
       <div class="ask-head">
-        <h2 id="ask-heading" class="t-statement ask-heading">{{ t("investors.ask.heading") }}</h2>
+        <h2 id="ask-heading" class="t-heading ask-heading">{{ t("investors.ask.heading") }}</h2>
         <p class="t-lede">{{ t("investors.ask.body") }}</p>
       </div>
       <ul class="tracks">
@@ -69,11 +70,8 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
 }
 .ask-head {
   display: grid;
-  gap: var(--klc-space-24);
-  max-width: 48rem;
-}
-.ask-heading {
-  max-width: 16ch;
+  gap: var(--klc-space-16);
+  max-width: 40rem;
 }
 .tracks {
   display: grid;
@@ -84,10 +82,8 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
   align-content: start;
   justify-items: start;
   gap: var(--klc-space-12);
-  padding: var(--klc-space-24);
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-lg);
-  background: var(--kcq-surface);
+  padding-top: var(--klc-space-24);
+  border-top: 1px solid var(--kcq-rule);
 }
 .track .button {
   margin-top: var(--klc-space-12);
@@ -100,7 +96,6 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
 }
 .ask-email {
   color: var(--kcq-ink);
-  font-family: var(--kcq-font-mono);
   font-size: var(--klc-text-copy-16-font-size);
   line-height: var(--klc-text-copy-16-line-height);
 }
@@ -118,7 +113,7 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
   transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
 }
 .ask-copy[data-copied] {
-  color: var(--kcq-up);
+  color: var(--kcq-ink);
 }
 @media (hover: hover) and (pointer: fine) {
   .ask-copy:hover {
@@ -140,7 +135,7 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
 @media (min-width: 1024px) {
   .ask-grid {
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    align-items: end;
+    align-items: start;
   }
   .ask-head {
     grid-column: 1 / span 6;
