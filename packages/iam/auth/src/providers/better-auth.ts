@@ -53,6 +53,7 @@ import { loadBetterAuthDeviceAuthorizationPlugins } from "./better-auth/device-a
 import { DEVICE_AUTH_RATE_LIMIT_RULES } from "./better-auth/device-authorization-config";
 import { buildMagicLinkCapability } from "./better-auth/magic-link";
 import { mapSession, mapUser, normalizeOrganization } from "./better-auth/mappers";
+import { NODE_ORGANIZATION_SCHEMA } from "./better-auth/node-organization-config";
 import { buildOrganizationsCapability } from "./better-auth/organization";
 import { buildPasskeysCapability } from "./better-auth/passkey";
 import { loadBetterAuthOneTapPlugin } from "./better-auth/plugin-loaders";
@@ -181,7 +182,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
 
     let orgPlugin: BetterAuthPlugin | undefined;
     try {
-      orgPlugin = organization();
+      orgPlugin = organization({ schema: NODE_ORGANIZATION_SCHEMA });
     } catch {
       logger.warn(
         "Better Auth: organization plugin not available — multi-tenant features will be stubbed.",
