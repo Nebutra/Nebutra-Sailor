@@ -3,6 +3,7 @@
 import { Check, ChevronUpDown as ChevronsUpDown } from "@nebutra/icons";
 import { cva } from "class-variance-authority";
 import * as React from "react";
+import { controlFontSize, controlHeight } from "../tokens/components/control-ladder";
 import { cn } from "../utils/cn";
 import {
   Command,
@@ -41,21 +42,23 @@ const comboboxSizeMap = {
   large: "large",
 } as const satisfies Record<ComboboxSize | LegacyComboboxSize, ComboboxSize>;
 
+// Heights and type size from the shared control ladder, so the trigger lines up
+// with Input, Select and Button under every Brand Package density.
 const comboboxSizeTokens = {
   small: {
-    "--combobox-trigger-height": "2rem",
+    "--combobox-trigger-height": controlHeight("sm", 32),
     "--combobox-trigger-padding-x": "0.625rem",
-    "--combobox-font-size": "0.75rem",
+    "--combobox-font-size": controlFontSize("sm", 12),
   },
   medium: {
-    "--combobox-trigger-height": "2.5rem",
+    "--combobox-trigger-height": controlHeight("md", 40),
     "--combobox-trigger-padding-x": "0.75rem",
-    "--combobox-font-size": "0.875rem",
+    "--combobox-font-size": controlFontSize("md", 14),
   },
   large: {
-    "--combobox-trigger-height": "3rem",
+    "--combobox-trigger-height": controlHeight("lg", 48),
     "--combobox-trigger-padding-x": "0.875rem",
-    "--combobox-font-size": "1rem",
+    "--combobox-font-size": controlFontSize("lg", 16),
   },
 } as const satisfies Record<ComboboxSize, ComboboxStyle>;
 
@@ -160,16 +163,16 @@ export interface ComboboxListProps extends CommandListProps {
 export const comboboxTriggerVariants = cva(
   [
     "flex w-full items-center justify-between gap-2 whitespace-nowrap",
-    // --input-radius, not the generic md step: this trigger is a form control and
+    // --radius-inputs, not the generic md step: this trigger is a form control and
     // should round like Input and Select do. Reading the scale step meant it
     // tracked whatever a language did to medium surfaces instead of what it
     // decided for its fields.
-    "h-[var(--combobox-trigger-height)] rounded-[var(--input-radius,var(--radius-md))] border border-input bg-background px-[var(--combobox-trigger-padding-x)]",
+    "h-[var(--combobox-trigger-height)] rounded-[var(--radius-inputs,var(--radius-md))] border border-input bg-background px-[var(--combobox-trigger-padding-x)]",
     "text-[length:var(--combobox-font-size)] ring-offset-background",
     "transition-colors duration-micro ease-out",
     "placeholder:text-muted-foreground",
     "disabled:cursor-not-allowed disabled:opacity-50",
-    "[&>span]:line-clamp-1 [&>span]:text-left",
+    "[&>span]:line-clamp-1 [&>span]:text-start",
   ].join(" "),
   {
     variants: {

@@ -119,6 +119,8 @@ html[data-brand="vercel"] {
   --control-height-icon-sm: 1.5rem;
   --control-height-icon-md: 1.75rem;
   --control-height-icon-lg: 2rem;
+  --control-font-size-tiny: 0.6875rem;
+  --control-font-size-sm: 0.75rem;
   --control-font-size-md: 0.8125rem;
 
   /* Typography */

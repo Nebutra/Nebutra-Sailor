@@ -1,7 +1,11 @@
 "use client";
 
 import * as React from "react";
-
+import {
+  type ControlStep,
+  controlFontSize,
+  controlHeight,
+} from "../tokens/components/control-ladder";
 import { type SwitchSize, switchSizes, switchTokens } from "../tokens/components/switch";
 import { cn } from "../utils/cn";
 import { asPlainStyle } from "../utils/primitive-props";
@@ -55,20 +59,29 @@ export interface SwitchProps
   value?: string;
 }
 
+const SWITCH_STEP: Record<SwitchSize, ControlStep> = { small: "sm", medium: "md", large: "lg" };
+
+/** Segment height: the control-ladder step, less the track's inset on both sides. */
+function segmentHeight(size: SwitchSize): string {
+  const t = switchSizes[size];
+  return `calc(${controlHeight(SWITCH_STEP[size], t.height)} - ${t.padding * 2}px)`;
+}
+
 function getSwitchStyle(size: SwitchSize, style: unknown) {
   const sizeTokens = switchSizes[size];
 
   return {
-    "--switch-height": `${sizeTokens.height}px`,
-    "--switch-control-height": `${sizeTokens.controlHeight}px`,
+    "--switch-height": controlHeight(SWITCH_STEP[size], sizeTokens.height),
+    "--switch-control-height": segmentHeight(size),
     "--switch-control-min-width": `${sizeTokens.minWidth}px`,
     "--switch-control-padding-x": `${sizeTokens.paddingX}px`,
     "--switch-icon-size": `${sizeTokens.iconSize}px`,
-    "--switch-font-size": `${sizeTokens.fontSize}px`,
+    "--switch-font-size": controlFontSize(SWITCH_STEP[size], sizeTokens.fontSize),
     "--switch-padding": `${sizeTokens.padding}px`,
     "--switch-gap": `${switchTokens.gap}px`,
-    "--switch-radius": `${switchTokens.radius}px`,
-    "--switch-control-radius": `${switchTokens.controlRadius}px`,
+    // Concentric, and on the language's control corner rather than a fixed 8/6.
+    "--switch-radius": `calc(var(--radius-md, ${switchTokens.controlRadius}px) + ${sizeTokens.padding}px)`,
+    "--switch-control-radius": `var(--radius-md, ${switchTokens.controlRadius}px)`,
     "--switch-duration": `${switchTokens.motion.duration}ms`,
     "--switch-easing": switchTokens.motion.easing,
     ...asPlainStyle(style),
@@ -79,11 +92,11 @@ function getSwitchControlStyle(size: SwitchSize, style: unknown) {
   const sizeTokens = switchSizes[size];
 
   return {
-    "--switch-control-height": `${sizeTokens.controlHeight}px`,
+    "--switch-control-height": segmentHeight(size),
     "--switch-control-min-width": `${sizeTokens.minWidth}px`,
     "--switch-control-padding-x": `${sizeTokens.paddingX}px`,
     "--switch-icon-size": `${sizeTokens.iconSize}px`,
-    "--switch-font-size": `${sizeTokens.fontSize}px`,
+    "--switch-font-size": controlFontSize(SWITCH_STEP[size], sizeTokens.fontSize),
     ...asPlainStyle(style),
   } satisfies Pick<
     SwitchCssVars,
@@ -129,7 +142,7 @@ const SwitchRoot = function SwitchRoot({
         data-slot="switch"
         role="radiogroup"
         className={cn(
-          "inline-flex h-[var(--switch-height)] items-center gap-[var(--switch-gap)] rounded-[var(--switch-radius)] border border-border bg-muted p-[var(--switch-padding)] text-muted-foreground",
+          "inline-flex h-[var(--switch-height)] items-center gap-[var(--switch-gap)] rounded-[var(--switch-radius)] border border-border bg-muted p-[calc(var(--switch-padding)-1px)] text-muted-foreground",
           disabled && "cursor-not-allowed opacity-60",
           className,
         )}

@@ -272,7 +272,7 @@
   --secondary: 220 14.3% 95.9%;
   --secondary-foreground: 225 7.7% 10.2%;
   --muted: 220 14.3% 95.9%;
-  --muted-foreground: 220 2.6% 45.5%;
+  --muted-foreground: 220 3.5% 41%;
   --accent: 220 14.3% 95.9%;
   --accent-foreground: 225 7.7% 10.2%; /** Softer brand blue — desaturated to match --primary, avoids 100% saturation glare on focus/accent */
   --destructive: 0 84% 45%;

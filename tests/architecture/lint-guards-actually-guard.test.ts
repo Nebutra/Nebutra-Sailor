@@ -259,6 +259,14 @@ const CASES: Case[] = [
     path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
   },
   {
+    // A space inside a Tailwind arbitrary value: the class list splits there
+    // and neither half generates CSS — how three Alert variants lost their fill.
+    guard: "lint-tw-arbitrary-space",
+    violation:
+      'export const A = () => <div className="bg-[var(--color-success, var(--color-green-500))]" />;\n',
+    path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
+  },
+  {
     // The site calling itself a unicorn — a claim nothing on the page can show.
     guard: "lint-site-claims",
     violation: "export const C = () => <p>The unicorn template for founders.</p>;\n",

@@ -282,7 +282,7 @@ export const TOKEN_VALUES = {
   "--motion-ease-out": { light: "cubic-bezier(0.16, 1, 0.3, 1)" },
   "--motion-ease-spring": { light: "cubic-bezier(0.175, 0.885, 0.32, 1.275)" },
   "--muted": { light: "220 14.3% 95.9%", dark: "225 6.2% 12.5%" },
-  "--muted-foreground": { light: "220 2.6% 45.5%", dark: "228 2.6% 62.5%" },
+  "--muted-foreground": { light: "220 3.5% 41%", dark: "228 2.6% 62.5%" },
   "--nebutra-blue-100": { light: "#dbe4ff" },
   "--nebutra-blue-200": { light: "#bac8ff" },
   "--nebutra-blue-300": { light: "#91a7ff" },

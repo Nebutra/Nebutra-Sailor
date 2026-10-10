@@ -4,6 +4,12 @@ import { Input as BaseInput } from "@base-ui/react/input";
 import { Eye, EyeOff, LoaderCircle as Loader2, Cross as X } from "@nebutra/icons";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
+import {
+  type ControlStep,
+  controlFontSize,
+  controlHeight,
+  fieldRadius,
+} from "../tokens/components/control-ladder";
 import { type InputSize, inputTokens } from "../tokens/components/input";
 import { cn } from "../utils/cn";
 import { asPlainStyle } from "../utils/primitive-props";
@@ -51,9 +57,9 @@ const inputVariants = cva(
       },
       affix: {
         none: "",
-        prefix: "pl-[var(--input-padding-left)]",
-        suffix: "pr-[var(--input-padding-right)]",
-        both: "pl-[var(--input-padding-left)] pr-[var(--input-padding-right)]",
+        prefix: "ps-[var(--input-padding-left)]",
+        suffix: "pe-[var(--input-padding-right)]",
+        both: "ps-[var(--input-padding-left)] pe-[var(--input-padding-right)]",
       },
       /**
        * `bare` drops the field's own stroke, fill and lift so it can sit inside
@@ -91,8 +97,8 @@ const affixVariants = cva(
   {
     variants: {
       side: {
-        prefix: "left-[var(--input-affix-inset)]",
-        suffix: "right-[var(--input-affix-inset)]",
+        prefix: "start-[var(--input-affix-inset)]",
+        suffix: "end-[var(--input-affix-inset)]",
       },
     },
   },
@@ -100,7 +106,7 @@ const affixVariants = cva(
 
 const inputControlButtonVariants = cva(
   [
-    "absolute right-[var(--input-control-inset)] top-1/2 flex size-[var(--input-control-size)] -translate-y-1/2 items-center justify-center",
+    "absolute end-[var(--input-control-inset)] top-1/2 flex size-[var(--input-control-size)] -translate-y-1/2 items-center justify-center",
     "rounded-[var(--radius-sm)] text-muted-foreground transition-colors duration-micro ease-out",
     "hover:bg-accent hover:text-accent-foreground",
     "focus-visible:outline-none",
@@ -184,24 +190,36 @@ function assignRef<T>(ref: React.Ref<T> | undefined, value: T | null) {
   }
 }
 
+const INPUT_STEP: Record<InputSize, ControlStep> = { sm: "sm", md: "md", lg: "lg" };
+
+/**
+ * Size variables for the field and everything positioned against it.
+ *
+ * Height, type size and corner come from the shared control ladder
+ * (tokens/components/control-ladder.ts), so a Brand Package that tightens its
+ * density or rounds its fields moves Input with Button instead of leaving it on
+ * a pixel table of its own. `outline` is not set here: this object is also the
+ * inline style of the clear and reveal buttons, and an inline `outline: none`
+ * beats the global :focus-visible rule — those two buttons had no keyboard
+ * focus indicator at all.
+ */
 function getInputStyle(size: InputSize, style: unknown): InputCssVars {
   const token = inputTokens.sizes[size];
+  const step = INPUT_STEP[size];
 
   return {
-    "--input-height": `${token.height}px`,
+    "--input-height": controlHeight(step, token.height),
     "--input-padding-x": `${token.paddingX}px`,
     "--input-padding-left": `${token.affixWidth}px`,
     "--input-padding-right": `${token.affixWidth}px`,
-    "--input-font-size": `${token.fontSize}px`,
-    "--input-radius": `${token.radius}px`,
+    "--input-font-size": controlFontSize(step, token.fontSize),
+    "--input-radius": fieldRadius(token.radius),
     "--input-affix-inset": `${token.affixInset}px`,
     "--input-control-inset": `${token.controlInset}px`,
     "--input-control-size": `${token.controlSize}px`,
     "--input-control-icon-size": `${token.controlIconSize}px`,
     "--input-icon-size": `${token.iconSize}px`,
     "--input-focus-ring-width": `${inputTokens.focusRingWidth}px`,
-    borderRadius: "var(--input-radius)",
-    outline: "none",
     ...asPlainStyle(style),
   };
 }
@@ -388,7 +406,7 @@ const Input = ({
       aria-busy={loading || undefined}
       className={cn(
         inputVariants({ size, affix, tone }),
-        type === "file" && "p-0 pr-[var(--input-padding-x)] text-muted-foreground",
+        type === "file" && "p-0 pe-[var(--input-padding-x)] text-muted-foreground",
         className,
       )}
       style={getInputStyle(size, style)}
@@ -420,7 +438,7 @@ const Input = ({
       {showSpinner && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute right-[var(--input-control-inset)] top-1/2 flex size-[var(--input-control-size)] -translate-y-1/2 items-center justify-center text-muted-foreground"
+          className="pointer-events-none absolute end-[var(--input-control-inset)] top-1/2 flex size-[var(--input-control-size)] -translate-y-1/2 items-center justify-center text-muted-foreground"
           style={getInputStyle(size, undefined)}
         >
           <Loader2 className="size-[var(--input-control-icon-size)] animate-spin" />
@@ -443,7 +461,7 @@ const Input = ({
       {showShortcut && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute right-[var(--input-control-inset)] top-1/2 flex -translate-y-1/2 items-center"
+          className="pointer-events-none absolute end-[var(--input-control-inset)] top-1/2 flex -translate-y-1/2 items-center"
           style={getInputStyle(size, undefined)}
         >
           <Kbd small>{currentValue.length > 0 ? "Esc" : shortcut}</Kbd>

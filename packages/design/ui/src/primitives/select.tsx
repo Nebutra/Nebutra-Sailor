@@ -3,7 +3,12 @@
 import { Select as BaseSelect, type SelectRoot } from "@base-ui/react/select";
 import { Check, ChevronDown } from "@nebutra/icons";
 import * as React from "react";
-
+import {
+  type ControlStep,
+  controlFontSize,
+  controlHeight,
+  fieldRadius,
+} from "../tokens/components/control-ladder";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { type SelectSize, selectTokens } from "../tokens/components/select";
 import { cn } from "../utils/cn";
@@ -20,17 +25,30 @@ type SelectTriggerCssVars = React.CSSProperties & {
   "--select-focus-ring-width"?: string;
 };
 
+/** Select's four sizes on the shared control ladder — xsmall is the 24px step. */
+const SELECT_STEP: Record<SelectSize, ControlStep> = {
+  xsmall: "tiny",
+  small: "sm",
+  medium: "md",
+  large: "lg",
+};
+
+/**
+ * Trigger size variables, read from the control ladder so a Select sits at the
+ * same height and corner as the Input and Button beside it under every
+ * language (see tokens/components/control-ladder.ts). No inline `outline`: the
+ * class list already owns it, and an inline value outranks every rule.
+ */
 function getSelectTriggerStyle(size: SelectSize, style: unknown): SelectTriggerCssVars {
   const token = selectTokens.sizes[size];
+  const step = SELECT_STEP[size];
 
   return {
-    "--select-height": `${token.height}px`,
+    "--select-height": controlHeight(step, token.height),
     "--select-padding-x": `${token.paddingX}px`,
-    "--select-font-size": `${token.fontSize}px`,
-    "--select-radius": `${token.radius}px`,
+    "--select-font-size": controlFontSize(step, token.fontSize),
+    "--select-radius": fieldRadius(token.radius),
     "--select-focus-ring-width": `${selectTokens.focusRingWidth}px`,
-    borderRadius: "var(--select-radius)",
-    outline: "none",
     ...asPlainStyle(style),
   };
 }
@@ -114,12 +132,13 @@ export type SelectProps = OptionsSelectProps | CompoundSelectProps;
 
 function getNativeSelectStyle(size: SelectSize, style: unknown): NativeSelectCssVars {
   const token = selectTokens.sizes[size];
+  const step = SELECT_STEP[size];
 
   return {
-    "--select-height": `${token.height}px`,
+    "--select-height": controlHeight(step, token.height),
     "--select-padding-x": `${token.paddingX}px`,
-    "--select-font-size": `${token.fontSize}px`,
-    "--select-radius": `${token.radius}px`,
+    "--select-font-size": controlFontSize(step, token.fontSize),
+    "--select-radius": fieldRadius(token.radius),
     "--select-icon-inset": `${token.iconInset}px`,
     "--select-icon-box-size": `${token.iconBoxSize}px`,
     "--select-icon-size": `${token.iconSize}px`,
@@ -138,12 +157,15 @@ function getSelectContentStyle(style: unknown): SelectContentCssVars {
     "--select-content-max-height": `${selectTokens.content.maxHeight}px`,
     "--select-content-min-width": `${selectTokens.content.minWidth}px`,
     "--select-content-padding": `${selectTokens.content.padding}px`,
-    "--select-content-radius": `${selectTokens.content.radius}px`,
+    // The menu-family corner (dropdown, popover, combobox list): the
+    // container step, which a Brand Package maps to its card radius. It was a
+    // fixed 12px while every other menu was 6px.
+    "--select-content-radius": "var(--radius-lg, 0.5rem)",
     "--select-content-shadow": selectTokens.content.shadow,
     "--select-font-size": `${selectTokens.content.fontSize}px`,
     "--select-duration": `${selectTokens.motion.duration}ms`,
     "--select-easing": selectTokens.motion.easing,
-    "--select-item-radius": `${selectTokens.item.radius}px`,
+    "--select-item-radius": "var(--radius-sm, 0.25rem)",
     "--select-item-padding-x": `${selectTokens.item.paddingX}px`,
     "--select-item-padding-y": `${selectTokens.item.paddingY}px`,
     "--select-item-indicator-inset": `${selectTokens.item.indicatorInset}px`,
@@ -248,7 +270,7 @@ function NativeSelect({
       {label && (
         <Label
           htmlFor={selectId}
-          className="text-[length:var(--select-label-size)] font-medium text-foreground capitalize"
+          className="text-[length:var(--select-label-size)] font-medium text-foreground"
         >
           {label}
         </Label>
@@ -276,11 +298,11 @@ function NativeSelect({
             formControlInvalidClassNames.select,
             variant === "ghost" ? "border-transparent bg-transparent shadow-none" : "border-input",
             prefix
-              ? "pl-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]"
-              : "pl-[var(--select-padding-x)]",
+              ? "ps-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]"
+              : "ps-[var(--select-padding-x)]",
             hasAffix
-              ? "pr-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]"
-              : "pr-[var(--select-padding-x)]",
+              ? "pe-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]"
+              : "pe-[var(--select-padding-x)]",
             className,
           )}
           onChange={(event) => onChange?.(event)}
@@ -299,11 +321,11 @@ function NativeSelect({
           {children}
         </select>
         {prefix && (
-          <span className="pointer-events-none absolute left-[var(--select-icon-inset)] inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
+          <span className="pointer-events-none absolute start-[var(--select-icon-inset)] inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
             {prefix}
           </span>
         )}
-        <span className="pointer-events-none absolute right-[var(--select-icon-inset)] inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
+        <span className="pointer-events-none absolute end-[var(--select-icon-inset)] inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
           {suffix ?? <ChevronDown aria-hidden="true" className="size-[var(--select-icon-size)]" />}
         </span>
       </div>
@@ -388,7 +410,7 @@ function OptionsListboxSelect({
         <Label
           id={labelId}
           htmlFor={selectId}
-          className="text-[length:var(--select-label-size)] font-medium text-foreground capitalize"
+          className="text-[length:var(--select-label-size)] font-medium text-foreground"
         >
           {label}
         </Label>
@@ -401,7 +423,7 @@ function OptionsListboxSelect({
         )}
       >
         {prefix && (
-          <span className="pointer-events-none absolute left-[var(--select-icon-inset)] z-10 inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
+          <span className="pointer-events-none absolute start-[var(--select-icon-inset)] z-10 inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
             {prefix}
           </span>
         )}
@@ -420,7 +442,7 @@ function OptionsListboxSelect({
             aria-labelledby={labelId}
             className={cn(
               variant === "ghost" && "border-transparent bg-transparent shadow-none",
-              prefix && "pl-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]",
+              prefix && "ps-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]",
               className,
             )}
           >
@@ -437,7 +459,7 @@ function OptionsListboxSelect({
           </SelectContent>
         </BaseSelect.Root>
         {suffix && (
-          <span className="pointer-events-none absolute right-[var(--select-icon-inset)] z-10 inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
+          <span className="pointer-events-none absolute end-[var(--select-icon-inset)] z-10 inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
             {suffix}
           </span>
         )}
@@ -511,7 +533,7 @@ const SelectTrigger = ({
   <BaseSelect.Trigger
     ref={ref}
     className={cn(
-      "flex h-[var(--select-height)] w-full items-center justify-between whitespace-nowrap rounded-[var(--select-radius)] border border-input bg-background",
+      "flex h-[var(--select-height)] w-full min-w-0 items-center justify-between gap-2 whitespace-nowrap rounded-[var(--select-radius)] border border-input bg-background",
       "px-[var(--select-padding-x)] text-[length:var(--select-font-size)] text-foreground",
       "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
       formControlFocusClassNames.select,
@@ -524,7 +546,7 @@ const SelectTrigger = ({
   >
     {children}
     <BaseSelect.Icon render={<span />}>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      <ChevronDown className="size-4 shrink-0 opacity-50" />
     </BaseSelect.Icon>
   </BaseSelect.Trigger>
 );
@@ -602,12 +624,12 @@ const SelectItem = ({
   <BaseSelect.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-pointer select-none items-center rounded-[var(--select-item-radius)] py-[var(--select-item-padding-y)] pl-[var(--select-item-padding-x)] pr-[calc(var(--select-item-indicator-inset)+var(--select-item-indicator-size)+var(--select-item-padding-x))] text-[length:var(--select-font-size)] outline-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
+      "relative flex w-full cursor-pointer select-none items-center rounded-[var(--select-item-radius)] py-[var(--select-item-padding-y)] ps-[var(--select-item-padding-x)] pe-[calc(var(--select-item-indicator-inset)+var(--select-item-indicator-size)+var(--select-item-padding-x))] text-[length:var(--select-font-size)] outline-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
       className,
     )}
     {...props}
   >
-    <span className="absolute right-[var(--select-item-indicator-inset)] flex size-[var(--select-item-indicator-size)] items-center justify-center">
+    <span className="absolute end-[var(--select-item-indicator-inset)] flex size-[var(--select-item-indicator-size)] items-center justify-center">
       <BaseSelect.ItemIndicator render={<span />}>
         <Check className="size-[var(--select-item-indicator-icon-size)]" />
       </BaseSelect.ItemIndicator>
@@ -624,7 +646,7 @@ const SelectSeparator = ({
 }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
   <BaseSelect.Separator
     ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-muted", className)}
+    className={cn("-mx-1 my-1 h-px bg-border", className)}
     {...props}
   />
 );

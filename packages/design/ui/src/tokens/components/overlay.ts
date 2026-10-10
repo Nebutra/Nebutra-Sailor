@@ -102,5 +102,8 @@ export const overlayClassNames = {
     "outline-none transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-brand)]",
     "data-ending-style:opacity-0 data-starting-style:opacity-0 data-ending-style:duration-[var(--motion-duration-micro)] motion-reduce:transition-none",
   ].join(" "),
-  closeButton: `absolute right-4 top-4 rounded-[var(--radius-sm)] opacity-70 ring-offset-background ${overlayFocusRingClassName} transition-opacity duration-[var(--motion-duration-micro)] ease-[var(--ease-brand)] hover:opacity-100 disabled:pointer-events-none data-[open]:bg-accent data-[open]:text-muted-foreground motion-reduce:transition-none`,
+  // A ghost icon button (24px box): tint on hover per the hover contract, not
+  // an opacity dim; `outline-none` is overridden by the unlayered global
+  // :focus-visible rule, so keyboard focus still shows.
+  closeButton: `absolute end-4 top-4 inline-flex size-6 items-center justify-center rounded-[var(--radius-sm)] text-muted-foreground ${overlayFocusRingClassName} transition-colors duration-[var(--motion-duration-micro)] ease-[var(--ease-brand)] hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none motion-reduce:transition-none`,
 } as const;

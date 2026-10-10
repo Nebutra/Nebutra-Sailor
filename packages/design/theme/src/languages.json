@@ -58,7 +58,7 @@
       "id": "gsap",
       "name": "GSAP",
       "kind": "design-language",
-      "description": "Dark cream-on-void; shockingly-green is accent — CTA is gradient-stroke/outline, not solid green fill.",
+      "description": "Dual-mode: dark cream-on-void default + light cream paper with void ink; shockingly-green is accent — CTA is gradient-stroke/outline, not solid green fill.",
       "tagline": "saturated, fast easing",
       "shortName": "GSAP",
       "proves": [
@@ -106,7 +106,7 @@
       "id": "notion",
       "name": "Notion",
       "kind": "design-language",
-      "description": "Warm paper notebook; Notion Blue sole filled CTA ≠ Ink brand-mark; 8px buttons / 12px cards; elev=none + hairline; accent hues decorative only.",
+      "description": "Dual-mode: warm paper notebook + Notion dark (#191919); Notion Blue sole filled CTA ≠ Ink brand-mark; 8px buttons / 12px cards; elev=none + hairline; accent hues decorative only.",
       "tagline": "paper surfaces, muted ink",
       "shortName": "Notion",
       "proves": [
@@ -134,7 +134,7 @@
       "id": "raycast",
       "name": "Raycast",
       "kind": "design-language",
-      "description": "Neutral Mist/Iron filled CTA; Coral is brand-mark only. Key elevation stack.",
+      "description": "Dual-mode: dark glass default + light window appearance; neutral Mist/Iron filled CTA (Iron ink in light); Coral is brand-mark only. Key elevation stack.",
       "tagline": "dark glass and a coloured halo",
       "shortName": "Raycast",
       "proves": ["action ≠ brand-mark", "elevation=key free CSS"],
@@ -156,7 +156,7 @@
       "id": "stripe",
       "name": "Stripe",
       "kind": "design-language",
-      "description": "Indigo-ink ledger on frost glass; Indigo action ≠ Midnight brand-mark; 4px controls; elevation=none (tint + frost rules).",
+      "description": "Dual-mode: indigo-ink ledger on frost glass + navy dashboard dark; Indigo action ≠ Midnight brand-mark; 4px controls; elevation=none (tint + frost rules).",
       "tagline": "soft elevation, generous type",
       "shortName": "Stripe",
       "proves": [
@@ -183,7 +183,7 @@
       "id": "vanta",
       "name": "Vanta",
       "kind": "design-language",
-      "description": "Editorial violet on parchment; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
+      "description": "Dual-mode: editorial violet on parchment + deep-indigo night; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
       "tagline": "high-trust enterprise blues",
       "shortName": "Vanta",
       "proves": [

@@ -36,12 +36,18 @@ export const buttonVariants = cva(
           "border border-transparent bg-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-input",
         warning: "bg-warning text-warning-foreground hover:bg-warning/90",
       },
+      // One corner for every size. tiny/sm used to take --radius-sm and lg
+      // --radius-lg (the container step, which a skin maps to its CARD radius),
+      // while the default variant's recipe pinned --btn-default-radius at every
+      // size — so in one toolbar an outline sm button was 4px beside a default
+      // sm at 6px, and under Raycast a large outline button came out at 16px.
+      // Geist and Radix keep one control radius across the ladder.
       size: {
-        tiny: "h-[var(--control-height-tiny,1.5rem)] rounded-[var(--radius-sm)] px-2 text-[length:var(--control-font-size-tiny,0.6875rem)]",
-        sm: "h-[var(--control-height-sm,2rem)] rounded-[var(--radius-sm)] px-3 text-[length:var(--control-font-size-sm,0.75rem)]",
+        tiny: "h-[var(--control-height-tiny,1.5rem)] px-2 text-[length:var(--control-font-size-tiny,0.75rem)]",
+        sm: "h-[var(--control-height-sm,2rem)] px-3 text-[length:var(--control-font-size-sm,0.875rem)]",
         default:
           "h-[var(--control-height-md,2.5rem)] px-[var(--btn-default-padding-x,1rem)] py-[var(--btn-default-padding-y,0.5rem)]",
-        lg: "h-[var(--control-height-lg,3rem)] rounded-[var(--radius-lg)] px-5 text-[length:var(--control-font-size-lg,1rem)]",
+        lg: "h-[var(--control-height-lg,3rem)] px-5 text-[length:var(--control-font-size-lg,1rem)]",
         icon: "h-[var(--control-height-md,2.5rem)] w-[var(--control-height-md,2.5rem)]",
       },
       shape: {

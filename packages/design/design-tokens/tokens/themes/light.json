@@ -301,7 +301,7 @@
       "$type": "string"
     },
     "muted-foreground": {
-      "$value": "220 2.6% 45.5%",
+      "$value": "220 3.5% 41%",
       "$type": "string"
     },
     "accent": {
