@@ -17,12 +17,18 @@ import { createHeroTimeline, type HeroTimeline } from "./motion/hero-timeline";
 
 const { t } = useI18n();
 
-/** The hero's one GSAP timeline (motion/hero-timeline.ts); the chart's handoff resumes it. */
+/**
+ * The hero's one GSAP timeline (motion/hero-timeline.ts), created after load on idle, like the
+ * chart itself (hero-chart.vue): the prerendered text has painted by then, so the timeline skips
+ * the text part anyway, and GSAP stays off the first view's network. It is ready long before the
+ * chart's handoff, which needs the engine chunk; if not, the handoff waits for it.
+ */
 const root = ref<HTMLElement>();
 let timeline: HeroTimeline | undefined;
+let pending: boolean | undefined;
 let disposed = false;
 const pick = (selector: string) => root.value?.querySelector(selector) ?? null;
-onMounted(async () => {
+async function create() {
   const created = await createHeroTimeline(() => ({
     heading: pick(".hero-heading"),
     lede: pick(".hero-lede"),
@@ -31,15 +37,25 @@ onMounted(async () => {
     field: pick(".hero-field"),
     poster: pick(".hero-poster"),
   })).catch(() => undefined);
-  if (disposed) created?.revert();
-  else timeline = created;
+  if (disposed) return created?.revert();
+  timeline = created;
+  if (pending !== undefined) timeline?.product(pending);
+}
+onMounted(() => {
+  const idle = () =>
+    typeof window.requestIdleCallback === "function"
+      ? window.requestIdleCallback(() => void create(), { timeout: 1500 })
+      : window.setTimeout(() => void create(), 600);
+  if (document.readyState === "complete") idle();
+  else window.addEventListener("load", idle, { once: true });
 });
 onBeforeUnmount(() => {
   disposed = true;
   timeline?.revert();
 });
 function onShown(withField: boolean) {
-  timeline?.product(withField);
+  if (timeline) timeline.product(withField);
+  else pending = withField;
 }
 </script>
 <template>

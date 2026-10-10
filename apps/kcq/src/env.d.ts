@@ -54,6 +54,11 @@ declare module "*.webp" {
   const url: string;
   export default url;
 }
+/** A file URL even under the inline limit (a lazy image stays out of the HTML). */
+declare module "*.webp?no-inline" {
+  const url: string;
+  export default url;
+}
 /** A data URI in the HTML (the hero poster is the LCP image: no extra request). */
 declare module "*.webp?inline" {
   const uri: string;

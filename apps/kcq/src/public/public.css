@@ -74,7 +74,11 @@
 }
 @font-face {
   font-family: "Geist Mono";
-  src: url("kcq-geist-mono-font.woff2") format("woff2");
+  /* Latin only (13 KB instead of 49 KB): code, tool names and chart figures. Regenerate with
+     pyftsubset GeistMono-Regular.woff2 --unicodes="U+0020-007E,U+00A0-00FF,U+2013-2014,
+       U+2018-201D,U+2026,U+2190-2193,U+00D7" --layout-features=kern,liga,calt,ccmp,locl,tnum,zero
+       --flavor=woff2 --output-file=src/public/brand/kcq-geist-mono-latin.woff2 */
+  src: url("./brand/kcq-geist-mono-latin.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -413,13 +417,6 @@ a {
   padding-block: var(--kcq-band-space);
   background: var(--kcq-page);
   color: var(--kcq-ink);
-}
-/* The last blocks (code, text, the close) skip style, layout and paint until they near the viewport,
-   so the first view's fonts and frames own the network and the main thread at load. Only blocks
-   after the last nav anchor's start defer, so "Agent" and "Developers" still land exactly. */
-.band-deferred {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 720px;
 }
 .section-head {
   display: grid;

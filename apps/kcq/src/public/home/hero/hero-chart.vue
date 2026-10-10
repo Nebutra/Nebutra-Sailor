@@ -22,9 +22,10 @@ import { type Bar, tradingDate } from "./bars";
 import cachedSeries from "./cached-bars.json";
 import HeroTimeAxis from "./hero-time-axis.vue";
 import type { ChartGeometry, HeroChart } from "./live-chart";
-// Inlined: the poster is the hero's LCP image, so it paints with the HTML (5 KB). One size: a
-// second data URI would only add bytes to the document every visitor downloads.
-import posterDark1600 from "./poster/poster-dark-1600.webp?inline";
+// Inlined: the poster is the hero's LCP image, so it paints with the HTML. One size, the 800px
+// frame (2 KB): it is a soft glow on the dark ground, held only until the light or the chart takes
+// over, and every byte of a data URI is a byte of the document every visitor downloads first.
+import posterDark800 from "./poster/poster-dark-800.webp?inline";
 
 const emit = defineEmits<{ shown: [withField: boolean] }>();
 const { t } = useI18n();
@@ -205,10 +206,10 @@ onBeforeUnmount(() => {
     <div class="hero-chart-body">
       <picture class="hero-poster">
         <img
-          :src="posterDark1600"
+          :src="posterDark800"
           alt=""
-          width="1600"
-          height="700"
+          width="800"
+          height="350"
           fetchpriority="high"
           decoding="sync"
         />

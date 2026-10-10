@@ -27,7 +27,7 @@ const channels = computed(() => {
 const facts = computed(() => (tm("home.trust.facts") as unknown as string[]).map((fact) => rt(fact)));
 </script>
 <template>
-  <section id="community" class="band band-deferred open-source" aria-labelledby="community-heading">
+  <section id="community" class="band open-source" aria-labelledby="community-heading">
     <div class="container">
       <h2 id="community-heading" class="t-heading">{{ t("home.community.heading") }}</h2>
       <div class="open-source-grid">

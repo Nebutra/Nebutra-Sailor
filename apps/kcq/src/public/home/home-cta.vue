@@ -10,12 +10,13 @@ import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
 import { LINKS } from "../links";
 import { APP_PATH } from "../routes";
-import posterDark800 from "./hero/poster/poster-dark-800.webp";
+// A file, not a data URI: the close is far below the fold, so it stays out of the HTML.
+import posterDark800 from "./hero/poster/poster-dark-800.webp?no-inline";
 
 const { t } = useI18n();
 </script>
 <template>
-  <section id="start" class="band band-deferred cta" data-theme="dark" aria-labelledby="cta-heading">
+  <section id="start" class="band cta" data-theme="dark" aria-labelledby="cta-heading">
     <div class="container cta-body">
       <img
         class="cta-light"

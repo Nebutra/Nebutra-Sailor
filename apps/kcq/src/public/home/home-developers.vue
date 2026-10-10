@@ -42,7 +42,7 @@ function onKey(event: KeyboardEvent) {
 }
 </script>
 <template>
-  <section id="developers" class="band band-deferred developers" aria-labelledby="developers-heading">
+  <section id="developers" class="band developers" aria-labelledby="developers-heading">
     <div class="container">
       <div class="section-head">
         <h2 id="developers-heading" class="t-heading">{{ t("home.developers.heading") }}</h2>
