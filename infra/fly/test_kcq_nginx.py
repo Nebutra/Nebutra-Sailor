@@ -46,9 +46,28 @@ class NginxRoutesTest(unittest.TestCase):
 
     def test_unknown_paths_get_a_real_404_page_per_locale(self):
         self.assertIn("error_page 404 $kcq_not_found;", self.conf)
-        self.assertRegex(self.conf, r"map \$uri \$kcq_not_found \{\s*~\^/zh/ /zh/404\.html;\s*default /404\.html;")
-        body = dict(locations(self.conf))["~ ^/(zh/)?404\\.html$"]
+        self.assertRegex(
+            self.conf,
+            r"map \$uri \$kcq_not_found \{\s*~\^/zh/docs\(/\|\$\) /zh/docs/404\.html;\s*"
+            r"~\^/docs\(/\|\$\) /docs/404\.html;\s*~\^/zh/ /zh/404\.html;\s*default /404\.html;",
+        )
+        body = dict(locations(self.conf))["~ ^/(zh/)?(docs/)?404\\.html$"]
         self.assertIn("internal;", body)
+
+    def test_docs_are_extensionless_pages_with_one_url_each(self):
+        blocks = locations(self.conf)
+        matchers = [matcher for matcher, _ in blocks]
+        pages = dict(blocks)["~ ^/(zh/)?docs(/[^.]*)?$"]
+        self.assertIn("try_files $uri.html =404;", pages)
+        self.assertIn('add_header Cache-Control "no-cache" always;', pages)
+        # Trailing slash and .html both redirect to the bare path; the internal 404 must be matched
+        # first, since error_page re-enters location matching with /docs/404.html.
+        internal = matchers.index("~ ^/(zh/)?(docs/)?404\\.html$")
+        html = matchers.index("~ ^/((?:zh/)?docs(?:/[^.]*)?)\\.html$")
+        self.assertLess(internal, html)
+        self.assertIn("return 301 /$1$is_args$args;", dict(blocks)["~ ^/((?:zh/)?docs(?:/[^.]*?)?)/$"])
+        # OG images are matched before the immutable asset rule.
+        self.assertLess(matchers.index("~ ^/docs/og/.+\\.png$"), matchers.index("~* \\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|webp)$"))
 
 
 if __name__ == "__main__":
