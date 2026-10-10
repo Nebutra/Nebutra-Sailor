@@ -1,5 +1,5 @@
 import { CheckCircle } from "@nebutra/icons";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type messages from "../../../messages/en.json";
 import type { PublicOffer } from "../../lib/public-offers";
 
@@ -23,6 +23,12 @@ export interface PricingProduct {
     alt: string;
     width: number;
     height: number;
+    /**
+     * A narrow-screen crop of the same capture, `<name>-m.avif|webp`, so the
+     * meaningful region stays legible at phone width instead of the whole
+     * screen shrunk to a smudge.
+     */
+    mobile?: { width: number; height: number };
   };
   /** The product's glyph, under /images/product. */
   glyph?: string;
@@ -410,9 +416,10 @@ function ProductWindow({
   visual: NonNullable<PricingProduct["visual"]>;
 }) {
   const base = `/images/product/${visual.name}`;
+  const mobile = visual.mobile;
   return (
-    <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-xl border border-border bg-muted/50 sm:aspect-[16/11]">
-      <div className="absolute top-[6%] left-[4%] w-[115%] sm:left-[5%] sm:w-[90%] overflow-hidden rounded-lg border border-border bg-card shadow-ambient-lg">
+    <figure className="relative -mx-6 m-0 overflow-hidden border-y border-border bg-muted/50 p-3 sm:mx-0 sm:aspect-[16/11] sm:rounded-xl sm:border sm:p-0">
+      <div className="relative w-full sm:absolute sm:top-[6%] sm:left-[5%] sm:w-[90%] overflow-hidden rounded-lg border border-border bg-card shadow-ambient-lg">
         <div className="flex items-center gap-3 border-b border-border bg-muted/70 px-3.5 py-2">
           <span aria-hidden className="flex gap-1.5">
             <span className="size-2.5 rounded-full bg-[#ff5f57]" />
@@ -422,9 +429,27 @@ function ProductWindow({
           <span className="mx-auto truncate rounded-md bg-background px-3 py-0.5 font-mono text-xs text-muted-foreground">
             {domain}
           </span>
-          <span aria-hidden className="w-12" />
+          <span aria-hidden className="hidden w-12 sm:block" />
         </div>
         <picture>
+          {mobile ? (
+            <>
+              <source
+                media="(max-width: 639px)"
+                srcSet={`${base}-m.avif`}
+                type="image/avif"
+                width={mobile.width}
+                height={mobile.height}
+              />
+              <source
+                media="(max-width: 639px)"
+                srcSet={`${base}-m.webp`}
+                type="image/webp"
+                width={mobile.width}
+                height={mobile.height}
+              />
+            </>
+          ) : null}
           <source srcSet={`${base}.avif`} type="image/avif" />
           <source srcSet={`${base}.webp`} type="image/webp" />
           <img
@@ -434,7 +459,15 @@ function ProductWindow({
             height={visual.height}
             loading="lazy"
             decoding="async"
-            className="block h-auto w-full"
+            className={`block h-auto w-full${mobile ? " aspect-[var(--ar-m)] sm:aspect-[var(--ar-d)]" : ""}`}
+            style={
+              mobile
+                ? ({
+                    "--ar-m": `${mobile.width} / ${mobile.height}`,
+                    "--ar-d": `${visual.width} / ${visual.height}`,
+                  } as CSSProperties)
+                : undefined
+            }
           />
         </picture>
       </div>

@@ -50,10 +50,29 @@ const GLYPHS: Record<string, string> = {
 /** Real captures of the live products (see public/images/product). */
 const VISUALS: Record<
   string,
-  { name: string; altKey: "altRouter" | "altKcq"; width: number; height: number }
+  {
+    name: string;
+    altKey: "altRouter" | "altKcq";
+    width: number;
+    height: number;
+    /** Phone-width crop, `<name>-m.avif|webp`. */
+    mobile: { width: number; height: number };
+  }
 > = {
-  router: { name: "router-shelf", altKey: "altRouter", width: 1600, height: 1000 },
-  kcq: { name: "kcq-workbench", altKey: "altKcq", width: 1600, height: 1000 },
+  router: {
+    name: "router-shelf",
+    altKey: "altRouter",
+    width: 1600,
+    height: 1000,
+    mobile: { width: 640, height: 720 },
+  },
+  kcq: {
+    name: "kcq-workbench",
+    altKey: "altKcq",
+    width: 1600,
+    height: 1000,
+    mobile: { width: 640, height: 720 },
+  },
 };
 
 async function PaidProductPricing({ lang }: { lang: string }) {
@@ -68,7 +87,15 @@ async function PaidProductPricing({ lang }: { lang: string }) {
       what: zh ? p.whatZh : p.what,
       domain: p.domain,
       glyph: GLYPHS[p.id],
-      visual: v ? { name: v.name, alt: t(v.altKey), width: v.width, height: v.height } : undefined,
+      visual: v
+        ? {
+            name: v.name,
+            alt: t(v.altKey),
+            width: v.width,
+            height: v.height,
+            mobile: v.mobile,
+          }
+        : undefined,
     };
   });
   try {

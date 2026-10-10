@@ -97,4 +97,29 @@ describe("public product pricing", () => {
     expect(html).toContain("/images/product/router-shelf.avif");
     expect(html).toContain("kuanlan.example.com");
   });
+  it("serves a phone-width crop through media-gated sources", () => {
+    const html = renderToStaticMarkup(
+      <ProductOfferList
+        offers={offers.filter((offer) => offer.kind === "balance")}
+        products={[
+          {
+            ...(products[0] as (typeof products)[number]),
+            id: "router",
+            visual: {
+              name: "router-shelf",
+              alt: "A shelf of models",
+              width: 1600,
+              height: 1000,
+              mobile: { width: 640, height: 720 },
+            },
+          },
+        ]}
+        locale="en"
+        t={t}
+      />,
+    );
+    expect(html).toContain('media="(max-width: 639px)"');
+    expect(html).toContain("/images/product/router-shelf-m.avif");
+    expect(html).toContain("/images/product/router-shelf-m.webp");
+  });
 });
