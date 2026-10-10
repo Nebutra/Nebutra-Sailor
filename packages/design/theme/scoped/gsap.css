@@ -183,7 +183,7 @@ html.dark[data-brand="gsap"] {
   --role-quiet: 70 5% 25%;
   --role-quiet-fg: 54 100% 94%;
   --role-muted: 0 0% 10%;
-  --role-muted-fg: 60 6% 46%;
+  --role-muted-fg: 60 6% 52%;
   --role-border: 70 5% 25%;
   --role-input: 70 5% 25%;
   --role-ring: 137 92% 47%;
@@ -200,7 +200,7 @@ html.dark[data-brand="gsap"] {
   --secondary: 70 5% 25%;
   --secondary-foreground: 54 100% 94%;
   --muted: 0 0% 10%;
-  --muted-foreground: 60 6% 46%;
+  --muted-foreground: 60 6% 52%;
   --accent: 70 5% 25%;
   --accent-foreground: 54 100% 94%;
   --destructive: 309 100% 47%;
@@ -237,9 +237,9 @@ html.dark[data-brand="gsap"] {
   --neutral-5: color-mix(in oklab, hsl(70 5% 25%) 60%, hsl(0 0% 10%));
   --neutral-6: color-mix(in oklab, hsl(70 5% 25%) 80%, hsl(0 0% 10%));
   --neutral-7: hsl(70 5% 25%);
-  --neutral-8: color-mix(in oklab, hsl(60 6% 46%) 25%, hsl(70 5% 25%));
-  --neutral-9: color-mix(in oklab, hsl(60 6% 46%) 50%, hsl(70 5% 25%));
-  --neutral-10: color-mix(in oklab, hsl(60 6% 46%) 75%, hsl(70 5% 25%));
-  --neutral-11: hsl(60 6% 46%);
+  --neutral-8: color-mix(in oklab, hsl(60 6% 52%) 25%, hsl(70 5% 25%));
+  --neutral-9: color-mix(in oklab, hsl(60 6% 52%) 50%, hsl(70 5% 25%));
+  --neutral-10: color-mix(in oklab, hsl(60 6% 52%) 75%, hsl(70 5% 25%));
+  --neutral-11: hsl(60 6% 52%);
   --neutral-12: hsl(54 100% 94%);
 }

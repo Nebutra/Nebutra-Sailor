@@ -17,7 +17,7 @@ html[data-brand="vanta"] {
   --role-quiet: 250 100% 92%;
   --role-quiet-fg: 272 100% 14%;
   --role-muted: 240 20% 93%;
-  --role-muted-fg: 238 11% 48%;
+  --role-muted-fg: 238 11% 44%;
   --role-border: 240 17% 11%;
   --role-input: 240 17% 11%;
   --role-ring: 268 95% 39%;
@@ -38,7 +38,7 @@ html[data-brand="vanta"] {
   --secondary: 250 100% 92%;
   --secondary-foreground: 272 100% 14%;
   --muted: 240 20% 93%;
-  --muted-foreground: 238 11% 48%;
+  --muted-foreground: 238 11% 44%;
   --accent: 250 100% 92%;
   --accent-foreground: 272 100% 14%;
   --destructive: 0 72% 51%;
@@ -75,10 +75,10 @@ html[data-brand="vanta"] {
   --neutral-5: color-mix(in oklab, hsl(240 17% 11%) 60%, hsl(0 0% 100%));
   --neutral-6: color-mix(in oklab, hsl(240 17% 11%) 80%, hsl(0 0% 100%));
   --neutral-7: hsl(240 17% 11%);
-  --neutral-8: color-mix(in oklab, hsl(238 11% 48%) 25%, hsl(240 17% 11%));
-  --neutral-9: color-mix(in oklab, hsl(238 11% 48%) 50%, hsl(240 17% 11%));
-  --neutral-10: color-mix(in oklab, hsl(238 11% 48%) 75%, hsl(240 17% 11%));
-  --neutral-11: hsl(238 11% 48%);
+  --neutral-8: color-mix(in oklab, hsl(238 11% 44%) 25%, hsl(240 17% 11%));
+  --neutral-9: color-mix(in oklab, hsl(238 11% 44%) 50%, hsl(240 17% 11%));
+  --neutral-10: color-mix(in oklab, hsl(238 11% 44%) 75%, hsl(240 17% 11%));
+  --neutral-11: hsl(238 11% 44%);
   --neutral-12: hsl(240 17% 11%);
 
   /* Recipe (action language + free elev/radii) */
