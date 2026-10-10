@@ -96,42 +96,16 @@
     },
     "progress": {
       "back": "Tilbage",
-      "stepCounter": "Trin {current} af {total}",
-      "ariaLabel": "Onboarding progress",
-      "skip": "Skip for now"
+      "stepCounter": "Trin {current} af {total}"
+    },
+    "invite": {
+      "emailPlaceholder": "colleague@company.com"
     },
     "plan": {
       "title": "Vælg en plan",
       "description": "Start gratis eller lås mere kapacitet op. Du kan ændre plan når som helst.",
       "choose": "Vælg en plan",
       "skip": "Spring over for nu"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces.",
-      "slugTaken": "That workspace address is already taken. Try another."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -224,12 +198,7 @@
       "subtitle": "Plan, kvote og fornyelse.",
       "currentPlan": "Nuværende plan",
       "upgradeCta": "Sammenlign planer",
-      "manageCta": "Administrer abonnement",
-      "usageTitle": "Usage this period",
-      "usageApiCalls": "API calls",
-      "usageAiTokens": "AI tokens",
-      "usageUnavailable": "Usage is unavailable right now.",
-      "usageRetry": "Retry"
+      "manageCta": "Administrer abonnement"
     },
     "billing": {
       "title": "Afgift",
@@ -410,15 +379,7 @@
       "homeLink": "Hjem",
       "signInFailed": "Logon mislykkedes",
       "genericError": "Der opstod en fejl. Prøv igen.",
-      "captchaError": "Bot-verificering mislykkedes. Opdater siden og prøv igen.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "captchaError": "Bot-verificering mislykkedes. Opdater siden og prøv igen."
     },
     "signUp": {
       "title": "Opret din Nebutra-konto",
@@ -432,12 +393,7 @@
       "alreadyHaveAccount": "Har du allerede en konto?",
       "signInLink": "Log ind",
       "signUpFailed": "Tilmelding mislykkedes",
-      "inviteLabel": "Invite code",
-      "invitePlaceholder": "neb_...",
-      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
-      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled."
     },
     "passkeys": {
       "title": "Nøglepar",
@@ -593,11 +549,9 @@
           "description": "Visa, Mastercard med flere, opkrævet i {currency}"
         },
         "alipay": {
-          "title": "Alipay",
           "description": "Opkrævet i {currency}"
         },
         "wechat": {
-          "title": "WeChat Pay",
           "description": "Opkrævet i {currency}"
         }
       },
@@ -665,8 +619,7 @@
         "date": "Dato",
         "item": "Vare",
         "method": "Betalt med",
-        "amount": "Beløb",
-        "status": "Status"
+        "amount": "Beløb"
       },
       "status": {
         "PENDING": "Afventer betaling",

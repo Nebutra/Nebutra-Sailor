@@ -1,5 +1,4 @@
 {
-  "panelLabel": "Boot log",
   "entries": {
     "transistor-name-off-patent-1947": {
       "tag": "Bằng sáng chế",
@@ -50,7 +49,6 @@
       "coda": "Đến năm 1995 Moore nói thuật ngữ này đã trở nên có nghĩa gần như bất cứ điều gì trong ngành chip."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
       "title": "Người thư ký và DOCTOR",
       "body": "Năm 1966 Joseph Weizenbaum phát hành kịch bản DOCTOR của ELIZA tại MIT, một chương trình chủ yếu phản chiếu lại câu của người dùng dưới dạng câu hỏi. Người thư ký của ông据报道 yêu cầu ông rời phòng để bà có thể nói chuyện với nó một mình.",
       "coda": "Mẫu mà ông không ngờ tới sau này được đặt tên là hiệu ứng ELIZA."
@@ -98,7 +96,6 @@
       "coda": "Báo chí thấy vạch ngang khó giải thích nên viết thành dấu gạch nối. Dấu gạch nối được giữ lại."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
       "title": "Bản demo của mọi bản demo",
       "body": "Engelbart được cho chín mươi phút. Thiết bị đầu cuối của ông kết nối qua đường dây điện thoại với một máy cách ba mươi dặm, và ông đã trình diễn chuột, siêu liên kết, cửa sổ, chia sẻ màn hình, và hai người cùng chỉnh sửa một tài liệu cùng lúc.",
       "coda": "Một nghìn người đã xem, rồi quay lại dùng thẻ đục lỗ thêm một thập kỷ nữa."
@@ -111,7 +108,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Bình luận",
-      "title": "Burn, Baby, Burn",
       "body": "Thủ tục đánh lửa chính của module hạ cánh được gắn nhãn BURN_BABY_BURN trong mã nguồn. Cái tên không liên quan đến lực đẩy; nó được mượn từ câu khẩu hiệu của một DJ đài phát thanh soul thời bấy giờ.",
       "coda": "Dòng mã đó vẫn nằm nguyên chưa bị chỉnh sửa trong kho lưu trữ công khai."
     },
@@ -146,7 +142,6 @@
       "coda": "Wozniak nói anh sẽ đưa tiền cho Jobs nếu được yêu cầu."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
       "title": "Không Được Mong Đợi Hiểu",
       "body": "slp.c của Unix Phiên bản Thứ Sáu chứa dòng 'Bạn không được mong đợi hiểu điều này,' gắn vào mã khôi phục ngăn xếp chuyển đổi tiến trình được xây dựng dựa trên các đặc điểm của trình biên dịch PDP-11. Dennis Ritchie sau đó nói anh ý nó theo cách một giáo viên nói điều này sẽ không có trong bài kiểm tra.",
       "coda": "Quy trình này được viết lại cho Unix Phiên bản Thứ Bảy."
@@ -188,13 +183,11 @@
       "coda": "Quyền sở hữu được trả lại cho ông vào năm 1996, mười một năm sau khi ông viết nó."
     },
     "euv-twenty-three-hours-2018": {
-      "tag": "Lithography",
       "title": "Hai Mươi Ba Giờ Cho Một Wafer",
       "body": "Hiroo Kinoshita tại NTT lần đầu trình diễn hình ảnh extreme ultraviolet lithography vào năm 1986. Nguyên mẫu năm 2006 của ASML mất hai mươi ba giờ để phơi sáng một wafer. Mãi đến năm 2018 EUV mới được đưa vào sản xuất, trong một cỗ máy mà MIT Technology Review gọi là cỗ máy đã cứu Moore's law.",
       "coda": "Đến năm 2022, một máy quét EUV sản xuất xử lý khoảng hai trăm wafer một giờ."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
       "title": "Foundry Ở Tuổi Năm Mươi Sáu",
       "body": "Morris Chang, sinh năm 1931, thăng tiến lên phó chủ tịch nhóm mảng hoạt động bán dẫn toàn cầu tại Texas Instruments, sau đó làm chủ tịch kiêm COO của General Instrument, rồi đứng đầu ITRI của Đài Loan. Năm 1987, ở tuổi năm mươi sáu, ông thành lập TSMC, công ty không tự thiết kế bất kỳ con chip nào trong số những chip nó sản xuất.",
       "coda": "Đó là foundry đầu tiên trên thế giới chỉ làm một việc là sản xuất."
@@ -242,7 +235,6 @@
       "coda": "Không ai đã trả phí bản quyền để sử dụng nó kể từ đó."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "Máy chủ họ không thể truy cập",
       "body": "Ngày 10 tháng 12 năm 1993, id Software phát hành miễn phí tập đầu của Doom dưới dạng shareware, đặt cược vào doanh số của các phần còn lại. Khi tải lên máy chủ FTP của Đại học Wisconsin, họ thấy rất nhiều người đã chờ sẵn đến mức chính nhóm phát triển cũng không thể kết nối.",
       "coda": "Việc tải lên hoàn tất gần nửa đêm; mười nghìn lượt tải cùng lúc đã làm sập mạng của trường đại học."
@@ -278,8 +270,6 @@
       "coda": "Chưa từng có người kế nhiệm được chỉ định."
     },
     "book-of-mozilla-verses": {
-      "tag": "Easter Egg",
-      "title": "The Book of Mozilla",
       "body": "Nhập about:mozilla vào thanh địa tiết lộ The Book of Mozilla, một đoạn kinh văn mang sắc thái tận thế đối lập 'con thú' với 'Mammon', được mỗi thế hệ trình duyệt cập nhật. Các số câu không phải là đánh dấu chương: chúng là ngày phát hành.",
       "coda": "Đoạn mới nhất, 6:27, lần đầu xuất hiện trong bản dựng Firefox Nightly năm 2020."
     },
@@ -308,7 +298,6 @@
       "coda": "Chữ ký của một văn phòng đã nghỉ hưu một điều khoản đã nhân lên trong một thập kỷ."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "Giá của phần mềm miễn phí",
       "body": "Red Hat cho đi mã nguồn của sản phẩm cốt lõi và thay vào đó tính phí hỗ trợ, đào tạo và tích hợp. Vào ngày 11 tháng 8 năm 1999, công ty đã niêm yết công khai. Mức tăng trong ngày đầu tiên của nó xếp hạng thứ tám lớn nhất trong lịch sử Phố Wall tại thời điểm đó.",
       "coda": "Người sáng lập Bob Young đã bị thay thế bằng CEO bốn tháng sau."
@@ -542,7 +531,6 @@
       "coda": "Phần mềm CAD thương mại mất gần hai thập kỷ để bắt kịp những gì luận án đã thể hiện."
     },
     "douglas-mcilroy-garden-hose-pipe": {
-      "tag": "Memo",
       "title": "Bản Ghi nhớ Vòi Tưới Vườn",
       "body": "Tháng 10 năm 1964, McIlroy viết một bản ghi nhớ tại Bell Labs đề xuất các chương trình kết nối với nhau như vòi tưới vườn — vặn thêm một đoạn để xử lý dữ liệu khác đi. Bản ghi nhớ được truyền tay, được ngưỡng mộ, và không được hiện thực hóa. Chín năm sau, Ken Thompson thêm một ký tự, |, vào Unix shell trong một đêm.",
       "coda": "Sáng hôm sau, các chương trình chưa từng giao tiếp với nhau đã làm được điều đó."
@@ -638,61 +626,46 @@
       "coda": "Ranh giới module hóa ra mã hóa một phỏng đoán về những gì một người bảo trì tương lai sẽ cần biết."
     },
     "karen-sparck-jones-idf": {
-      "tag": "Record",
       "title": "Công Thức Không Ai Cảm Ơn",
       "body": "Năm 1972, Spärck Jones công bố một bài báo đề xuất rằng độ hiếm của một từ trong bộ sưu tập tài liệu đo lường tầm quan trọng của nó — tần số tài liệu nghịch đảo, hiện nằm dưới logic xếp hạng của hầu hết mọi công cụ tìm kiếm. Cô ấy không có vị trí thường trực tại Cambridge cho đến năm 1993.",
       "coda": "Trước đó cô ấy đã làm một chuỗi hợp đồng ngắn hạn, tài trợ mềm."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
       "title": "Người Thứ Năm Của Internet",
       "body": "Năm 1972, Louis Pouzin xây dựng mạng CYCLADES tại Pháp, mạng đầu tiên khiến các host cuối, không phải mạng, chịu trách nhiệm cho việc giao nhận đáng tin cậy. Năm 1974, bài báo TCP của Cerf và Kahn cảm ơn ông ấy theo tên. Năm 2004, Cerf và Kahn giành Giải Turing. Tên của Pouzin không có trên đó.",
       "coda": "The Economist sau đó gọi ông ấy là người thứ năm của internet."
     },
     "ethernet-1973-memo": {
-      "tag": "Origin",
       "title": "Memo Ether",
       "body": "Ngày 22 tháng 5 năm 1973, Robert Metcalfe viết một memo Xerox PARC có tiêu đề \"Ether Acquisition,\" với một sơ đồ vẽ tay về một cáp chia sẻ kết nối các máy Alto. Công nghệ thường được tính từ bài báo tạp chí năm 1976. Bản phác thảo thực tế cũ hơn ba năm, và vẽ tay.",
       "coda": "Đến khi bài báo được công bố, Ethernet đã chạy bên trong PARC trong ba năm."
     },
     "vint-cerf-envelope-sketch": {
-      "tag": "Anecdote",
       "title": "Mặt Lưng Của Một Phong Bì",
       "body": "Truyền thuyết sáng lập internet nói rằng Cerf phác thảo kiến trúc gateway trên một khăn ăn. Ông ấy đã đính chính: 'Thực ra không phải khăn ăn, mà là mặt lưng của một phong bì.' Năm 1973, chờ đợi trong sảnh khách sạn, ông ấy phác thảo thứ sau này trở thành thiết kế gateway của TCP/IP.",
       "coda": "Năm sau, bản phác thảo trở thành một bài báo trong IEEE Transactions on Communications."
     },
     "gchq-nonsecret-encryption": {
-      "tag": "Cryptography",
-      "title": "The Unpublished Key",
       "body": "Tháng 9 năm 1973, Clifford Cocks 22 tuổi, vừa đến GCHQ, đã giải ra một phương pháp mã hóa không dùng khóa chung trong nửa giờ. Ba năm sau, Diffie, Hellman và Merkle công bố cùng ý tưởng tại Mỹ và được ghi nhận là người phát minh. Hồ sơ GCHQ vẫn bị phân loại cho đến năm 1997.",
       "coda": "James Ellis qua đời năm 1997, vài tháng sau khi hồ sơ được giải mật và tên ông được ghi vào hồ sơ."
     },
     "kodak-digital-camera-1975": {
-      "tag": "Shelved",
-      "title": "Kodak's Buried Camera",
       "body": "Năm 1975, kỹ sư Steven Sasson 24 tuổi chế tạo chiếc máy ảnh kỹ thuật số đầu tiên: nặng 8 pound, chụp mỗi tấm mất 23 giây. Ban lãnh đạo lập luận rằng không ai muốn xem ảnh trên tivi khi bản in rẻ và đã hoạt động suốt một thế kỷ. Họ cấp bằng sáng chế cho máy ảnh và cất nó đi.",
       "coda": "Kodak nộp đơn xin bảo vệ phá sản năm 2012."
     },
     "galls-law-origin": {
-      "tag": "Origin",
-      "title": "A Book About Bureaucracies",
       "body": "Năm 1975, sau khi 30 nhà xuất bản từ chối, bác sĩ nhi khoa John Gall tự xuất bản Systemantics: một hệ thống phức tạp đang hoạt động luôn tiến hóa từ một hệ thống đơn giản đang hoạt động, và một hệ thống phức tạp xây dựng từ đầu không bao giờ hoạt động. Ông đang viết về bệnh viện và các cơ quan chính phủ.",
       "coda": "Các kiến trúc sư phần mềm giữ lại câu đó và lặng lẽ bỏ qua các cơ quan hành chính mà nó được viết về."
     },
     "ken-olsen-home-computer-1977": {
-      "tag": "Misquote",
-      "title": "Olsen's Home Computer",
       "body": "Năm 1977, người sáng lập DEC Ken Olsen nói rằng không có lý do gì để một cá nhân có máy tính trong nhà. Ông muốn nói một máy trung tâm điều khiển đèn, sưởi và giải trí cho một hộ gia đình, chính xác với thứ ông mô tả. Các bài báo chỉ giữ lại nửa đầu câu.",
       "coda": "Olsen bản thân ông có máy tính ở nhà vào thời điểm đó."
     },
     "kernighans-debugging-law": {
-      "tag": "Maxim",
-      "title": "Twice as Hard as Writing It",
       "body": "Trong Elements of Programming Style năm 1978, Kernighan và Plauger viết rằng gỡ lỗi khó gấp đôi việc viết chương trình, nên viết nó khéo léo nhất có thể khiến bạn, theo định nghĩa, không đủ thông minh để gỡ lỗi nó. Một quy tắc phong cách được phát biểu như một giới hạn về việc gặp lại chính công việc của mình hai lần.",
       "coda": "Đối thủ không bao giờ là người khác, đó là bạn vài tuần sau."
     },
     "xerox-parc-1979-visit": {
-      "tag": "Origin",
       "title": "Giao dịch của chính Xerox",
       "body": "Tháng 12 năm 1979: Apple tham quan Xerox PARC sau khi Xerox đồng ý mua 100.000 cổ phiếu Apple tiền IPO với giá 10 đô la mỗi cổ phiếu để có quyền truy cập. Jobs đã nhìn thấy giao diện đồ họa của Alto và gọi đó là thứ hay nhất ông từng thấy. Câu chuyện phổ biến là ăn cắp; hồ sơ ghi lại là một giao dịch Xerox đã đàm phán.",
       "coda": "Xerox đã nhận được cổ phiếu của mình. Alto chưa bao giờ được bán như một sản phẩm thương mại."
@@ -735,7 +708,6 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Mẩu chuyện",
-      "title": "Algorhyme",
       "body": "Năm 1985, quản lý của Perlman tại DEC giao bài toán cầu nối không vòng lặp vào thứ Sáu, rồi biến mất một tuần. Cô hoàn thành thuật toán cây bao trùm vào thứ Ba — và dành thời gian còn lại viết Algorhyme, một bài thơ trở thành tóm tắt của bài báo.",
       "coda": "Bài thơ mất nhiều thời gian viết hơn thuật toán."
     },
@@ -783,7 +755,6 @@
     },
     "worse-is-better": {
       "tag": "Tranh luận",
-      "title": "Worse Is Better",
       "body": "Năm 1989 Richard Gabriel đặt ra thuật ngữ 'worse is better': một bản thực thi đơn giản, đúng một nửa tồn tại tốt hơn một bản hoàn chỉnh, chính xác, đó là lý do ông cho rằng C và Unix vượt Lisp. Năm 1991 ông công bố một bài bác dưới bút danh Nickieben Bourbaki, giả mạo một người bạn cũ.",
       "coda": "Nhiều thập kỷ sau ông vẫn nói không thể quyết định liệu lập luận của chính mình có đúng hay không."
     },
@@ -806,13 +777,11 @@
       "coda": "Định dạng mọi người gọi là MP3 mang kỹ thuật của đề xuất thua bên trong tên của đề xuất thắng."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Một bài đăng lên comp.os.minix",
       "body": "Ngày 25 tháng 8 năm 1991, một sinh viên đại học Helsinki đăng lên nhóm tin comp.os.minix rằng anh ấy đang viết một hệ điều hành miễn phí, gọi nó là \"chỉ là sở thích, sẽ không lớn và chuyên nghiệp như gnu,\" và hỏi mọi người muốn những tính năng gì.",
       "coda": "Kể từ tháng 11 năm 2017, tất cả 500 siêu máy tính nhanh nhất thế giới đều chạy một hệ điều hành xây dựng trên nó."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Beat Miễn Phí",
       "body": "Năm 1991, Tim Berners-Lee phát hành World Wide Web từ CERN. Cùng năm đó, Đại học Minnesota phát hành Gopher, trong một thời gian là hệ thống phổ biến hơn. Tháng 2 năm 1993, Minnesota thông báo phí cấp phép cho máy chủ Gopher. Tháng 4 năm đó, CERN miễn phí giao thức web.",
       "coda": "Gopher có lượng người dùng lớn hơn trước khi thông báo phí, và không bao giờ có lại sau đó."
@@ -872,7 +841,6 @@
       "coda": "Cơ quan tiêu chuẩn đã nghỉ hưu khuyến nghị bảo mật của chính mình sáu năm sau khi công bố."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "Bộ đếm lượt xem sơ yếu lý lịch",
       "body": "Năm 1994, một lập trình viên viết một vài chương trình CGI nhỏ bằng C, chỉ vì muốn biết có bao nhiêu người đang xem sơ yếu lý lịch trực tuyến của anh ta. Anh ta gọi bộ công cụ này là \"Personal Home Page Tools\" và công bố mã nguồn vào tháng 6 năm 1995.",
       "coda": "Ba thập kỷ sau, hơn 70% các trang web có ngôn ngữ phía máy chủ được biết đến vẫn chạy hậu duệ của nó."
@@ -951,7 +919,6 @@
     },
     "mars-climate-orbiter-units": {
       "tag": "Sự cố",
-      "title": "Pound-Force, Newton",
       "body": "Mars Climate Orbiter mất liên lạc trong quá trình chèn quỹ đạo. Hội đồng xác định rằng phần mềm động cơ của nhà thầu xuất xung lực bằng pound-force giây trong khi phần mềm điều hướng mong đợi newton-giây, sai lệch một hệ số 4.45. Tàu vũ trụ được lái đến khoảng cách khoảng 57 km từ bề mặt.",
       "coda": "Nhiệm vụ trị giá 327,6 triệu đô la không bao giờ truyền tin trở lại."
     },
@@ -998,7 +965,6 @@
       "coda": "Ngày 23 tháng 8, 2010, Tencent thâu tóm công ty mà anh đã xây dựng quanh nó."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Một dự án phụ bên cạnh Nupedia",
       "body": "Ngày 10 tháng 1, 2001, người sáng lập một bách khoa toàn thư trực tuyến có bình duyệt đã cài đặt phần mềm wiki trên máy chủ riêng của dự án, chủ yếu để tình nguyện viên có thể thử soạn thảo các mục từ lỏng lẻo bên cạnh trong khi bách khoa toàn thư được bình duyệt tiến triển chậm chạp.",
       "coda": "Đến tháng 7, 2026, riêng phiên bản tiếng Anh đã chứa hơn 7,2 triệu bài viết."
@@ -1184,7 +1150,6 @@
       "coda": "Hầu hết các gói được công bố không bao giờ rời khỏi khoảng phiên bản mà quy tắc không ràng buộc."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
       "title": "Những Gì Bị Cắt Bỏ Từ Burbn",
       "body": "Kevin Systrom và Mike Krieger dành gần một năm xây dựng ứng dụng check-in đầy đủ tính năng tên Burbn, sau đó đánh giá bản dựng iPhone hoàn chỉnh của chính họ là rối rắm. Họ cắt giảm xuống còn ảnh, bình luận và lượt thích, rồi phát hành kết quả tám tuần sau dưới tên Instagram.",
       "coda": "Trong vòng một tuần sau khi ra mắt, nó đã có 100.000 người dùng."

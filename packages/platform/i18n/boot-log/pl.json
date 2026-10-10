@@ -1,8 +1,6 @@
 {
-  "panelLabel": "Boot log",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
       "title": "Nazwisko pominięte w patencie",
       "body": "23 grudnia 1947 r. Bardeen i Brattain zademonstrowali w Bell Labs tranzystor punktowy z germanu. Shockley nie był w pomieszczeniu. Prawnicy uznali, że jego własny projekt jest zbyt zbliżony do patentu Juliusa Lilienfelda z 1925 r. i usunęli jego nazwisko z tego zgłoszenia.",
       "coda": "W 1956 r. wszyscy trzej otrzymali Nagrodę Nobla w dziedzinie fizyki."
@@ -56,7 +54,6 @@
       "coda": "Wzorzec, którego nie przewidział, później nazwano efektem ELIZY."
     },
     "engelbart-royalties": {
-      "tag": "Patent",
       "title": "Czterdzieści tysięcy dolarów",
       "body": "SRI opatentowało mysz po demonstracji i, według własnych danych, nie miało prawdziwego pojęcia o jej wartości. Niektóre lata później okazało się, że licencjonowali ją Apple'owi za około 40 000 dolarów.",
       "coda": "Engelbart nigdy nie otrzymał żadnych tantiem za jej wynalezienie."
@@ -111,7 +108,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Komentarz",
-      "title": "Burn, Baby, Burn",
       "body": "Główna rutyna zapłonu modułu księżycowego jest oznaczona jako BURN_BABY_BURN w kodzie źródłowym. Nazwa nie dotyczy ciągu; została wzięta z hasła popularnego w tamtym czasie didżeja radiowego grającego muzykę soul.",
       "coda": "Linia nadal pozostaje nieedytowana w publicznym repozytorium."
     },
@@ -194,7 +190,6 @@
       "coda": "W 2022 roku produkcyjny skaner EUV przetwarzał około dwustu wafli na godzinę."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
       "title": "Foundry w wieku pięćdziesięciu sześciu lat",
       "body": "Morris Chang, ur. 1931, awansował na wiceprezesa grupy ds. światowych operacji półprzewodnikowych w Texas Instruments, następnie pełnił funkcję prezesa i COO w General Instrument, a potem stał na czele tajwańskiego ITRI. W 1987 roku, w wieku pięćdziesięciu sześciu lat, założył TSMC, które nie projektuje żadnych produkowanych przez siebie układów scalonych.",
       "coda": "Było to pierwsze na świecie foundry zajmujące się wyłącznie produkcją."
@@ -242,7 +237,6 @@
       "coda": "Od tego czasu nikt nie zapłacił opłaty licencyjnej za jego używanie."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "Serwer, którego nie mogli osiągnąć",
       "body": "10 grudnia 1993 roku id Software udostępniło pierwszy odcinek Doom jako shareware, licząc na sprzedaż pozostałych części. Przenosząc go na serwer FTP Uniwersytetu Wisconsin, odkryli, że czeka już tak wiele osób, iż sama ekipa nie mogła się połączyć.",
       "coda": "Przesyłanie zakończyło się około północy; dziesięć tysięcy pobrań jednocześnie zablokowało sieć uniwersytecką."
@@ -260,7 +254,6 @@
       "coda": "Dwa lata później, jego pierwszy własny sedan, F3, trafił do sprzedaży."
     },
     "ariane-501": {
-      "tag": "Incident",
       "title": "Trzydzieści siedem sekund",
       "body": "Po trzydziestu siedmiu sekundach system odniesienia inercyjnego przekształcił liczbę zmiennoprzecinkową 64-bitową na liczbę całkowitą 16-bitową i doszło do przepełnienia; około czterdziestej sekundy pojazd się rozpadł. Procedura pochodziła bez zmian z Ariane 4 i nie miała powodu, by działać po starcie.",
       "coda": "Około 370 milionów dolarów, wydanych na kod, który powinien był zostać wyłączony."
@@ -278,14 +271,12 @@
       "coda": "Nigdy nie wymieniono żadnego następcy."
     },
     "book-of-mozilla-verses": {
-      "tag": "Easter Egg",
       "title": "Księga Mozilli",
       "body": "Wpisanie about:mozilla w pasek adresu ujawnia Księgę Mozilli, apokaliptyczny werset przeciwstawiający „bestię” „Mammonowi”, który każde pokolenie przeglądarek aktualizuje. Numery wersetów nie są oznaczeniami rozdziałów: to daty wydań.",
       "coda": "Najnowszy werset, 6:27, po raz pierwszy pojawił się w kompilacji Firefox Nightly w 2020 roku."
     },
     "http-418-teapot": {
       "tag": "Protokół",
-      "title": "I'm a Teapot",
       "body": "RFC 2324, opublikowany 1 kwietnia 1998, definiuje status 418 jako „I'm a teapot” i klasyfikuje się jako Informational, a nie jako standard. 1 kwietnia 2014 RFC 7168 rozszerzył go o parzenie herbaty. Kod nigdy nie stał się prawdziwym standardem.",
       "coda": "Oba dokumenty pozostają Informational; kod statusu trafił do prawdziwych serwerów i tak."
     },
@@ -308,7 +299,6 @@
       "coda": "Podpis jednego urzędu wycofał zapis, który przez dekadę się mnożył."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "Cena darmowego oprogramowania",
       "body": "Red Hat rozdawał kod źródłowy swojego podstawowego produktu i pobierał opłaty za wsparcie, szkolenia i integrację. 11 sierpnia 1999 roku firma wyszła na giełdę. Jej zysk pierwszego dnia był ósmym pod względem wielkości w historii Wall Street w tamtym czasie.",
       "coda": "Założyciel Bob Young został zastąpiony na stanowisku CEO cztery miesiące później."
@@ -338,7 +328,6 @@
       "coda": "Autor tego wpisu przeznaczył go wyłącznie dla swoich kolegów."
     },
     "hupu-rumours": {
-      "tag": "Forum",
       "title": "Ten tłumaczący plotki",
       "body": "W styczniu 2004 roku chiński student pracujący nad doktoratem z inżynierii mechanicznej w Chicago założył w wolnym czasie forum koszykarskie. Praca polegała głównie na tłumaczeniu wiadomości i plotek NBA na chiński oraz ich porządkowaniu.",
       "coda": "Osiem lat później forum otworzyło własny sklep internetowy."
@@ -363,12 +352,10 @@
     },
     "knuth-reward-check": {
       "tag": "Nagroda",
-      "title": "Bank of San Serriffe",
       "body": "Donald Knuth płaci 2,56 USD za każdy błąd znaleziony w jego książkach, wystawiając czeki na fikcyjny Bank of San Serriffe. Do marca 2005 roku czeki podpisane przez niego osiągnęły łączną kwotę ponad 20 000 USD.",
       "coda": "Większość odbiorców ramuje czek zamiast go zrealizować."
     },
     "dji-helicopter-first": {
-      "tag": "Pivot",
       "title": "DJI zaczęło od helikoptera",
       "body": "Frank Wang ukończył Hong Kong University of Science and Technology w 2006 roku i współtworzył DJI w Shenzhen wraz z kolegami z roku. Pierwszym produktem był system sterowania lotem helikoptera; pierwsza dojrzała wersja, XP3.1, została wydana w 2008 roku.",
       "coda": "Zespół później stwierdził, że większość nabywców gimbali montuje je na wielowirnikowcach, a nie helikopterach."
@@ -380,7 +367,6 @@
       "coda": "Jedenaście lat później, przy IPO, Houston nazwał to swoim ulubionym wątkiem na stronie."
     },
     "butterfield": {
-      "tag": "Pivot",
       "title": "Dwa razy z gruzów",
       "body": "Gra Butterfielda, Game Neverending, utknęła w martwym punkcie, a zespół wyodrębnił część do udostępniania zdjęć jako Flickr. Osiem lat później jego druga gra, Glitch, została zamknięta, a zespół wyodrębnił narzędzie czatu zbudowane dla własnych potrzeb: Slack.",
       "coda": "Za obu razemń produkt uboczny stał się widoczny dopiero po zamknięciu głównego projektu."
@@ -422,7 +408,6 @@
       "coda": "Oba nekrologi ukazały się w tym samym tygodniu."
     },
     "leap-second": {
-      "tag": "Incident",
       "title": "Dodatkowa sekunda",
       "body": "Dodano sekundę przestępną, aby utrzymać zegary atomowe w synchronii z rotacją Ziemi. Kernel nie poinformował o tym podsystemu zegarowego, zegary wysokiej rozdzielczości wystrzeliły za wcześnie, a procesory kręciły się w kółko. Reddit, Mozilla i LinkedIn zamarły; linia lotnicza przyjmowała pasażerów ręcznie.",
       "coda": "Czas nie rośnie monotonicznie. Kod zakłada, że tak."
@@ -446,7 +431,6 @@
       "coda": "Abolowany system pozostał zamontowany na ścianie pałacu przez lata."
     },
     "railway-time-gwr": {
-      "tag": "Standard",
       "title": "Czas, który trzymały pociągi",
       "body": "W listopadzie 1840 roku Great Western Railway przyjęła czas greenwichski na całej sieci, zastępując lokalny czas każdej miejscowości. Do 1855 roku około 98 procent brytyjskich miast podążyło tym przykładem. Parlament nie uczynił go prawnym standardem krajowym aż do 1880 roku.",
       "coda": "Zegary zgodziły się na czas na czterdzieści lat przed prawem."
@@ -458,13 +442,11 @@
       "coda": "Western Union faktycznie odrzucił patent Bella w tym roku; po prostu nigdy nie napisał tego memo."
     },
     "nintendo-hanafuda-detours": {
-      "tag": "Pivot",
       "title": "Zakręty po kartach kwiatowych",
       "body": "Fusajiro Yamauchi otworzył sklep w Kioto w 1889 roku, ręcznie wykonując karty do gry hanafuda. Firma później próbowała z usługą taksówek i ryżem instant, obie porzucone; szeroko powtarzana informacja o sieci hoteli typu love-hotel nie ma potwierdzenia w dokumentach giełdowych zbadanych wstecz do 1962 roku.",
       "coda": "W 1966 roku zabawka o nazwie Ultra Hand sprzedała się w setkach tysięcy egzemplarzy."
     },
     "wrigley-premiums-premium": {
-      "tag": "Pivot",
       "title": "Premium premium",
       "body": "W 1891 roku William Wrigley Jr. sprzedawał mydło w Chicago i dodawał proszek do pieczenia jako bonus. Klienci chcieli proszku do pieczenia bardziej niż mydła, więc zaczął sprzedawać to zamiast tego i dodał gumę do żucia jako własny bonus proszku do pieczenia. Klienci chcieli gumy bardziej.",
       "coda": "Do 1892 roku porzucił zarówno mydło, jak i proszek do pieczenia, sprzedając tylko gumę."
@@ -476,13 +458,11 @@
       "coda": "Sztuka zachowała imię jednego z braci na stronie tytułowej."
     },
     "play-doh-wallpaper-cleaner": {
-      "tag": "Pivot",
       "title": "Miała czyścić tapety",
       "body": "W latach 30. Kutol stworzył miękką masę do czyszczenia sadzy z węgla z tapet. Gdy domy przeszły na czystsze paliwo grzewcze, popyt zniknął. Nauczycielka zasugerowała sprzedaż jej jako plasteliny; w 1956 roku została przemianowana na Play-Doh.",
       "coda": "Do 2005 roku sprzedawała się w 95 milionach puszek rocznie w 75 krajach."
     },
     "hedy-lamarr-frequency-hopping-patent": {
-      "tag": "Patent",
       "title": "Patent, który schowano",
       "body": "W 1942 roku Lamarr i kompozytor George Antheil opatentowali system skakania częstotliwości, aby chronić radio torped przed zakłóceniami. Marynarka zaklasyfikowała go, schowała i zasugerowała Lamarr, aby zamiast tego sprzedawała obligacje wojenne. Patent wygasł w 1959 roku, zanim którykolwiek statek go zastosował.",
       "coda": "Lamarr nigdy nie otrzymała zapłaty za patent w ciągu swojego życia."
@@ -644,7 +624,6 @@
       "coda": "Do tego czasu pracowała na szereg krótkoterminowych kontraktów finansowanych z miękkich środków."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
       "title": "Piąty człowiek internetu",
       "body": "W 1972 roku Louis Pouzin zbudował sieć CYCLADES we Francji, pierwszą, która uczyniła końcowe hosty, a nie sieć, odpowiedzialnymi za niezawodne dostarczanie. W 1974 roku artykuł Cerfa i Kahna o TCP podziękował mu z imienia. W 2004 roku Cerf i Kahn otrzymali nagrodę Turinga. Nazwiska Pouzina nie było na niej.",
       "coda": "The Economist nazwał go później piątym człowiekiem internetu."
@@ -735,7 +714,6 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Anegdota",
-      "title": "Algorhyme",
       "body": "W 1985 roku przełożony Perlman w DEC przydzielił problem bezpętlowego mostowania w piątek, a potem zniknął na tydzień. Miała gotowy algorytm drzewa rozpinającego do środy — i resztę czasu spędziła pisząc Algorhyme, wiersz, który stał się abstraktem artykułu.",
       "coda": "Wiersz pisał się dłużej niż algorytm."
     },
@@ -770,7 +748,6 @@
       "coda": "W 2010 roku Apple wydał iPada, tablet z pojemnościowym ekranem dotykowym wielodotykowym."
     },
     "iso8601-unify-then-fork": {
-      "tag": "Standard",
       "title": "Węższy zamiennik ISO 8601",
       "body": "ISO 8601 po raz pierwszy opublikowano w 1988 roku, ujednolicając pięć wcześniejszych, sprzecznych standardów ISO daty i czasu w jeden. Jednak format, z którym większość oprogramowania internetowego weryfikuje zgodność, to RFC 3339 (1997), węższy profil, który po późniejszej rewizji ISO 8601 nie jest nawet jego ścisłym podzbiorem.",
       "coda": "Standard, na który wszyscy się powołują, i dialekt, z którym weryfikuje kod każdy, to nie ten sam dokument."
@@ -788,31 +765,26 @@
       "coda": "Kilkadziesiąt lat później nadal mówił, że nie może zdecydować, czy jego własny argument jest poprawny."
     },
     "rfc1149-avian-carriers-test": {
-      "tag": "Incident",
       "title": "Protokół, który ktoś naprawdę wcielił w życie",
       "body": "David Waitzman opublikował RFC 1149 w Dzień Kłamstw, 1990: specyfikację przesyłania datagramów IP gołębiem pocztowym. 28 kwietnia 2001 roku Bergen Linux User Group rzeczywiście to zbudował, wysyłając dziewięć pakietów ping przez około 5 km. Cztery wróciły — 55% utraty, czas przebiegu 53 do 106 minut.",
       "coda": "Żartobliwy RFC ma zarejestrowany rzeczywisty wskaźnik utraty pakietów: 55 procent."
     },
     "att-1990-break-statement": {
-      "tag": "Incident",
       "title": "Nieumiejętnie umieszczone break",
       "body": "Procedura odzyskiwania na przełączniku 4ESS w Nowym Jorku zawierała instrukcję break zagnieżdżoną o jeden poziom zbyt płytko, wadę, której testy nigdy nie wykryły. Sygnał „gotowy” procedury restartu został następnie błędnie odczytany przez sąsiednie przełączniki jako błąd, a fałszywy alarm rozprzestrzenił się przez sieć przez dziewięć godzin.",
       "coda": "AT&T później oszacowało utracone przychody na sześćdziesiąt milionów dolarów."
     },
     "aspec-vs-musicam": {
-      "tag": "Audio",
       "title": "Przegrana z prostszym rozwiązaniem",
       "body": "W 1991 roku MPEG przetestował dwa rywalizujące kodeki audio. ASPEC, zbudowany przez Fraunhofer, AT&T i francuskie CNET, wygrał testy jakości, ale uznano go za zbyt złożony. MUSICAM, od Matsushity i Philipsa, wygrał dzięki prostocie. Ostateczny MP3 jednak włączył projekt filtra ASPEC.",
       "coda": "Format, który wszyscy nazywają MP3, zawiera inżynierię przegranego projektu pod nazwą zwycięzcy."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Post na comp.os.minix",
       "body": "25 sierpnia 1991 roku student uniwersytetu w Helsinkach napisał na grupie dyskusyjnej comp.os.minix, że pisze darmowy system operacyjny, nazywając to „tylko hobby, nie będzie duże i profesjonalne jak gnu”, i zapytał, jakie funkcje ludzie chcą.",
       "coda": "Od listopada 2017 roku wszystkie 500 najszybszych superkomputerów na świecie działa na systemie operacyjnym zbudowanym na jego podstawie."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Bezpłatny Beat",
       "body": "W 1991 roku Tim Berners-Lee opublikował World Wide Web z CERN. W tym samym roku University of Minnesota wydał Gopher, przez pewien czas bardziej popularny system. W lutym 1993 Minnesota ogłosił opłaty licencyjne za serwery Gopher. W kwietniu CERN uczynił protokół sieciowy bezpłatnym.",
       "coda": "Gopher miał większą grupę zwolenników przed ogłoszeniem opłaty i nigdy jej nie odzyskał."
@@ -824,7 +796,6 @@
       "coda": "Zabawny slajd o regułach głosowania OSI stał się fundamentem zarządzania internetem."
     },
     "han-unification-japanese-delegate": {
-      "tag": "Standard",
       "title": "Niezwykły Autor Unifikacji Han",
       "body": "W 1992 roku CJK Joint Research Group połączyła dziesiątki tysięcy znaków chińskich, japońskich i koreańskich w wspólne punkty kodowe Unicode. Popularne opowiadania przedstawiają Japonię jako sprzeciwiającą się stronę. Historia Unicode przypisuje zasady weryfikacji japońskiemu delegatowi Miyazawa Akira.",
       "coda": "Delegacja przedstawiana jako ofiara pomogła napisać zasady, którym miała się sprzeciwiać."
@@ -842,37 +813,31 @@
       "coda": "Pierwszym domem słowa był napis na boku autobusu lotniskowego."
     },
     "robots-exclusion-rfc9309": {
-      "tag": "Standard",
       "title": "robots.txt: 28 lat bez ratyfikacji",
       "body": "Martijn Koster zaproponował robots.txt w 1994 roku; crawlersy stosowały się do niego dobrowolnie, bez formalnego standardu i bez mechanizmu egzekwowania. Google zaproponował standaryzację w 2019 roku, a IETF ostatecznie opublikował RFC 9309 we wrześniu 2022, zamykając 28-letnią lukę.",
       "coda": "Najbardziej przestrzegana dżentelmeńska umowa internetu potrzebowała dwudziestu ośmiu lat, by stać się prawdziwym standardem."
     },
     "pentium-fdiv-writeoff": {
-      "tag": "Incident",
       "title": "Brakujące wpisy w tablicy",
       "body": "Matematyk Thomas Nicely zauważył, że jego nowy Pentium zwraca nieco błędne wyniki podczas sumowania odwrotności liczb pierwszych i zlokalizował usterkę w samym chipie. Intel początkowo oferował wymiany tylko klientom, którzy się skarżyli, i przeszedł na pełny recall dopiero pod presją publiczności.",
       "coda": "Intel księgował 475 milionów dolarów kosztu przed opodatkowaniem za recall."
     },
     "general-magic-private-network": {
-      "tag": "Networks",
       "title": "Prywatny przewód General Magic",
       "body": "W 1990 roku byłei inżynierowie Apple'a Bill Atkinson, Andy Hertzfeld i Marc Porat założyli General Magic. Magic Link od Sony trafił do sprzedaży w 1994 roku za 800 dolarów, wysyłając e-maile i uruchamiając aplikacje. Prowadzący zbudowali własną sieć AT&T zamiast korzystać z internetu, nazywając sieć \"pasywną\".",
       "coda": "Pracownik Tony Fadell później kierował rozwojem sprzętu iPod i iPhone w Apple."
     },
     "ibm-simon-first-touchscreen": {
-      "tag": "Touchscreen",
       "title": "Faks Simon",
       "body": "16 sierpnia 1994 roku IBM i BellSouth uruchomiły Simon Personal Communicator: 4,5-calowy ekran dotykowy wysyłający e-maile i faksy, w cenie 899 dolarów. Czas pracy na baterii wynosił około godziny. Urządzenie wycofano sześć miesięcy później, sprzedając około 50 000 sztuk.",
       "coda": "W 2007 roku Apple wypuścił iPhone, telefon z ekranem dotykowym pojemnościowym bez fizycznej klawiatury."
     },
     "cors-same-origin-orphaned": {
-      "tag": "Standard",
       "title": "CORS: Rekomendacja w emeryturze",
       "body": "Netscape dokleił politykę tego samego pochodzenia do Navigatora w 1995 roku, obok JavaScript, bez żadnego procesu standaryzacyjnego. CORS, mający formalnie rozluźnić tę politykę, stał się Rekomendacją W3C dopiero w 2014 roku — a do 2020 roku W3C wycofał ją, przekazując specyfikację do dokumentu Fetch WHATWG.",
       "coda": "Organizm standaryzacyjny wycofał własną rekomendację bezpieczeństwa sześć lat po jej opublikowaniu."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "Licznik odwiedzin CV",
       "body": "W 1994 roku programista napisał kilka małych programów CGI w języku C, ponieważ chciał wiedzieć, ilu ludzi ogląda jego internetowe CV. Nazwał ten zestaw narzędzi „Personal Home Page Tools” i opublikował kod źródłowy w czerwcu 1995 roku.",
       "coda": "Trzy dekady później ponad 70% witryn z znanym językiem po stronie serwera nadal używa jego potomka."
@@ -920,7 +885,6 @@
       "coda": "Rejestracja nadal nosi błędny zapis, z datą 15 września 1997."
     },
     "rfc2119-must-should": {
-      "tag": "Standard",
       "title": "MUST vs must: Dwudziestoletnia luka",
       "body": "RFC 2119 (marzec 1997) zdefiniował MUST, SHOULD, MAY i ich negacje jako wiążące poziomy wymagań dla dokumentów IETF. Ale mówił tylko, że te słowa „są często pisane wielkimi literami” — małe must i should nigdy nie zostały wykluczone. RFC 8174 załatka lukę w 2017: liczy się tylko wielkie litery.",
       "coda": "Przez dwadzieścia lat małe must miało taką samą wagę prawną jak wzruszenie ramion."
@@ -933,7 +897,6 @@
     },
     "lixiang-graphics-card-home": {
       "tag": "Strona recenzji",
-      "title": "Graphics Card Home",
       "body": "W 1998 roku uczeń szkoły średniej w prowincji Hebei założył w wolnym czasie osobistą stronę o nazwie Graphics Card Home, publikując recenzje kart graficznych do komputerów. Dwa lata później zmienił jej nazwę na PCPop i kontynuował aktualizacje przez resztę okresu nauki.",
       "coda": "W 2005 roku ta sama osoba założyła Autohome."
     },
@@ -950,8 +913,6 @@
       "coda": "Bell stwierdził później, że podjąłby tę samą decyzję ponownie."
     },
     "mars-climate-orbiter-units": {
-      "tag": "Incident",
-      "title": "Pound-Force, Newton",
       "body": "Mars Climate Orbiter przestał odpowiadać podczas wchodzenia na orbitę. Komisja ustaliła, że oprogramowanie silników wykonawcy podawało impuls w funt-silach, podczas gdy oprogramowanie nawigacyjne oczekiwało niuton-sekund, co różniło się o czynnik 4,45. Statek został skierowany na odległość około 57 km od powierzchni.",
       "coda": "Misja warte 327,6 mln USD nigdy więcej nie przesyłała danych."
     },
@@ -992,13 +953,11 @@
       "coda": "Komentarz jest obecnie rutynowo przywoływany jako przeciwprzykład, który wyprodukował."
     },
     "discuz-shenyang-dorm": {
-      "tag": "Forum",
       "title": "CDB, budowa w akademiku",
       "body": "W 2001 roku student mieszkający w akademiku w Shenyang napisał oprogramowanie forum i nazwał je Crossday Bulletin, pracując nad nim obok zajęć. Następnego października zmienił jego nazwę na Discuz.",
       "coda": "23 sierpnia 2010 roku Tencent przejął firmę, którą zbudował wokół tego projektu."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Projekt poboczny obok Nupedia",
       "body": "10 stycznia 2001 roku założyciel recenzowanej online encyklopedii zainstalował oprogramowanie wiki na własnym serwerze projektu, głównie aby wolontariusze mogli próbować sporządzać wpisy luźno z boku, podczas gdy recenzowana encyklopedia powoli posuwała się naprzód.",
       "coda": "Do lipca 2026 roku sama jej edycja angielska zawierała ponad 7,2 miliona artykułów."
@@ -1064,7 +1023,6 @@
       "coda": "Firma, która wyrosła z tego forka, była wyceniana na 7,5 miliarda dolarów w 2021 roku."
     },
     "2003-blackout-race-condition": {
-      "tag": "Incident",
       "title": "Alarm, który nie zadzwonił",
       "body": "Proces alarmowy w sali kontrolnej w Ohio ucichł: błąd w kodzie pozwolił dwóm procesom uzyskać jednocześnie dostęp do zapisu w tej samej strukturze danych, co spowodowało nieskończoną pętlę. Operatorzy nie zobaczyli ostrzeżeń o przeciążeniu i nie zdążyli odciążyć systemu. Kaskada zostawiła 55 milionów ludzi bez prądu.",
       "coda": "Inżynierowie potrzebowali ośmiu tygodni, aby odtworzyć warunek wyścigu."
@@ -1088,13 +1046,11 @@
       "coda": "Facebook wystartował w 2004 roku na tej samej idei grafu społecznego i wytrzymał ruch."
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
       "title": "Oprogramowanie sklepu przerosło sklep",
       "body": "W 2004 roku programista Tobias Lutke uznał ówczesne oprogramowanie e-commerce za zbyt nieporęczne, więc napisał własne, by sprzedawać sprzęt snowboardowy online jako Snowdevil. Sam Snowdevil pozostał małym sklepem, ale inni kupcy zaczęli pytać o licencję na stojące za nim oprogramowanie.",
       "coda": "Shopify zadebiutował na New York Stock Exchange w 2015 roku."
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
       "title": "Projekt poboczny firmy podcastowej",
       "body": "28 czerwca 2005 roku Apple wbudowało subskrypcje podcastów w iTunes; w ciągu dwóch dni liczba subskrypcji przekroczyła milion, a cały biznes podcastowy Odeo stał się z dnia na dzień przestarzały. W następnym marcu wewnętrzny hackathon wyprodukował propozycję Jacka Dorsey'a dotyczącą aktualizacji statusu przez SMS: Twitter.",
       "coda": "Odeo, firma, w której powstał Twitter, została sprzedana w 2007 roku."
@@ -1136,13 +1092,11 @@
       "coda": "Znajomy, który go zbudował, to Kyle Vogt, później założyciel Cruise, przejętego przez GM za ponad 1 miliard dolarów."
     },
     "stackoverflow-blog-post": {
-      "tag": "Q&A",
       "title": "Przeciw-Experts-Exchange",
       "body": "16 kwietnia 2008 programista opublikował na swoim blogu informację, że chce zbudować stronę z pytaniami i odpowiedziami dla programistów w modelu „przeciw-Experts-Exchange”, bez płatnych barier i manipulacji wyszukiwarkami, które uważał za obrzydliwe w przypadku istniejącego serwisu.",
       "coda": "W 2021 roku serwis został sprzedany firmie Prosus za 1,8 miliarda dolarów."
     },
     "zune-leap-year-freeze": {
-      "tag": "Incident",
       "title": "Dzień 366",
       "body": "Tuż przed północą czasu pacyficznego 31 grudnia 2008 r. każdy model Zune 30 całkowicie się zablokował; zdarzenie nazwano Z2K9. Przyczyną była nieskończona pętla w sterowniku układu zasilania, która mogła wystąpić wyłącznie w 366. dniu roku przestępnego. Nie istniała żadna łatka; jedynym rozwiązaniem było rozładowanie baterii.",
       "coda": "Środek zaradczy dostarczony przez Microsoft polegał na odczekaniu, aż urządzenie rozładuje się."
@@ -1166,25 +1120,21 @@
       "coda": "Tym kolegą z klasy była Michelle Zatlyn, późniejsza współzałożycielka i COO Cloudflare."
     },
     "china-3q-war": {
-      "tag": "Incident",
       "title": "Wybierz jedno",
       "body": "3 listopada 2010 Tencent wymusił wybór: odinstaluj 360 lub QQ przestanie działać. Ma Huateng ostrzegał, że użytkownicy mogą zostać wyeliminowani w ciągu trzech dni. Dni później Ministerstwo Przemysłu i Technologii Informacyjnej nakazało obu stronom przywrócić kompatybilność.",
       "coda": "Regulator zakończył to, nie rynek ani żadna z firm."
     },
     "china-thousand-groupon-war": {
-      "tag": "Bubble",
       "title": "Wojna tysiąca Grouponów",
       "body": "Pierwsza chińska strona zakupów grupowych wystartowała w 2010 roku; portale i sieci społecznościowe dołączyły w ciągu kilku miesięcy. Do sierpnia 2011 roku ponad 5000 firm zajmujących się zakupami grupowymi konkurowało ze sobą — „Wojna tysiąca Grouponów”. Do połowy 2014 roku przetrwało zaledwie 176 serwisów.",
       "coda": "Z pięciu tysięcy przetrwało mniej niż dwieście."
     },
     "semver-dependency-hell": {
-      "tag": "Standard",
       "title": "Własny wyimek SemVer",
       "body": "W 2010 roku współzałożyciel GitHub Tom Preston-Werner opublikował semver.org, proponując MAJOR.MINOR.PATCH jako środek na zakończenie „piekła zależności”. Sama specyfikacja zawiera wyjątek: w fazie 0.y.z, określanej jako „początkowy rozwój”, wszystko może ulec zmianie w dowolnym momencie — etap, z którego większość pakietów w rzeczywistości nigdy nie wychodzi.",
       "coda": "Większość opublikowanych pakietów nigdy nie opuszcza zakresu wersji, którego reguła nie wiąże."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
       "title": "Co wycięto z Burbn",
       "body": "Kevin Systrom i Mike Krieger spędzili prawie rok na budowie rozbudowanej aplikacji check-in o nazwie Burbn, po czym uznali swoją ukończoną wersję na iPhone za przeładowaną. Zredukowali ją do zdjęć, komentarzy i polubień, a efekt wydali osiem tygodni później jako Instagram.",
       "coda": "W tydzień po uruchomieniu miał 100 000 użytkowników."
@@ -1208,13 +1158,11 @@
       "coda": "Dwa miesiące później jednocześnie online było ponad sto kierowców."
     },
     "knight-capital-power-peg": {
-      "tag": "Incident",
       "title": "Ósmy serwer",
       "body": "Knight Capital wdrożył nowy kod handlowy na osiem serwerów; tylko siedem go przyjęło. Ósmy nadal uruchamiał martwy kod Power Peg, wycofany lata wcześniej, który aktywne zlecenia obudziły. W 45 minut Knight zbudował pozycję long w wysokości 3,5 mld USD i short w wysokości 3,15 mld USD. Wniosek SEC: nikt nie sprawdził niekompletnego wdrożenia.",
       "coda": "Knight został przejęty przez konkurenta w ciągu tygodnia od straty."
     },
     "dnnresearch-week-of-bidding": {
-      "tag": "Auction",
       "title": "Tydzień licytacji",
       "body": "W 2012 roku profesor z University of Toronto i jego dwaj studenci podyplomowi zdominowali pole w konkursie rozpoznawania obrazów, a następnie założyli pustą spółkę, by sprzedać siebie. Google, Microsoft, Baidu i DeepMind spędziły tydzień na licytacji między sobą.",
       "coda": "Hinton wybrał Google. Jednym z dwóch studentów był Ilya Sutskever."
@@ -1232,7 +1180,6 @@
       "coda": "Czerwona koperta stała się lejkiem płatności."
     },
     "heartbleed-two-person-team": {
-      "tag": "Incident",
       "title": "Zespół czterech osób",
       "body": "Brak sprawdzenia zakresu w Heartbleed trafił do rozszerzenia heartbeat OpenSSL w grudniu 2011 roku i pozostawał niezauważony przez dwa lata, aż do kwietnia 2014 roku, kiedy odkryli go niezależni badacze. W tamtym czasie bazą kodu obsługującą większość ruchu HTTPS w sieci zarządzało czterech wolontariuszy, z czego jeden pracował na pełen etat.",
       "coda": "Poprawka została wdrożona tego samego dnia, w którym ujawniono błąd."
@@ -1256,13 +1203,11 @@
       "coda": "Ruch, który wyróżnił, nosił jedynie numer kamienia, bez nazwy."
     },
     "aws-s3-2017-typo": {
-      "tag": "Incident",
       "title": "Jeden Szeroki Argument",
       "body": "Inżynier S3 uruchomił autoryzowane polecenie mające wyłączyć niewielką liczbę serwerów rozliczeniowych, ale jeden argument objął szerszy zakres niż zamierzono. Usunięte serwery obsługiwały również podsystem indeksowania, który nie był w pełni restartowany od lat i wrócił znacznie wolniej niż oczekiwano.",
       "coda": "Przestój trwał około czterech godzin; własna strona statusu AWS zależała od tych samych systemów."
     },
     "gitlab-2017-rm-rf": {
-      "tag": "Incident",
       "title": "Pięć kopii zapasowych, zero",
       "body": "Inżynier miał wyczyścić opóźniającą się replikę, ale zamiast tego usunął katalog danych PostgreSQL na węźle głównym, zatrzymując się sekundami za późno; około 300 GB było już utraconych. GitLab stwierdził, że spośród pięciu działających metod kopii zapasowych i replikacji żadna nie była w stanie faktycznie przywrócić danych.",
       "coda": "Odzyskiwanie opierało się na migawce, którą ktoś przypadkiem zrobił sześć godzin wcześniej."
@@ -1274,7 +1219,6 @@
       "coda": "Wszyscy ośmiu autorów opuścił później Google."
     },
     "cloudflare-2019-regex": {
-      "tag": "Incident",
       "title": "Ubezpieczenie, które zostało usunięte",
       "body": "Nowa reguła WAF z katastroficznie cofającym się wyrażeniem regularnym podniosła zużycie CPU w globalnej sieci Cloudflare do blisko 100 procent w ciągu sekund od wdrożenia. Sama reguła była zwyczajna; to, co pozwoliło jej wybuchnąć, to zabezpieczenie zużycia CPU dla reguł regex, cicho usunięte kilka tygodni wcześniej podczas refaktoryzacji.",
       "coda": "Awaria trwała 27 minut i zakończyła się po globalnym wyłączeniu WAF."

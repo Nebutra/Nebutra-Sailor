@@ -92,10 +92,6 @@
       "label": "LLM",
       "hint": "Tokeny · koszt · schema"
     },
-    "net": {
-      "label": "Network",
-      "hint": "DNS · TLS · IP · leak check"
-    },
     "security": {
       "label": "Bezpieczeństwo",
       "hint": "Generator haseł"
@@ -182,24 +178,7 @@
       "copyText": "Kopiuj tekst",
       "quality": "Jakość",
       "original": "Oryginał",
-      "result": "Wynik",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "result": "Wynik"
     },
     "base64": {
       "encodeDir": "Tekst → Base64",
@@ -249,11 +228,7 @@
     },
     "creditCardLuhn": {
       "number": "Numer karty",
-      "note": "Sprawdzanie Luhn · offline, nigdy nie zapisywane",
-      "digits": "digits",
-      "specimenLabel": "Specimen",
-      "structureOnly": "Luhn structure only",
-      "unknownBrand": "Card"
+      "note": "Sprawdzanie Luhn · offline, nigdy nie zapisywane"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -429,14 +404,7 @@
     "contrast": {
       "fg": "Pierwszy plan (#hex)",
       "bg": "Tło (#hex)",
-      "note": "Kontrast kolorów · WCAG 2.x",
-      "sampleHeadline": "Sample text",
-      "pass": "pass",
-      "fail": "fail",
-      "aaNormal": "AA normal",
-      "aaLarge": "AA large",
-      "aaaNormal": "AAA normal",
-      "aaaLarge": "AAA large"
+      "note": "Kontrast kolorów · WCAG 2.x"
     },
     "exif": {
       "file": "Plik obrazu",
@@ -464,11 +432,7 @@
       "secret": "Tajny klucz",
       "exp": "Wygaśnięcie (sekundy)",
       "payload": "Obciążenie JSON",
-      "note": "Generowanie JWT · HS256 (tylko dev/test)",
-      "header": "Header",
-      "payloadLabel": "Payload",
-      "signature": "Signature",
-      "emptySignature": "(empty signature segment)"
+      "note": "Generowanie JWT · HS256 (tylko dev/test)"
     },
     "rand": {
       "min": "Min",
@@ -517,11 +481,7 @@
       "in": "Wejście",
       "out": "Wyjście",
       "saved": "Zapisano",
-      "note": "Kompresja PDF · qpdf / Ghostscript na hoście · pdf-lib jako rezerwa",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "note": "Kompresja PDF · qpdf / Ghostscript na hoście · pdf-lib jako rezerwa"
     },
     "jsonFormat": {
       "indent": "Wcięcie",
@@ -538,10 +498,7 @@
       "invalid": "Niepoprawny JSON",
       "line": "wiersz",
       "column": "kolumna",
-      "note": "Silnik: JSON.parse/stringify · natychmiast lokalnie · ta sama ścieżka co API",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "note": "Silnik: JSON.parse/stringify · natychmiast lokalnie · ta sama ścieżka co API"
     },
     "qr": {
       "size": "Rozmiar",
@@ -845,12 +802,7 @@
       "generate": "Generuj PDF",
       "generating": "Generowanie…",
       "download": "Pobierz PDF",
-      "note": "marked → HTML → drukowanie w Playwright Chromium. Jeśli Chromium jest nieobecny, automatycznie przechodzi do prostego strukturalnego PDF — sprawdź renderEngine; prosty to nie układ klasy print.",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "note": "marked → HTML → drukowanie w Playwright Chromium. Jeśli Chromium jest nieobecny, automatycznie przechodzi do prostego strukturalnego PDF — sprawdź renderEngine; prosty to nie układ klasy print."
     },
     "tokenCount": {
       "count": "Policz tokeny",
@@ -895,8 +847,7 @@
       "dims": " · {w}×{h}",
       "original": "Oryginał",
       "result": "Wynik",
-      "note": "Silnik: sharp (libvips) · po stronie serwera · ta sama ścieżka co API (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "note": "Silnik: sharp (libvips) · po stronie serwera · ta sama ścieżka co API (imageBase64)"
     },
     "pptxText": {
       "file": "Plik PPTX",
@@ -1003,7 +954,6 @@
       "deduped": "{n} zduplikowanych wzorców scalonych",
       "notFound": "Brak w korpusie: {stacks}",
       "globalScope": "{stacks} to wpisy systemowe/edytorowe — wielu programistów trzyma je w osobistym ~/.gitignore_global zamiast w każdym repozytorium.",
-      "untrackedNote": "Plik .gitignore działa tylko na pliki nieśledzone. Dla pliku już śledzonego przez gita uruchom git rm -r --cached <path>.",
       "fileLabel": ".gitignore"
     },
     "editorconfig": {
@@ -1305,11 +1255,7 @@
         "noIsbn10": "Prefiks 979 nie ma odpowiednika w ISBN-10",
         "nonBookland": "13-cyfrowe ISBN musi zaczynać się od 978 lub 979",
         "ismn": "979-0 to zakres ISMN (muzyka drukowana), a nie ISBN"
-      },
-      "specimenTitle": "ISBN · structure specimen",
-      "segPrefix": "Prefix",
-      "segBody": "Body",
-      "segCheck": "Check"
+      }
     },
     "languageDetect": {
       "inputLabel": "Fragment kodu",
@@ -1376,11 +1322,7 @@
         "pass": "przeszedł",
         "fail": "nie przeszedł",
         "skipped": "nie osiągnięty"
-      },
-      "specimenTitle": "IBAN · structure specimen",
-      "segCountry": "Country",
-      "segCheck": "Check",
-      "segBban": "BBAN"
+      }
     },
     "secretScan": {
       "pasteLabel": "Wklej kod, konfigurację lub plik .env",
@@ -1458,10 +1400,7 @@
       "mathSum": "Suma {sum} → cyfra kontrolna {check}",
       "truncatedRows": "Wyświetlono pierwsze {shown} z {total} wierszy. Kopiowanie i pobieranie obejmuje wszystkie.",
       "privacy": "Kody są wysyłane do API Forge w celu sprawdzenia i nie są przechowywane.",
-      "scopeNote": "Poprawna cyfra kontrolna oznacza, że numer jest poprawnie zbudowany. Nie oznacza to, że GS1 kiedykolwiek przypisał go do rzeczywistego produktu, firmy lub lokalizacji – tylko zapytanie w rejestrze GEPIR daje odpowiedź.",
-      "specimenTitle": "GTIN · structure specimen",
-      "segPayload": "Payload",
-      "segCheck": "Check"
+      "scopeNote": "Poprawna cyfra kontrolna oznacza, że numer jest poprawnie zbudowany. Nie oznacza to, że GS1 kiedykolwiek przypisał go do rzeczywistego produktu, firmy lub lokalizacji – tylko zapytanie w rejestrze GEPIR daje odpowiedź."
     },
     "vin": {
       "inputLabel": "VIN (17 znaków)",
@@ -1508,8 +1447,7 @@
           "product": "Iloczyn"
         },
         "formula": "suma = {sum};  {sum} mod 11 = {remainder}  →  cyfra kontrolna {expected}"
-      },
-      "specimenTitle": "VIN · structure specimen"
+      }
     },
     "envDiff": {
       "envA": "Środowisko A",
@@ -1670,8 +1608,7 @@
         "allCodes": "Wszystkie kody",
         "disclaimer": "Te kody są strukturalnie poprawne, ale nie należą do żadnej zarejestrowanej organizacji. Nie używaj ich do reprezentowania rzeczywistej podmiotu.",
         "note": "Generowanie jest oparte na ziarnie: te same opcje i ziarno zawsze zwracają tę samą partię, więc fixture pozostaje odtwarzalny. Każdy kod jest oznaczony jako isTestData zarówno w JSON, jak i tutaj."
-      },
-      "specimenTitle": "Unified social credit code · structure specimen"
+      }
     },
     "yamlDiff": {
       "original": "Oryginał",
@@ -2028,29 +1965,11 @@
       "summaryStripped": "Usunięto pola metadanych {fields} ({families}), {kb} KB. Obraz pozostał bez zmian.",
       "summaryClean": "Nie znaleziono metadanych do usunięcia. Plik zwrócony bez zmian."
     },
-    "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
-      "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
-      }
-    },
-    "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
-    },
     "dns": {
-      "name": "Name / Host",
       "type": "Record-Typ",
       "note": "Auflösung über den Forge-Host-DNS — kann vom lokalen Stub abweichen."
     },
     "tls": {
-      "host": "Host",
       "expired": "Zertifikat abgelaufen",
       "validDays": "Noch {n} Tage",
       "note": "Verbindung vom Forge-Host. Trust-Prüfung deaktiviert nur zur Inspektion."
@@ -2059,153 +1978,16 @@
       "refresh": "Aktualisieren",
       "note": "IP wie vom Forge-Edge gesehen. Kein Geo ohne Lizenzdaten."
     },
-    "mermaid": {
-      "source": "Mermaid source",
-      "idle": "Valid diagrams render here",
-      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
-      "sample": "Sample",
-      "theme": "Theme",
-      "theme_default": "Default",
-      "theme_dark": "Dark",
-      "theme_forest": "Forest",
-      "theme_neutral": "Neutral",
-      "theme_base": "Base",
-      "sample_flowchart": "Flowchart",
-      "sample_sequence": "Sequence",
-      "sample_class": "Class",
-      "sample_er": "ER diagram",
-      "sample_state": "State",
-      "sample_gantt": "Gantt",
-      "sample_pie": "Pie",
-      "sample_mindmap": "Mindmap",
-      "zoomIn": "Zoom in",
-      "zoomOut": "Zoom out",
-      "zoomReset": "Reset view",
-      "copySvg": "Copy SVG",
-      "downloadSvg": "Download SVG",
-      "downloadPng": "Download PNG",
-      "previewAria": "Mermaid diagram preview",
-      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
-    },
     "colorDeltaE": {
       "note": "CIEDE2000 via culori. Schwellen nur für UI-Review."
     },
     "dbml": {
-      "source": "DBML",
       "dialect": "SQL-Dialekt",
       "parseNote": "Nur Parse/Inventar. ERD-Canvas separat.",
       "convertNote": "@dbml/core — gleicher Pfad wie die API."
     },
     "dnsLeak": {
-      "probeHost": "Compare host (advanced)",
-      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
-      "run": "Start DNS leak check",
-      "retest": "Run again",
-      "showAdvanced": "Advanced options",
-      "hideAdvanced": "Hide advanced",
-      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
-      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
-      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
-      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
-      "edgeIp": "Your edge IP",
-      "authorityHits": "Recursive IPs",
-      "forgePaths": "Forge resolver hits",
-      "dohPaths": "Browser DoH hits",
-      "webrtcCount": "WebRTC IPs",
-      "forgeResolvers": "Forge multi-resolver (server-side)",
-      "forgeNote": "These queries leave from the Forge host — not your laptop.",
-      "browserDoh": "Browser DoH",
-      "webrtc": "WebRTC ICE",
-      "egressMarkers": "Forge egress markers",
-      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
-      "honestyPrefix": "Honesty:",
-      "verdictConsistent": "Paths look consistent on this check",
-      "verdictSplit": "Split answers across DNS paths",
-      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
-      "verdictIncomplete": "Incomplete — browser probes missing",
-      "verdictAuthority": "System DNS recursives captured",
-      "infraOn": "Authority online",
-      "infraOff": "Authority offline — multi-path only",
-      "infraChecking": "Checking…",
-      "authorityResolvers": "System DNS recursive resolvers",
-      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
-      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
-      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
-      "authorityDetail": "Authority session detail",
-      "phaseSession": "Creating session…",
-      "phaseSystemDns": "Triggering system DNS…",
-      "phasePoll": "Listening for recursive hits ({n}/{total})…",
-      "phaseBrowser": "Browser DoH + WebRTC…",
-      "phaseServer": "Forge multi-resolver…",
-      "stepSession": "Session",
-      "stepSystemDns": "System DNS",
-      "stepPoll": "Listen",
-      "stepBrowser": "Browser",
-      "stepServer": "Server",
-      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
-      "liveHits": "Live recursive hits",
-      "sectionSystemDns": "System DNS (what you came for)",
-      "sectionComplementary": "Complementary paths",
-      "sectionTech": "Technical session detail",
-      "copyIps": "Copy IPs",
-      "copied": "Copied",
-      "queryCount": "{n} queries",
-      "colPath": "Path",
-      "colAnswers": "Answers",
-      "colMs": "ms",
-      "ipPublic": "public",
-      "ipPrivate": "private",
-      "sig": {
-        "captured": "System DNS captured",
-        "onlineNoHits": "Authority online · no hits yet",
-        "offline": "Authority offline",
-        "forgeSplit": "Forge resolvers disagree",
-        "dohSplit": "Browser DoH disagree",
-        "webrtcMismatch": "WebRTC ≠ edge IP",
-        "webrtcLocal": "Local WebRTC candidates",
-        "noBrowser": "No browser probes"
-      }
-    },
-    "honesty": {
-      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
-      "signatureNotVerified": "{engine} · decode only · signature not verified",
-      "localOnly": "Processed for this request · not stored as a card or credential"
-    },
-    "idCard": {
-      "number": "Resident ID number",
-      "note": "GB 11643 check digit · no household registry lookup · same path as API",
-      "specimenTitle": "Resident ID · structure specimen",
-      "segRegion": "Region",
-      "segBirth": "Birth",
-      "segSeq": "Seq",
-      "segCheck": "Check",
-      "metaBirth": "Birth",
-      "metaGender": "Gender",
-      "metaRegion": "Region code",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "reasonFormat": "Format should be 18 characters (last may be X)",
-      "reasonBirth": "Birth date segment is invalid",
-      "reasonCheck": "Check digit is wrong",
-      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
-    },
-    "filePaper": {
-      "lines": "{n} lines",
-      "chars": "{n} chars",
-      "empty": "(empty file)",
-      "readyToShip": "Ready to drop into the repo"
-    },
-    "textTransform": {
-      "mode": "Mode",
-      "input": "Input",
-      "output": "Output",
-      "emptyResult": "Result appears here",
-      "runLocal": "Run locally",
-      "runServer": "Run on server",
-      "statusLocalLive": "Local · live",
-      "statusLocal": "Local",
-      "statusServer": "Server · same path as API",
-      "noteDefault": "Same path as API"
+      "colMs": "ms"
     }
   },
   "roots": {

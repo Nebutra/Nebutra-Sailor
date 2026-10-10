@@ -3026,7 +3026,7 @@
       },
       "api": {
         "title": "API",
-        "description": "Shared gateway. Product namespaces stay under /<product>/v1/*."
+        "description": "Shared gateway. Product namespaces stay under /'<product>'/v1/*."
       },
       "router": {
         "title": "Router",
@@ -3171,7 +3171,7 @@
       "errors": "Typed application error taxonomy — UserError, AuthError, RateLimitError. Maps cleanly to HTTP, to logs, to Sentry, to the in-product toast.",
       "gateway-core": "BFF primitives shared by backends/gateway and edge handlers — middleware chains, route matchers, header normalization, request-id propagation.",
       "rate-limit": "Token-bucket rate limiter — Upstash Redis or in-memory. Per-route + per-tenant policy, 429 with retry-after, decision logged for audit.",
-      "repositories": "Repository-pattern primitives — findAll, findById, create, update, delete behind one Repository<T>. Swap Prisma for any backend without changing callers.",
+      "repositories": "Repository-pattern primitives — findAll, findById, create, update, delete behind one Repository'<T>'. Swap Prisma for any backend without changing callers.",
       "tenant-store": "Tenant-bound key/value cache for lookups too hot for the database. Auto-invalidates on tenant settings change.",
       "trace-store": "OpenTelemetry-compatible span store and query layer. Lets agents trace a tool call across iam, billing, and webhooks.",
       "status": "Public status page primitives — incident timeline, component graph, subscriber emails. Renders both /status pages and embeddable widgets.",
@@ -3222,7 +3222,7 @@
       "preset": "Feature-based SaaS config system. Toggle apps and features directly in one config file to shape your stack.",
       "sanity": "Sanity Studio v4 helpers — schema generators, content-driven page builder, image pipeline integration.",
       "china-compliance": "China-region operations — ICP filing helpers, MIIT registration, real-name verification, in-country DB residency.",
-      "content-store": "Headless CMS adapter — Sanity / Strapi / Notion behind one ContentEntry<T> read API. Drives marketing pages and product copy.",
+      "content-store": "Headless CMS adapter — Sanity / Strapi / Notion behind one ContentEntry'<T>' read API. Drives marketing pages and product copy.",
       "play-loader": "Hot-reload loader for atelier plays — sandboxed iframe, message bridge, persistence on save.",
       "play-marketplace": "Marketplace shell for shareable atelier plays — discovery, ratings, install, attribution.",
       "access-gate": "Pre-launch access gate — invite-code redemption, position queue, drip-release windows. Layers on top of @nebutra/waitlist.",

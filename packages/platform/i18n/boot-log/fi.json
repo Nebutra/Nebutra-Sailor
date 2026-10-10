@@ -75,7 +75,6 @@
     },
     "rfc1": {
       "tag": "Hallinto",
-      "title": "Request for Comments",
       "body": "Steve Crockerin piti kirjoittaa ensimmäiset säännöt muutamalle verkkoon yhdistetylle isäntäkoneelle. Häntä ei ollut valtuutettu tehtävään, ja hän pelkäsi, että se tulisi vastaan viranomaisasenteena — joten hän kutsui genren nimellä Request for Comments.",
       "coda": "Kaikki internetin siitä lähtien hyväksymät säännöt tunnetaan edelleen nimellä RFC."
     },
@@ -86,7 +85,6 @@
       "coda": "Neljän viikon kuluttua kone, jota kukaan ei halunnut, ajoi Unixiä."
     },
     "alarm-1202": {
-      "tag": "Incident",
       "title": "Ohjelmaalarmi 1202",
       "body": "Neljä minuuttia pinnan edessä ohjauskompuutteri laukaisi viisi alarmia: kohtaamisradarin kytkin oli jäänyt väärään asentoon ja söi sen syklejä. Se ei jäädytynyt. Se hylkäsi matalan prioriteetin tehtävät, käynnisti uudelleen ja jatkoi laskeutumista.",
       "coda": "Tietää, mitä hylätä kuormituksessa, on kallis oppi."
@@ -98,7 +96,6 @@
       "coda": "Lehdet pitivät ylintä viivaa vaikeana selittää ja kirjoittivat yhdysmerkin. Yhdysmerkki jäi."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
       "title": "Kaikkien demojen emo",
       "body": "Engelbartille annettiin yhdeksänkymmentä minuuttia. Hänen päätelaiteensa toimi puhelinyhteyden yli kolmekymmentä mailia päässä olevaan koneeseen, ja hän esitteli hiiren, hyperlinkit, ikkunat, näytön jakamisen ja kahden henkilön muokkaavan yhden asiakirjan samanaikaisesti.",
       "coda": "Tuhat ihmistä katsoi ja palasi sitten reikäkortteihin seuraavaksi vuosikymmeneksi."
@@ -111,7 +108,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Kommentti",
-      "title": "Burn, Baby, Burn",
       "body": "Kuukerrosmoduulin pääsytytysrutiini on merkitty lähdekoodissa nimellä BURN_BABY_BURN. Nimi ei liity työntövoimaan; se lainattiin soul-radio-DJ:n päivän sanahelinästä.",
       "coda": "Rivi on edelleen muokkaamattomana julkisessa arkistossa."
     },
@@ -206,7 +202,6 @@
       "coda": "Neljän vuoden kuluttua yhtiö piirsi ensimmäisen kerran oman piirilevynsä."
     },
     "morris": {
-      "tag": "Incident",
       "title": "Mittaus",
       "body": "Morris halusi tietää, kuinka suuri internet oli, joten hän kirjoitti ohjelman, joka kopioi itseään. Jotta isäntien ei olisi mahdollista väärentää jo infektoidun vastauksen näyttämistä, hän antoi sille yhden seitsemästä mahdollisuuden infektoida uudelleen silti.",
       "coda": "Se yksi seitsemästä kaatoi noin 6 000 silloin verkossa olleesta 60 000 isännästä."
@@ -231,7 +226,6 @@
     },
     "sosumi-so-sue-me": {
       "tag": "Nimeäminen",
-      "title": "So Sue Me",
       "body": "Vuonna 1991 Applen oikeusosasto hylkäsi hälytysäänen nimen \"Let It Beep\" liian musiikillisena, sovinnon nojalla, joka esti Apple Computerin käyttämästä musiikkiin liittyviä tavaramerkkejä. Äänisuunnittelija Jim Reekes kirjoitti takaisin \"so sue me\" ja rekisteröi sen nimellä \"sosumi\".",
       "coda": "Ääni oli mukana Mac OS:ssä lähes kolme vuosikymmentä, ennen kuin Big Sur korvasi sen vuonna 2020."
     },
@@ -242,7 +236,6 @@
       "coda": "Kukaan ei ole maksanut palkkiota sen käytöstä siitä lähtien."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "Palvelin, johon he eivät päässeet",
       "body": "10. joulukuuta 1993 id Software antoi Doomin ensimmäisen episodin sharewarena, lyöden vetoa loppujen myynnistä. Lähettäessään sen Wisconsinin yliopiston FTP-palvelimelle he huomasivat, että niin monet odottivat jo, ettei tiimi itse päässyt yhteyteen.",
       "coda": "Lähetys valmistui lähellä keskiyötä; kymmenen tuhatta latausta kerralla kaatoi yliopiston verkon."
@@ -308,7 +301,6 @@
       "coda": "Yhden toimiston allekirjoitus poisti käytöstä lausekkeen, joka oli lisääntynyt vuosikymmenen ajan."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "Ilmaisen ohjelmiston hinta",
       "body": "Red Hat jakoi ydinohjelmistonsa lähdekoodin ilmaiseksi ja peri sen sijaan tuen, koulutuksen ja integraation. Yhtiö listautui pörssiin 11. elokuuta 1999. Sen ensimmäisen päivän voitto oli tuolloin Wall Streetin historian kahdeksanneksi suurin.",
       "coda": "Perustaja Bob Young korvattiin toimitusjohtajana neljä kuukautta myöhemmin."
@@ -357,24 +349,20 @@
     },
     "git-information-manager-hell": {
       "tag": "Git",
-      "title": "Information Manager from Hell",
       "body": "7. huhtikuuta 2005 Linus Torvalds teki gitin ensimmäisen versiohallintasitoumuksen. Viestissä lukee: Initial revision of \"git\", the information manager from hell. Tekijän osoite on torvalds@ppc970.osdl.org.",
       "coda": "Tuo osoite viittaa PowerPC 970 -testikoneeseen OSDL:ssä."
     },
     "knuth-reward-check": {
       "tag": "Palkinto",
-      "title": "Bank of San Serriffe",
       "body": "Donald Knuth maksaa 2,56 dollaria jokaisesta hänen kirjoissaan löydetystä virheestä, ja maksu peritään kuvitteelliselta Bank of San Serriffe -pankilta. Maaliskuuhun 2005 mennessä hänen allekirjoittamansa shekit ylittivät 20 000 dollaria.",
       "coda": "Useimmat saajat kehystävät shekin eikä sitä talleteta."
     },
     "dji-helicopter-first": {
-      "tag": "Pivot",
       "title": "DJI aloitti helikopterilla",
       "body": "Frank Wang valmistui Hong Kong University of Science and Technologysta vuonna 2006 ja perusti DJI:n Shenzhenissä luokkatovereidensa kanssa. Sen ensimmäinen tuote oli helikopterin lentäjäjärjestelmä; ensimmäinen kypsä versio, XP3.1, toimitettiin vuonna 2008.",
       "coda": "Tiimi havaitsi myöhemmin, että useimmat gimbal-ostajat kiinnittivät ne moniroottoreihin, ei helikoptereihin."
     },
     "dropbox-hn": {
-      "tag": "Counterintuitive",
       "title": "Se vastaus",
       "body": "Houston julkaisi Dropbox-demon Hacker Newsissa. Kuuluisa vastaus selitti, että sen voi tehdä itse FTP-tilillä, curlftpfs:llä ja SVN:llä, ja että se ei näyttänyt tuottavan rahaa.",
       "coda": "Yhdeksän vuoden kuluttua, IPO:n yhteydessä, Houston kutsui sitä suosikkiviestikokonaan sivustolla."
@@ -422,7 +410,6 @@
       "coda": "Kaksi kuolinilmoitusta julkaistiin samalla viikolla."
     },
     "leap-second": {
-      "tag": "Incident",
       "title": "Lisäsekunti",
       "body": "Lisäsekunti lisättiin pitääkseen atomikellot synkronoituna Maan pyörimisen kanssa. Ydinjärjestelmä ei ilmoittanut asiaa ajastinmoduulilleen, korkean tarkkuuden ajastimet laukeaisivat liian aikaisin ja prosessorit pyöriivät tyhjän päällä. Reddit, Mozilla ja LinkedIn jumittuivat; lentoyhtiö laivasi matkustajat käsin.",
       "coda": "Aika ei kasva monotonisesti. Koodi olettaa sen kasvavan."
@@ -644,7 +631,6 @@
       "coda": "Siihen asti hän oli työskennellyt sarjan lyhytaikaisissa, pehmeän rahan sopimuksissa."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
       "title": "Internetin viides mies",
       "body": "Vuonna 1972 Louis Pouzin rakensi CYCLADES-verkon Ranskassa, ensimmäisen, jossa päätepisteet, ei verkko, olivat vastuussa luotettavasta toimituksesta. Vuonna 1974 Cerfin ja Kahnin TCP-artikkeli kiitti häntä nimeltä. Vuonna 2004 Cerf ja Kahn saivat Turing-palkinnon. Pouzinin nimi ei ollut siinä.",
       "coda": "The Economist kutsui häntä myöhemmin internetin viidenneksi mieheksi."
@@ -735,7 +721,6 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Kasku",
-      "title": "Algorhyme",
       "body": "Vuonna 1985 Perlmanin esimies DEC:llä antoi silmukattoman siltausongelman perjantaina ja katosi sitten viikoksi. Hän sai spanning-tree-algoritmin valmiiksi keskiviikkoon mennessä — ja käytti loppuajan kirjoittaen Algorhyme-runon, josta tuli paperin abstrakti.",
       "coda": "Runon laatiessaan kului enemmän aikaa kuin algoritmia."
     },
@@ -782,37 +767,31 @@
       "coda": "Heinäkuussa 2026 se sijoittui ensimmäiseksi TIOBE:n ohjelmointikielten suosion indeksissä."
     },
     "worse-is-better": {
-      "tag": "Debate",
       "title": "Huonompi on parempi",
       "body": "Vuonna 1989 Richard Gabriel loi termin 'worse is better': yksinkertainen, puoliksi oikea toteutus selviää paremmin kuin täydellinen ja oikea toteutus, minkä vuoksi hänen mielestään C ja Unix voittivat Lispin. Vuonna 1991 hän julkaisi vastaväitteen nimellä Nickieben Bourbaki, esittäen itsensä vanhana ystävänä.",
       "coda": "Kymmenien vuosien kuluttua hän sanoi edelleen, ettei hän osannut päättää, oliko hänen oma väitöksensä oikea."
     },
     "rfc1149-avian-carriers-test": {
-      "tag": "Incident",
       "title": "Pöytäkirja, jonka joku todella lensi",
       "body": "David Waitzman julkaisi RFC 1149:n huippuäitienpäivänä vuonna 1990: eritelmän IP-datagrammien kuljettamisesta kyyhkysellä. 28. huhtikuuta 2001 Bergenin Linux-käyttäjäryhmä rakensi sen todellisuudessa ja laukaisi yhdeksän ping-pakettia noin 5 km:n matkalle. Neljä palasi — 55 prosentin häviöaste, edestakaiset matkat kestivät 53–106 minuuttia.",
       "coda": "Vitsa-RFC:llä on kirjattuna todellinen paketinhäviö: 55 prosenttia."
     },
     "att-1990-break-statement": {
-      "tag": "Incident",
       "title": "Väärässä paikassa oleva break",
       "body": "New Yorkin 4ESS-kytkimen palautusrutiinissa oli break-lauseke, joka oli sisäistetty yhden tason liian matalalle, vika, jota testaus ei koskaan käyttänyt. Uudelleenkäynnistyksen rutiinin \"valmis\"-signaali luettiin sitten väärin naapurikytkimissä virheeksi, ja vääriä hälytyksiä kaskadoitui verkossa yhdeksän tuntia.",
       "coda": "AT&T myöhemmin arvioi menetetyt tulot 60 miljoonaksi dollariksi."
     },
     "aspec-vs-musicam": {
-      "tag": "Audio",
       "title": "Häviö yksinkertaisemmalle",
       "body": "Vuonna 1991 MPEG testasi kahta kilpailevaa äänikoodikkia. Fraunhoferin, AT&T:n ja Ranskan CNET:n kehittämä ASPEC voitti laadun testit, mutta se hylättiin liian monimutkaisena. Matsushitan ja Philipsin MUSICAM voitti yksinkertaisuudellaan. Valmis MP3 sisällytti lopulta ASPEC:n suodatinrakenteen silti.",
       "coda": "Kaikkien MP3:ksi kutsuman muodoston sisällä on hävinneen ehdotuksen insinööritöitä voittaneen nimen alla."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Viesti comp.os.minixiin",
       "body": "25. elokuuta 1991 helsinkiläinen ylioppilas kirjoitti comp.os.minix-uutisryhmään, että hän kirjoittaa vapaan käyttöjärjestelmän, kutsuen sitä \"vain harrastukseksi, ei tule olemaan iso ja ammattimainen kuten gnu\", ja kysyi, mitä ominaisuuksia ihmiset halusivat.",
       "coda": "Marraskuusta 2017 lähtien kaikki maailman 500 nopeinta supertietokonetta ovat käyttäneet sen varaan rakennettua käyttöjärjestelmää."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Ilmainen biitti hinnoiteltu",
       "body": "Vuonna 1991 Tim Berners-Lee julkaisi World Wide Webin CERNistä. Samana vuonna Minnesotan yliopisto julkaisi Gopherin, joka oli jonkin aikaa suositumpi järjestelmä. Helmikuussa 1993 Minnesota ilmoitti lisenssimaksuista Gopher-palvelimille. Saman vuoden huhtikuussa CERN teki verkkoprotokollasta ilmaisen.",
       "coda": "Gopherilla oli suurempi kannatus ennen maksuilmoitusta, eikä koskaan sen jälkeen."
@@ -848,13 +827,11 @@
       "coda": "Verkon eniten noudatettu herrasmiessovinto kesti 28 vuotta ennen kuin siitä tuli todellinen standardi."
     },
     "pentium-fdiv-writeoff": {
-      "tag": "Incident",
       "title": "Puuttuvat taulukkorivit",
       "body": "Matematiikko Thomas Nicely huomasi uuden Pentiuminsa tuottavan hieman väärän tuloksen laskiessaan alkulukujen käänteislukujen summaa ja jäljitti vian siruun itse. Intel tarjosi aluksi vaihtosiruja vain valittaneille asiakkaille ja kääntyi täysimittaiseen takaisinkutsuun vasta julkisen paineen alla.",
       "coda": "Intel kirjasi takaisinkutsusta 475 miljoonan dollarin veron edellisen kustannuksen."
     },
     "general-magic-private-network": {
-      "tag": "Networks",
       "title": "General Magicin yksityinen johto",
       "body": "Vuonna 1990 entiset Applen insinöörit Bill Atkinson, Andy Hertzfeld ja Marc Porat perustivat General Magicin. Sonyn Magic Link julkaistiin vuonna 1994 hintaan 800 dollaria, lähettämään sähköposteja ja ajamaan sovelluksia. Johto rakensi oman AT&T-verkkonsa internetin sijaan kutsuen webiä \"passiiviseksi\".",
       "coda": "Työntekijä Tony Fadell johti myöhemmin iPodin ja iPhonen laitteistokehitystä Applen palveluksessa."
@@ -872,7 +849,6 @@
       "coda": "Standardointielin jäädytti oman tietosuosituksensa kuusi vuotta sen julkaisun jälkeen."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "CV:n katselukertojen laskuri",
       "body": "Vuonna 1994 ohjelmoija kirjoitti muutamia pieniä C-kielellä tehtyjä CGI-ohjelmia ainoastaan siksi, että hän halusi tietää, kuinka monta ihmistä katsoi hänen verkkosivuillaan olevaa CV:tään. Hän kutsui työkalupakettia nimellä \"Personal Home Page Tools\" ja julkaisi lähdekoodin kesäkuussa 1995.",
       "coda": "Kolme vuosikymmentä myöhemmin yli 70 % verkkosivustoista, joiden palvelinpohjainen kieli on tunnettu, käyttää edelleen sen jälkeläistä."
@@ -998,7 +974,6 @@
       "coda": "23. elokuuta 2010 Tencent osti hänen sen ympärille rakentamansa yrityksen."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Nupedian vieressä tehty sivuprojekti",
       "body": "10. tammikuuta 2001 vertaisarvioidun verkkotietosanakirjan perustaja asensi wikiohjelmiston projektin omaan palvelimeen pääasiassa sen vuoksi, että vapaaehtoiset voisivat kokeilla kirjoittaa artikkeleita sivuprojektina, kun arvioitu tietosanakirja edistyi hitaasti.",
       "coda": "Heinäkuuhun 2026 mennessä sen englanninkielinen painos yksinään sisälsi yli 7,2 miljoonaa artikkelia."
@@ -1142,7 +1117,6 @@
       "coda": "Vuonna 2021 sivusto myytiin Prosusille 1,8 miljardilla dollarilla."
     },
     "zune-leap-year-freeze": {
-      "tag": "Incident",
       "title": "Päivä 366",
       "body": "Yöll 31. joulukuuta 2008 Pacificin aikavyöhykkeellä kaikki Zune 30 -laitteet jäätyivät täysin, lempinimellä Z2K9. Syy oli ääretön silmukka virtasirun ajurissa, joka voitiin laukaista vain karkausvuoden 366. päivänä. Päivitystä ei ollut olemassa; ainoa korjaus oli odottaa akun tyhjenemistä.",
       "coda": "Microsoftin toimittama korjaus oli odottaa laitteen akun tyhjenemistä."
@@ -1208,31 +1182,26 @@
       "coda": "Kaksi kuukautta myöhemmin yli sata kuljettajaa oli yhtä aikaa verkossa."
     },
     "knight-capital-power-peg": {
-      "tag": "Incident",
       "title": "Kahdeksas palvelin",
       "body": "Knight Capital lähetti uutta kaupankäyntikoodia kahdeksalle palvelimelle; vain seitsemän otti sen vastaan. Kahdeksas palvelin ajoi edelleen vanhaa Power Peg -koodia, joka oli poistettu käytöstä vuosia aiemmin ja jonka live-tilaukset herättivät. 45 minuutissa Knight rakensi 3,5 miljardin dollarin longin ja 3,15 miljardin dollarin shortin. SEC:n päätelmä: kukaan ei tarkistanut keskeneräistä deploytä.",
       "coda": "Knight ostettiin kilpailijan toimesta viikon kuluessa tappiosta."
     },
     "dnnresearch-week-of-bidding": {
-      "tag": "Auction",
       "title": "Tarjousviikko",
       "body": "Vuonna 2012 Toronton yliopiston professori ja hänen kaksi maisteriopilaataansa murskasivat kentän kuvantunnistuskilpailussa ja perustivat sitten kuorifirman myydäkseen itsensä. Google, Microsoft, Baidu ja DeepMind käyttivät viikon tarjoten toisiaan vastaan.",
       "coda": "Hinton valitsi Googlen. Yksi kahdesta opiskelijasta oli Ilya Sutskever."
     },
     "xiaohongshu-name": {
-      "tag": "Etymology",
       "title": "Ei tuo pieni punainen kirja",
       "body": "Useimmat olettavat nimen viittaavan toiseen punaiseen kirjaan. Perustajan oma selitys on tylsää: Bain & Company ja Stanfordin liiketalouskoulu, hänen yrityksensä ja koulunsa, molemmat toimivat punaisella.",
       "coda": "Käännettynä englanniksi nimi on joka tapauksessa sama kuin toinen."
     },
     "china-wechat-red-envelope-pearl-harbor": {
-      "tag": "Payments",
       "title": "Pearl Harbor, digitaalinen",
       "body": "Kiinalaisen uudenvuoden 2014 aikoihin WeChatin punaisen kirjekuoren ominaisuus tuli käyttöön; käyttäjät nappasivat yli 40 miljoonaa punaista kirjekuorta muutamassa päivässä. Sovelluksessa Laiwang Jack Ma kutsui sitä 'Pearl Harborin yllätysiskuksi' — tehokas lyhyellä aikavälillä, hän kirjoitti, mutta terve pitkäaikainen kasvu oli tärkeämpää.",
       "coda": "Punainen kirjekuori muuttui maksukanavaksi."
     },
     "heartbleed-two-person-team": {
-      "tag": "Incident",
       "title": "Neljän hengen tiimi",
       "body": "Heartbleedin puuttuva rajatarkistus päätyi OpenSSL:n heartbeat-laajennukseen joulukuussa 2011 ja pysyi huomaamattomana kaksi vuotta, kunnes riippumattomat tutkijat löysivät sen huhtikuussa 2014. Tuolloin suurimman osan verkon HTTPS-liikenteestä takana olevaa koodikantaa ylläpiti neljä vapaaehtoista, joista yksi kokopäiväisesti.",
       "coda": "Korjaus julkaistiin samana päivänä, kun haavoittuvuus paljastettiin."
@@ -1274,7 +1243,6 @@
       "coda": "Kaikki kahdeksan kirjoittajaa ovat sittemmin lähteneet Googlestä."
     },
     "cloudflare-2019-regex": {
-      "tag": "Incident",
       "title": "Poistettu sulatin",
       "body": "Uusi WAF-sääntö, jossa oli katastrofaalisesti takaisinperääntyvä regex, nosti Cloudflaren globaalin verkon CPU-käytön lähes 100 prosenttiin muutaman sekunnin sisällä käyttöönotosta. Sääntö itsessään oli tavallinen; sen räjäyttämisen mahdollisti CPU-käytön turvasuoja regex-säännöissä, joka oli hiljaa poistettu viikkoja aiemmin refaktoroinnissa.",
       "coda": "Käyttökatko kesti 27 minuuttia ja päättyi, kun WAF poistettiin käytöstä globaalisti."
@@ -1286,13 +1254,11 @@
       "coda": "Hän ei ole palannut johtamaan projektia eroamisensa jälkeen."
     },
     "linux-y2038-kernel-fix": {
-      "tag": "Fix",
       "title": "Kahdeksantoista vuotta aikaisemmin",
       "body": "32-bittiset Unix-järjestelmät ylivuotavat time_t-laskurinsa 19. tammikuuta 2038. Linux 5.6, joka julkaistiin vuonna 2020, oli ensimmäinen ydin, joka pystyi pitämään 32-bittisen järjestelmän käynnissä sen päivän jälkeen. Sovellukset tarvitsevat kuitenkin uudelleenkäännöksen 64-bittistä time_t:tä vastaan hyötyäkseen todella.",
       "coda": "Ydin korjattiin vuosia ennen kuin useimmat 32-bittiset käyttäjätason ohjelmat ehtivät perääntyä."
     },
     "log4shell-eight-years": {
-      "tag": "Vulnerability",
       "title": "Kahdeksan vuotta lukematta",
       "body": "Log4j sijaitsee useimmissa yritysten Java-ohjelmistoissa; Wiz ja EY havaitsivat 93 prosentilla pilvialustoista Log4Shell-alttiuden. Virhe oli koodissa vuodesta 2013. Se ilmoitettiin 24. marraskuuta 2021 ja julkaistiin julkisesti 10. joulukuuta, arvosana CVSS 10.",
       "coda": "Muutama vapaaehtoinen kirjoitti korjauksen, joka saapui miljooniin palvelimiin."

@@ -2,7 +2,6 @@
   "panelLabel": "Startlog",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
       "title": "Navnet, der blev udeladt fra patentet",
       "body": "Den 23. december 1947 demonstrerede Bardeen og Brattain en germanium point-contact transistor på Bell Labs. Shockley var ikke i rummet. Jurister fandt hans eget design for tæt på et patent fra 1925 af Julius Lilienfeld og fjernede hans navn fra dette.",
       "coda": "I 1956 delte alle tre Nobelprisen i fysik."
@@ -14,19 +13,16 @@
       "coda": "Navnet de valgte til feltet, artificial intelligence, er det, der blev ved."
     },
     "traitorous-eight-lie-detector-1957": {
-      "tag": "Split",
       "title": "Liedetektormemoen",
       "body": "I maj 1957 krævede otte ingeniører hos Shockley Semiconductor, at William Shockley blev erstattet som manager. Han havde optaget telefonopkald, blokeret personale for at dele resultater og krævet liedetektortests. Den 18. september 1957 stiftede de otte i stedet Fairchild Semiconductor.",
       "coda": "Wikipedia tæller Intel og AMD blandt de dusinvis af virksomheder, der kan spores tilbage til denne spinoff."
     },
     "kilby-noyce-six-months-1958-1959": {
-      "tag": "Parallel",
       "title": "Seks måneder, én medalje",
       "body": "Kilby demonstrerede en fungerende integreret kreds hos Texas Instruments i september 1958, med dele forbundet af eksterne ledninger. Noyce indsendte en monolitisk siliciumversion hos Fairchild i juli 1959, masseproducerbar. Ingen af mændene afviste den andens krav på medopfinderskab.",
       "coda": "Kilby modtog Nobelprisen i 2000 alene. Noyce var død i 1990."
     },
     "perceptron-conscious-machine-1958": {
-      "tag": "Neural Nets",
       "title": "Maskinen, der ville vågne",
       "body": "I 1958 rapporterede New York Times, at Frank Rosenblatts perceptron var embryoet af en computer, som flåden forventede ville kunne gå, tale, se, skrive, reproducere sig selv og være bevidst om sin eksistens. I 1969 beviste Minsky og Paperts bog, at en enkeltlags perceptron ikke kunne beregne XOR.",
       "coda": "Finansieringen af forskning i neurale netværk tørrede ud og vendte ikke tilbage før i 1980'erne."
@@ -50,13 +46,11 @@
       "coda": "I 1995 sagde Moore, at begrebet var kommet til at betyde næsten hvad som helst i chipindustrien."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
       "title": "Sekretæren og DOCTOR",
       "body": "I 1966 udgav Joseph Weizenbaum ELIZA's DOCTOR-script på MIT, et program, der primært afspejlede brugernes egne sætninger tilbage som spørgsmål. Hans egen sekretær rapporteres at have bedt ham forlade rummet, så hun kunne tale med det alene.",
       "coda": "Mønsteret, han ikke havde forventet, blev senere kaldt ELIZA-effekten."
     },
     "engelbart-royalties": {
-      "tag": "Patent",
       "title": "Fyrtusind dollars",
       "body": "SRI patenterede musen efter demoen og havde ifølge egen beretning ingen reel idé om dens værdi. Nogle år senere fremkom det, at de havde licenseret den til Apple for noget i nærheden af 40.000 dollars.",
       "coda": "Engelbart modtog aldrig nogen royalty for at opfinde den."
@@ -75,7 +69,6 @@
     },
     "rfc1": {
       "tag": "Styring",
-      "title": "Request for Comments",
       "body": "Steve Crocker skulle skrive de første regler for et par netværksforbundne hosts. Ingen havde givet ham myndighed, og han frygtede, at det ville læses som at trække rang — så han kaldte genren en Request for Comments.",
       "coda": "Hver regel, internettet har enige sig om siden, kaldes stadig en RFC."
     },
@@ -87,7 +80,6 @@
     },
     "alarm-1202": {
       "tag": "Hændelse",
-      "title": "Program alarm 1202",
       "body": "Fire minutter fra overfladen rejste styrecomputeren fem alarmer: en rendezvous-radarafbryder efterladt i forkert position ædte dens cyklusser. Den hang ikke. Den smed de lavprioritetsjobs, genstartede og beholdt landingen.",
       "coda": "At vide, hvad man skal smide under belastning, er den dyre lektion."
     },
@@ -98,7 +90,6 @@
       "coda": "Pressen fandt overstreget svær at forklare og skrev bindestreg. Bindestrengen blev hængende."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
       "title": "Moderen af alle demos",
       "body": "Engelbart fik nioghalvtreds minutter. Hans terminal kørte over telefonlinjer til en maskin treogtyve mil væk, og han demonstrerede musen, hyperlinks, vinduer, skærmdeling og to personer, der redigerede ét dokument samtidig.",
       "coda": "Et tusind mennesker så til, og gik derefter tilbage til hullingskort i endnu et årti."
@@ -111,7 +102,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Kommentar",
-      "title": "Burn, Baby, Burn",
       "body": "Måne-modulets master ignition-rutine er mærket BURN_BABY_BURN i kilden. Navnet handler ikke om trækraften; det blev lånt fra en soul-radio-DJs slogan for dagen.",
       "coda": "Linien sidder stadig uredigeret i det offentlige repository."
     },
@@ -134,19 +124,16 @@
       "coda": "Generel salg af Intel 4004 begyndte i juli samme år."
     },
     "pong-coin-overflow": {
-      "tag": "Feedback",
       "title": "Møntboksen løb over",
       "body": "I august 1972 placerede Atari Pong-prototypen i en bar i Sunnyvale. Få dage senere rapporterede ejeren, at den var ødelagt. Ingeniøren Al Alcorn kørte ud for at reparere den og fandt, at fejlen ikke var elektrisk: møntmekanismen var gået i stå, fordi den løb over med kvarters.",
       "coda": "Fejlen var ikke en ledningsfejl; det var for mange mønter."
     },
     "wozniak-breakout-bonus": {
-      "tag": "Bonus",
       "title": "Opdelingen",
       "body": "I 1973 bad Atari Steve Jobs om at mindske Breakout-kredsløbskortet og betalte $100 pr. fjernet chip. Jobs bad Wozniak om hjælp og lovede halvdelen. Wozniak fjernede 50 chips. Jobs sagde, at det samlede beløb blev til $700, så Wozniaks andel var $350. Ti år senere lærte Wozniak, at den rigtige bonus var $5.000.",
       "coda": "Wozniak sagde, at han ville have givet Jobs pengene, hvis han blev bedt."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
       "title": "Ikke forventet at forstå",
       "body": "Sjette udgave af Unix's slp.c indeholder linjen 'Du forventes ikke at forstå dette', knyttet til proces-swap-stack-gendannelseskode bygget på PDP-11-kompileringsunderligheder. Dennis Ritchie sagde senere, at han mente det på samme måde, som en lærer siger, at dette ikke vil være på eksamen.",
       "coda": "Rutinen blev omskrevet til Sjette udgave af Unix."
@@ -194,7 +181,6 @@
       "coda": "I 2022 bearbejdede en produktions-EUV-scanner cirka to hundrede wafers i timen."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
       "title": "En foundry på seksogfyrre",
       "body": "Morris Chang, født 1931, steg til gruppevicepræsident for verdensomspændende halvlederdrift hos Texas Instruments, tjente derefter som præsident og COO hos General Instrument og ledede derefter Taiwans ITRI. I 1987, på seksogfyrre, stiftede han TSMC, som designerer ingen af de chips, den fremstiller.",
       "coda": "Det var den første foundry i verden, der kun lavede fremstilling."
@@ -242,7 +228,6 @@
       "coda": "Ingen har betalt en royalty for at bruge det siden."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "Serveren, de ikke kunne nå",
       "body": "Den 10. december 1993 gav id Software Dooms første episode væk som shareware og satsede på salg af resten. Ved at uploade den til en FTP-server på University of Wisconsin fandt de så mange, der allerede ventede, at holdet selv ikke kunne oprette forbindelse.",
       "coda": "Uploaden sluttede nær midnat; ti tusinde downloads på én gang fik universitetets netværk til at bryde sammen."
@@ -338,7 +323,6 @@
       "coda": "Forfatteren af det indlæg havde ment det kun for sine kolleger."
     },
     "hupu-rumours": {
-      "tag": "Forum",
       "title": "Den, der oversætter rygter",
       "body": "I januar 2004 startede en kinesisk studerende, der arbejdede på en doktorgrad i maskinteknik i Chicago, et basketballforum i sin fritid. Arbejdet bestod mest af at oversætte NBA-nyheder og rygter til kinesisk og gøre dem pæne.",
       "coda": "Otte år senere åbnede forummet sin egen onlinebutik."
@@ -357,18 +341,15 @@
     },
     "git-information-manager-hell": {
       "tag": "Git",
-      "title": "Information Manager from Hell",
       "body": "Den 7. april 2005 committede Linus Torvalds gits første revision. Beskeden lyder: Initial revision of \"git\", the information manager from hell. Forfatteradressen på den er torvalds@ppc970.osdl.org.",
       "coda": "Den adresse peger på en PowerPC 970 testmaskine hos OSDL."
     },
     "knuth-reward-check": {
       "tag": "Belønning",
-      "title": "Bank of San Serriffe",
       "body": "Donald Knuth betaler $2,56 for hver fejl fundet i hans bøger, trukket på den fiktive Bank of San Serriffe. I marts 2005 havde de tjek, han havde underskrevet, i alt overstiget $20.000.",
       "coda": "De fleste modtagere indfrier tjekket frem for at indbetale det."
     },
     "dji-helicopter-first": {
-      "tag": "Pivot",
       "title": "DJI startede med en helikopter",
       "body": "Frank Wang tog eksamen fra Hong Kong University of Science and Technology i 2006 og medstiftede DJI i Shenzhen sammen med klassekammerater. Dets første produkt var et helikopterflyvekontrolesystem; den første modne version, XP3.1, blev leveret i 2008.",
       "coda": "Holdet fandt senere ud af, at de fleste gimbal-købere monterede dem på multirotorer, ikke helikoptere."
@@ -380,7 +361,6 @@
       "coda": "Elleve år senere, ved IPO'en, kaldte Houston det sin yndlings-tråd på siden."
     },
     "butterfield": {
-      "tag": "Pivot",
       "title": "To gange fra vraket",
       "body": "Butterfields spil, Game Neverending, stod stille, og holdet spinnede delen til deling af fotos ud som Flickr. Otte år senere lukkede hans andet spil, Glitch, og holdet spinnede chatværktøjet, de havde bygget til sig selv, ud: Slack.",
       "coda": "Begge gange blev biproduktet først synligt, når hovedsagen lukkede."
@@ -410,7 +390,6 @@
       "coda": "Dens finansieringshistorie er én Kickstarter og en Open Source Collective-konto."
     },
     "xiaomi-software-first": {
-      "tag": "Software",
       "title": "Xiaomis første produkt var ikke en telefon",
       "body": "Xiaomi blev grundlagt den 6. april 2010. I august og december samme år udgav det betaversioner af operativsystemet MIUI og chatappen Miliao, begge software.",
       "coda": "Firmaets første telefon blev først leveret i august året efter."
@@ -446,7 +425,6 @@
       "coda": "Det afskaffede system forblev monteret på en paladsvæg i årevis efterfølgende."
     },
     "railway-time-gwr": {
-      "tag": "Standard",
       "title": "Den tid, togene holdt",
       "body": "I november 1840 vedtog Great Western Railway Greenwich-tid på tværs af sit netværk og erstattede hver bys egen lokale tid. I 1855 havde omkring 98 procent af britiske byer fulgt efter. Parlamentet gjorde det ikke til den juridiske nationale standard før 1880.",
       "coda": "Urene blev enige om tiden fyrre år før loven gjorde."
@@ -458,13 +436,11 @@
       "coda": "Western Union afviste Bells patent det år; det skrev bare aldrig denne memo."
     },
     "nintendo-hanafuda-detours": {
-      "tag": "Pivot",
       "title": "Afvigelserne efter blomsterkortene",
       "body": "Fusajiro Yamauchi åbnede en butik i Kyoto i 1889 og lavede håndlavne hanafuda-spilkort. Selskabet forsøgte senere en taxa-service og instant-ris, begge opgivet; den vidt gentagne påstand om kæden af kærlighedshoteller har ingen optegnelser i værdipapirfilings, der er undersøgt tilbage til 1962.",
       "coda": "I 1966 solgte en legetøj kaldet Ultra Hand hundredetusindvis af enheder."
     },
     "wrigley-premiums-premium": {
-      "tag": "Pivot",
       "title": "Præmiens præmie",
       "body": "I 1891 solgte William Wrigley Jr. sæbe i Chicago og gav bagepulver med som bonus. Kunderne ville have bagepulveret mere end sæben, så han skiftede til at sælge det i stedet og tilføjede tyggegummi som bagepulverets egen bonus. Kunderne ville have tyggegummi mere.",
       "coda": "I 1892 havde han droppet både sæbe og bagepulver for kun at sælge tyggegummi."
@@ -476,13 +452,11 @@
       "coda": "Skuespillet beholdt én brors navn på titelsiden."
     },
     "play-doh-wallpaper-cleaner": {
-      "tag": "Pivot",
       "title": "Det var ment til at rense tapet",
       "body": "I 1930'erne formulerede Kutol en blød dej til at skrubbe kulrøg af tapet. Da hjem skiftede til renere opvarmningsbrændsel, forsvandt efterspørgslen. En lærer foreslog at sælge det som modelleringsclay; det blev omdøbt til Play-Doh i 1956.",
       "coda": "I 2005 solgte det 95 millioner dåser om året i 75 lande."
     },
     "hedy-lamarr-frequency-hopping-patent": {
-      "tag": "Patent",
       "title": "Patentet, de lagde på hylden",
       "body": "I 1942 patenterede Lamarr og komponisten George Antheil et frekvensspringsystem for at forhindre, at torpedoradio blev blokeret. Marinen klassificerede det, lagde det på hylden og foreslog i stedet, at Lamarr solgte krigsobligationer. Patentet udløb i 1959, før noget skib havde båret det.",
       "coda": "Lamarr modtog aldrig betaling for patentet i sin levetid."
@@ -542,7 +516,6 @@
       "coda": "Kommercielt CAD-software tog næsten to årtier at indhente det, afhandlingen havde vist."
     },
     "douglas-mcilroy-garden-hose-pipe": {
-      "tag": "Memo",
       "title": "Gartnerhosesnotatet",
       "body": "I oktober 1964 skrev McIlroy et memo fra Bell Labs, der foreslog, at programmer skulle kunne forbindes som gartnerhoses — man skrue et nyt stykke på for at behandle data anderledes. Det cirkulerede, blev beundret og blev aldrig bygget. Ni år senere tilføjede Ken Thompson ét tegn, |, til Unix-shell natten over.",
       "coda": "Om morgenen talte programmer, der aldrig havde talt sammen, sammen."
@@ -572,7 +545,6 @@
       "coda": "Sikkerheds målet var eksplicit; fejlen var, at nemhed vandt alligevel."
     },
     "johnson-vs-cern-touchscreen": {
-      "tag": "Touchscreen",
       "title": "Hvem var faktisk først",
       "body": "CERN tilskriver Bent Stumpe opfindelsen af verdens første kapacitive touchskærm i 1972 til brug i deres accelerator kontrolrum. Eric Johnson fra Storbritanniens Royal Radar Establishment havde allerede i 1965 offentliggjort en artikel om fingerstyret kapacitiv touch-teknologi, syv år tidligere.",
       "coda": "CERNs påstand om at have bygget den første touchskærm står stadig på deres egen hjemmeside."
@@ -638,31 +610,26 @@
       "coda": "Modulgrænsen viste sig at kode et gæt om, hvad en fremtidig vedligeholder ville have brug for at vide."
     },
     "karen-sparck-jones-idf": {
-      "tag": "Record",
       "title": "Formlen, ingen takker",
       "body": "I 1972 offentliggjorde Spärck Jones en artikel, der foreslog, at et ord's sjældenhed tværs over en dokumentkollektion måler dets vigtighed — inverse dokumentfrekvens, nu under rangeringslogikken i næsten hver søgemaskine. Hun fik ingen fast stilling ved Cambridge før 1993.",
       "coda": "Indtil da havde hun arbejdet en række kortvarige, bløde penge-kontrakter."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
       "title": "Internettets femte mand",
       "body": "I 1972 byggede Louis Pouzin CYCLADES-netværket i Frankrig, det første, der gjorde endepunkter, ikke netværket, ansvarlige for pålidelig levering. I 1974 takkede Cerf og Kahns TCP-artikel ham ved navn. I 2004 vandt Cerf og Kahn Turing Award. Pouzins navn var ikke på det.",
       "coda": "The Economist kaldte ham senere internettets femte mand."
     },
     "ethernet-1973-memo": {
-      "tag": "Origin",
       "title": "Ether-memoen",
       "body": "Den 22. maj 1973 skrev Robert Metcalfe et Xerox PARC-memo titleret \"Ether Acquisition,\" med et håndtegnet diagram af en delt kabel, der forbinder Alto-computere. Teknologien dateres normalt til 1976-tidsskriftsartiklen. Den faktiske skitse er tre år ældre og håndtegnet.",
       "coda": "Da artiklen blev udgivet, havde Ethernet allerede kørt inde i PARC i tre år."
     },
     "vint-cerf-envelope-sketch": {
-      "tag": "Anecdote",
       "title": "Bagsiden af et kuvert",
       "body": "Internettets grundlæggende legende siger, at Cerf skitserede gateway-arkitekturen på en serviet. Han har rettet dette: 'Det var faktisk ikke en serviet, det var bagsiden af en kuvert.' I 1973, mens han ventede i en hotellobby, skitserede han det, der blev TCP/IP's gateway-design.",
       "coda": "Året efter blev skitsen en artikel i IEEE Transactions on Communications."
     },
     "gchq-nonsecret-encryption": {
-      "tag": "Cryptography",
       "title": "Den upublicerede nøgle",
       "body": "I september 1973 fandt 22-årige Clifford Cocks, nyankommet til GCHQ, et krypteringssystem uden fælles nøgle på en halv time. Tre år senere offentliggjorde Diffie, Hellman og Merkle den samme idé i USA og blev krediteret som dets opfindere. GCHQ-dokumenterne forblev klassificerede indtil 1997.",
       "coda": "James Ellis døde i 1997, få måneder efter deklassificeringen, der satte hans navn på arkivet."
@@ -680,13 +647,11 @@
       "coda": "Softwarearkitekter beholdt linjen og droppede stille bureaukratierne, den var skrevet om."
     },
     "ken-olsen-home-computer-1977": {
-      "tag": "Misquote",
       "title": "Olsens hjemmecomputer",
       "body": "I 1977 sagde DEC-grundlæggeren Ken Olsen, at der ikke var nogen grund til, at en enkelt person skulle have en computer i hjemmet. Han mente én central maskine, der kørte lys, varme og underholdning for en husholdning, korrekt for det, han beskrev. Dækningen beholdt kun den første halvdel af sætningen.",
       "coda": "Olsen selv ejede en computer derhjemme på det tidspunkt."
     },
     "kernighans-debugging-law": {
-      "tag": "Maxim",
       "title": "Dobbelt så svært som at skrive det",
       "body": "I 1978 Elements of Programming Style skrev Kernighan og Plauger, at fejlfinding er dobbelt så svært som at skrive et program, så at skrive det så klogt som muligt efterlader dig, per definition, ikke klog nok til at fejlsøge det. En stilregel udtalt som en grænse for at møde dit eget arbejde to gange.",
       "coda": "Modparten var aldrig nogen anden, det var dig et par uger senere."
@@ -735,19 +700,15 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Anekdote",
-      "title": "Algorhyme",
       "body": "I 1985 tildelte Perlmans chef hos DEC problemet med sløjfefri brobygning en fredag og forsvandt så i en uge. Hun havde spanning-tree-algoritmen færdig inden onsdag – og brugte resten af tiden på at skrive Algorhyme, et digt der blev papirets abstrakt.",
       "coda": "Digtet tog længere tid at skrive end algoritmen."
     },
     "brooks-no-silver-bullet": {
-      "tag": "Essay",
-      "title": "No Silver Bullet",
       "body": "På IFIP-kongressen i 1986 delte Fred Brooks softwarevanskeligheder op i essentiel og tilfældig kompleksitet. Den tilfældige vanskelighed var faldet markant, sagde han, men ingen enkelt teknik ville levere en ti-dobling af produktiviteten inden for et årti.",
       "coda": "Fire årtier senere sælges hvert nye paradigme stadig som den kugle, han sagde ikke eksisterede."
     },
     "tz-olson-database": {
       "tag": "Navngivning",
-      "title": "The Olson Database",
       "body": "De fleste enheder løser tidszoner mod ét frivilligt drevet fil sæt, uformelt kaldet Olson-databasen efter grundlæggeren Arthur David Olson. Dens navngivningsskema tilskrives Paul Eggert, der faktisk har redigeret databasen siden 2005.",
       "coda": "Eponymen og den person, der har vedligeholdt den siden, er forskellige personer."
     },
@@ -770,13 +731,11 @@
       "coda": "I 2010 udgav Apple iPad'en, et kapacitivt multitouch-tablet."
     },
     "iso8601-unify-then-fork": {
-      "tag": "Standard",
       "title": "ISO 8601's snævrere stand-in",
       "body": "ISO 8601 blev først udgivet i 1988 og samlede fem tidligere, modsatrettede ISO-dato- og tidsstandarder til én. Men det format, som de fleste internetprogrammer validerer mod, er RFC 3339 (1997), en snævrere profil, som efter ISO 8601's senere revidering ikke engang er en streng delmængde af den.",
       "coda": "Den standard, alle henviser til, og den dialekt, alle koder tjekker mod, er ikke det samme dokument."
     },
     "python-christmas-project": {
-      "tag": "Scripting",
       "title": "Et julehobbyprojekt",
       "body": "Under juleferien i 1989, med sit kontor lukket i en uge, søgte en forsker i Amsterdam efter et hobbyprogrammeringsprojekt. Han begyndte at skrive en tolk til et nyt scripting-sprog og navngav det efter en komedietruppe, ikke efter slangen.",
       "coda": "I juli 2026 rangerede det som nummer ét på TIOBE-indekset over programmeringssprogernes popularitet."
@@ -800,32 +759,26 @@
       "coda": "AT&T beregnede senere det tabte omsætning til 60 millioner dollars."
     },
     "aspec-vs-musicam": {
-      "tag": "Audio",
       "title": "Tabte til den enklere",
       "body": "I 1991 testede MPEG to rivaliserende audiocodecs. ASPEC, bygget af Fraunhofer, AT&T og Frankrigs CNET, vandt kvalitetstestene, men blev dømt for kompleks. MUSICAM fra Matsushita og Philips vandt på enkelhed. Den færdige MP3 foldede ASPEC's filterdesign tilbage alligevel.",
       "coda": "Formatet, som alle kalder MP3, bærer det tabende forslag's ingeniørkunst indeni det vindende forslag's navn."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Et indlæg til comp.os.minix",
       "body": "Den 25. august 1991 postede en studerende fra Helsinki til newsgroupen comp.os.minix, at han skrev et gratis operativsystem, og kaldte det \"bare et hobbyprojekt, bliver ikke stort og professionelt som gnu,\" og spurgte, hvilke funktioner folk ønskede.",
       "coda": "Siden november 2017 har alle 500 af verdens hurtigste supercomputere kørt et OS bygget på det."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Gratis Beat Priced",
       "body": "I 1991 frigav Tim Berners-Lee World Wide Web fra CERN. Samme år frigav University of Minnesota Gopher, som en tid var det mere populære system. I februar 1993 meddelte Minnesota licensgebyrer for Gopher-servere. I april samme år gjorde CERN webprotokollen gratis.",
       "coda": "Gopher havde den større tilhængergruppe før gebyrmeddelelsen og fik den aldrig tilbage bagefter."
     },
     "rough-consensus-running-code": {
       "tag": "Styring",
-      "title": "Rough Consensus, Running Code",
       "body": "Ved IETF-mødet i juli 1992 viste MIT's Dave Clark et dias: 'We reject kings, presidents and voting. We believe in rough consensus and running code.' Udtrykket fungerer nu som en anker i internetstyringens folklore. Det startede som et stik mod OSI's formelle komitéafstemningsproces.",
       "coda": "Joke-diaset om OSI's afstemningsregler blev internetstyringens grundlæggende credo."
     },
     "han-unification-japanese-delegate": {
-      "tag": "Standard",
-      "title": "Han Unification's Unlikely Author",
       "body": "I 1992 slog CJK Joint Research Group titusindvis af kinesiske, japanske og koreanske tegn sammen til fælles Unicode-kodepunkter. Populære gengivelser fremstiller Japan som indvenderen. Unicodes egen historie tilskriver verifikationsreglerne til den japanske delegat Miyazawa Akira.",
       "coda": "Delegationen, der blev fremstillet som offer, hjalp med at skrive de regler, den huskes for at modsætte sig."
     },
@@ -842,13 +795,11 @@
       "coda": "Ordets første hjem var malet på siden af en lufthavnsbus."
     },
     "robots-exclusion-rfc9309": {
-      "tag": "Standard",
       "title": "robots.txt: 28 år uden ratificering",
       "body": "Martijn Koster foreslog robots.txt i 1994; crawlers fulgte det frivilligt, uden formel standard og uden noget, der kunne håndhæve det. Google foreslog standardisering i 2019, og IETF udgav endelig RFC 9309 i september 2022 og lukkede et 28-årigt hul.",
       "coda": "Webbets mest efterlevede herre-herre-aftale tog 28 år på at blive en rigtig standard."
     },
     "pentium-fdiv-writeoff": {
-      "tag": "Incident",
       "title": "De manglende tabelindgange",
       "body": "Matematikeren Thomas Nicely bemærkede, at hans nye Pentium returnerede let forkerte resultater, mens han summerede reciprokke af primtal, og sporede fejlen til selve chippen. Intel tilbød først udskiftninger kun til kunder, der klagede, og vendte kun til en fuld tilbagekaldelse under offentlig pres.",
       "coda": "Intel bogførte en før-skatter-afskrivning på 475 millioner dollars for tilbagekaldelsen."
@@ -860,19 +811,16 @@
       "coda": "Tony Fadell ledede senere hardwareudviklingen af iPod og iPhone hos Apple."
     },
     "ibm-simon-first-touchscreen": {
-      "tag": "Touchscreen",
       "title": "Simons faxmaskine",
       "body": "Den 16. august 1994 lancerede IBM og BellSouth Simon Personal Communicator: en 4,5-tommers touchscreen, der kunne sende e-mail og fax, til en pris på 899 dollars. Batterilevetiden var cirka en time. Den blev udfaset seks måneder senere efter at have solgt cirka 50.000 enheder.",
       "coda": "I 2007 udgav Apple iPhone, en kapacitiv touchscreen-telefon uden fysisk tastatur."
     },
     "cors-same-origin-orphaned": {
-      "tag": "Standard",
       "title": "CORS: En anbefaling i pensionering",
       "body": "Netscape tilføjede same-origin-policy til Navigator i 1995 sammen med JavaScript uden nogen standardiseringsproces. CORS, der skulle formelt aflukke den politik, blev først en W3C-anbefaling i 2014 — og i 2020 havde W3C pensioneret den og overdraget specifikationen til WHATWG's Fetch-dokument.",
       "coda": "Standardorganet pensionerede sin egen sikkerhedsanbefaling seks år efter udgivelsen."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "En CV-tæller",
       "body": "I 1994 skrev en programmør en håndfuld små CGI-programmer i C, uden anden grund end at han ville vide, hvor mange der kiggede på hans online CV. Han kaldte værktøjskassen \"Personal Home Page Tools\" og udgav kildekoden i juni 1995.",
       "coda": "Tre årtier senere kører over 70 % af hjemmesider med et kendt serversprog stadig på dets efterkommer."
@@ -896,7 +844,6 @@
       "coda": "Startuppen var General Magic. Sitet blev senere omdøbt til eBay."
     },
     "gettickcount-776-day-bug": {
-      "tag": "Overflow",
       "title": "En 776-dages gæld",
       "body": "Windows 95's GetTickCount ruller til nul hver 49,7 dag, dokumenteret adfærd, aldrig behandlet som en fejl. Men på Windows 8 til Server 2019 kunne samme funktion rulle over tidligt, nær 776 dage, en ægte defekt. Microsoft fik det først rettet i Windows 11, version 24H2.",
       "coda": "Fixet landede tre årtier efter, at den tæller, det retter, først blev udgivet."
@@ -920,7 +867,6 @@
       "coda": "Registreringsposten bærer stadig stavefejlen, dateret 15. september 1997."
     },
     "rfc2119-must-should": {
-      "tag": "Standard",
       "title": "SKAL vs skal: Et tyveårigt hul",
       "body": "RFC 2119 (marts 1997) definerede SKAL, BØR, KAN og deres negationer som bindende kravniveauer for IETF-dokumenter. Men den sagde kun, at disse ord 'ofte skrives med store bogstaver' — små bogstaver must og should blev aldrig udelukket. RFC 8174 lukkede hullet i 2017: kun store bogstaver tæller.",
       "coda": "I tyve år bar et must med små bogstaver samme juridiske vægt som et skuldertræk."
@@ -938,31 +884,25 @@
       "coda": "I 2005 grundlagde samme person Autohome."
     },
     "china-oicq-to-qq": {
-      "tag": "Rebrand",
       "title": "Fra OICQ til QQ",
       "body": "Tencent lancerede OICQ i februar 1999 — O'et stod for 'Open', en hyldest til ICQ. I oktober samme år sendte AOL, ICQ's ejer, en ophør-og-undladelse-erklæring over varemærkeovertrædelse. I november 2000 omdøbte Ma Huateng det til QQ, valgt fordi bogstavet læses som 'sød' på kinesisk.",
       "coda": "Open var det første ord, der forsvandt, da AOL's advokater ankom."
     },
     "excite-google-1999": {
-      "tag": "Misjudgment",
       "title": "Excite Afviser Google",
       "body": "I 1999 tilbød Google at sælge sig selv til Excite for 750.000 dollars plus cirka 1% aktier. CEO George Bell vurderede søgegapet for lille til at retfærdiggøre udskiftning af Excites teknologi. Resonnementet holdt. Google var værd mere end en milliard inden for et år.",
       "coda": "Bell har siden sagt, at han ville træffe samme beslutning igen."
     },
     "mars-climate-orbiter-units": {
-      "tag": "Incident",
-      "title": "Pound-Force, Newton",
       "body": "Mars Climate Orbiter gik i stilhed under orbital indsættelse. Bestyrelsen fandt, at kontraktorens thruster-software output impulse i pund-kraft sekunder, mens navigationssoftwaren forventede newton-sekunder, med en faktor på 4,45. Fartøjet blev styret til inden for cirka 57 km fra overfladen.",
       "coda": "Missionen på 327,6 millioner dollars transmitterede aldrig igen."
     },
     "paypal-palm-beaming": {
-      "tag": "Pivot",
       "title": "Strålen, der Aldrig Kom",
       "body": "I 1999 lancerede Confinity infrarøde kontantoverførsler mellem Palm Pilots, demonstreret live ved et finansieringsarrangement. Uger efter lanceringen havde det cirka 13.000 brugere, et tal der næsten ikke bevægede sig i det følgende år. Det, der faktisk tog af, var e-mail-betalinger, bygget kun som en fallback-option.",
       "coda": "Virksomheden omdøbte sig selv til PayPal og droppede stille strålen."
     },
     "cai-500-yuan": {
-      "tag": "Small world",
       "title": "Lønnen på 500 yuan",
       "body": "I 1999 rejste en hongkongkinesisk investeringsdirektør til Hangzhou for at vurdere en lille hjemmeside som mulig investering. Han fandt et dusin eller deromkring mennesker, der kodede i en enkelt overfyldt lejlighed. Han investerede ikke — han sagde sin løn på 700.000 dollars op og gik med i stedet, for 500 yuan om måneden.",
       "coda": "Hans navn var Joe Tsai. Han blev senere Alibabas udnævnte viceformand."
@@ -992,13 +932,11 @@
       "coda": "Kommentaren citeres nu rutinemæssigt som det modbevis, den producerede."
     },
     "discuz-shenyang-dorm": {
-      "tag": "Forum",
       "title": "CDB, et bygget i et kollegium",
       "body": "I 2001 skrev en universitetsstuderende, der boede på kollegium i Shenyang, et stykke forumsoftware og kaldte det Crossday Bulletin, mens han arbejdede på det ved siden af sine studier. I oktober samme år omdøbte han det til Discuz.",
       "coda": "Den 23. august 2010 overtog Tencent det selskab, han havde bygget omkring det."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Et sideprojekt ved siden af Nupedia",
       "body": "Den 10. januar 2001 installerede grundlæggeren af en fagrefereeret online-encyklopædi wiki-software på projektets egen server, primært så frivillige kunne prøve at udarbejde indlæg løst på siden, mens den fagrefereerede encyklopædi langsomt rykkede frem.",
       "coda": "I juli 2026 indeholdt alene den engelske udgave over 7,2 millioner artikler."
@@ -1028,7 +966,6 @@
       "coda": "I januar 2009 minedede Satoshi Nakamoto bitcoins genesis-block."
     },
     "yahoo-google-2002": {
-      "tag": "Miss",
       "title": "Yahoo springer over Google",
       "body": "I 2002 tilbød Yahoo-CEO Terry Semel 3 milliarder dollars for Google; Page og Brin holdt ud til 5 milliarder dollars. Semels læsning var, at Yahoos egen markedsværdi, tæt på 5 milliarder dollars efter crashen, ikke kunne absorbere det væddemål. Google gik på børsen to år senere til 23 milliarder dollars.",
       "coda": "Yahoo solgte sin kerneforretning til Verizon i 2017 for 4,48 milliarder dollars."
@@ -1058,7 +995,6 @@
       "coda": "Dianping, siden der voksede frem af det, gik live den 12. april 2003."
     },
     "wordpress-b2-post": {
-      "tag": "Blogging",
       "title": "Blogging-softwaren dilemma",
       "body": "Den 24. januar 2003 skrev en universitetsstuderende på sin egen blog, at b2, blogging-softwaren han brugte dagligt, havde været uden vedligehold i måneder siden dens hovedudvikler var forsvundet. Han sagde, at han ville forke den, og bad kun om et navn.",
       "coda": "Virksomheden, der voksede frem af den forking, blev vurderet til 7,5 milliarder dollars i 2021."
@@ -1088,31 +1024,26 @@
       "coda": "Facebook lancerede i 2004 på samme social-graph-ide og holdt under trafikken."
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
       "title": "Butikssoftwaren voksede ud af butikken",
       "body": "I 2004 fandt programmøren Tobias Lutke dagens e-handelssoftware for kluntet, så han skrev sin egen for at sælge snowboard-udstyr online som Snowdevil. Snowdevil selv forblev en lille butik, men andre forhandlere begyndte at spørge om at licensere softwaren bag den.",
       "coda": "Shopify blev noteret på New York Stock Exchange i 2015."
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
       "title": "Podcastfirmaets sideprojekt",
       "body": "Den 28. juni 2005 byggede Apple podcast-abonnementer ind i iTunes; inden for to dage passede abonnementerne en million, og Odeos hele podcast-forretning blev overnattet forældet. Martsen efter producerede et intern hackathon Jack Dorseys SMS-statusopdateringspitch: Twitter.",
       "coda": "Odeo, det firma Twitter blev bygget inde i, blev solgt af i 2007."
     },
     "youtube-tune-in-hook-up": {
-      "tag": "Legend",
       "title": "Domænet registreret på Valentinsdag",
       "body": "youtube.com blev registreret den 14. februar 2005, og dets grundlæggere fortalte senere om et dating-site-koncept modelleret efter Hot or Not. Jawed Karim nægtede at have deltaget i den aftensmad, historien hviler på, og Steve Chen indrømmede, at det læses som en markedsføringsnarrativ.",
       "coda": "Det Karim citerede i stedet var problemer med at finde tsunamifilm online."
     },
     "duan-buffett-lunch": {
-      "tag": "Small world",
       "title": "Buffett-middagen",
       "body": "I 2006 vandt en Guangdong-elektronikfabrikant den årlige velgørenhedsauktion for middag med Warren Buffett og betalte $620.100. Han bragte en 26-årig med, der lige havde sagt op i et amerikansk firma og endnu ikke havde nogen klar plan.",
       "coda": "Fabrikanten var Duan Yongping. Den unge mand var Colin Huang, der senere grundlagde Pinduoduo."
     },
     "blackberry-iphone-2007": {
-      "tag": "Misread",
       "title": "BlackBerry så svaghederne",
       "body": "I januar 2007 så BlackBerry's med-CEO Jim Balsillie og formand Mike Lazaridis iPhone-afsløringen. Lazaridis' liste over mangler var præcis: ingen fysisk tastatur, svag sikkerhed, dårlig batteri, glas-tastning. Hvert punkt var reelt. Balsillies svar var: \"Det er okay, vi klarer os fint.\"",
       "coda": "BlackBerrys markedsandel blev ædt af iPhone i de følgende år."
@@ -1178,31 +1109,26 @@
       "coda": "Mindre end to hundrede af fem tusind overlevede."
     },
     "semver-dependency-hell": {
-      "tag": "Standard",
       "title": "SemVers egen undtagelse",
       "body": "I 2010 offentliggjorde GitHub-medstifteren Tom Preston-Werner semver.org og foreslog MAJOR.MINOR.PATCH for at afslutte 'dependency hell.' Specifikationen selv skærer en undtagelse ud: i løbet af 0.y.z-fasen 'initial development' kan alt ændre sig til enhver tid — en fase, som de fleste pakker aldrig faktisk forlader.",
       "coda": "De fleste udgivne pakker forlader aldrig versionsintervallet, som reglen ikke binder."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
       "title": "Hvad der blev skåret fra Burbn",
       "body": "Kevin Systrom og Mike Krieger brugte næsten et år på at bygge en fuldt udstyret check-in-app kaldet Burbn og dømte derefter deres egen færdige iPhone-build for overfyldt. De fjernede alt undtagen fotos, kommentarer og likes og udgav resultatet otte uger senere som Instagram.",
       "coda": "Inden for en uge efter lanceringen havde den 100.000 brugere."
     },
     "tz-database-lawsuit": {
-      "tag": "Incident",
       "title": "Sagen om tidszonedatabasen",
       "body": "I oktober 2011 sagsøgte astrologiprogramproducenten Astrolabe vedligeholderne af tz-databasen og påstod, at dens zonedata krænkte et atlas, den havde udgivet. Mailinglisten og FTP-serveren gik i mørke. ICANN greb ind for at hoste databasen; Astrolabe trak sagen tilbage i februar 2012.",
       "coda": "En astrologiselskabs ophavsretskrav over solopgangstabeller blev trukket tilbage uden betaling."
     },
     "instagram-facebook-2012": {
-      "tag": "Ridicule",
       "title": "En milliard for et filter",
       "body": "I april 2012 meddelte Facebook, at det betalte 1 milliard dollar for Instagram, et 13-personers team uden indtægter. På The Daily Show spurgte Jon Stewart: \"En milliard dollars? For noget, der i nogen grad ødelægger dine billeder?\" Målt mod teamstørrelse og indtægter var spørgsmålet ikke uretfærdigt.",
       "coda": "Aftalen citeres nu rutinemæssigt som en af de bedste opkøb i tech-historien."
     },
     "didi-alibaba-resignation": {
-      "tag": "Resignation",
       "title": "Fra Alibaba til taxaer",
       "body": "Cheng Wei brugte otte år hos Alibaba og arbejdede sig op til vicegeneraldirektør for Alipay's forretningsområde for forbrugere. I juni 2012 forlod han og startede sammen med Wu Rui og Li Xiang en taxa-app. Da den blev lanceret den 9. september, var kun seksten chauffører online samtidig.",
       "coda": "To måneder senere var mere end hundrede chauffører online samtidig."
@@ -1256,13 +1182,11 @@
       "coda": "Trækket, han fremhævede, fik kun et stennummer, ingen navn."
     },
     "aws-s3-2017-typo": {
-      "tag": "Incident",
       "title": "Ét bredt argument",
       "body": "En S3-ingeniør kørte en autoriseret kommando, der skulle tage et lille antal faktureringsservere offline, men én input dækkede et bredere område end tilsigtet. De fjernede servere understøttede også indeksundersystemet, som ikke var blevet genstartet fuldt ud på år og kom tilbage langt langsommere end forventet.",
       "coda": "Udgiften varede cirka fire timer; AWS' egen statusside afhæng af de samme systemer."
     },
     "gitlab-2017-rm-rf": {
-      "tag": "Incident",
       "title": "Fem sikkerhedskopier, nul",
       "body": "En ingeniør mente at rydde en forsinket replika, men slettede i stedet PostgreSQL-datakataloget på primæren og stoppede sekunder for sent; cirka 300 GB var allerede væk. GitLab fandt ud af, at ingen af de fem sikkerhedskopi- og replikationsmetoder, de havde kørende, faktisk kunne gendanne dataene.",
       "coda": "Gendannelsen beroede på et snapshot, nogen havde tilfældigvis taget seks timer tidligere."
@@ -1274,7 +1198,6 @@
       "coda": "Alle otte forfattere har siden forladt Google."
     },
     "cloudflare-2019-regex": {
-      "tag": "Incident",
       "title": "Sikringsledningen, der blev fjernet",
       "body": "En ny WAF-regel med et katastrofalt backtracking regex pressede CPU på Cloudflares globale netværk til næsten 100 procent inden for sekunder efter udrulning. Reglen selv var almindelig; det, der lod den detonere, var en CPU-forbrugssikring på regex-regler, der stille og roligt var blevet slettet uger tidligere i en refactor.",
       "coda": "Udsvindet varede 27 minutter og sluttede, da WAF blev deaktiveret globalt."
@@ -1286,7 +1209,6 @@
       "coda": "Han er ikke vendt tilbage for at lede projektet siden han trådte tilbage."
     },
     "linux-y2038-kernel-fix": {
-      "tag": "Fix",
       "title": "Attien år for tidligt",
       "body": "32-bit Unix-systemer vil løbe over deres time_t-tæller den 19. januar 2038. Linux 5.6, udgivet i 2020, var den første kerne, der kunne holde et 32-bit-system kørende ud over den dato. Applikationer har stadig brug for en genopbygning mod en 64-bit time_t for faktisk at drage fordel.",
       "coda": "Kernen blev patchet år før de fleste 32-bit userspace indhentede."
@@ -1298,31 +1220,26 @@
       "coda": "Et håndfuld frivillige skrev rettet, der nåede millioner af servere."
     },
     "core-js-denis-pushkarev": {
-      "tag": "Maintainer",
       "title": "Patches, ingen erstattede",
       "body": "core-js leveres inde i WhatsApp, Netflix, Apple og PayPal og logger cirka 250 millioner downloads om måneden. Dens forfatter, Denis Pushkarev, var involveret i en dødelig bilulykke i 2019, afsidte cirka ti måneder i fængsel fra januar 2020 og fortsatte med at vedligeholde biblioteket hele tiden.",
       "coda": "Månedlige donationer faldt fra cirka 2.500 dollars til 400."
     },
     "tesla-westinghouse-royalty": {
-      "tag": "Patents",
       "title": "Royalty, Tesla afstod fra",
       "body": "Westinghouse's kontrakt betalte Tesla $2,50 pr. hestekraft i royalties. I begyndelsen af 1891, med selskabet tæt på fiasko, frigjorde Tesla det fra royalty-klausulen.",
       "coda": "I 1897 købte Westinghouse hans patenter direkte for $216.000."
     },
     "salk-polio-patent": {
-      "tag": "Patents",
       "title": "Solen har ingen patent",
       "body": "Edward Murrow spurgte, hvem der ejede patentet på polio-vaccinen. Salk svarede, at der ikke var noget, kunne man patentere solen. Fondens advokater havde allerede undersøgt spørgsmålet and fundet, at vaccinen manglede patentbar nyhed på grund af prior art.",
       "coda": "Den upatenterede vaccine blev senere vurderet til syv milliarder dollars."
     },
     "cobol-two-hundred-billion-lines": {
-      "tag": "Legacy",
       "title": "To hundrede milliarder linjer",
       "body": "I 1997 estimerede Gartner 200 milliarder linjer COBOL, der kørte 80 procent af forretningsprogrammer verden over. I 2020, da COVID-æraens ledighedsansøgninger steg, appellerede flere amerikanske delstatsregeringer offentligt til COBOL-programmerere for at holde deres årtier gamle ydelsessystemer kørende.",
       "coda": "Seks år er gået siden den appel."
     },
     "sabre-sage-to-booking": {
-      "tag": "Booking",
       "title": "Fra radar til reservationer",
       "body": "American Airlines og IBM indgik deres partnerskab i 1957 og tilpassede luftvåbnets SAGE-luftforsvarsarkitektur fra Den Kolde Krig til et bookingsystem. SABRE kørte sin første onlinetest i 1960 og blev fuldt lanceret i 1964, og blev dermed verdens første online transaktionsbehandlingssystem.",
       "coda": "Moderselskabet driver stadig, mere end tres år senere."
@@ -1353,7 +1270,6 @@
     },
     "json-good-not-evil": {
       "tag": "Licens",
-      "title": "For Good, Not Evil",
       "body": "Douglas Crockfords licens fra 2002 til JSON-bibliotekerne tilføjer én klausul: softwaren skal bruges til Gode, ikke Onde. JSON selv spredte sig gratis og uden patent til næsten hver API på internettet, men den ene sætning gjorde licensen inkompatibel med standard open-source-betingelser.",
       "coda": "Formatet blev universelt; skæreklausulen, det blev leveret med, overlevede ikke kontakten med virksomhedsjuridisk."
     },
@@ -1364,7 +1280,6 @@
       "coda": "Punchlinen blev produktets navn, ureduceret."
     },
     "tbl-double-slash": {
-      "tag": "Design",
       "title": "De ekstra skråstreg",
       "body": "Tim Berners-Lee satte \"//\" foran domænenavnet, da han designede URL'en. I oktober 2009 indrømmede han, givet kolonet allerede der, at de to skråstreg slet ikke var nødvendige — \"det virkede som en god idé på det tidspunkt,\" sagde han.",
       "coda": "Hver URL siden har stadig tastet begge af dem."
@@ -1424,7 +1339,6 @@
       "coda": "Unitree blev registreret i Binjiang-distriktet i Hangzhou i august 2016."
     },
     "unitree-one-yuan-option": {
-      "tag": "Options",
       "title": "En yuan pr. aktie",
       "body": "I september 2017 underskrev Unitree optionsaftaler med sytten ansatte til en yuan pr. aktie. Yderligere tildelinger fulgte, holdt gennem et enkelt ansattevehikel.",
       "coda": "Otte år senere åbnede selskabet bogen på sin IPO."

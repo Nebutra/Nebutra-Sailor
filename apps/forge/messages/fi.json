@@ -92,10 +92,6 @@
       "label": "LLM",
       "hint": "Tokenit · kustannus · skeema"
     },
-    "net": {
-      "label": "Network",
-      "hint": "DNS · TLS · IP · leak check"
-    },
     "security": {
       "label": "Turvallisuus",
       "hint": "Salasanageneraattori"
@@ -182,24 +178,7 @@
       "copyText": "Kopioi teksti",
       "quality": "Laatu",
       "original": "Alkuperäinen",
-      "result": "Tulos",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "result": "Tulos"
     },
     "base64": {
       "encodeDir": "Teksti → Base64",
@@ -249,11 +228,7 @@
     },
     "creditCardLuhn": {
       "number": "Kortin numero",
-      "note": "Luhn-tarkistus · offline, ei tallenneta",
-      "digits": "digits",
-      "specimenLabel": "Specimen",
-      "structureOnly": "Luhn structure only",
-      "unknownBrand": "Card"
+      "note": "Luhn-tarkistus · offline, ei tallenneta"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -429,14 +404,7 @@
     "contrast": {
       "fg": "Etualusta (#hex)",
       "bg": "Tausta (#hex)",
-      "note": "Värikontrasti · WCAG 2.x",
-      "sampleHeadline": "Sample text",
-      "pass": "pass",
-      "fail": "fail",
-      "aaNormal": "AA normal",
-      "aaLarge": "AA large",
-      "aaaNormal": "AAA normal",
-      "aaaLarge": "AAA large"
+      "note": "Värikontrasti · WCAG 2.x"
     },
     "exif": {
       "file": "Kuvatiedosto",
@@ -464,11 +432,7 @@
       "secret": "Salasana",
       "exp": "Vanhenee (sekuntia)",
       "payload": "Payload JSON",
-      "note": "JWT Generointi · HS256 (vain kehitys/testaus)",
-      "header": "Header",
-      "payloadLabel": "Payload",
-      "signature": "Signature",
-      "emptySignature": "(empty signature segment)"
+      "note": "JWT Generointi · HS256 (vain kehitys/testaus)"
     },
     "rand": {
       "min": "Min",
@@ -517,11 +481,7 @@
       "in": "Syöte",
       "out": "Tulos",
       "saved": "Tallennettu",
-      "note": "PDF-pakkaus · qpdf / Ghostscript isäntäkonetta · pdf-lib-varjostus",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "note": "PDF-pakkaus · qpdf / Ghostscript isäntäkonetta · pdf-lib-varjostus"
     },
     "jsonFormat": {
       "indent": "Sisennys",
@@ -538,10 +498,7 @@
       "invalid": "Virheellinen JSON",
       "line": "rivi",
       "column": "sarakke",
-      "note": "Moottori: JSON.parse/stringify · välitön paikallinen · sama polku kuin API",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "note": "Moottori: JSON.parse/stringify · välitön paikallinen · sama polku kuin API"
     },
     "qr": {
       "size": "Koko",
@@ -845,12 +802,7 @@
       "generate": "Luo PDF",
       "generating": "Luodaan…",
       "download": "Lataa PDF",
-      "note": "marked → HTML → Playwright Chromium print. Jos Chromium puuttuu, käytetään automaattisesti yksinkertaistettua PDF-rakennetta — tarkista renderEngine; yksinkertainen versio ei ole painovalmis asettelu.",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "note": "marked → HTML → Playwright Chromium print. Jos Chromium puuttuu, käytetään automaattisesti yksinkertaistettua PDF-rakennetta — tarkista renderEngine; yksinkertainen versio ei ole painovalmis asettelu."
     },
     "tokenCount": {
       "count": "Laske tokenit",
@@ -895,8 +847,7 @@
       "dims": " · {w}×{h}",
       "original": "Alkuperäinen",
       "result": "Tulos",
-      "note": "Moottori: sharp (libvips) · palvelinpohjainen · sama polku kuin API:ssa (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "note": "Moottori: sharp (libvips) · palvelinpohjainen · sama polku kuin API:ssa (imageBase64)"
     },
     "pptxText": {
       "file": "PPTX-tiedosto",
@@ -1003,7 +954,6 @@
       "deduped": "{n} kaksoiskuvioita yhdistetty",
       "notFound": "Ei korpuksessa: {stacks}",
       "globalScope": "{stacks} ovat käyttöjärjestelmä/editori-määrittelyjä — monet kehittäjät pitävät nämä henkilökohtaisessa ~/.gitignore_global-tiedostossa eikä jokaisessa repositoriossa.",
-      "untrackedNote": ".gitignore vaikuttaa vain seurantaan ottamattomiin tiedostoihin. Gitin jo seuraamaan tiedostoon suorita git rm -r --cached <path>.",
       "fileLabel": ".gitignore"
     },
     "editorconfig": {
@@ -1305,11 +1255,7 @@
         "noIsbn10": "979-alkiolla ei ole ISBN-10-vastaavaa",
         "nonBookland": "13 merkin ISBN:n on aloitettava 978- tai 979-alkiolla",
         "ismn": "979-0 on ISMN-alue (painettu musiikki), ei ISBN"
-      },
-      "specimenTitle": "ISBN · structure specimen",
-      "segPrefix": "Prefix",
-      "segBody": "Body",
-      "segCheck": "Check"
+      }
     },
     "languageDetect": {
       "inputLabel": "Koodinpätkä",
@@ -1376,11 +1322,7 @@
         "pass": "läpäisi",
         "fail": " epäonnistui",
         "skipped": "ei saavutettu"
-      },
-      "specimenTitle": "IBAN · structure specimen",
-      "segCountry": "Country",
-      "segCheck": "Check",
-      "segBban": "BBAN"
+      }
     },
     "secretScan": {
       "pasteLabel": "Liitä koodi, konfiguraatio tai .env",
@@ -1458,10 +1400,7 @@
       "mathSum": "Summa {sum} → tarkistekirjain {check}",
       "truncatedRows": "Näytetään ensimmäiset {shown} rivistä yhteensä {total}. Kopioi ja lataa kaikki.",
       "privacy": "Koodit lähetetään Forge API:lle tarkistettavaksi eivätkä niitä tallenneta.",
-      "scopeNote": "Oikea tarkistekirjain tarkoittaa, että numero on muodoltaan oikea. Se ei tarkoita sitä, että GS1 olisi koskaan osoittanut sitä todelliselle tuotteelle, yritykselle tai sijainnille — vain GEPIR-rekisterin hakemalla saa vastauksen siihen.",
-      "specimenTitle": "GTIN · structure specimen",
-      "segPayload": "Payload",
-      "segCheck": "Check"
+      "scopeNote": "Oikea tarkistekirjain tarkoittaa, että numero on muodoltaan oikea. Se ei tarkoita sitä, että GS1 olisi koskaan osoittanut sitä todelliselle tuotteelle, yritykselle tai sijainnille — vain GEPIR-rekisterin hakemalla saa vastauksen siihen."
     },
     "vin": {
       "inputLabel": "VIN (17 merkkiä)",
@@ -1508,8 +1447,7 @@
           "product": "Tulo"
         },
         "formula": "sum = {sum};  {sum} mod 11 = {remainder}  →  tarkistusmerkki {expected}"
-      },
-      "specimenTitle": "VIN · structure specimen"
+      }
     },
     "envDiff": {
       "envA": "Ympäristö A",
@@ -1670,8 +1608,7 @@
         "allCodes": "Kaikki koodit",
         "disclaimer": "Nämä koodit ovat rakenteellisesti kelvollisia, mutta ne eivät kuulu mihinkään rekisteröityyn organisaatioon. Älä käytä niitä todellisen entiteetin edustamiseen.",
         "note": "Generointi on siemenpohjainen: samat vaihtoehdot ja siemen tuottavat aina saman erän, joten fixture pysyy toistettavana. Jokainen koodi on merkitty isTestData-kentällä sekä JSON:ssä että tässä."
-      },
-      "specimenTitle": "Unified social credit code · structure specimen"
+      }
     },
     "yamlDiff": {
       "original": "Alkuperäinen",
@@ -2028,29 +1965,11 @@
       "summaryStripped": "Poistettiin {fields} metatietokenttää ({families}), {kb} KB. Kuva muuten muuttumaton.",
       "summaryClean": "Poistettavaa metatietoa ei löytynyt. Tiedosto palautettu muuttumattomana."
     },
-    "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
-      "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
-      }
-    },
-    "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
-    },
     "dns": {
-      "name": "Name / Host",
       "type": "Record-Typ",
       "note": "Auflösung über den Forge-Host-DNS — kann vom lokalen Stub abweichen."
     },
     "tls": {
-      "host": "Host",
       "expired": "Zertifikat abgelaufen",
       "validDays": "Noch {n} Tage",
       "note": "Verbindung vom Forge-Host. Trust-Prüfung deaktiviert nur zur Inspektion."
@@ -2059,153 +1978,16 @@
       "refresh": "Aktualisieren",
       "note": "IP wie vom Forge-Edge gesehen. Kein Geo ohne Lizenzdaten."
     },
-    "mermaid": {
-      "source": "Mermaid source",
-      "idle": "Valid diagrams render here",
-      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
-      "sample": "Sample",
-      "theme": "Theme",
-      "theme_default": "Default",
-      "theme_dark": "Dark",
-      "theme_forest": "Forest",
-      "theme_neutral": "Neutral",
-      "theme_base": "Base",
-      "sample_flowchart": "Flowchart",
-      "sample_sequence": "Sequence",
-      "sample_class": "Class",
-      "sample_er": "ER diagram",
-      "sample_state": "State",
-      "sample_gantt": "Gantt",
-      "sample_pie": "Pie",
-      "sample_mindmap": "Mindmap",
-      "zoomIn": "Zoom in",
-      "zoomOut": "Zoom out",
-      "zoomReset": "Reset view",
-      "copySvg": "Copy SVG",
-      "downloadSvg": "Download SVG",
-      "downloadPng": "Download PNG",
-      "previewAria": "Mermaid diagram preview",
-      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
-    },
     "colorDeltaE": {
       "note": "CIEDE2000 via culori. Schwellen nur für UI-Review."
     },
     "dbml": {
-      "source": "DBML",
       "dialect": "SQL-Dialekt",
       "parseNote": "Nur Parse/Inventar. ERD-Canvas separat.",
       "convertNote": "@dbml/core — gleicher Pfad wie die API."
     },
     "dnsLeak": {
-      "probeHost": "Compare host (advanced)",
-      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
-      "run": "Start DNS leak check",
-      "retest": "Run again",
-      "showAdvanced": "Advanced options",
-      "hideAdvanced": "Hide advanced",
-      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
-      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
-      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
-      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
-      "edgeIp": "Your edge IP",
-      "authorityHits": "Recursive IPs",
-      "forgePaths": "Forge resolver hits",
-      "dohPaths": "Browser DoH hits",
-      "webrtcCount": "WebRTC IPs",
-      "forgeResolvers": "Forge multi-resolver (server-side)",
-      "forgeNote": "These queries leave from the Forge host — not your laptop.",
-      "browserDoh": "Browser DoH",
-      "webrtc": "WebRTC ICE",
-      "egressMarkers": "Forge egress markers",
-      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
-      "honestyPrefix": "Honesty:",
-      "verdictConsistent": "Paths look consistent on this check",
-      "verdictSplit": "Split answers across DNS paths",
-      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
-      "verdictIncomplete": "Incomplete — browser probes missing",
-      "verdictAuthority": "System DNS recursives captured",
-      "infraOn": "Authority online",
-      "infraOff": "Authority offline — multi-path only",
-      "infraChecking": "Checking…",
-      "authorityResolvers": "System DNS recursive resolvers",
-      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
-      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
-      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
-      "authorityDetail": "Authority session detail",
-      "phaseSession": "Creating session…",
-      "phaseSystemDns": "Triggering system DNS…",
-      "phasePoll": "Listening for recursive hits ({n}/{total})…",
-      "phaseBrowser": "Browser DoH + WebRTC…",
-      "phaseServer": "Forge multi-resolver…",
-      "stepSession": "Session",
-      "stepSystemDns": "System DNS",
-      "stepPoll": "Listen",
-      "stepBrowser": "Browser",
-      "stepServer": "Server",
-      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
-      "liveHits": "Live recursive hits",
-      "sectionSystemDns": "System DNS (what you came for)",
-      "sectionComplementary": "Complementary paths",
-      "sectionTech": "Technical session detail",
-      "copyIps": "Copy IPs",
-      "copied": "Copied",
-      "queryCount": "{n} queries",
-      "colPath": "Path",
-      "colAnswers": "Answers",
-      "colMs": "ms",
-      "ipPublic": "public",
-      "ipPrivate": "private",
-      "sig": {
-        "captured": "System DNS captured",
-        "onlineNoHits": "Authority online · no hits yet",
-        "offline": "Authority offline",
-        "forgeSplit": "Forge resolvers disagree",
-        "dohSplit": "Browser DoH disagree",
-        "webrtcMismatch": "WebRTC ≠ edge IP",
-        "webrtcLocal": "Local WebRTC candidates",
-        "noBrowser": "No browser probes"
-      }
-    },
-    "honesty": {
-      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
-      "signatureNotVerified": "{engine} · decode only · signature not verified",
-      "localOnly": "Processed for this request · not stored as a card or credential"
-    },
-    "idCard": {
-      "number": "Resident ID number",
-      "note": "GB 11643 check digit · no household registry lookup · same path as API",
-      "specimenTitle": "Resident ID · structure specimen",
-      "segRegion": "Region",
-      "segBirth": "Birth",
-      "segSeq": "Seq",
-      "segCheck": "Check",
-      "metaBirth": "Birth",
-      "metaGender": "Gender",
-      "metaRegion": "Region code",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "reasonFormat": "Format should be 18 characters (last may be X)",
-      "reasonBirth": "Birth date segment is invalid",
-      "reasonCheck": "Check digit is wrong",
-      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
-    },
-    "filePaper": {
-      "lines": "{n} lines",
-      "chars": "{n} chars",
-      "empty": "(empty file)",
-      "readyToShip": "Ready to drop into the repo"
-    },
-    "textTransform": {
-      "mode": "Mode",
-      "input": "Input",
-      "output": "Output",
-      "emptyResult": "Result appears here",
-      "runLocal": "Run locally",
-      "runServer": "Run on server",
-      "statusLocalLive": "Local · live",
-      "statusLocal": "Local",
-      "statusServer": "Server · same path as API",
-      "noteDefault": "Same path as API"
+      "colMs": "ms"
     }
   },
   "roots": {

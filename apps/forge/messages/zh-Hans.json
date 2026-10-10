@@ -1003,7 +1003,6 @@
       "deduped": "已合并 {n} 个重复模式",
       "notFound": "语料库中未收录：{stacks}",
       "globalScope": "{stacks} 属于操作系统/编辑器条目——许多开发者会将其放在个人 ~/.gitignore_global 中，而非每个仓库。",
-      "untrackedNote": ".gitignore 仅影响未跟踪的文件。对于 git 已跟踪的文件，请运行 git rm -r --cached <path>。",
       "fileLabel": ".gitignore"
     },
     "editorconfig": {
@@ -1848,7 +1847,6 @@
       "holidaysHint": "留空则按纯周末规则计算，不应用任何国家日历。",
       "makeupWorkdays": "调休补班日",
       "makeupHint": "虽落在周末或节假日但仍需上班的日期——中国的调休/补班周六填在这里。",
-      "datesPlaceholder": "YYYY-MM-DD（每行一个）",
       "datesIgnored": "{n, plural, one {# 条记录不是 YYYY-MM-DD 日期格式，将不予使用} other {# 条记录不是 YYYY-MM-DD 日期格式，将不予使用}}",
       "pickStart": "请选择开始日期。",
       "emptyHintShift": "请选择开始日期和营业天数。",
@@ -2069,7 +2067,6 @@
       "theme_dark": "深色",
       "theme_forest": "森林",
       "theme_neutral": "中性",
-      "theme_base": "Base",
       "sample_flowchart": "流程图",
       "sample_sequence": "时序图",
       "sample_class": "类图",
@@ -2091,7 +2088,6 @@
       "note": "culori CIEDE2000。阈值仅供 UI 评审参考。OKLCH 已在颜色转换工具中提供。"
     },
     "dbml": {
-      "source": "DBML",
       "dialect": "SQL 方言",
       "parseNote": "硬正确：仅解析与清单。ER 图画布需布局质量过 gate 后再单独上架。",
       "convertNote": "@dbml/core 导出/导入 — 与 API 同一路径。"
@@ -2115,7 +2111,6 @@
       "forgeResolvers": "Forge 多解析器（服务端）",
       "forgeNote": "这些查询从 Forge 主机发出，不是你的电脑。",
       "browserDoh": "浏览器 DoH",
-      "webrtc": "WebRTC ICE",
       "egressMarkers": "Forge 出口标记",
       "egressNote": "OpenDNS/Google 看到的是 Forge 主机出口，不是你的设备。",
       "honestyPrefix": "诚实说明：",
@@ -2131,7 +2126,6 @@
       "authorityNote": "查询了你唯一探测名的递归解析器 IP（操作系统 DNS 路径）。请与 VPN/DNS 提供商对照。",
       "authorityNoHits": "本轮未捕获递归命中。可暂时关闭浏览器「安全 DNS」后重试。",
       "authorityOfflineHint": "权威区离线 — 无法做系统 DNS 捕获。",
-      "authorityDetail": "Authority session detail",
       "phaseSession": "正在创建会话…",
       "phaseSystemDns": "正在触发系统 DNS…",
       "phasePoll": "等待递归命中（{n}/{total}）…",

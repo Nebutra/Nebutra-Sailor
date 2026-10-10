@@ -6,7 +6,6 @@
     "unavailable": "價格暫時無法載入，請稍後重試，或在購買前聯絡我們。",
     "empty": "目前沒有可購買的付費商品。",
     "viewProduct": "開啟 {product}",
-    "amountRange": "{min} – {max}",
     "oneTime": "一次性付款，不自動續費。",
     "personal": "適用於個人帳戶。",
     "organization": "適用於組織帳戶。",
@@ -19,76 +18,7 @@
     "paymentNote": "美元銀行卡付款由 Creem 處理；人民幣付款在可用時使用支付寶或微信支付。適用稅費及最終總額在結帳時顯示。積分與餘額歸屬於所購產品。",
     "refund": "退款政策",
     "terms": "服務條款",
-    "contact": "帳單諮詢",
-    "eyebrow": "Pricing",
-    "heroTitle": "Pay for what you <signature>use</signature>.",
-    "jumpSailor": "Sailor licences",
-    "jumpFaq": "Questions",
-    "altRouter": "Router's API market: a shelf of models by vendor and category, with input and output prices per million tokens.",
-    "altKcq": "The KCQ workbench: a daily candlestick chart of a Shanghai-listed stock, with an AI analyst panel on the right.",
-    "trustCards": "Cards via Creem, our merchant of record",
-    "trustCn": "Alipay and WeChat Pay for CNY",
-    "trustCurrency": "Prices in USD and CNY",
-    "trustOneTime": "One-time payments, no auto-renewal",
-    "usageBased": "Usage-based",
-    "membershipsAndCredits": "Memberships and credits",
-    "payAsYouGo": "Pay as you go",
-    "topUpRange": "Top up any amount",
-    "colCurrency": "Currency",
-    "colMinimum": "Minimum",
-    "colMaximum": "Maximum",
-    "termMonth": "1 month",
-    "termYear": "1 year",
-    "termOther": "{days} days",
-    "perMonth": "/ month",
-    "perYear": "/ year",
-    "yearAsMonthly": "{amount} a month, paid once",
-    "monthlyCreditsShort": "{credits} credits / month",
-    "creditPacks": "Credit packs",
-    "colPack": "Pack",
-    "colPrice": "Price",
-    "colExpires": "Expires",
-    "packCredits": "{credits} credits",
-    "expiresShort": "{days} days",
-    "neverExpires": "Does not expire",
-    "choosePlan": "Choose {name}",
-    "buyPack": "Buy",
-    "billingTitle": "How billing works",
-    "billCardsTitle": "Cards, in USD",
-    "billCardsBody": "Card payments are processed by Creem, the merchant of record.",
-    "billCnTitle": "Alipay and WeChat Pay, in CNY",
-    "billCnBody": "CNY payments use Alipay or WeChat Pay when available.",
-    "billTaxTitle": "Taxes and totals",
-    "billTaxBody": "Applicable taxes and the final total are shown at checkout.",
-    "billWalletTitle": "Balances stay with the product",
-    "billWalletBody": "Credits and balances belong to the product you bought them for.",
-    "privacy": "Privacy policy",
-    "billingEmail": "Billing support",
-    "sailorTitle": "{brandName} Sailor licences",
-    "faqTitle": "Questions",
-    "faqLead": "What people ask before they buy.",
-    "faq": {
-      "f1": {
-        "q": "Do plans renew automatically?",
-        "a": "No. Every offer here is a one-time payment. Top-ups are bought when you need them."
-      },
-      "f2": {
-        "q": "Which currencies and payment methods do you take?",
-        "a": "USD by card through Creem, and CNY through Alipay or WeChat Pay when available. The final total, with any taxes, is shown at checkout."
-      },
-      "f3": {
-        "q": "What does a balance top-up pay for?",
-        "a": "Metered API usage in Router, and managed AI usage in KCQ at Router's model shelf prices. Model rates are listed in Router, and a top-up can be any amount within the range shown."
-      },
-      "f4": {
-        "q": "Do credits expire?",
-        "a": "Purchased credits expire after the number of days shown on each pack. Credits and balances belong to the product you bought them for."
-      },
-      "f5": {
-        "q": "Where do I get billing help?",
-        "a": "The refund policy covers what can be refunded. For anything about a payment, write to the billing address on this page."
-      }
-    }
+    "contact": "帳單諮詢"
   },
   "nav": {
     "features": "特性",
@@ -257,14 +187,14 @@
     },
     "copyright": "© 2026 {companyLegal} · 保留所有权利。",
     "statusOnline": "所有子系统在线运行",
+    "statusDegraded": "服務降級",
+    "statusOutage": "重大服務中斷",
+    "statusUnknown": "正在檢查狀態",
     "newsletterTitle": "保持最新动态",
     "newsletterPlaceholder": "you@example.com",
     "newsletterSubscribe": "订阅",
     "newsletterSuccess": "感谢订阅！",
-    "newsletterError": "出了些问题",
-    "statusDegraded": "服務降級",
-    "statusOutage": "重大服務中斷",
-    "statusUnknown": "正在檢查狀態"
+    "newsletterError": "出了些问题"
   },
   "logoStrip": {
     "tagline": "執行於"
@@ -457,7 +387,6 @@
             "duration": "会话期间"
           },
           "1": {
-            "name": "better-auth.session_token",
             "provider": "Better Auth",
             "purpose": "身分驗證會話權杖",
             "duration": "7 天"
@@ -1874,7 +1803,6 @@
           "label": "AI 提供商支持"
         },
         "projects": {
-          "value": "104",
           "label": "monorepo 包"
         },
         "uptime": {
@@ -1944,7 +1872,6 @@
       },
       "latest": {
         "title": "最新文章",
-        "titleCn": "最新文章",
         "viewAll": "全部文章"
       },
       "newsletter": {
@@ -1983,19 +1910,16 @@
       },
       "parts": {
         "ideas": {
-          "title": "Ideas",
           "titleCn": "創意與需求",
           "body": "寫下你希望存在的東西，或者你需要的東西。大家發的創意和需求，就是網絡的起點。",
           "cta": "發一個創意"
         },
         "capital": {
-          "title": "Capital",
           "titleCn": "資本",
           "body": "我們維護的投資人名錄：國內與全球的基金，各自投什麼，一目了然。",
           "cta": "瀏覽投資人"
         },
         "network": {
-          "title": "The network",
           "titleCn": "網絡",
           "body": "描述你想找的那個人，由 AI 原生的網絡替你找到。開發中。",
           "cta": "看看計劃"
@@ -2054,8 +1978,7 @@
           "line": "給 AI 寫出來的產品鋪好上線的路。",
           "body": "給 agent 寫出來的軟件用的生產層：認證、全球與中國雙通道支付、多租戶和 AI 網關，一條命令搞定，零密鑰本地就能跑。程式碼歸你。",
           "cn": "給 AI 寫出來的產品鋪好上線的路。",
-          "status": "今天就能用",
-          "cta": "了解 Sailor"
+          "status": "今天就能用"
         },
         "sleptons": {
           "line": "人、想法、需求與資本彼此找到的地方。",
@@ -2259,7 +2182,6 @@
         "is": "創辦人的文章：我們對如今怎麼造東西的看法。"
       },
       "sailor": {
-        "title": "開源平台",
         "is": "一切都建在它上面的開源平台，今天就能用。"
       },
       "sleptons": {
@@ -2299,9 +2221,7 @@
         "title": "新聞"
       },
       "sailor": {
-        "title": "開源平台",
         "studio": {
-          "title": "Sailor Studio",
           "frame": {
             "title": "Sailor Studio 畫框"
           }
@@ -2389,9 +2309,6 @@
       },
       "playbook": {
         "title": "演示合輯"
-      },
-      "opc": {
-        "title": "OPC"
       },
       "about": {
         "title": "關於",
@@ -2874,11 +2791,8 @@
     "meta": {
       "indexTitle": "解決方案 | {brandName}",
       "indexDescription": "為出海創業者準備的場景手冊——出海、增長、架構治理、AI 與融資的最佳實踐。",
-      "detailTitleSuffix": "{brandName} Solutions",
       "chinaVcProfileTitle": "{name} — 投資機構畫像 | {brandName}",
-      "chinaVcProfileDescriptionFallback": "{name} 的投資主線、賽道、階段與代表案例。",
-      "globalVcProfileTitle": "{name} — Investor Profile | {brandName}",
-      "globalVcProfileDescriptionFallback": "{name}: focus sectors, stage and region."
+      "chinaVcProfileDescriptionFallback": "{name} 的投資主線、賽道、階段與代表案例。"
     }
   },
   "solutionsNav": {
@@ -2954,7 +2868,6 @@
         "tagline": "API 文件與指南"
       },
       "forge": {
-        "label": "Forge 工具站",
         "tagline": "線上編解碼、文本、雜湊與文件工具"
       },
       "blog": {
@@ -3025,8 +2938,7 @@
         "description": "指南、API 參考與 Webhook 契約。"
       },
       "api": {
-        "title": "API",
-        "description": "共享閘道器。產品名稱空間落在 /<product>/v1/*。"
+        "title": "API"
       },
       "router": {
         "title": "Router",
@@ -3038,8 +2950,7 @@
       },
       "sso": {
         "title": "使用{brandNameCn}登入",
-        "description": "OIDC 簽發在 sso。第三方應用註冊尚未自助開通。",
-        "badge": "IdP"
+        "description": "OIDC 簽發在 sso。第三方應用註冊尚未自助開通。"
       },
       "status": {
         "title": "服務狀態",
@@ -3050,7 +2961,6 @@
         "description": "建立、吊銷閘道器的程式化金鑰。"
       },
       "webhooks": {
-        "title": "Webhooks",
         "description": "訂閱工作區事件。載荷帶簽名。"
       },
       "provider-keys": {
@@ -3092,7 +3002,6 @@
         "description": "把分鏡、拍攝、剪輯串成一條多 agent 流水線的短片生成。"
       },
       "sailor-studio": {
-        "title": "Sailor Studio",
         "description": "選定專案的外觀，在真實頁面上預覽，一條命令落地。"
       },
       "color-tokens": {
@@ -3112,9 +3021,7 @@
         "description": "用一段嵌入程式碼把 Sailor 介面塞進任意頁面。"
       },
       "startup-os": {
-        "title": "Startup OS",
-        "description": "在 Sailor 上經營一家創業公司的一體化操作面板。",
-        "badge": "Alpha"
+        "description": "在 Sailor 上經營一家創業公司的一體化操作面板。"
       }
     },
     "page": {
@@ -3123,7 +3030,6 @@
       "lead": "Sailor 內建的基礎設施 Demo、實用工具、整合能力與實驗性功能——挑一個直接上手。"
     },
     "meta": {
-      "title": "Playbook — {productName}",
       "description": "Sailor 內建的基礎設施 Demo、實用工具、整合能力與實驗性功能的精選目錄。"
     }
   },
@@ -3171,7 +3077,6 @@
       "errors": "應用錯誤型別分類 — UserError / AuthError / RateLimitError;到 HTTP、日誌、Sentry、產品內 toast 各層對映一致。",
       "gateway-core": "BFF 原語 — backends/gateway 與 edge handler 共用;中介軟體鏈、路由匹配、header 規整、request-id 透傳。",
       "rate-limit": "令牌桶限速器 — Upstash Redis / 記憶體;按路由 + 按租戶配置,返回 429 + retry-after,決策可審計。",
-      "repositories": "倉儲模式原語 — findAll / findById / create / update / delete 統一 Repository<T>;換 backend 不動呼叫方。",
       "tenant-store": "按租戶的 KV 快取 — 快取資料庫查詢太熱的 lookup;租戶設定變更自動失效。",
       "trace-store": "OpenTelemetry 相容的 span 儲存與查詢層;讓 agent 能跨 iam / billing / webhooks 追蹤一個 tool 呼叫。",
       "status": "公開狀態頁原語 — incident 時間線、元件圖、訂閱郵件;支援完整狀態頁與可嵌入 widget。",
@@ -3222,7 +3127,6 @@
       "preset": "基於 feature 的 SaaS 配置系統;在單個配置檔案中直接開關 apps 與 features,組裝你的 stack。",
       "sanity": "Sanity Studio v4 輔助 — schema 生成器、內容驅動的 page builder、與影像流水線整合。",
       "china-compliance": "中國區運營支援 — ICP 備案輔助、工信部登記、實名認證、資料境記憶體儲。",
-      "content-store": "Headless CMS 介面卡 — Sanity / Strapi / Notion 統一為一個 ContentEntry<T> 讀 API;驅動營銷頁面與產品文案。",
       "play-loader": "Atelier play 的熱過載 loader — 沙箱 iframe、訊息橋、儲存即持久化。",
       "play-marketplace": "可分享 atelier play 的市場殼 — 發現、評分、安裝、署名。",
       "access-gate": "上線前訪問閘門 — 邀請碼核銷、排隊位置、分批放量;在 @nebutra/waitlist 之上疊加。",
@@ -3672,11 +3576,9 @@
       "document-pipeline": {
         "steps": {
           "0": {
-            "label": "PDF",
             "meta": "上傳"
           },
           "1": {
-            "label": "OCR",
             "meta": "47頁"
           },
           "2": {
@@ -3828,9 +3730,6 @@
         "kpis": {
           "0": {
             "label": "API 呼叫"
-          },
-          "1": {
-            "label": "AI tokens"
           },
           "2": {
             "label": "儲存"
@@ -4200,7 +4099,6 @@
     "providerCount": "{count} 個提供商",
     "status": {
       "opencode": "生產環境",
-      "ai-sdk": "AI SDK",
       "cn-compatible": "相容",
       "pending": "待接入"
     },
@@ -4227,8 +4125,7 @@
     },
     "direction": {
       "title": "方向",
-      "lead": "每一行都是創始人的原話，照 Journal 裡寫的樣子摘錄。",
-      "cn": "方向，L1 到 L8。"
+      "lead": "每一行都是創始人的原話，照 Journal 裡寫的樣子摘錄。"
     },
     "execution": {
       "title": "執行",
@@ -4299,7 +4196,6 @@
         "lead": "Creem 作為交易商戶（merchant of record）覆蓋全球主流卡組織，代收代繳各地銷售稅/增值稅；微信支付與支付寶原生覆蓋中國大陸——都在同一套計費契約背後，配好金鑰即可上線。"
       },
       "cta": {
-        "eyebrow": "Ready to Sail",
         "title": "準備在全球啟航？",
         "lead": "從本地驗證到全球擴張，Sailor 是您最可靠的技術合夥人。",
         "button": "聯絡我們"
@@ -4393,7 +4289,6 @@
     },
     "featured": "精選",
     "categories": {
-      "saas": "SaaS",
       "ecommerce": "電商",
       "ai": "AI / 機器學習",
       "devtools": "開發者工具",
@@ -4453,12 +4348,10 @@
         "detail": "可按需提供 DPA。應用內已支援資料主體訪問與刪除流程。"
       },
       "soc2": {
-        "label": "SOC 2 Type II",
         "state": "路線圖中",
         "detail": "目前尚未認證。架構設計已支援 SOC 2 控制項；計劃進行正式審計。"
       },
       "iso27001": {
-        "label": "ISO 27001",
         "state": "路線圖中",
         "detail": "目前尚未認證。ISMS 範圍與 SOC 2 一併跟蹤推進。"
       },

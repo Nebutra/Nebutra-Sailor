@@ -96,42 +96,16 @@
     },
     "progress": {
       "back": "بازگشت",
-      "stepCounter": "مرحله {current} از {total}",
-      "ariaLabel": "Onboarding progress",
-      "skip": "Skip for now"
+      "stepCounter": "مرحله {current} از {total}"
+    },
+    "invite": {
+      "emailPlaceholder": "colleague@company.com"
     },
     "plan": {
       "title": "یک طرح انتخاب کنید",
       "description": "رایگان شروع کنید یا ظرفیت بیشتری باز کنید. می‌توانید هر زمان طرح را تغییر دهید.",
       "choose": "انتخاب طرح",
       "skip": "فعلاً رد شوید"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces.",
-      "slugTaken": "That workspace address is already taken. Try another."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -224,12 +198,7 @@
       "subtitle": "پلن، سهمیه و تمدید.",
       "currentPlan": "پلن فعلی",
       "upgradeCta": "مقایسه طرح‌ها",
-      "manageCta": "مدیریت اشتراک",
-      "usageTitle": "Usage this period",
-      "usageApiCalls": "API calls",
-      "usageAiTokens": "AI tokens",
-      "usageUnavailable": "Usage is unavailable right now.",
-      "usageRetry": "Retry"
+      "manageCta": "مدیریت اشتراک"
     },
     "billing": {
       "title": "صورتحساب",
@@ -410,15 +379,7 @@
       "homeLink": "خانه",
       "signInFailed": "ورود ناموفق بود",
       "genericError": "خطایی رخ داد. لطفاً دوباره تلاش کنید.",
-      "captchaError": "تأیید ربات ناموفق بود. صفحه را تازه کنید و دوباره تلاش کنید.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "captchaError": "تأیید ربات ناموفق بود. صفحه را تازه کنید و دوباره تلاش کنید."
     },
     "signUp": {
       "title": "حساب Nebutra خود را بسازید",
@@ -432,12 +393,7 @@
       "alreadyHaveAccount": "قبلاً حساب دارید؟",
       "signInLink": "ورود",
       "signUpFailed": "ثبت‌نام ناموفق بود",
-      "inviteLabel": "Invite code",
-      "invitePlaceholder": "neb_...",
-      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
-      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled."
     },
     "passkeys": {
       "title": "کلیدهای عبور",

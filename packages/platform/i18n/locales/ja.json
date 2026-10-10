@@ -97,41 +97,19 @@
     "progress": {
       "back": "戻る",
       "stepCounter": "ステップ {current} / {total}",
-      "ariaLabel": "Onboarding progress",
       "skip": "今はスキップ"
+    },
+    "workspace": {
+      "slugTaken": "このワークスペースアドレスは使用済みです。別のものをお試しください。"
+    },
+    "invite": {
+      "emailPlaceholder": "colleague@company.com"
     },
     "plan": {
       "title": "プランを選択",
       "description": "無料で開始するか、容量をアンロック。いつでもプランを変更できます。",
       "choose": "プランを選択",
       "skip": "今はスキップ"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces.",
-      "slugTaken": "このワークスペースアドレスは使用済みです。別のものをお試しください。"
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -411,14 +389,7 @@
       "signInFailed": "サインイン失敗",
       "genericError": "エラーが発生しました。もう一度試してください。",
       "captchaError": "ボット認証に失敗しました。ページを更新して再度お試しください。",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "続行することで、{brandName} の <terms>利用規約</terms> および <privacy>プライバシーポリシー</privacy> に同意したものとみなされます。",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "legalNotice": "続行することで、{brandName} の <terms>利用規約</terms> および <privacy>プライバシーポリシー</privacy> に同意したものとみなされます。"
     },
     "signUp": {
       "title": "Nebutra アカウントを作成",
@@ -433,7 +404,6 @@
       "signInLink": "ログイン",
       "signUpFailed": "登録に失敗しました",
       "inviteLabel": "招待コード",
-      "invitePlaceholder": "neb_...",
       "inviteHint": "コールドスタート中は招待制です。",
       "inviteRequired": "登録には有効な招待コードが必要です。",
       "inviteInvalid": "招待コードが無効、期限切れ、または利用できません。",
@@ -597,7 +567,6 @@
           "description": "{currency}で請求されます"
         },
         "wechat": {
-          "title": "WeChat Pay",
           "description": "{currency}で請求されます"
         }
       },
@@ -869,7 +838,6 @@
       }
     },
     "webhooks": {
-      "title": "Webhooks",
       "description": "ワークスペースから出力されたイベントをサブスクライブします。すべてのペイロードにエンドポイントのシークレットで署名するため、真正性を検証できます。",
       "create": {
         "heading": "新規エンドポイント",
@@ -1002,7 +970,6 @@
         "apiKeys": "API キー",
         "notifications": "通知",
         "auditLog": "監査ログ",
-        "webhooks": "Webhooks",
         "admin": "管理"
       },
       "action": {

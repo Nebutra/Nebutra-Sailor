@@ -452,7 +452,8 @@
       "local": "Run local",
       "server": "Server verify",
       "count": "{count} matches",
-      "sotaNote": "Instant local highlight · server timeout budget · same path as API"
+      "sotaNote": "Instant local highlight · server timeout budget · same path as API",
+      "note": "Instant local · server timeout budget · same path as API"
     },
     "jwt": {
       "decode": "Decode JWT",
@@ -1003,7 +1004,7 @@
       "deduped": "{n} duplicate patterns merged",
       "notFound": "Not in the corpus: {stacks}",
       "globalScope": "{stacks} are OS/editor entries — many developers keep these in a personal ~/.gitignore_global instead of every repo.",
-      "untrackedNote": "A .gitignore only affects untracked files. For a file git already tracks, run git rm -r --cached <path>.",
+      "untrackedNote": "A .gitignore only affects untracked files. For a file git already tracks, run git rm -r --cached '<path>'.",
       "fileLabel": ".gitignore"
     },
     "editorconfig": {

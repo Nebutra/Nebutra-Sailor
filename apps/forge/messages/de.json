@@ -505,6 +505,7 @@
     },
     "pdfCompress": {
       "file": "PDF-Datei",
+      "drop": "PDF hier ablegen oder wählen",
       "quality": "Qualität",
       "engine": "Engine",
       "qStructural": "Strukturell (qpdf, verlustfreie Streams)",
@@ -514,14 +515,13 @@
       "eAuto": "Auto (qpdf → Ghostscript → pdf-lib)",
       "download": "PDF herunterladen",
       "needFile": "Wähle zuerst eine PDF-Datei",
+      "needPdf": "Bitte eine PDF-Datei wählen",
+      "privacy": "PDFs werden zur Kompression an den Host gesendet und nicht gespeichert.",
+      "barHint": "Balken = relative Ausgabegröße",
       "in": "Eingabe",
       "out": "Ausgabe",
       "saved": "Gespeichert",
-      "note": "PDF komprimieren · qpdf / Ghostscript auf Host · pdf-lib als Fallback",
-      "drop": "PDF hier ablegen oder wählen",
-      "needPdf": "Bitte eine PDF-Datei wählen",
-      "privacy": "PDFs werden zur Kompression an den Host gesendet und nicht gespeichert.",
-      "barHint": "Balken = relative Ausgabegröße"
+      "note": "PDF komprimieren · qpdf / Ghostscript auf Host · pdf-lib als Fallback"
     },
     "jsonFormat": {
       "indent": "Einrücken",
@@ -538,10 +538,10 @@
       "invalid": "Ungültiges JSON",
       "line": "Zeile",
       "column": "Spalte",
-      "note": "Engine: JSON.parse/stringify · lokal in Echtzeit · gleicher Pfad wie API",
       "sortKeys": "Schlüssel sortieren",
       "stats": "{chars} Zeichen · {lines} Zeilen",
-      "liveOff": "Live aus"
+      "liveOff": "Live aus",
+      "note": "Engine: JSON.parse/stringify · lokal in Echtzeit · gleicher Pfad wie API"
     },
     "qr": {
       "size": "Größe",
@@ -845,12 +845,12 @@
       "generate": "PDF generieren",
       "generating": "Generiere…",
       "download": "PDF herunterladen",
-      "note": "marked → HTML → Playwright Chromium-Druck. Wenn Chromium fehlt, wechselt auto auf einfaches strukturiertes PDF — prüfe renderEngine; einfach ist kein druckgerechtes Layout.",
       "openTab": "In neuem Tab öffnen",
       "preview": "PDF-Vorschau",
       "previewTitle": "PDF-Vorschau",
       "previewHint": "Native PDF-Ansicht. Manche mobilen Browser unterstützen nur den Download.",
-      "noPayload": "Keine PDF-Daten zurückgegeben"
+      "noPayload": "Keine PDF-Daten zurückgegeben",
+      "note": "marked → HTML → Playwright Chromium-Druck. Wenn Chromium fehlt, wechselt auto auf einfaches strukturiertes PDF — prüfe renderEngine; einfach ist kein druckgerechtes Layout."
     },
     "tokenCount": {
       "count": "Tokens zählen",
@@ -895,8 +895,8 @@
       "dims": " · {w}×{h}",
       "original": "Original",
       "result": "Ergebnis",
-      "note": "Engine: sharp (libvips) · serverseitig · gleicher Pfad wie API (imageBase64)",
-      "privacy": "Bilder werden zur Verarbeitung an den Host gesendet und nicht gespeichert."
+      "privacy": "Bilder werden zur Verarbeitung an den Host gesendet und nicht gespeichert.",
+      "note": "Engine: sharp (libvips) · serverseitig · gleicher Pfad wie API (imageBase64)"
     },
     "pptxText": {
       "file": "PPTX-Datei",
@@ -1003,7 +1003,6 @@
       "deduped": "{n} doppelte Muster zusammengeführt",
       "notFound": "Nicht im Korpus: {stacks}",
       "globalScope": "{stacks} sind OS-/Editor-Einträge — viele Entwickler halten diese in einer persönlichen ~/.gitignore_global statt in jedem Repo.",
-      "untrackedNote": "Eine .gitignore wirkt nur auf nicht verfolgte Dateien. Für eine Datei, die git bereits verfolgt, führe git rm -r --cached <path> aus.",
       "fileLabel": ".gitignore"
     },
     "editorconfig": {
@@ -1848,7 +1847,6 @@
       "holidaysHint": "Leer lassen, um die reine Wochenendregel anzuwenden – es wird kein Länderkalender berücksichtigt.",
       "makeupWorkdays": "Nachholarbeitstage",
       "makeupHint": "Arbeitsdaten, die auf ein Wochenende oder einen Feiertag fallen – Chinas 调休/补班-Samstage gehören hierher.",
-      "datesPlaceholder": "YYYY-MM-DD (eine pro Zeile)",
       "datesIgnored": "{n, plural, one {# Eintrag war kein YYYY-MM-DD-Datum und wird nicht verwendet} other {# Einträge waren keine YYYY-MM-DD-Daten und werden nicht verwendet}}",
       "pickStart": "Wählen Sie ein Startdatum aus, um zu beginnen.",
       "emptyHintShift": "Wählen Sie ein Startdatum und eine Anzahl von Arbeitstagen aus.",
@@ -2045,12 +2043,10 @@
       "at": "Zeitpunkt (optional ISO / Unix)"
     },
     "dns": {
-      "name": "Name / Host",
       "type": "Record-Typ",
       "note": "Auflösung über den Forge-Host-DNS — kann vom lokalen Stub abweichen."
     },
     "tls": {
-      "host": "Host",
       "expired": "Zertifikat abgelaufen",
       "validDays": "Noch {n} Tage",
       "note": "Verbindung vom Forge-Host. Trust-Prüfung deaktiviert nur zur Inspektion."
@@ -2091,80 +2087,12 @@
       "note": "CIEDE2000 via culori. Schwellen nur für UI-Review."
     },
     "dbml": {
-      "source": "DBML",
       "dialect": "SQL-Dialekt",
       "parseNote": "Nur Parse/Inventar. ERD-Canvas separat.",
       "convertNote": "@dbml/core — gleicher Pfad wie die API."
     },
     "dnsLeak": {
-      "probeHost": "Compare host (advanced)",
-      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
-      "run": "Start DNS leak check",
-      "retest": "Run again",
-      "showAdvanced": "Advanced options",
-      "hideAdvanced": "Hide advanced",
-      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
-      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
-      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
-      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
-      "edgeIp": "Your edge IP",
-      "authorityHits": "Recursive IPs",
-      "forgePaths": "Forge resolver hits",
-      "dohPaths": "Browser DoH hits",
-      "webrtcCount": "WebRTC IPs",
-      "forgeResolvers": "Forge multi-resolver (server-side)",
-      "forgeNote": "These queries leave from the Forge host — not your laptop.",
-      "browserDoh": "Browser DoH",
-      "webrtc": "WebRTC ICE",
-      "egressMarkers": "Forge egress markers",
-      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
-      "honestyPrefix": "Honesty:",
-      "verdictConsistent": "Paths look consistent on this check",
-      "verdictSplit": "Split answers across DNS paths",
-      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
-      "verdictIncomplete": "Incomplete — browser probes missing",
-      "verdictAuthority": "System DNS recursives captured",
-      "infraOn": "Authority online",
-      "infraOff": "Authority offline — multi-path only",
-      "infraChecking": "Checking…",
-      "authorityResolvers": "System DNS recursive resolvers",
-      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
-      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
-      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
-      "authorityDetail": "Authority session detail",
-      "phaseSession": "Creating session…",
-      "phaseSystemDns": "Triggering system DNS…",
-      "phasePoll": "Listening for recursive hits ({n}/{total})…",
-      "phaseBrowser": "Browser DoH + WebRTC…",
-      "phaseServer": "Forge multi-resolver…",
-      "stepSession": "Session",
-      "stepSystemDns": "System DNS",
-      "stepPoll": "Listen",
-      "stepBrowser": "Browser",
-      "stepServer": "Server",
-      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
-      "liveHits": "Live recursive hits",
-      "sectionSystemDns": "System DNS (what you came for)",
-      "sectionComplementary": "Complementary paths",
-      "sectionTech": "Technical session detail",
-      "copyIps": "Copy IPs",
-      "copied": "Copied",
-      "queryCount": "{n} queries",
-      "colPath": "Path",
-      "colAnswers": "Answers",
-      "colMs": "ms",
-      "ipPublic": "public",
-      "ipPrivate": "private",
-      "sig": {
-        "captured": "System DNS captured",
-        "onlineNoHits": "Authority online · no hits yet",
-        "offline": "Authority offline",
-        "forgeSplit": "Forge resolvers disagree",
-        "dohSplit": "Browser DoH disagree",
-        "webrtcMismatch": "WebRTC ≠ edge IP",
-        "webrtcLocal": "Local WebRTC candidates",
-        "noBrowser": "No browser probes"
-      }
+      "colMs": "ms"
     },
     "honesty": {
       "algorithmOnly": "Nur Algorithmus · kein Registerabgleich",

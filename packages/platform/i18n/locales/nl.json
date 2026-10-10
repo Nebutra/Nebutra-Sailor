@@ -97,41 +97,16 @@
     "progress": {
       "back": "Terug",
       "stepCounter": "Stap {current} van {total}",
-      "ariaLabel": "Onboarding progress",
       "skip": "Nu overslaan"
+    },
+    "invite": {
+      "emailPlaceholder": "colleague@company.com"
     },
     "plan": {
       "title": "Kies een plan",
       "description": "Begin gratis of ontgrendel meer capaciteit. Je kunt altijd van plan wisselen.",
       "choose": "Kies een plan",
       "skip": "Nu overslaan"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces.",
-      "slugTaken": "That workspace address is already taken. Try another."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -224,12 +199,7 @@
       "subtitle": "Plan, quota en verlenging.",
       "currentPlan": "Huidig plan",
       "upgradeCta": "Plannen vergelijken",
-      "manageCta": "Abonnement beheren",
-      "usageTitle": "Usage this period",
-      "usageApiCalls": "API calls",
-      "usageAiTokens": "AI tokens",
-      "usageUnavailable": "Usage is unavailable right now.",
-      "usageRetry": "Retry"
+      "manageCta": "Abonnement beheren"
     },
     "billing": {
       "title": "Facturatie",
@@ -410,15 +380,7 @@
       "homeLink": "Home",
       "signInFailed": "Inloggen mislukt",
       "genericError": "Er is een fout opgetreden. Probeer het opnieuw.",
-      "captchaError": "Botverificatie mislukt. Vernieuw de pagina en probeer het opnieuw.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "By continuing, you agree to {brandName}'s <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "captchaError": "Botverificatie mislukt. Vernieuw de pagina en probeer het opnieuw."
     },
     "signUp": {
       "title": "Maak je Nebutra-account aan",
@@ -432,12 +394,7 @@
       "alreadyHaveAccount": "Heb je al een account?",
       "signInLink": "Inloggen",
       "signUpFailed": "Aanmelden mislukt",
-      "inviteLabel": "Invite code",
-      "invitePlaceholder": "neb_...",
-      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
-      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled."
     },
     "passkeys": {
       "title": "Passkeys",
@@ -593,11 +550,9 @@
           "description": "Visa, Mastercard en meer, in rekening gebracht in {currency}"
         },
         "alipay": {
-          "title": "Alipay",
           "description": "In rekening gebracht in {currency}"
         },
         "wechat": {
-          "title": "WeChat Pay",
           "description": "In rekening gebracht in {currency}"
         }
       },
@@ -663,10 +618,8 @@
       "unavailable": "Bestellingen konden niet worden geladen. Probeer het straks opnieuw.",
       "columns": {
         "date": "Datum",
-        "item": "Item",
         "method": "Betaald met",
-        "amount": "Bedrag",
-        "status": "Status"
+        "amount": "Bedrag"
       },
       "status": {
         "PENDING": "Wacht op betaling",

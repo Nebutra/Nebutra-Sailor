@@ -97,41 +97,16 @@
     "progress": {
       "back": "Zurück",
       "stepCounter": "Schritt {current} von {total}",
-      "ariaLabel": "Onboarding progress",
       "skip": "Erstmal überspringen"
+    },
+    "invite": {
+      "emailPlaceholder": "colleague@company.com"
     },
     "plan": {
       "title": "Einen Plan wählen",
       "description": "Kostenlos starten oder mehr Kapazität freischalten. Sie können jederzeit den Plan ändern.",
       "choose": "Plan wählen",
       "skip": "Für später überspringen"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces.",
-      "slugTaken": "That workspace address is already taken. Try another."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -411,14 +386,7 @@
       "signInFailed": "Anmeldung fehlgeschlagen",
       "genericError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
       "captchaError": "Bot-Verifizierung fehlgeschlagen. Aktualisieren Sie die Seite und versuchen Sie es erneut.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "Mit dem Fortfahren stimmst du den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> von {brandName} zu.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "legalNotice": "Mit dem Fortfahren stimmst du den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> von {brandName} zu."
     },
     "signUp": {
       "title": "Nebutra-Konto erstellen",
@@ -432,12 +400,7 @@
       "alreadyHaveAccount": "Bereits ein Konto?",
       "signInLink": "Anmelden",
       "signUpFailed": "Registrierung fehlgeschlagen",
-      "inviteLabel": "Invite code",
-      "invitePlaceholder": "neb_...",
-      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
-      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled."
     },
     "passkeys": {
       "title": "Passkeys",
@@ -593,11 +556,9 @@
           "description": "Visa, Mastercard und mehr, abgerechnet in {currency}"
         },
         "alipay": {
-          "title": "Alipay",
           "description": "Abgerechnet in {currency}"
         },
         "wechat": {
-          "title": "WeChat Pay",
           "description": "Abgerechnet in {currency}"
         }
       },
@@ -665,8 +626,7 @@
         "date": "Datum",
         "item": "Artikel",
         "method": "Bezahlt mit",
-        "amount": "Betrag",
-        "status": "Status"
+        "amount": "Betrag"
       },
       "status": {
         "PENDING": "Zahlung ausstehend",

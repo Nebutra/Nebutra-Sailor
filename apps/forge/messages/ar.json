@@ -92,10 +92,6 @@
       "label": "LLM",
       "hint": "الرموز · التكلفة · المخطط"
     },
-    "net": {
-      "label": "Network",
-      "hint": "DNS · TLS · IP · leak check"
-    },
     "security": {
       "label": "الأمان",
       "hint": "مولّد كلمات المرور"
@@ -182,29 +178,11 @@
       "copyText": "نسخ النص",
       "quality": "الجودة",
       "original": "الأصلي",
-      "result": "النتيجة",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "result": "النتيجة"
     },
     "base64": {
       "encodeDir": "نص → Base64",
       "decodeDir": "Base64 → نص",
-      "localNote": "Local Web API (TextEncoder / atob)",
       "serverNote": "خادم Buffer · نفس مسار API"
     },
     "password": {
@@ -249,11 +227,7 @@
     },
     "creditCardLuhn": {
       "number": "رقم البطاقة",
-      "note": "فاحص Luhn · غير متصل، لا يُحفظ",
-      "digits": "digits",
-      "specimenLabel": "Specimen",
-      "structureOnly": "Luhn structure only",
-      "unknownBrand": "Card"
+      "note": "فاحص Luhn · غير متصل، لا يُحفظ"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -429,14 +403,7 @@
     "contrast": {
       "fg": "اللون الأمامي (#hex)",
       "bg": "اللون الخلفي (#hex)",
-      "note": "تباين الألوان · WCAG 2.x",
-      "sampleHeadline": "Sample text",
-      "pass": "pass",
-      "fail": "fail",
-      "aaNormal": "AA normal",
-      "aaLarge": "AA large",
-      "aaaNormal": "AAA normal",
-      "aaaLarge": "AAA large"
+      "note": "تباين الألوان · WCAG 2.x"
     },
     "exif": {
       "file": "ملف الصورة",
@@ -464,11 +431,7 @@
       "secret": "السر",
       "exp": "تاريخ الانتهاء (بالثواني)",
       "payload": "حمولة JSON",
-      "note": "إنشاء JWT · HS256 (للتطوير والاختبار فقط)",
-      "header": "Header",
-      "payloadLabel": "Payload",
-      "signature": "Signature",
-      "emptySignature": "(empty signature segment)"
+      "note": "إنشاء JWT · HS256 (للتطوير والاختبار فقط)"
     },
     "rand": {
       "min": "الحد الأدنى",
@@ -517,11 +480,7 @@
       "in": "الإدخال",
       "out": "الإخراج",
       "saved": "تم الحفظ",
-      "note": "ضغط PDF · qpdf / Ghostscript على المضيف · pdf-lib كخيار بديل",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "note": "ضغط PDF · qpdf / Ghostscript على المضيف · pdf-lib كخيار بديل"
     },
     "jsonFormat": {
       "indent": "المسافة البادئة",
@@ -538,10 +497,7 @@
       "invalid": "JSON غير صالح",
       "line": "سطر",
       "column": "عمود",
-      "note": "المحرك: JSON.parse/stringify · محلي فوري · نفس مسار API",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "note": "المحرك: JSON.parse/stringify · محلي فوري · نفس مسار API"
     },
     "qr": {
       "size": "الحجم",
@@ -845,12 +801,7 @@
       "generate": "إنشاء PDF",
       "generating": "جارٍ الإنشاء…",
       "download": "تحميل PDF",
-      "note": "marked → HTML → طباعة Playwright Chromium. إذا كان Chromium غير موجود، يتم التراجع تلقائيًا إلى PDF مُنظَّم بسيط — تحقق من renderEngine؛ البسيط ليس تخطيطًا بجودة الطباعة.",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "note": "marked → HTML → طباعة Playwright Chromium. إذا كان Chromium غير موجود، يتم التراجع تلقائيًا إلى PDF مُنظَّم بسيط — تحقق من renderEngine؛ البسيط ليس تخطيطًا بجودة الطباعة."
     },
     "tokenCount": {
       "count": "عد الرموز",
@@ -895,8 +846,7 @@
       "dims": " · {w}×{h}",
       "original": "الأصلي",
       "result": "النتيجة",
-      "note": "المحرك: sharp (libvips) · على الخادم · نفس مسار API (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "note": "المحرك: sharp (libvips) · على الخادم · نفس مسار API (imageBase64)"
     },
     "pptxText": {
       "file": "ملف PPTX",
@@ -1003,7 +953,6 @@
       "deduped": "تم دمج {n} أنماط مكررة",
       "notFound": "غير موجود في المجموعة المرجعية: {stacks}",
       "globalScope": "{stacks} هي إدخالات لنظام التشغيل/المحرر — يفضل العديد من المطورين الاحتفاظ بها في ملف ~/.gitignore_global الشخصي بدلاً من كل مستودع.",
-      "untrackedNote": "ملف .gitignore يؤثر فقط على الملفات غير المتعقبة. بالنسبة لملف يتعقبه git بالفعل، نفذ git rm -r --cached <path>.",
       "fileLabel": ".gitignore"
     },
     "editorconfig": {
@@ -1305,11 +1254,7 @@
         "noIsbn10": "لا يوجد مقابل لـ ISBN-10 للبادئة 979",
         "nonBookland": "يجب أن تبدأ أرقام ISBN المكونة من 13 رقمًا بـ 978 أو 979",
         "ismn": "النطاق 979-0 مخصص لـ ISMN (الموسيقى المطبوعة) وليس ISBN"
-      },
-      "specimenTitle": "ISBN · structure specimen",
-      "segPrefix": "Prefix",
-      "segBody": "Body",
-      "segCheck": "Check"
+      }
     },
     "languageDetect": {
       "inputLabel": "مقتطف كود",
@@ -1376,11 +1321,7 @@
         "pass": "نجاح",
         "fail": "فشل",
         "skipped": "لم يتم الوصول"
-      },
-      "specimenTitle": "IBAN · structure specimen",
-      "segCountry": "Country",
-      "segCheck": "Check",
-      "segBban": "BBAN"
+      }
     },
     "secretScan": {
       "pasteLabel": "الصق الكود أو الإعدادات أو ملف .env",
@@ -1390,7 +1331,6 @@
       "scan": "فحص",
       "scanning": "جارٍ الفحص…",
       "idleTitle": "الصق شيئًا ثم اضغط على فحص.",
-      "idleHint": "Checks for vendor API keys, tokens, private keys and high-entropy secrets. Matched values are masked; only line numbers are shown in full.",
       "clean": "لم يتم العثور على أسرار",
       "cleanCaveat": "لا يتطابق أي شيء هنا مع تنسيق بيانات اعتماد معروف أو يبدو كسر عشوائي. مطابقة الأنماط ليست دليلاً — راجع أي شيء لست متأكداً منه.",
       "found": "{n, plural, one {تم العثور على # سر محتمل} other {تم العثور على # أسرار محتملة}}",
@@ -1458,10 +1398,7 @@
       "mathSum": "المجموع {sum} → رقم التحقق {check}",
       "truncatedRows": "يُعرض أول {shown} من أصل {total} صف. النسخ والتحميل يشمل الكل.",
       "privacy": "يتم إرسال الرموز إلى واجهة Forge API للتحقق منها ولا تُخزَّن.",
-      "scopeNote": "يشير رقم تحقق صحيح إلى أن الرقم مُشكَّل بشكل سليم. ولا يعني ذلك أن GS1 قد خصصته لمنتج أو شركة أو موقع حقيقي — فقط البحث في سجل GEPIR يجيب على ذلك.",
-      "specimenTitle": "GTIN · structure specimen",
-      "segPayload": "Payload",
-      "segCheck": "Check"
+      "scopeNote": "يشير رقم تحقق صحيح إلى أن الرقم مُشكَّل بشكل سليم. ولا يعني ذلك أن GS1 قد خصصته لمنتج أو شركة أو موقع حقيقي — فقط البحث في سجل GEPIR يجيب على ذلك."
     },
     "vin": {
       "inputLabel": "رقم الهيكل (VIN) (17 حرفًا)",
@@ -1508,8 +1445,7 @@
           "product": "المنتج"
         },
         "formula": "المجموع = {sum}؛  {sum} mod 11 = {remainder}  →  رقم التحقق {expected}"
-      },
-      "specimenTitle": "VIN · structure specimen"
+      }
     },
     "envDiff": {
       "envA": "البيئة أ",
@@ -1670,8 +1606,7 @@
         "allCodes": "جميع الرموز",
         "disclaimer": "هذه الرموز صالحة من الناحية الهيكلية لكنها لا تنتمي إلى أي جهة مسجلة. لا تستخدمها لتمثيل كيان حقيقي.",
         "note": "التوليد مبذّر: نفس الخيارات والبذرة تعيد دائماً نفس الدفعة، لذا يبقى العنصر قابلاً للتكرار. كل رمز مُعلّم بـ isTestData في ملف JSON وكذلك هنا."
-      },
-      "specimenTitle": "Unified social credit code · structure specimen"
+      }
     },
     "yamlDiff": {
       "original": "الأصلي",
@@ -1702,7 +1637,6 @@
         "mergeKeys": "يتم توسيع مفاتيح الدمج (<<) قبل المقارنة، وتغلب مفاتيح العقدة الخاصة بها على المفاتيح المدمجة.",
         "types": "النوع جزء من القيمة: يُبلغ عن 8080 و\"8080\" و!!str 8080 كتغييرات في النوع، وليس كتغيير عام.",
         "sequences": "تتزاوج تسلسلات الخرائط بالاسم أو المعرف أو المفتاح عندما يكون هذا الحقل فريدًا على كلا الجانبين، لذا لا يتسبب إدخال عنصر واحد في تسلسل متتالي؛ لا يزال يُبلغ عن إعادة الترتيب.",
-        "blockScalars": "Block scalars compare by resolved string, so the trailing newline that |- strips is a real change; a restyle with the same value is structural.",
         "comments": "التعليقات ليست جزءًا من نموذج بيانات YAML ولا تتم مقارنتها.",
         "multiDoc": "--- يقارن المستندات زوجًا زوجًا؛ في حالة عدم تطابق العدد يُبلغ عن ذلك بدلاً من مقارنة الأول فقط.",
         "duplicateKeys": "في حالة وجود مفتاح تكرار في الإدخال، يُستخدم آخر ظهور ويُبلغ عنه كتحذير."
@@ -1903,17 +1837,6 @@
       "retryCount": "{count, plural, =0 {بدون إعادة محاولة} one {# إعادة محاولة} other {# إعادة محاولة}}",
       "capFlattened": "تم الوصول إلى الحد الأقصى في المحاولة {attempt} — كل تأخير لاحق يبقى عند {delay}.",
       "timeoutExceeded": "أسوأ حالة تنتظر {wait}، مما يتجاوز ميزانيتك {timeout}.",
-      "timeoutOk": "Worst case waits {wait}, inside your {timeout} budget.",
-      "tableLabel": "Retry schedule",
-      "colAttempt": "Attempt",
-      "colDelay": "Delay",
-      "colCumulative": "Cumulative wait",
-      "average": "avg {value}",
-      "formula": {
-        "none": "Delays are exact — no jitter applied.",
-        "equal": "Equal jitter: half the delay is fixed, the other half is drawn uniformly, so each wait lands between half the delay and the full delay.",
-        "full": "Full jitter: the wait is drawn uniformly between zero and the computed delay."
-      },
       "errInitialDelay": "يجب أن يكون التأخير الأولي عددًا صحيحًا من الميلي ثانية، على الأقل 1.",
       "errFactor": "يجب أن يكون العامل أكبر من 1 وعلى الأكثر 100. العامل 1 هو الاستراتيجية الثابتة.",
       "errIncrement": "يجب أن يكون مقدار الزيادة عدداً صحيحاً بالميلي ثانية، 0 أو أكثر.",
@@ -1931,32 +1854,12 @@
       "delimiterLabel": "الفاصل",
       "delimiter": {
         "comma": "فاصلة  ,",
-        "semicolon": "فاصلة منقوطة  ;",
-        "tab": "Tab",
-        "pipe": "Pipe  |"
+        "semicolon": "فاصلة منقوطة  ;"
       },
-      "raggedPolicyLabel": "Rows that don't match the header",
-      "ragged": {
-        "pad": "Align to the header",
-        "truncate": "Cut long rows, leave short rows short",
-        "reject": "Stop and report"
-      },
-      "columnsTitle": "Columns — {kept} of {total} kept",
-      "columnsHint": "Untick to drop a column, edit the box to rename it, use the arrows to reorder. Everything resolves against the original header.",
-      "reset": "Reset columns",
       "keep": "إبقاء العمود {name}",
       "renameLabel": "{name}",
       "moveUp": "نقل {name} للأعلى",
       "moveDown": "نقل {name} للأسفل",
-      "noneKept": "Every column is unticked — keep at least one.",
-      "emptyHint": "Paste a CSV above to manage its columns.",
-      "note": "Runs on the text you paste. Drop, then rename, then reorder — in that fixed order, always against the original header.",
-      "columnCount": "{n} columns",
-      "rowCount": "{n} rows",
-      "duplicateHeaders": "Duplicate header used by name: {names}",
-      "raggedCount": "{n}{more} rows don't match the header width",
-      "previewLabel": "Output CSV",
-      "previewTruncated": "Showing the first {shown} of {total} lines. Copy or download for the whole file.",
       "raggedListLabel": "الصفوف التي لا تتطابق مع عرض الرأس",
       "raggedRow": "السطر {line}: {actual} حقول، الرأس يحتوي على {expected}",
       "unusedRenames": "تم تجاهل إعادة التسمية — هذه الأعمدة غير موجودة في المخرجات: {names}"
@@ -2028,29 +1931,12 @@
       "summaryStripped": "تمت إزالة {fields} من حقول البيانات الوصفية ({families})، {kb} كيلوبايت. الصورة لم تتغير.",
       "summaryClean": "لم يتم العثور على بيانات وصفية قابلة للإزالة. تم إرجاع الملف دون تغيير."
     },
-    "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
-      "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
-      }
-    },
-    "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
-    },
     "dns": {
       "name": "Nombre / host",
       "type": "Tipo de registro",
       "note": "Resuelto por el DNS del host Forge."
     },
     "tls": {
-      "host": "Host",
       "expired": "Certificado caducado",
       "validDays": "{n} días restantes",
       "note": "Conexión desde el host Forge. Solo inspección."
@@ -2059,159 +1945,21 @@
       "refresh": "Actualizar",
       "note": "IP vista por Forge. Sin geo sin fuente licenciada."
     },
-    "mermaid": {
-      "source": "Mermaid source",
-      "idle": "Valid diagrams render here",
-      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
-      "sample": "Sample",
-      "theme": "Theme",
-      "theme_default": "Default",
-      "theme_dark": "Dark",
-      "theme_forest": "Forest",
-      "theme_neutral": "Neutral",
-      "theme_base": "Base",
-      "sample_flowchart": "Flowchart",
-      "sample_sequence": "Sequence",
-      "sample_class": "Class",
-      "sample_er": "ER diagram",
-      "sample_state": "State",
-      "sample_gantt": "Gantt",
-      "sample_pie": "Pie",
-      "sample_mindmap": "Mindmap",
-      "zoomIn": "Zoom in",
-      "zoomOut": "Zoom out",
-      "zoomReset": "Reset view",
-      "copySvg": "Copy SVG",
-      "downloadSvg": "Download SVG",
-      "downloadPng": "Download PNG",
-      "previewAria": "Mermaid diagram preview",
-      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
-    },
     "colorDeltaE": {
       "note": "CIEDE2000 con culori. Umbrales orientativos de UI."
     },
     "dbml": {
-      "source": "DBML",
       "dialect": "Dialecto SQL",
       "parseNote": "Solo parseo e inventario. ERD visual aparte.",
       "convertNote": "@dbml/core — misma ruta que la API."
     },
     "dnsLeak": {
-      "probeHost": "Compare host (advanced)",
-      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
-      "run": "Start DNS leak check",
-      "retest": "Run again",
-      "showAdvanced": "Advanced options",
-      "hideAdvanced": "Hide advanced",
-      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
-      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
-      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
-      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
-      "edgeIp": "Your edge IP",
-      "authorityHits": "Recursive IPs",
-      "forgePaths": "Forge resolver hits",
-      "dohPaths": "Browser DoH hits",
-      "webrtcCount": "WebRTC IPs",
-      "forgeResolvers": "Forge multi-resolver (server-side)",
-      "forgeNote": "These queries leave from the Forge host — not your laptop.",
-      "browserDoh": "Browser DoH",
-      "webrtc": "WebRTC ICE",
-      "egressMarkers": "Forge egress markers",
-      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
-      "honestyPrefix": "Honesty:",
-      "verdictConsistent": "Paths look consistent on this check",
-      "verdictSplit": "Split answers across DNS paths",
-      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
-      "verdictIncomplete": "Incomplete — browser probes missing",
-      "verdictAuthority": "System DNS recursives captured",
-      "infraOn": "Authority online",
-      "infraOff": "Authority offline — multi-path only",
-      "infraChecking": "Checking…",
-      "authorityResolvers": "System DNS recursive resolvers",
-      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
-      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
-      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
-      "authorityDetail": "Authority session detail",
-      "phaseSession": "Creating session…",
-      "phaseSystemDns": "Triggering system DNS…",
-      "phasePoll": "Listening for recursive hits ({n}/{total})…",
-      "phaseBrowser": "Browser DoH + WebRTC…",
-      "phaseServer": "Forge multi-resolver…",
-      "stepSession": "Session",
-      "stepSystemDns": "System DNS",
-      "stepPoll": "Listen",
-      "stepBrowser": "Browser",
-      "stepServer": "Server",
-      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
-      "liveHits": "Live recursive hits",
-      "sectionSystemDns": "System DNS (what you came for)",
-      "sectionComplementary": "Complementary paths",
-      "sectionTech": "Technical session detail",
-      "copyIps": "Copy IPs",
-      "copied": "Copied",
-      "queryCount": "{n} queries",
-      "colPath": "Path",
-      "colAnswers": "Answers",
-      "colMs": "ms",
-      "ipPublic": "public",
-      "ipPrivate": "private",
-      "sig": {
-        "captured": "System DNS captured",
-        "onlineNoHits": "Authority online · no hits yet",
-        "offline": "Authority offline",
-        "forgeSplit": "Forge resolvers disagree",
-        "dohSplit": "Browser DoH disagree",
-        "webrtcMismatch": "WebRTC ≠ edge IP",
-        "webrtcLocal": "Local WebRTC candidates",
-        "noBrowser": "No browser probes"
-      }
-    },
-    "honesty": {
-      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
-      "signatureNotVerified": "{engine} · decode only · signature not verified",
-      "localOnly": "Processed for this request · not stored as a card or credential"
-    },
-    "idCard": {
-      "number": "Resident ID number",
-      "note": "GB 11643 check digit · no household registry lookup · same path as API",
-      "specimenTitle": "Resident ID · structure specimen",
-      "segRegion": "Region",
-      "segBirth": "Birth",
-      "segSeq": "Seq",
-      "segCheck": "Check",
-      "metaBirth": "Birth",
-      "metaGender": "Gender",
-      "metaRegion": "Region code",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "reasonFormat": "Format should be 18 characters (last may be X)",
-      "reasonBirth": "Birth date segment is invalid",
-      "reasonCheck": "Check digit is wrong",
-      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
-    },
-    "filePaper": {
-      "lines": "{n} lines",
-      "chars": "{n} chars",
-      "empty": "(empty file)",
-      "readyToShip": "Ready to drop into the repo"
-    },
-    "textTransform": {
-      "mode": "Mode",
-      "input": "Input",
-      "output": "Output",
-      "emptyResult": "Result appears here",
-      "runLocal": "Run locally",
-      "runServer": "Run on server",
-      "statusLocalLive": "Local · live",
-      "statusLocal": "Local",
-      "statusServer": "Server · same path as API",
-      "noteDefault": "Same path as API"
+      "colMs": "ms"
     }
   },
   "roots": {
     "hubLabel": "حسب النية",
     "tools": "أدوات",
-    "dualSurface": "Human page + Agent API · same engine",
     "otherRoots": "جذور الطلب الأخرى"
   }
 }

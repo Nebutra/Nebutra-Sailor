@@ -97,41 +97,19 @@
     "progress": {
       "back": "돌아가기",
       "stepCounter": "{current}/{total} 단계",
-      "ariaLabel": "Onboarding progress",
       "skip": "지금은 건너뛰기"
+    },
+    "workspace": {
+      "slugTaken": "이미 사용 중인 워크스페이스 주소입니다. 다른 주소를 사용해 주세요."
+    },
+    "invite": {
+      "emailPlaceholder": "colleague@company.com"
     },
     "plan": {
       "title": "플랜 선택",
       "description": "무료로 시작하거나 더 많은 용량을 활용하세요. 언제든지 플랜을 변경할 수 있습니다.",
       "choose": "플랜 선택",
       "skip": "지금은 건너뛰기"
-    },
-    "workspace": {
-      "title": "Name the workspace",
-      "description": "This is how it shows up on invites and invoices.",
-      "nameLabel": "Workspace name",
-      "namePlaceholder": "e.g. Acme Corp",
-      "nameRequired": "Enter a workspace name.",
-      "urlLabel": "Workspace URL",
-      "slugPlaceholder": "my-workspace",
-      "slugError": "3–48 characters, lowercase letters, numbers, and hyphens only.",
-      "submit": "Create workspace",
-      "submitting": "Creating…",
-      "error": "Could not create the workspace.",
-      "providerUnsupported": "This sign-in provider does not support workspaces.",
-      "slugTaken": "이미 사용 중인 워크스페이스 주소입니다. 다른 주소를 사용해 주세요."
-    },
-    "invite": {
-      "title": "Invite the team",
-      "description": "You can do this later. Empty fields are skipped.",
-      "emailsLabel": "Email addresses",
-      "emailPlaceholder": "colleague@company.com",
-      "addAnother": "Add another",
-      "removeEmail": "Remove email",
-      "send": "Send invitations",
-      "sending": "Sending…",
-      "skip": "Skip for now",
-      "error": "Could not send invitations."
     }
   },
   "userMenu": {
@@ -411,14 +389,7 @@
       "signInFailed": "로그인 실패",
       "genericError": "오류가 발생했습니다. 다시 시도하세요.",
       "captchaError": "봇 확인이 실패했습니다. 페이지를 새로고침하고 다시 시도하세요.",
-      "challengeTitle": "Verify you are human",
-      "challengeSubtitle": "Complete the check to continue signing in. This step keeps automated abuse off the form.",
-      "challengeSubmitting": "Verification complete — signing you in…",
-      "legalNotice": "계속 진행하면 {brandName}의 <terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다.",
-      "oauthInvalidCode": "Social sign-in failed (authorization code rejected). Try again. If this keeps happening, the OAuth client secret or redirect URI is likely misconfigured.",
-      "oauthStateMismatch": "This sign-in attempt expired or was interrupted. Close extra tabs, then start Google or GitHub again.",
-      "oauthAccessDenied": "Sign-in was cancelled. Choose a provider again when you are ready.",
-      "oauthUnavailable": "This sign-in method is temporarily unavailable. Use email and password, or try another provider."
+      "legalNotice": "계속 진행하면 {brandName}의 <terms>서비스 약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하는 것으로 간주됩니다."
     },
     "signUp": {
       "title": "Nebutra 계정 만들기",
@@ -432,12 +403,7 @@
       "alreadyHaveAccount": "이미 계정이 있나요?",
       "signInLink": "로그인",
       "signUpFailed": "가입에 실패했습니다",
-      "inviteLabel": "Invite code",
-      "invitePlaceholder": "neb_...",
-      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled.",
-      "inviteRequired": "A valid invite code is required to sign up.",
-      "inviteInvalid": "Invite code is invalid, expired, or not available.",
-      "inviteRedemptionFailed": "Invite redemption failed. Contact support before retrying."
+      "inviteHint": "Nebutra is invite-only while the cold-start gate is enabled."
     },
     "passkeys": {
       "title": "패스키",

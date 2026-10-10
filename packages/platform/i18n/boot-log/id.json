@@ -2,31 +2,26 @@
   "panelLabel": "Log boot",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
       "title": "Nama yang Dihilangkan dari Patent",
       "body": "Pada 23 Desember 1947, Bardeen dan Brattain mendemonstrasikan transistor kontak titik germanium di Bell Labs. Shockley tidak berada di ruangan itu. Pengacara menemukan desainnya sendiri terlalu mirip dengan patent 1925 karya Julius Lilienfeld dan menghapus namanya dari patent ini.",
       "coda": "Pada 1956 ketiganya berbagi Nobel Prize in Physics."
     },
     "dartmouth-two-month-study-1956": {
-      "tag": "Proposal",
       "title": "Studi Dua Bulan",
       "body": "Proposal 1955 oleh McCarthy, Minsky, Rochester dan Shannon meminta studi dua bulan dengan sepuluh orang, berdasarkan premis bahwa kecerdasan dapat dideskripsikan cukup presisi agar mesin dapat mensimulasikannya. Workshop 1956 berlangsung enam hingga delapan minggu; hanya tiga peserta yang hadir sepanjang waktu.",
       "coda": "Nama yang mereka pilih untuk bidang ini, artificial intelligence, adalah yang bertahan."
     },
     "traitorous-eight-lie-detector-1957": {
-      "tag": "Split",
       "title": "Memo Detektor Kebohongan",
       "body": "Pada Mei 1957, delapan insinyur di Shockley Semiconductor menuntut William Shockley diganti sebagai manajer. Ia telah merekam panggilan telepon, menghalangi staf berbagi hasil, dan mewajibkan tes detektor kebohongan. Pada 18 September 1957, kedelapan mendirikan Fairchild Semiconductor.",
       "coda": "Wikipedia menghitung Intel dan AMD di antara puluhan perusahaan yang dapat ditelusuri kembali ke spinoff itu."
     },
     "kilby-noyce-six-months-1958-1959": {
-      "tag": "Parallel",
       "title": "Enam Bulan, Satu Medali",
       "body": "Kilby mendemonstrasikan sirkuit terpadu yang berfungsi di Texas Instruments pada September 1958, bagiannya disambungkan oleh kabel eksternal. Noyce mengajukan versi silikon monolitik di Fairchild pada Juli 1959, yang dapat diproduksi massal. Tidak ada yang menolak klaim pihak lain sebagai co-inventor.",
       "coda": "Kilby menerima Nobel Prize 2000 sendirian. Noyce telah meninggal pada 1990."
     },
     "perceptron-conscious-machine-1958": {
-      "tag": "Neural Nets",
       "title": "Mesin yang Akan Bangun",
       "body": "Pada 1958 New York Times melaporkan bahwa perceptron Frank Rosenblatt adalah embrio komputer yang diharapkan Navy dapat berjalan, berbicara, melihat, menulis, mereproduksi dirinya sendiri dan sadar akan keberadaannya. Pada 1969 buku Minsky dan Papert membuktikan perceptron satu lapis tidak dapat menghitung XOR.",
       "coda": "Pendanaan untuk penelitian neural network kering dan tidak kembali hingga 1980-an."
@@ -38,7 +33,6 @@
       "coda": "Lelucon itu berlangsung selama bertahun-tahun, lalu tidak ada lagi yang mengatakannya."
     },
     "macau-seventeen-thousand": {
-      "tag": "Tender",
       "title": "Tujuh belas ribu",
       "body": "Pada Oktober 1961 sebuah sindikat yang dibentuk oleh Stanley Ho, Henry Fok, Yip Hon dan Teddy Yip mengajukan penawaran untuk monopoli perjudian Macau. Mereka menawarkan 3.167.000 pataca, tujuh belas ribu lebih dari penawaran pesaing.",
       "coda": "Selisih itu membeli monopoli yang mereka pegang selama lebih dari empat puluh tahun."
@@ -50,7 +44,6 @@
       "coda": "Pada 1995 Moore mengatakan istilah itu telah menjadi berarti hampir apa saja di industri chip."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
       "title": "Sekretaris dan DOCTOR",
       "body": "Pada 1966 Joseph Weizenbaum merilis skrip DOCTOR dari ELIZA di MIT, sebuah program yang sebagian besar memantulkan kalimat pengguna sendiri kembali sebagai pertanyaan. Sekretarisnya sendiri dilaporkan memintanya meninggalkan ruangan agar ia bisa berbicara dengannya sendirian.",
       "coda": "Pola yang tidak ia harapkan itu kemudian dinamai efek ELIZA."
@@ -98,8 +91,6 @@
       "coda": "Pers menemukan overbar sulit dijelaskan dan menulis hyphen. Hyphen itu tetap."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
-      "title": "The Mother of All Demos",
       "body": "Engelbart diberi sembilan puluh menit. Terminalnya berjalan melalui jalur telepon ke mesin yang berjarak tiga puluh mil, dan ia mendemonstrasikan mouse, hyperlink, jendela, berbagi layar, dan dua orang mengedit satu dokumen sekaligus.",
       "coda": "Seribu orang menonton, lalu kembali ke punch card selama satu dekade lagi."
     },
@@ -111,7 +102,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Komentar",
-      "title": "Burn, Baby, Burn",
       "body": "Rutin pengapian utama modul lunar diberi label BURN_BABY_BURN dalam sumber. Nama itu bukan tentang dorongan; ia dipinjam dari frasa khas DJ radio soul pada masa itu.",
       "coda": "Baris itu masih ada tanpa diedit di repositori publik."
     },
@@ -140,44 +130,35 @@
       "coda": "Kerusakan itu bukan kesalahan kabel; itu karena terlalu banyak koin."
     },
     "wozniak-breakout-bonus": {
-      "tag": "Bonus",
       "title": "Pembagian",
       "body": "Pada tahun 1973, Atari meminta Steve Jobs untuk mengecilkan papan sirkuit Breakout, dengan bayaran $100 per chip yang dihilangkan. Jobs meminta Wozniak untuk membantu, dengan janji pembagian setengah. Wozniak mengurangi 50 chip. Jobs mengatakan totalnya menjadi $700, sehingga bagian Wozniak adalah $350. Sepuluh tahun kemudian, Wozniak mengetahui bonus aslinya adalah $5.000.",
       "coda": "Wozniak mengatakan ia akan memberikan uang itu kepada Jobs jika diminta."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
       "title": "Tidak Diharapkan Memahami",
       "body": "Fungsi slp.c pada Unix Edisi Keenam mengandung baris 'You are not expected to understand this,' yang melekat pada kode pemulihan tumpukan proses-swap yang dibangun di atas keanehan kompiler PDP-11. Dennis Ritchie kemudian mengatakan ia maksudkan seperti seorang guru yang mengatakan ini tidak akan keluar di ujian.",
       "coda": "Rutin tersebut ditulis ulang untuk Unix Edisi Ketujuh."
     },
     "vi-adm3a-keys": {
-      "tag": "Keybinds",
       "title": "Panah Terukir pada Tombol Huruf",
       "body": "Bill Joy menulis vi di Berkeley pada 1977 di terminal Lear Siegler ADM-3A yang tidak memiliki tombol panah; h, j, k dan l diukir dengan panah dan menjadi tombol pergerakan. Perintah satu huruf yang ringkas berasal dari mengetik di depan modem 300-baud yang terlalu lambat untuk mengikuti.",
       "coda": "Tombol-tombol yang kemudian dikreditkan pada filosofi desain bermula sebagai jalan keluar untuk terminal tanpa tombol panah."
     },
     "kildall-flying": {
-      "tag": "Testimony",
       "title": "Penerbangan yang Tidak Dikonfirmasi",
       "body": "Pada 1980 IBM datang untuk melisensikan CP/M. Gary Kildall sedang terbang membawa perangkat lunak ke klien; istrinya Dorothy menangani pembicaraan awal. Bill Gates kemudian memberi tahu wartawan bahwa Kildall telah \"berpenerbangan secara sembarangan.\" Negosiator utama IBM, Jack Sams, mengatakan ia sama sekali tidak pernah bertemu Kildall.",
       "coda": "Kedua catatan tentang pertemuan itu tidak pernah diselaraskan."
     },
     "trusting-trust": {
-      "tag": "Trust",
-      "title": "Reflections on Trusting Trust",
       "body": "Ceramah Turing Thompson menggambarkan compiler yang menanam backdoor di program login, dan memasang kembali seluruh trik setiap kali mengompilasi compiler. Bangun ulang dari sumber bersih dan backdoor tetap bertahan.",
       "coda": "Anda tidak dapat mempercayai kode yang tidak sepenuhnya Anda buat sendiri."
     },
     "arm-one-person-company-1985": {
-      "tag": "Origin",
       "title": "Perusahaan Chip Satu Orang",
       "body": "Acorn, yang telah membuat namanya pada komputer pendidikan, memulai penelitian RISC pada 1983. Kunjungan ke desainer chip saingan menunjukkan kepada mereka bahwa pembaruan untuk 6502 keluar dari apa yang efektif merupakan perusahaan satu orang, dan mereka menyimpulkan bahwa mereka tidak membutuhkan lebih dari itu.",
       "coda": "ARM1 tiba pada 26 April 1985 dan berfungsi pada penyalaan pertama."
     },
     "copyleft-all-rights-reversed": {
-      "tag": "Copyright",
-      "title": "All Rights Reversed",
       "body": "Seseorang mengirim surat kepada Richard Stallman bertanda \"Copyleft — all rights reversed,\" permainan kata pada pemberitahuan standar. Setelah Symbolics meningkatkan interpreter Lisp-nya dan menolak untuk membagikan perbaikan kembali, ia menggunakan hukum hak cipta itu sendiri untuk menulis lisensi yang menuntut kewajiban sebaliknya.",
       "coda": "General Public License menyusul pada Februari 1989."
     },
@@ -194,13 +175,11 @@
       "coda": "Pada 2022 sebuah scanner EUV produksi memproses sekitar dua ratus wafer per jam."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
       "title": "Sebuah Foundry pada Usia Enam Puluh Enam",
       "body": "Morris Chang, lahir 1931, naik menjadi wakil presiden kelompok operasi semikonduktor dunia di Texas Instruments, lalu menjabat sebagai presiden dan COO General Instrument, lalu memimpin ITRI Taiwan. Pada 1987, pada usia lima puluh enam, ia mendirikan TSMC, yang tidak merancang satu pun chip yang dibuatnya.",
       "coda": "Itu adalah foundry pertama di dunia yang hanya melakukan manufaktur."
     },
     "huawei-diet-pills": {
-      "tag": "Reseller",
       "title": "Bisnis Pertama Huawei Bukan Teknologi",
       "body": "Huawei terdaftar dengan modal 21.000 yuan pada 15 September 1987, menyebut dirinya perusahaan teknologi. Ia memulai dengan berdagang barang, termasuk pil diet, lalu menjual kembali sakelar HAX buatan Hong Kong untuk marginnya. Sakelar sendiri, BH01, baru dirakit tangan pada 1989.",
       "coda": "Empat tahun kemudian, perusahaan itu menggambar papan sirkuitnya sendiri untuk pertama kalinya."
@@ -231,7 +210,6 @@
     },
     "sosumi-so-sue-me": {
       "tag": "Penamaan",
-      "title": "So Sue Me",
       "body": "Pada 1991, departemen hukum Apple menolak nama suara peringatan \"Let It Beep\" karena terlalu musikal, berdasarkan penyelesaian yang melarang Apple Computer dari merek dagang terkait musik. Desainer suara Jim Reekes membalas \"so sue me,\" lalu mendaftarkannya sebagai \"sosumi.\"",
       "coda": "Suara itu disertakan dalam Mac OS selama hampir tiga dekade sebelum Big Sur menggantikannya pada 2020."
     },
@@ -242,31 +220,26 @@
       "coda": "Tidak ada yang membayar royalti untuk menggunakannya sejak itu."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "Server yang Tak Tercapai",
       "body": "Pada 10 Desember 1993, id Software memberikan episode pertama Doom sebagai shareware, bertaruh pada penjualan sisanya. Saat mengunggahnya ke server FTP University of Wisconsin, mereka menemukan begitu banyak orang sudah menunggu sehingga tim itu sendiri tidak dapat terhubung.",
       "coda": "Pengunggahan selesai mendekati tengah malam; sepuluh ribu unduhan sekaligus menjatuhkan jaringan universitas."
     },
     "zlib-two-authors": {
-      "tag": "Foundation",
       "title": "Lapisan Kompresi Dua Orang",
       "body": "zlib berada di dalam Linux, macOS, iOS, dan generasi-generasi konsol permainan; Git dan OpenSSH sama-sama bergantung padanya untuk kompresi. Dua orang menulis rilis publik pertamanya pada 1995.",
       "coda": "Baris kepenulisan tidak pernah bertambah nama ketiga."
     },
     "byd-battery-to-car": {
-      "tag": "Acquisition",
       "title": "Perusahaan Baterai Membeli Pembuat Mobil",
       "body": "BYD didirikan di distrik Longgang, Shenzhen pada 10 Februari 1995, membuat baterai nikel-kadmium dan nikel-logam hidrida, kemudian memasuki sel lithium-ion pada 1996. Pada 2003 pembuat baterai itu mengakuisisi Xi'an Qinchuan Automobile, menamainya kembali BYD Auto.",
       "coda": "Dua tahun kemudian, sedan buatan sendiri pertamanya, F3, dijual."
     },
     "ariane-501": {
-      "tag": "Incident",
       "title": "Tiga puluh tujuh detik",
       "body": "Tiga puluh tujuh detik kemudian, sistem referensi inersia mengonversi float 64-bit menjadi integer 16-bit dan meluap; pada sekitar empat puluh detik kendaraan hancur. Rutinitas itu datang tanpa perubahan dari Ariane 4 dan tidak ada alasan untuk berjalan setelah lepas landas.",
       "coda": "Sekitar $370 juta, dihabiskan untuk kode yang seharusnya dimatikan."
     },
     "deep-blue-move-44-1997": {
-      "tag": "Chess",
       "title": "Glitch Langkah Empat Puluh Empat",
       "body": "Dalam permainan pertama rematch 1997 Kasparov mengalahkan Deep Blue dalam empat puluh lima langkah. Langkah keempat puluh empat Deep Blue diduga merupakan hasil bug: tidak mampu menetapkan langkah pilihan di dalam pencariannya, mesin itu kembali ke fail-safe.",
       "coda": "Setelah kalah di permainan dua, Kasparov menuduh IBM curang."
@@ -308,7 +281,6 @@
       "coda": "Tanda tangan satu kantor mengundurkan klausul yang telah berkembang selama satu dekade."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "Harga Perangkat Lunak Gratis",
       "body": "Red Hat memberikan kode sumber produk intinya secara gratis dan memungut biaya untuk dukungan, pelatihan, dan integrasi. Pada 11 Agustus 1999 perusahaan tersebut go public. Kenaikan hari pertamanya menempati peringkat kedelapan terbesar dalam sejarah Wall Street pada saat itu.",
       "coda": "Pendiri Bob Young digantikan sebagai CEO empat bulan kemudian."
@@ -338,7 +310,6 @@
       "coda": "Penulis unggahan itu bermaksud untuk koleganya saja."
     },
     "hupu-rumours": {
-      "tag": "Forum",
       "title": "Yang Menerjemahkan Rumor",
       "body": "Pada Januari 2004 seorang mahasiswa Tiongkok yang sedang menempuh doktor teknik mesin di Chicago memulai forum basket di waktu luangnya. Pekerjaannya sebagian besar menerjemahkan berita dan rumor NBA ke dalam bahasa Tionghoa dan merapikannya.",
       "coda": "Delapan tahun kemudian forum itu membuka toko daring sendiri."
@@ -363,36 +334,30 @@
     },
     "knuth-reward-check": {
       "tag": "Hadiah",
-      "title": "Bank of San Serriffe",
       "body": "Donald Knuth membayar $2,56 untuk setiap kesalahan yang ditemukan dalam bukunya, ditarik dari Bank of San Serriffe fiktif. Hingga Maret 2005, cek yang telah ia tanda tangani berjumlah lebih dari $20.000.",
       "coda": "Sebagian besar penerima membingkai cek tersebut alih-alih menyetorkannya."
     },
     "dji-helicopter-first": {
-      "tag": "Pivot",
       "title": "DJI Dimulai dengan Helikopter",
       "body": "Frank Wang lulus dari Hong Kong University of Science and Technology pada 2006 dan mendirikan DJI di Shenzhen bersama teman sekelasnya. Produk pertamanya adalah sistem kendali penerbangan helikopter; versi matang pertamanya, XP3.1, diluncurkan pada 2008.",
       "coda": "Tim kemudian menemukan sebagian besar pembeli gimbal memasangnya pada multirotor, bukan helikopter."
     },
     "dropbox-hn": {
-      "tag": "Counterintuitive",
       "title": "Balasan itu",
       "body": "Houston memposting demo Dropbox ke Hacker News. Balasan terkenal itu menjelaskan bahwa Anda bisa melakukannya sendiri dengan akun FTP, curlftpfs, dan SVN, dan bahwa itu tidak terlihat akan menghasilkan uang.",
       "coda": "Sebelas tahun kemudian, pada IPO, Houston menyebutnya sebagai thread favoritnya di situs tersebut."
     },
     "butterfield": {
-      "tag": "Pivot",
       "title": "Dua kali dari reruntuhan",
       "body": "Permainan Butterfield, Game Neverending, terhenti, dan tim memisahkan bagian berbagi foto menjadi Flickr. Delapan tahun kemudian, permainan keduanya, Glitch, ditutup, dan tim memisahkan alat obrolan yang telah mereka bangun untuk diri sendiri: Slack.",
       "coda": "Kedua kali produk sampingan baru terlihat setelah hal utama ditutup."
     },
     "blockbuster": {
-      "tag": "The pass",
       "title": "Lima puluh juta",
       "body": "Hastings dan Randolph terbang ke Dallas untuk menjual Netflix ke Blockbuster seharga lima puluh juta, dan menjalankan sisi online untuk mereka. Menurut Randolph, CEO di seberang meja menghabiskan pertemuan itu menahan tawa.",
       "coda": "Blockbuster mengajukan kebangkrutan sepuluh tahun kemudian."
     },
     "y2k": {
-      "tag": "Governance",
       "title": "Tidak ada yang terjadi",
       "body": "Gartner memperkirakan biaya global Y2K sebesar tiga ratus hingga enam ratus miliar dolar, dan ratusan ribu orang mengubah tahun dua digit baris demi baris. Malam itu, jaringan listrik bertahan, bank bertahan, pesawat terbang.",
       "coda": "Empat tahun kemudian seorang ekonom menerbitkan makalah yang berargumen sebagian besar uang itu terbuang sia-sia."
@@ -458,13 +423,11 @@
       "coda": "Western Union memang menolak paten Bell tahun itu; memo ini tidak pernah ditulis."
     },
     "nintendo-hanafuda-detours": {
-      "tag": "Pivot",
       "title": "Belokan Setelah Kartu Bunga",
       "body": "Fusajiro Yamauchi membuka toko di Kyoto pada 1889 membuat kartu permainan hanafuda secara manual. Perusahaan kemudian mencoba layanan taksi dan nasi instan, keduanya ditinggalkan; klaim rantai hotel cinta yang sering diulang tidak tercatat dalam laporan efek yang diteliti hingga 1962.",
       "coda": "Pada 1966 sebuah mainan bernama Ultra Hand terjual ratusan ribu unit."
     },
     "wrigley-premiums-premium": {
-      "tag": "Pivot",
       "title": "Bonus dari Bonus",
       "body": "Pada 1891 William Wrigley Jr. menjual sabun di Chicago dan menyertakan baking powder sebagai bonus. Pelanggan lebih menginginkan baking powder daripada sabun, jadi ia beralih menjual baking powder, dan menambahkan permen karet sebagai bonus baking powder. Pelanggan lebih menginginkan permen karet.",
       "coda": "Pada 1892 ia telah menghentikan penjualan sabun dan baking powder untuk hanya menjual permen karet."
@@ -476,7 +439,6 @@
       "coda": "Drama itu mempertahankan nama satu saudara di halaman judul."
     },
     "play-doh-wallpaper-cleaner": {
-      "tag": "Pivot",
       "title": "Awalnya Untuk Membersihkan Wallpaper",
       "body": "Pada 1930-an, Kutol meracik adonan lembut untuk menggosok jelaga batu bara dari wallpaper. Setelah rumah beralih ke bahan bakar pemanas yang lebih bersih, permintaan punah. Seorang guru menyarankan menjualnya sebagai tanah liat modeling; namanya diubah menjadi Play-Doh pada 1956.",
       "coda": "Pada 2005 produk itu menjual 95 juta kaleng per tahun di 75 negara."
@@ -542,7 +504,6 @@
       "coda": "Perangkat lunak CAD komersial butuh hampir dua dekade untuk menyamai apa yang ditunjukkan tesis itu."
     },
     "douglas-mcilroy-garden-hose-pipe": {
-      "tag": "Memo",
       "title": "Memo Selang Taman",
       "body": "Pada Oktober 1964, McIlroy menulis memo Bell Labs yang mengusulkan program terhubung seperti selang taman — pasang segmen lain untuk memproses data secara berbeda. Memo itu beredar, dipuji, dan tidak pernah dibangun. Sembilan tahun kemudian, Ken Thompson menambahkan satu karakter, |, ke shell Unix dalam semalam.",
       "coda": "Saat pagi, program yang belum pernah berkomunikasi satu sama lain melakukannya."
@@ -590,7 +551,6 @@
       "coda": "Frasa itu melampaui suratnya, melahirkan puluhan tahun judul 'X Considered Harmful' yang tidak dibaca orang sampai habis."
     },
     "rollkugel-vs-mouse": {
-      "tag": "Mouse",
       "title": "Dua Mouse, Satu Tahun",
       "body": "Pada Oktober 1968, Telefunken mencantumkan mouse Rollkugel dalam brosur penjualan, perangkat bola bergulir yang insinyurnya bangun sejak 1966. Dua bulan kemudian, pada 9 Desember, Douglas Engelbart mendemonstrasikan mouse kayu yang tim SRI-nya bangun sejak 1963. Tidak ada tim yang mengetahui tim lainnya.",
       "coda": "Telefunken mencapai pasar lebih dulu dan terlupakan; Engelbart datang kedua dan adalah apa yang orang maksud dengan mouse."
@@ -602,7 +562,6 @@
       "coda": "Punchline ternyata menjadi koefisien regresi terukur dan terbit."
     },
     "lanpar-vs-visicalc": {
-      "tag": "Spreadsheet",
       "title": "Spreadsheet Tanpa Nama",
       "body": "Pada musim panas 1969, lulusan Harvard Rene Pardo dan Remy Landau menulis LANPAR, bahasa spreadsheet yang memungkinkan pengguna memasukkan rumus dalam urutan apa pun dan tetap menghitung dengan benar. Bell Canada dan General Motors menjalankannya. Pada 1979, Dan Bricklin membangun VisiCalc tanpa mengetahui keberadaan LANPAR.",
       "coda": "Paten LANPAR bertahan dari tantangan pengadilan hingga 1983; majalah-majalah telah menamai VisiCalc sebagai yang pertama."
@@ -644,7 +603,6 @@
       "coda": "Hingga saat itu, ia bekerja dalam serangkaian kontrak jangka pendek dengan dana tidak tetap."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
       "title": "Orang Kelima Internet",
       "body": "Pada tahun 1972, Louis Pouzin membangun jaringan CYCLADES di Prancis, yang pertama menjadikan host akhir, bukan jaringan, bertanggung jawab atas pengiriman yang andal. Pada tahun 1974, makalah TCP oleh Cerf dan Kahn menyebut namanya sebagai ucapan terima kasih. Pada tahun 2004, Cerf dan Kahn memenangkan Turing Award. Nama Pouzin tidak ada di dalamnya.",
       "coda": "The Economist kemudian menyebutnya sebagai orang kelima internet."
@@ -735,13 +693,11 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Anekdote",
-      "title": "Algorhyme",
       "body": "Pada tahun 1985, manajer Perlman di DEC menyerahkan masalah bridging bebas lingkaran pada hari Jumat, lalu menghilang selama seminggu. Dia menyelesaikan algoritma spanning-tree pada hari Rabu — dan menghabiskan sisa waktu menulis Algorhyme, sebuah puisi yang menjadi abstrak makalahnya.",
       "coda": "Menulis puisi memakan waktu lebih lama daripada menulis algoritma."
     },
     "brooks-no-silver-bullet": {
       "tag": "Esai",
-      "title": "No Silver Bullet",
       "body": "Pada kongres IFIP 1986, Fred Brooks membagi kesulitan perangkat lunak menjadi kompleksitas esensial dan kompleksitas aksidental. Kesulitan aksidental telah turun tajam, katanya, namun tidak ada satu teknik pun yang akan memberikan peningkatan produktivitas sepuluh kali lipat dalam satu dekade.",
       "coda": "Empat dekade kemudian, setiap paradigma baru tetap dijual sebagai peluru yang katanya tidak ada."
     },
@@ -776,14 +732,12 @@
       "coda": "Standar yang dikutip semua orang dan dialek yang diperiksa oleh kode semua orang bukanlah dokumen yang sama."
     },
     "python-christmas-project": {
-      "tag": "Scripting",
       "title": "Hobi Natal",
       "body": "Selama liburan Natal 1989, dengan kantornya tutup selama seminggu, seorang peneliti di Amsterdam mencari proyek pemrograman hobi. Ia mulai menulis interpreter untuk bahasa scripting baru dan menamainya berdasarkan kelompok komedi, bukan ular.",
       "coda": "Pada Juli 2026, bahasa ini menempati peringkat pertama pada indeks popularitas bahasa pemrograman TIOBE."
     },
     "worse-is-better": {
       "tag": "Debat",
-      "title": "Worse Is Better",
       "body": "Pada 1989 Richard Gabriel mempopulerkan istilah 'worse is better': implementasi sederhana yang setengah benar bertahan lebih baik daripada implementasi lengkap dan benar, itulah sebabnya ia berpendapat C dan Unix mengalahkan Lisp. Pada 1991 ia menerbitkan sanggahan dengan nama samaran Nickieben Bourbaki, berpura-pura menjadi teman lama.",
       "coda": "Berkelanjutan hingga puluhan tahun kemudian ia masih menyatakan tidak dapat memutuskan apakah argumennya sendiri benar."
     },
@@ -800,19 +754,16 @@
       "coda": "AT&T kemudian memperkirakan pendapatan yang hilang sebesar enam puluh juta dolar."
     },
     "aspec-vs-musicam": {
-      "tag": "Audio",
       "title": "Kalah dari yang Lebih Sederhana",
       "body": "Pada 1991, MPEG menguji dua codec audio saingan. ASPEC, yang dibangun oleh Fraunhofer, AT&T, dan CNET Prancis, memenangkan uji kualitas namun dianggap terlalu kompleks. MUSICAM, dari Matsushita dan Philips, menang karena kesederhanaannya. MP3 yang jadi akhirnya tetap memasukkan desain filter ASPEC.",
       "coda": "Format yang semua orang sebut MP3 membawa teknik dari proposal yang kalah di dalam nama pemenang."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Posting ke comp.os.minix",
       "body": "Pada 25 Agustus 1991, seorang mahasiswa Universitas Helsinki memposting ke newsgroup comp.os.minix bahwa ia sedang menulis sistem operasi gratis, menyebutnya \"hanya hobi, tidak akan besar dan profesional seperti gnu,\" dan menanyakan fitur apa yang diinginkan orang.",
       "coda": "Sejak November 2017, seluruh 500 superkomputer tercepat di dunia menjalankan sistem operasi yang dibangun di atasnya."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Harga Bebas Beat",
       "body": "Pada tahun 1991, Tim Berners-Lee merilis World Wide Web dari CERN. Pada tahun yang sama, University of Minnesota merilis Gopher, yang untuk sementara menjadi sistem yang lebih populer. Pada Februari 1993, Minnesota mengumumkan biaya lisensi untuk server Gopher. Pada April tahun itu, CERN menjadikan protokol web gratis.",
       "coda": "Gopher memiliki pengikut yang lebih banyak sebelum pengumuman biaya, dan tidak pernah memilikinya lagi setelah itu."
@@ -872,7 +823,6 @@
       "coda": "Badan standar pensiunkan rekomendasi keamanannya sendiri enam tahun setelah menerbitkannya."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "Penghitung Kunjungan Résumé",
       "body": "Pada tahun 1994, seorang programmer menulis sejumlah kecil program CGI dalam bahasa C hanya karena ingin tahu berapa banyak orang yang melihat résumé onlinenya. Ia menyebut toolkit tersebut \"Personal Home Page Tools\" dan merilis sumbernya pada Juni 1995.",
       "coda": "Tiga dekade kemudian, lebih dari 70% situs web dengan bahasa sisi server yang diketahui masih menjalankan keturunannya."
@@ -896,7 +846,6 @@
       "coda": "Startup tersebut adalah General Magic. Situs itu kemudian diubah namanya menjadi eBay."
     },
     "gettickcount-776-day-bug": {
-      "tag": "Overflow",
       "title": "Utang 776 Hari",
       "body": "GetTickCount di Windows 95 kembali ke nol setiap 49,7 hari, perilaku yang terdokumentasi, tidak pernah dianggap sebagai bug. Namun pada Windows 8 hingga Server 2019, fungsi yang sama dapat melampaui batas lebih awal, mendekati 776 hari, sebuah cacat nyata. Microsoft memperbaikinya hanya di Windows 11, versi 24H2.",
       "coda": "Perbaikan diterapkan tiga dekade setelah penghitung yang diperbaikinya pertama kali dirilis."
@@ -938,7 +887,6 @@
       "coda": "Pada tahun 2005 orang yang sama mendirikan Autohome."
     },
     "china-oicq-to-qq": {
-      "tag": "Rebrand",
       "title": "Dari OICQ ke QQ",
       "body": "Tencent meluncurkan OICQ pada Februari 1999 — huruf O melambangkan 'Open,' sebagai pengakuan pada ICQ. Pada Oktober tahun itu, AOL, pemilik ICQ, mengirimkan surat penghentian atas dugaan pelanggaran merek dagang. Pada November 2000, Ma Huateng mengubah namanya menjadi QQ, dipilih karena huruf tersebut terdengar seperti 'lucu' dalam bahasa Mandarin.",
       "coda": "Open adalah kata pertama yang dihilangkan begitu pengacara AOL tiba."
@@ -951,12 +899,10 @@
     },
     "mars-climate-orbiter-units": {
       "tag": "Insiden",
-      "title": "Pound-Force, Newton",
       "body": "Mars Climate Orbiter kehilangan kontak selama penyisipan orbit. Dewan menemukan bahwa perangkat lunak pendorong kontraktor mengeluarkan impuls dalam pound-force seconds sementara perangkat lunak navigasi mengharapkan newton-seconds, selisih faktor 4,45. Wahana diarahkan hingga sekitar 57 km dari permukaan.",
       "coda": "Misi senilai $327,6 juta tidak pernah mentransmisikan lagi."
     },
     "paypal-palm-beaming": {
-      "tag": "Pivot",
       "title": "Beam Yang Tidak Pernah Datang",
       "body": "Pada 1999 Confinity meluncurkan transfer uang inframerah antar Palm Pilot, didemonstrasikan langsung di acara pendanaan. Beberapa minggu setelah peluncuran, ia memiliki sekitar 13.000 pengguna, angka yang hampir tidak bergerak sepanjang tahun berikutnya. Yang benar-benar meluncur adalah pembayaran email, yang dibangun hanya sebagai opsi cadangan.",
       "coda": "Perusahaan mengganti namanya menjadi PayPal dan secara diam-diam menghentikan beam."
@@ -969,7 +915,6 @@
     },
     "gps-week-rollover": {
       "tag": "Mekanisme",
-      "title": "GPS Week 1024",
       "body": "GPS menghitung minggu dalam 10 bit, sebuah field yang maksimumnya 1.023 dan bergulir ke nol kira-kira setiap 19,7 tahun. Rollover pertama terjadi pada Agustus 1999. Rollover kedua terjadi pada 6 April 2019, merusak receiver yang dibangun seolah rollover pertama adalah kejadian satu kali.",
       "coda": "Overflow yang sama terjadwal dan akan terulang lagi pada 2038."
     },
@@ -980,7 +925,6 @@
       "coda": "Programernya adalah Zhang Xiaolong. Lima tahun kemudian, di dalam Tencent, ia membangun WeChat."
     },
     "danger-duarte-android-reunion": {
-      "tag": "Reunion",
       "title": "Direktur Desain, Startup Gagal",
       "body": "Pada tahun 2000 seorang desainer bergabung dengan startup perangkat genggam yang didirikan oleh Andy Rubin, bekerja pada antarmukanya. Perusahaan tersebut dijual ke Microsoft dan timnya bubar. Desainer tersebut kemudian bekerja di dua perusahaan lain selama dekade berikutnya.",
       "coda": "Desainernya adalah Matias Duarte. Sepuluh tahun kemudian Rubin merekrutnya ke Android."
@@ -992,13 +936,11 @@
       "coda": "Komentar tersebut kini secara rutin dikutip sebagai contoh tandingan yang dihasilkannya."
     },
     "discuz-shenyang-dorm": {
-      "tag": "Forum",
       "title": "CDB, sebuah bangun asrama",
       "body": "Pada tahun 2001, seorang mahasiswa yang tinggal di asrama di Shenyang menulis perangkat lunak forum dan menamainya Crossday Bulletin, mengerjakan proyek tersebut bersamaan dengan tugas kuliahnya. Pada Oktober berikutnya ia mengubah namanya menjadi Discuz.",
       "coda": "Pada 23 Agustus 2010, Tencent mengakuisisi perusahaan yang ia bangun di sekitarnya."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Proyek Sampingan di Sisi Nupedia",
       "body": "Pada 10 Januari 2001, pendiri sebuah ensiklopedia daring yang ditelaah sejawat memasang perangkat lunak wiki pada server proyek tersebut, terutama agar sukarelawan dapat mencoba menyusun entri secara longgar di samping sementara ensiklopedia yang ditelaah bergerak maju secara perlahan.",
       "coda": "Hingga Juli 2026 edisi bahasa Inggrisnya saja telah menampung lebih dari 7,2 juta artikel."
@@ -1058,7 +1000,6 @@
       "coda": "Dianping, situs yang tumbuh dari ide tersebut, mulai beroperasi pada 12 April 2003."
     },
     "wordpress-b2-post": {
-      "tag": "Blogging",
       "title": "Dilema Perangkat Lunak Blogging",
       "body": "Pada 24 Januari 2003, seorang mahasiswa menulis di blognya sendiri bahwa b2, perangkat lunak blogging yang ia gunakan setiap hari, sudah tidak terawat selama berbulan-bulan sejak pengembang utamanya menghilang. Ia mengatakan ingin melakukan fork dan hanya meminta sebuah nama.",
       "coda": "Perusahaan yang tumbuh dari fork tersebut bernilai $7,5 miliar pada tahun 2021."
@@ -1088,13 +1029,11 @@
       "coda": "Facebook diluncurkan pada 2004 dengan gagasan grafik sosial yang sama dan bertahan di bawah lalu lintas."
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
       "title": "Perangkat Lunak Toko Melebihi Toko",
       "body": "Pada 2004, programmer Tobias Lutke menemukan perangkat lunak e-commerce saat itu terlalu kaku, sehingga ia menulis perangkat lunak sendiri untuk menjual perlengkapan papan seluncur salju secara online sebagai Snowdevil. Snowdevil sendiri tetap menjadi toko kecil, namun pedagang lain mulai meminta lisensi perangkat lunak di baliknya.",
       "coda": "Shopify terdaftar di Bursa Efek New York pada 2015."
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
       "title": "Proyek Samping Perusahaan Podcast",
       "body": "Pada 28 Juni 2005, Apple memasukkan langganan podcast ke iTunes; dalam dua hari langganan melampaui satu juta, dan seluruh bisnis podcasting Odeo menjadi usang dalam semalam. Maret berikutnya, hackathon internal menghasilkan pitch pembaruan status SMS Jack Dorsey: Twitter.",
       "coda": "Odeo, perusahaan tempat Twitter dibangun, dijual pada tahun 2007."
@@ -1124,7 +1063,6 @@
       "coda": "Ia kemudian mengatakan bahwa begitu ia benar-benar memegang ponsel itu, ia menyesali pernyataannya."
     },
     "auctomatic-taggar-yc": {
-      "tag": "Merger",
       "title": "Orang yang Harus Belajar Coding",
       "body": "Pada 2007 dua saudara laki-laki asal Irlandia membawa alat e-commerce buatan sendiri ke Y Combinator dan menggabungkan perusahaan mereka dengan satu perusahaan yang dijalankan oleh dua lulusan Oxford. Sepasang lulusan Oxford itu tidak bisa memprogram. Salah satu dari mereka disuruh belajar, dengan cepat.",
       "coda": "Orang itu adalah Harj Taggar, yang kemudian menjadi mitra non-pendiri pertama Y Combinator."
@@ -1184,7 +1122,6 @@
       "coda": "Sebagian besar paket yang diterbitkan tidak pernah meninggalkan rentang versi yang tidak diikat oleh aturan tersebut."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
       "title": "Apa yang Dihapus dari Burbn",
       "body": "Kevin Systrom dan Mike Krieger menghabiskan hampir satu tahun membangun aplikasi check-in lengkap bernama Burbn, lalu menilai build iPhone yang sudah jadi itu terlalu penuh. Mereka memangkasnya menjadi hanya foto, komentar, dan like, lalu merilis hasilnya delapan minggu kemudian sebagai Instagram.",
       "coda": "Dalam seminggu setelah peluncuran, jumlah penggunanya mencapai 100.000."
@@ -1227,7 +1164,6 @@
     },
     "china-wechat-red-envelope-pearl-harbor": {
       "tag": "Pembayaran",
-      "title": "Pearl Harbor, Digital",
       "body": "Sekitar Tahun Baru Imlek 2014, fitur amplop merah WeChat diluncurkan; pengguna mengambil lebih dari 40 juta paket merah dalam beberapa hari. Di aplikasi Laiwang, Jack Ma menyebutnya 'serangan diam-diam Pearl Harbor' — efektif dalam jangka pendek, tulisnya, tetapi pertumbuhan jangka panjang yang sehat lebih penting.",
       "coda": "Lampiran merah menjadi corong pembayaran."
     },
@@ -1334,7 +1270,6 @@
       "coda": "Kata yang ia sesali itu bertahan lebih lama dari gagasan yang ia maksudkan untuk dibawanya."
     },
     "voyager-68-kilobits": {
-      "tag": "Deep Space",
       "title": "Mengelilingi chip yang rusak",
       "body": "Voyager 1 diluncurkan pada September 1977. Empat puluh tujuh tahun kemudian, sebuah chip memori di subsistem data penerbangan rusak, tiga persen darinya korup dan tidak dapat diperbaiki. Pada 20 April 2024 insinyur menyusun ulang kode di sekitar area yang rusak dan sinyal kembali.",
       "coda": "Generatornya dapat menyediakan daya cukup untuk mengirimkan data teknik hingga 2036."

@@ -50,7 +50,6 @@
       "coda": "Em 1995 Moore disse que o termo havia passado a significar quase qualquer coisa na indústria de chips."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
       "title": "A secretária e o DOCTOR",
       "body": "Em 1966 Joseph Weizenbaum lançou o script DOCTOR do ELIZA no MIT, um programa que basicamente refletia as próprias frases dos usuários de volta como perguntas. Sua própria secretária, segundo relatos, pediu que ele saísse da sala para que ela pudesse conversar com ele sozinha.",
       "coda": "O padrão que ele não esperava foi mais tarde chamado de efeito ELIZA."
@@ -75,7 +74,6 @@
     },
     "rfc1": {
       "tag": "Governança",
-      "title": "Request for Comments",
       "body": "Steve Crocker teve que escrever as primeiras regras para alguns hosts em rede. Ninguém lhe havia dado autoridade, e ele temia que soasse como imposição de hierarquia — então chamou o gênero de Request for Comments.",
       "coda": "Toda regra que a internet acordou desde então ainda é chamada de RFC."
     },
@@ -98,7 +96,6 @@
       "coda": "A imprensa achou overbar difícil de explicar e escreveu hífen. O hífen ficou."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
       "title": "A Mãe de Todas as Demos",
       "body": "Engelbart recebeu noventa minutos. Seu terminal operava por linhas telefônicas até uma máquina a trinta milhas de distância, e ele demonstrou o mouse, hiperlinks, janelas, compartilhamento de tela e duas pessoas editando um documento ao mesmo tempo.",
       "coda": "Mil pessoas assistiram, depois voltaram para cartões perfurados por mais uma década."
@@ -111,7 +108,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Comentário",
-      "title": "Burn, Baby, Burn",
       "body": "A rotina de ignição principal do módulo lunar é rotulada como BURN_BABY_BURN na origem. O nome não se refere ao empuxo; foi emprestado de uma frase de efeito de um DJ de rádio soul da época.",
       "coda": "A linha ainda permanece sem edição no repositório público."
     },
@@ -134,7 +130,6 @@
       "coda": "As vendas gerais do Intel 4004 começaram naquele julho."
     },
     "pong-coin-overflow": {
-      "tag": "Feedback",
       "title": "A Caixa de Moedas Transbordou",
       "body": "Em agosto de 1972, a Atari colocou o protótipo do Pong em um bar em Sunnyvale. Alguns dias depois, o proprietário relatou que estava quebrado. O engenheiro Al Alcorn foi até lá para consertá-lo e descobriu que o defeito não era elétrico: o mecanismo de moedas havia travado porque estava transbordando de moedas de 25 centavos.",
       "coda": "A falha não era um problema de fiação; eram moedas demais."
@@ -146,7 +141,6 @@
       "coda": "Wozniak disse que teria dado o dinheiro a Jobs se ele pedisse."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
       "title": "Não Se Esperava que Entendesse",
       "body": "O slp.c da Sexta Edição do Unix contém a linha 'You are not expected to understand this', anexada ao código de restauração de pilha de troca de processos construído sobre peculiaridades do compilador PDP-11. Dennis Ritchie disse mais tarde que quis dizer da mesma forma que um professor diz que isso não cairá na prova.",
       "coda": "A rotina foi reescrita para a Sétima Edição do Unix."
@@ -194,7 +188,6 @@
       "coda": "Até 2022, um scanner EUV de produção processava cerca de duzentas wafers por hora."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
       "title": "Uma Foundry aos Cinquenta e Seis",
       "body": "Morris Chang, nascido em 1931, ascendeu a vice-presidente do grupo de operações mundiais de semicondutores da Texas Instruments, depois serviu como presidente e COO da General Instrument e, em seguida, liderou o ITRI de Taiwan. Em 1987, aos cinquenta e seis anos, fundou a TSMC, que não projeta nenhum dos chips que fabrica.",
       "coda": "Foi a primeira foundry do mundo a fazer apenas fabricação."
@@ -231,7 +224,6 @@
     },
     "sosumi-so-sue-me": {
       "tag": "Nomeação",
-      "title": "So Sue Me",
       "body": "Em 1991, o departamento jurídico da Apple rejeitou o nome do som de alerta \"Let It Beep\" por ser muito musical, sob um acordo que proibia a Apple Computer de usar marcas relacionadas à música. O designer de som Jim Reekes respondeu \"so sue me\" e depois o registrou como \"sosumi\".",
       "coda": "O som foi lançado no Mac OS por quase três décadas antes de ser substituído pelo Big Sur em 2020."
     },
@@ -242,7 +234,6 @@
       "coda": "Ninguém pagou royalties para usá-lo desde então."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "O Servidor Que Não Conseguiram Alcançar",
       "body": "Em 10 de dezembro de 1993, a id Software distribuiu o primeiro episódio de Doom como shareware, apostando nas vendas do restante. Ao fazer upload para um servidor FTP da Universidade do Wisconsin, descobriram que tantas pessoas já estavam esperando que a própria equipe não conseguia se conectar.",
       "coda": "O upload terminou perto da meia-noite; dez mil downloads simultâneos derrubaram a rede da universidade."
@@ -278,7 +269,6 @@
       "coda": "Nenhum sucessor nomeado foi jamais listado."
     },
     "book-of-mozilla-verses": {
-      "tag": "Easter Egg",
       "title": "O Livro da Mozilla",
       "body": "Digitar about:mozilla na barra de endereços revela o Livro da Mozilla, um verso apocalíptico que coloca 'a besta' contra 'Mammon' e que cada geração do navegador atualiza. Os números dos versos não são marcadores de capítulo: são datas de lançamento.",
       "coda": "O verso mais novo, 6:27, foi lançado pela primeira vez em uma compilação do Firefox Nightly em 2020."
@@ -308,7 +298,6 @@
       "coda": "A assinatura de um escritório aposentou uma cláusula que havia se multiplicado por uma década."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "O Preço do Software Livre",
       "body": "A Red Hat distribuía gratuitamente o código-fonte de seu produto principal e cobrava por suporte, treinamento e integração. Em 11 de agosto de 1999, a empresa abriu seu capital. O ganho no primeiro dia foi o oitavo maior da história de Wall Street na época.",
       "coda": "O fundador Bob Young foi substituído como CEO quatro meses depois."
@@ -357,7 +346,6 @@
     },
     "git-information-manager-hell": {
       "tag": "Git",
-      "title": "Information Manager from Hell",
       "body": "Em 7 de abril de 2005, Linus Torvalds fez o commit da primeira revisão do git. A mensagem diz: Initial revision of \"git\", the information manager from hell. O endereço do autor é torvalds@ppc970.osdl.org.",
       "coda": "Esse endereço aponta para uma máquina de teste PowerPC 970 na OSDL."
     },
@@ -380,7 +368,6 @@
       "coda": "Onze anos depois, no IPO, Houston chamou esse de seu tópico favorito no site."
     },
     "butterfield": {
-      "tag": "Pivot",
       "title": "Duas vezes dos destroços",
       "body": "O jogo de Butterfield, Game Neverending, estagnou, e a equipe separou a parte de compartilhamento de fotos como Flickr. Oito anos depois, seu segundo jogo, Glitch, foi encerrado, e a equipe separou a ferramenta de chat que havia construído para si mesma: Slack.",
       "coda": "Nas duas vezes, o subproduto só se tornou visível quando a coisa principal fechou."
@@ -410,7 +397,6 @@
       "coda": "Seu histórico de financiamento é um Kickstarter e uma conta no Open Source Collective."
     },
     "xiaomi-software-first": {
-      "tag": "Software",
       "title": "O Primeiro Produto da Xiaomi Não Foi um Telefone",
       "body": "A Xiaomi foi fundada em 6 de abril de 2010. Em agosto e dezembro daquele ano, lançou versões beta do sistema operacional MIUI e do aplicativo de chat Miliao, ambos software.",
       "coda": "O primeiro telefone da empresa só foi lançado em agosto do ano seguinte."
@@ -464,7 +450,6 @@
       "coda": "Em 1966 um brinquedo chamado Ultra Hand vendeu centenas de milhares de unidades."
     },
     "wrigley-premiums-premium": {
-      "tag": "Pivot",
       "title": "O Prêmio do Prêmio",
       "body": "Em 1891, William Wrigley Jr. vendia sabão em Chicago e incluía pó de fermento como brinde. Os clientes queriam mais o pó de fermento do que o sabão, então ele passou a vender apenas isso e incluiu chiclete como brinde do pó de fermento. Os clientes queriam mais o chiclete.",
       "coda": "Até 1892, ele havia abandonado tanto o sabão quanto o pó de fermento para vender apenas chiclete."
@@ -476,7 +461,6 @@
       "coda": "A peça manteve o nome de um irmão na página de título."
     },
     "play-doh-wallpaper-cleaner": {
-      "tag": "Pivot",
       "title": "Era Para Limpar Papel de Parede",
       "body": "Na década de 1930, a Kutol formulou uma massa macia para esfregar fuligem de carvão de papéis de parede. Quando as casas mudaram para combustíveis de aquecimento mais limpos, a demanda desapareceu. Uma professora sugeriu vendê-la como massa de modelar; foi renomeada Play-Doh em 1956.",
       "coda": "Em 2005, vendia 95 milhões de latas por ano em 75 países."
@@ -572,7 +556,6 @@
       "coda": "O objetivo de segurança era explícito; a falha foi que a facilidade venceu mesmo assim."
     },
     "johnson-vs-cern-touchscreen": {
-      "tag": "Touchscreen",
       "title": "Quem realmente foi o primeiro",
       "body": "O CERN atribui a Bent Stumpe a construção do primeiro ecrã tátil capacitivo do mundo em 1972, para a sua sala de controlo do acelerador. Eric Johnson, do Royal Radar Establishment britânico, já havia publicado um artigo sobre tecnologia tátil capacitiva acionada por dedo em 1965, sete anos antes.",
       "coda": "A alegação da CERN de ter construído o primeiro touchscreen ainda consta em seu próprio site."
@@ -590,7 +573,6 @@
       "coda": "A frase superou a carta, gerando décadas de títulos 'X Considered Harmful' que ninguém lia até o fim."
     },
     "rollkugel-vs-mouse": {
-      "tag": "Mouse",
       "title": "Dois Ratos, Um Ano",
       "body": "Em outubro de 1968, a Telefunken listou o mouse Rollkugel em um folheto de vendas, um dispositivo de bola rolante que seus engenheiros construíam desde 1966. Dois meses depois, em 9 de dezembro, Douglas Engelbart demonstrou o mouse de madeira que sua equipe da SRI construíra desde 1963. Nenhuma das equipes sabia da outra.",
       "coda": "A Telefunken chegou ao mercado primeiro e foi esquecida; Engelbart veio em segundo e é o que as pessoas entendem por mouse."
@@ -644,7 +626,6 @@
       "coda": "Até então, ela havia trabalhado em uma série de contratos de curto prazo com financiamento precário."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
       "title": "O Quinto Homem da Internet",
       "body": "Em 1972, Louis Pouzin construiu a rede CYCLADES na França, a primeira a tornar os hosts finais, e não a rede, responsáveis pela entrega confiável. Em 1974, o artigo TCP de Cerf e Kahn agradeceu-o pelo nome. Em 2004, Cerf e Kahn ganharam o Prêmio Turing. O nome de Pouzin não estava nele.",
       "coda": "O Economist mais tarde o chamou de o quinto homem da internet."
@@ -735,13 +716,11 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Anedota",
-      "title": "Algorhyme",
       "body": "Em 1985, o gerente de Perlman na DEC atribuiu o problema de ponte sem ciclos numa sexta-feira e desapareceu por uma semana. Ela terminou o algoritmo de árvore geradora na quarta-feira — e passou o resto do tempo escrevendo Algorhyme, um poema que se tornou o resumo do artigo.",
       "coda": "O poema levou mais tempo para ser escrito do que o algoritmo."
     },
     "brooks-no-silver-bullet": {
       "tag": "Ensaio",
-      "title": "No Silver Bullet",
       "body": "No congresso IFIP de 1986, Fred Brooks dividiu a dificuldade do software em complexidade essencial e acidental. A dificuldade acidental havia caído acentuadamente, disse ele, mas nenhuma técnica única entregaria um ganho de produtividade dez vezes maior dentro de uma década.",
       "coda": "Quatro décadas depois, cada novo paradigma ainda é vendido como a bala que ele disse não existir."
     },
@@ -776,13 +755,11 @@
       "coda": "O padrão que todos citam e o dialeto que o código de todos verifica não são o mesmo documento."
     },
     "python-christmas-project": {
-      "tag": "Scripting",
       "title": "Um Passatempo de Natal",
       "body": "Durante as férias de Natal de 1989, com seu escritório fechado por uma semana, um pesquisador em Amsterdã procurou um projeto de programação como passatempo. Ele começou a escrever um interpretador para uma nova linguagem de script e a nomeou em homenagem a um grupo de comédia, não à cobra.",
       "coda": "Em julho de 2026, ela ocupou o primeiro lugar no índice TIOBE de popularidade de linguagens de programação."
     },
     "worse-is-better": {
-      "tag": "Debate",
       "title": "Pior é Melhor",
       "body": "Em 1989, Richard Gabriel cunhou 'worse is better': uma implementação simples e meio certa sobrevive melhor do que uma completa e correta, razão pela qual ele achava que C e Unix superavam Lisp. Em 1991, ele publicou uma réplica sob o pseudônimo Nickieben Bourbaki, fingindo ser um velho amigo.",
       "coda": "Décadas depois, ele ainda dizia que não conseguia decidir se seu próprio argumento estava certo."
@@ -806,13 +783,11 @@
       "coda": "O formato que todos chamam de MP3 carrega a engenharia da proposta perdedora dentro do nome da vencedora."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Uma Postagem no comp.os.minix",
       "body": "Em 25 de agosto de 1991, um estudante universitário de Helsinque postou no newsgroup comp.os.minix que estava escrevendo um sistema operacional gratuito, chamando-o de \"apenas um hobby, não será grande e profissional como o gnu\", e perguntou quais recursos as pessoas queriam.",
       "coda": "Desde novembro de 2017, todos os 500 supercomputadores mais rápidos do mundo executam um SO construído sobre ele."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Gratuito Venceu o Pago",
       "body": "Em 1991, Tim Berners-Lee lançou a World Wide Web no CERN. No mesmo ano, a Universidade de Minnesota lançou o Gopher, por um tempo o sistema mais popular. Em fevereiro de 1993, Minnesota anunciou taxas de licenciamento para servidores Gopher. Naquele abril, o CERN tornou o protocolo da web gratuito.",
       "coda": "O Gopher tinha uma base maior antes do anúncio das taxas e nunca mais a recuperou depois."
@@ -860,7 +835,6 @@
       "coda": "O funcionário Tony Fadell liderou posteriormente o desenvolvimento de hardware do iPod e do iPhone na Apple."
     },
     "ibm-simon-first-touchscreen": {
-      "tag": "Touchscreen",
       "title": "A Máquina de Fax do Simon",
       "body": "Em 16 de agosto de 1994, a IBM e a BellSouth lançaram o Simon Personal Communicator: uma tela sensível ao toque de 4,5 polegadas que enviava e-mail e fax, com preço de US$ 899. A bateria durava cerca de uma hora. Foi descontinuado seis meses depois, tendo vendido cerca de 50.000 unidades.",
       "coda": "Em 2007 a Apple lançou o iPhone, um telefone com tela sensível ao toque capacitiva e sem teclado físico."
@@ -872,7 +846,6 @@
       "coda": "O órgão normativo retirou sua própria recomendação de segurança seis anos após publicá-la."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "Um Contador de Visitas para Currículo",
       "body": "Em 1994, um programador escreveu um punhado de pequenos programas CGI em C pela simples razão de querer saber quantas pessoas estavam vendo seu currículo online. Ele chamou o conjunto de ferramentas de \"Personal Home Page Tools\" e lançou o código-fonte em junho de 1995.",
       "coda": "Três décadas depois, mais de 70% dos sites com uma linguagem de servidor conhecida ainda executam seu descendente."
@@ -896,7 +869,6 @@
       "coda": "A startup era a General Magic. O site foi posteriormente renomeado para eBay."
     },
     "gettickcount-776-day-bug": {
-      "tag": "Overflow",
       "title": "Uma Dívida de 776 Dias",
       "body": "O GetTickCount do Windows 95 zera a cada 49,7 dias, comportamento documentado, nunca tratado como bug. Mas no Windows 8 até o Server 2019, a mesma função podia zerar antes do prazo, perto de 776 dias, um defeito genuíno. A Microsoft corrigiu isso apenas no Windows 11, versão 24H2.",
       "coda": "A correção foi aplicada três décadas depois que o contador que ela corrige foi lançado."
@@ -933,7 +905,6 @@
     },
     "lixiang-graphics-card-home": {
       "tag": "Site de avaliações",
-      "title": "Graphics Card Home",
       "body": "Em 1998, um estudante do ensino médio em Hebei criou um site pessoal chamado Graphics Card Home em seu tempo livre, publicando análises de placas de vídeo. Dois anos depois, ele renomeou o site para PCPop e continuou atualizando-o durante o restante da escola.",
       "coda": "Em 2005, a mesma pessoa fundou a Autohome."
     },
@@ -951,12 +922,10 @@
     },
     "mars-climate-orbiter-units": {
       "tag": "Incidente",
-      "title": "Pound-Force, Newton",
       "body": "A Mars Climate Orbiter silenciou-se durante a inserção orbital. A comissão concluiu que o software de propulsão do contratante emitia o impulso em libra-força-segundo, enquanto o software de navegação esperava newton-segundo, com uma diferença de fator 4,45. A sonda foi guiada a aproximadamente 57 km da superfície.",
       "coda": "A missão de 327,6 milhões de dólares nunca transmitiu novamente."
     },
     "paypal-palm-beaming": {
-      "tag": "Pivot",
       "title": "O Feixe Que Nunca Veio",
       "body": "Em 1999, a Confinity lançou transferências de dinheiro por infravermelho entre Palm Pilots, demonstradas ao vivo num evento de financiamento. Semanas após o lançamento, tinha cerca de 13.000 utilizadores, número que mal se alterou no ano seguinte. O que realmente prosperou foram os pagamentos por email, criados apenas como opção de recurso.",
       "coda": "A empresa mudou de nome para PayPal e abandonou discretamente o feixe."
@@ -998,7 +967,6 @@
       "coda": "Em 23 de agosto de 2010, a Tencent adquiriu a empresa que ele havia construído em torno disso."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Um Projeto Paralelo ao Lado da Nupedia",
       "body": "Em 10 de janeiro de 2001, o fundador de uma enciclopédia online com revisão por pares instalou software wiki no servidor do projeto, principalmente para que voluntários pudessem experimentar a redação de entradas de forma solta ao lado enquanto a enciclopédia revisada avançava lentamente.",
       "coda": "Até julho de 2026, sua edição em inglês continha mais de 7,2 milhões de artigos."
@@ -1058,7 +1026,6 @@
       "coda": "O Dianping, o site que cresceu a partir dele, entrou no ar em 12 de abril de 2003."
     },
     "wordpress-b2-post": {
-      "tag": "Blogging",
       "title": "O Dilema do Software de Blog",
       "body": "Em 24 de janeiro de 2003, um estudante universitário escreveu em seu próprio blog que o b2, o software de blog que ele usava diariamente, estava sem manutenção há meses desde que seu desenvolvedor principal desapareceu. Ele disse que queria fazer um fork e pediu apenas um nome.",
       "coda": "A empresa que surgiu desse fork foi avaliada em US$ 7,5 bilhões em 2021."
@@ -1088,13 +1055,11 @@
       "coda": "O Facebook foi lançado em 2004 com a mesma ideia de grafo social e resistiu ao tráfego."
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
       "title": "O software da loja cresceu mais que a loja",
       "body": "Em 2004, o programador Tobias Lutke achou o software de comércio eletrônico da época muito engessado e escreveu o seu próprio para vender equipamentos de snowboard online como Snowdevil. A Snowdevil permaneceu uma pequena loja, mas outros comerciantes começaram a pedir licença para usar o software por trás dela.",
       "coda": "A Shopify foi listada na Bolsa de Nova York em 2015."
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
       "title": "O Projeto Paralelo da Empresa de Podcasts",
       "body": "Em 28 de junho de 2005, a Apple integrou assinaturas de podcasts ao iTunes; em dois dias, as assinaturas ultrapassaram um milhão e todo o negócio de podcasts da Odeo tornou-se obsoleto da noite para o dia. Em março seguinte, um hackathon interno resultou na proposta de atualização de status por SMS de Jack Dorsey: Twitter.",
       "coda": "A Odeo, empresa onde o Twitter foi construído, foi vendida em 2007."
@@ -1184,7 +1149,6 @@
       "coda": "A maioria dos pacotes publicados nunca sai da faixa de versões que a regra não vincula."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
       "title": "O Que Foi Cortado do Burbn",
       "body": "Kevin Systrom e Mike Krieger passaram quase um ano construindo um aplicativo de check-in completo chamado Burbn, depois julgaram sua própria versão final para iPhone como poluída. Eles reduziram o app a fotos, comentários e curtidas, e lançaram o resultado oito semanas depois como Instagram.",
       "coda": "Uma semana após o lançamento, tinha 100.000 usuários."
@@ -1227,7 +1191,6 @@
     },
     "china-wechat-red-envelope-pearl-harbor": {
       "tag": "Pagamentos",
-      "title": "Pearl Harbor, Digital",
       "body": "Por volta do Ano Novo Chinês de 2014, o recurso de envelope vermelho do WeChat entrou no ar; usuários resgataram mais de 40 milhões de envelopes em poucos dias. No aplicativo Laiwang, Jack Ma chamou aquilo de 'ataque surpresa a Pearl Harbor' — eficaz a curto prazo, escreveu, mas o crescimento saudável a longo prazo importava mais.",
       "coda": "O envelope vermelho virou um funil de pagamentos."
     },
@@ -1364,7 +1327,6 @@
       "coda": "A graça da piada se tornou o nome do produto, sem edição."
     },
     "tbl-double-slash": {
-      "tag": "Design",
       "title": "As Barras Extras",
       "body": "Tim Berners-Lee colocou \"//\" na frente do nome do domínio quando projetou a URL. Em outubro de 2009 ele admitiu que, dado o dois-pontos já presente, as duas barras não eram necessárias de forma alguma — \"parecia uma boa ideia na época\", disse ele.",
       "coda": "Toda URL desde então ainda digita as duas."

@@ -2,7 +2,6 @@
   "panelLabel": "Önyükleme günlüğü",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
       "title": "Patentten Çıkarılan İsim",
       "body": "23 Aralık 1947'de Bardeen ve Brattain, Bell Labs'ta germanyum nokta temaslı transistörü tanıttı. Shockley odada değildi. Avukatlar kendi tasarımını Julius Lilienfeld'in 1925 patentine fazla yakın buldular ve onun adını bu patentten çıkardılar.",
       "coda": "1956'da üçü de Nobel Fizik Ödülü'nü paylaştı."
@@ -56,7 +55,6 @@
       "coda": "Beklemediği kalıp daha sonra ELIZA etkisi olarak adlandırıldı."
     },
     "engelbart-royalties": {
-      "tag": "Patent",
       "title": "Kırk bin dolar",
       "body": "SRI, demo sonrasında fareyi patentletti ve kendi ifadesine göre değeri hakkında gerçek bir fikri yoktu. Birkaç yıl sonra Apple'a yaklaşık 40.000 dolara lisansladıkları ortaya çıktı.",
       "coda": "Engelbart onu icat ettiği için hiçbir telif hakkı almadı."
@@ -98,7 +96,6 @@
       "coda": "Basın, üst çizgiyi açıklamakta zorlandı ve kısa çizgi yazdı. Kısa çizgi kaldı."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
       "title": "Tüm Demoların Anası",
       "body": "Engelbart'a doksan dakika verildi. Terminali, otuz mil uzaktaki bir makineye telefon hatları üzerinden bağlıydı ve fareyi, köprüleri, pencereleri, ekran paylaşımını ve iki kişinin aynı anda tek bir belgeyi düzenlemesini gösterdi.",
       "coda": "Bin kişi izledi, ardından bir on yıl daha delikli kartlara geri döndü."
@@ -111,7 +108,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Yorum",
-      "title": "Burn, Baby, Burn",
       "body": "Ay modülünün ana ateşleme rutini kaynakta BURN_BABY_BURN olarak etiketlenmiştir. İsim itkiyle ilgili değildir; günün bir soul radyo DJ'sinin sloganından alınmıştır.",
       "coda": "Satır, kamu deposunda hâlâ düzenlenmemiş halde duruyor."
     },
@@ -122,7 +118,6 @@
       "coda": "Sektör şemayı tuttu ve cümleyi bıraktı."
     },
     "moth": {
-      "tag": "Etymology",
       "title": "İlk gerçek hata",
       "body": "Harvard Mark II'nin bir rölesinden bir güve çıkarıldı ve günlük defterine yapıştırıldı. Yanındaki satır kelimenin kökeni olarak alıntılanır, ancak üzerinde yazan şudur: hata bulunmasının ilk gerçek durumu.",
       "coda": "Mühendisler Edison'dan beri hata demişti. Müze, sayfanın Hopper'ın el yazısında olup olmadığını bile şüpheli görüyor."
@@ -140,13 +135,11 @@
       "coda": "Arıza bir kablo hatası değildi; çok fazla paradı."
     },
     "wozniak-breakout-bonus": {
-      "tag": "Bonus",
       "title": "Paylaşım",
       "body": "1973'te Atari, Steve Jobs'tan Breakout devre kartını küçültmesini istedi, çıkarılan her çip için 100 dolar ödeyeceğini söyledi. Jobs, Wozniak'tan yardım etmesini istedi ve yarısını vaat etti. Wozniak 50 çip çıkardı. Jobs toplamın 700 dolar olduğunu, dolayısıyla Wozniak'ın payının 350 dolar olduğunu söyledi. On yıl sonra Wozniak gerçek bonusun 5.000 dolar olduğunu öğrendi.",
       "coda": "Wozniak, sorulsaydı parayı Jobs'a vereceğini söyledi."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
       "title": "Anlaması Beklenmiyor",
       "body": "Unix'in Altıncı Sürümü'nün slp.c dosyası, PDP-11 derleyici özellikleri üzerine inşa edilmiş işlem değişimi yığın geri yükleme koduna bağlı olarak 'Bunu anlaman beklenmiyor' satırını içerir. Dennis Ritchie daha sonra bunun bir öğretmenin sınavda çıkmayacak demesi gibi olduğunu söyledi.",
       "coda": "Rutin, Unix'in Yedinci Sürümü için yeniden yazıldı."
@@ -194,7 +187,6 @@
       "coda": "2022'ye gelindiğinde bir üretim EUV tarayıcısı saatte yaklaşık iki yüz wafer işledi."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
       "title": "Altmış Altı Yaşında Bir Foundry",
       "body": "Morris Chang, 1931 doğumlu, Texas Instruments'ta dünya çapında yarı iletken operasyonları grubu başkan yardımcılığına kadar yükseldi, ardından General Instrument'ta başkan ve COO olarak görev yaptı, daha sonra Tayvan'ın ITRI'sine başkanlık etti. 1987'de, altmış altı yaşında, ürettiği çiplerin hiçbirini tasarlamayan TSMC'yi kurdu.",
       "coda": "Dünyada sadece üretim yapan ilk foundry oldu."
@@ -308,7 +300,6 @@
       "coda": "Bir ofisin imzası, on yıl boyunca çoğalan bir maddeyi emekli etti."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "Ücretsiz Yazılımın Fiyatı",
       "body": "Red Hat, temel ürününün kaynak kodunu bedava dağıttı ve bunun yerine destek, eğitim ve entegrasyon için ücret talep etti. 11 Ağustos 1999'da şirket halka arz oldu. İlk gün kazancı, o dönemde Wall Street tarihinde sekizinci en büyük olarak sıralandı.",
       "coda": "Kurucu Bob Young, dört ay sonra CEO olarak görevden alındı."
@@ -338,7 +329,6 @@
       "coda": "Bu gönderinin yazarı bunu yalnızca meslektaşları için yazmıştı."
     },
     "hupu-rumours": {
-      "tag": "Forum",
       "title": "Söylentileri çeviren",
       "body": "Ocak 2004'te Chicago'da makine mühendisliği doktorası yapan Çinli bir öğrenci boş zamanlarında bir basketbol forumu kurdu. Çoğunlukla NBA haberlerini ve söylentilerini Çinceye çevirip düzenlemekten ibaretti.",
       "coda": "Sekiz yıl sonra forum kendi çevrimiçi mağazasını açtı."
@@ -363,7 +353,6 @@
     },
     "knuth-reward-check": {
       "tag": "Ödül",
-      "title": "Bank of San Serriffe",
       "body": "Donald Knuth, kitaplarında bulunan her hata için 2,56 dolar ödüyor; ödemeler kurgusal Bank of San Serriffe üzerinden yapılıyor. Mart 2005 itibarıyla imzaladığı çeklerin toplam tutarı 20.000 doları aştı.",
       "coda": "Çekleri yatıranlardan çok çerçeveletenler oldu."
     },
@@ -482,7 +471,6 @@
       "coda": "2005'e kadar 75 ülkede yılda 95 milyon kutu satıyordu."
     },
     "hedy-lamarr-frequency-hopping-patent": {
-      "tag": "Patent",
       "title": "Raf edilen Patent",
       "body": "1942'de Lamarr ve besteci George Antheil, torpido radyosunun bozulmasını önlemek için bir frekans atlama sistemi patentini aldı. Donanma bunu gizli sınıflandırdı, raf etti ve Lamarr'ın bunun yerine savaş tahvili satmasını önerdi. Patent, herhangi bir gemi bunu taşımadan önce 1959'da süresi doldu.",
       "coda": "Lamarr, patent için ömrü boyunca ödeme almadı."
@@ -735,7 +723,6 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Anekdot",
-      "title": "Algorhyme",
       "body": "1985'te Perlman'ın DEC'teki yöneticisi, döngüsüz köprüleme sorununu Cuma günü verdi, ardından bir hafta kayboldu. O, Wednesday'e kadar spanning-tree algoritmasını bitirmişti — ve kalan süreyi Algorhyme'i yazarak geçirdi; makalenin özetine dönüşen bir şiir.",
       "coda": "Şiiri yazmak, algoritmayı yazmaktan daha uzun sürdü."
     },
@@ -782,7 +769,6 @@
       "coda": "Temmuz 2026'da programlama dili popülaritesine ilişkin TIOBE indeksinde birinci sırada yer aldı."
     },
     "worse-is-better": {
-      "tag": "Debate",
       "title": "Daha Kötü Daha İyi",
       "body": "1989'da Richard Gabriel 'worse is better' kavramını ortaya attı: basit, yarım doğru bir uygulama, eksiksiz ve doğru bir uygulamadan daha iyi hayatta kalır; bu yüzden C ve Unix'in Lisp'i geçirdiğini düşündü. 1991'de Nickieben Bourbaki takma adıyla, eski bir arkadaş gibi davranarak bir yanıt yayımladı.",
       "coda": "Onlarca yıl sonra kendi argümanının doğru olup olmadığına karar veremediğini söyledi."
@@ -812,7 +798,6 @@
       "coda": "Kasım 2017'den bu yana dünyanın en hızlı 500 süperbilgisayarının tamamı, üzerine inşa edilmiş bir işletim sistemi çalıştırmaktadır."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Ücretsiz Beat Fiyatlı",
       "body": "1991'de Tim Berners-Lee, World Wide Web'i CERN'den yayınladı. Aynı yıl Minnesota Üniversitesi, bir süreliğine daha popüler sistem olan Gopher'ı yayınladı. Şubat 1993'te Minnesota, Gopher sunucuları için lisans ücretleri duyurdu. O Nisan'da CERN, web protokolünü ücretsiz hale getirdi.",
       "coda": "Gopher, ücret duyurusundan önce daha büyük bir takipçi kitlesine sahipti ve sonrasında bir daha asla sahip olamadı."
@@ -836,7 +821,6 @@
       "coda": "İki hat var; sadece biri yıldönümü görüyor."
     },
     "wiki-the-airport-shuttle": {
-      "tag": "Etymology",
       "title": "Bir Şehirler Arası Otobüsten Adını Aldı",
       "body": "\"Wiki\" Hawaii dilinde \"hızlı\" anlamına gelir. 1995 yılında Ward Cunningham, geliştirdiği ilk düzenlenebilir web sistemi için bir isim ararken teknik bir terim yerine Honolulu havalimanında terminal arası ücretsiz otobüs olan Wiki Wiki Shuttle'ı hatırladı.",
       "coda": "Kelimenin ilk evi, bir havaalanı otobüsünün yan tarafına boyanmıştı."
@@ -872,7 +856,6 @@
       "coda": "Standart kuruluşu, kendi güvenlik tavsiyesini yayınladıktan altı yıl sonra geri çekti."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "Bir Özgeçmiş Görüntüleme Sayacı",
       "body": "1994 yılında bir programcı, çevrimiçi özgeçmişini kaç kişinin görüntülediğini bilmek istemesi dışında hiçbir nedenle C dilinde birkaç küçük CGI programı yazdı. Araç takımına \"Personal Home Page Tools\" adını verdi ve kaynağı Haziran 1995'te yayınladı.",
       "coda": "Üç on yıl sonra, sunucu tarafı dili bilinen web sitelerinin %70'inden fazlası hala onun torununu çalıştırıyor."
@@ -951,12 +934,10 @@
     },
     "mars-climate-orbiter-units": {
       "tag": "Olay",
-      "title": "Pound-Force, Newton",
       "body": "Mars Climate Orbiter yörünge yerleşimi sırasında sessiz kaldı. Kurul, müteahhitin itici yazılımının impulsu pound-force saniye cinsinden çıkartırken, navigasyon yazılımının newton-saniye beklediğini ve 4.45 kat fark olduğunu buldu. Aracın yüzeye yaklaşık 57 km mesafeye kadar yönlendirildiği tespit edildi.",
       "coda": "327.6 milyon dolarlık görev bir daha asla veri iletmadi."
     },
     "paypal-palm-beaming": {
-      "tag": "Pivot",
       "title": "Hiç Gelmeyen Işın",
       "body": "1999'da Confinity, Palm Pilot cihazları arasında kızılötesi para transferini başlattı ve bir fonlama etkinliğinde canlı olarak tanıttı. Lansmandan haftalar sonra yaklaşık 13.000 kullanıcısı vardı; bu sayı sonraki yıl boyunca neredeyse hiç değişmedi. Asıl ilgi gören şey, yalnızca bir yedek seçenek olarak geliştirilen e-posta ödemeleri oldu.",
       "coda": "Şirket kendini PayPal olarak yeniden adlandırdı ve ışını sessizce bıraktı."
@@ -992,13 +973,11 @@
       "coda": "Yorum, yarattığı karşıt örnek olarak artık rutin olarak alıntılanıyor."
     },
     "discuz-shenyang-dorm": {
-      "tag": "Forum",
       "title": "CDB, bir yurt projesi",
       "body": "2001'de Shenyang'da bir yurtta yaşayan bir üniversite öğrencisi, forum yazılımı yazdı ve Crossday Bulletin adını verdi; dersleriyle birlikte üzerinde çalıştı. Ertesi yılın ekim ayında adını Discuz olarak değiştirdi.",
       "coda": "23 Ağustos 2010'da Tencent, bunun etrafında kurduğu şirketi satın aldı."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Nupedia'nın Yanında Bir Yan Proje",
       "body": "10 Ocak 2001'de, hakemli bir çevrimiçi ansiklopedinin kurucusu, projenin kendi sunucusuna wiki yazılımı kurdu; temel olarak gönüllülerin, hakemli ansiklopedi yavaşça ilerlerken gevşekçe taslak maddeler yazmayı deneyebilmeleri için.",
       "coda": "Temmuz 2026'ya kadar yalnızca İngilizce baskısı 7.2 milyondan fazla makale içeriyordu."
@@ -1088,13 +1067,11 @@
       "coda": "Facebook 2004'te aynı sosyal-grafik fikriyle piyasaya sürüldü ve trafik altında kaldı."
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
       "title": "Mağaza Yazılımı Mağazadan Büyüdü",
       "body": "2004'te programcı Tobias Lutke, günün e-ticaret yazılımının çok kaba olduğunu buldu, bu yüzden Snowdevil olarak karabin ekipmanlarını çevrimiçi satmak için kendi yazılımını yazdı. Snowdevil kendisi küçük bir mağaza olarak kaldı, ancak diğer tüccarlar arkasındaki yazılımı lisanslamaya başladı.",
       "coda": "Shopify 2015'te New York Stock Exchange'te listelendi."
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
       "title": "Podcast Şirketinin Yan Projesi",
       "body": "28 Haziran 2005'te Apple, podcast aboneliklerini iTunes'a ekledi; iki gün içinde abonelikler bir milyonu geçti ve Odeo'nun tüm podcast işi bir gecede geçersiz oldu. Ertesi Mart'ta, iç bir hackathon Jack Dorsey'in SMS durum güncellemesi fikrini üretti: Twitter.",
       "coda": "Twitter'in içinde inşa edildiği şirket olan Odeo, 2007 yılında satıldı."

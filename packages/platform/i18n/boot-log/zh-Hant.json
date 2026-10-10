@@ -111,7 +111,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "註解",
-      "title": "Burn, Baby, Burn",
       "body": "登月艙的主點火常式在原始碼中被標記為 BURN_BABY_BURN。這個名稱與推力無關；它借自當時一位靈魂樂電台 DJ 的口頭禪。",
       "coda": "這行字仍原封不動地留在公開倉庫中。"
     },
@@ -231,7 +230,6 @@
     },
     "sosumi-so-sue-me": {
       "tag": "命名",
-      "title": "So Sue Me",
       "body": "1991 年，Apple 法律部門以和解協議禁止 Apple Computer 使用與音樂相關的商標為由，拒絕了警示音效名稱「Let It Beep」，認為其過於音樂化。音效設計師 Jim Reekes 回覆「so sue me」，隨後將其註冊為「sosumi」。",
       "coda": "該音效在 Mac OS 中隨附近三十年，直至 2020 年被 Big Sur 取代。"
     },
@@ -783,36 +781,26 @@
     },
     "worse-is-better": {
       "tag": "辯論",
-      "title": "Worse Is Better",
       "body": "1989 年 Richard Gabriel 提出「worse is better」：簡單、半對的實作比完整、正確的實作更能存活，這也是他認為 C 與 Unix 勝過 Lisp 的原因。1991 年他以 Nickieben Bourbaki 的假名發表反駁，偽裝成一位老朋友。",
       "coda": "數十年後他仍表示無法判斷自己的論點是否正確。"
     },
     "rfc1149-avian-carriers-test": {
-      "tag": "Incident",
-      "title": "The Protocol Someone Actually Flew",
       "body": "David Waitzman 於 1990 年愚人節發布 RFC 1149：一份以鴿子承載 IP 數據報的規格。2001 年 4 月 28 日，Bergen Linux User Group 實際建造了它，在約 5 公里距離上發射九個 ping 封包。四個返回——55% 的封包遺失率，往返時間介於 53 至 106 分鐘。",
       "coda": "這份玩笑 RFC 在紀錄上有一個真實的封包遺失數字：55 百分比。"
     },
     "att-1990-break-statement": {
-      "tag": "Incident",
-      "title": "The Misplaced Break",
       "body": "紐約 4ESS 交換機上的一條復原常式將 break 語句嵌套得過淺一層，這是一個測試從未觸發的缺陷。重啟常式的「ready」訊號隨後被鄰近交換機誤讀為錯誤，虛假警報在網絡中級聯了九小時。",
       "coda": "AT&T 後來將損失的營收定為六千萬美元。"
     },
     "aspec-vs-musicam": {
-      "tag": "Audio",
-      "title": "Losing to the Simpler One",
       "body": "1991 年，MPEG 測試了兩個競爭的音頻編碼器。由 Fraunhofer、AT&T 與法國 CNET 建構的 ASPEC 在品質測試中獲勝，但被判定過於複雜。來自 Matsushita 與 Philips 的 MUSICAM 憑藉簡潔性獲勝。最終的 MP3 仍將 ASPEC 的濾波器設計重新納入。",
       "coda": "所有人稱為 MP3 的格式，在獲勝者的名稱內承載了落敗提案的工程。"
     },
     "linux-minix-post": {
-      "tag": "Kernel",
-      "title": "A Post to comp.os.minix",
       "body": "1991 年 8 月 25 日，一名赫爾辛基大學學生在 comp.os.minix 新聞組發文，表示他正在撰寫一個免費作業系統，稱其「只是一個興趣，不會像 gnu 那樣龐大且專業」，並詢問人們想要什麼功能。",
       "coda": "自 2017 年 11 月起，全球最快的 500 台超級電腦皆運行基於它的作業系統。"
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "免費的 Beat 定價",
       "body": "1991 年，Tim Berners-Lee 從 CERN 發布了 World Wide Web。同年，明尼蘇達大學發布了 Gopher，一度成為更受歡迎的系統。1993 年 2 月，明尼蘇達大學宣布對 Gopher 伺服器收取授權費。同年 4 月，CERN 將網頁協定改為免費。",
       "coda": "在收費公告之前，Gopher 擁有更大的追隨者群體，此後再未恢復。"
@@ -998,31 +986,26 @@
       "coda": "2010 年 8 月 23 日，Tencent 收購了他圍繞該軟體建立的公司。"
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Nupedia 旁的副專案",
       "body": "2001 年 1 月 10 日，一位同儕審查線上百科全書的創辦人，在專案自有伺服器上安裝了 wiki 軟體，主要讓志工在受審查百科緩慢推進的同時，能於旁側隨意嘗試撰寫條目。",
       "coda": "至 2026 年 7 月，其英文版單單就擁有超過 720 萬篇文章。"
     },
     "bittorrent-mailing-list": {
-      "tag": "Protocol",
       "title": "一款新的 P2P 應用",
       "body": "2001 年 7 月 2 日，一名程式設計師在 Yahoo eGroups 郵件列表上發布了一則標題為「BitTorrent -- a new P2P app」的訊息，描述了他剛完成設計的一種檔案分發協定，該協定能同時從多個來源拉取檔案片段。",
       "coda": "三年後，根據 2004 年 CacheLogic 的研究，它佔據了所有網際網路流量的三分之一。"
     },
     "webvan-thirty-minute-window": {
-      "tag": "Groceries",
       "title": "三十分鐘窗口",
       "body": "1996 年，Borders 書店共同創辦人 Louis Borders 創立了 Webvan，承諾在從零建成的倉庫基礎上提供 30 分鐘送貨。它於 1999 年 11 月以超過 48 億美元的估值 IPO，募資 3.75 億美元，隨後於 2001 年 7 月申請破產，虧損超過 8 億美元。",
       "coda": "部分 Webvan 高階主管後來轉投 Amazon；Amazon Fresh 和 Instacart 後來填補了相同的訂單需求。"
     },
     "kozmo-free-hour-delivery": {
-      "tag": "Delivery",
       "title": "免費一小時承諾",
       "body": "1998 年，Joseph Park 與 Yong Kang 創立了 Kozmo.com，承諾透過傳呼機調度快遞員提供免費一小時送貨。它募資約 2.5 億美元，但在 1999 年賺得 350 萬美元，卻面臨 2630 萬美元的虧損。2001 年 4 月，員工透過發現辦公室關閉而得知關門消息。",
       "coda": "2013 年創立的 DoorDash，透過智慧型手機 GPS 調度快遞員，並收取送貨費。"
     },
     "flooz-digital-currency": {
-      "tag": "Currency",
       "title": "無店鋪的貨幣",
       "body": "1999 年 2 月，iVillage 聯合創辦人 Robert Levitan 推出 Flooz.com，一種用戶可向合作商家購買並消費的數位貨幣。一個犯罪集團使用盜用信用卡鑄造了 30 萬美元的詐欺信用額度，到 2001 年詐欺佔交易量達 19%。該公司於同年 8 月倒閉。",
       "coda": "2009 年 1 月，Satoshi Nakamoto 挖出了比特幣的創世區塊。"
@@ -1304,25 +1287,21 @@
       "coda": "每月捐款從約 2,500 美元降至 400 美元。"
     },
     "tesla-westinghouse-royalty": {
-      "tag": "Patents",
       "title": "Tesla 放棄的版稅",
       "body": "Westinghouse 的合約按每馬力 2.50 美元支付 Tesla 版稅。1891 年初，在公司濒临失敗之際，Tesla 免除其版稅條款。",
       "coda": "1897 年 Westinghouse 以 216,000 美元 outright 買斷其專利。"
     },
     "salk-polio-patent": {
-      "tag": "Patents",
       "title": "太陽沒有專利",
       "body": "Edward Murrow 詢問誰擁有小兒麻痺疫苗專利。Salk 回答沒有，難道能為太陽申請專利嗎。基金會律師早已審查該問題，並發現因先前技術存在，該疫苗缺乏可專利的新穎性。",
       "coda": "該未申請專利的疫苗後被估值為 70 億美元。"
     },
     "cobol-two-hundred-billion-lines": {
-      "tag": "Legacy",
       "title": "兩千億行",
       "body": "至 1997 年，Gartner 估計有 2000 億行 COBOL 程式碼運行全球 80 百分比的商業程式。2020 年，隨著 COVID 時期失業申請激增，數個美國州政府公開呼籲招募 COBOL 程式員，以維持其數十年歷史的福利系統運行。",
       "coda": "自該呼籲以來已過去六年。"
     },
     "sabre-sage-to-booking": {
-      "tag": "Booking",
       "title": "從雷達到預訂",
       "body": "美國航空與 IBM 於 1957 年簽署合作協議，將美國空軍冷戰時期的 SAGE 防空架構改造成預訂系統。SABRE 於 1960 年進行首次線上測試，1964 年全面上線，成為全球首個線上交易處理系統。",
       "coda": "母公司至今仍在營運，已逾六十年。"

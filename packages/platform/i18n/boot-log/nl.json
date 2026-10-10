@@ -1,8 +1,6 @@
 {
-  "panelLabel": "Boot log",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
       "title": "De naam die van het patent werd weggelaten",
       "body": "Op 23 december 1947 demonstreerden Bardeen en Brattain een germanium puntcontacttransistor bij Bell Labs. Shockley was niet in de kamer. Advocaten oordeelden dat zijn eigen ontwerp te veel leek op een patent van Julius Lilienfeld uit 1925 en haalden zijn naam van dit patent.",
       "coda": "In 1956 deelden alle drie de Nobelprijs voor Natuurkunde."
@@ -20,7 +18,6 @@
       "coda": "Wikipedia noemt Intel en AMD onder de tientallen bedrijven die zijn terug te voeren op die afsplitsing."
     },
     "kilby-noyce-six-months-1958-1959": {
-      "tag": "Parallel",
       "title": "Zes maanden, één medaille",
       "body": "Kilby demonstreerde een werkende geïntegreerde schakeling bij Texas Instruments in september 1958, de onderdelen verbonden door externe draden. Noyce diende een monolithische siliciumversie in bij Fairchild in juli 1959, massaal te produceren. Geen van beide mannen verwierp de claim van de ander op mede-uitvinderschap.",
       "coda": "Kilby accepteerde de Nobelprijs van 2000 alleen. Noyce was in 1990 overleden."
@@ -50,7 +47,6 @@
       "coda": "In 1995 zei Moore dat de term bijna alles in de chipindustrie was gaan betekenen."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
       "title": "De secretaresse en DOCTOR",
       "body": "In 1966 bracht Joseph Weizenbaum ELIZA's DOCTOR-script uit bij MIT, een programma dat voornamelijk de eigen zinnen van gebruikers terugkaatste als vragen. Zijn eigen secretaresse zou hem hebben gevraagd de kamer te verlaten zodat ze er alleen mee kon praten.",
       "coda": "Het patroon dat hij niet had verwacht, werd later de ELIZA-effect genoemd."
@@ -75,7 +71,6 @@
     },
     "rfc1": {
       "tag": "Bestuur",
-      "title": "Request for Comments",
       "body": "Steve Crocker moest de eerste regels schrijven voor een paar genetwerkte hosts. Niemand had hem het gezag gegeven, en hij vreesde dat het zou overkomen als het trekken van rang — dus noemde hij het genre een Request for Comments.",
       "coda": "Elke regel waar het internet sindsdien overeenstemming over heeft bereikt, heet nog steeds een RFC."
     },
@@ -86,20 +81,15 @@
       "coda": "Vier weken later draaide de machine die niemand wilde Unix."
     },
     "alarm-1202": {
-      "tag": "Incident",
-      "title": "Program alarm 1202",
       "body": "Vier minuten voor het oppervlak gaf de besturingscomputer vijf alarmen: een rendez-vous-radarschakelaar die in de verkeerde stand was achtergelaten, vrat zijn cycli. Hij hing niet. Hij liet de laagprioritaire taken vallen, herstartte en hield de landing gaande.",
       "coda": "Weten wat je onder belasting moet laten vallen, is de dure les."
     },
     "mariner-1": {
-      "tag": "Incident",
       "title": "Eén ontbrekende overbar",
       "body": "Mariner 1 werd 293 seconden na lancering vernietigd. Een boordbeacon was uitgevallen, en toen de besturingsvergelijkingen in het programma werden gekopieerd, viel een overbar van R weg. De streep betekende: neem het gemiddelde.",
       "coda": "De pers vond overbar moeilijk te verklaren en schreef een koppelteken. Het koppelteken bleef hangen."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
-      "title": "The Mother of All Demos",
       "body": "Engelbart kreeg negentig minuten. Zijn terminal liep over telefoonlijnen naar een machine dertig mijl verderop, en hij demonstreerde de muis, hyperlinks, vensters, scherm delen, en twee personen die tegelijk één document bewerkten.",
       "coda": "Duizend mensen keken toe, en gingen daarna nog een decennium terug naar ponskaarten."
     },
@@ -111,7 +101,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Commentaar",
-      "title": "Burn, Baby, Burn",
       "body": "De hoofdontstekingsroutine van de maanlander is in de broncode gelabeld als BURN_BABY_BURN. De naam gaat niet over de stuwing; hij was overgenomen van een catchphrase van een soul-radio-dj uit die tijd.",
       "coda": "De regel staat nog steeds ongewijzigd in de openbare repository."
     },
@@ -134,19 +123,16 @@
       "coda": "Algemene verkoop van de Intel 4004 begon die juli."
     },
     "pong-coin-overflow": {
-      "tag": "Feedback",
       "title": "De Muntkoker Liep Over",
       "body": "In augustus 1972 plaatste Atari de Pong-prototype in een bar in Sunnyvale. Enkele dagen later meldde de eigenaar dat hij kapot was. Ingenieur Al Alcorn reed erheen om hem te repareren en ontdekte dat de storing niet elektrisch was: het muntmechanisme was vastgelopen omdat het overliep met kwartjes.",
       "coda": "De storing was geen bedradingfout; het waren te veel munten."
     },
     "wozniak-breakout-bonus": {
-      "tag": "Bonus",
       "title": "De Splitsing",
       "body": "In 1973 vroeg Atari Steve Jobs om het Breakout-circuitboard te verkleinen, met betaling van $100 per verwijderd chip. Jobs vroeg Wozniak om hulp, met de belofte van de helft. Wozniak verwijderde 50 chips. Jobs zei dat het totaal $700 was, dus Wozniaks aandeel was $350. Tien jaar later ontdekte Wozniak dat de echte bonus $5.000 was.",
       "coda": "Wozniak zei dat hij Jobs het geld had gegeven als hij had gevraagd."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
       "title": "Niet Verwacht om te Begrijpen",
       "body": "Sixth Edition Unix's slp.c bevat de regel 'You are not expected to understand this,' gekoppeld aan proces-swap stack-herstelcode gebouwd op PDP-11 compiler-quirks. Dennis Ritchie zei later dat hij het bedoelde zoals een leraar zegt dat dit niet op het examen komt.",
       "coda": "De routine werd herschreven voor Seventh Edition Unix."
@@ -194,19 +180,16 @@
       "coda": "In 2022 verwerkte een productie-EUV-scanner ongeveer tweehonderd wafers per uur."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
       "title": "Een foundry op vijfenzestig",
       "body": "Morris Chang, geboren in 1931, steeg op tot groepsvicepresident van wereldwijde halfgeleideroperaties bij Texas Instruments, diende vervolgens als president en COO van General Instrument, en leidde vervolgens de ITRI van Taiwan. In 1987, op vijfenzestig, stichtte hij TSMC, dat geen van de chips ontwerpt die het maakt.",
       "coda": "Het was de eerste foundry ter wereld die niets deed dan fabriceren."
     },
     "huawei-diet-pills": {
-      "tag": "Reseller",
       "title": "Huawei's eerste bedrijf was geen tech",
       "body": "Huawei registreerde zich op 15 september 1987 met 21.000 yuan kapitaal, en noemde zichzelf een technologiebedrijf. Het begon met het verhandelen van goederen, waaronder dieetpillen, en verkocht vervolgens in Hong Kong gemaakte HAX-schakelaars voor de marge. Zijn eigen schakelaar, de BH01, werd pas in 1989 met de hand gemonteerd.",
       "coda": "Na vier jaar tekende het bedrijf voor het eerst zijn eigen printplaat."
     },
     "morris": {
-      "tag": "Incident",
       "title": "Een meting",
       "body": "Morris wilde weten hoe groot het internet was, dus schreef hij een programma dat zichzelf kopieerde. Om te voorkomen dat hosts een al geïnfecteerde reactie vonden, gaf hij het een kans op zeven om toch opnieuw te infecteren.",
       "coda": "Die kans op zeven bracht ongeveer 6.000 van de 60.000 hosts die toen online waren, naar beneden."
@@ -231,7 +214,6 @@
     },
     "sosumi-so-sue-me": {
       "tag": "Naamgeving",
-      "title": "So Sue Me",
       "body": "In 1991 weigerde de juridische afdeling van Apple de naam \"Let It Beep\" voor het waarschuwingsgeluid als te muzikaal, onder een schikking die Apple Computer verbod op muziekgerelateerde handelsmerken oplegde. Geluidsontwerper Jim Reekes schreef terug \"so sue me\" en diende het in als \"sosumi\".",
       "coda": "Het geluid werd bijna drie decennia meegeleverd in Mac OS voordat Big Sur het in 2020 verving."
     },
@@ -242,7 +224,6 @@
       "coda": "Niemand heeft sindsdien een royalty betaald om het te gebruiken."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "De server die ze niet konden bereiken",
       "body": "Op 10 december 1993 gaf id Software de eerste episode van Doom weg als shareware, in de hoop op verkoop van de rest. Bij het uploaden naar een FTP-server van de Universiteit van Wisconsin troffen ze zoveel wachtenden aan dat het team zelf geen verbinding kon maken.",
       "coda": "De upload was rond middernacht voltooid; tienduizend gelijktijdige downloads legden het universiteitsnetwerk plat."
@@ -260,7 +241,6 @@
       "coda": "Twee jaar later ging de eerste eigen sedan, de F3, in de verkoop."
     },
     "ariane-501": {
-      "tag": "Incident",
       "title": "Zevenendertig seconden",
       "body": "Zevenendertig seconden na de start zette het traagheidsreferentiesysteem een 64-bit float om naar een 16-bit integer, wat leidde tot een overflow; rond veertig seconden viel het voertuig uit elkaar. De routine kwam ongewijzigd uit Ariane 4 en had na de lancering niet mogen draaien.",
       "coda": "Ongeveer $370 miljoen, besteed aan code die uitgeschakeld had moeten zijn."
@@ -278,14 +258,11 @@
       "coda": "Er is nooit een benoemde opvolger vermeld."
     },
     "book-of-mozilla-verses": {
-      "tag": "Easter Egg",
       "title": "Het Boek van Mozilla",
       "body": "Het intypen van about:mozilla in de adresbalk onthult het Boek van Mozilla, een apocalyptische vers die 'het beest' tegen 'Mammon' uitspeelt en die elke browsergeneratie bijwerkt. De versnummers zijn geen hoofdstukmarkeringen: het zijn releasedatums.",
       "coda": "De nieuwste vers, 6:27, verscheen voor het eerst in een Firefox Nightly-build in 2020."
     },
     "http-418-teapot": {
-      "tag": "Protocol",
-      "title": "I'm a Teapot",
       "body": "RFC 2324, gepubliceerd op 1 april 1998, definieert status 418 als \"I'm a teapot\" en classificeert zichzelf als Informational, niet als standaard. Op 1 april 2014 breidde RFC 7168 dit uit tot theezetten. De code is nooit een echte standaard geworden.",
       "coda": "Beide documenten blijven Informational; de statuscode verscheen toch in echte servers."
     },
@@ -296,7 +273,6 @@
       "coda": "De groep probeerde later de term te registreren als handelsmerk en faalde."
     },
     "netscape-source-1998": {
-      "tag": "Release",
       "title": "Niet helemaal open",
       "body": "Op 22 januari 1998 kondigde Netscape aan dat de broncode van de browser zou worden vrijgegeven, en de werknemer Jamie Zawinski registreerde mozilla.org. Maar de licentie die ze schreven hield één deur open: Netscape zelf kon doorgaan met dezelfde code in propriëtaire producten te verwerken.",
       "coda": "Netscape werd ongeveer een jaar later overgenomen door AOL."
@@ -308,7 +284,6 @@
       "coda": "De handtekening van één kantoor liet een clausule vervallen die een decennium lang was vermenigvuldigd."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "De prijs van gratis software",
       "body": "Red Hat gaf de broncode van zijn kernproduct weg en rekende in plaats daarvan voor ondersteuning, training en integratie. Op 11 augustus 1999 ging het bedrijf naar de beurs. De winst op de eerste dag stond op dat moment op de achtste plaats in de geschiedenis van Wall Street.",
       "coda": "Oprichter Bob Young werd vier maanden later vervangen als CEO."
@@ -338,7 +313,6 @@
       "coda": "De auteur van die post had het alleen voor zijn collega's bedoeld."
     },
     "hupu-rumours": {
-      "tag": "Forum",
       "title": "Degene die geruchten vertaalt",
       "body": "In januari 2004 startte een Chinese student die in Chicago aan een doctoraat in werktuigbouwkunde werkte, in zijn vrije tijd een basketbalforum. Het werk bestond voornamelijk uit het vertalen van NBA-nieuws en geruchten naar het Chinees en het opruimen ervan.",
       "coda": "Acht jaar later opende het forum een eigen webwinkel."
@@ -363,12 +337,10 @@
     },
     "knuth-reward-check": {
       "tag": "Beloning",
-      "title": "Bank of San Serriffe",
       "body": "Donald Knuth betaalt $2,56 voor elke in zijn boeken gevonden fout, getrokken op de fictieve Bank of San Serriffe. Tot maart 2005 bedroeg het totaal van de door hem ondertekende cheques meer dan $20.000.",
       "coda": "De meeste ontvangers lijsten de cheque in in plaats van hem te verzilveren."
     },
     "dji-helicopter-first": {
-      "tag": "Pivot",
       "title": "DJI begon met een helikopter",
       "body": "Frank Wang studeerde in 2006 af aan de Hong Kong University of Science and Technology en richtte DJI op in Shenzhen met medestudenten. Het eerste product was een vluchtcontrolesysteem voor helikopters; de eerste volwassen versie, XP3.1, werd in 2008 verzonden.",
       "coda": "Het team ontdekte later dat de meeste kopers van gimbals deze op multirotors monteerden, niet op helikopters."
@@ -380,7 +352,6 @@
       "coda": "Elf jaar later, bij de IPO, noemde Houston het zijn favoriete thread op de site."
     },
     "butterfield": {
-      "tag": "Pivot",
       "title": "Tweemaal uit het puin",
       "body": "Butterfields spel, Game Neverending, liep vast, en het team spinde het foto-delende deel uit als Flickr. Acht jaar later werd zijn tweede spel, Glitch, stopgezet, en het team spinde de chattool uit die ze voor zichzelf hadden gebouwd: Slack.",
       "coda": "Beide keren werd het bijproduct pas zichtbaar nadat het hoofdproject was gesloten."
@@ -410,7 +381,6 @@
       "coda": "De financieringsgeschiedenis bestaat uit één Kickstarter en een Open Source Collective-account."
     },
     "xiaomi-software-first": {
-      "tag": "Software",
       "title": "Xiaomi's Eerste Product Was Geen Telefoon",
       "body": "Xiaomi werd opgericht op 6 april 2010. Dat augustus en december bracht het bètaversies uit van het MIUI-besturingssysteem en de Miliao-chatapp, beide software.",
       "coda": "Het eerste telefoonmodel van het bedrijf werd pas in augustus van het volgende jaar geleverd."
@@ -422,7 +392,6 @@
       "coda": "De twee overlijdensberichten verschenen in dezelfde week."
     },
     "leap-second": {
-      "tag": "Incident",
       "title": "De extra seconde",
       "body": "Een schrikkelseconde werd ingevoegd om atoomklokken op de rotatie van de aarde af te stemmen. De kernel informeerde zijn timersubsystem niet, high-resolution timers vuurden te vroeg en processors draaiden. Reddit, Mozilla en LinkedIn stonden stil; een luchtvaartmaatschappij liet passagiers handmatig instappen.",
       "coda": "Tijd neemt niet monotoon toe. Code neemt aan dat het wel zo is."
@@ -440,7 +409,6 @@
       "coda": "Het woord voor de truc was bij het eerste gebruik een grappig punt over het falen van de truc."
     },
     "french-revolutionary-decimal-time": {
-      "tag": "Experiment",
       "title": "De tien-uren dag",
       "body": "In 1793 verdeelde Frankrijk de dag in tien uren van honderd decimale minuten. Verplicht gebruik begon in september 1794 en werd zeven maanden later opgeheven. Het decimale wijzerplaat op de klok van het Tuileriespaleis liep door tot ten minste 1801.",
       "coda": "Het afgeschaft systeem bleef jarenlang aan een paleismuur gemonteerd."
@@ -458,13 +426,11 @@
       "coda": "Western Union weigerde dat jaar wel het octrooi van Bell; het schreef deze memo nooit."
     },
     "nintendo-hanafuda-detours": {
-      "tag": "Pivot",
       "title": "De omwegen na de bloemkaarten",
       "body": "Fusajiro Yamauchi opende in 1889 een winkel in Kyoto waar hij handgemaakte hanafuda-spelkaarten verkocht. Het bedrijf probeerde later een taxidienst en instantrijst, beide opgegeven; de veelgehaalde claim over een keten van love-hotels heeft geen vermelding in effectenregistraties die tot 1962 zijn onderzocht.",
       "coda": "In 1966 verkocht een speelgoed genaamd de Ultra Hand honderdduizenden exemplaren."
     },
     "wrigley-premiums-premium": {
-      "tag": "Pivot",
       "title": "De bonus van de bonus",
       "body": "In 1891 verkocht William Wrigley Jr. zeep in Chicago en voegde bakpoeder toe als bonus. Klanten wilden het bakpoeder meer dan de zeep, dus schakelde hij over naar de verkoop daarvan en voegde kauwgom toe als eigen bonus van het bakpoeder. Klanten wilden het kauwgom meer.",
       "coda": "In 1892 had hij zowel zeep als bakpoeder laten vallen om alleen nog kauwgom te verkopen."
@@ -476,7 +442,6 @@
       "coda": "Het toneelstuk behield de naam van één broer op de titelpagina."
     },
     "play-doh-wallpaper-cleaner": {
-      "tag": "Pivot",
       "title": "Het was bedoeld om behang te reinigen",
       "body": "In de jaren dertig formuleerde Kutol een zachte deeg om kolenroet van behang te schrobben. Toen huishoudens overschakelden naar schoner verwarmingsbrandstof, verdween de vraag. Een leraar stelde voor het als modelleerdeeg te verkopen; het werd in 1956 Play-Doh genoemd.",
       "coda": "In 2005 werden er 95 miljoen blikken per jaar verkocht in 75 landen."
@@ -494,13 +459,11 @@
       "coda": "Engelbart en Nelson gaven later beide aan dat het essay de reden was dat zij begonnen."
     },
     "jean-bartik-eniac-dinner": {
-      "tag": "Record",
       "title": "Het diner waar zij niet uitgenodigd waren",
       "body": "Bij de openbare onthulling van ENIAC op 14 februari 1946 was het trajectprogramma dat de zaal onder de indruk bracht geschreven door Jean Bartik en Betty Holberton. De pers introduceerde alleen Eckert en Mauchly. Geen van de zes vrouwelijke programmeurs werd uitgenodigd voor het diner dat volgde.",
       "coda": "Hun namen werden decennia later teruggehaald uit de foto's van het evenement."
     },
     "claude-shannon-juggling-theorem": {
-      "tag": "Paper",
       "title": "De jugglingstelling",
       "body": "In 1948 publiceerde Shannon 'A Mathematical Theory of Communication', waarmee hij de informatietheorie stichtte. Decennia later richtte hij dezelfde nauwkeurigheid op zijn hobby en leidde hij een formele relatie af tussen de vluchttijd van een bal, zijn verblijftijd en het aantal ballen en handen.",
       "coda": "Het werd opgenomen in dezelfde bundel als het paper van 1948."
@@ -524,7 +487,6 @@
       "coda": "Scherr gaf het pas bijna dertig jaar later toe aan de directeur van het lab."
     },
     "katherine-johnson-check-the-numbers": {
-      "tag": "Record",
       "title": "Laat het meisje het controleren",
       "body": "Voor zijn orbitale vlucht in 1962 liet John Glenn ingenieurs Katherine Johnson vragen om de baan handmatig opnieuw te berekenen die een IBM 7090 al had berekend. 'Als zij zegt dat ze goed zijn', zei hij, 'dan ben ik klaar om te gaan.' Haar cijfers kwamen exact overeen met die van de computer.",
       "coda": "Friendship 7 lanceerde op schema, 20 februari 1962."
@@ -542,7 +504,6 @@
       "coda": "Commerciële CAD-software had bijna twee decennia nodig om bij te komen wat de scriptie had getoond."
     },
     "douglas-mcilroy-garden-hose-pipe": {
-      "tag": "Memo",
       "title": "De Tuinslangmemo",
       "body": "In oktober 1964 schreef McIlroy een Bell Labs-memo waarin hij voorstelde dat programma's als tuinslangen met elkaar verbonden zouden worden — schroef een ander segment erop om de gegevens anders te bewerken. Het circuleerde, werd bewonderd en bleef ongebouwd. Negen jaar later voegde Ken Thompson in een nacht één teken, |, toe aan de Unix-shell.",
       "coda": "Tegen de ochtend spraken programma's die nooit met elkaar hadden gecommuniceerd wel met elkaar."
@@ -560,7 +521,6 @@
       "coda": "Het Web nam zijn vocabulaire over en liet het betalingsmechanisme achter."
     },
     "mary-allen-wilkes-linc": {
-      "tag": "Record",
       "title": "De LINC in de Woonkamer",
       "body": "In 1965 verplaatste Wilkes een 250 pond zware LINC-computer naar de woonkamer van haar ouders in Baltimore en schreef alleen LAP6, een interactief besturingssysteem — twaalf jaar voordat de Apple II in enig huis terechtkwam. Toen gevraagd of zij de eerste was, zei ze alleen: 'Ik denk dat ik misschien wel de eerste was.'",
       "coda": "Zij claimde de titel nooit zelf openlijk."
@@ -572,7 +532,6 @@
       "coda": "Het veiligheidsdoel was expliciet; het falen was dat gemak toch won."
     },
     "johnson-vs-cern-touchscreen": {
-      "tag": "Touchscreen",
       "title": "Wie was er werkelijk het eerst",
       "body": "CERN schrijft Bent Stumpe toe de werelds eerste capacitieve touchscreen te hebben gebouwd in 1972, voor zijn versnellerbesturingsruimte. Eric Johnson van de Britse Royal Radar Establishment had al in 1965 een paper gepubliceerd over vingerbediende capacitieve touchtechnologie, zeven jaar eerder.",
       "coda": "CERN's claim om de eerste touchscreen te hebben gebouwd staat nog steeds op zijn eigen website."
@@ -602,7 +561,6 @@
       "coda": "De punchline bleek een meetbare, gepubliceerde regressiecoëfficiënt."
     },
     "lanpar-vs-visicalc": {
-      "tag": "Spreadsheet",
       "title": "Het spreadsheet dat niemand een naam gaf",
       "body": "In de zomer van 1969 schreven Harvard-afgestudeerden Rene Pardo en Remy Landau LANPAR, een spreadsheettaal waarmee gebruikers formules in willekeurige volgorde konden invoeren en die toch correct berekende. Bell Canada en General Motors draaiden erop. In 1979 bouwde Dan Bricklin VisiCalc zonder te weten dat LANPAR bestond.",
       "coda": "LANPAR's patent overleefde een rechtszaak tot 1983; de tijdschriften hadden VisiCalc al als eerste genoemd."
@@ -638,13 +596,11 @@
       "coda": "De modulegrens bleek een aanname in te koderen over wat een toekomstige onderhouder zou moeten weten."
     },
     "karen-sparck-jones-idf": {
-      "tag": "Record",
       "title": "De formule die niemand bedankt",
       "body": "In 1972 publiceerde Spärck Jones een paper waarin zij voorstelde dat de zeldzaamheid van een woord in een documentencollectie het belang ervan meet — inverse document frequency, nu onderdeel van de rangschikkingslogica van vrijwel elke zoekmachine. Ze kreeg geen permanente aanstelling in Cambridge tot 1993.",
       "coda": "Tot die tijd had ze gewerkt aan een reeks tijdelijke, op projectgeld gefinancierde contracten."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
       "title": "De vijfde man van het internet",
       "body": "In 1972 bouwde Louis Pouzin het CYCLADES-netwerk in Frankrijk, het eerste waarin eindhosts, niet het netwerk, verantwoordelijk waren voor betrouwbare aflevering. In 1974 bedankte het TCP-paper van Cerf en Kahn hem bij naam. In 2004 wonnen Cerf en Kahn de Turing Award. De naam van Pouzin stond er niet op.",
       "coda": "The Economist noemde hem later de vijfde man van het internet."
@@ -656,7 +612,6 @@
       "coda": "Tegen de tijd dat het paper werd gepubliceerd, draaide Ethernet al drie jaar binnen PARC."
     },
     "vint-cerf-envelope-sketch": {
-      "tag": "Anecdote",
       "title": "De achterkant van een envelop",
       "body": "De stichtingslegende van het internet zegt dat Cerf de gateway-architectuur schetste op een servet. Hij heeft dit gecorrigeerd: 'It wasn't a napkin, actually, it was the back of an envelope.' In 1973, wachtend in een hotellokaal, schetste hij wat het gateway-ontwerp van TCP/IP werd.",
       "coda": "Het jaar erop werd de schets een paper in IEEE Transactions on Communications."
@@ -716,13 +671,11 @@
       "coda": "De standaard die het internet verzocht tolerant te zijn, werd ingetrokken door zijn eigen bewaarders."
     },
     "end-to-end-argument": {
-      "tag": "Paper",
       "title": "Een betoog voor een dom netwerk",
       "body": "In 1981 betoogden Saltzer, Reed en Clark dat het controleren van een overgedragen bestand op fouten alleen correct kan worden gedaan op de twee eindpunten; het netwerk kan helpen maar nooit volledig vervangen. Een paper over waar een checksum moet worden geplaatst werd het stichtende geval voor het eenvoudig houden van netwerken.",
       "coda": "Een notitie over de plaatsing van foutcontrole groeide uit tot het betoog voor netneutraliteit."
     },
     "excel-1900-leap-year": {
-      "tag": "Legacy",
       "title": "Het schrikkeljaar dat er niet was",
       "body": "Lotus 1-2-3 behandelde 1900 als schrikkeljaar, een onschuldig handigheidje. Microsoft kopieerde dezelfde valse datum om compatibel te blijven. Lotus is weg; de valse schrikkeldag blijft, nu vastgelegd in de Office Open XML-specificatie.",
       "coda": "Een compatibiliteitstruc voor een uitgefaseerde concurrent is nu een geschreven standaard."
@@ -735,13 +688,10 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Anekdote",
-      "title": "Algorhyme",
       "body": "In 1985 stelde Perlman's manager bij DEC het probleem van lusvrije bridging op vrijdag, en verdween daarna een week. Ze had het spanning-tree-algoritme woensdag af — en besteedde de rest aan Algorhyme, een gedicht dat het abstract van het paper werd.",
       "coda": "Het gedicht kostte meer tijd dan het algoritme."
     },
     "brooks-no-silver-bullet": {
-      "tag": "Essay",
-      "title": "No Silver Bullet",
       "body": "Op het IFIP-congres van 1986 splitste Fred Brooks softwaremoeilijkheid in essentiële en accidentele complexiteit. Accidentele moeilijkheid was scherp gedaald, zei hij, maar geen enkele techniek zou binnen een decennium een tienvoudige productiviteitswinst opleveren.",
       "coda": "Vier decennia later wordt elk nieuw paradigma nog steeds verkocht als de zilveren kogel die hij zei niet te bestaan."
     },
@@ -752,7 +702,6 @@
       "coda": "De naamgever en de persoon die het sindsdien heeft onderhouden zijn verschillende mensen."
     },
     "china-1987-first-email": {
-      "tag": "Record",
       "title": "Voorbij de Muur",
       "body": "Hervertellingen crediteren Qian Tianbai alleen met Chinas eerste e-mail, 'Across the Great Wall we can reach every corner of the world.' Qian studeerde die maand in de VS; het werd getypt door Li Chengjiong en Werner Zorn uit Karlsruhe, en verliet China zes dagen later, op 20 september.",
       "coda": "Zijn overlijdensberichten noemen hem nog steeds als de afzender."
@@ -764,7 +713,6 @@
       "coda": "Het woord 'principe' was iemands toevoeging."
     },
     "go-corporation-pen-computing": {
-      "tag": "Pen computing",
       "title": "De Tablet die Niemand Kocht",
       "body": "In 1987 startte Jerry Kaplan GO Corporation om het pen-gebaseerde PenPoint-besturingssysteem te bouwen, en verzamelde hij $75 miljoen. AT&T verwierf GO in januari 1994, annuleerde twee weken later de ondersteunende chiplijn, en GO sloot die juli. Kaplan zei later dat het bedrijf \"geen betekenisvolle verkoop\" had.",
       "coda": "In 2010 bracht Apple de iPad uit, een capacitief multitouch-tablet."
@@ -776,43 +724,36 @@
       "coda": "De standaard die iedereen citeert en de dialect waar ieders code tegen controleert, zijn niet hetzelfde document."
     },
     "python-christmas-project": {
-      "tag": "Scripting",
       "title": "Een Kerst Hobby",
       "body": "Tijdens de kerstvakantie van 1989, met zijn kantoor een week gesloten, zocht een onderzoeker in Amsterdam naar een hobby programmeerproject. Hij begon een interpreter te schrijven voor een nieuwe scriptingtaal en noemde het naar een comedygroep, niet naar de slang.",
       "coda": "In juli 2026 stond het op de eerste plaats op de TIOBE-index van programmeertaalt populariteit."
     },
     "worse-is-better": {
       "tag": "Debat",
-      "title": "Worse Is Better",
       "body": "In 1989 coinde Richard Gabriel 'worse is better': een eenvoudige, deels juiste implementatie overleeft beter dan een complete, correcte, waarom hij dacht dat C en Unix Lisp versloegen. In 1991 publiceerde hij een weerlegging onder het pseudoniem Nickieben Bourbaki, zich voorhoudend als een oude vriend.",
       "coda": "Decennia later zei hij nog steeds dat hij niet kon beslissen of zijn eigen argument juist was."
     },
     "rfc1149-avian-carriers-test": {
-      "tag": "Incident",
       "title": "Het Protocol dat Iemand daadwerkelijk vloog",
       "body": "David Waitzman publiceerde RFC 1149 op 1 april 1990: een specificatie voor het vervoeren van IP-datagrammen per duif. Op 28 april 2001 bouwde de Bergen Linux User Group het daadwerkelijk, lanceerde negen ping-pakketten over ongeveer 5 km. Vier keerden terug — een verliespercentage van 55%, rondreizen van 53 tot 106 minuten.",
       "coda": "De grappen-RFC heeft een echt pakketverliespercentage op de boeken: 55 procent."
     },
     "att-1990-break-statement": {
-      "tag": "Incident",
       "title": "De Verkeerd Geplaatste Break",
       "body": "Een herstelroutine op een New Yorkse 4ESS-schakelaar hield een break-statement één niveau te ondiep genest, een defect dat testen nooit uitoefenden. Een 'ready'-signaal van een herstart werd vervolgens door buurtschakelaars verkeerd gelezen als een fout, en de valse alarm cascadeerde negen uur door het netwerk.",
       "coda": "AT&T stelde later het verloren omzet op zestig miljoen dollar."
     },
     "aspec-vs-musicam": {
-      "tag": "Audio",
       "title": "Verliezen van de Eenvoudigere",
       "body": "In 1991 testte MPEG twee rivaliserende audio-codecs. ASPEC, gebouwd door Fraunhofer, AT&T en het Franse CNET, won de kwaliteitstests maar werd te complex bevonden. MUSICAM, van Matsushita en Philips, won op eenvoudigheid. De afgeronde MP3 vouwde het filterontwerp van ASPEC toch weer terug.",
       "coda": "Het formaat dat iedereen MP3 noemt, draagt de engineering van het verliezende voorstel binnen de naam van het winnende."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Een Bericht op comp.os.minix",
       "body": "Op 25 augustus 1991 postte een student uit Helsinki op de comp.os.minix-newsgroep dat hij een gratis besturingssysteem schreef, het noemde 'gewoon een hobby, zal niet groot en professioneel zijn zoals gnu', en vroeg welke functies mensen wilden.",
       "coda": "Sinds november 2017 draaien alle 500 snelste supercomputers ter wereld een besturingssysteem gebouwd op het."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Gratis Beat Geprijsd",
       "body": "In 1991 bracht Tim Berners-Lee het World Wide Web uit bij CERN. Datzelfde jaar bracht de Universiteit van Minnesota Gopher uit, een tijdlang het populairdere systeem. In februari 1993 kondigde Minnesota licentiekosten aan voor Gopher-servers. Dat april maakte CERN het webprotocol gratis.",
       "coda": "Gopher had de grotere aanhang voor de aankondiging van de kosten en had die daarna nooit meer."
@@ -830,7 +771,6 @@
       "coda": "De delegatie die als slachtoffer werd neergezet, hielp de regels schrijven die het bekendstaat als te hebben bestreden."
     },
     "china-first-internet-line": {
-      "tag": "Record",
       "title": "De Lijn Een Jaar Te Vroeg",
       "body": "China markeert 20 april 1994 als de dag waarop het zich aansloot bij het wereldwijde internet — een 64K-lijn, volledige toegang. Dertien maanden eerder hadden fysici bij IHEP al een lijn gehuurd bij Stanford's SLAC en e-mail uitgewisseld met tientallen instellingen. Het was gewoon niet het soort lijn dat iemand telde.",
       "coda": "Twee lijnen bestaan; slechts één krijgt een verjaardag."
@@ -848,7 +788,6 @@
       "coda": "De meest gehoorzaamd herenafspraak van het web duurde achtentwintig jaar om een echte standaard te worden."
     },
     "pentium-fdiv-writeoff": {
-      "tag": "Incident",
       "title": "De ontbrekende tabelvermeldingen",
       "body": "Wiskundige Thomas Nicely merkte dat zijn nieuwe Pentium iets verkeerde resultaten opleverde bij het optellen van de omgekeerde waarden van priemgetallen, en spoorde de fout terug tot de chip zelf. Intel bood eerst alleen vervanging aan aan klanten die zich erover beklaagden, en draaide pas over op een volledige terugroepactie onder publieke druk.",
       "coda": "Intel boekte een voorbelastinglast van $475 miljoen voor de terugroepactie."
@@ -860,7 +799,6 @@
       "coda": "Medeweriker Tony Fadell leidde later de hardwareontwikkeling van de iPod en iPhone bij Apple."
     },
     "ibm-simon-first-touchscreen": {
-      "tag": "Touchscreen",
       "title": "Simon's faxmachine",
       "body": "Op 16 augustus 1994 lanceerden IBM en BellSouth de Simon Personal Communicator: een 4,5-inch touchscreen die e-mail en fax kon versturen, geprijsd op $899. De batterijduur was ongeveer een uur. Het werd zes maanden later uitgefaseerd, na ongeveer 50.000 verkochte exemplaren.",
       "coda": "In 2007 bracht Apple de iPhone uit, een capacitieve touchscreen-telefoon zonder fysiek toetsenbord."
@@ -872,7 +810,6 @@
       "coda": "Het standaardisatieorgaan pensioneerde zijn eigen beveiligingsaanbeveling zes jaar na publicatie."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "Een bezoekenteller voor een cv",
       "body": "In 1994 schreef een programmeur een handvol kleine CGI-programma's in C, zonder andere reden dan dat hij wilde weten hoeveel mensen zijn online cv bekeken. Hij noemde de toolkit \"Personal Home Page Tools\" en bracht de broncode in juni 1995 uit.",
       "coda": "Drie decennia later draait meer dan 70% van de websites met een bekende server-side taal nog steeds een afstammeling ervan."
@@ -896,7 +833,6 @@
       "coda": "De startup was General Magic. De site werd later hernoemd naar eBay."
     },
     "gettickcount-776-day-bug": {
-      "tag": "Overflow",
       "title": "Een schuld van 776 dagen",
       "body": "GetTickCount van Windows 95 springt elke 49,7 dagen terug naar nul, gedocumenteerd gedrag, nooit behandeld als een bug. Maar op Windows 8 tot en met Server 2019 kon dezelfde functie vroegtijdig overlopen, rond de 776 dagen, een echt defect. Microsoft repareerde het pas in Windows 11, versie 24H2.",
       "coda": "De fix landde drie decennia nadat de teller die hij repareert voor het eerst werd uitgebracht."
@@ -950,13 +886,10 @@
       "coda": "Bell zei later dat hij dezelfde keuze opnieuw zou maken."
     },
     "mars-climate-orbiter-units": {
-      "tag": "Incident",
-      "title": "Pound-Force, Newton",
       "body": "Mars Climate Orbiter ging stil tijdens de baaninvoering. De commissie concludeerde dat de software van de aannemer impuls uitstuurde in pond-force seconden terwijl de navigatiesoftware newton-seconden verwachtte, een verschil van een factor 4,45. Het ruimtevaartuig werd gestuurd naar ongeveer 57 km boven het oppervlak.",
       "coda": "De missie van 327,6 miljoen dollar zond nooit meer een signaal uit."
     },
     "paypal-palm-beaming": {
-      "tag": "Pivot",
       "title": "De Beam Die Nooit Kwam",
       "body": "In 1999 lanceerde Confinity infrarode geldovermakingen tussen Palm Pilots, live gedemonstreerd op een financieringsbijeenkomst. Weken na de lancering had het ongeveer 13.000 gebruikers, een aantal dat in het daaropvolgende jaar nauwelijks veranderde. Wat daadwerkelijk opgang maakte waren e-mailbetalingen, die alleen als noodoplossing waren ontwikkeld.",
       "coda": "Het bedrijf hernoemde zichzelf naar PayPal en liet de beam stilzwijgend vallen."
@@ -992,19 +925,16 @@
       "coda": "De opmerking wordt nu routinematig aangehaald als het tegenvoorbeeld dat het opleverde."
     },
     "discuz-shenyang-dorm": {
-      "tag": "Forum",
       "title": "CDB, een dorm-project",
       "body": "In 2001 schreef een universiteitsstudent in een studentenkamer in Shenyang een stuk forumsoftware en noemde het Crossday Bulletin, eraan werkend naast zijn studie. De volgende oktober hernoemde hij het tot Discuz.",
       "coda": "Op 23 augustus 2010 nam Tencent het bedrijf over dat hij eromheen had opgebouwd."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Een zijproject naast Nupedia",
       "body": "Op 10 januari 2001 installeerde de oprichter van een aan collegiale toetsing onderworpen online encyclopedie wiki-software op de eigen server van het project, voornamelijk zodat vrijwilligers losjes concepten konden opstellen terzijde terwijl de getoetste encyclopedie langzaam vooruitgang boekte.",
       "coda": "In juli 2026 bevatte de Engelse editie alleen al meer dan 7,2 miljoen artikelen."
     },
     "bittorrent-mailing-list": {
-      "tag": "Protocol",
       "title": "Een nieuwe P2P-applicatie",
       "body": "Op 2 juli 2001 plaatste een programmeur een bericht op een Yahoo eGroups mailinglijst getiteld \"BitTorrent -- a new P2P app,\" waarin hij een bestandsdistributieprotocol beschreef dat hij zojuist had ontworpen, dat tegelijk stukken van een bestand uit vele bronnen haalde.",
       "coda": "Drie jaar later was het goed for een derde van al het internetverkeer, volgens een studie van CacheLogic uit 2004."
@@ -1064,7 +994,6 @@
       "coda": "Het bedrijf dat uit die fork groeide, werd in 2021 gewaardeerd op 7,5 miljard dollar."
     },
     "2003-blackout-race-condition": {
-      "tag": "Incident",
       "title": "Het alarm dat niet afging",
       "body": "Het alarmproces in een controlekamer in Ohio liep vast door een codefout: twee processen kregen tegelijk schrijftoegang tot dezelfde datastructuur, waardoor een oneindige lus ontstond. Operators zagen de overbelastingswaarschuwingen nooit en konden de belasting niet tijdig verminderen. De cascade liet 55 miljoen mensen zonder stroom.",
       "coda": "Engineers hadden acht weken nodig om de race condition te reproduceren."
@@ -1136,13 +1065,11 @@
       "coda": "De vriend die het bouwde was Kyle Vogt, die later Cruise oprichtte, overgenomen door GM voor meer dan $1 miljard."
     },
     "stackoverflow-blog-post": {
-      "tag": "Q&A",
       "title": "De Anti-Experts-Exchange",
       "body": "Op 16 april 2008 plaatste een programmeur op zijn eigen blog dat hij een vraag-en-antwoordsite voor programmeurs wilde bouwen, een \"anti-Experts-Exchange\", zonder de betaalmuren en zoekmachine-manipulatie die hij aan de gevestigde orde weerzinwekkend vond.",
       "coda": "In 2021 werd de site verkocht aan Prosus voor 1,8 miljard dollar."
     },
     "zune-leap-year-freeze": {
-      "tag": "Incident",
       "title": "Dag 366",
       "body": "Rond middernacht Pacifische tijd op 31 december 2008 bevroor elke Zune 30 volledig, bijgenaamd Z2K9. De oorzaak was een oneindige lus in een stroomchip-driver die alleen kon worden geactiveerd op de 366e dag van een schrikkeljaar. Er bestond geen patch; de enige oplossing was de batterij laten leeglopen.",
       "coda": "De remedie die Microsoft uitbracht was wachten tot het apparaat zijn stroom op had."
@@ -1166,7 +1093,6 @@
       "coda": "Die medestudent was Michelle Zatlyn, later medeoprichter en COO van Cloudflare."
     },
     "china-3q-war": {
-      "tag": "Incident",
       "title": "Kies Eén",
       "body": "Op 3 november 2010 dwong Tencent een pop-upkeuze af: verwijder 360 of QQ stopt met draaien. Ma Huateng waarschuwde dat gebruikers binnen drie dagen uitgewist zouden kunnen worden. Dagen later beval het Ministerie van Industrie en Informatietechnologie beide partijen op te dragen de compatibiliteit te herstellen.",
       "coda": "De regulator beëindigde het, niet de markt of een van de bedrijven."
@@ -1184,19 +1110,16 @@
       "coda": "De meeste gepubliceerde pakketten verlaten nooit het versienummerbereik dat de regel niet bindt."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
       "title": "Wat Er Van Burbn Wegviel",
       "body": "Kevin Systrom en Mike Krieger besteedden bijna een jaar aan het bouwen van een volwaardige check-in-app genaamd Burbn, en vonden hun eigen afgeronde iPhone-build overladen. Ze stripden het terug naar foto's, commentaren en likes, en brachten het resultaat acht weken later uit als Instagram.",
       "coda": "Binnen een week na de lancering had het 100.000 gebruikers."
     },
     "tz-database-lawsuit": {
-      "tag": "Incident",
       "title": "De rechtszaak over de tijdzonedatabase",
       "body": "In oktober 2011 spande Astrolabe, een maker van astrologiesoftware, een rechtszaak aan tegen de beheerders van de tz-database, met de bewering dat de zonegegevens inbreuk maakten op een door hen gepubliceerde atlas. De mailinglijst en FTP-server gingen offline. ICANN stapte in om de database te hosten; Astrolabe trok de rechtszaak in februari 2012 in.",
       "coda": "De auteursrechtclaim van een astrologiebedrijf over zonsopgangtabellen werd zonder betaling ingetrokken."
     },
     "instagram-facebook-2012": {
-      "tag": "Ridicule",
       "title": "Een miljard voor een filter",
       "body": "In april 2012 kondigde Facebook aan dat het $1 miljard betaalde voor Instagram, een team van 13 personen zonder omzet. In The Daily Show vroeg Jon Stewart: \"Een miljard dollar? Voor iets dat je foto's verpest?\" Gemeten naar teamgrootte en omzet was de vraag niet onredelijk.",
       "coda": "De deal wordt nu routinematig aangehaald als een van de beste overnames in de techgeschiedenis."
@@ -1208,7 +1131,6 @@
       "coda": "Twee maanden later waren meer dan honderd chauffeurs tegelijk online."
     },
     "knight-capital-power-peg": {
-      "tag": "Incident",
       "title": "De achtste server",
       "body": "Knight Capital rolde nieuwe handelscode uit naar acht servers; slechts zeven namen deze over. De achtste draaide nog steeds dode Power Peg-code, jaren eerder buiten gebruik gesteld, die live orders wekten. In 45 minuten bouwde Knight $3,5B long en $3,15B short op. De bevinding van de SEC: niemand controleerde de onvolledige uitrol.",
       "coda": "Knight werd binnen een week na het verlies overgenomen door een concurrent."
@@ -1232,7 +1154,6 @@
       "coda": "De rode envelop werd een betalingsfunnel."
     },
     "heartbleed-two-person-team": {
-      "tag": "Incident",
       "title": "Een team van vier",
       "body": "Heartbleeds ontbrekende grenstoets kwam in december 2011 in de heartbeat-extensie van OpenSSL terecht en bleef twee jaar onopgemerkt totdat onafhankelijke onderzoekers het in april 2014 vonden. Destijds werd de codebase achter het grootste deel van het HTTPS-verkeer op het web onderhouden door vier vrijwilligers, waarvan één fulltime.",
       "coda": "De oplossing werd dezelfde dag uitgebracht als de fout werd gemeld."
@@ -1256,25 +1177,21 @@
       "coda": "De zet die hij uit koos droeg alleen een steeonnummer, geen naam."
     },
     "aws-s3-2017-typo": {
-      "tag": "Incident",
       "title": "Eén Brede Argument",
       "body": "Een S3-ingenieur voerde een geautoriseerd commando uit dat bedoeld was om een klein aantal facturatie-servers offline te halen, maar één invoer dekte een bredere reeks dan beoogd. De verwijderde servers ondersteunden ook het indexsubsysteem, dat al jaren niet volledig was herstart en veel langzamer terugkwam dan verwacht.",
       "coda": "De storing duurde ongeveer vier uur; de eigen statuspagina van AWS was afhankelijk van dezelfde systemen."
     },
     "gitlab-2017-rm-rf": {
-      "tag": "Incident",
       "title": "Vijf Back-ups, Nul",
       "body": "Een engineer wilde een achterblijvende replica wissen, maar verwijderde in plaats daarvan de PostgreSQL-gegevensdirectory op de primaire server, en stopte seconden te laat; ruwweg 300 GB was al verdwenen. GitLab ontdekte dat van de vijf back-up- en replicatiemethoden die het draaiende had, geen enkele de gegevens kon herstellen.",
       "coda": "Herstel was afhankelijk van een momentopname die iemand toevallig zes uur eerder had gemaakt."
     },
     "attention-title-beatles-2017": {
-      "tag": "Paper",
       "title": "Een Titel Geleend van de Beatles",
       "body": "Acht Google-onderzoekers publiceerden in juni 2017 'Attention Is All You Need'; de titel verwijst naar het Beatles-nummer 'All You Need Is Love'. Het gestelde doel van het paper was een sequentiemodel voor machinale vertaling dat recurrente netwerken liet vallen ten gunste van alleen aandacht.",
       "coda": "Alle acht auteurs hebben Google inmiddels verlaten."
     },
     "cloudflare-2019-regex": {
-      "tag": "Incident",
       "title": "De Zekering Die Was Verwijderd",
       "body": "Een nieuwe WAF-regel met een catastrofaal terugkerende regex dreef de CPU op het wereldwijde netwerk van Cloudflare binnen seconden na implementatie tot bijna 100 procent. De regel zelf was gewoon; wat hem liet ontploffen was een CPU-gebruiksbeveiliging voor regex-regels die weken eerder stilzwijgend was verwijderd tijdens een refactor.",
       "coda": "De storing duurde 27 minuten en eindigde toen de WAF wereldwijd werd uitgeschakeld."
@@ -1286,7 +1203,6 @@
       "coda": "Hij is niet teruggekeerd om het project te leiden sinds hij aftreding deed."
     },
     "linux-y2038-kernel-fix": {
-      "tag": "Fix",
       "title": "Achtentwintig Jaar Te Vroeg",
       "body": "32-bit Unix-systemen zullen hun time_t-teller overstromen op 19 januari 2038. Linux 5.6, uitgebracht in 2020, was de eerste kernel die een 32-bit-systeem kon laten draaien na die datum. Applicaties moeten nog steeds opnieuw worden gebouwd tegen een 64-bit time_t om daadwerkelijk te profiteren.",
       "coda": "De kernel werd gepatcht jaren voordat de meeste 32-bit userspace bij was."
@@ -1316,7 +1232,6 @@
       "coda": "Het niet-octrooieerde vaccin werd later gewaardeerd op zeven miljard dollar."
     },
     "cobol-two-hundred-billion-lines": {
-      "tag": "Legacy",
       "title": "Twee honderd miljard regels",
       "body": "In 1997 schatte Gartner dat er 200 miljard regels COBOL liepen die tachtig procent van de bedrijfsprogramma's wereldwijd draaiden. In 2020, toen de werkloosheidsuitkeringen in de COVID-tijd opliepen, riepen verschillende Amerikaanse staatsregeringen openlijk COBOL-programmeurs op om hun decennia oude uitkeringssystemen draaiende te houden.",
       "coda": "Zes jaar is verstreken sinds dat verzoek."
@@ -1346,7 +1261,6 @@
       "coda": "De patenten liepen wereldwijd in 2004 af, en pas toen was GIF vrij."
     },
     "zimmermann-pgp-release": {
-      "tag": "Crypto",
       "title": "PGP Weggegeven, Vervolgens Onderzocht",
       "body": "Phil Zimmermann bracht PGP uit met de broncode op openbare FTP in 1991, het eerste breed beschikbare openbare-sleutelversleutelingsprogramma. De Amerikaanse douane opende een strafrechtelijk onderzoek naar overtredingen van exportcontrole. Het duurde drie jaar en werd begin 1996 zonder aanklacht gesloten.",
       "coda": "Drie jaar onder onderzoek, geen aanklacht, geen royalty's ooit geïnd."

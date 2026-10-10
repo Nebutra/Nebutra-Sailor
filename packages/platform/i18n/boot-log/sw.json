@@ -2,31 +2,26 @@
   "panelLabel": "Logi ya kuanzisha",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
       "title": "Jina Lilopuuliwa kwenye Patent",
       "body": "Tarehe 23 Desemba 1947, Bardeen na Brattain walionyesha transistor ya point-contact ya germanium katika Bell Labs. Shockley hakikuwa kwenye chumba hicho. Wavulaji walipata muundo wake mwenyewe uko karibu sana na patent ya Julius Lilienfeld ya 1925 na kuondoa jina lake kwenye hii.",
       "coda": "Mwaka 1956 wote watatu walinashiriki Tuzo ya Nobel ya Fizikia."
     },
     "dartmouth-two-month-study-1956": {
-      "tag": "Proposal",
       "title": "Utafiti wa Miezi Miwili",
       "body": "Mapendekezo ya 1955 ya McCarthy, Minsky, Rochester na Shannon yalikuwa ombi la utafiti wa miezi miwili wa watu kumi, kwenye dhana kwamba akili ingeweza kuelezwa kwa usahihi wa kutosha ili mashine iweze kuifanya. Kipindi cha 1956 kilikuwa wiki sita hadi nane; tu washiriki watatu walibaki kwa muda wote.",
       "coda": "Jina walilochagua kwa uwanja huu, artificial intelligence, ndilo liliendelea."
     },
     "traitorous-eight-lie-detector-1957": {
-      "tag": "Split",
       "title": "Barua ya Kigezo cha Uongo",
       "body": "Mwezi Mei 1957, wahandisi wanne kwenye Shockley Semiconductor walihitaji William Shockley akubadilishwe kama meneja. Alikuwa amerekodi simu, kuzuia wafanyakazi kushiriki matokeo, na kuhitaji majaribio ya kigezo cha uongo. Tarehe 18 Septemba 1957, wanne hao walianzisha Fairchild Semiconductor badala yake.",
       "coda": "Wikipedia inahesabu Intel na AMD kati ya makampuni mengi yanayoweza kufuatiliwa hadi spinoff hiyo."
     },
     "kilby-noyce-six-months-1958-1959": {
-      "tag": "Parallel",
       "title": "Miezi Sita, Nguo Moja",
       "body": "Kilby alionyesha integrated circuit inayofanya kazi katika Texas Instruments mwezi Septemba 1958, sehemu zake zikishikamana kwa waya za nje. Noyce alitoa toleo la monolithic la silikoni katika Fairchild mwezi Julai 1959, linaloweza kutengenezwa kwa wingi. Mmoja wao hakukataa idhini ya mwingine kuwa mshiriki wa uumbaji.",
       "coda": "Kilby alikubali Tuzo ya Nobel ya 2000 peke yake. Noyce alikuwa amekufa mwaka 1990."
     },
     "perceptron-conscious-machine-1958": {
-      "tag": "Neural Nets",
       "title": "Mashine Ingeamka",
       "body": "Mwaka 1958 New York Times iliripoti kwamba perceptron ya Frank Rosenblatt ilikuwa embryo ya kompyuta ambayo Navy ilikuwa inatarajia kutembea, kuzungumza, kuona, kuandika, kujirepudisha na kujua uwepo wake. Mwaka 1969 kitabu cha Minsky na Papert kilithibitisha kwamba perceptron ya tabaka moja haiwezi kuhesabu XOR.",
       "coda": "Mali kwa utafiti wa neural network ilikauka na haikurudi hadi miaka ya 1980."
@@ -38,7 +33,6 @@
       "coda": "Mchezo ulikuwa ukiendelea kwa miaka mingi, kisha hakuna mtu aliyeeambia tena."
     },
     "macau-seventeen-thousand": {
-      "tag": "Tender",
       "title": "Robo elfu saba",
       "body": "Katika Oktoba 1961, shirika lililoundwa na Stanley Ho, Henry Fok, Yip Hon na Teddy Yip lilitawala monopoli ya kucheza kazi ya Macau. Walitoa patacas 3,167,000, robo elfu saba zaidi kuliko tofauti ya ushindani.",
       "coda": "Monopoli ambayo tofauti hiyo iliyonunua ilikuwa na zaidi ya miaka arobaini."
@@ -50,13 +44,11 @@
       "coda": "Kwa 1995 Moore alisema neno lilikuwa limekuja kumaanisha karibu chochote katika tasnia ya chipi."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
       "title": "Msaada na DOCTOR",
       "body": "Mwaka 1966 Joseph Weizenbaum alitoa scripti ya DOCTOR ya ELIZA katika MIT, programu iliyokuwa ikigawanya sentensi za watumiaji wenyewe kurudisha kama maswali. Msaada wake mwenyewe kulingana na ripoti alimwomba aondoke chumbani ili aweze kuzungumza nayo peke yake.",
       "coda": "Mfumo ambao hakuwa amekusudia baadaye ulijulikana kama athari ya ELIZA."
     },
     "engelbart-royalties": {
-      "tag": "Patent",
       "title": "Dola thelathini elfu",
       "body": "SRI ilipata patent ya panya baada ya demo na, kulingana na hesabu yao, haikuwa na wazo halisi la thamani yake. Baada ya miaka michache ilibainika walikuwa wameipa leseni kwa Apple kwa kiasi cha takriban $40,000.",
       "coda": "Engelbart hakupokea haki yoyote kwa kuifundisha."
@@ -146,7 +138,6 @@
       "coda": "Wozniak alisema angeampa Jobs pesa zote kama angeulizwa."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
       "title": "Haikuwa Inatarajiwa Kueleweka",
       "body": "Unix ya Toleo la Sita ina mstari 'You are not expected to understand this' katika slp.c, ukiambatana na kodi ya kurudisha stack ya mchakato iliyojengwa juu ya tabia za compiler ya PDP-11. Dennis Ritchie baadaye alisema alimaanisha kwa njia mwalimu anasema hii haipo kwenye mtihani.",
       "coda": "Rutini ilikuandikwa upya kwa Unix ya Toleo la Saba."
@@ -242,7 +233,6 @@
       "coda": "Hakuna mtu aliyelipa ada ya kutumia tangu hapo."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "Seva Ili Hawaikuwasha",
       "body": "Tarehe 10 Desemba 1993, id Software ilitoa kipindi cha kwanza cha Doom kama shareware, ikiamini katika mauzo ya sehemu nyingine. Wakipakia kwenye seva ya FTP ya Chuo Kikuu cha Wisconsin, wakaona watu wengi tayari wamekusanyika hadi timu yenyewe haikuweza kuunganisha.",
       "coda": "Upakiaji ulikamilika karibu usiku; maelfu kumi ya kupakua kwa wakati mmoja iliharibu mtandao wa chuo kikuu."
@@ -266,7 +256,6 @@
       "coda": "Takriban dola milioni 370, zilizotumika kwenye msimbo ambao ulipaswa kuzimwa."
     },
     "deep-blue-move-44-1997": {
-      "tag": "Chess",
       "title": "Hitilafu ya Hatua ya Arobaini na Nne",
       "body": "Katika mchezo wa kwanza wa mchujo wa 1997, Kasparov alimshinda Deep Blue kwa hatua arobaini na tano. Hatua ya arobaini na nne ya Deep Blue inadaiwa kuwa matokeo ya hitilafu: kwa kushindwa kuamua hatua inayopendekezwa ndani ya utafutaji wake, injini ilirudi kwenye njia ya usalama.",
       "coda": "Baada ya kupoteza mchezo wa pili, Kasparov alimshutumu IBM kwa udanganyifu."
@@ -278,13 +267,11 @@
       "coda": "Mkutanishi mwingine hakuwekwa kwenye orodha."
     },
     "book-of-mozilla-verses": {
-      "tag": "Easter Egg",
       "title": "Kitabu cha Mozilla",
       "body": "Kuingiza about:mozilla kwenye baa ya anwani inaonyesha Kitabu cha Mozilla, mashairi ya mwisho wa dunia yanayoweka 'shetani' dhidi ya 'Mammon' ambayo kila kizazi cha kivinjari kinabadilisha. Nambari za mashairi si alama za sura: ni tarehe za toleo.",
       "coda": "Shairi jipya, 6:27, kilipangishwa kwanza kwenye toleo la Firefox Nightly mnamo 2020."
     },
     "http-418-teapot": {
-      "tag": "Protocol",
       "title": "Mimi ni Teapot",
       "body": "RFC 2324, iliyochapishwa Aprili 1, 1998, inafafanua hali 418 kama \"Mimi ni teapot\" na kujiandaa kama Habari, si kiwango. Aprili 1, 2014, RFC 7168 ilikuongeza ili kufunika ujanishi wa chai. Kodi bado haijawahi kuwa kiwango halisi.",
       "coda": "Nyaraka zote mbili zimebaki Habari; kodi ya hali ilipangishwa kwenye seva halisi vivyo hivyo."
@@ -296,7 +283,6 @@
       "coda": "Kikundi baadaye kilijaribu kuweka alama ya biashara kwa msemo na kushindwa."
     },
     "netscape-source-1998": {
-      "tag": "Release",
       "title": "Si Open Kabisa",
       "body": "Tarehe 22 Januari 1998 Netscape ilitangaza kwamba chanzo cha kivinjari chake kitatolewa, na mshirika Jamie Zawinski alisajili mozilla.org. Lakini leseni walioandika ilibaki na mlango mmoja wazi: Netscape yenyewe ingeweza kuendelea kuunganisha kodi ileile kwenye bidhaa za kibinafsi.",
       "coda": "Netscape ilinunuliwa na AOL takribani mwaka mmoja baadaye."
@@ -308,7 +294,6 @@
       "coda": "Saini ya ofisi moja ilifuta kifungu kilichozidishwa kwa mwaka kumi."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "Bei ya Programu Bure",
       "body": "Red Hat ilikuza msimbo wa chanzo wa bidhaa yake kuu na kulipia badala ya huduma, mafunzo na muunganisho. Tarehe 11 Agosti, 1999 kampuni ilifunguliwa. Ongezeko la siku ya kwanza lilikuwa la nane kubwa katika historia ya Wall Street wakati huo.",
       "coda": "Mwenzi Bob Young alibadilishwa kama CEO miezi minne baadaye."
@@ -368,31 +353,26 @@
       "coda": "Wapokeaji wengi hufunga cheki badala ya kuweka ndani."
     },
     "dji-helicopter-first": {
-      "tag": "Pivot",
       "title": "DJI Ilianza na Helikopta",
       "body": "Frank Wang alihitimu chuo kikuu cha Hong Kong University of Science and Technology mwaka 2006 na alikuwa mmoja wa kuanzisha DJI Shenzhen pamoja na wanafunzi wenzake. Bidhaa yake ya kwanza ilikuwa mfumo wa kudhibiti upepo wa helikopta; toleo la kwanza la XP3.1, lililochakaa, lilitolewa mwaka 2008.",
       "coda": "Timu baadaye iligundua wamiliki wengi wa gimbal walikuwa wakiamka juu ya multirotors, si helikopta."
     },
     "dropbox-hn": {
-      "tag": "Counterintuitive",
       "title": "Jibu hilo",
       "body": "Houston alitoa demo la Dropbox kwenye Hacker News. Jibu la mashuhuri lilionyesha kwamba unaweza kufanya mwenyewe kwa akaunti ya FTP, curlftpfs na SVN, na kwamba haikuonekana kama ingekusanya pesa.",
       "coda": "Miaka kumi na moja baadaye, wakati wa IPO, Houston alisema ilikuwa thread yake ya upendo kwenye tovuti."
     },
     "butterfield": {
-      "tag": "Pivot",
       "title": "Marahawa mbili kutoka kwa mabaki",
       "body": "Mchezo wa Butterfield, Game Neverending, ulisimama, na timu ilichora sehemu ya picha-kugawana kama Flickr. Miaka nane baadaye mchezo wake wa pili, Glitch, ulifungwa, na timu ilichora zana ya mazungumzo walikuwa wamejenga kwa wenyewe: Slack.",
       "coda": "Mara zote mbili bidhaa ya pili ilikuwa inayoonekana tu baada ya kitu kikuu kufungwa."
     },
     "blockbuster": {
-      "tag": "The pass",
       "title": "Mamilioni hamsini",
       "body": "Hastings na Randolph waliruka Dallas kuuza Netflix kwa Blockbuster kwa mamilioni hamsini, na kuendesha upande wa mtandao kwa ajili yao. Kulingana na Randolph, CEO upande wa pili wa meza alitumia mkutano kukandamiza kicheko.",
       "coda": "Blockbuster ilikuja kwa ajili ya uovu miaka kumi baadaye."
     },
     "y2k": {
-      "tag": "Governance",
       "title": "Hakuna kilichotokea",
       "body": "Gartner ilikadiria gharama ya Y2K duniani kote kuwa biliuni tatu hadi sita za dola, na watu mia za elfu walibadilisha miaka ya tarakimu mbili mstari kwa mstari. Usiku huo, mtandao ulisimama, benki zilisimama, ndege zilienda.",
       "coda": "Miaka minne baadaye mwanafunzi wa uchumi alichapisha kazi inayodai sehemu kubwa ya pesa ilikuwa imepotea."
@@ -578,61 +558,51 @@
       "coda": "Dai la CERN la kujenga skrin ya kwanza ya kugusa bado linasimama kwenye tovuti yake mwenyewe."
     },
     "second-redefined-1967": {
-      "tag": "Metrology",
       "title": "Mizunguko 9,192,631,770",
       "body": "Hadi 1960, sekunde ilikuwa sehemu ya mwaka wa tropiki wa 1900, iliyobainishwa na uchunguzi wa astronomia. Mwaka 1967, Mkutano wa Jumuiya wa Mizani na Vipimo uliibadilisha tena kuwa mizunguko 9,192,631,770 ya mpito wa caesium-133.",
       "coda": "Urefu wa sekunde ukasimama kuwekwa na jua na kuanza kuwekwa na atomi."
     },
     "goto-statement-considered-harmful": {
-      "tag": "Correction",
       "title": "Kichwa Ambacho Hakuchapishwa",
       "body": "Dijkstra alituma makala iliyoketi A Case against the GO TO Statement kwa CACM. Mhariri Niklaus Wirth, ukisukuma kwa haraka kuchapishwa kama barua, ukampa kichwa kilichokifanya kuwa mashuhuri: Go To Statement Considered Harmful.",
       "coda": "Neno lilipita barua, likizalisha miaka mingi ya mababu ya 'X Considered Harmful' ambayo hakuna mtu aliyosoma zaidi."
     },
     "rollkugel-vs-mouse": {
-      "tag": "Mouse",
       "title": "Panya Mbili, Mwaka Mmoja",
       "body": "Mwaka 1968, mwezi Oktoba, Telefunken ilirejesha panya ya Rollkugel katika brocha ya mauzo, kifaa cha mpira unaozunguka ambacho wahandisi wake walikuwa wamejenga tangu 1966. Miaka miwili baadaye, tarehe 9 Desemba, Douglas Engelbart alionyesha panya ya mbao timu yake ya SRI ilikuwa imejenga tangu 1963. Timu yoyote haikuwa na habari ya nyingine.",
       "coda": "Telefunken ilifika sokoni kwanza na kusahauliwa; Engelbart alikuja pili na ndiyo maana ya panya."
     },
     "peter-principle-verified": {
-      "tag": "Study",
       "title": "Kufundishwa kwa Ujuzi",
       "body": "Mwaka 1969, Laurence Peter na Raymond Hull walinong'aa nusu katika bestseller kwamba kila mshirika anapanda hadi kiwango ambacho anakuwa hawezi kufanya kazi, iliyokusudiwa kama satire. Mwaka 2019, utafiti wa data ya kuandikishwa kwa nguvu za mauzo katika makampuni 214 halisi ulipata kwamba nong'ono ilikuwa sahihi: wauzaji bora walikuwa wazalishaji mbaya.",
       "coda": "Nong'ono ilikuwa kizidisho cha regression kilichopimwa na kuchapishwa."
     },
     "lanpar-vs-visicalc": {
-      "tag": "Spreadsheet",
       "title": "Lahajedwali Ambalo Hakuna Aliyelitaja",
       "body": "Katika majira ya joto ya 1969, wahitimu wa Harvard Rene Pardo na Remy Landau waliandika LANPAR, lugha ya lahajedwali iliyowaruhusu watumiaji kuingiza fomula kwa mpangilio wowote na bado kuhesabu kwa usahihi. Bell Canada na General Motors ziliitumia. Mnamo 1979, Dan Bricklin alijenga VisiCalc bila kujua kwamba LANPAR ilikuwepo.",
       "coda": "Hati miliki ya LANPAR ilinusurika changamoto ya mahakama hadi 1983; majarida yalikuwa tayari yamemtaja VisiCalc kwanza."
     },
     "spam-vikings-not-marketers": {
-      "tag": "Etymology",
       "title": "Spam, Kabla ya Masoko",
       "body": "Katika kipande cha 1970, Vikings wa Monty Python waliimba \"spam\" juu ya mazungumzo ya mlo, wakidhihaki wingi wa nyama ya makopo kwenye menyu. Utani huo ulihamia kwenye vyumba vya mazungumzo vya MUD mwishoni mwa miaka ya 1980 kwa ajili ya kufurika kwa mazungumzo, kisha kwenye barua pepe mapema miaka ya 1990.",
       "coda": "Neno hilo lilifika kwenye sanduku za barua kwa njia ya kipande cha ucheshi kuhusu chakula cha mchana."
     },
     "codd-1970-relational-model": {
-      "tag": "Origin",
       "title": "Waraka Ambao Mwajiri Wake Aliupuuza",
       "body": "Mnamo 1970, mtafiti wa IBM Edgar Codd alichapisha mfano wa uhusiano. Bidhaa kuu ya IBM ilikuwa ya daraja, na kampuni haikuwa na haraka ya kupitisha wazo lake. Larry Ellison alisoma waraka wa Codd na ripoti za System R za IBM yenyewe, kisha akasafirisha bidhaa ya kibiashara ya hifadhidata ya uhusiano kwanza, mnamo 1979.",
       "coda": "Bidhaa ya uhusiano ya IBM yenyewe, DB2, haikusafirishwa hadi 1983."
     },
     "linnainmaa-backpropagation": {
-      "tag": "Algorithm",
       "title": "Rejea Iliyokosekana",
       "body": "Mnamo 1970, mwanafunzi wa Kifini Seppo Linnainmaa alichapisha algorithm kamili ya upambanuzi wa kiotomatiki wa mwelekeo wa nyuma, pamoja na msimbo unaofanya kazi, katika tasnifu yake ya uzamili. Mnamo 1986, Rumelhart, Hinton na Williams walichapisha njia hiyo hiyo katika Nature kufundisha mitandao ya neva. Hawakumrejea.",
       "coda": "Tasnifu ya Linnainmaa ilikaa bila rejea kwa miaka kumi na sita kabla ya wanahistoria wa uwanja huo kuichimba tena."
     },
     "at-sign-arbitrary-pick": {
-      "tag": "Etymology",
       "title": "Kitufe Pekee Kisichotumika",
       "body": "Mnamo 1971, mhandisi wa BBN Ray Tomlinson alihitaji kitenganishi kati ya jina la mtumiaji na seva ambacho hakingeweza kamwe kuonekana katika jina halisi la mtu. Akichunguza kibodi yake ya Model 33 Teletype, alichagua @ — herufi iliyokuwa ikitumika karibu tu na wauzaji wa mboga na wahesabuji.",
       "coda": "Kila anwani ya barua pepe tangu wakati huo imebeba kizuizi hicho kimoja mbele."
     },
     "parnas-module-decomposition": {
-      "tag": "Method",
       "title": "Mahali pa Kukata Moduli",
       "body": "Mnamo 1972 David Parnas akagawanya mfumo huo huo wa KWIC-index katika moduli kwa njia mbili: moja kwa hatua ya usindikaji, nyingine kwa maamuzi ya muundo yanayoweza kubadilika zaidi, kila moja ikifichwa nyuma ya kiolesura. Njia ya pili peke yake iliruhusu mabadiliko kuugua moduli moja bila mtu yeyote kusoma baki.",
       "coda": "Mpaka wa moduli ukagundulika kuwa unasimulia dhana juu ya kile msimamizi wa baadaye angehitaji kujua."
@@ -735,7 +705,6 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Hadithi",
-      "title": "Algorhyme",
       "body": "Mwaka 1985, meneja wa Perlman katika DEC alitoa tatizo la kuunganisha bila mzunguko Alhamisi, kisha alipotea kwa wiki moja. Alikamilisha algoriti ya mti wa kuenea Ijumaa — na alitumia baada yake kuandika Algorhyme, mashairi ambayo yalikuwa muhtasari wa karatasi.",
       "coda": "Shairi lilichukua muda mrefu kuandika kuliko algorithm."
     },
@@ -776,13 +745,11 @@
       "coda": "Kiwango ambacho kila mtu anarejelea na dialekti ambayo kodi ya kila mtu inachunguza si hati ile ile."
     },
     "python-christmas-project": {
-      "tag": "Scripting",
       "title": "Shughuli ya Krismasi",
       "body": "Wakati likizo za Krismasi za 1989, ofisi yake ikifungwa wiki nzima, mtafiti Amsterdam alitafuta mradi wa programu wa shughuli. Alianza kuandika mtafsiri wa lugha mpya ya scripting na kuuita kwa jina la kundi la komedi, si nyoka.",
       "coda": "Mwezi Julai 2026 ilikuwa ya kwanza kwenye faharasa ya TIOBE ya utajiri wa lugha za programu."
     },
     "worse-is-better": {
-      "tag": "Debate",
       "title": "Mbaya Ni Bora",
       "body": "Mnamo 1989 Richard Gabriel alitengeneza 'worse is better': utekelezaji rahisi, nusu sahihi unapita bora kuliko kamili, sahihi, ambayo ndiyo sababu alidhani C na Unix zilishinda Lisp. Mnamo 1991 alichapisha upinzani chini ya jina la uongo Nickieben Bourbaki, akijitokeza kama rafiki wa zamani.",
       "coda": "Miaka mingi baadaye bado alisema hakuweza kuamua kama hoja yake mwenyewe ilikuwa sahihi."
@@ -806,13 +773,11 @@
       "coda": "Fomati ambayo kila mtu anaita MP3 inabeba uhandisi wa pendekezo lililopotea ndani ya jina la linaloshinda."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Ujumbe kwa comp.os.minix",
       "body": "Tarehe 25 Agosti, 1991, mwanafunzi wa chuo kikuu Helsinki alitoa ujumbe kwenye kundi la habari comp.os.minix kwamba alikuwa akitunga mfumo wa uendeshaji wa bure, akisema 'tu shughuli ya burudani, sitakuwa kubwa na ya kitaalamu kama gnu,' na akauliza vipengele gani watu wangependa.",
       "coda": "Tangu Novemba 2017, kompyuta zote 500 za supercomputer za kasi zaidi duniani zimeendesha OS iliyojengwa juu yake."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Bei ya Bure Iliyowekwa",
       "body": "Mnamo 1991, Tim Berners-Lee alitoa World Wide Web kutoka CERN. Mwaka huo huo, Chuo Kikuu cha Minnesota kilitoa Gopher, kwa muda mfupi mfumo maarufu zaidi. Mnamo Februari 1993, Minnesota ilitangaza ada za leseni kwa seva za Gopher. Aprili mwaka huo, CERN ilifanya itifaki ya wavuti kuwa bure.",
       "coda": "Gopher ilikuwa na wafuasi wengi kabla ya tangazo la ada, na haikuwahi kuwa nayo tena baadaye."
@@ -836,7 +801,6 @@
       "coda": "Mistari miwili ipo; moja tu inapata kumbukumbu ya mwaka."
     },
     "wiki-the-airport-shuttle": {
-      "tag": "Etymology",
       "title": "Iliyopewa Jina la Basi la Shuttle",
       "body": "\"Wiki\" ni neno la Kihawai linalomaanisha \"haraka.\" Mnamo 1995, Ward Cunningham alihitaji jina la mfumo wa kwanza wa wavuti unaoweza kuhaririwa alioujenga na hakufikia neno lolote la kiufundi bali kumbukumbu yake ya Wiki Wiki Shuttle, basi la bure kati ya vituo vya uwanja wa ndege wa Honolulu.",
       "coda": "Nyumba ya kwanza ya neno hilo ilipakwa rangi upande wa basi la uwanja wa ndege."
@@ -914,7 +878,6 @@
       "coda": "Mwanafunzi huyo alikuwa Wang Xiaochuan. Mnamo 2004, ndani ya Sohu, alijenga Sogou."
     },
     "google-a-typo": {
-      "tag": "Etymology",
       "title": "Utafutaji wa Kikoa Ulioandikwa Vibaya",
       "body": "Wakati wa mjadala wa Septemba 1997, Sean Anderson alipendekeza \"googolplex\"; Larry Page aliifupisha kuwa \"googol.\" Wakati wa kuangalia usajili wa kikoa papo hapo, Anderson aliandika \"google\" kwa makosa na akakuta hakijadaiwa. Page alisajili google.com siku hiyo hiyo.",
       "coda": "Rekodi ya usajili bado ina makosa ya tahajia, iliyowekwa tarehe 15 Septemba 1997."
@@ -951,7 +914,6 @@
     },
     "mars-climate-orbiter-units": {
       "tag": "Tukio",
-      "title": "Pound-Force, Newton",
       "body": "Mars Climate Orbiter ilikataa mawasiliano wakati wa kuwekwa kwenye obiti. Bodi iligundua kwamba programu ya thruster ya mkataba ilitoa impulse kwa pound-force sekunde wakati programu ya uongozi ilikuwa inatarajia newton-sekunde, tofauti ya kizidisho cha 4.45. Ndege iliongozwa ndani ya takriban 57 km kutoka uso.",
       "coda": "Misheni ya $327.6 milioni haikamwagisha tena."
     },
@@ -998,7 +960,6 @@
       "coda": "Mnamo Agosti 23, 2010, Tencent ilinunua kampuni aliyokuwa ameijenga kuzunguka hiyo programu."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Mradi wa Pembeni Karibu na Nupedia",
       "body": "Mnamo Januari 10, 2001, mwanzilishi wa ensaiklopidia ya mtandaoni iliyokaguliwa na wenzao aliweka programu ya wiki kwenye seva ya mradi huo, hasa ili wafanyakazi wa kujitolea waweze kujaribu kuandika makala kwa upande wakati ensaiklopidia iliyokaguliwa ikiendelea polepole.",
       "coda": "Kufikia Julai 2026 toleo lake la Kiingereza pekee lilikuwa na zaidi ya makala milioni 7.2."
@@ -1058,31 +1019,26 @@
       "coda": "Dianping, tovuti iliyokua kutoka hapo, ilifunguliwa tarehe 12 Aprili, 2003."
     },
     "wordpress-b2-post": {
-      "tag": "Blogging",
       "title": "Dilema ya Programu ya Blogging",
       "body": "Tarehe 24 Januari, 2003, mwanafunzi wa chuo alikuandika kwenye blogu yake kwamba b2, programu ya blogging aliyotumia kila siku, haikuwekwa katika utunzaji kwa miezi kadhaa tangu mtaalamu wake mkuu alipotea. Alisema alikuwa amekusudia kuiforke na alikuwa amesomba jina peke yake.",
       "coda": "Kampuni iliyokua kutoka forke hiyo ilikuwa na thamani ya dola bilioni 7.5 kwa mwaka 2021."
     },
     "2003-blackout-race-condition": {
-      "tag": "Incident",
       "title": "Aala Ambayo Haikupiga",
       "body": "Mchakato wa aala katika chumba cha udhibiti huko Ohio ulikwama kimya: hitilafu ya uandishi iliruhusu michakato miwili kupata ufikiaji wa kuandika kwa muundo huo huo wa data kwa wakati mmoja, ikizunguka milele. Wafanya kazi hawakumwona onyo la mzigo na hawakufaulu kupunguza mzigo kwa wakati. Mfululizo uliacha watu milioni 55 bila nguvu.",
       "coda": "Wahandisi walihitaji wiki nane kurejesha hali ya shindano."
     },
     "aws-not-leftover-servers": {
-      "tag": "Correction",
       "title": "Si Vyombo Vilivyobaki",
       "body": "Toleo la kawaida linasema AWS ilianza kwa kuuza tena uwezo wa vyombo vya Amazon vilivyobaki wakati wa msimu wa likizo. Benjamin Black anasema hilo ni uongo wazi: mnamo 2003 yeye na Chris Pinkham walikuandika barua pepe inayopendekeza miundombinu sanifu, iliyoundwa kwa kusudi kuanzishwa kuuza nje kama huduma.",
       "coda": "S3 na EC2 zilianzishwa mnamo 2006, ikifuata barua pepe hiyo."
     },
     "maps-intern-friendfeed": {
-      "tag": "Internship",
       "title": "Mwanafunzi wa Timu ya Ramani",
       "body": "Mnamo 2003 meneja wa bidhaa wa Google alifanya kazi na mwanafunzi kwenye timu inayojenga utafutaji wa ndani, mradi uliokua kuwa Google Maps. Miaka minne baadaye mwanafunzi huyo na mhandisi aliyejenga Gmail waliondoka Google pamoja kuanzisha kampuni.",
       "coda": "Mwanafunzi alikuwa Bret Taylor. Kampuni aliyondoka kuanzisha ilinunuliwa na Facebook."
     },
     "friendster-forty-second-load": {
-      "tag": "Scaling",
       "title": "Mzigo wa Arobaini na Mbili",
       "body": "Friendster ilizinduliwa mwaka 2002 na kufikia zaidi ya akaunti milioni 100 zilizosajiliwa, lakini seva zake zilishindwa chini ya mzigo wa kukokotoa viwango vya uhusiano kati ya marafiki; ukurasa mmoja unaweza kuchukua sekunde arobaini kupakia. Barua pepe za usaidizi zinaonyesha watumiaji wakitishia kuhamia MySpace mpya.",
       "coda": "Facebook ilizinduliwa mwaka 2004 kwa wazo hilo hilo la grafu ya kijamii na kustahimili trafiki."
@@ -1172,7 +1128,6 @@
       "coda": "Msimamizi alimaliza, si soko wala kampuni yoyote."
     },
     "china-thousand-groupon-war": {
-      "tag": "Bubble",
       "title": "Vita ya Maelfu ya Groupon",
       "body": "Tovuti ya kwanza ya ununuzi wa kikundi nchini China ilizinduliwa mwaka 2010; portal na mitandao ya kijamii zilijitoma ndani ya miezi michache. Kufikia Agosti 2011, zaidi ya makampuni 5,000 ya ununuzi wa kikundi yalikuwa yakishindana — 'Vita ya Maelfu ya Groupon.' Kufikia katikati ya 2014, ni tovuti 176 tu zilizosimama.",
       "coda": "Chini ya mia mbili kati ya elfu tano zilinusurika."
@@ -1184,7 +1139,6 @@
       "coda": "Pakiti nyingi zilizochapishwa haziachi kamwe safu ya toleo ambayo kanuni haifungamani nayo."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
       "title": "Kilichokatwa Kutoka Burbn",
       "body": "Kevin Systrom na Mike Krieger walitumia karibu mwaka mzima kujenga programu ya kuingia yenye vipengele kamili iitwayo Burbn, kisha wakaamua kuwa toleo lao la iPhone lililokamilika lilikuwa na mambo mengi. Walipunguza hadi picha, maoni, na kupenda, na kusambaza matokeo wiki nane baadaye kama Instagram.",
       "coda": "Ndani ya wiki moja ya kufunguliwa ilikuwa na watumiaji 100,000."
@@ -1227,12 +1181,10 @@
     },
     "china-wechat-red-envelope-pearl-harbor": {
       "tag": "Malipo",
-      "title": "Pearl Harbor, Digital",
       "body": "Karibu mwaka wa China 2014, kipengele cha redi ya WeChat kilifunguliwa; watumiaji walichukua zaidi ya redi milioni 40 ndani ya siku chache. Kwenye app Laiwang, Jack Ma alisema ni 'shambulio la Pearl Harbor' — muhimu kwa muda mfupi, alisema, lakini ukuaji wa afya kwa muda mrefu ulikuwa muhimu zaidi.",
       "coda": "Redi ilikuwa funnel ya malipo."
     },
     "heartbleed-two-person-team": {
-      "tag": "Incident",
       "title": "Timu ya Wanne",
       "body": "Kukosa ukaguzi wa mipaka wa Heartbleed kuingia katika upanuzi wa heartbeat wa OpenSSL mnamo Desemba 2011 na kukaa bila kugunduliwa kwa miaka miwili hadi watafiti wa kujitegemea kugundua mnamo Aprili 2014. Wakati huo, msingi wa msimbo nyuma ya trafiki nyingi ya HTTPS ya wavuti ulikuwa unashughulikiwa na kujitolea wanne, mmoja kwa muda mzima.",
       "coda": "Urekebishaji ulitolewa siku ileile kosa kilipopasuliwa."
@@ -1340,19 +1292,16 @@
       "coda": "Vifaa vyake vinaweza kutoa nguvu ya kutosha kurudisha data ya uhandisi hadi 2036."
     },
     "gif-lzw-unisys": {
-      "tag": "Patents",
       "title": "Fomu ya Bure Iliyokuwa Si",
       "body": "CompuServe ilitoa GIF Juni 1987 ikutumia LZW compression bila kuelewa Sperry Corporation tayari ilikuwa na patent juu yake. Desemba 1994 Unisys, iliyoundwa kutoka muungano wa Sperry, ilitangaza itakuwa ikikusanya ada za leseni, ikasababisha wabunifu kujenga PNG kama mbadala.",
       "coda": "Patents ziliisha duniani mwaka 2004, na tu wakati huo GIF ilikuwa bure."
     },
     "zimmermann-pgp-release": {
-      "tag": "Crypto",
       "title": "PGP Iliyopewa, Kisha Inachunguzwa",
       "body": "Phil Zimmermann alitoa PGP na msimbo wake wa chanzo kwenye FTP ya umma mwaka 1991, programu ya kwanza ya encryption ya umma iliyopatikana sana. US Customs ilifungua uchunguzi wa jinai kwa ukiukwaji wa udhibiti wa usafirishaji. Ilikwenda miaka mitatu na ilipitishwa bila kushinikiza mwanzoni mwa 1996.",
       "coda": "Miaka mitatu chini ya uchunguzi, hakuna masharti yaliyowasilishwa, hakuna royalties zilizokusanywa kamwe."
     },
     "json-good-not-evil": {
-      "tag": "License",
       "title": "Kwa Bora, Si Kwa Mabaya",
       "body": "Leseni ya Douglas Crockford ya mwaka 2002 kwa maktaba za JSON iliongeza kifungu kimoja: programu lazima iweze kutumika kwa Bora, si kwa Mabaya. JSON yenyewe ilisambaa bure na bila patenti hadi kila API karibu kote kwenye mtandao, lakini sentensi moja hiyo ilifanya leseni isiwe na ubadilishaji na masharti sanifu ya chanzo wazi.",
       "coda": "Fomu ilikuwa ya kawaida; kifungu cha kicheko kilichotumwa pamoja nayo hakikubaki baada ya kukutana na sheria za makampuni."

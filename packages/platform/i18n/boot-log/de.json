@@ -2,7 +2,6 @@
   "panelLabel": "Startprotokoll",
   "entries": {
     "transistor-name-off-patent-1947": {
-      "tag": "Patent",
       "title": "Der Name, der vom Patent fehlte",
       "body": "Am 23. Dezember 1947 demonstrierten Bardeen und Brattain einen Germanium-Punktkontakt-Transistor bei Bell Labs. Shockley war nicht im Raum. Anwälte stellten fest, dass sein eigenes Design zu ähnlich an ein Patent von Julius Lilienfeld aus dem Jahr 1925 war, und streichen seinen Namen von diesem Patent.",
       "coda": "1956 teilten sich alle drei den Nobelpreis für Physik."
@@ -20,7 +19,6 @@
       "coda": "Wikipedia zählt Intel und AMD zu den Dutzenden von Unternehmen, die auf diese Abspaltung zurückgehen."
     },
     "kilby-noyce-six-months-1958-1959": {
-      "tag": "Parallel",
       "title": "Sechs Monate, eine Medaille",
       "body": "Kilby demonstrierte im September 1958 bei Texas Instruments einen funktionierenden integrierten Schaltkreis, dessen Teile durch externe Drähte verbunden waren. Noyce reichte im Juli 1959 bei Fairchild eine monolithische Siliziumversion ein, die massenproduzierbar war. Keiner der beiden Männer lehnte den Anspruch des anderen auf Miturheberschaft ab.",
       "coda": "Kilby nahm den Nobelpreis 2000 allein entgegen. Noyce war 1990 gestorben."
@@ -50,13 +48,11 @@
       "coda": "Bis 1995 sagte Moore, der Begriff habe fast alles in der Chipindustrie zu bedeuten begonnen."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
       "title": "Die Sekretärin und DOCTOR",
       "body": "1966 veröffentlichte Joseph Weizenbaum ELIZAs DOCTOR-Skript am MIT, ein Programm, das die Sätze der Nutzer größtenteils als Fragen zurückspiegelte. Seine eigene Sekretärin soll ihn gebeten haben, den Raum zu verlassen, damit sie allein mit ihm sprechen konnte.",
       "coda": "Das Muster, das er nicht erwartet hatte, wurde später als ELIZA-Effekt bezeichnet."
     },
     "engelbart-royalties": {
-      "tag": "Patent",
       "title": "Vierzigtausend Dollar",
       "body": "SRI patentierte die Maus nach der Demo und hatte, eigenen Angaben zufolge, keine wirkliche Vorstellung von ihrem Wert. Einige Jahre später stellte sich heraus, dass sie sie an Apple für etwa 40.000 Dollar lizenziert hatten.",
       "coda": "Engelbart erhielt für die Erfindung nie irgendwelche Lizenzgebühren."
@@ -74,8 +70,6 @@
       "coda": "Fünfzig Jahre später wurde die Idee in Cloud Computing umbenannt."
     },
     "rfc1": {
-      "tag": "Governance",
-      "title": "Request for Comments",
       "body": "Steve Crocker musste die ersten Regeln für ein paar vernetzte Hosts aufstellen. Niemand hatte ihm die Autorität dazu gegeben, und er fürchtete, es würde als Amtsanmaßung wirken – also nannte er das Genre Request for Comments.",
       "coda": "Jede Regel, auf die sich das Internet seitdem geeinigt hat, heißt immer noch RFC."
     },
@@ -98,7 +92,6 @@
       "coda": "Der Presse fiel es schwer, den Überstrich zu erklären, und sie schrieb Bindestrich. Der Bindestrich blieb hängen."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
       "title": "Die Mutter aller Demos",
       "body": "Engelbart wurden neunzig Minuten gegeben. Sein Terminal war über Telefonleitungen mit einer dreißig Meilen entfernten Maschine verbunden, und er demonstrierte die Maus, Hyperlinks, Fenster, Bildschirmfreigabe und zwei Personen, die gleichzeitig an einem Dokument arbeiteten.",
       "coda": "Tausend Menschen sahen zu und kehrten dann für ein weiteres Jahrzehnt zu Lochkarten zurück."
@@ -111,7 +104,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Kommentar",
-      "title": "Burn, Baby, Burn",
       "body": "Die Hauptzündroutinen des Mondmoduls sind im Quellcode als BURN_BABY_BURN gekennzeichnet. Der Name bezieht sich nicht auf den Schub, sondern wurde von einem Slogan eines Soul-Radio-DJs übernommen.",
       "coda": "Die Zeile befindet sich weiterhin unverändert im öffentlichen Repository."
     },
@@ -134,19 +126,16 @@
       "coda": "Der allgemeine Verkauf des Intel 4004 begann im Juli desselben Jahres."
     },
     "pong-coin-overflow": {
-      "tag": "Feedback",
       "title": "Die Münzkiste war überlaufen",
       "body": "Im August 1972 stellte Atari den Pong-Prototypen in einer Bar in Sunnyvale auf. Wenige Tage später meldete der Besitzer, das Gerät sei defekt. Der Ingenieur Al Alcorn fuhr los, um es zu reparieren, und stellte fest, dass der Fehler nicht elektrischer Natur war: der Münzmechanismus war blockiert, weil er mit Vierteldollar-Münzen überlaufen war.",
       "coda": "Die Störung war kein Verkabelungsfehler; es waren einfach zu viele Münzen."
     },
     "wozniak-breakout-bonus": {
-      "tag": "Bonus",
       "title": "Die Aufteilung",
       "body": "1973 bat Atari Steve Jobs, die Breakout-Schaltplatine zu verkleinern, und zahlte 100 US-Dollar pro entferntem Chip. Jobs bat Wozniak um Hilfe und versprach ihm die Hälfte. Wozniak entfernte 50 Chips. Jobs sagte, der Gesamtbetrag belaufe sich auf 700 US-Dollar, sodass Wozniaks Anteil 350 US-Dollar betrage. Zehn Jahre später erfuhr Wozniak, dass die tatsächliche Prämie 5.000 US-Dollar betrug.",
       "coda": "Wozniak sagte, er hätte Jobs das Geld gegeben, wenn er darum gebeten hätte."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
       "title": "Nicht zum Verstehen gedacht",
       "body": "Die Datei slp.c der Unix Sixth Edition enthält die Zeile 'You are not expected to understand this', die an Code für die Wiederherstellung des Prozess-Swap-Stacks angehängt ist, der auf Eigenheiten des PDP-11-Compilers aufbaut. Dennis Ritchie sagte später, er habe es so gemeint, wie ein Lehrer sagt, dass etwas nicht in der Prüfung vorkommen wird.",
       "coda": "Die Routine wurde für die Unix Seventh Edition neu geschrieben."
@@ -194,13 +183,11 @@
       "coda": "Bis 2022 verarbeitete ein Produktions-EUV-Scanner etwa zweihundert Wafer pro Stunde."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
       "title": "Eine Foundry mit sechsundfünfzig",
       "body": "Morris Chang, geboren 1931, stieg zum Group Vice President der weltweiten Halbleiteroperationen bei Texas Instruments auf, war dann Präsident und COO von General Instrument und leitete anschließend Taiwans ITRI. 1987, im Alter von sechsundfünfzig, gründete er TSMC, das keinen der Chips entwirft, die es herstellt.",
       "coda": "Es war die erste Foundry der Welt, die nichts anderes als die Fertigung tat."
     },
     "huawei-diet-pills": {
-      "tag": "Reseller",
       "title": "Huaweis erstes Geschäft war nicht Technik",
       "body": "Huawei wurde am 15. September 1987 mit einem Kapital von 21.000 Yuan registriert und nannte sich selbst ein Technologieunternehmen. Es begann mit dem Handel von Waren, einschließlich Diätpillen, und verkaufte anschließend in Hongkong hergestellte HAX-Schalter weiter. Den eigenen Schalter, den BH01, baute das Unternehmen erst 1989 in Handarbeit.",
       "coda": "Nach vier Jahren entwarf das Unternehmen zum ersten Mal seine eigene Leiterplatte."
@@ -231,7 +218,6 @@
     },
     "sosumi-so-sue-me": {
       "tag": "Benennung",
-      "title": "So Sue Me",
       "body": "Im Jahr 1991 lehnte die Rechtsabteilung von Apple den Namen \"Let It Beep\" für den Alarmton als zu musikalisch ab, gemäß einer Einigung, die Apple Computer von musikbezogenen Marken abhielt. Der Sounddesigner Jim Reekes antwortete daraufhin \"so sue me\" und reichte es als \"sosumi\" ein.",
       "coda": "Der Ton war fast drei Jahrzehnte in Mac OS enthalten, bevor Big Sur ihn 2020 ersetzte."
     },
@@ -242,7 +228,6 @@
       "coda": "Seitdem hat niemand eine Lizenzgebühr für die Nutzung gezahlt."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "Der Server, den sie nicht erreichen konnten",
       "body": "Am 10. Dezember 1993 gab id Software das erste Episode von Doom als Shareware heraus und setzte auf den Verkauf des Rests. Beim Hochladen auf einen FTP-Server der University of Wisconsin stellten sie fest, dass so viele Menschen bereits warteten, dass das Team selbst keine Verbindung herstellen konnte.",
       "coda": "Der Upload war gegen Mitternacht abgeschlossen; zehntausend gleichzeitige Downloads brachten das Netzwerk der Universität zum Erliegen."
@@ -285,7 +270,6 @@
     },
     "http-418-teapot": {
       "tag": "Protokoll",
-      "title": "I'm a Teapot",
       "body": "RFC 2324, veröffentlicht am 1. April 1998, definiert Status 418 als „I'm a teapot“ und reiht sich als Informational ein, nicht als Standard. Am 1. April 2014 erweiterte RFC 7168 ihn um die Teezubereitung. Der Code wurde nie zu einem echten Standard.",
       "coda": "Beide Dokumente bleiben informativ; der Statuscode wurde trotzdem in echten Servern ausgeliefert."
     },
@@ -308,7 +292,6 @@
       "coda": "Die Unterschrift einer einzigen Abteilung ließ eine Klausel verschwinden, die sich über ein Jahrzehnt vermehrt hatte."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "Der Preis freier Software",
       "body": "Red Hat gab den Quellcode seines Kernprodukts kostenlos heraus und verlangte stattdessen Gebühren für Support, Schulung und Integration. Am 11. August 1999 ging das Unternehmen an die Börse. Der Kursgewinn am ersten Handelstag war damals der achtgrößte in der Geschichte der Wall Street.",
       "coda": "Gründer Bob Young wurde vier Monate später als CEO abgelöst."
@@ -320,7 +303,6 @@
       "coda": "Fünfunddreißig Jahre nach Projektbeginn."
     },
     "sqlite-no-license": {
-      "tag": "Foundation",
       "title": "Die Datenbank ohne Lizenz",
       "body": "SQLites eigene Seite schätzt weltweit über eine Billion aktive Datenbankdateien, da allein jedes Smartphone Hunderte enthält, was SQLite nach zlib an zweiter Stelle der eingesetzten Software setzt. Es gibt keine Lizenz, da die Autoren jede Zeile in die Public Domain gegeben haben.",
       "coda": "Unternehmen, die rechtlichen Schutz wünschen, erwerben eine separate Titelversicherung."
@@ -332,13 +314,11 @@
       "coda": "Im November 2010 einigte sich SMIC mit TSMC auf eine Zahlung von 200 Millionen US-Dollar und rund 8 Prozent der Anteile."
     },
     "api-mandate": {
-      "tag": "Governance",
       "title": "Das Memorandum",
       "body": "Laut dem Beitrag, der 2011 versehentlich öffentlich wurde, ordnete Bezos 2002 an, dass Teams alles über Service-Schnittstellen bereitstellen: keine direkten Verknüpfungen, kein Lesen des Speichers eines anderen Teams, keine Hintertüren.",
       "coda": "Der Autor dieses Beitrags hatte ihn nur für seine Kollegen bestimmt."
     },
     "hupu-rumours": {
-      "tag": "Forum",
       "title": "Der Übersetzer von Gerüchten",
       "body": "Im Januar 2004 gründete ein chinesischer Student, der in Chicago an einer Promotion in Maschinenbau arbeitete, in seiner Freizeit ein Basketball-Forum. Die Arbeit bestand hauptsächlich darin, NBA-Nachrichten und -Gerüchte ins Chinesische zu übersetzen und aufzubereiten.",
       "coda": "Acht Jahre später eröffnete das Forum einen eigenen Online-Shop."
@@ -357,18 +337,14 @@
     },
     "git-information-manager-hell": {
       "tag": "Git",
-      "title": "Information Manager from Hell",
       "body": "Am 7. April 2005 commitete Linus Torvalds die erste Revision von git. Die Nachricht lautet: Initial revision of \"git\", the information manager from hell. Die Autorenadresse lautet torvalds@ppc970.osdl.org.",
       "coda": "Diese Adresse verweist auf einen PowerPC 970-Testrechner bei OSDL."
     },
     "knuth-reward-check": {
-      "tag": "Reward",
-      "title": "Bank of San Serriffe",
       "body": "Donald Knuth zahlt 2,56 USD für jeden in seinen Büchern gefundenen Fehler, gezahlt vom fiktiven Bank of San Serriffe. Bis März 2005 beliefen sich die von ihm unterzeichneten Schecks auf über 20.000 USD.",
       "coda": "Die meisten Empfänger lassen den Scheck einrahmen, statt ihn einzulösen."
     },
     "dji-helicopter-first": {
-      "tag": "Pivot",
       "title": "DJI begann mit einem Hubschrauber",
       "body": "Frank Wang absolvierte 2006 die Hong Kong University of Science and Technology und gründete DJI in Shenzhen mit Kommilitonen. Das erste Produkt war ein Hubschrauber-Flugregelsystem; die erste ausgereifte Version, XP3.1, wurde 2008 ausgeliefert.",
       "coda": "Später stellte das Team fest, dass die meisten Gimbal-Käufer diese an Multikoptern, nicht an Hubschraubern, montierten."
@@ -380,7 +356,6 @@
       "coda": "Elf Jahre später, bei dem Börsengang, nannte Houston es seinen Lieblings-Thread auf der Seite."
     },
     "butterfield": {
-      "tag": "Pivot",
       "title": "Zweimal aus den Trümmern",
       "body": "Butterfields Spiel Game Neverending kam ins Stocken, und das Team spinnte den Foto-Sharing-Teil als Flickr aus. Acht Jahre später wurde sein zweites Spiel, Glitch, eingestellt, und das Team spinnte das Chat-Tool aus, das es für sich selbst entwickelt hatte: Slack.",
       "coda": "Beide Male wurde das Nebenprodukt erst sichtbar, nachdem das Hauptprodukt geschlossen wurde."
@@ -392,7 +367,6 @@
       "coda": "Blockbuster ging zehn Jahre später in die Insolvenz."
     },
     "y2k": {
-      "tag": "Governance",
       "title": "Es passierte nichts",
       "body": "Gartner bezifferte die weltweiten Kosten von Y2K auf 300 bis 600 Milliarden Dollar, und Hunderttausende Menschen änderten zweistellige Jahreszahlen Zeile für Zeile. In der Nacht hielt das Stromnetz, die Banken hielten, die Flugzeuge flogen.",
       "coda": "Vier Jahre später veröffentlichte ein Ökonom eine Studie, in der er argumentierte, dass der Großteil des Geldes verschwendet worden sei."
@@ -404,13 +378,11 @@
       "coda": "Der 701 verkaufte sich anschließend achtmal so oft."
     },
     "homebrew-volunteer-team": {
-      "tag": "Foundation",
       "title": "Das Repository ohne Arbeitgeber",
       "body": "Homebrew ist der Standard-Paketmanager auf den meisten Mac-Entwicklermaschinen; 2013 führte er bei GitHub an Contributors. Max Howell schrieb 2009 die erste Version. Heute wird er von einem Team von 34 Personen gewartet, alle unbezahlt.",
       "coda": "Seine Finanzierungsgeschichte besteht aus einem Kickstarter und einem Open Source Collective-Konto."
     },
     "xiaomi-software-first": {
-      "tag": "Software",
       "title": "Xiaomis erstes Produkt war kein Telefon",
       "body": "Xiaomi wurde am 6. April 2010 gegründet. Im August und Dezember desselben Jahres veröffentlichte es Betaversionen des MIUI-Betriebssystems und der Miliao-Chat-App, beides Software.",
       "coda": "Das erste Telefon des Unternehmens wurde erst im August des folgenden Jahres ausgeliefert."
@@ -440,13 +412,11 @@
       "coda": "Das Wort für den Trick war bei seiner ersten Verwendung ein Witz über das Scheitern des Tricks."
     },
     "french-revolutionary-decimal-time": {
-      "tag": "Experiment",
       "title": "Der zehnstündige Tag",
       "body": "1793 teilte Frankreich den Tag in zehn Stunden zu je hundert Dezimalminuten. Die Pflichtanwendung begann im September 1794 und wurde bereits sieben Monate später ausgesetzt. Das Dezimalzifferblatt der Uhr im Tuilerienpalast lief mindestens bis 1801 weiter.",
       "coda": "Das abgeschaffte System blieb noch jahrelang an einer Palastwand montiert."
     },
     "railway-time-gwr": {
-      "tag": "Standard",
       "title": "Die Zeit, die die Züge einhielten",
       "body": "Im November 1840 führte die Great Western Railway die Greenwich-Zeit in ihrem gesamten Netz ein und ersetzte die lokale Zeit jeder Stadt. Bis 1855 hatten etwa 98 Prozent der britischen Städte nachgezogen. Das Parlament machte sie erst 1880 zur gesetzlichen nationalen Standardzeit.",
       "coda": "Die Uhren einigten sich auf die Zeit vierzig Jahre vor dem Gesetz."
@@ -458,13 +428,11 @@
       "coda": "Western Union lehnte Bells Patent in jenem Jahr tatsächlich ab; dieses Memo schrieb es aber nie."
     },
     "nintendo-hanafuda-detours": {
-      "tag": "Pivot",
       "title": "Die Umwege nach den Blumenkarten",
       "body": "Fusajiro Yamauchi eröffnete 1889 in Kyoto ein Geschäft und stellte dort hanafuda-Spielkarten von Hand her. Das Unternehmen versuchte später mit einem Taxidienst und Instantreis, beides aufgegeben; die häufig wiederholte Behauptung einer Love-Hotel-Kette findet sich in den Wertpapiermeldungen bis 1962 nicht.",
       "coda": "1966 verkaufte ein Spielzeug namens Ultra Hand mehrere hunderttausend Einheiten."
     },
     "wrigley-premiums-premium": {
-      "tag": "Pivot",
       "title": "Das Prämien-Prämium",
       "body": "1891 verkaufte William Wrigley Jr. in Chicago Seife und gab Backpulver als Bonus dazu. Die Kunden wollten das Backpulver mehr als die Seife, also wechselte er auf den Verkauf davon und fügte Kaugummi als eigenes Bonusprodukt hinzu. Die Kunden wollten den Kaugummi mehr.",
       "coda": "Bis 1892 hatte er sowohl Seife als auch Backpulver aufgegeben, um nur noch Kaugummi zu verkaufen."
@@ -476,13 +444,11 @@
       "coda": "Das Stück behielt den Namen eines Bruders auf dem Titelblatt."
     },
     "play-doh-wallpaper-cleaner": {
-      "tag": "Pivot",
       "title": "Es sollte Tapeten reinigen",
       "body": "In den 1930er Jahren entwickelte Kutol einen weichen Teig, um Kohle Ruß von Tapeten zu schrubben. Als die Häuser auf sauberere Heizstoffe umstellten, verschwand die Nachfrage. Eine Lehrerin schlug vor, ihn als Modelliermasse zu verkaufen; 1956 wurde er in Play-Doh umbenannt.",
       "coda": "Bis 2005 wurden jährlich 95 Millionen Dosen in 75 Ländern verkauft."
     },
     "hedy-lamarr-frequency-hopping-patent": {
-      "tag": "Patent",
       "title": "Das Patent, das man einstaubte",
       "body": "1942 patentierten Lamarr und der Komponist George Antheil ein Frequenzsprungsystem, um Torpedoradio vor Störungen zu schützen. Die Marine klassifizierte es, legte es ein und schlug Lamarr vor, stattdessen Kriegsanleihen zu verkaufen. Das Patent lief 1959 ab, bevor es je ein Schiff nutzte.",
       "coda": "Lamarr erhielt zu Lebzeiten keine Vergütung für das Patent."
@@ -500,7 +466,6 @@
       "coda": "Ihre Namen wurden Jahrzehnte später wieder aus den Eventfotos herausgesucht."
     },
     "claude-shannon-juggling-theorem": {
-      "tag": "Paper",
       "title": "Der Jongliertheorem",
       "body": "1948 veröffentlichte Shannon „A Mathematical Theory of Communication“ und begründete damit die Informationstheorie. Jahrzehnte später wandte er dieselbe Strenge auf sein Hobby an und leitete eine formale Beziehung zwischen der Flugzeit eines Balls, seiner Verweildauer sowie der Anzahl der Bälle und Hände her.",
       "coda": "Es wurde im selben Band wie die Arbeit von 1948 gesammelt."
@@ -542,7 +507,6 @@
       "coda": "Kommerzielle CAD-Software brauchte fast zwei Jahrzehnte, um das zu erreichen, was die Dissertation gezeigt hatte."
     },
     "douglas-mcilroy-garden-hose-pipe": {
-      "tag": "Memo",
       "title": "Das Gartenschlauch-Memo",
       "body": "Im Oktober 1964 schrieb McIlroy ein Bell-Labs-Memo, in dem er vorschlug, Programme wie Gartenschläuche zu verbinden – ein weiteres Segment anschrauben, um Daten anders zu verarbeiten. Es wurde verbreitet, bewundert und blieb unbaut. Neun Jahre später fügte Ken Thompson der Unix-Shell über Nacht ein Zeichen hinzu: |.",
       "coda": "Am Morgen kommunizierten Programme, die zuvor nie miteinander gesprochen hatten."
@@ -572,7 +536,6 @@
       "coda": "Das Sicherheitsziel war explizit; der Fehler war, dass die Einfachheit trotzdem gewann."
     },
     "johnson-vs-cern-touchscreen": {
-      "tag": "Touchscreen",
       "title": "Wer war tatsächlich zuerst",
       "body": "CERN schreibt Bent Stumpe die Entwicklung des weltweit ersten kapazitiven Touchscreens im Jahr 1972 für seinen Beschleuniger-Kontrollraum zu. Eric Johnson von der britischen Royal Radar Establishment hatte bereits 1965, sieben Jahre früher, eine Arbeit über fingerbetriebene kapazitive Touch-Technologie veröffentlicht.",
       "coda": "CERNs Anspruch, den ersten Touchscreen gebaut zu haben, steht immer noch auf seiner eigenen Website."
@@ -644,7 +607,6 @@
       "coda": "Bis dahin hatte sie eine Reihe kurzfristiger, prekärer Verträge absolviert."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
       "title": "Der fünfte Mann des Internets",
       "body": "1972 baute Louis Pouzin in Frankreich das CYCLADES-Netzwerk, das erste, das die Endgeräte – nicht das Netzwerk – für die zuverlässige Zustellung verantwortlich machte. 1974 bedankten sich Cerf und Kahn in ihrer TCP-Arbeit namentlich bei ihm. 2004 erhielten Cerf und Kahn den Turing Award. Pouzins Name stand nicht darauf.",
       "coda": "The Economist nannte ihn später den fünften Mann des Internets."
@@ -710,7 +672,6 @@
       "coda": "Klonhersteller folgten innerhalb weniger Jahre, und IBM erlangte die Kontrolle über die Plattform nie wieder."
     },
     "postel-law-robustness-reversal": {
-      "tag": "Governance",
       "title": "Das Robustheitsprinzip, umgekehrt",
       "body": "RFC 761 (1980) forderte Implementierer auf, bei dem, was sie akzeptieren, großzügig zu sein und bei dem, was sie senden, konservativ. 2023 kehrte der eigene Architekturvorstand der IETF diese Anleitung in RFC 9413 um: Nachsicht lässt Fehler zu de facto Standards erstarren, wodurch Systeme weniger robust werden, nicht mehr.",
       "coda": "Der Standard, der das Internet zur Nachsicht aufforderte, wurde von seinen eigenen Hütern zurückgenommen."
@@ -722,7 +683,6 @@
       "coda": "Eine Anmerkung zur Platzierung der Fehlerprüfung wuchs zum Fall für Netzneutralität heran."
     },
     "excel-1900-leap-year": {
-      "tag": "Legacy",
       "title": "Das Schaltjahr, das es nicht gab",
       "body": "Lotus 1-2-3 behandelte 1900 als Schaltjahr, eine harmlose Abkürzung. Microsoft kopierte dasselbe falsche Datum, um kompatibel zu bleiben. Lotus ist weg; der falsche Schalttag bleibt, nun in die Office Open XML-Spezifikation geschrieben.",
       "coda": "Ein Kompatibilitäts-Hack für einen eingestellten Konkurrenten ist nun ein geschriebener Standard."
@@ -735,12 +695,10 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Anekdote",
-      "title": "Algorhyme",
       "body": "1985 übertrug Perlmans Vorgesetzter bei DEC das Problem der Schleifenfreien Brückenkommunikation am Freitag und verschwand dann für eine Woche. Sie hatte den Spanning-Tree-Algorithmus bis Mittwoch fertiggestellt — und verbrachte den Rest damit, Algorhyme zu schreiben, ein Gedicht, das zum Abstract des Papiers wurde.",
       "coda": "Das Gedicht dauerte länger zu schreiben als der Algorithmus."
     },
     "brooks-no-silver-bullet": {
-      "tag": "Essay",
       "title": "Keine Silberne Kugel",
       "body": "Auf dem IFIP-Kongress 1986 teilte Fred Brooks die Software-Schwierigkeit in essentielle und zufällige Komplexität auf. Zufällige Schwierigkeiten seien stark gesunken, sagte er, aber keine einzelne Technik werde innerhalb eines Jahrzehnts eine zehnfache Produktivitätssteigerung liefern.",
       "coda": "Vier Jahrzehnte später wird jedes neue Paradigma immer noch als die Kugel verkauft, die er sagte, es nicht gäbe."
@@ -770,7 +728,6 @@
       "coda": "Im Jahr 2010 veröffentlichte Apple das iPad, ein kapazitives Multitouch-Tablet."
     },
     "iso8601-unify-then-fork": {
-      "tag": "Standard",
       "title": "Der engere Vertreter von ISO 8601",
       "body": "ISO 8601 wurde erstmals 1988 veröffentlicht und vereinheitlichte fünf frühere, widersprüchliche ISO-Datums- und Zeitstandards zu einem. Das Format, gegen das die meisten Internet-Softwarelösungen validieren, ist jedoch RFC 3339 (1997), ein engeres Profil, das nach der späteren Überarbeitung von ISO 8601 nicht einmal mehr ein strikter Untermenge davon ist.",
       "coda": "Der Standard, den alle zitieren, und der Dialekt, gegen den jeder Code prüft, sind nicht dasselbe Dokument."
@@ -783,7 +740,6 @@
     },
     "worse-is-better": {
       "tag": "Debatte",
-      "title": "Worse Is Better",
       "body": "1989 prägte Richard Gabriel den Begriff „worse is better“: Eine einfache, halbwegs richtige Implementierung überlebt besser als eine vollständige und korrekte – deshalb glaubte er, dass C und Unix Lisp überlegen sind. 1991 veröffentlichte er unter dem Pseudonym Nickieben Bourbaki eine Replik, in der er sich als alter Freund ausgab.",
       "coda": "Jahrzehnte später sagte er immer noch, er könne sich nicht entscheiden, ob sein eigenes Argument richtig war."
     },
@@ -800,31 +756,25 @@
       "coda": "AT&T bezifferte den entgangenen Umsatz später auf sechzig Millionen Dollar."
     },
     "aspec-vs-musicam": {
-      "tag": "Audio",
       "title": "Der Einfachere gewinnt",
       "body": "1991 testete MPEG zwei konkurrierende Audio-Codecs. ASPEC, entwickelt von Fraunhofer, AT&T und dem französischen CNET, gewann die Qualitätstests, galt jedoch als zu komplex. MUSICAM von Matsushita und Philips setzte sich aufgrund seiner Einfachheit durch. Das fertige MP3 integrierte dennoch das Filterdesign von ASPEC.",
       "coda": "Das Format, das alle MP3 nennen, trägt die Technik des unterlegenen Vorschlags im Namen des Siegers."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Ein Beitrag zu comp.os.minix",
       "body": "Am 25. August 1991 schrieb ein Student der Universität Helsinki in die Newsgroup comp.os.minix, dass er ein freies Betriebssystem schreibe, nannte es \"nur ein Hobby, wird nicht groß und professionell wie gnu sein\" und fragte, welche Funktionen die Leute wünschten.",
       "coda": "Seit November 2017 laufen alle 500 schnellsten Supercomputer der Welt mit einem darauf basierenden Betriebssystem."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Kostenlose Beat-Preisgestaltung",
       "body": "1991 veröffentlichte Tim Berners-Lee das World Wide Web beim CERN. Im selben Jahr brachte die University of Minnesota Gopher heraus, das für eine Zeit das beliebtere System war. Im Februar 1993 kündigte Minnesota Lizenzgebühren für Gopher-Server an. Im April desselben Jahres machte das CERN das Web-Protokoll kostenlos.",
       "coda": "Gopher hatte vor der Ankündigung der Gebühren eine größere Fangemeinde und hatte sie danach nie wieder."
     },
     "rough-consensus-running-code": {
-      "tag": "Governance",
-      "title": "Rough Consensus, Running Code",
       "body": "Auf der IETF-Veranstaltung im Juli 1992 stellte Daves Clark vom MIT eine Folie vor: 'Wir lehnen Könige, Präsidenten und Abstimmungen ab. Wir glauben an groben Konsens und funktionierenden Code.' Der Satz ist heute ein fester Bestandteil der Internet-Governance-Folklore. Er begann als Spott über das formelle Komitee-Abstimmungsverfahren der OSI.",
       "coda": "Die Witzfolie über OSIs Abstimmungsregeln wurde zum Gründungsglaubensbekenntnis der Internet-Governance."
     },
     "han-unification-japanese-delegate": {
-      "tag": "Standard",
       "title": "Der unwahrscheinliche Autor der Han-Unifikation",
       "body": "1992 verschmolz die CJK-Gemeinschaftsforschungsgruppe Zehntausende chinesischer, japanischer und koreanischer Zeichen in gemeinsame Unicode-Codewerte. In populären Darstellungen wird Japan als der Einwender dargestellt. Die eigene Geschichte von Unicode schreibt die Verifikationsregeln dem japanischen Delegierten Miyazawa Akira zu.",
       "coda": "Die Delegation, die als Opfer dargestellt wird, half bei der Ausarbeitung der Regeln, gegen die sie sich angeblich gewandt hat."
@@ -842,7 +792,6 @@
       "coda": "Das erste Zuhause des Wortes war die Seite eines Flughafenbusses."
     },
     "robots-exclusion-rfc9309": {
-      "tag": "Standard",
       "title": "robots.txt: 28 Jahre ohne Ratifizierung",
       "body": "Martijn Koster schlug robots.txt 1994 vor; Crawler folgten ihm freiwillig, ohne formellen Standard und ohne Durchsetzungsmöglichkeit. Google schlug 2019 eine Standardisierung vor, und die IETF veröffentlichte schließlich RFC 9309 im September 2022 und schloss damit eine 28-jährige Lücke.",
       "coda": "Das am meisten befolgte Ehrenwort des Webs brauchte achtundzwanzig Jahre, um ein echter Standard zu werden."
@@ -860,19 +809,16 @@
       "coda": "Der Mitarbeiter Tony Fadell leitete später die Hardwareentwicklung für iPod und iPhone bei Apple."
     },
     "ibm-simon-first-touchscreen": {
-      "tag": "Touchscreen",
       "title": "Simons Faxgerät",
       "body": "Am 16. August 1994 stellten IBM und BellSouth den Simon Personal Communicator vor: ein 4,5-Zoll-Touchscreen, der E-Mails und Faxe versenden konnte und für 899 US-Dollar verkauft wurde. Die Akkulaufzeit betrug etwa eine Stunde. Sechs Monate später wurde er eingestellt, nachdem rund 50.000 Einheiten verkauft worden waren.",
       "coda": "Im Jahr 2007 brachte Apple das iPhone heraus, ein kapazitives Touchscreen-Telefon ohne physische Tastatur."
     },
     "cors-same-origin-orphaned": {
-      "tag": "Standard",
       "title": "CORS: Eine Empfehlung im Ruhestand",
       "body": "Netscape fügte 1995 die Same-Origin-Policy zusammen mit JavaScript in Navigator ein, ganz ohne Standardisierungsprozess. CORS, das diese Policy formal lockern sollte, wurde erst 2014 zur W3C-Empfehlung – und bis 2020 hatte das W3C sie in den Ruhestand versetzt und die Spezifikation an WHATWGs Fetch-Dokument übergeben.",
       "coda": "Das Standardisierungsgremium hat seine eigene Sicherheitsempfehlung sechs Jahre nach ihrer Veröffentlichung zurückgezogen."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "Ein Lebenslauf-Zähler",
       "body": "1994 schrieb ein Programmierer ein paar kleine CGI-Programme in C, einfach um zu wissen, wie viele Menschen sich sein Online-Lebenslauf ansahen. Er nannte das Toolkit „Personal Home Page Tools“ und veröffentlichte den Quellcode im Juni 1995.",
       "coda": "Drei Jahrzehnte später läuft mehr als 70 % der Websites mit einer bekannten serverseitigen Sprache immer noch auf seinem Nachfolger."
@@ -920,7 +866,6 @@
       "coda": "Der Registrierungsdatensatz trägt bis heute die falsche Schreibweise, datiert auf den 15. September 1997."
     },
     "rfc2119-must-should": {
-      "tag": "Standard",
       "title": "MUST vs must: Eine zwanzigjährige Lücke",
       "body": "RFC 2119 (März 1997) definierte MUST, SHOULD, MAY und deren Negationen als verbindliche Anforderungsebenen für IETF-Dokumente. Es hieß jedoch nur, diese Wörter 'seien oft großgeschrieben' — Kleinbuchstaben must und should wurden nie ausgeschlossen. RFC 8174 stopfte die Lücke 2017: Nur Großbuchstaben zählen.",
       "coda": "Zwanzig Jahre lang hatte ein Kleinbuchstaben-must das gleiche Gewicht wie ein Achselzucken."
@@ -938,7 +883,6 @@
       "coda": "Im Jahr 2005 gründete dieselbe Person Autohome."
     },
     "china-oicq-to-qq": {
-      "tag": "Rebrand",
       "title": "Von OICQ zu QQ",
       "body": "Tencent startete OICQ im Februar 1999 – das O stand für „Open“ und war eine Anspielung auf ICQ. Im Oktober desselben Jahres sandte AOL, der Eigentümer von ICQ, eine Abmahnung wegen Markenverletzung. Im November 2000 benannte Ma Huateng es in QQ um, da der Buchstabe auf Chinesisch „niedlich“ ausgesprochen wird.",
       "coda": "Open war das erste Wort, das verschwand, sobald die Anwälte von AOL eintrafen."
@@ -956,7 +900,6 @@
       "coda": "Die Mission im Wert von 327,6 Millionen US-Dollar sendete nie wieder."
     },
     "paypal-palm-beaming": {
-      "tag": "Pivot",
       "title": "Der Strahl, der nie kam",
       "body": "1999 startete Confinity Infrarot-Geldtransfers zwischen Palm Pilots und demonstrierte dies live bei einer Finanzierungsrunde. Wochen nach dem Start hatte es rund 13.000 Nutzer, eine Zahl, die sich im folgenden Jahr kaum bewegte. Was tatsächlich durchstartete, waren E-Mail-Zahlungen, die nur als Fallback-Option entwickelt wurden.",
       "coda": "Das Unternehmen nannte sich in PayPal um und ließ den Strahl stillschweigend fallen."
@@ -992,13 +935,11 @@
       "coda": "Der Kommentar wird heute routinemäßig als das Gegenbeispiel zitiert, das er hervorbrachte."
     },
     "discuz-shenyang-dorm": {
-      "tag": "Forum",
       "title": "CDB, ein Wohnheim-Projekt",
       "body": "Im Jahr 2001 schrieb ein Universitätsstudent, der in einem Wohnheim in Shenyang lebte, eine Forensoftware und nannte sie Crossday Bulletin, wobei er parallel zu seinem Studium daran arbeitete. Im darauffolgenden Oktober benannte er sie in Discuz um.",
       "coda": "Am 23. August 2010 erwarb Tencent das Unternehmen, das er um sie herum aufgebaut hatte."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Ein Nebenprojekt neben Nupedia",
       "body": "Am 10. Januar 2001 installierte der Gründer einer peer-reviewed Online-Enzyklopädie Wiki-Software auf dem eigenen Server des Projekts, hauptsächlich damit Freiwillige nebenbei lose Entwürfe für Einträge verfassen konnten, während die begutachtete Enzyklopädie langsam vorankam.",
       "coda": "Bis Juli 2026 enthielt allein die englische Ausgabe über 7,2 Millionen Artikel."
@@ -1058,7 +999,6 @@
       "coda": "Dianping, die aus ihm hervorgegangene Seite, ging am 12. April 2003 live."
     },
     "wordpress-b2-post": {
-      "tag": "Blogging",
       "title": "Das Blogging-Software-Dilemma",
       "body": "Am 24. Januar 2003 schrieb ein Universitätsstudent auf seinem eigenen Blog, dass b2, die Blogging-Software, die er täglich nutzte, seit Monaten nicht mehr gepflegt werde, seitdem der Hauptentwickler verschwunden war. Er sagte, er wolle sie forken, und bat nur um einen Namen.",
       "coda": "Das Unternehmen, das aus dieser Abspaltung hervorging, wurde bis 2021 mit 7,5 Milliarden Dollar bewertet."
@@ -1088,13 +1028,11 @@
       "coda": "Facebook startete 2004 mit derselben Social-Graph-Idee und hielt der Traffic-Last stand."
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
       "title": "Die Laden-Software überwuchs den Laden",
       "body": "Im Jahr 2004 empfand der Programmierer Tobias Lutke die damalige E-Commerce-Software als zu umständlich, also schrieb er seine eigene, um Snowboard-Ausrüstung online als Snowdevil zu verkaufen. Snowdevil selbst blieb ein kleiner Laden, aber andere Händler begannen, nach einer Lizenz für die dahinterstehende Software zu fragen.",
       "coda": "Shopify wurde 2015 an der New Yorker Börse notiert."
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
       "title": "Das Nebenprojekt des Podcast-Unternehmens",
       "body": "Am 28. Juni 2005 integrierte Apple Podcast-Abonnements in iTunes; innerhalb von zwei Tagen überschritten die Abonnements die Millionengrenze, und Odeos gesamtes Podcasting-Geschäft wurde über Nacht obsolet. Im folgenden März brachte ein internes Hackathon Jack Dorseys SMS-Statusupdate-Pitch hervor: Twitter.",
       "coda": "Odeo, das Unternehmen, in dem Twitter aufgebaut wurde, wurde 2007 verkauft."
@@ -1178,13 +1116,11 @@
       "coda": "Weniger als zweihundert von fünftausend überlebten."
     },
     "semver-dependency-hell": {
-      "tag": "Standard",
       "title": "SemVers eigene Ausnahme",
       "body": "2010 veröffentlichte Tom Preston-Werner, Mitgründer von GitHub, semver.org und schlug MAJOR.MINOR.PATCH vor, um die „Dependency-Hölle“ zu beenden. Die Spezifikation selbst schafft eine Ausnahme: Während der 0.y.z-Phase der „initialen Entwicklung“ kann sich jederzeit alles ändern – eine Phase, die die meisten Pakete nie wirklich verlassen.",
       "coda": "Die meisten veröffentlichten Pakete verlassen nie den Versionsbereich, den die Regel nicht bindet."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
       "title": "Was aus Burbn gestrichen wurde",
       "body": "Kevin Systrom und Mike Krieger verbrachten fast ein Jahr damit, eine voll ausgestattete Check-in-App namens Burbn zu bauen, urteilten dann aber, dass ihre eigene fertige iPhone-Version überladen war. Sie reduzierten sie auf Fotos, Kommentare und Likes und veröffentlichten das Ergebnis acht Wochen später als Instagram.",
       "coda": "Innerhalb einer Woche nach dem Start hatte es 100.000 Nutzer."
@@ -1227,7 +1163,6 @@
     },
     "china-wechat-red-envelope-pearl-harbor": {
       "tag": "Zahlungen",
-      "title": "Pearl Harbor, Digital",
       "body": "Um das chinesische Neujahr 2014 herum ging die Roter-Umschlag-Funktion von WeChat live; innerhalb weniger Tage griffen Nutzer auf über 40 Millionen rote Pakete zu. In der App Laiwang nannte Jack Ma es einen 'Pearl Harbor-Überraschungsangriff' – kurzfristig effektiv, schrieb er, aber ein gesundes langfristiges Wachstum sei wichtiger.",
       "coda": "Der rote Umschlag wurde zu einem Zahlungstrichter."
     },
@@ -1268,13 +1203,11 @@
       "coda": "Die Wiederherstellung gelang dank eines Snapshots, den jemand sechs Stunden zuvor gemacht hatte."
     },
     "attention-title-beatles-2017": {
-      "tag": "Paper",
       "title": "Ein Titel, der von den Beatles entlehnt wurde",
       "body": "Acht Google-Forscher veröffentlichten im Juni 2017 den Artikel \"Attention Is All You Need\"; der Titel ist eine Anspielung auf den Beatles-Song \"All You Need Is Love\". Das erklärte Ziel der Arbeit war ein Sequenzmodell für die maschinelle Übersetzung, das rekurrente Netzwerke zugunsten von reiner Attention aufgab.",
       "coda": "Alle acht Autoren haben Google seither verlassen."
     },
     "cloudflare-2019-regex": {
-      "tag": "Incident",
       "title": "Die entfernte Sicherung",
       "body": "Eine neue WAF-Regel mit einem katastrophal zurückverfolgenden Regex brachte die CPU-Auslastung im globalen Cloudflare-Netzwerk innerhalb von Sekunden nach der Bereitstellung auf nahezu 100 Prozent. Die Regel selbst war unspektakulär; das, was ihre Detonation ermöglichte, war ein CPU-Schutzmechanismus für Regex-Regeln, der Wochen zuvor bei einer Refaktorierung stillschweigend gelöscht worden war.",
       "coda": "Der Ausfall dauerte 27 Minuten und endete, als die WAF global deaktiviert wurde."
@@ -1286,7 +1219,6 @@
       "coda": "Er ist nach seinem Rücktritt nicht wieder als Projektleiter zurückgekehrt."
     },
     "linux-y2038-kernel-fix": {
-      "tag": "Fix",
       "title": "Achtzehn Jahre früher",
       "body": "32-Bit-Unix-Systeme werden am 19. Januar 2038 ihren time_t-Zähler überlaufen lassen. Linux 5.6, veröffentlicht im Jahr 2020, war der erste Kernel, der ein 32-Bit-System nach diesem Datum weiterlaufen lassen konnte. Anwendungen müssen dennoch gegen ein 64-Bit-time_t neu kompiliert werden, um tatsächlich davon zu profitieren.",
       "coda": "Der Kernel wurde Jahre vorher gepatcht, bevor der Großteil des 32-Bit-Userspace nachzog."
@@ -1298,7 +1230,6 @@
       "coda": "Eine Handvoll Freiwilliger schrieb den Fix, der Millionen von Servern erreichte."
     },
     "core-js-denis-pushkarev": {
-      "tag": "Maintainer",
       "title": "Der Patch, den niemand ersetzt hat",
       "body": "core-js ist in WhatsApp, Netflix, Apple und PayPal integriert und verzeichnet monatlich rund 250 Millionen Downloads. Sein Autor, Denis Pushkarev, kam 2019 bei einem tödlichen Autounfall ums Leben, verbüßte ab Januar 2020 etwa zehn Monate Haft und pflegte die Bibliothek währenddessen weiter.",
       "coda": "Die monatlichen Spenden fielen von rund 2.500 Dollar auf 400 Dollar."
@@ -1316,7 +1247,6 @@
       "coda": "Der nicht patentierte Impfstoff wurde später auf sieben Milliarden Dollar geschätzt."
     },
     "cobol-two-hundred-billion-lines": {
-      "tag": "Legacy",
       "title": "Zweihundert Milliarden Zeilen",
       "body": "Bis 1997 schätzte Gartner 200 Milliarden Zeilen COBOL, die achtzig Prozent der Geschäftsprogramme weltweit betrieben. Im Jahr 2020, als die Arbeitslosenanträge während der COVID-Ära stark anstiegen, appellierten mehrere US-Bundesstaaten öffentlich an COBOL-Programmierer, ihre jahrzehntealten Leistungssysteme am Laufen zu halten.",
       "coda": "Sechs Jahre sind seit diesem Appell vergangen."
@@ -1364,7 +1294,6 @@
       "coda": "Die Pointe wurde zum Produktnamen, unverändert."
     },
     "tbl-double-slash": {
-      "tag": "Design",
       "title": "Die zusätzlichen Schrägstriche",
       "body": "Tim Berners-Lee setzte „//“ vor den Domainnamen, als er die URL entwarf. Im Oktober 2009 räumte er ein, dass die beiden Schrägstriche angesichts des bereits vorhandenen Doppelpunkts gar nicht nötig waren – „es schien damals eine gute Idee zu sein“, sagte er.",
       "coda": "Seitdem werden bei jeder URL beide Schrägstriche weiterhin eingegeben."

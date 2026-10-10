@@ -50,7 +50,6 @@
       "coda": "Para 1995, Moore dijo que el término había llegado a significar casi cualquier cosa en la industria de los chips."
     },
     "eliza-secretary-1966": {
-      "tag": "Chatbot",
       "title": "La secretaria y DOCTOR",
       "body": "En 1966, Joseph Weizenbaum publicó el guion DOCTOR de ELIZA en el MIT, un programa que en su mayoría reflejaba las propias frases de los usuarios como preguntas. Se dice que su propia secretaria le pidió que saliera de la habitación para poder hablar con él sola.",
       "coda": "El patrón que no había esperado más tarde se llamó efecto ELIZA."
@@ -98,7 +97,6 @@
       "coda": "La prensa encontró difícil explicar la barra superior y escribió guion. El guion se quedó."
     },
     "mother-of-all-demos": {
-      "tag": "Demo",
       "title": "La madre de todas las demostraciones",
       "body": "A Engelbart le dieron noventa minutos. Su terminal funcionaba por líneas telefónicas conectada a una máquina a treinta millas de distancia, y demostró el ratón, los hipervínculos, las ventanas, la compartición de pantalla y dos personas editando un documento al mismo tiempo.",
       "coda": "Mil personas lo vieron y luego volvieron a las tarjetas perforadas durante otra década."
@@ -111,7 +109,6 @@
     },
     "apollo-burn-baby-burn": {
       "tag": "Comentario",
-      "title": "Burn, Baby, Burn",
       "body": "La rutina de ignición principal del módulo lunar está etiquetada como BURN_BABY_BURN en el código fuente. El nombre no tiene que ver con el empuje; fue tomado de la frase de moda de un DJ de radio soul de la época.",
       "coda": "La línea sigue sin editar en el repositorio público."
     },
@@ -140,13 +137,11 @@
       "coda": "La avería no era un fallo de cableado; eran demasiadas monedas."
     },
     "wozniak-breakout-bonus": {
-      "tag": "Bonus",
       "title": "La división",
       "body": "En 1973, Atari pidió a Steve Jobs que redujera la placa de circuito de Breakout, pagando 100 dólares por cada chip eliminado. Jobs pidió ayuda a Wozniak, prometiéndole la mitad. Wozniak eliminó 50 chips. Jobs dijo que el total ascendía a 700 dólares, por lo que la parte de Wozniak era de 350 dólares. Diez años después, Wozniak supo que la bonificación real era de 5.000 dólares.",
       "coda": "Wozniak dijo que le habría dado el dinero a Jobs si se lo hubiera pedido."
     },
     "unix-not-expected-to-understand": {
-      "tag": "Kernel",
       "title": "No se esperaba que lo entendieras",
       "body": "El archivo slp.c de la Sexta Edición de Unix contiene la línea 'No se espera que entiendas esto', adjunta al código de restauración de pila para intercambio de procesos, construido sobre peculiaridades del compilador PDP-11. Dennis Ritchie dijo más tarde que lo decía de la misma manera en que un profesor dice que esto no saldrá en el examen.",
       "coda": "La rutina se reescribió para la Séptima Edición de Unix."
@@ -176,7 +171,6 @@
       "coda": "ARM1 llegó el 26 de abril de 1985 y funcionó al primer encendido."
     },
     "copyleft-all-rights-reversed": {
-      "tag": "Copyright",
       "title": "Todos los Derechos Invertidos",
       "body": "Alguien envió a Richard Stallman una carta marcada \"Copyleft — todos los derechos invertidos\", un juego de palabras con el aviso estándar. Después de que Symbolics mejorara su intérprete Lisp y se negara a compartir las mejoras, usó la propia ley de derechos de autor para redactar una licencia que exigía la obligación contraria.",
       "coda": "La Licencia Pública General siguió en febrero de 1989."
@@ -194,7 +188,6 @@
       "coda": "Para 2022, un escáner EUV de producción procesaba aproximadamente doscientas obleas por hora."
     },
     "tsmc-foundry-fifty-six-1987": {
-      "tag": "Foundry",
       "title": "Una fundición en el cincuenta y seis",
       "body": "Morris Chang, nacido en 1931, ascendió a vicepresidente de grupo de operaciones mundiales de semiconductores en Texas Instruments, luego fue presidente y director de operaciones de General Instrument, y posteriormente dirigió el ITRI de Taiwán. En 1987, a los cincuenta y seis años, fundó TSMC, que no diseña ninguno de los chips que fabrica.",
       "coda": "Fue la primera fundición del mundo dedicada exclusivamente a fabricar."
@@ -242,7 +235,6 @@
       "coda": "Nadie ha pagado una regalía por usarlo desde entonces."
     },
     "doom-ftp-crash": {
-      "tag": "Shareware",
       "title": "El servidor al que no podían llegar",
       "body": "El 10 de diciembre de 1993, id Software regaló el primer episodio de Doom como shareware, apostando por las ventas del resto. Al subirlo a un servidor FTP de la Universidad de Wisconsin, se encontraron con tanta gente esperando que el propio equipo no pudo conectarse.",
       "coda": "La subida terminó cerca de la medianoche; diez mil descargas simultáneas colapsaron la red de la universidad."
@@ -278,7 +270,6 @@
       "coda": "Nunca se ha mencionado un sucesor."
     },
     "book-of-mozilla-verses": {
-      "tag": "Easter Egg",
       "title": "El Libro de Mozilla",
       "body": "Escribir about:mozilla en la barra de direcciones revela el Libro de Mozilla, un versículo apocalíptico que enfrenta a «la bestia» contra «Mammon» y que cada generación de navegadores actualiza. Los números de los versículos no son marcadores de capítulo: son fechas de lanzamiento.",
       "coda": "El versículo más reciente, 6:27, se lanzó por primera vez en una compilación de Firefox Nightly en 2020."
@@ -308,7 +299,6 @@
       "coda": "La firma de una oficina retiró una cláusula que se había multiplicado durante una década."
     },
     "red-hat-ipo-1999": {
-      "tag": "IPO",
       "title": "El Precio del Software Libre",
       "body": "Red Hat regalaba el código fuente de su producto principal y cobraba en su lugar por soporte, capacitación e integración. El 11 de agosto de 1999 la empresa salió a bolsa. Su ganancia del primer día se clasificó como la octava más grande en la historia de Wall Street en ese momento.",
       "coda": "El fundador Bob Young fue reemplazado como CEO cuatro meses después."
@@ -380,7 +370,6 @@
       "coda": "Once años después, en la OPI, Houston lo llamó su hilo favorito del sitio."
     },
     "butterfield": {
-      "tag": "Pivot",
       "title": "Dos veces desde los escombros",
       "body": "El juego de Butterfield, Game Neverending, se estancó, y el equipo separó la parte de compartir fotos como Flickr. Ocho años después, su segundo juego, Glitch, cerró, y el equipo separó la herramienta de chat que habían construido para sí mismos: Slack.",
       "coda": "Ambas veces, el subproducto solo se hizo visible una vez que lo principal cerró."
@@ -410,7 +399,6 @@
       "coda": "Su historial de financiación es un Kickstarter y una cuenta de Open Source Collective."
     },
     "xiaomi-software-first": {
-      "tag": "Software",
       "title": "El primer producto de Xiaomi no era un teléfono",
       "body": "Xiaomi se fundó el 6 de abril de 2010. Ese agosto y diciembre lanzó versiones beta del sistema operativo MIUI y de la aplicación de chat Miliao, ambos software.",
       "coda": "El primer teléfono de la empresa no se lanzó hasta agosto del año siguiente."
@@ -542,7 +530,6 @@
       "coda": "El software CAD comercial tardó casi dos décadas en igualar lo que la tesis había mostrado."
     },
     "douglas-mcilroy-garden-hose-pipe": {
-      "tag": "Memo",
       "title": "El memorándum de la manguera de jardín",
       "body": "En octubre de 1964, McIlroy escribió un memorándum en Bell Labs proponiendo que los programas se conectaran como mangueras de jardín — enroscar otro segmento para procesar datos de manera diferente. Circuló, fue admirado y no se construyó. Nueve años después, Ken Thompson añadió un carácter, |, al shell de Unix durante la noche.",
       "coda": "Para la mañana, programas que nunca se habían hablado lo hicieron."
@@ -644,7 +631,6 @@
       "coda": "Hasta entonces, había trabajado una serie de contratos de corta duración y financiación inestable."
     },
     "cyclades-pouzin-tcpip": {
-      "tag": "Internet",
       "title": "El quinto hombre de Internet",
       "body": "En 1972, Louis Pouzin construyó la red CYCLADES en Francia, la primera en hacer que los hosts finales, no la red, fueran responsables de la entrega fiable. En 1974, el artículo TCP de Cerf y Kahn le agradeció por su nombre. En 2004, Cerf y Kahn ganaron el Premio Turing. El nombre de Pouzin no estaba en él.",
       "coda": "The Economist más tarde lo llamó el quinto hombre de Internet."
@@ -716,7 +702,6 @@
       "coda": "El estándar que le decía a internet que fuera tolerante fue rescindido por sus propios custodios."
     },
     "end-to-end-argument": {
-      "tag": "Paper",
       "title": "Un argumento a favor de una red tonta",
       "body": "En 1981, Saltzer, Reed y Clark argumentaron que la verificación de errores en un archivo transferido solo puede realizarse correctamente en los dos puntos finales; la red puede ayudar, pero nunca sustituir por completo. Un artículo sobre dónde colocar una suma de verificación se convirtió en el caso fundacional para mantener las redes simples.",
       "coda": "Una nota sobre la ubicación de la verificación de errores se convirtió en el argumento a favor de la neutralidad de la red."
@@ -735,13 +720,11 @@
     },
     "radia-perlman-algorhyme": {
       "tag": "Anécdota",
-      "title": "Algorhyme",
       "body": "En 1985, el jefe de Perlman en DEC le asignó el problema de puenteo sin bucles un viernes y desapareció durante una semana. Para el miércoles tenía el algoritmo de árbol de expansión terminado — y pasó el resto del tiempo escribiendo Algorhyme, un poema que se convirtió en el resumen del artículo.",
       "coda": "El poema tomó más tiempo escribirlo que el algoritmo."
     },
     "brooks-no-silver-bullet": {
       "tag": "Ensayo",
-      "title": "No Silver Bullet",
       "body": "En el congreso IFIP de 1986, Fred Brooks dividió la dificultad del software en complejidad esencial y accidental. La dificultad accidental había disminuido drásticamente, dijo, pero ninguna técnica individual lograría un aumento de productividad diez veces mayor en una década.",
       "coda": "Cuatro décadas después, cada nuevo paradigma sigue vendiéndose como la bala mágica que él dijo que no existía."
     },
@@ -776,14 +759,11 @@
       "coda": "El estándar que todos citan y el dialecto contra el que todos validan su código no son el mismo documento."
     },
     "python-christmas-project": {
-      "tag": "Scripting",
       "title": "Un pasatiempo navideño",
       "body": "Durante las vacaciones de Navidad de 1989, con su oficina cerrada por la semana, un investigador en Ámsterdam buscó un proyecto de programación como pasatiempo. Comenzó a escribir un intérprete para un nuevo lenguaje de scripting y lo nombró en honor a una troupe de comedia, no a la serpiente.",
       "coda": "En julio de 2026 ocupó el primer lugar en el índice TIOBE de popularidad de lenguajes de programación."
     },
     "worse-is-better": {
-      "tag": "Debate",
-      "title": "Worse Is Better",
       "body": "En 1989 Richard Gabriel acuñó «worse is better»: una implementación simple y parcialmente correcta sobrevive mejor que una completa y exacta, razón por la cual creyó que C y Unix superaron a Lisp. En 1991 publicó una refutación bajo el seudónimo Nickieben Bourbaki, haciéndose pasar por un viejo amigo.",
       "coda": "Décadas después, seguía diciendo que no podía decidir si su propio argumento era correcto."
     },
@@ -800,19 +780,16 @@
       "coda": "AT&T calculó posteriormente las pérdidas de ingresos en sesenta millones de dólares."
     },
     "aspec-vs-musicam": {
-      "tag": "Audio",
       "title": "Perder ante el más simple",
       "body": "En 1991, MPEG probó dos códecs de audio rivales. ASPEC, desarrollado por Fraunhofer, AT&T y el CNET francés, ganó las pruebas de calidad pero fue descartado por ser demasiado complejo. MUSICAM, de Matsushita y Philips, ganó por simplicidad. El MP3 final terminó reintegrando de todos modos el diseño de filtro de ASPEC.",
       "coda": "El formato que todos llaman MP3 lleva la ingeniería de la propuesta perdedora dentro del nombre de la ganadora."
     },
     "linux-minix-post": {
-      "tag": "Kernel",
       "title": "Una publicación en comp.os.minix",
       "body": "El 25 de agosto de 1991, un estudiante universitario de Helsinki publicó en el grupo de noticias comp.os.minix que estaba escribiendo un sistema operativo gratuito, calificándolo como \"solo un pasatiempo, no será grande ni profesional como gnu\", y preguntó qué funciones querían las personas.",
       "coda": "Desde noviembre de 2017, los 500 supercomputadores más rápidos del mundo han ejecutado un sistema operativo construido sobre él."
     },
     "web-vs-gopher-1991": {
-      "tag": "Web",
       "title": "Precio de Beat Gratuito",
       "body": "En 1991, Tim Berners-Lee lanzó la World Wide Web desde el CERN. Ese mismo año, la Universidad de Minnesota lanzó Gopher, que durante un tiempo fue el sistema más popular. En febrero de 1993, Minnesota anunció tarifas de licencia para los servidores Gopher. Ese abril, el CERN liberó el protocolo web.",
       "coda": "Gopher tenía más seguidores antes del anuncio de la tarifa, y nunca volvió a tenerlos después."
@@ -872,7 +849,6 @@
       "coda": "El organismo de estándares retiró su propia recomendación de seguridad seis años después de publicarla."
     },
     "php-resume-counter": {
-      "tag": "Web",
       "title": "Un contador de visitas para currículum",
       "body": "En 1994, un programador escribió un puñado de pequeños programas CGI en C sin más motivo que querer saber cuántas personas veían su currículum en línea. Llamó al conjunto de herramientas \"Personal Home Page Tools\" y publicó el código fuente en junio de 1995.",
       "coda": "Tres décadas después, más del 70 % de los sitios web con un lenguaje del lado del servidor conocido siguen ejecutando su descendiente."
@@ -998,7 +974,6 @@
       "coda": "El 23 de agosto de 2010, Tencent adquirió la empresa que había construido en torno a ella."
     },
     "wikipedia-side-wiki": {
-      "tag": "Wiki",
       "title": "Un proyecto paralelo junto a Nupedia",
       "body": "El 10 de enero de 2001, el fundador de una enciclopedia en línea con revisión por pares instaló un software wiki en el servidor propio del proyecto, principalmente para que los voluntarios pudieran intentar redactar entradas de forma informal mientras la enciclopedia revisada avanzaba lentamente.",
       "coda": "Para julio de 2026, solo su edición en inglés contaba con más de 7,2 millones de artículos."
@@ -1058,7 +1033,6 @@
       "coda": "Dianping, el sitio que surgió de él, se lanzó el 12 de abril de 2003."
     },
     "wordpress-b2-post": {
-      "tag": "Blogging",
       "title": "El dilema del software de blogs",
       "body": "El 24 de enero de 2003, un estudiante universitario escribió en su propio blog que b2, el software de blogs que usaba a diario, llevaba meses sin mantenimiento desde que su desarrollador principal desapareció. Dijo que quería bifurcarlo y solo pedía un nombre.",
       "coda": "La empresa que surgió de esa bifurcación valía 7.500 millones de dólares en 2021."
@@ -1088,13 +1062,11 @@
       "coda": "Facebook se lanzó en 2004 con la misma idea de grafo social y soportó el tráfico."
     },
     "shopify-snowdevil-software": {
-      "tag": "Pivot",
       "title": "El software de la tienda superó a la tienda",
       "body": "En 2004, el programador Tobias Lutke encontró el software de comercio electrónico de la época demasiado engorroso, así que escribió el suyo propio para vender equipo de snowboard en línea como Snowdevil. Snowdevil se mantuvo como una tienda pequeña, pero otros comerciantes comenzaron a pedir licenciar el software que la respaldaba.",
       "coda": "Shopify se cotizó en la Bolsa de Nueva York en 2015."
     },
     "twitter-odeo-podcast-pivot": {
-      "tag": "Pivot",
       "title": "El proyecto paralelo de la empresa de podcasts",
       "body": "El 28 de junio de 2005, Apple incorporó las suscripciones a podcasts en iTunes; en dos días las suscripciones superaron el millón y todo el negocio de podcasts de Odeo quedó obsoleto de la noche a la mañana. En marzo del año siguiente, un hackathon interno produjo la propuesta de Jack Dorsey sobre actualizaciones de estado por SMS: Twitter.",
       "coda": "Odeo, la empresa dentro de la cual se construyó Twitter, fue vendida en 2007."
@@ -1184,7 +1156,6 @@
       "coda": "La mayoría de los paquetes publicados nunca abandonan el rango de versiones; la regla no vincula."
     },
     "instagram-burbn-cut": {
-      "tag": "Pivot",
       "title": "Lo que se eliminó de Burbn",
       "body": "Kevin Systrom y Mike Krieger pasaron casi un año construyendo una aplicación de registro completa llamada Burbn, y luego consideraron que su propia versión final para iPhone estaba sobrecargada. La redujeron a fotos, comentarios y me gusta, y lanzaron el resultado ocho semanas después como Instagram.",
       "coda": "En una semana desde su lanzamiento, ya tenía 100.000 usuarios."
@@ -1227,7 +1198,6 @@
     },
     "china-wechat-red-envelope-pearl-harbor": {
       "tag": "Pagos",
-      "title": "Pearl Harbor, Digital",
       "body": "Alrededor del Año Nuevo chino de 2014, la función de sobres rojos de WeChat se lanzó; los usuarios agarraron más de 40 millones de sobres rojos en cuestión de días. En la aplicación Laiwang, Jack Ma la llamó un 'ataque sorpresa de Pearl Harbor': efectivo a corto plazo, escribió, pero el crecimiento saludable a largo plazo importaba más.",
       "coda": "La envoltura roja se convirtió en un embudo de pagos."
     },

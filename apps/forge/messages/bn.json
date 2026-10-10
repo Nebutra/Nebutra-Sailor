@@ -10,7 +10,6 @@
     "tools": "টুলস",
     "wallet": "ওয়ালেট",
     "api": "API",
-    "routerAria": "{brandName} Router",
     "categoriesAria": "টুল ক্যাটাগরি",
     "languageAria": "ভাষা পরিবর্তন করুন"
   },
@@ -92,10 +91,6 @@
       "label": "LLM",
       "hint": "টোকেন · খরচ · স্কিমা"
     },
-    "net": {
-      "label": "Network",
-      "hint": "DNS · TLS · IP · leak check"
-    },
     "security": {
       "label": "নিরাপত্তা",
       "hint": "পাসওয়ার্ড জেনারেটর"
@@ -123,7 +118,6 @@
       "running": "চলছে…",
       "copy": "কপি করুন",
       "copied": "কপি হয়েছে",
-      "sameAsApi": "Same path as API · OSS engine",
       "mustBeNumber": "{label} অবশ্যই একটি সংখ্যা হতে হবে",
       "base64Loaded": "Base64 পেইলোড লোড হয়েছে",
       "workspaceMissing": "ওয়ার্কস্পেস কনফিগার করা হয়নি: {slug}",
@@ -182,24 +176,7 @@
       "copyText": "টেক্সট কপি করুন",
       "quality": "গুণমান",
       "original": "মূল",
-      "result": "ফলাফল",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "result": "ফলাফল"
     },
     "base64": {
       "encodeDir": "টেক্সট → Base64",
@@ -249,11 +226,7 @@
     },
     "creditCardLuhn": {
       "number": "কার্ড নম্বর",
-      "note": "Luhn চেকার · অফলাইন, কখনো সংরক্ষিত হয় না",
-      "digits": "digits",
-      "specimenLabel": "Specimen",
-      "structureOnly": "Luhn structure only",
-      "unknownBrand": "Card"
+      "note": "Luhn চেকার · অফলাইন, কখনো সংরক্ষিত হয় না"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -429,14 +402,7 @@
     "contrast": {
       "fg": "ফোরগ্রাউন্ড (#hex)",
       "bg": "ব্যাকগ্রাউন্ড (#hex)",
-      "note": "রঙের কনট্রাস্ট · WCAG 2.x",
-      "sampleHeadline": "Sample text",
-      "pass": "pass",
-      "fail": "fail",
-      "aaNormal": "AA normal",
-      "aaLarge": "AA large",
-      "aaaNormal": "AAA normal",
-      "aaaLarge": "AAA large"
+      "note": "রঙের কনট্রাস্ট · WCAG 2.x"
     },
     "exif": {
       "file": "ছবির ফাইল",
@@ -464,11 +430,7 @@
       "secret": "সিক্রেট",
       "exp": "মেয়াদ শেষ (সেকেন্ড)",
       "payload": "পেইলোড JSON",
-      "note": "JWT তৈরি · HS256 (শুধুমাত্র ডেভ/টেস্ট)",
-      "header": "Header",
-      "payloadLabel": "Payload",
-      "signature": "Signature",
-      "emptySignature": "(empty signature segment)"
+      "note": "JWT তৈরি · HS256 (শুধুমাত্র ডেভ/টেস্ট)"
     },
     "rand": {
       "min": "ন্যূনতম",
@@ -517,11 +479,7 @@
       "in": "ইনপুট",
       "out": "আউটপুট",
       "saved": "সংরক্ষিত",
-      "note": "PDF কম্প্রেস · হোস্টে qpdf / Ghostscript · pdf-lib ফলব্যাক",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "note": "PDF কম্প্রেস · হোস্টে qpdf / Ghostscript · pdf-lib ফলব্যাক"
     },
     "jsonFormat": {
       "indent": "ইনডেন্ট",
@@ -538,10 +496,7 @@
       "invalid": "ভুল JSON",
       "line": "লাইন",
       "column": "কলাম",
-      "note": "এঞ্জিন: JSON.parse/stringify · তাৎক্ষণিক স্থানীয় · API-এর মতোই পথ",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "note": "এঞ্জিন: JSON.parse/stringify · তাৎক্ষণিক স্থানীয় · API-এর মতোই পথ"
     },
     "qr": {
       "size": "আকার",
@@ -845,12 +800,7 @@
       "generate": "PDF তৈরি করুন",
       "generating": "জেনারেট হচ্ছে…",
       "download": "PDF ডাউনলোড করুন",
-      "note": "marked → HTML → Playwright Chromium প্রিন্ট। যদি Chromium না থাকে, স্বয়ংক্রিয়ভাবে সরল স্ট্রাকচার্ড PDF-তে ফলব্যাক হবে — renderEngine চেক করুন; সরল ভার্সন প্রিন্ট-গ্রেড লেআউট নয়।",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "note": "marked → HTML → Playwright Chromium প্রিন্ট। যদি Chromium না থাকে, স্বয়ংক্রিয়ভাবে সরল স্ট্রাকচার্ড PDF-তে ফলব্যাক হবে — renderEngine চেক করুন; সরল ভার্সন প্রিন্ট-গ্রেড লেআউট নয়।"
     },
     "tokenCount": {
       "count": "টোকেন গণনা করুন",
@@ -895,8 +845,7 @@
       "dims": " · {w}×{h}",
       "original": "মূল",
       "result": "ফলাফল",
-      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)"
     },
     "pptxText": {
       "file": "PPTX ফাইল",
@@ -1003,12 +952,10 @@
       "deduped": "{n} ডুপ্লিকেট প্যাটার্ন একত্রিত হয়েছে",
       "notFound": "কর্পাসে নেই: {stacks}",
       "globalScope": "{stacks} হলো অপারেটিং সিস্টেম/এডিটর এন্ট্রি — অনেক ডেভেলপার এগুলো প্রতিটি রিপোতে না রেখে ব্যক্তিগত ~/.gitignore_global ফাইলে রাখেন।",
-      "untrackedNote": "একটি .gitignore শুধুমাত্র আনট্র্যাকড ফাইলগুলিকে প্রভাবিত করে। একটি ফাইল যা git ইতিমধ্যে ট্র্যাক করে, তার জন্য git rm -r --cached <path> চালান।",
       "fileLabel": ".gitignore"
     },
     "editorconfig": {
       "emptyHint": "ফাইলটি দেখতে অন্তত একটি প্রপার্টি সেট করুন।",
-      "note": "Same engine as the API. Your choices stay in this browser session; nothing is stored.",
       "checks": "চেক",
       "presets": "এখান থেকে শুরু করুন",
       "preset": {
@@ -1305,18 +1252,13 @@
         "noIsbn10": "979 প্রিফিক্সের কোনো ISBN-10 সমতুল্য নেই",
         "nonBookland": "১৩-অঙ্কের ISBN অবশ্যই 978 বা 979 দিয়ে শুরু হতে হবে",
         "ismn": "979-0 হলো ISMN রেঞ্জ (মুদ্রিত সঙ্গীত), ISBN নয়"
-      },
-      "specimenTitle": "ISBN · structure specimen",
-      "segPrefix": "Prefix",
-      "segBody": "Body",
-      "segCheck": "Check"
+      }
     },
     "languageDetect": {
       "inputLabel": "কোড স্নিপেট",
       "inputPlaceholder": "ফাইল নাম ছাড়া কোড পেস্ট করুন — চ্যাট লগ, টিকিট, উত্তর থেকে…",
       "hintLabel": "ফাইল নাম বা এক্সটেনশন (ঐচ্ছিক)",
       "hintPlaceholder": "main.h · .pl · Dockerfile",
-      "note": "Runs the same engine as the API. Detection is content-only unless you supply a filename hint; ambiguous extensions (.h .m .pl .fs .ts .cs .r) are routed through their own rules first.",
       "idle": "একটি স্নিপেট পেস্ট করুন — আপনি টাইপ করতে করতে সিদ্ধান্ত দেখা যাবে।",
       "confidence": {
         "high": "উচ্চ আস্থা",
@@ -1376,11 +1318,7 @@
         "pass": "পাস",
         "fail": "ফেল",
         "skipped": "অপহিত"
-      },
-      "specimenTitle": "IBAN · structure specimen",
-      "segCountry": "Country",
-      "segCheck": "Check",
-      "segBban": "BBAN"
+      }
     },
     "secretScan": {
       "pasteLabel": "কোড, কনফিগ বা .env পেস্ট করুন",
@@ -1458,10 +1396,7 @@
       "mathSum": "যোগফল {sum} → চেক ডিজিট {check}",
       "truncatedRows": "মোট {total} এর মধ্যে প্রথম {shown} সারি দেখানো হচ্ছে। সবগুলো কপি এবং ডাউনলোড করুন।",
       "privacy": "কোডগুলো Forge API-তে পাঠানো হয় যাচাইয়ের জন্য এবং সেভ করা হয় না।",
-      "scopeNote": "সঠিক চেক ডিজিট মানে সংখ্যাটি সঠিকভাবে গঠিত। এর মানে নয় যে GS1 এটি কোনো বাস্তব পণ্য, কোম্পানি বা অবস্থানের জন্য বরাদ্দ করেছে — শুধুমাত্র GEPIR রেজিস্ট্রি লুকআপ সেই প্রশ্নের উত্তর দেয়।",
-      "specimenTitle": "GTIN · structure specimen",
-      "segPayload": "Payload",
-      "segCheck": "Check"
+      "scopeNote": "সঠিক চেক ডিজিট মানে সংখ্যাটি সঠিকভাবে গঠিত। এর মানে নয় যে GS1 এটি কোনো বাস্তব পণ্য, কোম্পানি বা অবস্থানের জন্য বরাদ্দ করেছে — শুধুমাত্র GEPIR রেজিস্ট্রি লুকআপ সেই প্রশ্নের উত্তর দেয়।"
     },
     "vin": {
       "inputLabel": "VIN (১৭ অক্ষর)",
@@ -1508,8 +1443,7 @@
           "product": "ফলাফল"
         },
         "formula": "যোগফল = {sum};  {sum} mod 11 = {remainder}  →  চেক ডিজিট {expected}"
-      },
-      "specimenTitle": "VIN · structure specimen"
+      }
     },
     "envDiff": {
       "envA": "এনভায়রনমেন্ট A",
@@ -1668,10 +1602,8 @@
         "testDataBadge": "টেস্ট ডেটা",
         "seed": "সিড {seed}",
         "allCodes": "সব কোড",
-        "disclaimer": "এই কোডগুলো কাঠামোগতভাবে বৈধ কিন্তু কোনো নিবন্ধিত প্রতিষ্ঠানের নয়। এগুলো দিয়ে কোনো বাস্তব প্রতিষ্ঠানকে উপস্থাপন করবেন না।",
-        "note": "Generation is seeded: the same options and seed always return the same batch, so a fixture stays reproducible. Every code is flagged isTestData in the JSON as well as here."
-      },
-      "specimenTitle": "Unified social credit code · structure specimen"
+        "disclaimer": "এই কোডগুলো কাঠামোগতভাবে বৈধ কিন্তু কোনো নিবন্ধিত প্রতিষ্ঠানের নয়। এগুলো দিয়ে কোনো বাস্তব প্রতিষ্ঠানকে উপস্থাপন করবেন না।"
+      }
     },
     "yamlDiff": {
       "original": "মূল",
@@ -1724,7 +1656,6 @@
       "listB": "তালিকা B",
       "placeholder": "আইটেম পেস্ট করুন, প্রতি লাইনে একটি (অথবা একটি .txt/.csv ফাইল ড্রপ করুন)",
       "emptyHint": "তুলনা দেখতে তালিকা A এবং তালিকা B উভয়েই আইটেম যোগ করুন।",
-      "privacy": "Both lists are compared in your browser — nothing is uploaded. The same engine runs server-side for API and MCP callers.",
       "delimiter": "ডিলিমিটার",
       "delimiterOption": {
         "auto": "স্বয়ংক্রিয় শনাক্তকরণ",
@@ -1747,46 +1678,17 @@
       "optCollapse": "ভেতরের স্পেস সংকুচিত করুন",
       "optIgnoreZeros": "শুরুর শূন্য উপেক্ষা করুন",
       "paneItems": "{n} আইটেম",
-      "paneSingle": "1 item — check the delimiter",
       "items": "{n}",
-      "none": "None",
-      "more": "+{n} more — copy or download for the full list",
-      "panel": {
-        "onlyInA": "Only in A",
-        "onlyInB": "Only in B",
-        "intersection": "Intersection (in both)",
-        "union": "Union (all items)",
-        "symmetricDifference": "Symmetric difference"
-      },
-      "summaryIdentical": "Same set — {n} shared items",
       "summaryDiff": "{a} শুধুমাত্র A-তে · {b} শুধুমাত্র B-তে · {shared} সাধারণ",
       "drill": {
         "symmetricDifference": "সিমেট্রিক পার্থক্য ({n})",
-        "duplicates": "একটি তালিকার মধ্যে ডুপ্লিকেট ({n})",
-        "multiplicities": "Per-item counts ({n})",
-        "warnings": "Notices ({n})"
-      },
-      "duplicatesInA": "Repeated in A",
-      "duplicatesInB": "Repeated in B",
-      "colValue": "Item",
-      "colCountA": "In A",
-      "colCountB": "In B",
-      "detailTruncated": "Per-item counts truncated — raise maxDetail on the API for the full table.",
-      "reportTitle": "List comparison"
+        "duplicates": "একটি তালিকার মধ্যে ডুপ্লিকেট ({n})"
+      }
     },
     "loanAmortization": {
       "principal": "ঋণের পরিমাণ",
       "rate": "বার্ষিক হার %",
       "term": "মেয়াদ",
-      "termUnit": "Term unit",
-      "unitYears": "Years",
-      "unitMonths": "Months",
-      "startMonth": "First payment month",
-      "startMonthHint": "YYYY-MM. Labels the schedule; changes no amount.",
-      "extraHeading": "Extra payments",
-      "extraMonthly": "Extra every month",
-      "extraYearly": "Extra once a year",
-      "extraYearlyMonth": "Yearly extra lands in month",
       "extraOneTime": "এককালীন অতিরিক্ত",
       "extraOneTimePeriod": "পেমেন্ট #-এ এককালীন",
       "extraNote": "অতিরিক্ত পেমেন্টগুলি যে সময়কালে আসে সেখানে মূলধন কমিয়ে দেয়, যা পরবর্তী প্রতিটি সময়কালের সুদ কমিয়ে দেয়। হার এবং নির্ধারিত পেমেন্ট একই থাকে।",
@@ -2028,184 +1930,26 @@
       "summaryStripped": "{fields} মেটাডেটা ফিল্ড ({families}) অপসারণ করা হয়েছে, {kb} KB। ছবি অন্যথায় অপরিবর্তিত।",
       "summaryClean": "কোনো অপসারণযোগ্য মেটাডেটা পাওয়া যায়নি। ফাইল অপরিবর্তিত ফেরত দেওয়া হয়েছে।"
     },
-    "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
-      "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
-      }
-    },
-    "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
-    },
     "dns": {
       "name": "Name / host",
-      "type": "Record type",
       "note": "Resolved by the Forge host DNS resolver — may differ from your local stub or browser DoH."
     },
     "tls": {
-      "host": "Host",
-      "expired": "Certificate expired",
       "validDays": "{n} days remaining",
       "note": "Connects from the Forge host. Inspection disables trust rejection so you can still read an untrusted leaf."
     },
     "myIp": {
-      "refresh": "Refresh",
       "note": "Shows how this request reached Forge. No ASN/geo without a licensed data feed."
-    },
-    "mermaid": {
-      "source": "Mermaid source",
-      "idle": "Valid diagrams render here",
-      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
-      "sample": "Sample",
-      "theme": "Theme",
-      "theme_default": "Default",
-      "theme_dark": "Dark",
-      "theme_forest": "Forest",
-      "theme_neutral": "Neutral",
-      "theme_base": "Base",
-      "sample_flowchart": "Flowchart",
-      "sample_sequence": "Sequence",
-      "sample_class": "Class",
-      "sample_er": "ER diagram",
-      "sample_state": "State",
-      "sample_gantt": "Gantt",
-      "sample_pie": "Pie",
-      "sample_mindmap": "Mindmap",
-      "zoomIn": "Zoom in",
-      "zoomOut": "Zoom out",
-      "zoomReset": "Reset view",
-      "copySvg": "Copy SVG",
-      "downloadSvg": "Download SVG",
-      "downloadPng": "Download PNG",
-      "previewAria": "Mermaid diagram preview",
-      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
     },
     "colorDeltaE": {
       "note": "CIEDE2000 via culori. Thresholds are UI review heuristics, not print contracts. color-convert already covers OKLCH."
     },
     "dbml": {
-      "source": "DBML",
-      "dialect": "SQL dialect",
       "parseNote": "Hard-correct: parse & inventory only. Visual ERD ships only when layout quality passes the ship gate.",
       "convertNote": "@dbml/core ModelExporter / importer — same path as the API."
     },
     "dnsLeak": {
-      "probeHost": "Compare host (advanced)",
-      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
-      "run": "Start DNS leak check",
-      "retest": "Run again",
-      "showAdvanced": "Advanced options",
-      "hideAdvanced": "Hide advanced",
-      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
-      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
-      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
-      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
-      "edgeIp": "Your edge IP",
-      "authorityHits": "Recursive IPs",
-      "forgePaths": "Forge resolver hits",
-      "dohPaths": "Browser DoH hits",
-      "webrtcCount": "WebRTC IPs",
-      "forgeResolvers": "Forge multi-resolver (server-side)",
-      "forgeNote": "These queries leave from the Forge host — not your laptop.",
-      "browserDoh": "Browser DoH",
-      "webrtc": "WebRTC ICE",
-      "egressMarkers": "Forge egress markers",
-      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
-      "honestyPrefix": "Honesty:",
-      "verdictConsistent": "Paths look consistent on this check",
-      "verdictSplit": "Split answers across DNS paths",
-      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
-      "verdictIncomplete": "Incomplete — browser probes missing",
-      "verdictAuthority": "System DNS recursives captured",
-      "infraOn": "Authority online",
-      "infraOff": "Authority offline — multi-path only",
-      "infraChecking": "Checking…",
-      "authorityResolvers": "System DNS recursive resolvers",
-      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
-      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
-      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
-      "authorityDetail": "Authority session detail",
-      "phaseSession": "Creating session…",
-      "phaseSystemDns": "Triggering system DNS…",
-      "phasePoll": "Listening for recursive hits ({n}/{total})…",
-      "phaseBrowser": "Browser DoH + WebRTC…",
-      "phaseServer": "Forge multi-resolver…",
-      "stepSession": "Session",
-      "stepSystemDns": "System DNS",
-      "stepPoll": "Listen",
-      "stepBrowser": "Browser",
-      "stepServer": "Server",
-      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
-      "liveHits": "Live recursive hits",
-      "sectionSystemDns": "System DNS (what you came for)",
-      "sectionComplementary": "Complementary paths",
-      "sectionTech": "Technical session detail",
-      "copyIps": "Copy IPs",
-      "copied": "Copied",
-      "queryCount": "{n} queries",
-      "colPath": "Path",
-      "colAnswers": "Answers",
-      "colMs": "ms",
-      "ipPublic": "public",
-      "ipPrivate": "private",
-      "sig": {
-        "captured": "System DNS captured",
-        "onlineNoHits": "Authority online · no hits yet",
-        "offline": "Authority offline",
-        "forgeSplit": "Forge resolvers disagree",
-        "dohSplit": "Browser DoH disagree",
-        "webrtcMismatch": "WebRTC ≠ edge IP",
-        "webrtcLocal": "Local WebRTC candidates",
-        "noBrowser": "No browser probes"
-      }
-    },
-    "honesty": {
-      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
-      "signatureNotVerified": "{engine} · decode only · signature not verified",
-      "localOnly": "Processed for this request · not stored as a card or credential"
-    },
-    "idCard": {
-      "number": "Resident ID number",
-      "note": "GB 11643 check digit · no household registry lookup · same path as API",
-      "specimenTitle": "Resident ID · structure specimen",
-      "segRegion": "Region",
-      "segBirth": "Birth",
-      "segSeq": "Seq",
-      "segCheck": "Check",
-      "metaBirth": "Birth",
-      "metaGender": "Gender",
-      "metaRegion": "Region code",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "reasonFormat": "Format should be 18 characters (last may be X)",
-      "reasonBirth": "Birth date segment is invalid",
-      "reasonCheck": "Check digit is wrong",
-      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
-    },
-    "filePaper": {
-      "lines": "{n} lines",
-      "chars": "{n} chars",
-      "empty": "(empty file)",
-      "readyToShip": "Ready to drop into the repo"
-    },
-    "textTransform": {
-      "mode": "Mode",
-      "input": "Input",
-      "output": "Output",
-      "emptyResult": "Result appears here",
-      "runLocal": "Run locally",
-      "runServer": "Run on server",
-      "statusLocalLive": "Local · live",
-      "statusLocal": "Local",
-      "statusServer": "Server · same path as API",
-      "noteDefault": "Same path as API"
+      "colMs": "ms"
     }
   },
   "roots": {

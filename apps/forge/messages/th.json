@@ -92,10 +92,6 @@
       "label": "LLM",
       "hint": "โทเค็น · ค่าใช้จ่าย · schema"
     },
-    "net": {
-      "label": "Network",
-      "hint": "DNS · TLS · IP · leak check"
-    },
     "security": {
       "label": "ความปลอดภัย",
       "hint": "สร้างรหัสผ่าน"
@@ -182,24 +178,7 @@
       "copyText": "คัดลอกข้อความ",
       "quality": "คุณภาพ",
       "original": "ต้นฉบับ",
-      "result": "ผลลัพธ์",
-      "downloadPdf": "Download PDF",
-      "openTab": "Open in new tab",
-      "pdfPreview": "PDF preview",
-      "pdfPreviewTitle": "PDF preview",
-      "pdfPreviewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "single": "Single",
-      "batch": "Batch",
-      "privacyUpload": "Files are sent to the Forge host for processing and are not retained after the request.",
-      "dragDrop": "Drop a file here or click to choose",
-      "resultMeta": "Result",
-      "before": "Before",
-      "after": "After",
-      "liveHint": "Updates as you type",
-      "tablePreview": "Table preview",
-      "sourcePreview": "Source preview",
-      "metrics": "Metrics",
-      "thumbnail": "Preview"
+      "result": "ผลลัพธ์"
     },
     "base64": {
       "encodeDir": "ข้อความ → Base64",
@@ -249,11 +228,7 @@
     },
     "creditCardLuhn": {
       "number": "หมายเลขบัตร",
-      "note": "ตัวตรวจสอบ Luhn · แบบออฟไลน์ ไม่มีการเก็บข้อมูล",
-      "digits": "digits",
-      "specimenLabel": "Specimen",
-      "structureOnly": "Luhn structure only",
-      "unknownBrand": "Card"
+      "note": "ตัวตรวจสอบ Luhn · แบบออฟไลน์ ไม่มีการเก็บข้อมูล"
     },
     "jsonMinify": {
       "json": "JSON",
@@ -429,14 +404,7 @@
     "contrast": {
       "fg": "พื้นหน้า (#hex)",
       "bg": "พื้นหลัง (#hex)",
-      "note": "ความคมชัดของสี · WCAG 2.x",
-      "sampleHeadline": "Sample text",
-      "pass": "pass",
-      "fail": "fail",
-      "aaNormal": "AA normal",
-      "aaLarge": "AA large",
-      "aaaNormal": "AAA normal",
-      "aaaLarge": "AAA large"
+      "note": "ความคมชัดของสี · WCAG 2.x"
     },
     "exif": {
       "file": "ไฟล์รูปภาพ",
@@ -464,11 +432,7 @@
       "secret": "Secret",
       "exp": "หมดอายุ (วินาที)",
       "payload": "Payload JSON",
-      "note": "สร้าง JWT · HS256 (สำหรับ dev/test เท่านั้น)",
-      "header": "Header",
-      "payloadLabel": "Payload",
-      "signature": "Signature",
-      "emptySignature": "(empty signature segment)"
+      "note": "สร้าง JWT · HS256 (สำหรับ dev/test เท่านั้น)"
     },
     "rand": {
       "min": "ค่าต่ำสุด",
@@ -517,11 +481,7 @@
       "in": "นำเข้า",
       "out": "ส่งออก",
       "saved": "บันทึกแล้ว",
-      "note": "PDF Compress · qpdf / Ghostscript บนโฮสต์ · pdf-lib เป็นทางเลือกสำรอง",
-      "drop": "Drop a PDF here, or browse",
-      "needPdf": "Please drop a .pdf file",
-      "privacy": "File is sent to the Forge server for compression, then discarded after the response. Prefer structural mode when you must keep lossless streams.",
-      "barHint": "Bar shows output size relative to input (shorter = more compression)."
+      "note": "PDF Compress · qpdf / Ghostscript บนโฮสต์ · pdf-lib เป็นทางเลือกสำรอง"
     },
     "jsonFormat": {
       "indent": "ย่อหน้า",
@@ -538,10 +498,7 @@
       "invalid": "JSON ไม่ถูกต้อง",
       "line": "บรรทัด",
       "column": "คอลัมน์",
-      "note": "Engine: JSON.parse/stringify · instant local · same path as API",
-      "sortKeys": "Sort keys",
-      "stats": "{chars} characters · {lines} lines",
-      "liveOff": "live validate off (large input)"
+      "note": "Engine: JSON.parse/stringify · instant local · same path as API"
     },
     "qr": {
       "size": "ขนาด",
@@ -845,12 +802,7 @@
       "generate": "สร้าง PDF",
       "generating": "กำลังสร้าง…",
       "download": "ดาวน์โหลด PDF",
-      "note": "marked → HTML → Playwright Chromium print หากไม่มี Chromium จะใช้ PDF แบบโครงสร้างง่ายโดยอัตโนมัติ — ตรวจสอบ renderEngine; แบบง่ายไม่ใช่เลย์เอาต์ระดับ print",
-      "openTab": "Open in new tab",
-      "preview": "PDF preview",
-      "previewTitle": "Generated PDF preview",
-      "previewHint": "Browser-native PDF viewer. Some mobile browsers only support download.",
-      "noPayload": "No PDF payload returned"
+      "note": "marked → HTML → Playwright Chromium print หากไม่มี Chromium จะใช้ PDF แบบโครงสร้างง่ายโดยอัตโนมัติ — ตรวจสอบ renderEngine; แบบง่ายไม่ใช่เลย์เอาต์ระดับ print"
     },
     "tokenCount": {
       "count": "นับโทเค็น",
@@ -895,8 +847,7 @@
       "dims": " · {w}×{h}",
       "original": "ต้นฉบับ",
       "result": "ผลลัพธ์",
-      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)",
-      "privacy": "Images upload to the Forge server (sharp). Prefer Batch for many files. Nothing is stored after the response."
+      "note": "Engine: sharp (libvips) · server-side · same path as API (imageBase64)"
     },
     "pptxText": {
       "file": "ไฟล์ PPTX",
@@ -1003,7 +954,6 @@
       "deduped": "รวมรูปแบบซ้ำ {n} รายการ",
       "notFound": "ไม่มีในฐานข้อมูล: {stacks}",
       "globalScope": "{stacks} เป็นรายการระบบปฏิบัติการ/editor — นักพัฒนาหลายคนเก็บไว้ใน ~/.gitignore_global ส่วนตัว แทนที่จะใส่ในทุก repo",
-      "untrackedNote": ".gitignore มีผลเฉพาะไฟล์ที่ยังไม่ได้ติดตาม หาก git ติดตามไฟล์อยู่แล้ว ให้รัน git rm -r --cached <path>",
       "fileLabel": ".gitignore"
     },
     "editorconfig": {
@@ -1305,11 +1255,7 @@
         "noIsbn10": "รหัส 979 ไม่มี ISBN-10 ที่เทียบเท่า",
         "nonBookland": "ISBN 13 หลักต้องขึ้นต้นด้วย 978 หรือ 979",
         "ismn": "979-0 เป็นช่วงของ ISMN (ดนตรีพิมพ์) ไม่ใช่ ISBN"
-      },
-      "specimenTitle": "ISBN · structure specimen",
-      "segPrefix": "Prefix",
-      "segBody": "Body",
-      "segCheck": "Check"
+      }
     },
     "languageDetect": {
       "inputLabel": "โค้ดตัวอย่าง",
@@ -1376,11 +1322,7 @@
         "pass": "ผ่าน",
         "fail": "ไม่ผ่าน",
         "skipped": "ไม่ได้ตรวจสอบ"
-      },
-      "specimenTitle": "IBAN · structure specimen",
-      "segCountry": "Country",
-      "segCheck": "Check",
-      "segBban": "BBAN"
+      }
     },
     "secretScan": {
       "pasteLabel": "วางโค้ด การตั้งค่า หรือไฟล์ .env",
@@ -1458,10 +1400,7 @@
       "mathSum": "ผลรวม {sum} → หลักตรวจสอบ {check}",
       "truncatedRows": "แสดง {shown} จาก {total} แถวแรก คัดลอกและดาวน์โหลดเพื่อรับข้อมูลทั้งหมด",
       "privacy": "รหัสจะถูกส่งไปยัง Forge API เพื่อตรวจสอบและไม่มีการเก็บไว้",
-      "scopeNote": "หลักตรวจสอบที่ถูกต้องหมายความว่าหมายเลขมีรูปแบบถูกต้อง ไม่ได้หมายความว่า GS1 เคยมอบหมายให้ผลิตภัณฑ์ บริษัท หรือสถานที่จริง — มีเพียงการค้นหาในทะเบียน GEPIR เท่านั้นที่จะตอบคำถามนั้น",
-      "specimenTitle": "GTIN · structure specimen",
-      "segPayload": "Payload",
-      "segCheck": "Check"
+      "scopeNote": "หลักตรวจสอบที่ถูกต้องหมายความว่าหมายเลขมีรูปแบบถูกต้อง ไม่ได้หมายความว่า GS1 เคยมอบหมายให้ผลิตภัณฑ์ บริษัท หรือสถานที่จริง — มีเพียงการค้นหาในทะเบียน GEPIR เท่านั้นที่จะตอบคำถามนั้น"
     },
     "vin": {
       "inputLabel": "VIN (17 ตัวอักษร)",
@@ -1508,8 +1447,7 @@
           "product": "ผลคูณ"
         },
         "formula": "ผลรวม = {sum};  {sum} mod 11 = {remainder}  →  หลักตรวจสอบ {expected}"
-      },
-      "specimenTitle": "VIN · structure specimen"
+      }
     },
     "envDiff": {
       "envA": "สภาพแวดล้อม A",
@@ -1670,8 +1608,7 @@
         "allCodes": "รหัสทั้งหมด",
         "disclaimer": "รหัสเหล่านี้มีโครงสร้างที่ถูกต้อง แต่ไม่ได้เป็นขององค์กรที่จดทะเบียนจริง ห้ามใช้เพื่อแสดงถึงหน่วยงานจริง",
         "note": "การสร้างใช้ Seed: ตัวเลือกและ Seed เดียวกันจะให้ชุดผลลัพธ์เดิมเสมอ ทำให้ข้อมูลทดสอบสามารถทำซ้ำได้ ทุกโค้ดจะถูกทำเครื่องหมาย isTestData ใน JSON และที่นี่"
-      },
-      "specimenTitle": "Unified social credit code · structure specimen"
+      }
     },
     "yamlDiff": {
       "original": "ต้นฉบับ",
@@ -2028,22 +1965,6 @@
       "summaryStripped": "ลบฟิลด์ข้อมูล {fields} ({families}) แล้ว {kb} KB รูปภาพไม่มีการเปลี่ยนแปลงอื่น",
       "summaryClean": "ไม่พบข้อมูลที่สามารถลบได้ ส่งคืนไฟล์โดยไม่มีการเปลี่ยนแปลง"
     },
-    "validate": {
-      "valid": "Valid",
-      "invalid": "Invalid",
-      "summary": "{valid} / {total} valid",
-      "match": "Match",
-      "mismatch": "Mismatch",
-      "luhnCaveat": "Luhn pass only checks digit structure — not that the card exists or has funds.",
-      "luhnReason": {
-        "length_or_digits": "Need 12–19 digits",
-        "luhn_failed": "Luhn checksum failed"
-      }
-    },
-    "worldClock": {
-      "zones": "Timezones (one per line)",
-      "at": "Instant (optional ISO / unix)"
-    },
     "dns": {
       "name": "이름 / 호스트",
       "type": "레코드 유형",
@@ -2059,153 +1980,16 @@
       "refresh": "새로고침",
       "note": "Forge가 본 IP. 라이선스 geo 없음."
     },
-    "mermaid": {
-      "source": "Mermaid source",
-      "idle": "Valid diagrams render here",
-      "note": "Official mermaid 11 (securityLevel=strict). Live client preview · Agent SVG via Playwright. Not a DBML ERD product.",
-      "sample": "Sample",
-      "theme": "Theme",
-      "theme_default": "Default",
-      "theme_dark": "Dark",
-      "theme_forest": "Forest",
-      "theme_neutral": "Neutral",
-      "theme_base": "Base",
-      "sample_flowchart": "Flowchart",
-      "sample_sequence": "Sequence",
-      "sample_class": "Class",
-      "sample_er": "ER diagram",
-      "sample_state": "State",
-      "sample_gantt": "Gantt",
-      "sample_pie": "Pie",
-      "sample_mindmap": "Mindmap",
-      "zoomIn": "Zoom in",
-      "zoomOut": "Zoom out",
-      "zoomReset": "Reset view",
-      "copySvg": "Copy SVG",
-      "downloadSvg": "Download SVG",
-      "downloadPng": "Download PNG",
-      "previewAria": "Mermaid diagram preview",
-      "canvasHint": "Drag to pan · ⌘/Ctrl+scroll to zoom"
-    },
     "colorDeltaE": {
       "note": "culori CIEDE2000. 임계값은 UI 리뷰용."
     },
     "dbml": {
-      "source": "DBML",
       "dialect": "SQL 방언",
       "parseNote": "파싱/목록만. ERD는 별도.",
       "convertNote": "@dbml/core — API와 동일 경로."
     },
     "dnsLeak": {
-      "probeHost": "Compare host (advanced)",
-      "probeHostHint": "Only used for multi-resolver / browser DoH A-record comparison — not your leak probe names.",
-      "run": "Start DNS leak check",
-      "retest": "Run again",
-      "showAdvanced": "Advanced options",
-      "hideAdvanced": "Hide advanced",
-      "idle": "Start a check to compare multi-resolver paths, browser DoH, and WebRTC candidates.",
-      "idleOnline": "Authority zone is online. One click captures your system-DNS recursive resolvers, then DoH / WebRTC for comparison.",
-      "note": "Full OS-system DNS leak maps need an authoritative leak zone. Forge never invents Geo/ASN.",
-      "noteOnline": "Unique probe names under leak.nebutra.com reveal which recursive resolvers query on your OS DNS path.",
-      "edgeIp": "Your edge IP",
-      "authorityHits": "Recursive IPs",
-      "forgePaths": "Forge resolver hits",
-      "dohPaths": "Browser DoH hits",
-      "webrtcCount": "WebRTC IPs",
-      "forgeResolvers": "Forge multi-resolver (server-side)",
-      "forgeNote": "These queries leave from the Forge host — not your laptop.",
-      "browserDoh": "Browser DoH",
-      "webrtc": "WebRTC ICE",
-      "egressMarkers": "Forge egress markers",
-      "egressNote": "What OpenDNS/Google see for the Forge host egress, not your device.",
-      "honestyPrefix": "Honesty:",
-      "verdictConsistent": "Paths look consistent on this check",
-      "verdictSplit": "Split answers across DNS paths",
-      "verdictIpMismatch": "WebRTC public IP differs from edge IP",
-      "verdictIncomplete": "Incomplete — browser probes missing",
-      "verdictAuthority": "System DNS recursives captured",
-      "infraOn": "Authority online",
-      "infraOff": "Authority offline — multi-path only",
-      "infraChecking": "Checking…",
-      "authorityResolvers": "System DNS recursive resolvers",
-      "authorityNote": "IPs that queried your unique probe names (OS system DNS path). Compare with VPN/DNS provider.",
-      "authorityNoHits": "No recursive hits this round. Try disabling browser Secure DNS, then run again.",
-      "authorityOfflineHint": "Authority zone is offline — system-DNS capture unavailable.",
-      "authorityDetail": "Authority session detail",
-      "phaseSession": "Creating session…",
-      "phaseSystemDns": "Triggering system DNS…",
-      "phasePoll": "Listening for recursive hits ({n}/{total})…",
-      "phaseBrowser": "Browser DoH + WebRTC…",
-      "phaseServer": "Forge multi-resolver…",
-      "stepSession": "Session",
-      "stepSystemDns": "System DNS",
-      "stepPoll": "Listen",
-      "stepBrowser": "Browser",
-      "stepServer": "Server",
-      "pollHint": "Poll {n}/{total} · queries {hits} · resolvers {resolvers}",
-      "liveHits": "Live recursive hits",
-      "sectionSystemDns": "System DNS (what you came for)",
-      "sectionComplementary": "Complementary paths",
-      "sectionTech": "Technical session detail",
-      "copyIps": "Copy IPs",
-      "copied": "Copied",
-      "queryCount": "{n} queries",
-      "colPath": "Path",
-      "colAnswers": "Answers",
-      "colMs": "ms",
-      "ipPublic": "public",
-      "ipPrivate": "private",
-      "sig": {
-        "captured": "System DNS captured",
-        "onlineNoHits": "Authority online · no hits yet",
-        "offline": "Authority offline",
-        "forgeSplit": "Forge resolvers disagree",
-        "dohSplit": "Browser DoH disagree",
-        "webrtcMismatch": "WebRTC ≠ edge IP",
-        "webrtcLocal": "Local WebRTC candidates",
-        "noBrowser": "No browser probes"
-      }
-    },
-    "honesty": {
-      "algorithmOnly": "Algorithm check only · not a registry or bank lookup",
-      "signatureNotVerified": "{engine} · decode only · signature not verified",
-      "localOnly": "Processed for this request · not stored as a card or credential"
-    },
-    "idCard": {
-      "number": "Resident ID number",
-      "note": "GB 11643 check digit · no household registry lookup · same path as API",
-      "specimenTitle": "Resident ID · structure specimen",
-      "segRegion": "Region",
-      "segBirth": "Birth",
-      "segSeq": "Seq",
-      "segCheck": "Check",
-      "metaBirth": "Birth",
-      "metaGender": "Gender",
-      "metaRegion": "Region code",
-      "genderMale": "Male",
-      "genderFemale": "Female",
-      "reasonFormat": "Format should be 18 characters (last may be X)",
-      "reasonBirth": "Birth date segment is invalid",
-      "reasonCheck": "Check digit is wrong",
-      "reasonCheckExpected": "Check digit is wrong · expected {expected}"
-    },
-    "filePaper": {
-      "lines": "{n} lines",
-      "chars": "{n} chars",
-      "empty": "(empty file)",
-      "readyToShip": "Ready to drop into the repo"
-    },
-    "textTransform": {
-      "mode": "Mode",
-      "input": "Input",
-      "output": "Output",
-      "emptyResult": "Result appears here",
-      "runLocal": "Run locally",
-      "runServer": "Run on server",
-      "statusLocalLive": "Local · live",
-      "statusLocal": "Local",
-      "statusServer": "Server · same path as API",
-      "noteDefault": "Same path as API"
+      "colMs": "ms"
     }
   },
   "roots": {
