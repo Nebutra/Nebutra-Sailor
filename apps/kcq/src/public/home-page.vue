@@ -1,17 +1,16 @@
 <!--
-  /home: the approved deck's eight sections (research-a16z-copy.md §5), as bands with their own
-  ground and density (research §3 rhythm map): hero · agent (inverted, the pinned story) · chart
-  quality (chart-grid ground) · markets and data (the real workstation) · developers · open source
-  · trust (quiet) · final CTA (inverted, the light returns) · footer.
+  /home: seven blocks on one surface (restraint benchmark §4, founder decisions 2026-10-10), each in
+  one grammar (heading, sub, one artifact) and one rhythm: hero · agent (the pinned story) · chart
+  quality · markets and data (the real workstation) · developers · open source and trust (merged,
+  text only) · final CTA (the one dark block, where the light returns) · footer.
 -->
 <script setup lang="ts">
 import HomeAgent from "./home/home-agent.vue";
-import HomeCommunity from "./home/home-community.vue";
 import HomeCta from "./home/home-cta.vue";
 import HomeDevelopers from "./home/home-developers.vue";
 import HomeHero from "./home/home-hero.vue";
+import HomeOpenSource from "./home/home-open-source.vue";
 import HomeRendering from "./home/home-rendering.vue";
-import HomeTrust from "./home/home-trust.vue";
 import HomeWorkstation from "./home/home-workstation.vue";
 </script>
 <template>
@@ -21,8 +20,7 @@ import HomeWorkstation from "./home/home-workstation.vue";
     <HomeRendering />
     <HomeWorkstation />
     <HomeDevelopers />
-    <HomeCommunity />
-    <HomeTrust />
+    <HomeOpenSource />
     <HomeCta />
   </main>
 </template>

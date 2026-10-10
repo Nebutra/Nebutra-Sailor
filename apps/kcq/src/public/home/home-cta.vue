@@ -1,8 +1,9 @@
 <!--
-  09 Final CTA (research H1, §3 Final CTA): the bookend. An inverted band where the light returns:
-  the field's own opening frame (the KCQ candle glyph as the only light, the prerendered poster)
-  sits behind one line and two ways to start (deck 5.8). Static: the one signature motion stays in
-  the hero.
+  Final CTA (deck 5.8; restraint benchmark §4 row 7): the bookend and the page's one dark block.
+  The light returns as the same system: the light field's own opening frame (the KCQ candle glyph
+  as the only light, the prerendered poster), small and centred above one line and two ways to
+  start, "Open the workstation" and "View on GitHub". Static: the one signature motion stays in the
+  hero. The heading keeps the page's one H2 size, so the close never outshouts the hero.
 -->
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
@@ -15,20 +16,20 @@ import posterDark1600 from "./hero/poster/poster-dark-1600.webp";
 const { t } = useI18n();
 </script>
 <template>
-  <section id="start" class="band band-inverted cta" data-theme="dark" aria-labelledby="cta-heading">
-    <img
-      class="cta-light"
-      :srcset="`${posterDark800} 800w, ${posterDark1600} 1600w`"
-      sizes="(min-width: 1024px) 60vw, 100vw"
-      :src="posterDark1600"
-      alt=""
-      width="1600"
-      height="700"
-      loading="lazy"
-      decoding="async"
-    />
+  <section id="start" class="band cta" data-theme="dark" aria-labelledby="cta-heading">
     <div class="container cta-body">
-      <h2 id="cta-heading" class="t-statement cta-heading">{{ t("home.cta.heading") }}</h2>
+      <img
+        class="cta-light"
+        :srcset="`${posterDark800} 800w, ${posterDark1600} 1600w`"
+        sizes="800px"
+        :src="posterDark800"
+        alt=""
+        width="800"
+        height="350"
+        loading="lazy"
+        decoding="async"
+      />
+      <h2 id="cta-heading" class="t-heading">{{ t("home.cta.heading") }}</h2>
       <p class="t-lede">{{ t("home.cta.body") }}</p>
       <div class="cta-actions">
         <a class="button button-primary" :href="APP_PATH">
@@ -45,38 +46,30 @@ const { t } = useI18n();
 </template>
 <style scoped>
 .cta {
-  overflow: hidden;
-  isolation: isolate;
-}
-/* The light returns: the field's opening frame, fading into the band from the right. */
-.cta-light {
-  position: absolute;
-  inset: 0 0 0 auto;
-  z-index: -1;
-  width: min(100%, 64rem);
-  height: 100%;
-  object-fit: cover;
-  object-position: right center;
-  mask-image: radial-gradient(ellipse 60% 70% at 70% 50%, #000 35%, transparent 80%);
-  opacity: 0.9;
+  padding-bottom: var(--klc-space-96);
 }
 .cta-body {
   display: grid;
-  justify-items: start;
-  gap: var(--klc-space-24);
+  justify-items: center;
+  gap: var(--klc-space-16);
+  text-align: center;
 }
-.cta-heading {
-  max-width: 14ch;
+/* The light returns: the field's opening frame, cropped to the glyph (at 590 × 175 of the 800px
+   frame) and fading out at the edges, so only the candle and its glow show. */
+.cta-light {
+  width: 100%;
+  max-width: 40rem;
+  height: 15rem;
+  margin-bottom: var(--klc-space-8);
+  object-fit: none;
+  object-position: calc(50% - 190px) 50%;
+  mask-image: radial-gradient(closest-side, #000 40%, transparent);
 }
 .cta-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--klc-space-12);
-  margin-top: var(--klc-space-8);
-}
-@media (max-width: 767px) {
-  .cta-light {
-    opacity: 0.45;
-  }
+  margin-top: var(--klc-space-16);
 }
 </style>
