@@ -14,16 +14,8 @@
         "count": 1
       },
       {
-        "file": "packages/design/ui/src/patterns/artifact-shift-card.tsx",
-        "count": 3
-      },
-      {
-        "file": "packages/design/ui/src/patterns/kinetic-marketing.tsx",
-        "count": 7
-      },
-      {
         "file": "packages/design/ui/src/primitives/animated-hike-card.tsx",
-        "count": 3
+        "count": 2
       },
       {
         "file": "packages/design/ui/src/primitives/assisted-password-confirmation.tsx",
@@ -3145,6 +3137,219 @@
       },
       {
         "file": "packages/design/ui/src/patterns/kinetic-marketing.tsx",
+        "count": 1
+      }
+    ]
+  },
+  "hoverMotion": {
+    "description": "Shrink-only. scripts/lint-hover-motion.mjs, contract in docs/design-system/hover-motion.md. Measured baseline on origin/main 2026-10-10: 191 violations in 107 files; this list is what remained after the root fixes.",
+    "allowlist": [
+      {
+        "file": "apps/auth/src/components/boot-log-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/dns-leak-runner.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/components/tool-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/kcq/src/styles.css",
+        "count": 2
+      },
+      {
+        "file": "apps/kuanlan/src/app/globals.css",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/global/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/innovation/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/about/whitepaper/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/blog/[slug]/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx",
+        "count": 4
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/showcase/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/AIConstellationMarquee.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/capability-cards/AIGatewayCard.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/capability-cards/BillingCard.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/capability-cards/MultiTenantCard.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/capability-cards/RBACCard.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/design-system/TokenGovernanceCard.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/design-system/VrtCard.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/FooterMinimal.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/components/landing/HeroMockupWindow.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/landing/MonorepoFileTree.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/ResourcesMegaMenu.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/landing/navbar/SolutionsMegaMenu.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/components/status/uptime-bar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/components/ui/globe-stickers.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/landing/src/nebutra/studio/studio-workbench.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/home/asset-gallery.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/para/src/components/home/launch-hero.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/para/src/components/home/project-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/home/projects-list.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/home/recent-projects.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/para/src/components/overlays/agent-panel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/components/shell/app-sidebar.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/styles/shell.css",
+        "count": 2
+      },
+      {
+        "file": "apps/pebble/src/app/globals.css",
+        "count": 7
+      },
+      {
+        "file": "apps/router/src/components/market-banner-carousel.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/sailor-docs/src/components/feedback/client.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/sailor-docs/src/components/ui/button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/typelens/src/app/pairings/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/typelens/src/app/typefaces/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/typelens/src/app/works/[slug]/page.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/typelens/src/components/work-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/typelens/src/styles/shell.css",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/app/(app)/usage/page.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/web/src/app/providers/design-system-shell.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/command-palette/command-surface-button.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/command-palette/mode-pills.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/connectors/connectors-hub.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/onboarding/getting-started.tsx",
+        "count": 3
+      },
+      {
+        "file": "apps/web/src/components/onboarding/recent-sessions.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/components/startup-os/company-tower/tower-floor.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/primitives/bento-grid.tsx",
         "count": 1
       }
     ]

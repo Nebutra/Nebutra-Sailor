@@ -86,6 +86,7 @@ Complete navigation to all project documentation.
 | --------------------------------------------------------- | -------------------------------- |
 | [UI Registry Blueprint](./design-system/ui-registry-blueprint.md) | Design tokens, styles, component registry |
 | [Token Drift Audit](./design-system/token-drift-audit.md)         | Token audit and drift analysis            |
+| [Hover Motion Contract](./design-system/hover-motion.md)          | What may move on hover, per control class |
 
 ## Current phase
 

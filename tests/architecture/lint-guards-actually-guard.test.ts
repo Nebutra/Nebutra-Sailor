@@ -187,6 +187,26 @@ const CASES: Case[] = [
       'import { useEffect } from "react";\nexport function C() {\n  useEffect(() => {\n    void fetch("/api/probe");\n  }, []);\n  return null;\n}\n',
   },
   {
+    // The /ideas defect: a solid button that dims and rises under the pointer,
+    // reading as disabled (docs/design-system/hover-motion.md).
+    guard: "lint-hover-motion",
+    violation:
+      'export const C = () => <a className="bg-primary hover:opacity-90 hover:-translate-y-1">x</a>;\n',
+  },
+  {
+    // The /sailor command-box defect: a lift into a shadow two steps up, over
+    // a raw curve, on a transition-all.
+    guard: "lint-hover-motion",
+    violation:
+      'export const C = () => <div className="transition-all ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-xl" />;\n',
+  },
+  {
+    // A CSS :hover outside @media (hover: hover) — sticks after a tap on touch.
+    guard: "lint-hover-motion",
+    violation: ".probe:hover {\n  color: red;\n}\n",
+    path: "apps/design/src/__lint_guard_probe.css",
+  },
+  {
     // A hand-picked stacking number above the local range, instead of a layer role.
     guard: "lint-z-index",
     violation: 'export const C = () => <div className="fixed z-[150]" />;\n',

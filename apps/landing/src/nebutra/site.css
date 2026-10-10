@@ -46,8 +46,10 @@ html[data-brand="nebutra-site"] .hero-motion-video {
 html[data-brand="nebutra-site"] .site-reel-track {
   animation: site-reel 40s linear infinite;
 }
-html[data-brand="nebutra-site"] .site-reel:hover .site-reel-track {
-  animation-play-state: paused;
+@media (hover: hover) {
+  html[data-brand="nebutra-site"] .site-reel:hover .site-reel-track {
+    animation-play-state: paused;
+  }
 }
 html[data-brand="nebutra-site"] .site-reel {
   -webkit-mask-image: linear-gradient(90deg, transparent, black 4%, black 96%, transparent);
