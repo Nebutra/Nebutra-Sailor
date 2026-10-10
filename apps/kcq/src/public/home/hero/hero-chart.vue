@@ -22,8 +22,9 @@ import { type Bar, tradingDate } from "./bars";
 import cachedSeries from "./cached-bars.json";
 import HeroTimeAxis from "./hero-time-axis.vue";
 import type { ChartGeometry, HeroChart } from "./live-chart";
-import posterDark800 from "./poster/poster-dark-800.webp";
-import posterDark1600 from "./poster/poster-dark-1600.webp";
+// Inlined: the poster is the hero's LCP image, so it paints with the HTML (5 KB). One size: a
+// second data URI would only add bytes to the document every visitor downloads.
+import posterDark1600 from "./poster/poster-dark-1600.webp?inline";
 
 const emit = defineEmits<{ shown: [withField: boolean] }>();
 const { t } = useI18n();
@@ -46,8 +47,6 @@ const chartHost = ref<HTMLDivElement>();
 const chartMount = ref<HTMLDivElement>();
 const fieldCanvas = ref<HTMLCanvasElement>();
 
-const posterSrcset = `${posterDark800} 800w, ${posterDark1600} 1600w`;
-const posterSizes = "(min-width: 1344px) 1280px, calc(100vw - 32px)";
 
 const price = (value: number) =>
   new Intl.NumberFormat(intl.value, { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
@@ -206,14 +205,12 @@ onBeforeUnmount(() => {
     <div class="hero-chart-body">
       <picture class="hero-poster">
         <img
-          :srcset="posterSrcset"
-          :sizes="posterSizes"
           :src="posterDark1600"
           alt=""
           width="1600"
           height="700"
           fetchpriority="high"
-          decoding="async"
+          decoding="sync"
         />
       </picture>
       <canvas ref="fieldCanvas" class="hero-field" aria-hidden="true" />

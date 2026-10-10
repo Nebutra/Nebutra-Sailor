@@ -45,6 +45,12 @@ const sources = computed(() => (tm("home.workstation.sources") as unknown as str
   </section>
 </template>
 <style scoped>
+/* The frame keeps the capture's ratio before the image exists, and its subtree is skipped until it
+   nears the viewport, so the capture never competes with the first view (Lighthouse mobile). */
+.shot {
+  aspect-ratio: 1440 / 852;
+  content-visibility: auto;
+}
 .shot img {
   display: block;
   width: 100%;
@@ -53,6 +59,9 @@ const sources = computed(() => (tm("home.workstation.sources") as unknown as str
 }
 /* Phones: the full window is too small to read, so show the chart and its toolbar at legible size. */
 @media (max-width: 767px) {
+  .shot {
+    aspect-ratio: 1 / 1;
+  }
   .shot img {
     aspect-ratio: 1 / 1;
     object-fit: cover;

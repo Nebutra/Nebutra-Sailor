@@ -153,7 +153,8 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
             <div class="transcript">
               <p class="transcript-prompt">
                 <span class="t-ui transcript-who">{{ t("home.agent.you") }}</span>
-                <span class="transcript-text" :aria-label="promptText">
+                <span>
+                  <span class="visually-hidden">{{ promptText }}</span>
                   <span aria-hidden="true">{{ shownPrompt }}</span><span
                     v-if="shownPrompt.length < promptText.length"
                     class="caret"
@@ -206,7 +207,7 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
                 />
               </li>
             </ol>
-            <button type="button" class="scrub-button scrub-speed t-num" :aria-label="t('home.agent.speed')" @click="replay.cycleSpeed()">
+            <button type="button" class="scrub-button scrub-speed t-num" :aria-label="`${t('home.agent.speed')} ${speed}×`" @click="replay.cycleSpeed()">
               {{ speed }}×
             </button>
           </div>

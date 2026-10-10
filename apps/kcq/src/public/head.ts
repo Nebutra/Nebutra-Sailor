@@ -2,7 +2,7 @@
 // The same file public.css loads as `kcq-outfit-600.woff2` (vite.config.mjs alias), so one fetch.
 import outfitFont from "@fontsource/outfit/files/outfit-latin-600-normal.woff2?url";
 // Nebutra's heading face: the file public.css loads as `kcq-dm-sans.woff2` (vite.config.mjs alias), so one fetch.
-import dmSansFont from "../../../../packages/design/fonts/generated/dm-sans.woff2?url";
+import dmSansFont from "./brand/kcq-dm-sans-500.woff2?url";
 import { PUBLIC_MESSAGES } from "./messages";
 import {
   KCQ_ORIGIN,

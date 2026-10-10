@@ -54,6 +54,11 @@ declare module "*.webp" {
   const url: string;
   export default url;
 }
+/** A data URI in the HTML (the hero poster is the LCP image: no extra request). */
+declare module "*.webp?inline" {
+  const uri: string;
+  export default uri;
+}
 declare module "*.woff2?url" {
   const url: string;
   export default url;

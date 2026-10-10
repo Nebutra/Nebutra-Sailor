@@ -25,13 +25,19 @@
   descent-override: 27.44%;
   line-gap-override: 0%;
 }
-/* DM Sans, Nebutra's heading face: the same self-hosted variable file nebutra.com serves
-   (@nebutra/fonts generated/dm-sans.woff2), so the family's headings read as one voice. Fallback
-   metrics are the ones next/font computes from that file on nebutra.com. */
+/* DM Sans, Nebutra's heading face: the file nebutra.com serves (@nebutra/fonts
+   generated/dm-sans.woff2), instanced at the one weight KCQ's headings use (500, optical size 40)
+   and the Latin the page sets: 13 KB instead of 69 KB on the critical path. Regenerate with
+     fonttools varLib.instancer dm-sans.woff2 wght=500 opsz=40 -o dm.ttf
+     pyftsubset dm.ttf --unicodes="U+0020-007E,U+00A0-00FF,U+0131,U+0152-0153,U+02C6,U+02DA,
+       U+02DC,U+2013-2014,U+2018-201A,U+201C-201E,U+2022,U+2026,U+2032-2033,U+20AC,U+2122,
+       U+2190-2193,U+2212,U+00D7" --layout-features=kern,liga,calt,ccmp,locl,mark,mkmk,tnum,case
+       --flavor=woff2 --output-file=src/public/brand/kcq-dm-sans-500.woff2
+   Fallback metrics are the ones next/font computes from the full file on nebutra.com. */
 @font-face {
   font-family: "DM Sans";
   src: url("kcq-dm-sans.woff2") format("woff2");
-  font-weight: 100 1000;
+  font-weight: 500;
   font-style: normal;
   /* Preloaded (head.ts); never swapped in late, so the headline never reflows. */
   font-display: optional;
@@ -44,10 +50,17 @@
   descent-override: 29.18%;
   line-gap-override: 0%;
 }
+/* Geist for the public pages: the variable file limited to the weights they set (400–600) and the
+   Latin they use (18 KB instead of 69 KB; Han text falls through to the system face). The
+   workstation keeps the full file. Regenerate with
+     fonttools varLib.instancer Geist-Variable.woff2 wght=400:600 -o geist.ttf
+     pyftsubset geist.ttf --unicodes=<the DM Sans list above, plus U+00B7>
+       --layout-features=kern,liga,calt,ccmp,locl,mark,mkmk,tnum,zero,case,ss01 --flavor=woff2
+       --output-file=src/public/brand/kcq-geist-latin.woff2 */
 @font-face {
   font-family: "Geist";
-  src: url("kcq-geist-font.woff2") format("woff2");
-  font-weight: 100 900;
+  src: url("./brand/kcq-geist-latin.woff2") format("woff2");
+  font-weight: 400 600;
   font-style: normal;
   font-display: swap;
 }
@@ -400,6 +413,13 @@ a {
   padding-block: var(--kcq-band-space);
   background: var(--kcq-page);
   color: var(--kcq-ink);
+}
+/* The last blocks (code, text, the close) skip style, layout and paint until they near the viewport,
+   so the first view's fonts and frames own the network and the main thread at load. Only blocks
+   after the last nav anchor's start defer, so "Agent" and "Developers" still land exactly. */
+.band-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
 }
 .section-head {
   display: grid;

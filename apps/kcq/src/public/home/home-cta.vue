@@ -11,17 +11,14 @@ import KcqIcon from "../components/kcq-icon.vue";
 import { LINKS } from "../links";
 import { APP_PATH } from "../routes";
 import posterDark800 from "./hero/poster/poster-dark-800.webp";
-import posterDark1600 from "./hero/poster/poster-dark-1600.webp";
 
 const { t } = useI18n();
 </script>
 <template>
-  <section id="start" class="band cta" data-theme="dark" aria-labelledby="cta-heading">
+  <section id="start" class="band band-deferred cta" data-theme="dark" aria-labelledby="cta-heading">
     <div class="container cta-body">
       <img
         class="cta-light"
-        :srcset="`${posterDark800} 800w, ${posterDark1600} 1600w`"
-        sizes="800px"
         :src="posterDark800"
         alt=""
         width="800"
