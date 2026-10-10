@@ -296,7 +296,7 @@
       {
         "name": "web-dashboard-zh-copy-tokenized-for-locales",
         "description": "Chinese dashboard copy must stay in the shared i18n layer, not hardcoded in app components.",
-        "file": "packages/platform/i18n/locales/zh.json",
+        "file": "packages/platform/i18n/locales/zh-Hans.json",
         "requiredContains": [
           "\"commandCenter\"",
           "\"snapshot\": \"快照\"",

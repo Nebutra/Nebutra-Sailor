@@ -34,23 +34,22 @@ function getString(value: JsonValue, dottedKey: string): string | undefined {
 }
 
 describe("platform i18n parity", () => {
-  it("keeps the English and Chinese platform catalogs key-aligned", () => {
+  // Coverage is not parity any more: a key zh-Hans lacks renders the English
+  // until the translation workflow fills it (scripts/lib/i18n-catalog.mjs).
+  // A key only zh-Hans has is still a bug — nothing would ever render it.
+  it("keeps no Simplified Chinese key that English lacks", () => {
     const enKeys = new Set(flattenKeys(readJson("packages/platform/i18n/locales/en.json")));
-    const zhKeys = new Set(flattenKeys(readJson("packages/platform/i18n/locales/zh.json")));
+    const zhKeys = new Set(flattenKeys(readJson("packages/platform/i18n/locales/zh-Hans.json")));
 
     expect(
-      [...enKeys].filter((key) => !zhKeys.has(key)).sort(),
-      "en.json keys missing from zh.json",
-    ).toEqual([]);
-    expect(
       [...zhKeys].filter((key) => !enKeys.has(key)).sort(),
-      "zh.json keys missing from en.json",
+      "zh-Hans.json keys missing from en.json",
     ).toEqual([]);
   });
 
   it("keeps China compliance auth copy explicit in both catalogs", () => {
     const en = readJson("packages/platform/i18n/locales/en.json");
-    const zh = readJson("packages/platform/i18n/locales/zh.json");
+    const zh = readJson("packages/platform/i18n/locales/zh-Hans.json");
 
     for (const key of [
       "compliance.icp.recordNumber",
@@ -59,7 +58,7 @@ describe("platform i18n parity", () => {
       "compliance.wechat.notConfigured",
     ]) {
       expect(getString(en, key), `en.json ${key}`).toEqual(expect.any(String));
-      expect(getString(zh, key), `zh.json ${key}`).toEqual(expect.any(String));
+      expect(getString(zh, key), `zh-Hans.json ${key}`).toEqual(expect.any(String));
     }
   });
 });

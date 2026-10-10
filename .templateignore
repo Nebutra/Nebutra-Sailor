@@ -264,7 +264,6 @@ infra/ops/scripts/check-service-secret-parity.sh
 .github/workflows/public-url-check.yml
 .github/workflows/route-lastmod.yml
 .github/workflows/i18n-translate.yml
-.github/workflows/i18n-orphan-report.yml
 # Daily --strict reconcile against ops/nebutra/: without Nebutra's tokens every
 # row is skipped and strict exits 1; with a scaffold's own tokens it would check
 # Nebutra's project/app/worker names. Either way a scaffold gets a red run a day.

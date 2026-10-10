@@ -18,7 +18,7 @@ const SETTINGS_API_KEY_FORM = join(
 const API_KEY_DIALOG = join(APP_ROOT, "src/components/api-keys/create-api-key-dialog.tsx");
 const WEBHOOK_DIALOG = join(APP_ROOT, "src/components/webhooks/create-webhook-dialog.tsx");
 const SHARED_EN_MESSAGES = join(REPO_ROOT, "packages/platform/i18n/locales/en.json");
-const SHARED_ZH_MESSAGES = join(REPO_ROOT, "packages/platform/i18n/locales/zh.json");
+const SHARED_ZH_MESSAGES = join(REPO_ROOT, "packages/platform/i18n/locales/zh-Hans.json");
 const EXTERNAL_TASTE_PREFIX = ["cu", "lt-"].join("");
 
 describe("@nebutra/web dashboard UI governance", () => {

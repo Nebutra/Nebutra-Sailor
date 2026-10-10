@@ -1,6 +1,7 @@
-import { createHash } from "node:crypto";
+import { icuMismatch } from "./lib/i18n-catalog.mjs";
+
 /**
- * Pure helpers for SenseNova i18n translator (unit-testable, no network).
+ * Pure helpers for the i18n translator (scripts/i18n-translate.mjs) — no network.
  *
  * Engineering upgrades (throughput + quality gates, not full CAT/TM):
  *  - namespace-aware batching
@@ -61,71 +62,6 @@ export const DEFAULT_GLOSSARY = Object.freeze([
   "AGPL-3.0",
   "SPDX",
 ]);
-
-/**
- * Exact English leaves that must stay English in every locale.
- * Brand / protocol / product names only — not generic UI words like Theme/FAQ
- * (those legitimately localize to 主题 / Preguntas frecuentes / …).
- */
-export const EXACT_LEAF_KEEP = Object.freeze([
-  "Discord",
-  "Webhooks",
-  "Webhook",
-  "X (Twitter)",
-  "GitHub",
-  "Stripe",
-  "Clerk",
-  "MCP",
-  "JSON",
-  "YAML",
-  "OpenAI",
-  "Vercel",
-  "SaaS",
-  "OAuth",
-  "SSO",
-  "JWT",
-  "UUID",
-  "Nebutra",
-  "Forge",
-  "Router",
-  "Sailor",
-  "Inngest",
-  "LemonSqueezy",
-  "Polar",
-  "SenseNova",
-  "ClickHouse",
-  "Prisma",
-  "Supabase",
-  "Cloudflare",
-  "GraphQL",
-  "OpenAPI",
-  "OpenFGA",
-  "FSL-1.1-ALv2",
-  "Apache-2.0",
-  "AGPL-3.0",
-]);
-
-export function shouldSkipValue(value) {
-  if (typeof value !== "string") return true;
-  const v = value.trim();
-  if (!v) return true;
-  if (/^\{[a-zA-Z0-9_.]+\}$/.test(v)) return true;
-  if (/^(pnpm|npx|npm|yarn|docker|git|nebutra|create-sailor)\b/i.test(v) && v.length < 80) {
-    return true;
-  }
-  if (/^https?:\/\//i.test(v) || /^[\w.+-]+@[\w.-]+$/.test(v)) return true;
-  // Strings that are nothing but licence identifiers ("MIT + FSL-1.1-ALv2").
-  // Sending them to a translator can only corrupt them.
-  if (
-    /^(?:MIT|Apache-2\.0|AGPL-3\.0|FSL-1\.1-ALv2|BSD-[23]-Clause|ISC)(?:\s*[+/·,]\s*(?:MIT|Apache-2\.0|AGPL-3\.0|FSL-1\.1-ALv2|BSD-[23]-Clause|ISC))*$/.test(
-      v,
-    )
-  ) {
-    return true;
-  }
-  if (!/[A-Za-z\u00C0-\u024F\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]/.test(v)) return true;
-  return false;
-}
 
 /**
  * Normalize a `{…}` token to a signature for cross-locale comparison.
@@ -228,6 +164,8 @@ export function validateTranslation(
   if (typeof translated !== "string" || !translated.trim()) {
     return { ok: false, reason: "empty" };
   }
+  const icu = icuMismatch(source, translated);
+  if (icu) return { ok: false, reason: `ICU ${icu}` };
   if (!placeholdersMatch(source, translated)) {
     return {
       ok: false,
@@ -333,81 +271,6 @@ export function namespaceContextLine(entries) {
   return `Namespaces in this batch: ${[...ns].sort().join(", ")}.`;
 }
 
-export function flatten(obj, prefix = "", out = new Map()) {
-  if (obj === null || obj === undefined) return out;
-  if (typeof obj !== "object" || Array.isArray(obj)) {
-    out.set(prefix, obj);
-    return out;
-  }
-  for (const [k, v] of Object.entries(obj)) {
-    const path = prefix ? `${prefix}.${k}` : k;
-    if (v !== null && typeof v === "object" && !Array.isArray(v)) flatten(v, path, out);
-    else out.set(path, v);
-  }
-  return out;
-}
-
-export function unflatten(map) {
-  const root = {};
-  for (const [path, value] of map) {
-    const parts = path.split(".");
-    let cur = root;
-    for (let i = 0; i < parts.length - 1; i++) {
-      const p = parts[i];
-      if (!(p in cur) || typeof cur[p] !== "object" || cur[p] === null) cur[p] = {};
-      cur = cur[p];
-    }
-    cur[parts[parts.length - 1]] = value;
-  }
-  return root;
-}
-
-/**
- * Fingerprint an English source string. Confirmations are keyed on this, so
- * editing the English automatically invalidates any prior confirmation and the
- * leaf returns to the queue.
- */
-export function sourceFingerprint(value) {
-  return createHash("md5").update(String(value)).digest("hex");
-}
-
-/**
- * Decide which leaves need a translation call.
- *
- * A leaf still identical to English is normally re-queued — product UI is full
- * of short labels ("Search", "Docs") that a seeded catalog leaves untouched.
- * But some leaves are identical *because that is the correct translation*:
- * "Wallet", "Admin", "RAG", "Audio" are the same word in German. Those were
- * re-sent on every single run forever, never converging — 3,743 leaves of
- * permanent churn across the five catalogs, burning quota to receive the same
- * answer.
- *
- * `confirmedIdentical` is a Map of key → source fingerprint, recorded when a
- * model returns a translation equal to its source. A leaf is skipped only when
- * the fingerprint still matches, so changing the English re-queues it.
- * `force` ignores confirmations entirely.
- */
-export function collectWork(sourceMap, targetMap, { force, confirmedIdentical } = {}) {
-  const work = [];
-  for (const [key, enVal] of sourceMap) {
-    if (typeof enVal !== "string" || shouldSkipValue(enVal)) continue;
-    const cur = targetMap.get(key);
-    const missing = cur === undefined;
-    const identical = typeof cur === "string" && cur === enVal && enVal.trim().length > 0;
-    if (!force && identical && confirmedIdentical?.get(key) === sourceFingerprint(enVal)) {
-      continue;
-    }
-    if (force || missing || identical) work.push([key, enVal]);
-  }
-  return work;
-}
-
-export function chunk(arr, size) {
-  const out = [];
-  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
-  return out;
-}
-
 /** Minimal p-limit (no external dep at repo root). */
 export function pLimit(concurrency) {
   let active = 0;
@@ -436,46 +299,6 @@ export function pLimit(concurrency) {
       queue.push({ fn, resolve, reject });
       next();
     });
-}
-
-/**
- * Default SenseNova Token Plan model pool for product i18n.
- * Prefer multi-model rotation so one exhausted plan does not stall the wheel.
- */
-/**
- * Each model has its OWN rolling-window quota bucket, so the pool is capacity,
- * not just failover — the more usable ids in here, the more of the plan is
- * reachable in one run.
- *
- * `sensenova-u1-fast` is deliberately absent. `GET /v1/models` lists it and the
- * dashboard shows its window 100% unused, but `POST /v1/chat/completions`
- * answers `{"message":"model is not found"}` for it under every parameter
- * combination tried (with/without `thinking`, enabled/disabled). Keeping it
- * only burns one request per run to rediscover that.
- */
-export const DEFAULT_TRANSLATE_MODELS = [
-  "deepseek-v4-flash",
-  "glm-5.2",
-  "sensenova-6.7-flash-lite",
-];
-
-/**
- * Parse model list from env-style strings.
- * Priority: MODELS (csv) → single MODEL → defaults.
- */
-export function parseTranslateModels({
-  modelsCsv,
-  singleModel,
-  defaults = DEFAULT_TRANSLATE_MODELS,
-} = {}) {
-  const fromCsv = String(modelsCsv ?? "")
-    .split(/[,|\s]+/)
-    .map((s) => s.trim())
-    .filter(Boolean);
-  if (fromCsv.length > 0) return [...new Set(fromCsv)];
-  const one = String(singleModel ?? "").trim();
-  if (one) return [one];
-  return [...defaults];
 }
 
 /**
@@ -519,13 +342,6 @@ export function isSoftRateLimitError(status, bodyText = "") {
     // bare 429 with no body still treated as soft
     !t.trim() ||
     true
-  );
-}
-
-/** @deprecated use isHardQuotaError / isSoftRateLimitError */
-export function isQuotaOrRateLimitError(status, bodyText = "") {
-  return (
-    status === 429 || isHardQuotaError(status, bodyText) || isSoftRateLimitError(status, bodyText)
   );
 }
 

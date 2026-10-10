@@ -399,11 +399,10 @@ jobs:
         run: pnpm turbo typecheck --filter="...[${TURBO_BASE_REF}]..."
 
       # ── i18n integrity (every catalog) ──────────────────────────────
-      # Key parity + ICU placeholder consistency + critical-namespace
-      # untranslated detection. Catalog-driven from scripts/i18n-catalogs.mjs,
-      # so landing, web, forge and router are all covered — checking only
-      # landing while translation covered four catalogs is how Forge shipped
-      # 702 English strings into a Chinese surface with CI green.
+      # Valid ICU, no English copies, no translation that breaks at render
+      # time, no dead keys (scripts/lib/i18n-catalog.mjs). Untranslated keys
+      # are absent and reported, never blocking — the i18n Translate workflow
+      # fills them through Router when en.json lands on main.
       - name: i18n integrity (all catalogs)
         run: pnpm i18n:check
 

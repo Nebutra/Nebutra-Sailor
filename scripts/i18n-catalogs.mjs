@@ -8,61 +8,25 @@
  * and still drift silently, which is exactly how Forge shipped 702 English
  * strings into a Chinese product surface with nothing failing.
  *
+ * The rules every catalog follows are in scripts/lib/i18n-catalog.mjs.
+ *
  * Add a catalog here and both `pnpm i18n:translate` and `pnpm i18n:check` pick
  * it up. There is no second list to remember.
  */
 
-/** Locales every product catalog ships. */
-export const GLOBAL_TARGETS = [
-  "ar",
-  "bn",
-  "da",
-  "de",
-  "el",
-  "es",
-  "fa",
-  "fi",
-  "fr",
-  "he",
-  "hi",
-  "id",
-  "it",
-  "ja",
-  "ko",
-  "ms",
-  "nl",
-  "no",
-  "pl",
-  "pt",
-  "ru",
-  "sv",
-  "sw",
-  "th",
-  "tr",
-  "uk",
-  "ur",
-  "vi",
-  "zh-Hans",
-  "zh-Hant",
-];
+import { TARGET_LOCALES } from "./lib/i18n-registry.mjs";
 
 /**
- * Locales whose translations are enforced, not merely reported.
- *
- * These are the languages a human actually reads the product in today. For the
- * rest, an English fallback is an honest interim state; for these it is a bug.
+ * Locales every product catalog ships — derived from PRODUCT_LANGUAGES, never
+ * hand-listed. A hand list here once lost cs, ro and hu, and nothing noticed.
  */
-export const ENFORCED_LOCALES = [
-  "de",
-  "es",
-  "fr",
-  "ja",
-  "ko",
-  "zh-Hans",
-  "zh-Hant",
-  "zh", // legacy stem, if a catalog still carries one
-];
+export const GLOBAL_TARGETS = TARGET_LOCALES;
 
+/**
+ * `authoredLocales` are written by a person and never machine-translated, not
+ * even when their English changes (they are reported stale instead).
+ * `styleGuide` lines are appended to the translator prompt for that catalog.
+ */
 export const CATALOGS = [
   {
     id: "landing",
@@ -70,20 +34,6 @@ export const CATALOGS = [
     source: "en",
     targets: GLOBAL_TARGETS,
     description: "Public marketing site",
-    // Above-the-fold marketing copy: identical-to-EN here is a regression.
-    // `nav` and `footer` are advisory — they are dominated by short link
-    // labels (Blog, FAQ, npm, DPA, Docs) that B2B SaaS keeps in English.
-    criticalNamespaces: [
-      "hero",
-      "cta",
-      "logoStrip",
-      "monorepoTree",
-      "stats",
-      "metadata",
-      "features",
-      "comingSoon",
-    ],
-    advisoryNamespaces: ["nav", "footer", "landing"],
   },
   {
     id: "web",
@@ -91,40 +41,15 @@ export const CATALOGS = [
     source: "en",
     targets: GLOBAL_TARGETS,
     description: "Dashboard / authenticated product (shared @nebutra/i18n)",
-    criticalNamespaces: [],
-    advisoryNamespaces: [],
   },
   {
     id: "forge",
     messagesDir: "apps/forge/messages",
     source: "en",
     targets: GLOBAL_TARGETS,
+    // Tool titles are NOT here: those live bilingually on the registry
+    // definitions (design doc §6.10), not in this catalog.
     description: "Forge online tool station",
-    // `runners.*` is the field labels of every tool workspace — the strings a
-    // user is looking at while doing the work. `categories` and `home` are the
-    // browse surface. Tool titles are NOT here: those live bilingually on the
-    // registry definitions (design doc §6.10), not in this catalog.
-    criticalNamespaces: ["runners", "categories", "home", "tool", "roots"],
-    advisoryNamespaces: ["nav", "footer", "meta", "search", "auth"],
-    // Ratchet on untranslated strings in the enforced locales.
-    //
-    // The rule is "no silent regression", not "never changes". A wave that adds
-    // English keys legitimately raises these counts — Editor and Simulator added
-    // 228 strings and every locale went up by exactly that. Raising a number is
-    // allowed ONLY in the same commit that adds the keys, and it carries a
-    // standing obligation to bring it back down. Lower on every translation
-    // pass; delete an entry at zero. What is forbidden is raising one to make an
-    // existing failure go away.
-    identicalBaseline: {
-      // dns-leak UX wave: table/signal/phase strings seeded EN for enforced locales.
-      "zh-Hant": 8,
-      "zh-Hans": 8,
-      ja: 72,
-      fr: 71,
-      de: 71,
-      es: 69,
-      ko: 72,
-    },
   },
   {
     id: "boot-log",
@@ -132,11 +57,9 @@ export const CATALOGS = [
     source: "en",
     targets: GLOBAL_TARGETS,
     description: "Auth-center boot-log archive (editorial prose, not UI strings)",
-    // English and Chinese are hand-authored; the rest are translated from the
-    // English. Never run the translator with --force against this catalog — it
-    // would overwrite the authored Chinese with a machine pass.
-    criticalNamespaces: [],
-    advisoryNamespaces: [],
+    // English and Simplified Chinese are hand-authored; the rest are translated
+    // from the English.
+    authoredLocales: ["zh-Hans"],
     // Editorial prose, not UI copy — and the default prompt says "product UI
     // translator", which is why it behaved like one: a first pass mixed
     // Japanese 敬体 and 常体 inside a single archive and carried an inline
@@ -156,8 +79,6 @@ export const CATALOGS = [
     source: "en",
     targets: GLOBAL_TARGETS,
     description: "Router API marketplace",
-    criticalNamespaces: [],
-    advisoryNamespaces: [],
   },
 ];
 

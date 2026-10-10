@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { mergeMessages } from "@nebutra/i18n/messages";
 import { describe, expect, it } from "vitest";
 import de from "../../../messages/de.json";
 import en from "../../../messages/en.json";
@@ -8,7 +9,7 @@ import es from "../../../messages/es.json";
 import fr from "../../../messages/fr.json";
 import ja from "../../../messages/ja.json";
 import ko from "../../../messages/ko.json";
-import zh from "../../../messages/zh.json";
+import zh from "../../../messages/zh-Hans.json";
 import { type FileNode, SAILOR_EXCLUDED_PRODUCT_APPS, TREE_DATA } from "./landing-data";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../..");
@@ -89,15 +90,19 @@ describe("landing monorepo tree data", () => {
 });
 
 describe("landing monorepo count copy", () => {
-  const locales = [
+  // What each locale renders: its translations over the English source.
+  const catalogs: Array<[string, object]> = [
     ["de", de],
     ["en", en],
     ["es", es],
     ["fr", fr],
     ["ja", ja],
     ["ko", ko],
-    ["zh", zh],
-  ] as const;
+    ["zh-Hans", zh],
+  ];
+  const locales = catalogs.map(
+    ([locale, messages]) => [locale, mergeMessages(en, messages as never)] as const,
+  );
 
   it("uses the current apps and packages counts across localized landing copy", () => {
     const apps = TREE_DATA.find((node) => node.label === "apps");

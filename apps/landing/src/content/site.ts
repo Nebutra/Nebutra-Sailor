@@ -2,7 +2,7 @@
  * Your marketing site's structure and config — not its words.
  *
  * Every sentence the starter site shows lives in messages/en.json under the
- * `site` namespace (Simplified Chinese in zh-Hans.json/zh.json, Traditional
+ * `site` namespace (Simplified Chinese in zh-Hans.json, Traditional
  * in zh-Hant.json), read with getTranslations / useTranslations. This file
  * only keeps what isn't a sentence: plan ids, prices, hrefs, icons and the
  * `highlight` flag — the shape src/components/starter/ lays out.
