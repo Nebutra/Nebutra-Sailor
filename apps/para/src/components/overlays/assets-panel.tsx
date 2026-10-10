@@ -196,7 +196,7 @@ function AssetGrid({ q, projectId }: { q: string; projectId: string }) {
               draggable
               onDragStart={(e) => e.dataTransfer.setData(ASSET_MIME, a.id)}
               onClick={() => place(a)}
-              className="relative aspect-square h-auto overflow-hidden rounded-lg bg-neutral-3 p-0 hover:opacity-90"
+              className="relative aspect-square h-auto overflow-hidden rounded-lg bg-neutral-3 p-0 transition-[box-shadow] hover:ring-2 hover:ring-foreground/20"
             >
               <img
                 src={a.url}

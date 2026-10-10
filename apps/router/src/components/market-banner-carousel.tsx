@@ -96,7 +96,7 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
               aria-current={i === index}
               onClick={() => setIndex(i)}
               className={[
-                "h-1.5 rounded-full transition-all",
+                "h-1.5 rounded-full transition-[width,background-color] duration-flow ease-out",
                 i === index
                   ? "w-5 bg-neutral-12/80"
                   : "w-1.5 bg-neutral-12/25 hover:bg-neutral-12/45",

@@ -26,7 +26,7 @@ export function ArtifactShiftCard({
   return (
     <div
       className={cn(
-        "group/card relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[var(--radius-panel)] border bg-background/90 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] hover:-translate-y-1 hover:border-foreground/25 hover:shadow-ambient-lg focus-within:-translate-y-1 focus-within:border-foreground/25",
+        "group/card relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[var(--radius-panel)] border bg-background/90 transition-[border-color] duration-flow ease-out hover:border-foreground/25 focus-within:border-foreground/25",
         className,
       )}
       data-taste="nebutra-shift-card"
@@ -64,7 +64,7 @@ export function ArtifactShiftCardPreview({
     <section
       aria-label={label}
       className={cn(
-        "relative min-h-[260px] overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-background/80 p-3 shadow-ambient-sm transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/card:-translate-y-1 group-hover/card:border-foreground/20 group-hover/card:shadow-ambient-md group-focus-within/card:-translate-y-1 group-focus-within/card:border-foreground/20 sm:p-4",
+        "relative min-h-[260px] overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-background/80 p-3 shadow-ambient-sm transition-[border-color] duration-flow ease-out group-hover/card:border-foreground/20 group-focus-within/card:border-foreground/20 sm:p-4",
         className,
       )}
       {...props}
@@ -121,7 +121,7 @@ export function ArtifactShiftCardFooter({ className, ...props }: ArtifactShiftCa
   return (
     <footer
       className={cn(
-        "relative mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-xl)] border border-border/60 bg-background/85 px-4 py-3 shadow-ambient-sm backdrop-blur-xl transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover/card:-translate-y-2 group-hover/card:border-foreground/20 group-hover/card:shadow-ambient-md group-focus-within/card:-translate-y-2 group-focus-within/card:border-foreground/20",
+        "relative mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-xl)] border border-border/60 bg-background/85 px-4 py-3 shadow-ambient-sm backdrop-blur-xl transition-[border-color] duration-flow ease-out group-hover/card:border-foreground/20 group-focus-within/card:border-foreground/20",
         className,
       )}
       {...props}

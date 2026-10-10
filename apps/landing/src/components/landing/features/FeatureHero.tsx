@@ -128,7 +128,7 @@ export function FeatureHero({
                 href={primaryCtaHref}
                 target="_blank"
                 rel="noreferrer"
-                className="group/cta inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-semibold text-background text-sm transition-opacity hover:opacity-90"
+                className="group/cta inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-semibold text-background text-sm transition-[background-color] hover:bg-foreground/90"
               >
                 {primaryCtaLabel}
                 <ArrowUpRight

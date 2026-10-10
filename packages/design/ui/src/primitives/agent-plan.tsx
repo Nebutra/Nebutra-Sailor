@@ -332,10 +332,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                     animate="visible"
                   >
                     {/* Task row */}
-                    <motion.div
-                      className="group flex items-center rounded-[var(--radius-md)] px-3 py-1.5"
-                      whileHover={{ backgroundColor: "rgba(0,0,0,0.03)" }}
-                    >
+                    <motion.div className="group flex items-center rounded-[var(--radius-md)] px-3 py-1.5 transition-[background-color] duration-micro ease-out hover:bg-accent">
                       <motion.div
                         className="mr-2 flex-shrink-0 cursor-pointer"
                         onClick={(e: React.MouseEvent) => {
@@ -343,7 +340,6 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                           cycleTaskStatus(task.id);
                         }}
                         whileTap={{ scale: 0.9 }}
-                        whileHover={{ scale: 1.1 }}
                       >
                         <AnimatePresence mode="wait">
                           <motion.div
@@ -411,12 +407,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                                   variants={subtaskVariants}
                                   onClick={() => toggleSubtaskExpansion(task.id, subtask.id)}
                                 >
-                                  <motion.div
-                                    className="flex flex-1 items-center rounded-[var(--radius-md)] p-1"
-                                    whileHover={{
-                                      backgroundColor: "rgba(0,0,0,0.03)",
-                                    }}
-                                  >
+                                  <motion.div className="flex flex-1 items-center rounded-[var(--radius-md)] p-1 transition-[background-color] duration-micro ease-out hover:bg-accent">
                                     <motion.div
                                       className="mr-2 flex-shrink-0 cursor-pointer"
                                       onClick={(e: React.MouseEvent) => {
@@ -424,7 +415,6 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                                         toggleSubtaskStatus(task.id, subtask.id);
                                       }}
                                       whileTap={{ scale: 0.9 }}
-                                      whileHover={{ scale: 1.1 }}
                                     >
                                       <AnimatePresence mode="wait">
                                         <motion.div
@@ -479,7 +469,6 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                                                       delay: idx * 0.05,
                                                     },
                                                   }}
-                                                  whileHover={{ y: -1 }}
                                                 >
                                                   {tool}
                                                 </motion.span>

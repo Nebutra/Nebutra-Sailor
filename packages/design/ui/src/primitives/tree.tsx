@@ -713,7 +713,6 @@ export const TreeIcon = ({ icon, hasChildren = false, className, ...props }: Tre
         className,
       )}
       transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}
-      {...(!reduceMotion ? { whileHover: { scale: 1.1 } } : {})}
       {...props}
     >
       {icon || getDefaultIcon()}

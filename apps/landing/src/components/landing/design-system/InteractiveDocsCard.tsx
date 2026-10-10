@@ -35,7 +35,7 @@ export function InteractiveDocsCard() {
           <div className="h-2 w-5/6 bg-muted rounded-full" />
 
           {/* Code Block Mockup */}
-          <div className="mt-2 rounded-[var(--radius-lg)] bg-background p-3 w-[110%] sm:w-full shadow-sm border border-border/60 font-mono transition-transform ease-out group-hover:-translate-y-1">
+          <div className="mt-2 rounded-[var(--radius-lg)] bg-background p-3 w-[110%] sm:w-full shadow-sm border border-border/60 font-mono transition-transform duration-flow ease-out group-hover:-translate-y-0.5 motion-reduce:group-hover:translate-y-0">
             <div className="flex items-center justify-between mb-2">
               <div className="flex gap-1.5 opacity-60">
                 <div className="h-2.5 w-2.5 rounded-full border border-border bg-muted-foreground/20" />

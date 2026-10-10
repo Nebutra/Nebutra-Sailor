@@ -72,7 +72,7 @@ export function UseCasesSection() {
                     key={uc.key}
                     aria-pressed={isActive}
                     onClick={() => setActiveTab(i)}
-                    className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[var(--radius-card)] transition-transform duration-150 overflow-hidden hover:-translate-y-px motion-reduce:transform-none motion-reduce:transition-none ${
+                    className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[var(--radius-card)] transition-transform duration-micro overflow-hidden hover:-translate-y-px motion-reduce:transform-none motion-reduce:transition-none ${
                       isActive
                         ? "bg-background border border-border"
                         : "hover:bg-muted border border-transparent"
@@ -81,14 +81,14 @@ export function UseCasesSection() {
                     style={isActive ? { boxShadow: "var(--ring-hairline)" } : undefined}
                   >
                     <div
-                      className={`relative z-10 p-3 rounded-[var(--radius-button)] shrink-0 transition-colors duration-500 motion-reduce:duration-0 ${isActive ? "bg-primary text-primary-foreground" : "bg-muted/50 text-muted-foreground group-hover:bg-muted group-hover:text-foreground"}`}
+                      className={`relative z-10 p-3 rounded-[var(--radius-button)] shrink-0 transition-colors duration-flow motion-reduce:duration-0 ${isActive ? "bg-primary text-primary-foreground" : "bg-muted/50 text-muted-foreground group-hover:bg-muted group-hover:text-foreground"}`}
                     >
                       <Icon className="size-6" />
                     </div>
 
                     <div className="relative z-10 flex-1 pt-1">
                       <h3
-                        className={`text-xl font-semibold transition-colors duration-500 motion-reduce:duration-0 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
+                        className={`text-xl font-semibold transition-colors duration-flow motion-reduce:duration-0 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
                         style={{ letterSpacing: "var(--tracking-tight)" }}
                       >
                         {t(`tabs.${uc.key}` as UseCasesTranslationKey)}
@@ -99,7 +99,7 @@ export function UseCasesSection() {
                             presence machinery: the row is always mounted and
                             simply has no height when closed. */}
                       <div
-                        className="grid transition-[grid-template-rows,opacity,margin-top] duration-[400ms] ease-[cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none"
+                        className="grid transition-[grid-template-rows,opacity,margin-top] duration-reveal ease-out motion-reduce:transition-none"
                         style={{
                           gridTemplateRows: isActive ? "1fr" : "0fr",
                           opacity: isActive ? 1 : 0,

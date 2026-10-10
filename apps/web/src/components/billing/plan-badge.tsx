@@ -115,7 +115,7 @@ export async function PlanBadge() {
       {shouldPromoteUpgrade && (
         <ViewTransitionLink
           href="/billing"
-          className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold bg-primary text-primary-foreground transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold bg-primary text-primary-foreground transition-[background-color] hover:bg-primary/90"
         >
           <Sparkles className="size-3" />
           Upgrade

@@ -44,7 +44,6 @@ export const themeToggleTokens = {
   motion: {
     duration: primitiveTransition.duration.micro,
     easing: primitiveTransition.easing.default,
-    hoverScale: 1.06,
     tapScale: 0.92,
     morph: { type: "spring", stiffness: 380, damping: 30 } satisfies Transition,
     press: { type: "spring", stiffness: 420, damping: 28 } satisfies Transition,

@@ -921,8 +921,7 @@ export function LicenseWizard({
               <div className="flex w-full max-w-md flex-col gap-3">
                 <a
                   href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002"}?welcome=true`}
-                  className="rounded-[var(--radius-lg)] px-6 py-3 text-center font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-                  style={{ background: "hsl(var(--primary))" }}
+                  className="rounded-[var(--radius-lg)] bg-primary px-6 py-3 text-center font-semibold text-primary-foreground transition-[background-color] hover:bg-primary/90"
                 >
                   Explore Nebutra Community →
                 </a>

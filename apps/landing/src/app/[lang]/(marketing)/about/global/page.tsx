@@ -169,7 +169,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
           >
             {LANGUAGES.map((lng) => (
               <AnimateIn key={lng.code} preset="fadeUp">
-                <div className="group h-full bg-background border border-border/50 rounded-[var(--radius-2xl)] p-6 hover:border-border hover:shadow-lg transition-[border-color,box-shadow] duration-300 flex flex-col">
+                <div className="group h-full bg-background border border-border/50 rounded-[var(--radius-2xl)] p-6 hover:border-border transition-[border-color] duration-flow ease-out flex flex-col">
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-4xl" aria-hidden="true">
                       {lng.flag}
@@ -298,7 +298,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
           <AnimateInGroup stagger="fast" className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {PAYMENT_GATEWAYS.map((gw) => (
               <AnimateIn key={gw.name} preset="fadeUp">
-                <div className="group h-full bg-background border border-border/50 rounded-[var(--radius-2xl)] p-6 hover:border-foreground/30 hover:shadow-lg transition-[border-color,box-shadow] duration-300 flex flex-col items-center text-center">
+                <div className="group h-full bg-background border border-border/50 rounded-[var(--radius-2xl)] p-6 hover:border-foreground/30 transition-[border-color] duration-flow ease-out flex flex-col items-center text-center">
                   <span
                     className="text-lg md:text-xl font-semibold text-foreground mb-2"
                     style={{ letterSpacing: "var(--tracking-tight)" }}

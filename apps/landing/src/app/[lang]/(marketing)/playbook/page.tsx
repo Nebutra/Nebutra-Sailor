@@ -73,7 +73,7 @@ function PlaybookCard({ item, t }: { item: PlaybookItem; t: CatalogTranslator })
   );
 
   const className =
-    "group flex h-full flex-col rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 p-5 transition-shadow hover:shadow-lg";
+    "group flex h-full flex-col rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 p-5 transition-[border-color,box-shadow] duration-flow ease-out hover:border-neutral-8 hover:shadow-ambient-sm";
 
   return external ? (
     <a href={href} target="_blank" rel="noopener noreferrer" className={className}>

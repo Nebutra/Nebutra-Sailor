@@ -42,10 +42,20 @@ const cardVariants = cva(
         lg: "p-8",
       },
       interactive: {
-        true: "cursor-pointer hover:shadow-ambient-md",
+        true: "cursor-pointer",
         false: "",
       },
     },
+    // One shadow step up from wherever the variant rests
+    // (docs/design-system/hover-motion.md). A single hover:shadow-ambient-md
+    // for every variant meant the elevated card — already ambient-md — did
+    // nothing under the pointer, and the outline card jumped two steps.
+    compoundVariants: [
+      { interactive: true, variant: "default", className: "hover:shadow-ambient-md" },
+      { interactive: true, variant: "elevated", className: "hover:shadow-ambient-lg" },
+      { interactive: true, variant: "outline", className: "hover:shadow-ambient-sm" },
+      { interactive: true, variant: "ghost", className: "hover:bg-accent" },
+    ],
     defaultVariants: { variant: "default", padding: "none", interactive: false },
   },
 );

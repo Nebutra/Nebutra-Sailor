@@ -538,8 +538,10 @@
     0 16px 32px -24px color-mix(in oklab, var(--brand-gradient-start) 72%, transparent);
 }
 
-.landing-brand-action:hover {
-  filter: saturate(1.04) brightness(1.03);
+@media (hover: hover) and (pointer: fine) {
+  .landing-brand-action:hover {
+    filter: saturate(1.04) brightness(1.03);
+  }
 }
 
 /* Hero background animation: direct video, tokenized fallback, and accessible motion opt-out. */

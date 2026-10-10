@@ -115,19 +115,25 @@
   color: var(--neutral-1, #fff);
 }
 
-.nav a:hover,
-.headerActions a:hover,
-.footer a:hover,
-.announcement a:hover {
-  color: var(--neutral-12, #18181b);
-}
+/* Hover lives behind (hover: hover): on a touch screen a tapped link would
+   otherwise keep its hover colour until the next tap elsewhere. The solid
+   button's hover is its own fill at 90%, not the neutral-11 text grey that
+   reads as disabled (docs/design-system/hover-motion.md). */
+@media (hover: hover) and (pointer: fine) {
+  .nav a:hover,
+  .headerActions a:hover,
+  .footer a:hover,
+  .announcement a:hover {
+    color: var(--neutral-12, #18181b);
+  }
 
-.ghostButton:hover {
-  border-color: var(--neutral-12, #18181b);
-}
+  .ghostButton:hover {
+    border-color: var(--neutral-12, #18181b);
+  }
 
-.solidButton:hover {
-  background: var(--neutral-11, #3f3f46);
+  .solidButton:hover {
+    background: color-mix(in srgb, var(--neutral-12, #18181b) 90%, transparent);
+  }
 }
 
 .footer {

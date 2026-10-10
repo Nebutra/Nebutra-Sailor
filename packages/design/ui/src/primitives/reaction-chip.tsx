@@ -85,8 +85,8 @@ export function ReactionChip({
         const isActive = selected === em;
         const btnClassName = cn(
           "rounded-full p-1 text-base leading-none",
-          "transition-transform duration-micro ease-out",
-          "hover:scale-110 focus-visible:scale-110 focus-visible:outline-none",
+          "transition-[background-color] duration-micro ease-out",
+          "hover:bg-accent focus-visible:bg-accent focus-visible:outline-none",
           isActive && "bg-muted ring-1 ring-border dark:bg-muted/70",
         );
         const handleMouseDown = (evt: React.MouseEvent) => evt.preventDefault();

@@ -96,7 +96,7 @@ function DefaultTrigger({
       aria-label={triggerLabel}
       className={cn(
         "inline-flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full",
-        "outline-none transition-[box-shadow,opacity] hover:opacity-90",
+        "outline-none transition-[box-shadow] duration-micro ease-out",
         "",
         "hover:ring-1 hover:ring-border",
       )}

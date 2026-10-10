@@ -97,7 +97,7 @@ export async function VcProfile({
               href={org.website}
               target="_blank"
               rel="noreferrer nofollow"
-              className="inline-flex w-fit items-center gap-2 rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-5 py-2.5 font-semibold text-[color:hsl(var(--background))] text-sm transition-opacity hover:opacity-90"
+              className="inline-flex w-fit items-center gap-2 rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-5 py-2.5 font-semibold text-[color:hsl(var(--background))] text-sm transition-[background-color] hover:bg-[color:hsl(var(--foreground)/0.9)]"
             >
               {t("visit")}
               <ArrowUpRight className="h-4 w-4" />

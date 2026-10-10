@@ -66,7 +66,7 @@ export const AnimatedHikeCard = ({
       ref={ref}
       href={href}
       className={cn(
-        "group relative block w-full max-w-sm cursor-pointer rounded-[var(--radius-2xl)] border bg-card p-6 text-card-foreground shadow-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 ease-in-out hover:-translate-y-1 hover:shadow-md lg:max-w-md",
+        "group relative block w-full max-w-sm cursor-pointer rounded-[var(--radius-2xl)] border bg-card p-6 text-card-foreground shadow-ambient-sm transition-[border-color,box-shadow,transform] duration-flow ease-out hover:-translate-y-0.5 hover:shadow-ambient-md motion-reduce:hover:translate-y-0 lg:max-w-md",
         className,
       )}
       aria-label={`Learn more about ${title}`}

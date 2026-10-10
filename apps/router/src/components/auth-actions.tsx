@@ -63,7 +63,7 @@ export function AuthActions({
         </span>
         <button
           type="button"
-          className="font-medium text-neutral-12 hover:opacity-80"
+          className="font-medium text-neutral-12 transition-colors hover:text-neutral-11"
           onClick={() => {
             void signOut();
           }}
@@ -109,7 +109,10 @@ export function AuthActions({
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <a href={signInHref} className="font-medium text-neutral-12 hover:opacity-80">
+      <a
+        href={signInHref}
+        className="font-medium text-neutral-12 transition-colors hover:text-neutral-11"
+      >
         登录
       </a>
       <a href={signUpHref} className="hover:text-neutral-12">

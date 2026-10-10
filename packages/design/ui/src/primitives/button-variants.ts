@@ -21,7 +21,12 @@ export const buttonVariants = cva(
       variant: {
         // Recipe-driven via packages/design/tokens/recipe.css (.btn-brand-default)
         default: "btn-brand-default",
-        ink: "bg-neutral-12 text-neutral-1 ring-1 ring-inset ring-neutral-1/5 hover:bg-neutral-11 hover:-translate-y-px active:translate-y-0 transition-[transform,background-color] duration-micro",
+        // Hover is the fill at 90%, like every other solid variant. It was
+        // neutral-11 — the secondary-TEXT step, a mid grey under the site
+        // language in both modes — so the primary action turned the grey of a
+        // disabled control. A 1px lift rode along; buttons do
+        // not move on hover (docs/design-system/hover-motion.md).
+        ink: "bg-neutral-12 text-neutral-1 ring-1 ring-inset ring-neutral-1/5 hover:bg-neutral-12/90",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",

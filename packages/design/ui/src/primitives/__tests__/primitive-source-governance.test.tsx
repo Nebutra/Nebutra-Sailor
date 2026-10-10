@@ -39,7 +39,12 @@ describe("primitive source governance", () => {
     const source = primitiveSource("button-variants.ts");
     const componentSource = primitiveSource("button.tsx");
 
-    expect(source).toContain("duration-micro");
+    expect(source).toMatch(/\bduration-(?:micro|flow)\b/u);
+    // Buttons change colour on hover, not position, and never to the
+    // secondary-text grey (docs/design-system/hover-motion.md).
+    expect(source).not.toMatch(/\bhover:-?translate-/u);
+    expect(source).not.toMatch(/\bhover:bg-neutral-11\b/u);
+    expect(source).not.toMatch(/\bhover:opacity-/u);
     // The global `:focus-visible` rule in design-tokens/static/base.css is
     // unlayered, so it outranks every Tailwind-generated utility (which land in
     // `@layer utilities`). A component-level `focus-visible:outline-none`

@@ -225,13 +225,13 @@ export const InteractiveChangelog = ({ releases }: InteractiveChangelogProps) =>
                           </div>
 
                           <DialogTrigger asChild>
-                            <div className="relative cursor-pointer group/image">
+                            <div className="group/image relative cursor-pointer overflow-hidden rounded-[var(--radius-lg)]">
                               <Image
                                 src={item.image || FALLBACK_RELEASE_IMAGE}
                                 alt={item.title}
                                 width={1200}
                                 height={700}
-                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 object-cover transition-transform duration-500 ease-in-out group-image/image:hover:scale-[1.01]"
+                                className="max-h-96 w-full rounded-[var(--radius-lg)] border border-border/60 object-cover transition-transform duration-flow ease-out group-hover/image:scale-[1.015] motion-reduce:group-hover/image:scale-100"
                                 unoptimized={item.image?.endsWith(".svg")}
                               />
                               {/* allow-palette: scrim over a release screenshot, not a themed surface */}

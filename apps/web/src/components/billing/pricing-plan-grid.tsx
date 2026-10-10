@@ -353,7 +353,7 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
         aria-label={isFree ? `${plan.name} included` : `Choose ${plan.name}`}
         className={`mt-6 inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] px-4 py-2.5 font-medium text-sm transition ${
           recommended
-            ? "bg-[color:hsl(var(--primary))] text-[color:hsl(var(--background))] hover:opacity-90"
+            ? "bg-[color:hsl(var(--primary))] text-[color:hsl(var(--background))] hover:bg-[color:hsl(var(--primary)/0.9)]"
             : "border border-border text-foreground hover:bg-muted"
         } ${loading || disabled || isFree ? "cursor-not-allowed opacity-70" : ""}`}
       >

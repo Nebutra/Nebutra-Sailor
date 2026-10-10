@@ -20,8 +20,11 @@ describe("@nebutra/ui ArtifactShiftCard pattern governance", () => {
     expect(source).toContain('data-taste="nebutra-shift-card"');
     expect(source).not.toContain(EXTERNAL_TASTE_PREFIX);
     expect(source).toContain("bg-[radial-gradient");
-    expect(source).toContain("transition-[transform,border-color,box-shadow]");
-    expect(source).toContain("group-hover/card:-translate-y-");
-    expect(source).toContain("group-focus-within/card:-translate-y-");
+    // An exhibit, not a control: the shift is a border spotlight on hover and
+    // keyboard focus, never a lift (docs/design-system/hover-motion.md).
+    expect(source).toContain("transition-[border-color]");
+    expect(source).toContain("group-hover/card:border-");
+    expect(source).toContain("group-focus-within/card:border-");
+    expect(source).not.toMatch(/(?:hover|focus-within)(?:\/card)?:-translate-y-/u);
   });
 });

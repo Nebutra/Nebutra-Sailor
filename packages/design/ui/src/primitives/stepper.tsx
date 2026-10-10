@@ -200,7 +200,8 @@ export function Stepper({
                   status === "pending" && "border-neutral-6 bg-background text-muted-foreground",
                   status === "error" &&
                     "border-destructive bg-destructive text-destructive-foreground",
-                  clickable && "cursor-pointer hover:scale-105",
+                  clickable &&
+                    "cursor-pointer transition-[box-shadow] duration-flow ease-out hover:ring-4 hover:ring-accent",
                 )}
               >
                 {status === "completed" ? (

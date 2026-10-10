@@ -110,7 +110,7 @@ export function ProviderKeysClient() {
           <button
             type="button"
             onClick={() => setDialogOpen(true)}
-            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-opacity hover:opacity-90"
+            className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-[background-color] hover:bg-primary/90"
           >
             Add provider key
           </button>

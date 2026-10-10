@@ -89,7 +89,7 @@ export async function SolutionPage({ solution, locale }: SolutionPageProps) {
         {isOffering ? (
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-6 py-3 text-sm font-semibold text-[color:hsl(var(--background))] transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-lg)] bg-[color:hsl(var(--foreground))] px-6 py-3 text-sm font-semibold text-[color:hsl(var(--background))] transition-[background-color] hover:bg-[color:hsl(var(--foreground)/0.9)]"
           >
             {ctaLabel}
             <ArrowRight className="h-4 w-4" />

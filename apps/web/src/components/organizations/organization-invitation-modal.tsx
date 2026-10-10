@@ -97,7 +97,7 @@ export function OrganizationInvitationModal({
         <button
           type="button"
           onClick={() => router.push("/")}
-          className="mt-6 inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-foreground px-4 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
+          className="mt-6 inline-flex w-full items-center justify-center rounded-[var(--radius-lg)] bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-[background-color] hover:bg-foreground/90"
         >
           {t("backToDashboard")}
         </button>
@@ -165,7 +165,7 @@ export function OrganizationInvitationModal({
           type="button"
           onClick={handleAccept}
           disabled={!!submitting}
-          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] bg-foreground px-4 py-2.5 text-sm font-medium text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex flex-1 items-center justify-center rounded-[var(--radius-lg)] bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-[background-color] hover:bg-foreground/90 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {submitting === "accept" ? t("accepting") : t("accept")}
         </button>

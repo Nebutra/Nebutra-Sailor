@@ -87,11 +87,11 @@ function PipelineStep({
       inView
       preset="scale"
     >
-      <div className="absolute left-1/2 top-1/2 w-2.5 h-2.5 bg-background border-[2px] border-primary rounded-full -translate-x-1/2 -translate-y-1/2 z-10 shadow-[0_0_10px_hsl(var(--primary)/0.4)] transition-[opacity,transform] duration-150 hover:-translate-y-0.5 hover:opacity-80 motion-reduce:hover:-translate-y-1/2" />
+      <div className="absolute left-1/2 top-1/2 w-2.5 h-2.5 bg-background border-[2px] border-primary rounded-full -translate-x-1/2 -translate-y-1/2 z-10 shadow-[0_0_10px_hsl(var(--primary)/0.4)]" />
 
       <div
         className={cn(
-          "w-[44%] bg-background border border-border/50 rounded-[var(--radius-lg)] py-2 px-3 shadow-[0_2px_10px_rgba(0,0,0,0.02)] dark:shadow-[0_2px_10px_rgba(0,0,0,0.2)] flex flex-col gap-1 transition-[border-color,box-shadow,transform] hover:border-primary/50 hover:shadow-md hover:-translate-y-0.5 motion-reduce:hover:translate-y-0 relative overflow-hidden group/step",
+          "w-[44%] bg-background border border-border/50 rounded-[var(--radius-lg)] py-2 px-3 shadow-ambient-sm flex flex-col gap-1 transition-[border-color,box-shadow] duration-flow ease-out hover:border-primary/50 hover:shadow-ambient-md relative overflow-hidden group/step",
           isLeft ? "items-end text-right" : "items-start text-left",
         )}
       >

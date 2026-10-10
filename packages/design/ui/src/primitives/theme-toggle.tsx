@@ -187,7 +187,6 @@ export const ThemeToggle = ({
   const interactionMotionProps =
     !disabled && !shouldReduceMotion
       ? {
-          whileHover: { scale: themeToggleTokens.motion.hoverScale },
           whileTap: { scale: themeToggleTokens.motion.tapScale },
         }
       : {};

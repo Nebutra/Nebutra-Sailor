@@ -232,10 +232,8 @@ export default function IntegrationsPage() {
               <Card
                 padding="sm"
                 key={item.type}
-                className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-150 sm:p-5 ${
-                  isConnected
-                    ? "border-success/40 opacity-60"
-                    : "hover:border-blue-7 hover:shadow-md"
+                className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-flow ease-out sm:p-5 ${
+                  isConnected ? "border-success/40 opacity-60" : "hover:ring-neutral-8"
                 }`}
               >
                 <div className="flex items-start gap-3">

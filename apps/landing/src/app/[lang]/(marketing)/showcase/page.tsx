@@ -98,7 +98,7 @@ export default async function ShowcasePage({ params }: { params: Promise<{ lang:
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 transition-shadow hover:shadow-lg"
+                className="group block overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7 bg-neutral-1 transition-[border-color,box-shadow] duration-flow ease-out hover:border-neutral-8 hover:shadow-ambient-sm"
               >
                 {project.screenshot?.asset ? (
                   <div className="relative aspect-video overflow-hidden bg-neutral-3">

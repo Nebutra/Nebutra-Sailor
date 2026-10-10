@@ -101,7 +101,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="mt-6 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-4 font-mono text-xs text-muted-foreground">
               <a
                 href={`https://${brand.domains.status}`}
-                className="inline-flex items-center gap-1 transition-opacity hover:opacity-80"
+                className="inline-flex items-center gap-1 transition-colors hover:text-foreground"
                 rel="noreferrer"
               >
                 {brand.domains.status}

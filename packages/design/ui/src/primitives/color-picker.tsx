@@ -625,7 +625,7 @@ function ColorPicker({
                   );
                 }}
                 className={cn(
-                  "size-6 bg-[color:var(--cp-color)] rounded-full border-2 ring-1 ring-inset ring-border transition-transform duration-micro hover:scale-110 disabled:opacity-50 motion-reduce:transition-none",
+                  "size-6 bg-[color:var(--cp-color)] rounded-full border-2 ring-1 ring-inset ring-border transition-[box-shadow] duration-micro ease-out hover:ring-foreground/40 disabled:opacity-50",
                   active ? "border-foreground" : "border-transparent",
                 )}
                 style={{ "--cp-color": swatch } as CpVars}
@@ -694,7 +694,7 @@ function ColorPickerPopover({
             aria-label={`${labels.trigger}, ${shown}`}
             disabled={pickerProps.disabled}
             className={cn(
-              "relative size-8 overflow-hidden rounded-full border-2 ring-1 ring-inset ring-border transition-transform duration-micro hover:scale-105 disabled:opacity-50 motion-reduce:transition-none",
+              "relative size-8 overflow-hidden rounded-full border-2 ring-1 ring-inset ring-border transition-[box-shadow] duration-micro ease-out hover:ring-foreground/40 disabled:opacity-50",
               triggerSelected ? "border-foreground" : "border-transparent",
               CHECKER,
               triggerClassName,

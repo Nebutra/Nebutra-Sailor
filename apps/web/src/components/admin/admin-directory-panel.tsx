@@ -129,7 +129,7 @@ export function AdminDirectoryPanel({
           />
           <button
             type="submit"
-            className="rounded-[var(--radius-xl)] bg-[color:hsl(var(--primary))] px-4 py-2 font-medium text-background text-sm transition hover:opacity-90"
+            className="rounded-[var(--radius-xl)] bg-[color:hsl(var(--primary))] px-4 py-2 font-medium text-background text-sm transition-[background-color] hover:bg-[color:hsl(var(--primary)/0.9)]"
           >
             Search
           </button>

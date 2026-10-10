@@ -284,7 +284,7 @@ export const GitHubCalendar: React.FC<GitHubCalendarProps> = ({
                     <div
                       key={dayIndex}
                       className={cn(
-                        "h-3 w-3 rounded-[3px] transition-transform hover:scale-125",
+                        "h-3 w-3 rounded-[3px] transition-[box-shadow] duration-micro ease-out hover:ring-1 hover:ring-foreground/50",
                         usesDefaultRamp &&
                           (DEFAULT_LEVEL_CLASSES[level] ?? DEFAULT_LEVEL_CLASSES[0]),
                         cellClassName,

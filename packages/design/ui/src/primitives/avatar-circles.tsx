@@ -95,7 +95,7 @@ export function AvatarCircles({
           href={avatar.profileUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="transition-transform hover:z-10 hover:scale-110"
+          className="rounded-full transition-[box-shadow] duration-micro ease-out hover:z-10 hover:ring-2 hover:ring-foreground/25"
         >
           <Image
             className="rounded-full border-2 border-background"

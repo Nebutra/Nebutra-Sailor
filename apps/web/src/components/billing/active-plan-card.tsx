@@ -78,7 +78,7 @@ export function ActivePlanCard({
         <div className="mt-5">
           <Link
             href="/choose-plan"
-            className="inline-flex items-center gap-2 rounded-[var(--radius-xl)] bg-primary px-4 py-2.5 font-medium text-sm text-primary-foreground transition hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-xl)] bg-primary px-4 py-2.5 font-medium text-sm text-primary-foreground transition-[background-color] hover:bg-primary/90"
           >
             <Sparkles className="size-4" aria-hidden="true" />
             {t("choosePlan")}
@@ -133,7 +133,7 @@ export function ActivePlanCard({
         {isFree ? (
           <Link
             href="/choose-plan"
-            className="inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] bg-primary px-4 py-2.5 font-medium text-sm text-primary-foreground transition hover:opacity-90 sm:w-auto"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] bg-primary px-4 py-2.5 font-medium text-sm text-primary-foreground transition-[background-color] hover:bg-primary/90 sm:w-auto"
           >
             <Sparkles className="size-4" aria-hidden="true" />
             {t("choosePlan")}

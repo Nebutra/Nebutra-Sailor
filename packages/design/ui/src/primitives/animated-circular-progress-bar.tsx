@@ -70,7 +70,8 @@ export function AnimatedCircularProgressBar({
                   "calc(var(--stroke-percent) * var(--percent-to-px)) var(--circumference)",
                 transform:
                   "rotate(calc(1turn - 90deg - (var(--gap-percent) * var(--percent-to-deg) * var(--offset-factor-secondary)))) scaleY(-1)",
-                transition: "all var(--transition-length) ease var(--delay)",
+                transition:
+                  "stroke-dasharray var(--transition-length) ease var(--delay), transform var(--transition-length) ease var(--delay)",
                 transformOrigin: "calc(var(--circle-size) / 2) calc(var(--circle-size) / 2)",
               } as React.CSSProperties
             }
