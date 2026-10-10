@@ -76,7 +76,7 @@ export default function IconsPage() {
               <col className="w-[40%]" />
             </colgroup>
             <thead>
-              <tr className="text-[11px] text-muted-foreground uppercase tracking-wide">
+              <tr className="text-muted-foreground text-xs">
                 <th className="pb-2 font-medium">Library</th>
                 <th className="pb-2 font-medium">Where</th>
                 <th className="pb-2 font-medium">Why</th>

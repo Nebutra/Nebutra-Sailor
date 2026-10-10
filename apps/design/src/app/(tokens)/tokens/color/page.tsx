@@ -12,16 +12,7 @@ import {
   scales,
   semanticRoles,
 } from "@/lib/tokens";
-import {
-  BothModes,
-  Chip,
-  Mono,
-  Note,
-  PageHeader,
-  Panel,
-  Section,
-  Table,
-} from "../_components/primitives";
+import { Chip, Mono, Note, PageHeader, Panel, Section, Table } from "../_components/primitives";
 import {
   ColorRow,
   ColorTableHead,
@@ -36,20 +27,40 @@ export const metadata: Metadata = {
     "Every colour token in the DTCG source, with its resolved value, computed OKLCH, and measured contrast against the backdrops the source pairs it with.",
 };
 
-/** A scale rendered as twelve stacked swatches with their step numbers. */
-function ScaleStrip({ steps }: { steps: MeasuredColor[] }) {
+/**
+ * Every functional scale as one row of swatches — how Geist opens its colour
+ * page, and the view a reader comes for: the whole system at a glance before
+ * any table. Hex comes from the measured token, so a scale that drifts shows.
+ */
+/** Steps 1–12. Some scales also carry named extras (a contrast ink, say), listed in the reference below. */
+function isNumberedStep(step: MeasuredColor): boolean {
+  return /^(?:[1-9]|1[0-2])$/.test(step.token.name.split(".").at(-1) ?? "");
+}
+
+function ScaleMatrix({ mode }: { mode: Mode }) {
   return (
-    <div className="flex gap-1">
-      {steps.map((step) => (
-        <div key={step.token.cssVar} className="flex min-w-0 flex-1 flex-col gap-1.5">
-          <div
-            className="h-16 rounded-md"
-            style={{ backgroundColor: step.hex ?? undefined }}
-            title={`--${step.token.cssVar} = ${step.token.resolved}`}
-          />
-          <span className="text-center font-mono text-[10px] text-muted-foreground tabular-nums">
-            {step.token.name.split(".").at(-1)}
+    <div className="flex flex-col gap-3 overflow-x-auto">
+      <div className="grid min-w-[40rem] grid-cols-[7rem_repeat(12,minmax(0,1fr))] items-center gap-2">
+        <span />
+        {Array.from({ length: 12 }, (_, index) => (
+          <span className="text-center text-muted-foreground text-xs tabular-nums" key={index}>
+            {index + 1}
           </span>
+        ))}
+      </div>
+      {scales(mode).map((scale) => (
+        <div
+          className="grid min-w-[40rem] grid-cols-[7rem_repeat(12,minmax(0,1fr))] items-center gap-2"
+          key={scale.name}
+        >
+          <span className="truncate font-medium text-foreground text-sm">{scale.name}</span>
+          {scale.steps.filter(isNumberedStep).map((step) => (
+            <span
+              className="h-10 rounded-[var(--radius-md)] border border-border"
+              key={step.token.cssVar}
+              style={{ backgroundColor: step.hex ?? undefined }}
+            />
+          ))}
         </div>
       ))}
     </div>
@@ -81,12 +92,12 @@ function FindingsPanel({ mode }: { mode: Mode }) {
 
   return (
     <Panel tone="muted">
-      <h3 className="mb-3 font-medium font-mono text-[11px] uppercase tracking-widest">
-        {mode} · measured findings
+      <h3 className="m-0 mb-4 font-sans font-medium text-base text-foreground">
+        {mode === "dark" ? "Dark" : "Light"}
       </h3>
 
       {required.length === 0 ? (
-        <p className="text-[13px] text-muted-foreground">
+        <p className="m-0 text-neutral-11 text-sm">
           Every pairing the source declares clears its required bar.
         </p>
       ) : (
@@ -113,7 +124,7 @@ function FindingsPanel({ mode }: { mode: Mode }) {
         </ul>
       )}
 
-      <p className="mt-4 text-[12px] text-muted-foreground leading-relaxed">
+      <p className="m-0 mt-4 text-muted-foreground text-sm">
         {reference.length} further pairing{reference.length === 1 ? "" : "s"} sit below the 3:1
         reference line for boundaries. Those are reported on the rows rather than here: WCAG 1.4.11
         governs a boundary only where it is the sole means of identifying a component, so a token
@@ -131,20 +142,46 @@ export default function ColorTokensPage() {
     <div>
       <PageHeader eyebrow="tokens / colour" title="Colour">
         <p>
-          Every row below is read from <Mono>packages/design/design-tokens/tokens/**</Mono> at build
-          time. The value is resolved the way the token build resolves it — aliases followed, and
-          the border tier computed by the same <Mono>derive-border-tier.mjs</Mono> the build calls.
-          The OKLCH figures and every contrast ratio are calculated here, from that value. None of
-          it is transcribed, so none of it can drift.
-        </p>
-        <p>
-          Contrast is measured against the backdrops the source actually pairs a token with — a
-          declared <Mono>--x</Mono>/<Mono>--x-foreground</Mono> pair, or a step of the token's own
-          scale. Where the source declares no backdrop, the row says so instead of inventing one.
+          Every value below is read from the DTCG source at build time, with its OKLCH and its
+          contrast measured here — none of it is transcribed, so none of it can drift.
         </p>
       </PageHeader>
 
-      <Section title="Findings">
+      <Section
+        title="Scales"
+        note={
+          <p>
+            {lightScales.length} functional scales of twelve steps: 1–5 surfaces, 6–8 borders, 9–10
+            solid fills, 11–12 text. Light first, then the dark values, which are chosen
+            independently rather than mirrored.
+          </p>
+        }
+      >
+        <div className="flex flex-col gap-4">
+          <ScaleMatrix mode="light" />
+          <div className="dark rounded-lg border border-border bg-background p-6 text-foreground">
+            <ScaleMatrix mode="dark" />
+          </div>
+        </div>
+      </Section>
+
+      <Section
+        title="Findings"
+        note={
+          <>
+            <p>
+              The value is resolved the way the token build resolves it — aliases followed, and the
+              border tier computed by the same <Mono>derive-border-tier.mjs</Mono> the build calls.
+            </p>
+            <p>
+              Contrast is measured against the backdrops the source actually pairs a token with — a
+              declared <Mono>--x</Mono>/<Mono>--x-foreground</Mono> pair, or a step of the token's
+              own scale. Where the source declares no backdrop, the row says so instead of inventing
+              one.
+            </p>
+          </>
+        }
+      >
         <div className="grid gap-4 lg:grid-cols-2">
           {MODES.map((mode) => (
             <FindingsPanel key={mode} mode={mode} />
@@ -153,7 +190,7 @@ export default function ColorTokensPage() {
       </Section>
 
       <Section
-        title="The 12-step functional scales"
+        title="Scale reference"
         note={
           <>
             <p>
@@ -174,17 +211,10 @@ export default function ColorTokensPage() {
         <div className="space-y-12">
           {lightScales.map((scale) => (
             <div key={scale.name}>
-              <h3 className="mb-4 font-medium text-[15px] text-foreground">{scale.name}</h3>
-              <BothModes
-                render={(mode) => {
-                  const steps =
-                    scales(mode).find((entry) => entry.name === scale.name)?.steps ?? [];
-                  return <ScaleStrip steps={steps} />;
-                }}
-              />
-              <div className="mt-6">
-                <ScaleTable steps={scale.steps} />
-              </div>
+              <h3 className="m-0 mb-4 font-sans font-medium text-base text-foreground">
+                {scale.name}
+              </h3>
+              <ScaleTable steps={scale.steps} />
             </div>
           ))}
         </div>
@@ -226,9 +256,10 @@ export default function ColorTokensPage() {
             of this page covers both modes at once.
           </Note>
         </div>
-        <div className="dark mt-4 rounded-panel bg-background p-5 text-foreground shadow-ambient-sm">
-          <p className="mb-4 font-mono text-[11px] text-muted-foreground uppercase tracking-widest">
-            dark <span className="ml-2 normal-case tracking-normal">.dark</span>
+        <div className="dark mt-4 rounded-lg border border-border bg-card p-6 text-foreground">
+          <p className="m-0 mb-5 flex items-baseline gap-2 text-sm">
+            <span className="font-medium text-foreground">Dark</span>
+            <code className="font-mono text-muted-foreground text-xs">.dark</code>
           </p>
           <Table>
             <ColorTableHead />
@@ -277,10 +308,10 @@ export default function ColorTokensPage() {
           {lightPalettes.map((palette) => (
             <div key={palette.name}>
               <div className="mb-3 flex items-baseline gap-3">
-                <h3 className="font-medium text-[15px] text-foreground">{palette.name}</h3>
-                <span className="text-[12px] text-muted-foreground">
-                  {palette.steps.length} stops
-                </span>
+                <h3 className="m-0 font-sans font-medium text-base text-foreground">
+                  {palette.name}
+                </h3>
+                <span className="text-muted-foreground text-xs">{palette.steps.length} stops</span>
               </div>
               <div className="flex flex-wrap gap-3">
                 {palette.steps.map((step) => (

@@ -50,25 +50,27 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             Skip to content
           </a>
 
-          <SiteHeader
-            menu={<SiteNavSheet sections={sections} />}
-            search={<CommandPalette entries={entries} />}
-          />
-          <MobilePageBar sections={sections} />
+          {/* One framed column, the way Geist frames its docs: header, rail,
+              article and on-this-page all sit inside the same max-w-wide box
+              with a hairline on each side, so every horizontal rule in the
+              page runs edge to edge of something. The canvas outside the
+              frame is the same canvas; the frame is drawn by the two rails. */}
+          <div className="mx-auto min-h-screen max-w-wide border-border xl:border-x">
+            <SiteHeader
+              menu={<SiteNavSheet sections={sections} />}
+              search={<CommandPalette entries={entries} />}
+            />
+            <MobilePageBar sections={sections} />
 
-          {/* Full-bleed shell: the inventory rail on the left edge, the article
-              centred in what remains with a real measure, and on-this-page
-              beside it at xl. No slab, no dead gutters — the canvas is the page. */}
-          <div className="flex">
-            <SiteNav sections={sections} />
-            <div className="min-w-0 flex-1 px-4 md:px-8 xl:px-12">
-              <div className="mx-auto flex max-w-content gap-12">
-                <main className="min-w-0 flex-1 pt-8 pb-8 lg:pt-12" id="content">
-                  {children}
-                </main>
-                <PageToc />
-              </div>
-              <div className="mx-auto max-w-content">
+            <div className="flex">
+              <SiteNav sections={sections} />
+              <div className="flex min-w-0 flex-1 flex-col">
+                <div className="flex flex-1">
+                  <main className="min-w-0 flex-1 px-4 pb-16 md:px-8 lg:px-12" id="content">
+                    {children}
+                  </main>
+                  <PageToc />
+                </div>
                 <SiteFooter />
               </div>
             </div>

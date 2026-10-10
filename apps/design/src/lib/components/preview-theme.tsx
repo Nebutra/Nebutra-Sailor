@@ -71,29 +71,32 @@ export function PreviewTheme({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="flex items-center gap-1 rounded-lg bg-muted/60 p-1">
+    <div className="flex flex-col">
+      {/* Sticky under the header, so the theme a specimen is shown in can be
+          changed from wherever the reader has scrolled to. */}
+      <div className="-mx-4 sticky top-16 z-10 flex flex-wrap items-center gap-x-4 gap-y-2 border-border border-t bg-background/85 px-4 py-3 backdrop-blur-md md:-mx-8 md:px-8 lg:-mx-12 lg:px-12">
+        <fieldset className="m-0 flex min-w-0 items-center gap-0.5 rounded-[var(--radius-md)] border border-border bg-card p-0.5">
+          <legend className="sr-only">Preview theme</legend>
           {MODES.map((entry) => (
             <button
               aria-pressed={mode === entry.id}
               className={cn(
-                "inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 font-medium text-xs transition-colors",
+                "inline-flex h-7 items-center gap-1.5 rounded-[var(--radius-sm)] px-2.5 font-medium text-xs transition-colors duration-micro",
                 mode === entry.id
-                  ? "bg-background text-foreground shadow-xs"
+                  ? "bg-accent text-foreground"
                   : "text-muted-foreground hover:text-foreground",
               )}
               key={entry.id}
               onClick={() => setMode(entry.id)}
               type="button"
             >
-              {entry.id === "light" ? <Sun className="size-3" /> : null}
-              {entry.id === "dark" ? <Moon className="size-3" /> : null}
+              {entry.id === "light" ? <Sun aria-hidden className="size-3.5" /> : null}
+              {entry.id === "dark" ? <Moon aria-hidden className="size-3.5" /> : null}
               {entry.label}
             </button>
           ))}
-        </div>
-        <p className="text-muted-foreground text-xs">
+        </fieldset>
+        <p className="m-0 text-muted-foreground text-xs">
           {mode === "split"
             ? "Both themes at once. The right pane is a nested .dark island."
             : "The whole document switches, so overlays and portals switch with it."}
@@ -101,7 +104,7 @@ export function PreviewTheme({ children }: { children: React.ReactNode }) {
       </div>
 
       {mode === "split" ? (
-        <div className="grid gap-4 lg:grid-cols-2">
+        <div className="grid gap-4 py-12 lg:grid-cols-2">
           <Pane dark={false}>{children}</Pane>
           <Pane dark>{children}</Pane>
         </div>
@@ -119,10 +122,14 @@ function Pane({ children, dark }: { children: React.ReactNode; dark: boolean }) 
        against the pane edge — most visibly on the dark island, where the text
        ran straight into the boundary. A container that pads its chrome and not
        what it contains is the bug; matching the two is the fix. */
-    <div className={cn("rounded-xl bg-background p-4", dark && "dark")}>
-      <div className="mb-3 font-mono text-[11px] text-muted-foreground uppercase tracking-wide">
-        {dark ? "dark" : "light"}
-      </div>
+    <div
+      className={cn(
+        // States are full-bleed bands in the article; inside a pane they sit flush.
+        "rounded-lg border border-border bg-background p-4 [&_section]:mx-0 [&_section]:px-0",
+        dark && "dark",
+      )}
+    >
+      <div className="mb-3 font-medium text-foreground text-sm">{dark ? "Dark" : "Light"}</div>
       {children}
     </div>
   );

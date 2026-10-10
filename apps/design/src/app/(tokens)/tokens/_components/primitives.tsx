@@ -10,37 +10,34 @@
 
 import type { ReactNode } from "react";
 
+/**
+ * Full-bleed band inside the article column: cancels the column's side padding
+ * so a section's hairline runs from the rail to the edge of the frame, as every
+ * Geist page section does, then puts the same padding back inside.
+ */
+export const BAND = "-mx-4 px-4 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12";
+
 export function PageHeader({
   eyebrow,
   title,
+  actions,
   children,
 }: {
+  /** Kept as a path for the call sites; the rail already shows where you are. */
   eyebrow: string;
   title: string;
+  /** Right-aligned beside the title — a page-level control, not navigation. */
+  actions?: ReactNode;
   children?: ReactNode;
 }) {
-  // Written lower-case at the call sites as a path; shown as a sentence-case
-  // trail. Hidden under lg, where the sticky page bar already says where you are.
-  const trail = eyebrow.split(" / ").map((part) => part.charAt(0).toUpperCase() + part.slice(1));
   return (
-    <header className="mb-12 max-w-3xl">
-      <p className="mb-3 hidden items-center gap-1.5 text-muted-foreground text-ui lg:flex">
-        {trail.map((part, index) => (
-          <span className="inline-flex items-center gap-1.5" key={part}>
-            {index > 0 ? (
-              <span aria-hidden className="text-muted-foreground">
-                /
-              </span>
-            ) : null}
-            <span className={index === trail.length - 1 ? "text-foreground" : undefined}>
-              {part}
-            </span>
-          </span>
-        ))}
-      </p>
-      <h1 className="font-semibold text-3xl text-foreground tracking-tight sm:text-4xl">{title}</h1>
+    <header className={`${BAND} pt-12 pb-12 lg:pt-14`} data-eyebrow={eyebrow}>
+      <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-4">
+        <h1 className="m-0 text-4xl text-foreground leading-heading tracking-display">{title}</h1>
+        {actions ? <div className="flex items-center gap-2 pt-2">{actions}</div> : null}
+      </div>
       {children ? (
-        <div className="mt-5 space-y-4 text-base text-muted-foreground leading-relaxed">
+        <div className="mt-4 max-w-3xl space-y-4 text-base text-neutral-11 sm:text-lg [&_p]:m-0">
           {children}
         </div>
       ) : null}
@@ -75,26 +72,26 @@ export function Section({
 }) {
   const id = sectionId(title);
   return (
-    <section className="mb-16 scroll-mt-28" id={id}>
+    <section className={`${BAND} scroll-mt-20 border-border border-t py-12`} id={id}>
       <h2
-        className="mb-2 font-semibold text-foreground text-xl tracking-tight"
+        className="m-0 text-2xl text-foreground leading-heading tracking-heading"
         id={`${id}-heading`}
       >
         {title}
       </h2>
       {note ? (
-        <div className="mb-6 max-w-3xl space-y-3 text-muted-foreground text-sm leading-relaxed">
+        <div className="mt-3 mb-8 max-w-3xl space-y-3 text-base text-neutral-11 [&_p]:m-0">
           {note}
         </div>
       ) : (
-        <div className="mb-6" />
+        <div className="mb-8" />
       )}
       {children}
     </section>
   );
 }
 
-/** A tonal panel. Separation by background shift and space, not by an outline. */
+/** A framed panel — the same hairline-edged card the component previews use. */
 export function Panel({
   children,
   className = "",
@@ -104,9 +101,11 @@ export function Panel({
   className?: string;
   tone?: "card" | "muted";
 }) {
-  const background = tone === "card" ? "bg-card" : "bg-muted/50";
+  // A Geist preview card: white on the canvas, one hairline, an 8px corner.
+  // The muted tone is the canvas-coloured strip variant, still edged.
+  const background = tone === "card" ? "bg-card" : "bg-background";
   return (
-    <div className={`rounded-panel ${background} p-5 shadow-ambient-sm ${className}`}>
+    <div className={`rounded-lg border border-border ${background} p-6 ${className}`}>
       {children}
     </div>
   );
@@ -166,9 +165,7 @@ export function Chip({
 export function Table({ children }: { children: ReactNode }) {
   return (
     <div className="-mx-2 overflow-x-auto px-2">
-      <table className="w-full min-w-[42rem] border-collapse text-left text-[13px]">
-        {children}
-      </table>
+      <table className="w-full min-w-[42rem] border-collapse text-left text-ui">{children}</table>
     </div>
   );
 }
@@ -177,7 +174,7 @@ export function Th({ children, className = "" }: { children: ReactNode; classNam
   return (
     <th
       scope="col"
-      className={`pb-2 pl-3 font-medium text-[11px] text-muted-foreground uppercase tracking-wider ${className}`}
+      className={`border-border border-b py-2.5 pl-3 font-medium text-muted-foreground text-xs first:pl-0 ${className}`}
     >
       {children}
     </th>
@@ -194,15 +191,16 @@ export function Td({
   colSpan?: number;
 }) {
   return (
-    <td colSpan={colSpan} className={`py-2.5 pl-3 align-middle ${className}`}>
+    <td colSpan={colSpan} className={`py-3 pl-3 align-middle first:pl-0 ${className}`}>
       {children}
     </td>
   );
 }
 
-/** Zebra by tonal shift — the alternative to a border between every row. */
-export function Tr({ children, index }: { children: ReactNode; index: number }) {
-  return <tr className={index % 2 === 1 ? "bg-muted/35" : undefined}>{children}</tr>;
+/** Rows on hairlines, as Geist and Radix set their reference tables. `index`
+ * is kept for the call sites that pair a value row with its description row. */
+export function Tr({ children, index: _index }: { children: ReactNode; index: number }) {
+  return <tr className="border-border border-b last:border-b-0">{children}</tr>;
 }
 
 /**
@@ -228,13 +226,13 @@ export function ModeFrame({
 }) {
   return (
     <div
-      className={`${mode === "dark" ? "dark" : ""} rounded-panel bg-background p-5 text-foreground shadow-ambient-sm ${className}`}
+      className={`${mode === "dark" ? "dark" : ""} rounded-lg border border-border bg-card p-6 text-foreground ${className}`}
     >
-      <p className="mb-4 font-mono text-[11px] text-muted-foreground uppercase tracking-widest">
-        {mode}
-        <span className="ml-2 normal-case tracking-normal">
+      <p className="m-0 mb-5 flex items-baseline gap-2 text-sm">
+        <span className="font-medium text-foreground">{mode === "dark" ? "Dark" : "Light"}</span>
+        <code className="font-mono text-muted-foreground text-xs">
           {mode === "dark" ? ".dark" : ":root"}
-        </span>
+        </code>
       </p>
       {children}
     </div>
@@ -254,7 +252,7 @@ export function BothModes({ render }: { render: (mode: "light" | "dark") => Reac
 /** A short aside for a fact that would otherwise need a footnote. */
 export function Note({ children }: { children: ReactNode }) {
   return (
-    <p className="max-w-3xl rounded-lg bg-muted/60 px-4 py-3 text-[13px] text-muted-foreground leading-relaxed">
+    <p className="m-0 max-w-3xl rounded-lg border border-border bg-card px-4 py-3 text-neutral-11 text-sm">
       {children}
     </p>
   );

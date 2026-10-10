@@ -15,8 +15,8 @@ const LINKS: ReadonlyArray<{ label: string; href: string }> = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-border border-t">
-      <div className="flex flex-col gap-4 py-8 text-muted-foreground text-xs sm:flex-row sm:items-center sm:justify-between">
+    <footer className="border-border border-t">
+      <div className="flex flex-col gap-4 px-4 py-8 md:px-8 lg:px-12 text-muted-foreground text-xs sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2.5">
           <BrandMark size={16} />
           <span>{brand.name} Design · rendered from the packages it documents</span>

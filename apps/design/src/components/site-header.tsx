@@ -28,9 +28,13 @@ export function SiteHeader({ search, menu }: { search: ReactNode; menu: ReactNod
   const mounted = useMounted();
 
   return (
+    // Geist's bar: 64px, a hairline under it, the brand cell exactly the rail's
+    // width with the rail's own hairline continuing up through it, so the mark
+    // sits over the inventory it names and the search starts where the article
+    // starts.
     <header className="sticky top-0 z-30 border-border border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
-      <div className="flex h-14 items-center gap-3 px-4 md:px-6 lg:px-0">
-        <div className="flex min-w-0 items-center gap-2 lg:w-64 lg:shrink-0 lg:px-5">
+      <div className="flex h-16 items-center">
+        <div className="flex h-full min-w-0 items-center gap-2 pl-4 md:pl-6 lg:w-64 lg:shrink-0 lg:border-border lg:border-r lg:px-6">
           {menu}
           <Link
             aria-label={`${brand.name} Design — home`}
@@ -39,20 +43,17 @@ export function SiteHeader({ search, menu }: { search: ReactNode; menu: ReactNod
           >
             <BrandMark size={22} />
             <WordmarkEnSVG aria-hidden className="h-[13px] w-auto text-foreground" />
-            <span className="text-border" aria-hidden>
-              /
-            </span>
-            <span className="font-medium text-foreground text-sm tracking-tight">Design</span>
+            <span className="font-medium text-muted-foreground text-sm">Design</span>
           </Link>
         </div>
 
-        <div className="flex flex-1 items-center justify-end gap-1 lg:justify-between lg:pr-6 lg:pl-8">
-          <div className="hidden w-full max-w-sm lg:block">{search}</div>
+        <div className="flex flex-1 items-center justify-end gap-2 pr-4 md:pr-6 lg:justify-between lg:pl-12">
+          <div className="hidden w-64 lg:block">{search}</div>
           <div className="lg:hidden">{search}</div>
 
           <nav aria-label="Elsewhere" className="flex items-center gap-1">
             <a
-              className="hidden items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-muted-foreground text-ui no-underline transition-colors duration-micro hover:text-foreground sm:inline-flex"
+              className="hidden items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-muted-foreground text-sm no-underline transition-colors duration-micro hover:text-foreground sm:inline-flex"
               href={getBrandOrigin("landing")}
             >
               {brand.domains.landing}
@@ -61,7 +62,7 @@ export function SiteHeader({ search, menu }: { search: ReactNode; menu: ReactNod
             <Button
               aria-label="GitHub"
               asChild
-              iconSize="sm"
+              iconSize="md"
               shape="square"
               variant="ghost"
               className="hidden text-muted-foreground sm:inline-flex"

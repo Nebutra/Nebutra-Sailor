@@ -11,7 +11,9 @@
  *     kills the declaration.
  *   - shadows come from the ramp (`shadow-ambient-*`, `shadow-glass-*`,
  *     `shadow-sheen`, `shadow-xs`…`shadow-2xl`). No bespoke `shadow-[...]`.
- *   - separation is spacing plus a tonal background shift, not a border.
+ *   - a specimen sits on a framed stage: the card surface, one hairline, an
+ *     8px corner — Geist's preview card. A tonal wash with no edge read as a
+ *     smudge behind the component rather than a place it was put.
  */
 
 import { Check, ChevronDown, Command } from "@nebutra/icons";
@@ -21,7 +23,7 @@ import * as React from "react";
 // ─── page frame ───────────────────────────────────────────────────────────────
 
 export function DemoPage({ children }: { children: React.ReactNode }) {
-  return <div className="flex flex-col gap-10 pb-24">{children}</div>;
+  return <div className="flex flex-col">{children}</div>;
 }
 
 /**
@@ -44,36 +46,49 @@ export function State({
   children: React.ReactNode;
 }) {
   return (
-    <section aria-labelledby={`${id}-heading`} className="scroll-mt-24" id={id}>
-      <div className="mb-3 flex flex-col gap-1">
+    <section
+      aria-labelledby={`${id}-heading`}
+      className="group -mx-4 scroll-mt-20 border-border border-t px-4 py-12 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12"
+      id={id}
+    >
+      <div className="mb-6 flex flex-col gap-3">
         <div className="flex items-baseline gap-3">
-          <h2 className="font-medium text-base text-foreground" id={`${id}-heading`}>
+          <h2
+            className="m-0 text-2xl text-foreground leading-heading tracking-heading"
+            id={`${id}-heading`}
+          >
             {title}
           </h2>
           <a
             aria-label={`Link to the ${title} state`}
-            className="text-muted-foreground text-xs no-underline opacity-0 transition-opacity hover:underline focus-visible:opacity-100 group-hover:opacity-100"
+            className="text-muted-foreground text-sm no-underline opacity-0 transition-opacity duration-micro hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100"
             href={`#${id}`}
           >
             #
           </a>
         </div>
-        {note ? <p className="max-w-prose text-muted-foreground text-sm">{note}</p> : null}
+        {note ? <p className="m-0 max-w-3xl text-base text-neutral-11">{note}</p> : null}
+      </div>
+      <div className="overflow-hidden rounded-lg border border-border bg-card">
+        <div className="p-6">{children}</div>
+        {/* What the state is here to catch, in the strip under the stage —
+            where Geist puts "Show code": metadata about the specimen, kept off
+            the specimen and out of the reading column above it. */}
         {breaks ? (
-          <p className="max-w-prose text-muted-foreground text-xs">
-            <span className="font-medium text-foreground">Catches:</span> {breaks}
+          <p className="m-0 border-border border-t bg-background px-6 py-3 text-muted-foreground text-sm">
+            <span className="font-medium text-foreground">Catches</span>
+            <span aria-hidden className="px-2">
+              ·
+            </span>
+            {breaks}
           </p>
         ) : null}
       </div>
-      <Surface>{children}</Surface>
     </section>
   );
 }
 
-/**
- * The neutral stage a component is rendered on. Uses a tonal background shift
- * rather than a border so panels separate without a rule.
- */
+/** The stage a component is rendered on outside a State: the same framed card. */
 export function Surface({
   children,
   className,
@@ -87,7 +102,9 @@ export function Surface({
     // Deliberately no min-w-0 reset on descendants: the overflow states on these
     // pages show how a component behaves under real pressure, and a blanket
     // shrink override would quietly fix the thing being demonstrated.
-    <div className={cn("rounded-xl bg-muted/40", padded && "p-6", className)}>{children}</div>
+    <div className={cn("rounded-lg border border-border bg-card", padded && "p-6", className)}>
+      {children}
+    </div>
   );
 }
 
@@ -134,7 +151,7 @@ export function Specimen({
   return (
     <div className={cn("flex min-w-0 flex-col items-start gap-2", className)}>
       <div className="flex min-h-8 items-center">{children}</div>
-      <code className="font-mono text-[11px] text-muted-foreground leading-none">{label}</code>
+      <span className="text-muted-foreground text-xs">{label}</span>
     </div>
   );
 }
@@ -168,7 +185,7 @@ export function AxisMatrix({
   return (
     <Row className={className} align="start">
       {values.map((value) => (
-        <Specimen key={value} label={value === defaultValue ? `${value} (default)` : value}>
+        <Specimen key={value} label={value === defaultValue ? `${value} · default` : value}>
           {render(value)}
         </Specimen>
       ))}
@@ -243,7 +260,7 @@ export function KeyboardPath({
           {steps.map((step) => (
             <div className="flex flex-wrap items-baseline gap-2" key={step.keys}>
               <dt>
-                <kbd className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px] text-foreground">
+                <kbd className="rounded-[var(--radius-sm)] border border-border bg-background px-1.5 py-0.5 font-mono text-foreground text-xs">
                   {step.keys}
                 </kbd>
               </dt>
@@ -252,7 +269,7 @@ export function KeyboardPath({
           ))}
         </dl>
       </div>
-      <div className="rounded-lg bg-background p-4">{children}</div>
+      <div className="rounded-lg border border-border bg-background p-4">{children}</div>
     </div>
   );
 }
@@ -272,7 +289,7 @@ export function Aside({ title, children }: { title: string; children: React.Reac
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div className="rounded-lg bg-muted/40">
+    <div className="mt-12 rounded-lg border border-border bg-card">
       <button
         aria-expanded={open}
         className="flex w-full items-center justify-between gap-2 px-4 py-2.5 text-left font-medium text-foreground text-sm"

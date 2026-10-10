@@ -125,7 +125,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     id: "theme-toggle",
     title: "Theme Toggle",
     category: "actions",
-    status: "experimental",
+    status: "stable",
     import: "@nebutra/ui/primitives",
     files: ["primitives/theme-toggle.tsx"],
     demos: ["theme-toggle-demo"],

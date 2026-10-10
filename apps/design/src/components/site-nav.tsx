@@ -56,21 +56,21 @@ function Section({
 }) {
   const nested = section.level === 2;
   return (
-    <div className={cn("flex flex-col", nested ? "pt-4" : "pt-6 first:pt-0")}>
-      <div className="flex items-baseline justify-between gap-2 px-2.5 pb-1.5">
+    <div className={cn("flex flex-col", nested ? "pt-5" : "pt-8 first:pt-0")}>
+      <div className="flex h-8 items-center justify-between gap-2 px-3">
         <span
           className={cn(
             "font-medium",
-            nested ? "text-muted-foreground text-xs" : "text-foreground text-ui",
+            nested ? "text-muted-foreground text-xs" : "text-foreground text-sm",
           )}
         >
           {section.label}
         </span>
         {section.meta ? (
-          <span className="text-2xs text-muted-foreground tabular-nums">{section.meta}</span>
+          <span className="text-muted-foreground text-xs tabular-nums">{section.meta}</span>
         ) : null}
       </div>
-      <ul className="m-0 flex list-none flex-col gap-px p-0">
+      <ul className="m-0 flex list-none flex-col gap-0.5 p-0">
         {section.items.map((item) => {
           const active = pathname === item.href;
           return (
@@ -78,19 +78,19 @@ function Section({
               <Link
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative flex items-center rounded-[var(--radius-sm)] px-2.5 py-1.5 text-ui no-underline transition-colors duration-micro",
-                  // The current page carries ink, a tint and a 2px ink rule on its
-                  // leading edge: three cues, so it reads in any language,
-                  // including the ones whose hover tint is barely off-canvas.
-                  // Weight stays put — a bolder label would reflow the row.
+                  // Geist's rail: 14px items in the secondary ink (not the
+                  // tertiary grey — a whole column of 45% grey is what made the
+                  // old rail read washed out), a 6px tinted row and full ink
+                  // for the current page. Colour only: weight would reflow it.
+                  "flex h-8 items-center rounded-[var(--radius-md)] px-3 text-sm no-underline transition-colors duration-micro",
                   active
-                    ? "bg-accent text-foreground before:absolute before:inset-y-1.5 before:left-0 before:w-0.5 before:rounded-full before:bg-foreground"
-                    : "text-muted-foreground hover:bg-accent hover:text-foreground",
+                    ? "bg-accent text-foreground"
+                    : "text-neutral-11 hover:bg-accent hover:text-foreground",
                 )}
                 href={item.href}
                 {...(onNavigate ? { onClick: onNavigate } : {})}
               >
-                {item.label}
+                <span className="truncate">{item.label}</span>
               </Link>
             </li>
           );
@@ -120,13 +120,13 @@ function Tree({
 /** Desktop rail. Sticky: the inventory is what you navigate by. */
 export function SiteNav({ sections }: { sections: NavSection[] }) {
   return (
-    <aside className="sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-64 shrink-0 flex-col border-border border-r lg:flex">
-      <div className="px-3 pt-5 pb-2">
+    <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-64 shrink-0 flex-col border-border border-r lg:flex">
+      <div className="px-4 pt-6 pb-2">
         <LanguageSwitcher shortcut variant="sidebar" />
       </div>
       <nav
         aria-label="Design system"
-        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 pt-4 pb-12"
+        className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-6 pb-12"
       >
         <Tree sections={sections} />
       </nav>
@@ -152,8 +152,8 @@ export function SiteNavSheet({ sections }: { sections: NavSection[] }) {
         </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-0 p-0" side="left">
-        <SheetTitle className="px-5 pt-5 pb-3 text-sm">Design system</SheetTitle>
-        <nav aria-label="Design system" className="min-h-0 flex-1 overflow-y-auto px-3 pb-10">
+        <SheetTitle className="px-7 pt-6 pb-4 text-sm">Design system</SheetTitle>
+        <nav aria-label="Design system" className="min-h-0 flex-1 overflow-y-auto px-4 pb-10">
           <Tree onNavigate={close} sections={sections} />
         </nav>
       </SheetContent>
@@ -176,7 +176,7 @@ export function MobilePageBar({ sections }: { sections: NavSection[] }) {
   }, [pathname, sections]);
 
   return (
-    <div className="sticky top-14 z-20 flex h-12 items-center justify-between gap-3 border-border border-b bg-background/80 px-4 backdrop-blur-md md:px-6 lg:hidden">
+    <div className="sticky top-16 z-20 flex h-12 items-center justify-between gap-3 border-border border-b bg-background/80 px-4 backdrop-blur-md md:px-6 lg:hidden">
       <p className="m-0 min-w-0 truncate text-ui">
         {here ? (
           <>

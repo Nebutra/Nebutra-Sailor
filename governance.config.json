@@ -274,7 +274,7 @@
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/layers/page.tsx",
-        "count": 12
+        "count": 9
       },
       {
         "file": "apps/router/src/app/dashboard/page.tsx",
@@ -282,7 +282,7 @@
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/color/page.tsx",
-        "count": 11
+        "count": 3
       },
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/business-portfolio/page.tsx",
@@ -298,10 +298,6 @@
       },
       {
         "file": "apps/auth/src/components/boot-log-card.tsx",
-        "count": 10
-      },
-      {
-        "file": "apps/design/src/components/live-specimen.tsx",
         "count": 10
       },
       {
@@ -326,7 +322,7 @@
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/_components/primitives.tsx",
-        "count": 7
+        "count": 3
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/page.tsx",
@@ -486,7 +482,7 @@
       },
       {
         "file": "apps/design/src/app/(foundations)/accessibility/page.tsx",
-        "count": 6
+        "count": 5
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/type/page.tsx",
@@ -562,7 +558,7 @@
       },
       {
         "file": "apps/design/src/app/(patterns)/patterns/[slug]/page.tsx",
-        "count": 5
+        "count": 4
       },
       {
         "file": "apps/forge/src/components/specimens/bank-card-specimen.tsx",
@@ -686,11 +682,11 @@
       },
       {
         "file": "apps/design/src/app/(patterns)/patterns/modality/page.tsx",
-        "count": 4
+        "count": 3
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/elevation/page.tsx",
-        "count": 4
+        "count": 1
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/shape/page.tsx",
@@ -1030,7 +1026,7 @@
       },
       {
         "file": "apps/design/src/app/(foundations)/icons/page.tsx",
-        "count": 2
+        "count": 1
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/motion/page.tsx",
@@ -1042,10 +1038,6 @@
       },
       {
         "file": "apps/design/src/components/modality-specimens.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/design/src/lib/components/demo-kit.tsx",
         "count": 2
       },
       {
@@ -1297,10 +1289,6 @@
         "count": 1
       },
       {
-        "file": "apps/design/src/app/(components)/components/[slug]/page.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/design/src/app/(showcase)/showcase/page.tsx",
         "count": 1
       },
@@ -1326,10 +1314,6 @@
       },
       {
         "file": "apps/design/src/lib/components/demos/table.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/lib/components/preview-theme.tsx",
         "count": 1
       },
       {
@@ -2825,10 +2809,6 @@
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/_components/primitives.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/app/(tokens)/tokens/color/page.tsx",
         "count": 1
       },
       {

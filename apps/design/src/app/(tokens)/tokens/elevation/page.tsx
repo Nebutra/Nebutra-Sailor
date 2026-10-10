@@ -94,19 +94,19 @@ export default function ElevationTokensPage() {
             <tr>
               <th
                 scope="col"
-                className="pb-2 pl-3 font-medium text-[11px] text-muted-foreground uppercase tracking-wider"
+                className="border-border border-b pb-2.5 pl-3 font-medium text-muted-foreground text-xs"
               >
                 Token
               </th>
               <th
                 scope="col"
-                className="pb-2 pl-3 font-medium text-[11px] text-muted-foreground uppercase tracking-wider"
+                className="border-border border-b pb-2.5 pl-3 font-medium text-muted-foreground text-xs"
               >
                 Light
               </th>
               <th
                 scope="col"
-                className="pb-2 pl-3 font-medium text-[11px] text-muted-foreground uppercase tracking-wider"
+                className="border-border border-b pb-2.5 pl-3 font-medium text-muted-foreground text-xs"
               >
                 Dark
               </th>

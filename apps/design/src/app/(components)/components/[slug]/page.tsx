@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { CopyButton } from "@nebutra/ui/primitives";
 import { notFound } from "next/navigation";
 import type * as React from "react";
 import type { DemoProps, Derived } from "@/lib/components/derived";
@@ -14,6 +14,7 @@ import {
   storyFor,
 } from "@/lib/components/ui-source";
 import { SITE_NAME } from "@/lib/site";
+import { PageHeader } from "../../../(tokens)/tokens/_components/primitives";
 
 /**
  * No `dynamic` directive on purpose. These routes touch the filesystem (see
@@ -82,59 +83,56 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   };
   const Demo = mod.default;
 
+  const importLine = `import { ${entry.name} } from "${group?.importPath ?? "@nebutra/ui"}";`;
+
   return (
-    <div className="flex flex-col gap-10">
-      <header className="flex flex-col gap-4">
-        <Link
-          className="text-muted-foreground text-sm no-underline hover:underline"
-          href="/components"
-        >
-          ← All components
-        </Link>
+    <div className="flex flex-col">
+      <PageHeader eyebrow={`components / ${entry.slug}`} title={entry.name}>
+        <p>{entry.blurb}</p>
+      </PageHeader>
 
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-baseline gap-3">
-            <h1 className="font-semibold text-3xl text-foreground tracking-tight">{entry.name}</h1>
-            <span className="text-muted-foreground text-xs">
-              {entry.consumers} import sites across apps
-            </span>
-          </div>
-          <p className="max-w-prose text-muted-foreground">{entry.blurb}</p>
+      {/* Usage, then provenance: the import a reader copies, and under it in
+          the strip where the facts about a specimen go, where it comes from. */}
+      <div className="-mt-4 mb-12 overflow-hidden rounded-lg border border-border bg-card">
+        <div className="flex items-center justify-between gap-4 px-4 py-3">
+          <code className="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-foreground text-sm">
+            {importLine}
+          </code>
+          <CopyButton
+            className="shrink-0 text-muted-foreground"
+            showToast={false}
+            tooltipText="Copy import"
+            value={importLine}
+          />
         </div>
-
-        <dl className="flex flex-wrap gap-x-8 gap-y-2 text-sm">
-          <Meta label="Import">
-            <code className="font-mono text-xs">
-              {`import { ${entry.name} } from "${group?.importPath ?? "@nebutra/ui"}"`}
-            </code>
-          </Meta>
+        <dl className="m-0 flex flex-wrap gap-x-8 gap-y-2 border-border border-t bg-background px-4 py-3 text-xs">
           <Meta label="Source">
-            <code className="font-mono text-xs">{derived.sourceFile}</code>
+            <code className="break-all font-mono">{derived.sourceFile}</code>
           </Meta>
-          <Meta label="Storybook story">
+          <Meta label="Story">
             {derived.storyFile ? (
-              <code className="font-mono text-xs">{derived.storyFile}</code>
+              <code className="break-all font-mono">{derived.storyFile}</code>
             ) : (
-              <span className="text-muted-foreground text-xs">
-                none — this page is the only visual coverage
-              </span>
+              <span>none — this page is the only visual coverage</span>
             )}
           </Meta>
+          <Meta label="Used by">
+            <span className="tabular-nums">{entry.consumers} import sites</span>
+          </Meta>
         </dl>
+      </div>
 
-        <DerivedSummary derived={derived} />
-      </header>
+      <DerivedSummary derived={derived} />
 
       <PreviewTheme>
         <Demo derived={derived} />
       </PreviewTheme>
 
-      {/* Full width, matching every section above it. At max-w-prose this sat
-          at roughly two-fifths the width of the specimens and read as a stray
-          box rather than the page's closing note. */}
-      <footer className="rounded-xl bg-muted/30 p-5 text-muted-foreground text-sm">
-        <p className="font-medium text-foreground">Why there is no prop table</p>
-        <p className="mt-2 max-w-prose">
+      <footer className="-mx-4 border-border border-t px-4 pt-12 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12">
+        <h2 className="m-0 text-foreground text-lg leading-heading tracking-heading">
+          Why there is no prop table
+        </h2>
+        <p className="m-0 mt-3 max-w-3xl text-neutral-11">
           A prop table has to be extracted from the TypeScript types to be trustworthy, and this app
           does not extract them. A hand-written one would be wrong within a release — the
           design-docs site currently documents props that do not exist, including one rendered with
@@ -148,11 +146,9 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
 function Meta({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-1">
-      <dt className="font-mono text-[11px] text-muted-foreground uppercase tracking-wide">
-        {label}
-      </dt>
-      <dd className="text-foreground">{children}</dd>
+    <div className="flex items-baseline gap-2">
+      <dt className="shrink-0 text-muted-foreground">{label}</dt>
+      <dd className="m-0 text-neutral-11">{children}</dd>
     </div>
   );
 }
@@ -167,7 +163,7 @@ function DerivedSummary({ derived }: { derived: Derived }) {
 
   if (cvaEntries.length === 0 && axisEntries.length === 0) {
     return (
-      <p className="max-w-prose text-muted-foreground text-xs">
+      <p className="m-0 mb-12 max-w-3xl text-muted-foreground text-sm">
         This component declares no cva variant map and no enumerable size or tone union, so every
         state below is hand-composed rather than derived.
       </p>
@@ -175,28 +171,31 @@ function DerivedSummary({ derived }: { derived: Derived }) {
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <p className="text-muted-foreground text-xs">
-        Derived from source at build time — add a value in the library and it appears here:
-      </p>
-      <div className="flex flex-wrap gap-x-6 gap-y-2">
-        {cvaEntries.map((spec) =>
-          Object.entries(spec.variants).map(([axis, values]) => (
-            <div className="flex items-baseline gap-2" key={`${spec.name}-${axis}`}>
-              <code className="font-mono text-foreground text-xs">{axis}</code>
-              <span className="text-muted-foreground text-xs">
-                {values.length} values · {spec.name}
-              </span>
-            </div>
-          )),
-        )}
-        {axisEntries.map(([axis, values]) => (
-          <div className="flex items-baseline gap-2" key={`axis-${axis}`}>
+    <div className="mb-12 flex flex-wrap items-center gap-2 text-sm">
+      <span className="mr-1 text-muted-foreground">Derived from source</span>
+      {cvaEntries.map((spec) =>
+        Object.entries(spec.variants).map(([axis, values]) => (
+          <span
+            className="inline-flex items-baseline gap-1.5 rounded-[var(--radius-md)] border border-border bg-card px-2 py-0.5"
+            key={`${spec.name}-${axis}`}
+          >
             <code className="font-mono text-foreground text-xs">{axis}</code>
-            <span className="text-muted-foreground text-xs">{values.length} values</span>
-          </div>
-        ))}
-      </div>
+            <span className="text-muted-foreground text-xs tabular-nums">{values.length}</span>
+          </span>
+        )),
+      )}
+      {axisEntries.map(([axis, values]) => (
+        <span
+          className="inline-flex items-baseline gap-1.5 rounded-[var(--radius-md)] border border-border bg-card px-2 py-0.5"
+          key={`axis-${axis}`}
+        >
+          <code className="font-mono text-foreground text-xs">{axis}</code>
+          <span className="text-muted-foreground text-xs tabular-nums">{values.length}</span>
+        </span>
+      ))}
+      <span className="ml-1 text-muted-foreground">
+        — add a value in the library and it appears here
+      </span>
     </div>
   );
 }

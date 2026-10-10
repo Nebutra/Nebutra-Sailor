@@ -62,7 +62,7 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
               <col className="w-[36%]" />
             </colgroup>
             <thead>
-              <tr className="text-[11px] text-muted-foreground uppercase tracking-wide">
+              <tr className="text-muted-foreground text-xs">
                 {pattern.columns.map((column) => (
                   <th className="pb-2 font-medium" key={column}>
                     {column}

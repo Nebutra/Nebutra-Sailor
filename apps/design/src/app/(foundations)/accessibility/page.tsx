@@ -96,9 +96,7 @@ export default function AccessibilityPage() {
             },
           ].map((cell) => (
             <div className="bg-card px-5 py-4" key={cell.key}>
-              <dt className="text-[11px] text-muted-foreground uppercase tracking-wide">
-                {cell.key}
-              </dt>
+              <dt className="text-muted-foreground text-xs">{cell.key}</dt>
               <dd className="mt-2 font-semibold text-2xl text-foreground tabular-nums tracking-tight">
                 {cell.value}
               </dd>

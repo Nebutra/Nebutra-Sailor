@@ -73,7 +73,7 @@ export default function ModalityPage() {
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] text-left text-[14px]">
             <thead>
-              <tr className="text-[11px] text-muted-foreground uppercase tracking-wide">
+              <tr className="text-muted-foreground text-xs">
                 <th className="pb-2 font-medium">Surface</th>
                 <th className="pb-2 font-medium">Reach for it when</th>
                 <th className="pb-2 font-medium">Not when</th>

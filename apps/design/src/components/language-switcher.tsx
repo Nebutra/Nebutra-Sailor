@@ -1,4 +1,5 @@
 "use client";
+// @primitive-exempt: the language tiles are swatches painted in each language's own colours, not action buttons.
 
 /**
  * The site's one design-language control.
@@ -20,11 +21,19 @@
  * from the token values, at their default mode. Nothing here is typed in.
  */
 
-import { Check, ChevronUpDown } from "@nebutra/icons";
+import { ChevronUpDown } from "@nebutra/icons";
 import { getBuiltInBrandPackage } from "@nebutra/theme";
 import { LANGUAGES, useDesignLanguage } from "@nebutra/theme/language-switcher";
 import { tokenColor } from "@nebutra/tokens/values";
-import { Kbd, Popover, PopoverContent, PopoverTrigger } from "@nebutra/ui/primitives";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+  Kbd,
+} from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import * as React from "react";
 
@@ -113,65 +122,46 @@ export function LanguageSwitcher({
   const { active, select } = useDesignLanguage();
   const [open, setOpen] = React.useState(false);
   const current = LANGUAGES.find((language) => language.id === active) ?? LANGUAGES[0];
-  const listRef = React.useRef<HTMLDivElement>(null);
 
   const toggle = React.useCallback(() => setOpen((value) => !value), []);
   useShortcut(shortcut ? toggle : noop);
 
-  // Land focus on the active row so arrow keys start from where you are.
-  React.useEffect(() => {
-    if (!open) return;
-    const frame = requestAnimationFrame(() => {
-      listRef.current?.querySelector<HTMLElement>("[aria-checked='true']")?.focus();
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [open]);
-
-  function onListKey(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
-    event.preventDefault();
-    const rows = [
-      ...(listRef.current?.querySelectorAll<HTMLElement>("[role='menuitemradio']") ?? []),
-    ];
-    const at = rows.indexOf(document.activeElement as HTMLElement);
-    const next = event.key === "ArrowDown" ? at + 1 : at - 1;
-    rows[(next + rows.length) % rows.length]?.focus();
-  }
-
   if (!current) return null;
   const isSidebar = variant === "sidebar";
 
+  // The design system's menu, not a hand-rolled one: it brings the roving
+  // focus, typeahead and portal the old hand-written menu re-implemented.
   return (
-    <Popover onOpenChange={setOpen} open={open}>
-      <PopoverTrigger
-        aria-label={`Design language: ${current.name}`}
-        className={cn(
-          "group flex items-center gap-2.5 text-left transition-[background-color,border-color] duration-micro ease-out",
-          isSidebar
-            ? "w-full rounded-[var(--radius-md)] border border-border bg-card px-2.5 py-2 hover:bg-accent"
-            : "h-8 rounded-[var(--radius-md)] border border-border bg-card px-2 hover:bg-accent",
-          className,
-        )}
-        data-language-trigger
-      >
-        <LanguageSwatch id={current.id} />
-        <span className="flex min-w-0 flex-1 flex-col">
-          {isSidebar ? (
-            <span className="text-2xs text-muted-foreground">Design language</span>
-          ) : null}
-          <span className="truncate font-medium text-foreground text-ui">{current.shortName}</span>
-        </span>
-        <ChevronUpDown aria-hidden className="size-3.5 shrink-0 text-muted-foreground" />
-      </PopoverTrigger>
-      <PopoverContent
-        align="start"
-        className="w-[min(22rem,calc(100vw-2rem))] p-1.5"
-        side="bottom"
-        sideOffset={6}
-      >
-        <div className="flex items-baseline justify-between gap-3 px-2.5 pt-1.5 pb-2">
-          <span className="font-medium text-foreground text-xs">Design language</span>
-          <span className="text-2xs text-muted-foreground">
+    <DropdownMenu onOpenChange={setOpen} open={open}>
+      <DropdownMenuTrigger asChild>
+        <button
+          aria-label={`Design language: ${current.name}`}
+          className={cn(
+            "group flex items-center gap-2.5 text-left transition-[background-color,border-color] duration-micro ease-out",
+            isSidebar
+              ? "w-full rounded-[var(--radius-md)] border border-border bg-card px-2.5 py-2 hover:bg-accent"
+              : "h-8 rounded-[var(--radius-md)] border border-border bg-card px-2 hover:bg-accent",
+            className,
+          )}
+          data-language-trigger
+          type="button"
+        >
+          <LanguageSwatch id={current.id} />
+          <span className="flex min-w-0 flex-1 flex-col">
+            {isSidebar ? (
+              <span className="text-2xs text-muted-foreground">Design language</span>
+            ) : null}
+            <span className="truncate font-medium text-foreground text-ui">
+              {current.shortName}
+            </span>
+          </span>
+          <ChevronUpDown aria-hidden className="size-3.5 shrink-0 text-muted-foreground" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-[min(22rem,calc(100vw-2rem))]" sideOffset={6}>
+        <DropdownMenuLabel className="flex items-baseline justify-between gap-3">
+          <span>Design language</span>
+          <span className="font-normal text-2xs text-muted-foreground">
             Re-skins this site
             {shortcut ? (
               <>
@@ -180,57 +170,22 @@ export function LanguageSwitcher({
               </>
             ) : null}
           </span>
-        </div>
-        <div
-          aria-label="Design language"
-          className="flex flex-col gap-px"
-          onKeyDown={onListKey}
-          ref={listRef}
-          role="menu"
-        >
-          {LANGUAGES.map((language) => {
-            const checked = language.id === current.id;
-            return (
-              <div
-                aria-checked={checked}
-                className={cn(
-                  "flex cursor-default items-center gap-3 rounded-[var(--radius-sm)] px-2.5 py-2 outline-none transition-colors duration-micro hover:bg-accent focus-visible:bg-accent",
-                  checked && "bg-accent",
-                )}
-                key={language.id}
-                onClick={() => {
-                  select(language.id);
-                  setOpen(false);
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    select(language.id);
-                    setOpen(false);
-                  }
-                }}
-                role="menuitemradio"
-                tabIndex={checked ? 0 : -1}
-              >
-                <LanguageSwatch className="size-7 p-1" id={language.id} />
-                <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="font-medium text-foreground text-ui">{language.name}</span>
-                  {language.tagline ? (
-                    <span className="truncate text-muted-foreground text-xs">
-                      {language.tagline}
-                    </span>
-                  ) : null}
-                </span>
-                <Check
-                  aria-hidden
-                  className={cn("size-3.5 shrink-0 text-foreground", !checked && "invisible")}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </PopoverContent>
-    </Popover>
+        </DropdownMenuLabel>
+        <DropdownMenuRadioGroup onValueChange={(value) => select(String(value))} value={current.id}>
+          {LANGUAGES.map((language) => (
+            <DropdownMenuRadioItem className="gap-3 py-2" key={language.id} value={language.id}>
+              <LanguageSwatch className="size-7 p-1" id={language.id} />
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="font-medium text-foreground text-ui">{language.name}</span>
+                {language.tagline ? (
+                  <span className="truncate text-muted-foreground text-xs">{language.tagline}</span>
+                ) : null}
+              </span>
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -251,5 +206,60 @@ export function ActiveLanguageCaption({ className }: { className?: string }) {
         ) : null}
       </span>
     </span>
+  );
+}
+
+/**
+ * The home page's switch: every language as a tile you can press, painted in
+ * its own canvas, ink and action fill. Pressing one re-skins the whole site —
+ * the grid under it is the same live components, so the strip and what it
+ * changes are on one screen.
+ */
+export function LanguageStrip({ className }: { className?: string }) {
+  const { active, select } = useDesignLanguage();
+  return (
+    <div className={cn("grid grid-cols-5 gap-1.5 sm:gap-2 md:grid-cols-9", className)}>
+      {LANGUAGES.map((language) => {
+        const swatch = SWATCHES[language.id] ?? SWATCHES.factory;
+        const checked = language.id === active;
+        if (!swatch) return null;
+        return (
+          <button
+            aria-label={`${language.name} design language`}
+            aria-pressed={checked}
+            className={cn(
+              "group/tile flex flex-col gap-2 rounded-lg p-1 text-left transition-colors duration-micro",
+              checked ? "bg-accent" : "hover:bg-accent",
+            )}
+            key={language.id}
+            onClick={() => select(language.id)}
+            type="button"
+          >
+            <span
+              aria-hidden
+              className={cn(
+                "flex aspect-[4/3] w-full flex-col justify-between rounded-[var(--radius-md)] p-2.5 ring-1 ring-inset",
+                checked ? "ring-foreground" : "ring-border",
+              )}
+              style={{ background: swatch.canvas }}
+            >
+              <span className="font-medium text-lg leading-none" style={{ color: swatch.ink }}>
+                Aa
+              </span>
+              <span className="flex items-center gap-1">
+                <span
+                  className="h-1 flex-1 rounded-full opacity-30"
+                  style={{ background: swatch.ink }}
+                />
+                <span className="h-3 w-5 rounded-full" style={{ background: swatch.action }} />
+              </span>
+            </span>
+            <span className="truncate px-1 pb-0.5 text-foreground text-xs">
+              {language.shortName}
+            </span>
+          </button>
+        );
+      })}
+    </div>
   );
 }
