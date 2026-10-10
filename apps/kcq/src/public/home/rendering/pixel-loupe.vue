@@ -193,23 +193,13 @@ watch(at, () => visible.value && drawLens());
         <canvas ref="lens" aria-hidden="true" />
       </button>
     </div>
-    <figcaption class="loupe-bar">
-      <div class="loupe-toggle" role="radiogroup" :aria-label="t('home.rendering.loupe.toggle')">
-        <button
-          v-for="value in [true, false]"
-          :key="String(value)"
-          type="button"
-          role="radio"
-          class="loupe-option t-label"
-          :aria-checked="snapped === value"
-          @click="snapped = value"
-        >
-          {{ value ? t("home.rendering.loupe.on") : t("home.rendering.loupe.off") }}
-        </button>
-      </div>
-      <p class="t-copy loupe-note" aria-live="polite">
-        {{ snapped ? t("home.rendering.loupe.onNote") : t("home.rendering.loupe.offNote") }}
-      </p>
+    <figcaption class="loupe-bar t-copy">
+      <!-- One text toggle: the alignment the strip is drawn with. -->
+      <button type="button" role="switch" class="loupe-toggle" :aria-checked="snapped" @click="snapped = !snapped">
+        {{ t("home.rendering.loupe.toggle") }}:
+        <span class="loupe-state">{{ snapped ? t("home.rendering.loupe.on") : t("home.rendering.loupe.off") }}</span>
+      </button>
+      <span aria-live="polite">{{ snapped ? t("home.rendering.loupe.onNote") : t("home.rendering.loupe.offNote") }}</span>
     </figcaption>
   </figure>
 </template>
@@ -217,13 +207,14 @@ watch(at, () => visible.value && drawLens());
 .loupe {
   display: grid;
   gap: var(--klc-space-12);
-  margin: 0;
+  max-width: 56rem;
+  margin-bottom: 0;
+  margin-inline: 0;
 }
 .loupe-stage {
   position: relative;
-  height: 15rem;
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-md);
+  height: 16rem;
+  border-radius: var(--klc-radius-lg);
   overflow: hidden;
   background: var(--klc-color-chart-background);
   touch-action: none;
@@ -240,12 +231,11 @@ watch(at, () => visible.value && drawLens());
   width: 9rem;
   height: 9rem;
   padding: 0;
-  border: 1px solid var(--kcq-ink);
+  border: 1px solid var(--kcq-ink-2);
   border-radius: var(--klc-radius-full);
   overflow: hidden;
   background: var(--klc-color-chart-background);
   transform: translate(calc(var(--x) - 50%), calc(var(--y) - 50%));
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--kcq-page) 70%, transparent), var(--klc-elevation-3);
   cursor: grab;
 }
 .loupe-lens:active {
@@ -258,30 +248,24 @@ watch(at, () => visible.value && drawLens());
 .loupe-bar {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: var(--klc-space-8) var(--klc-space-16);
+  align-items: baseline;
+  gap: var(--klc-space-4) var(--klc-space-16);
 }
 .loupe-toggle {
-  display: inline-flex;
-  gap: var(--klc-space-2);
-  padding: var(--klc-space-2);
-  border: 1px solid var(--kcq-rule);
-  border-radius: var(--klc-radius-md);
-}
-.loupe-option {
   min-height: var(--klc-density-default);
-  padding-inline: var(--klc-space-12);
+  padding: 0;
   border: 0;
-  border-radius: var(--klc-radius-sm);
   background: transparent;
-  color: var(--kcq-ink-2);
+  color: var(--kcq-ink);
+  font-size: inherit;
+  line-height: inherit;
   cursor: pointer;
 }
-.loupe-option[aria-checked="true"] {
-  background: var(--kcq-control);
-  color: var(--kcq-ink);
-}
-.loupe-note {
-  flex-basis: 100%;
+.loupe-state {
+  color: var(--kcq-accent-text);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  text-decoration-color: color-mix(in oklab, currentColor 40%, transparent);
 }
 </style>
