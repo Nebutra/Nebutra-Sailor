@@ -25,6 +25,7 @@ const { kcqLandingPlugin } = await import(
 const { publicBoundary } = await import(
   pathToFileURL(resolve(root, "scripts/public-boundary.mjs")).href
 );
+const { appPreload } = await import(pathToFileURL(resolve(root, "scripts/app-preload.mjs")).href);
 const { indicatorEntrypointsPlugin } = await import(
   pathToFileURL(resolve(source, "scripts/indicator-entrypoints-plugin.mjs")).href
 );
@@ -87,6 +88,7 @@ export default ({ isSsrBuild }) => ({
     devRoutes(),
     kcqLandingPlugin({ root, source }),
     ...(isSsrBuild ? [] : [publicBoundary()]),
+    ...(isSsrBuild ? [] : [appPreload()]),
     tailwindcss(),
     indicatorEntrypointsPlugin(),
     babel({

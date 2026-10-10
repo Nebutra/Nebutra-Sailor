@@ -52,7 +52,7 @@ Spatial work (WebGL, shader, 3D) and splash screens are **P3** and need their ow
 | Navigation | Underline, active state, light header transition | CSS | 1 |
 | Social proof, trust, pricing, CTA, footer | Mostly static; hover, press, feedback | CSS | 1 |
 | Value and features | Grouped reveal, image/text coordination, hover preview | CSS / IntersectionObserver (Motion in React) | 2 |
-| Product demo (at most one) | Sticky, scrub, 2–4 chapters (problem → action → response → verifiable result); mobile degrades to tabs or tap-through | GSAP ScrollTrigger | 4 |
+| Product demo (at most one) | Sticky, scrub, 2–4 chapters (problem → action → response → verifiable result); mobile degrades to tabs or tap-through | GSAP ScrollTrigger, or CSS sticky + a scroll read (KCQ, see amendment) | 4 |
 | Architecture | SVG draw, node transitions | GSAP / CSS | 3 |
 
 ### 4. Engine ownership
@@ -107,6 +107,9 @@ Constraints:
 4. **Phase 3 — one product story.**
 5. **Phase 4 — progressive enhancements, each on its own merit.**
 6. **Phase 5 — QA:** desktop, mobile, touch, keyboard, reduced motion, slow network, low-end devices, back/refresh, rapid interaction.
+
+### Amendment 2026-10-10 (KCQ perf audit)
+ScrollTrigger keeps a requestAnimationFrame loop running for the whole visit once it is registered, so the page produces a main-thread frame on every vsync even at rest. KCQ measured 60 callbacks/s and 7.5–17.5 ms/s of idle main thread. KCQ's pinned agent story therefore uses CSS `position: sticky` over a runway, and reads progress from a passive scroll listener that is attached only while the story is near the viewport. The design (sticky, scrub, chapters, reversible, desktop-only, reduced-motion off) is unchanged. A landing that needs exact multi-element sync can still use ScrollTrigger.
 
 ## Acceptance
 - Every animation has a stated purpose and a single engine owner.
