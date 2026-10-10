@@ -8,8 +8,8 @@ import { REPO_URL } from "./repo";
  *
  * L1–L8 are the direction and change slowly; every line is the founder's own
  * words from "Why we are building Nebutra", never a paraphrase written for
- * this page. L9 is the execution — Now, Next, Later — and each bet names the
- * layer it answers to, because a bet that serves no layer has no reason to be
+ * this page. L9 is the execution — what landed, Now, Later — and each bet names
+ * the layer it answers to, because a bet that serves no layer has no reason to be
  * on the list.
  *
  * `LANDED` is what moved out of Now. It links the work itself, not a count of
@@ -65,9 +65,14 @@ export const LAYERS: readonly Layer[] = [
   { id: "l8", name: { zh: "身份", en: "Identity" } },
 ];
 
-export type Horizon = "now" | "next" | "later";
+/**
+ * Now is this month's work; Later is where the essays point. There is no
+ * Next while nothing is designed-but-unstarted: an empty phase would be a
+ * placeholder, not a plan.
+ */
+export type Horizon = "now" | "later";
 
-export const HORIZONS: readonly Horizon[] = ["now", "next", "later"];
+export const HORIZONS: readonly Horizon[] = ["now", "later"];
 
 export interface Bet {
   /** Key under `roadmapPage.bets` (title, what). */
@@ -82,10 +87,6 @@ export const BETS = [
   { id: "studio", horizon: "now", serves: "l5", href: "/sailor/studio" },
   { id: "template", horizon: "now", serves: "l1" },
   { id: "wallet", horizon: "now", serves: "l2" },
-  { id: "firstPlay", horizon: "next", serves: "l7", href: DIRECTION_ESSAY },
-  { id: "os", horizon: "next", serves: "l3" },
-  { id: "radar", horizon: "next", serves: "l4", href: "/blog/sleptons-project" },
-  { id: "plays", horizon: "later", serves: "l5" },
   { id: "ecosystem", horizon: "later", serves: "l2" },
   { id: "teams", horizon: "later", serves: "l6", href: "/blog/sleptons-project" },
 ] as const satisfies readonly Bet[];

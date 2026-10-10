@@ -10,11 +10,11 @@ import {
 
 /**
  * The roadmap data arranged the way the page reads it: one timeline, oldest
- * first — each month that landed, then Now, Next, Later — and, per layer, the
+ * first — each month that landed, then Now and Later — and, per layer, the
  * entries on that timeline that answer to it.
  */
 
-export type Status = "done" | "active" | "planned" | "exploring";
+export type Status = "done" | "active" | "exploring";
 
 export type Entry =
   | { kind: "landed"; id: LandedId; serves: LayerId; prs: readonly number[]; status: Status }
@@ -30,7 +30,7 @@ export type Phase =
       entries: Entry[];
     };
 
-const HORIZON_STATUS = { now: "active", next: "planned", later: "exploring" } as const;
+const HORIZON_STATUS = { now: "active", later: "exploring" } as const;
 
 export function timeline(): Phase[] {
   const months = [...new Set(LANDED.map((l) => l.month))].sort();

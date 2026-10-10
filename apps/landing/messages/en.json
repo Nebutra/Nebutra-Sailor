@@ -4653,7 +4653,7 @@
       "label": "The nine layers",
       "l9": "Execution",
       "l9Alt": "执行",
-      "l9Line": "Now, Next, Later — the timeline below.",
+      "l9Line": "What landed, what we are doing now, and what comes later — the timeline below.",
       "count": "{count, plural, one {# item} other {# items}} on the timeline"
     },
     "layers": {
@@ -4690,22 +4690,17 @@
     "execution": {
       "title": "Execution",
       "lead": "L9. Every bet names the layer it answers to; a bet that serves none does not go on the list.",
-      "cn": "执行：现在、接下来、更远。"
+      "cn": "执行：已落地、现在、更远。"
     },
     "status": {
       "done": "Landed",
       "active": "In progress",
-      "planned": "Planned",
       "exploring": "Exploring"
     },
     "horizons": {
       "now": {
         "label": "Now",
         "is": "In the repository this month."
-      },
-      "next": {
-        "label": "Next",
-        "is": "Designed, not started."
       },
       "later": {
         "label": "Later",
@@ -4726,22 +4721,6 @@
       "wallet": {
         "title": "A balance per product",
         "what": "Each product on the platform keeps its own wallet and its own offers, paid by card or, in mainland China, WeChat Pay and Alipay."
-      },
-      "firstPlay": {
-        "title": "The first Play: a 60-second brand film",
-        "what": "One sentence describing an idea in; a complete brand system and a launch film out, all from one context."
-      },
-      "os": {
-        "title": "The OS underneath every Play",
-        "what": "A local daemon, a semantic file system, an agent process control protocol, and state you can roll back."
-      },
-      "radar": {
-        "title": "Sleptons Radar",
-        "what": "Find the builders ordinary search misses — the first step of a network where people, ideas and capital meet."
-      },
-      "plays": {
-        "title": "Plays along the whole path",
-        "what": "From idea to launchable MVP, from MVP to customer discovery loops, and on toward a company."
       },
       "ecosystem": {
         "title": "From tool to ecosystem",

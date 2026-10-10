@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 /**
  * The roadmap: the founder's nine layers. L1–L8 are a stacked figure (the
  * direction, which holds still); L9 is the timeline under it — what landed,
- * month by month, then Now, Next and Later. Every entry links up to the
+ * month by month, then Now and Later. Every entry links up to the
  * layer it answers to. A Server Component; the only client code is the
  * beam's fallback for browsers without scroll-driven animations.
  */

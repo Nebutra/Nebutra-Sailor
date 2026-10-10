@@ -17,7 +17,7 @@ const monthLabel = (ym: string, lang: string) =>
 
 /**
  * The roadmap as one vertical timeline, oldest first: every month that
- * landed, then Now, Next and Later. Each phase label parks at the top of the
+ * landed, then Now and Later. Each phase label parks at the top of the
  * viewport (CSS sticky, md and up) while its entries scroll past; the beam
  * on the track fills as the reader goes (beam.tsx). The status of each phase
  * is written beside its mark, never shown by colour alone.
