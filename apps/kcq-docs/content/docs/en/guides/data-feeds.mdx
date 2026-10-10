@@ -1,0 +1,166 @@
+---
+title: Data feeds and BYOK
+description: How the chart gets market data, from inline bars to built-in sources, your own providers, live bars and host-managed keys.
+---
+
+The chart does not know about any vendor. It asks one interface, `MarketDataProvider`, for instruments and bars, and a router picks which provider answers. Everything in this guide plugs into that model.
+
+## Three ways to feed the chart
+
+| You have | Use |
+| --- | --- |
+| Bars already in memory | `customData`, or `setData` on the controller |
+| A service that speaks the KCQ V1 HTTP protocol | A built-in source, or `createMarketDataProvider` with your base URL |
+| Any other API | Your own `MarketDataProvider` object |
+
+## Inline data
+
+Pass `customData` to the component, as in [Your first chart](/docs/quickstart). It needs `market` and `data`, and can carry `comparisons` keyed by symbol. The chart registers the symbol in its catalog and does not page beyond the bars you gave it.
+
+From the controller you have finer control:
+
+| Method | Effect |
+| --- | --- |
+| `applyCustomData(source)` | Same as the `customData` prop |
+| `setData(bars)` | Replaces the active series |
+| `appendData(bars)` | Adds bars at the end |
+| `updateBars(bars)` | Writes live updates; a bar with an existing timestamp replaces it |
+
+## The provider model
+
+Three types carry the model, all from `@363045841yyt/klinechart-core/market-data`.
+
+- **`InstrumentDescriptor`** is one tradable instrument. Its `id` is the identity everywhere. `capabilities` lists the periods, adjustments and time-share support it offers. `providerRef` is private to the provider that created it; nothing else reads it.
+- **`MarketDataProvider`** is one source. It has a `source` descriptor, a `probe()` health check, and optional capability modules such as `catalog`, `bars`, `timeShare` and `liveBars`. A module that a source does not support is simply absent.
+- **`SourceRouter`** chooses the provider for a request. An explicit source answers alone, and its errors are returned as is. In `auto` mode, enabled providers are tried in priority order until one accepts.
+
+A minimal provider:
+
+```ts
+import {
+  marketDataProviderRegistry,
+  type MarketDataProvider,
+} from '@363045841yyt/klinechart-core/market-data'
+
+const provider = {
+  source: { id: 'my-feed', displayName: 'My feed' },
+  async probe() {
+    return { status: 'online', checkedAt: Date.now() }
+  },
+  catalog: {
+    async search(query) {
+      return lookUp(query.keyword, query.limit) // InstrumentDescriptor[]
+    },
+  },
+  bars: {
+    async fetch(query) {
+      return {
+        instrumentId: query.instrument.id,
+        period: query.period,
+        adjustment: query.adjustment,
+        barAggregation: query.barAggregation,
+        timezone: 'UTC',
+        data: await loadBars(query), // KLineData[], older than query.beforeTimestamp
+        olderData: 'unknown', // or 'available' | 'exhausted'
+      }
+    },
+  },
+} satisfies MarketDataProvider
+
+marketDataProviderRegistry.register(provider, { enabled: true })
+```
+
+Once registered, the source appears in the chart's source list and symbol search. The full contract is in the [provider API](/docs/market-data/provider-api).
+
+### Speaking the V1 protocol
+
+If your backend implements the KCQ V1 HTTP API, you do not write a provider by hand:
+
+```ts
+import {
+  createHttpMarketDataTransport,
+  createMarketDataProvider,
+  marketDataProviderRegistry,
+} from '@363045841yyt/klinechart-core/market-data'
+
+marketDataProviderRegistry.register(
+  createMarketDataProvider({
+    source: { id: 'my-v1', displayName: 'My V1 service' },
+    transport: createHttpMarketDataTransport({ baseUrl: 'https://data.example.com' }),
+  }),
+)
+```
+
+The endpoints are documented in the [HTTP API](/docs/market-data/http-api).
+
+## Built-in sources
+
+The core ships providers for these sources. They register themselves when the core loads; importing `@363045841yyt/klinechart-core/market-data/sources` makes that explicit.
+
+| Source id | Data | Served by |
+| --- | --- | --- |
+| `gotdx` | A shares, futures and more, from Tongdaxin | GoTDX-Connector |
+| `baostock` | A-share daily, weekly, monthly and minute bars | Baostock-Tradingview-Connector |
+| `finshare` | China futures | Baostock-Tradingview-Connector |
+| `tradingview` | Global instruments | Baostock-Tradingview-Connector |
+| `mt5` | Forex, metals and crypto CFDs from a logged-in MT5 terminal, with live bars | KCQ-MT5-connector |
+| `mock` | Test series `MOCK-100` and `MOCK-10000`, no backend | — |
+
+Except `mock`, each source needs its connector running; by default they point at local addresses. Setup for each is under [Sources](/docs/market-data/sources/klinechartquantgo).
+
+## Live bars
+
+A provider gets live updates by adding a `liveBars` module. `BarsLiveSource`, used by the built-in `mt5` source, opens a Server-Sent Events stream for one symbol, period and bar aggregation, and writes `forming` and `closed` bars into the chart. A stream opens only when the source declares `liveBars` in its capabilities.
+
+```ts
+import { BarsLiveSource, createMarketDataProvider } from '@363045841yyt/klinechart-core/market-data'
+
+createMarketDataProvider({
+  source,
+  transport,
+  liveBars: {
+    createStream: ({ symbol, period, barAggregation, instrumentId }) =>
+      new BarsLiveSource('my-v1', symbol, period, barAggregation, baseUrl, undefined, instrumentId),
+  },
+})
+```
+
+The frame format is in [Live bars (SSE)](/docs/market-data/live-bars).
+
+## Host-managed connections (BYOK)
+
+Many data vendors need an API key. KLineChartQuant leaves keys to the host app. The chart does not collect keys and never writes them to settings, URLs or browser storage.
+
+The split looks like this:
+
+- **The chart** provides the provider contract and the `source-management` slot, where your app renders connect, test, replace and disconnect controls.
+- **Your app** signs users in, stores keys encrypted on the server, and proxies data requests. It registers one provider per connection, pointing at a same-origin proxy URL, with `endpointEditable: false` so chart preferences cannot redirect it.
+- **Your proxy** checks the session and that the user owns the connection, limits request size, and never returns raw vendor errors or the key.
+
+```vue
+<KlineChart>
+  <template #source-management>
+    <MyConnections />
+  </template>
+</KlineChart>
+```
+
+When a user picks an explicit source and it fails, the router returns the error and does not fall back to another source. Removing a connection should unregister its provider.
+
+The [BYOK design note](/docs/architecture/notes/market-data-byok) lists vendors evaluated for host adapters. None of them ship as built-in adapters.
+
+### How the hosted workstation does it
+
+The [workstation](/docs/workstation) follows this pattern with Twelve Data:
+
+1. A signed-in user saves a key from the `source-management` panel. The Nebutra gateway encrypts it per tenant; the browser receives only a label and a masked suffix.
+2. For each connection, the page registers a provider with id `byok-<connectionId>`, base URL `/market/byok/connections/<connectionId>` on the same origin, and `endpointEditable: false`.
+3. Requests carry the session cookie and the active workspace. Nginx forwards `/market/byok/` to the gateway over TLS, where membership and ownership are checked before Twelve Data is called with the stored key.
+
+## Next
+
+<Cards>
+  <Card title="Provider API" href="/docs/market-data/provider-api" description="Every type in the market-data contract." />
+  <Card title="HTTP API" href="/docs/market-data/http-api" description="The V1 endpoints a connector implements." />
+  <Card title="Live bars" href="/docs/market-data/live-bars" description="The SSE stream for live K-lines." />
+</Cards>

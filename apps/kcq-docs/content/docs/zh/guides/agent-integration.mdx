@@ -1,0 +1,152 @@
+---
+title: 集成 Agent
+description: 把图表 Agent 接入你的应用，连接 OpenAI 兼容 Provider 或宿主托管的 Provider，并开启搜索、持久会话与代码执行。
+---
+
+设想用户说一句“标出上个月的高点，再加上 RSI”，指标和画线就直接出现在眼前的图表上，刷新页面后对话还在。本页先用浏览器 bridge 把这条链路接起来，再依次介绍 Provider、联网搜索、可选的代码解释器和持久会话。
+
+## 最小接入
+
+`BrowserAgentBridge` 在页面内运行 Agent，`AgentWorkbenchShell` 把 Agent 面板放到图表旁边。
+
+```vue title="App.vue"
+<script setup lang="ts">
+import { onBeforeUnmount, shallowRef } from 'vue'
+import {
+  AgentWorkbenchShell,
+  BrowserAgentBridge,
+  KlineChart,
+  type ChartController,
+} from '@363045841yyt/klinechart'
+import '@363045841yyt/klinechart/style.css'
+
+const controller = shallowRef<ChartController | null>(null)
+const bridge = new BrowserAgentBridge({
+  getChartAgent: () => controller.value?.agent, // 工具通过它访问图表
+})
+
+function onControllerReady(value: ChartController) {
+  controller.value = value
+  bridge.bindChartAgent(value.agent) // 面板展示的上下文
+}
+
+onBeforeUnmount(() => void bridge.close())
+</script>
+
+<template>
+  <AgentWorkbenchShell :bridge="bridge">
+    <template #chart>
+      <KlineChart @controller-ready="onControllerReady" />
+    </template>
+  </AgentWorkbenchShell>
+</template>
+```
+
+一定要传 `getChartAgent`：每次运行都通过它解析工具，缺了它就不会提供图表工具。`bindChartAgent` 只更新面板展示的上下文，因此面板可以先于图表挂载。
+
+## 用户自带 Provider
+
+默认情况下，用户在 Agent 设置里添加自己的 OpenAI 兼容 Provider。适配层同时支持 `openai-completions` 和 `openai-responses`，所选协议会与测试通过的 Base URL、模型一起保存。
+
+只有针对所选模型完整通过一次三阶段连接测试，Provider 才能运行：
+
+<Steps>
+<Step>
+
+`GET /models` 验证模型目录访问与鉴权。
+
+</Step>
+<Step>
+
+一次最小文本请求验证协议端点（`POST /chat/completions` 或 `POST /responses`）。
+
+</Step>
+<Step>
+
+一次精确、无副作用的函数调用验证工具兼容性。
+
+</Step>
+</Steps>
+
+Base URL 填 API 根地址（例如 `https://provider.example/v1`）。模型目录能拉下来，不代表这个 Provider 能配合 Agent 使用。
+
+在浏览器中，用户的 Key 保存在页面 `localStorage` 的 Agent 设置里。Electron 宿主可以注入自己的 `credentials` 存储（例如基于 `safeStorage` 的实现），注入后 Key 不再写入 `localStorage`。
+
+## 宿主持有凭据时用托管 Provider
+
+如果你的服务端已经负责用户鉴权和模型路由，可以注入 `managedProvider`。它排在配置列表首位，只要用户没有激活自己的配置就会生效。设置面板会隐藏它的 Base URL、Key 和模型选择，用户仍可以添加自己的 Provider。
+
+```ts
+import { BrowserAgentBridge } from '@363045841yyt/klinechart'
+import { ReadOnlyProviderCredentialStore } from '@363045841yyt/klinechart-agent-runtime'
+
+const hostFetch: typeof fetch = (input, init = {}) => {
+  const headers = new Headers(init.headers)
+  headers.delete('Authorization') // 占位 Key 仍会以 Bearer 形式发出
+  return fetch(input, { ...init, headers, credentials: 'same-origin' })
+}
+
+const bridge = new BrowserAgentBridge({
+  getChartAgent: () => controller.value?.agent,
+  managedProvider: {
+    name: 'Managed',
+    baseUrl: `${location.origin}/ai/v1`,
+    model: { id: 'auto' }, // 实际模型由你的服务端决定
+    credentials: new ReadOnlyProviderCredentialStore('placeholder'),
+    fetch: hostFetch,
+  },
+})
+```
+
+托管配置只存在于内存中，从不写入 `localStorage`。它是只读的：增删模型池、测试、删除凭据、重命名，或以同名保存配置，都会抛出 `PROVIDER_ERROR`。库本身不含任何产品字符串，鉴权、路由与计费都由宿主负责。
+
+托管工作台正是这样接入的：`baseUrl` 指向本站的 `/market/ai/v1`，模型 ID 用占位值 `auto`（网关会忽略它）；它的 `fetch` 删除 `Authorization`，以 `credentials: 'same-origin'` 携带会话 Cookie，并附加 `X-KCQ-Workspace` 请求头，确保由正确的钱包扣费。网关返回 `402` 时，宿主会提示充值。浏览器里从不保存任何模型 Key。
+
+## 联网搜索
+
+`web_search` 工具使用 Exa。Key 属于全局 Agent 设置，切换 Provider 配置时不受影响。用户可以在设置里填写，你也可以调用 `bridge.saveWebSearchApiKey(key)`。没有 Key 时工具依然存在，但它会让模型提示用户去填写 Key，而不是编造结果。搜索默认返回 5 条、最多 10 条，并要求模型引用返回的 URL。
+
+## 代码解释器（需显式开启）
+
+`code_interpreter` 在沙箱中运行 Agent 生成的 Python。导入入口即把它注册为 `destructive` 工具；不导入，工具就不存在。
+
+```ts
+import {
+  CodeInterpreterService,
+  CodeInterpreterTool,
+} from '@363045841yyt/klinechart-agent-runtime/code-interpreter'
+import { LocalProvider } from '@363045841yyt/klinechart-agent-runtime/code-interpreter/local'
+
+const tool = new CodeInterpreterTool(new CodeInterpreterService({ provider: new LocalProvider() }))
+```
+
+运行时为 `python-data-analysis-v1`，预装 numpy 和 pandas；不能 `pip install`，`policy.network` 只接受 `'disabled'`。输入从 `$INPUT_DIR` 读取，写到 `$OUTPUT_DIR` 顶层的文件会被返回。超时默认 60000 ms，这也是上限。产物随结果内联返回，从不持久化，需要保留的内容请自行存档。
+
+不同 Provider 的隔离强度不同，选择前请先看 `ProviderCapabilities.enforcesNetworkPolicy`。
+
+| Provider | `enforcesNetworkPolicy` | 信任基础 | 是否实测 |
+| --- | --- | --- | --- |
+| `cloud-run-sandbox` | `true` | Google Cloud | **否。切勿在真实 GCP 环境中运行。** |
+| `fly-machines` | `false` | 本项目的 runner 镜像 | 是，已在 fly.io 端到端验证 |
+| `local` | `false` | 开发者本机 | 是，单元测试 |
+
+<Callout type="warn" title="以下两条表述不得弱化">
+
+- **fly.io 不提供出站拦截。** 出站流量由我们自己沙箱镜像内的网络命名空间拦截，因此信任基础是本项目的 runner，而不是 fly.io 平台。
+- **`LocalProvider` 在 macOS、Windows 上不做任何隔离；在无法使用 `unshare -rn` 的 Linux 主机上同样如此**（内核或 AppArmor 可能拒绝非特权 user namespace）。这些环境下出站流量不受限制。它只用于单元测试和开发，切勿用它执行不可信代码。
+
+</Callout>
+
+当前提交下，`BrowserAgentBridge` 只从图表自身的工具宿主解析执行目标，并不承载代码解释器。请在能自行解析工具目标的 Node 或 Electron 主进程宿主中接入它。详见 [代码解释器工具](/zh/docs/agent/tools/code-interpreter) 与 [设计说明](/zh/docs/architecture/notes/agent-code-interpreter)。
+
+## 持久会话
+
+浏览器 bridge 通过 `createBrowserRuntimeSessions` 把对话存进 IndexedDB，默认数据库名为 `kq-agent-durable-v1`。独占的 Web Lock 保证同一时间只有一个页面持有会话，第二个页面会收到 “Agent sessions are open in another page.”。多租户应用请传入 `createSessions`，并使用带范围的 `databaseName`，参见 [布局与持久化](/zh/docs/guides/layouts)。
+
+在 Node 或 Electron 主进程中，使用 `@363045841yyt/klinechart-agent-runtime/node` 的 `createNodeRuntimeSessions`。它会加载 `node:sqlite`，切勿在浏览器代码中导入。
+
+<Cards>
+  <Card title="Agent 如何操作图表" href="/zh/docs/agent" description="工具、上下文与运行时。" />
+  <Card title="安全与权限" href="/zh/docs/agent/safety" description="只读运行、输入校验与脱敏。" />
+  <Card title="工具参考" href="/zh/docs/agent/tools" description="模型可以调用的全部工具。" />
+</Cards>

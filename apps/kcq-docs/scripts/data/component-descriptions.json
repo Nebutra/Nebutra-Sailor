@@ -1,0 +1,91 @@
+{
+  "$comment": "English descriptions for the generated component reference, keyed by the source name. The Chinese descriptions are the source's own JSDoc. A source name missing here renders the source text and is reported by the generator.",
+  "props": {
+    "symbols": {
+      "en": "Controlled instrument list. When set, the component syncs it into the chart's data sources."
+    },
+    "indicators": {
+      "en": "Controlled indicator instances. When set, it replaces the current instances as a whole."
+    },
+    "customMarkers": {
+      "en": "Controlled custom markers. When set, it replaces the current custom markers as a whole."
+    },
+    "marketSessions": { "en": "Market trading-session overrides for this chart instance." },
+    "yPaddingPx": {
+      "en": "Vertical padding inside the price pane, in CSS pixels.",
+      "zh": "价格区上下留白（CSS 像素）。"
+    },
+    "minKWidth": {
+      "en": "Narrowest candle width when zoomed out, in CSS pixels.",
+      "zh": "缩到最小时的 K 线宽度（CSS 像素）。"
+    },
+    "maxKWidth": {
+      "en": "Widest candle width when zoomed in, in CSS pixels.",
+      "zh": "放到最大时的 K 线宽度（CSS 像素）。"
+    },
+    "rightAxisWidth": { "en": "Width of the right price axis." },
+    "leftAxisWidth": { "en": "Width of the left price axis; 0 hides it." },
+    "bottomAxisHeight": { "en": "Height of the bottom time axis." },
+    "priceLabelWidth": {
+      "en": "Extra width of the last-price label, used for the change percentage."
+    },
+    "zoomLevels": { "en": "Number of zoom levels." },
+    "initialZoomLevel": { "en": "Zoom level at mount, from 1 to zoomLevels." },
+    "isFullscreen": {
+      "en": "Controlled fullscreen state. Leave it unbound and the component manages fullscreen itself."
+    },
+    "timezone": { "en": "IANA time zone used for dates and times on the axes and tooltips." },
+    "settings": {
+      "en": "Chart settings, merged per key: keys you pass win, other keys fall back to what the browser stored, then to defaults."
+    },
+    "legend": {
+      "en": "Canvas legend configuration for the main pane. Core draws it; it never enters the Vue update path."
+    },
+    "customData": {
+      "en": "Inline data bundle ({ symbol?, period?, data, comparisons? }). The chart uses it instead of fetching."
+    }
+  },
+  "events": {
+    "zoomLevelChange": { "en": "The zoom level changed.", "zh": "缩放级别变化。" },
+    "toggleFullscreen": { "en": "The fullscreen button was pressed.", "zh": "点击了全屏按钮。" },
+    "update:isFullscreen": {
+      "en": "Fullscreen state for v-model:is-fullscreen.",
+      "zh": "供 v-model:is-fullscreen 使用的全屏状态。"
+    },
+    "themeChange": {
+      "en": "The user switched between light and dark.",
+      "zh": "用户切换了明暗主题。"
+    },
+    "kLineLevelChange": { "en": "The user picked another period.", "zh": "用户切换了周期。" },
+    "kLineAdjustChange": {
+      "en": "The user picked another price adjustment.",
+      "zh": "用户切换了复权方式。"
+    },
+    "controllerReady": {
+      "en": "The headless ChartController is ready; use it for imperative calls.",
+      "zh": "无头 ChartController 已就绪，可用于命令式调用。"
+    }
+  },
+  "slots": {
+    "source-management": {
+      "en": "Host-managed market-data connections and credentials. The chart never holds keys."
+    },
+    "toolbar-start": {
+      "en": "Start of the top toolbar, for host controls such as an account menu.",
+      "zh": "顶部工具栏起始位置，放宿主控件（如账户菜单）。"
+    },
+    "toolbar-end": { "en": "End of the top toolbar.", "zh": "顶部工具栏末尾位置。" },
+    "legend": {
+      "en": "Replaces the main pane's default legend. Receives the core legend template context.",
+      "zh": "替换主图默认图例，作用域为 Core 的图例模板上下文。"
+    },
+    "kline-tooltip": {
+      "en": "Custom candle tooltip; rendered on hover (not on mobile) with the hovered bar.",
+      "zh": "自定义 K 线提示框，悬停时渲染（移动端除外），携带当前 K 线。"
+    },
+    "marker-tooltip": {
+      "en": "Custom marker tooltip; rendered while a marker is hovered.",
+      "zh": "自定义标记提示框，悬停标记时渲染。"
+    }
+  }
+}

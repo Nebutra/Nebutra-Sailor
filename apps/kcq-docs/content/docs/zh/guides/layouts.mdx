@@ -1,0 +1,106 @@
+---
+title: 布局与持久化
+description: 保存具名图表布局，让 K 线与分时各用一套配置，并按账户和工作区隔离浏览器存储。
+---
+
+交易员给波段交易留一套布局，给日内盯盘再留一套。切换时，品种、指标、窗格、画线、设置和滚动位置都会一起恢复，不用手动重建。本页说明布局保存了什么、存在哪里，以及多租户宿主如何避免不同用户的数据互相串用。
+
+## 布局保存了什么
+
+`LayoutDocument` 是图表上所有用户可控配置的唯一持久化载体，契约位于 `packages/core/src/engine/layout/types.ts`。
+
+| 字段 | 内容 |
+| --- | --- |
+| `version` | 文档版本号，用于迁移旧文档。 |
+| `currentSymbol` | 主品种的完整 `SymbolSpec`：数据源、周期、复权和路由信息。省略时保留当前品种。 |
+| `workspaces` | K 线与分时两个视图各自的指标、窗格规格、比例和坐标轴类型。 |
+| `panePriceAxisModes` | 各窗格价格轴的自动 / 手动模式。 |
+| `settings` | 图表设置的白名单子集。 |
+| `drawings` | 已确认的画线，含时间 / 价格锚点、样式和文字。 |
+| `viewport` | 按品种、周期、复权和视图分别记住的滚动锚点、偏移和缩放档位。 |
+
+有些内容刻意不进文档：设备级偏好（渲染后端、缓存上限、性能分析开关）、自选列表、聚合源、Agent 设置、行情数据以及运行时交互态。选择集合、当前工具和撤销历史同样属于运行时状态，不会保存。
+
+## 用代码管理布局
+
+`ChartController` 实现了布局 API，所有方法都接收一个对象参数。
+
+```ts title="layouts.ts"
+import type { ChartController } from '@363045841yyt/klinechart-core'
+
+export async function setUpLayouts(chart: ChartController) {
+  const intraday = await chart.createLayout({ name: '日内' })
+  await chart.switchLayout({ id: intraday })
+  await chart.setLayoutAutoSave({ enabled: true })
+
+  const snapshot = chart.exportLayout() // 普通的 LayoutDocument 对象
+  await chart.applyLayout(snapshot) // 先加载引用的指标实现，再原子恢复
+}
+```
+
+其余方法有 `saveLayout({ name, id? })`、`renameLayout`、`duplicateLayout`、`deleteLayout` 和 `listLayouts`。响应式状态通过 `layouts`、`activeLayoutId`、`layoutAutoSave`、`layoutDirty`、`layoutSaveError` 信号读取。
+
+几条规则保证归档始终一致：
+
+- 第一个文档是 `default`。默认布局和当前活动布局都不能删除。
+- 新建布局从默认设置和单个主窗格开始，沿用当前品种；复制布局会带上来源布局的品种和画线。
+- 自动保存会合并 600 ms 内的连续变更，并在切换布局、页面隐藏和图表销毁前补写。恢复操作引起的变更不会回写。
+- 恢复时整体替换画线和视口位置，不会沿用上一个布局的内容。
+
+布局保存在 IndexedDB 的 `@363045841yyt/klinechart-layouts` 中。工具栏里的布局菜单用的也是这套 API。布局管理没有注册为 Agent 工具。
+
+## K 线与分时各用一套配置
+
+指标与窗格按视图工作区隔离：`kline` 有自己的实例、窗格、比例和坐标轴类型，分时与五日分时共用 `timeshare` 工作区。切换视图时会在一次 batch 中激活对应工作区的快照，两个工作区之间不复制、不删除、也不同步。切换前发起的计算无法覆盖新视图，因为计算结果必须匹配当前的配置 revision 才会提交。两个工作区都随 `LayoutDocument.workspaces` 一起保存，详见 [视图工作区](/zh/docs/architecture/notes/view-workspaces)。
+
+## 设置的持久化
+
+图表设置逐个 key 解析，优先级如下：
+
+1. `settings` prop 中显式传入的 key。
+2. `localStorage` 中 `kline-chart-settings` 保存的值。
+3. 内置默认值。
+
+```vue
+<KlineChart :settings="{ theme: 'dark' }" />
+```
+
+这里 `theme` 由 prop 固定，其余 key 回落到用户上次保存的值。挂载后用户做的修改会写回存储；通过 prop 推入的值不会写回，所以 prop 不会覆盖一个它本来没有设置的已存偏好。布局也会携带图表级的设置子集，但不包括 `rendererBackend`、`marketDataCacheMaxMiB` 和 `enableCanvasProfiler`。
+
+## 按账户和工作区隔离存储
+
+SaaS 宿主需要按账户和工作区隔离布局、自选列表、设置和 Agent 数据。请在动态导入图表之前，从专用子路径调用 `configureBrowserPersistenceScope`。这个子路径不导入任何图表代码，也不创建存储。
+
+```ts title="main.ts"
+import { configureBrowserPersistenceScope } from '@363045841yyt/klinechart-core/persistence-scope'
+
+const scope = JSON.stringify(['my-app', userId ?? 'guest', workspaceId ?? 'personal'])
+configureBrowserPersistenceScope(scope)
+
+const { default: App } = await import('./App.vue') // 设置范围之后再加载图表模块
+```
+
+Core 中所有 `localStorage` 和 IndexedDB 存储都会在创建时捕获当前范围。配置了范围的页面里，`kline-chart-settings` 会变成 `kcq:<编码后的范围>:kline-chart-settings`。Agent 的会话数据库是独立的，同样要用带范围的名称：
+
+```ts
+import { scopedPersistenceName } from '@363045841yyt/klinechart-core/persistence-scope'
+import type { RedactionOptions } from '@363045841yyt/klinechart-agent-runtime'
+import { createBrowserRuntimeSessions } from '@363045841yyt/klinechart-agent-runtime/browser'
+
+const createSessions = (redaction: RedactionOptions) =>
+  createBrowserRuntimeSessions({ databaseName: scopedPersistenceName('agent-sessions'), redaction })
+```
+
+<Callout type="warn" title="切换范围必须刷新页面">
+第一个存储创建之后，范围就不能再改：`configureBrowserPersistenceScope` 会抛出 `Reload the page before changing persistence scope`。用户退出登录或切换工作区时，应销毁页面并重新加载，模块级缓存和延迟的异步写入绝不能跨租户复用。
+</Callout>
+
+这就是托管工作台在账户或工作区变化时一律刷新页面的原因。它在加载任何图表模块之前，用产品名、用户 ID 和当前工作区拼出范围；切换时先关闭 Agent bridge，再调用 `window.location.reload()`。窗口重新获得焦点时以及每 60 秒，它还会重新校验会话，发现用户或工作区变了就刷新。
+
+范围只是浏览器数据分区，不是权限边界：同源脚本仍然能读到其他分区。云端数据操作必须始终校验登录会话和工作区成员关系。未配置范围的页面保持原有的存储名称。
+
+<Cards>
+  <Card title="布局文档设计说明" href="/zh/docs/architecture/notes/layout-document" description="归档形状、列表顺序与视口规则。" />
+  <Card title="持久化范围设计说明" href="/zh/docs/architecture/notes/browser-persistence-scope" description="按范围隔离存储的设计决策。" />
+  <Card title="集成 Agent" href="/zh/docs/guides/agent-integration" description="为 Agent 配置带范围的持久会话。" />
+</Cards>

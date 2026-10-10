@@ -1,0 +1,113 @@
+---
+title: 画线工具
+description: 手动或用代码绘制趋势线、通道和价位线，添加文字，选择、复制图元，并把它们锁定在原位。
+---
+
+交易员标出一条支撑线、写上说明、把它复制到上一个波段，再锁定图表以免误拖。你的代码可以做同样的事，Agent 也可以。三者走同一条写入路径，所以无论谁画的线，行为都完全一致。
+
+## 图元种类
+
+`kind` 是图元持久化的类型；创建它的工具栏工具 ID 有时更短。工具 ID 由 `@363045841yyt/klinechart-core/engine/drawing` 中的 `DrawingTool` 常量定义。
+
+| 种类 | 工具栏工具 ID | 输入锚点 |
+| --- | --- | --- |
+| `horizontal-line` | `h-line` | 1（仅价格） |
+| `horizontal-ray` | `h-ray` | 1 |
+| `vertical-line` | `v-line` | 1 |
+| `cross-line` | `crosshair-line` | 1 |
+| `trend-line` | `trend-line` | 2 |
+| `ray` | `ray` | 2 |
+| `extended-line` | — | 2 |
+| `fib-retracement` | `fib-retracement` | 2 |
+| `rectangle` | `rectangle` | 2 |
+| `arrow` | `arrow` | 2 |
+| `info-line` | `info-line` | 2 |
+| `regression-channel` | `regression-channel` | 2 |
+| `parallel-channel` | `parallel-channel` | 3 |
+| `flat-line` | `flat-line` | 3 |
+| `disjoint-channel` | `disjoint-channel` | 3 |
+
+另有两个工具 ID 不创建图元：`cursor`（默认）和 `box-select`。三种通道类图元输入 3 个锚点、保存 4 个：派生点在创建时一次算好，之后只保存坐标。`fib-retracement` 在两个锚点之间按 0%、23.6%、38.2%、50%、61.8%、78.6%、100% 绘制水平线。
+
+## 锚点是时间加价格
+
+你不需要传屏幕坐标。每个锚点由价格和一种时间轴定位方式组成：
+
+- `tradingDate`：`YYYY-MM-DD` 格式的日期，按 K 线的 `date` 字段匹配。
+- `timestamp`：精确的毫秒时间戳，可加正整数 `futureOffset`，落到最后一根 K 线右侧的留白里。
+- 仅价格：用于 `horizontal-line`。
+
+保存下来的锚点包含 `time`、`price`，以及用到时的 `futureOffset`，从不保存 K 线下标。下标在每一帧重新解析，所以向前加载历史数据时图元不会错位。图元还绑定一个 `paneId`（它的价格坐标系），以及创建时所在的 `kline` 或 `timeshare` 工作区。
+
+交易日无法使用时，错误码会说明原因：`DRAWING_ANCHOR_DATE_OUT_OF_RANGE` 表示日期超出已加载范围（details 里带 `earliest` 和 `latest`），`DRAWING_ANCHOR_DATE_NOT_TRADING` 表示日期在范围内但当天没有 K 线，`DRAWING_ANCHOR_DATE_UNAVAILABLE` 表示数据没有逐根的日期字段。
+
+## 用代码创建和修改图元
+
+```ts title="drawings.ts"
+import type { ChartController } from '@363045841yyt/klinechart-core'
+
+export function markSupport(chart: ChartController) {
+  const line = chart.createDrawing({
+    kind: 'trend-line',
+    paneId: 'main',
+    anchors: [
+      { tradingDate: '2025-03-03', price: 10.2 },
+      { tradingDate: '2025-04-15', price: 12.8 },
+    ],
+    style: { stroke: '#4A90D9', strokeWidth: 2, strokeStyle: 'dashed' },
+    labels: { line: { '0': { text: '支撑', position: 'end' } }, area: {} },
+  })
+
+  chart.createDrawing({ kind: 'horizontal-line', paneId: 'main', anchors: [{ price: 11.5 }] })
+  return line.id
+}
+```
+
+新建的图元会成为当前选中项。控制器还提供以下方法：
+
+| 方法 | 用途 |
+| --- | --- |
+| `updateDrawing(drawing)` | 用从 `drawings` 取出并修改后的副本替换一个图元。 |
+| `updateBatch(ids, patch)` | 一次性为多个图元设置 `style`、`visible`、`locked` 或 `zIndex`。 |
+| `getBatchStyleKeys(ids)` | 所有目标共有的样式字段；`updateBatch` 只接受这些字段。 |
+| `removeDrawing(id)` / `removeBatch(ids)` | 删除；已锁定的图元不会被删除。 |
+| `clearDrawings()` | 删除全部图元。 |
+| `importDrawings(list)` | 作为一次可撤销操作整体替换图元文档。 |
+| `replaceDrawings(list)` | 从外部权威数据同步，并重置撤销历史。 |
+| `undoDrawing()` / `redoDrawing()` | 撤销 / 重做。 |
+| `setDrawingTool(id)` | 切换当前工具；`null` 视为 `cursor`。 |
+
+状态从 `drawings`、`selectedDrawingIds`、`globalDrawingLock`、`canUndoDrawing`、`canRedoDrawing` 这些信号读取。批量写入要么全部成功，要么什么都不写：只要有一个目标不存在，或 patch 里含有共有集合之外的样式字段，整次操作都不会生效。
+
+## 样式
+
+`style` 支持 `stroke`、`strokeWidth`、`strokeStyle`（`solid`、`dashed`、`dotted`）、`fill`、`fillOpacity`（0–1）、`pointRadius`、`textColor` 和 `fontSize`。你的代码可以使用任意颜色。
+
+Agent 只能从一组低刺激配色中选择，刻意避开 K 线使用的红绿两色：`#4A90D9`、`#7C6FCD`、`#C08457`、`#8B5E83`、`#9CA3AF`。
+
+## 文字标签
+
+文字属于所在的图元。`labels.line` 和 `labels.area` 以图元输出的线段或填充区域序号为键（`"0"`、`"1"`……），所以斐波那契回撤的每一根水平线都可以有自己的文字。每个值是 `{ text, position }`，`position` 取 `start`、`center` 或 `end`，按线段自身方向理解。
+
+字面量 `\n` 是唯一的换行方式，文字不会自动折行，也不会被截断。更新 `labels` 时替换的是整组标签，所以要先读出当前内容。在界面上，指针移到线上会出现低对比度的“添加文本”提示，点击即可就地编辑。
+
+## 选择、复制与锁定
+
+选择状态保存在图表状态里的 `selectedDrawingIds`。普通点击选中单个图元；按住 Ctrl 或 Shift 点击，把图元加入或移出选择。`box-select` 工具只在起始窗格内生效，线段与选框相交的可见图元都会被切换选中状态。拖动任一已选图元，整组选择会作为一次提交一起移动。
+
+`copyDrawings(ids)` 以统一偏移复制图元：大约向右 16 CSS px、向下 48 px，横向对齐到整个时间槽位。副本可见、未锁定、处于选中状态，整组复制只占一步撤销。
+
+锁定分两层，互不覆盖：
+
+- 图元自身的 `locked` 冻结几何位置，并防止被删除。
+- `setGlobalDrawingLock(true)` 冻结所有图元的移动，但不改写任何图元自身的 `locked`。删除、样式、显隐和文字编辑照常可用，命中与选择也照常工作。
+
+## Agent 画线走同一条路
+
+Agent 的 `drawing_create`、`drawing_update`、`drawings_copy`、`drawing_delete`、`drawings_clear` 工具与界面、控制器调用的是同一个 `DrawingCommands` 实例。Agent 画的线同样会被选中、可以撤销，并随布局一起保存。Agent 会拿到当前可用的精确 pane ID；日期无效时，失败结果里会带回有效范围，方便它自行修正。
+
+<Cards>
+  <Card title="Agent 画线工具" href="/zh/docs/agent/tools/drawings" description="模型收到的参数与规则。" />
+  <Card title="布局" href="/zh/docs/guides/layouts" description="图元随每个布局一起保存。" />
+  <Card title="画线工具设计说明" href="/zh/docs/architecture/notes/drawing-tools" description="绘图引擎的设计记录。" />
+</Cards>

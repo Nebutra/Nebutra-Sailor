@@ -1,0 +1,768 @@
+/*
+ * KCQ docs. Every colour, radius, space and motion value is a KCQ token (`--klc-*`, generated
+ * from the pinned chart source by scripts/generate.mjs, the same generator as the public pages)
+ * or derived from one here. Fumadocs supplies structure; this file supplies the brand.
+ * Restraint rules (research/restraint-benchmark.md, docs-benchmark.md): one accent (Cobalt) for
+ * links, the current item and focus; hairlines instead of fills; three radii (6px, 12px, pill);
+ * no eyebrows, no gradients, no shadows except the overlay.
+ */
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+/* fumadocs-ui/css/preset.css without the docs/home/flux layout safelists this site never renders. */
+@import "fumadocs-ui/css/lib/base.css";
+@import "fumadocs-ui/css/generated/notebook.css";
+@import "fumadocs-ui/css/generated/shared.css";
+@import "./fumadocs-animations.css";
+
+/* Dark mode follows data-theme, as on the KCQ public pages (Fumadocs defaults to a .dark class). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@import "../generated/tokens.css";
+@import "../generated/fonts.css";
+
+/* Fonts: the subset files kcq.nebutra.com ships, under content-hashed names (src/generated/fonts.css). */
+
+@theme {
+  --font-sans:
+    "Geist", "Geist Fallback", "MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    sans-serif;
+  --font-mono:
+    "Geist Mono", "Geist Mono Fallback", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+/* Page roles (the same names and jobs as apps/kcq/src/public/public.css). Declared on every
+   [data-theme] element so a subtree that sets its own theme re-derives them. */
+:root,
+[data-theme] {
+  --kcq-page: var(--klc-color-ui-background);
+  --kcq-surface: var(--klc-color-ui-surface);
+  --kcq-raised: var(--klc-color-ui-card);
+  --kcq-control: var(--klc-color-ui-control-background);
+  --kcq-hover: var(--klc-color-ui-hover);
+  --kcq-ink: var(--klc-color-ui-text);
+  --kcq-ink-2: var(--klc-color-ui-muted);
+  --kcq-ink-soft: color-mix(in oklab, var(--kcq-ink) 82%, var(--kcq-page));
+  --kcq-rule: var(--klc-color-ui-border);
+  --kcq-rule-strong: var(--klc-color-ui-border-strong);
+  --kcq-accent: var(--klc-brand-accent);
+  --kcq-accent-text: var(--klc-brand-accent-text);
+  --kcq-accent-wash: color-mix(in oklab, var(--klc-brand-accent) 12%, transparent);
+  --kcq-accent-strong: color-mix(in oklab, var(--klc-brand-accent) 84%, #000);
+  --kcq-warning: var(--klc-color-ui-warning-strong);
+  --kcq-code-bg: color-mix(in oklab, var(--kcq-surface) 70%, var(--kcq-page));
+
+  /* Fumadocs' palette, each slot bound to one KCQ role. */
+  --color-fd-background: var(--kcq-page);
+  --color-fd-foreground: var(--kcq-ink);
+  --color-fd-muted: var(--kcq-surface);
+  --color-fd-muted-foreground: var(--kcq-ink-2);
+  --color-fd-popover: var(--kcq-raised);
+  --color-fd-popover-foreground: var(--kcq-ink);
+  --color-fd-card: var(--kcq-page);
+  --color-fd-card-foreground: var(--kcq-ink);
+  --color-fd-border: var(--kcq-rule);
+  --color-fd-primary: var(--kcq-accent-text);
+  --color-fd-primary-foreground: var(--kcq-page);
+  --color-fd-secondary: var(--kcq-control);
+  --color-fd-secondary-foreground: var(--kcq-ink);
+  --color-fd-accent: var(--kcq-hover);
+  --color-fd-accent-foreground: var(--kcq-ink);
+  --color-fd-ring: var(--kcq-accent);
+  --color-fd-overlay: color-mix(in oklab, var(--klc-color-ui-background) 40%, transparent);
+  --color-fd-info: var(--kcq-accent-text);
+  --color-fd-warning: var(--kcq-warning);
+  --color-fd-error: var(--kcq-warning);
+  --color-fd-success: var(--kcq-ink-2);
+  --color-fd-idea: var(--kcq-accent-text);
+}
+
+:root {
+  --kcq-font-heading:
+    "DM Sans", "DM Sans Fallback", "MiSans", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    sans-serif;
+  /* The public pages' header height (apps/kcq: --kcq-header-height = space-64). */
+  --kcq-header-height: var(--klc-space-64);
+  --kcq-content-width: 720px;
+  /* Fumadocs layout: one 1408px frame (260 sidebar + content + 240 TOC), as the benchmark. */
+  --fd-layout-width: 88rem;
+  scroll-padding-top: calc(var(--kcq-header-height) + var(--klc-space-24));
+}
+
+html {
+  background: var(--kcq-page);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  background: var(--kcq-page);
+  color: var(--kcq-ink);
+  font-family: var(--font-sans);
+  font-size: var(--klc-text-copy-16-font-size);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01" 0;
+}
+::selection {
+  background: var(--kcq-accent-wash);
+}
+:focus-visible {
+  outline: 2px solid var(--kcq-accent);
+  outline-offset: 2px;
+}
+
+.kcq-skip {
+  position: fixed;
+  top: var(--klc-space-8);
+  left: var(--klc-space-8);
+  z-index: var(--klc-z-index-toast);
+  padding: var(--klc-space-8) var(--klc-space-12);
+  border-radius: var(--klc-radius-sm);
+  background: var(--kcq-ink);
+  color: var(--kcq-page);
+  font-size: var(--klc-text-label-14-font-size);
+  transform: translateY(-200%);
+}
+.kcq-skip:focus-visible {
+  transform: none;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+
+/* Fumadocs offsets the sticky sidebar and TOC by its header height; ours matches kcq.nebutra.com. */
+#nd-notebook-layout:has(#nd-subnav) {
+  --fd-header-height: var(--kcq-header-height);
+}
+#nd-subnav {
+  background: var(--kcq-page);
+  backdrop-filter: none;
+  /* Full-bleed hairline and ground under the centred header row. */
+  border-image: linear-gradient(var(--kcq-page) 0 0) fill 0 / / 0 100vw;
+}
+#nd-subnav [data-header-body] {
+  height: var(--kcq-header-height);
+  gap: var(--klc-space-16);
+  border-bottom: 1px solid var(--kcq-rule);
+  border-image: linear-gradient(var(--kcq-rule) 0 0) 0 0 1 0 / 0 0 1px 0 / 0 100vw;
+}
+#nd-subnav [data-header-body] > div:first-child {
+  gap: var(--klc-space-12);
+}
+.kcq-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--klc-space-8);
+  color: var(--kcq-ink);
+}
+.kcq-brand-glyph {
+  fill: var(--kcq-accent);
+  flex: none;
+}
+.kcq-brand-word {
+  display: block;
+  height: 14px;
+  background: currentColor;
+  -webkit-mask: var(--kcq-wordmark) center / contain no-repeat;
+  mask: var(--kcq-wordmark) center / contain no-repeat;
+  flex: none;
+}
+.kcq-docs-label {
+  display: inline-flex;
+  white-space: nowrap;
+  align-items: center;
+  min-height: var(--klc-density-default);
+  padding-left: var(--klc-space-12);
+  border-left: 1px solid var(--kcq-rule);
+  color: var(--kcq-ink-2);
+  font-family: var(--kcq-font-heading);
+  font-weight: 500;
+  font-size: var(--klc-text-label-14-font-size);
+  line-height: 1;
+  text-decoration: none;
+  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .kcq-docs-label:hover {
+    color: var(--kcq-ink);
+  }
+}
+.kcq-header-links {
+  display: flex;
+  align-items: center;
+  gap: var(--klc-space-4);
+}
+.kcq-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--klc-space-8);
+  min-height: var(--klc-density-default);
+  padding-inline: var(--klc-space-8);
+  border-radius: var(--klc-radius-sm);
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-label-14-font-size);
+  line-height: var(--klc-text-label-14-line-height);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .kcq-nav-link:hover {
+    color: var(--kcq-ink);
+    background: var(--kcq-hover);
+  }
+}
+/* The GitHub button as on kcq.nebutra.com: a quiet bordered control with the dated star count. */
+.kcq-github {
+  margin-right: var(--klc-space-4);
+  padding-right: var(--klc-space-4);
+  border: 1px solid var(--kcq-rule-strong);
+  color: var(--kcq-ink);
+}
+.kcq-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--klc-space-4);
+  min-height: 22px;
+  padding-inline: var(--klc-space-8);
+  border-radius: var(--klc-radius-full);
+  background: var(--kcq-control);
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-12-font-size);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.kcq-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--klc-space-8);
+  min-height: var(--klc-density-default);
+  padding-inline: var(--klc-space-12);
+  border-radius: var(--klc-radius-sm);
+  font-size: var(--klc-text-label-14-font-size);
+  line-height: var(--klc-text-label-14-line-height);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+.kcq-button-primary {
+  margin-left: var(--klc-space-4);
+  background: var(--kcq-ink);
+  color: var(--kcq-page);
+}
+@media (hover: hover) and (pointer: fine) {
+  .kcq-button-primary:hover {
+    background: color-mix(in oklab, var(--kcq-ink) 86%, var(--kcq-page));
+  }
+}
+.kcq-icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: var(--klc-density-default);
+  height: var(--klc-density-default);
+  border-radius: var(--klc-radius-sm);
+  color: var(--kcq-ink-2);
+  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .kcq-icon-button:hover {
+    color: var(--kcq-ink);
+    background: var(--kcq-hover);
+  }
+}
+/* Search field in the header: a quiet control, ⌘K hint on the right. */
+#nd-subnav button[data-search-full] {
+  height: var(--klc-density-default);
+  border-radius: var(--klc-radius-sm);
+  border: 1px solid var(--kcq-rule);
+  background: var(--kcq-page);
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-copy-14-font-size);
+  box-shadow: none;
+  max-width: 320px;
+}
+@media (hover: hover) and (pointer: fine) {
+  #nd-subnav button[data-search-full]:hover {
+    border-color: var(--kcq-rule-strong);
+    background: var(--kcq-page);
+  }
+}
+#nd-subnav button[data-search-full] kbd {
+  border-radius: 4px;
+  background: var(--kcq-control);
+  border: 0;
+  font-family: var(--font-sans);
+  font-size: var(--klc-text-12-font-size);
+}
+
+/* In the mobile drawer the header actions stack as menu rows. */
+#nd-sidebar-mobile .kcq-header-links,
+[data-sidebar-drawer] .kcq-header-links {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--klc-space-2);
+  padding-bottom: var(--klc-space-12);
+  border-bottom: 1px solid var(--kcq-rule);
+  margin-bottom: var(--klc-space-12);
+}
+#nd-sidebar-mobile .kcq-button-primary,
+[data-sidebar-drawer] .kcq-button-primary {
+  justify-content: center;
+  margin: var(--klc-space-8) 0 0;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+
+#nd-sidebar {
+  --fd-sidebar-width: 260px;
+  background: var(--kcq-page);
+  border-color: var(--kcq-rule);
+}
+#nd-sidebar a,
+#nd-sidebar button,
+#nd-sidebar-mobile a,
+#nd-sidebar-mobile button {
+  font-size: var(--klc-text-copy-14-font-size);
+  line-height: var(--klc-text-copy-14-line-height);
+}
+#nd-sidebar a[data-active],
+#nd-sidebar-mobile a[data-active] {
+  min-height: 32px;
+  border-radius: var(--klc-radius-sm);
+  color: var(--kcq-ink-2);
+  transition: color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+#nd-sidebar a[data-active="true"],
+#nd-sidebar-mobile a[data-active="true"] {
+  color: var(--kcq-ink);
+  background: transparent;
+  font-weight: 500;
+}
+@media (hover: hover) and (pointer: fine) {
+  #nd-sidebar a[data-active="false"]:hover {
+    color: var(--kcq-ink);
+    background: var(--kcq-hover);
+  }
+}
+/* Section labels: sentence case, quiet, no caps or eyebrows. */
+#nd-sidebar p,
+#nd-sidebar-mobile p {
+  color: var(--kcq-ink);
+  font-family: var(--kcq-font-heading);
+  font-size: var(--klc-text-label-13-font-size);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ── Page ─────────────────────────────────────────────────────────────────── */
+
+#nd-page {
+  --fd-page-width: var(--kcq-content-width);
+}
+#nd-page article,
+#nd-page > div {
+  max-width: var(--kcq-content-width);
+}
+#nd-page h1 {
+  font-family: var(--kcq-font-heading);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--kcq-ink);
+}
+@media (min-width: 768px) {
+  #nd-page h1 {
+    font-size: var(--klc-text-32-font-size);
+  }
+}
+#nd-page h1 + p {
+  margin-top: var(--klc-space-8);
+  color: var(--kcq-ink-2);
+  font-size: 17px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.kcq-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--klc-space-8);
+  margin-block: var(--klc-space-4) var(--klc-space-8);
+}
+.kcq-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding-inline: 10px;
+  border: 1px solid var(--kcq-rule);
+  border-radius: var(--klc-radius-sm);
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-label-13-font-size);
+  line-height: 1;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    color var(--klc-motion-dur-fast) var(--klc-motion-ease-out),
+    border-color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .kcq-chip:hover {
+    color: var(--kcq-ink);
+    border-color: var(--kcq-rule-strong);
+  }
+}
+.kcq-language-note {
+  margin: 0;
+  padding: var(--klc-space-12) var(--klc-space-16);
+  border: 1px solid var(--kcq-rule);
+  border-left: 2px solid var(--kcq-accent);
+  border-radius: var(--klc-radius-sm);
+  color: var(--kcq-ink-soft);
+  font-size: var(--klc-text-copy-14-font-size);
+  line-height: 1.6;
+}
+
+/* Prose. Fumadocs' typography plugin sets structure; type and colour follow KCQ. */
+.prose {
+  --tw-prose-body: var(--kcq-ink-soft);
+  --tw-prose-headings: var(--kcq-ink);
+  --tw-prose-links: var(--kcq-ink);
+  --tw-prose-bold: var(--kcq-ink);
+  --tw-prose-code: var(--kcq-ink);
+  --tw-prose-counters: var(--kcq-ink-2);
+  --tw-prose-bullets: var(--kcq-rule-strong);
+  --tw-prose-hr: var(--kcq-rule);
+  --tw-prose-quotes: var(--kcq-ink-soft);
+  --tw-prose-quote-borders: var(--kcq-rule-strong);
+  --tw-prose-th-borders: var(--kcq-rule);
+  --tw-prose-td-borders: var(--kcq-rule);
+  font-size: var(--klc-text-copy-16-font-size);
+  line-height: 1.7;
+}
+:lang(zh-Hans) .prose,
+.prose:lang(zh-Hans) {
+  line-height: 1.8;
+}
+.prose :where(h2, h3, h4):not(:where(.not-prose *)) {
+  font-family: var(--kcq-font-heading);
+  font-weight: 500;
+  color: var(--kcq-ink);
+  text-wrap: balance;
+  scroll-margin-top: calc(var(--kcq-header-height) + var(--klc-space-24));
+}
+.prose :where(h2):not(:where(.not-prose *)) {
+  margin-top: 2.5em;
+  font-size: var(--klc-text-24-font-size);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+.prose :where(h3):not(:where(.not-prose *)) {
+  margin-top: 2em;
+  font-size: 18px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.prose :where(h4):not(:where(.not-prose *)) {
+  font-size: var(--klc-text-16-font-size);
+}
+.prose :where(a):not(:where(.not-prose *)) {
+  font-weight: 500;
+  color: var(--kcq-ink);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in oklab, var(--kcq-accent) 55%, transparent);
+  text-decoration-thickness: max(0.06em, 1px);
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .prose :where(a):not(:where(.not-prose *)):hover {
+    text-decoration-color: var(--kcq-accent);
+  }
+}
+/* Inline code: mono on a quiet chip, never coloured. */
+.prose :where(:not(pre) > code):not(:where(.not-prose *)) {
+  padding: 0.12em 0.36em;
+  border-radius: 4px;
+  background: var(--kcq-control);
+  color: var(--kcq-ink);
+  font-size: 0.86em;
+  font-weight: 400;
+}
+.prose :where(:not(pre) > code):not(:where(.not-prose *))::before,
+.prose :where(:not(pre) > code):not(:where(.not-prose *))::after {
+  content: none;
+}
+.prose :where(strong):not(:where(.not-prose *)) {
+  font-weight: 600;
+}
+.prose :where(blockquote):not(:where(.not-prose *)) {
+  border-left-width: 2px;
+  font-style: normal;
+  font-weight: 400;
+}
+.prose :where(blockquote p):not(:where(.not-prose *))::before,
+.prose :where(blockquote p):not(:where(.not-prose *))::after {
+  content: none;
+}
+
+/* Tables: hairline rows, compact, numbers aligned. */
+.prose :where(table):not(:where(.not-prose *)) {
+  font-size: var(--klc-text-copy-14-font-size);
+  line-height: 1.55;
+  font-variant-numeric: tabular-nums;
+}
+.prose :where(thead th):not(:where(.not-prose *)) {
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-label-13-font-size);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.prose :where(td, th):not(:where(.not-prose *)) {
+  vertical-align: top;
+}
+.prose :where(td code):not(:where(.not-prose *)) {
+  white-space: nowrap;
+}
+.prose :where(td:last-child code, td:nth-child(4) code):not(:where(.not-prose *)) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Code blocks: one hairline frame, quiet title bar, copy feedback from Fumadocs. */
+figure.shiki,
+.prose :where(figure):has(> pre.shiki) {
+  border: 1px solid var(--kcq-rule);
+  border-radius: var(--klc-radius-sm);
+  background: var(--kcq-code-bg);
+  box-shadow: none;
+}
+figure.shiki pre,
+.shiki pre {
+  font-size: 13px;
+  line-height: 1.7;
+}
+figure.shiki > div:first-child:has(figcaption) {
+  border-bottom: 1px solid var(--kcq-rule);
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-label-13-font-size);
+}
+.shiki code span {
+  font-style: normal !important;
+}
+.shiki .highlighted {
+  background: var(--kcq-accent-wash);
+  box-shadow: inset 2px 0 0 var(--kcq-accent);
+}
+[data-theme="dark"] .shiki:not(.not-fumadocs-codeblock *) code span {
+  color: var(--shiki-dark);
+}
+
+/* Tabs (Vue / React / Web Component): text tabs with a 2px accent underline. */
+.prose [role="tablist"] {
+  gap: var(--klc-space-16);
+  border-bottom: 1px solid var(--kcq-rule);
+  background: transparent;
+}
+.prose [role="tab"] {
+  padding-inline: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-label-13-font-size);
+  font-weight: 500;
+}
+.prose [role="tab"][data-state="active"],
+.prose [role="tab"][aria-selected="true"] {
+  color: var(--kcq-ink);
+  border-bottom-color: var(--kcq-accent);
+}
+
+/* Callouts and cards: hairline, no tint. */
+.prose div[style*="--callout-color"] {
+  border: 1px solid var(--kcq-rule);
+  border-radius: var(--klc-radius-lg);
+  background: transparent;
+  box-shadow: none;
+}
+/* Heading permalinks are links too (Fumadocs marks them data-card); they stay plain headings. */
+.prose :where(h1, h2, h3, h4, h5, h6) > a[href^="#"] {
+  border: 0 !important;
+  border-radius: 0;
+  background: none !important;
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: none;
+}
+.prose a[data-card]:not([href^="#"]) {
+  border: 1px solid var(--kcq-rule);
+  border-radius: var(--klc-radius-lg);
+  background: var(--kcq-page);
+  box-shadow: none;
+  transition: border-color var(--klc-motion-dur-fast) var(--klc-motion-ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .prose a[data-card]:not([href^="#"]):hover {
+    border-color: var(--kcq-rule-strong);
+    background: var(--kcq-page);
+  }
+}
+
+/* Native disclosure (JSON Schema). */
+.prose details {
+  margin-block: var(--klc-space-16);
+  border: 1px solid var(--kcq-rule);
+  border-radius: var(--klc-radius-sm);
+}
+.prose details > summary {
+  cursor: pointer;
+  padding: var(--klc-space-8) var(--klc-space-12);
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-label-13-font-size);
+  font-weight: 500;
+}
+.prose details[open] > summary {
+  border-bottom: 1px solid var(--kcq-rule);
+}
+.prose details > :not(summary) {
+  margin: 0;
+  border: 0;
+}
+
+.kcq-schema-body {
+  max-height: 420px;
+  overflow: auto;
+  padding: var(--klc-space-12) var(--klc-space-16);
+  background: var(--kcq-code-bg);
+  color: var(--kcq-ink);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+/* Generated reference: tool and package metadata row, endpoints. */
+.kcq-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--klc-space-8);
+  margin-block: calc(-1 * var(--klc-space-8)) var(--klc-space-16);
+  font-size: var(--klc-text-label-13-font-size);
+}
+.kcq-meta-label {
+  color: var(--kcq-ink);
+  font-weight: 500;
+}
+.kcq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 22px;
+  padding-inline: var(--klc-space-8);
+  border-radius: var(--klc-radius-full);
+  background: var(--kcq-control);
+  color: var(--kcq-ink-2);
+  font-size: var(--klc-text-12-font-size);
+  line-height: 1;
+}
+.kcq-badge[data-safety]::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: var(--klc-radius-full);
+  background: var(--kcq-ink-2);
+}
+.kcq-badge[data-safety="destructive"] {
+  color: var(--kcq-ink);
+}
+.kcq-badge[data-safety="destructive"]::before {
+  background: var(--kcq-warning);
+}
+.prose .kcq-meta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  color: var(--kcq-ink-2);
+  font-weight: 500;
+  text-decoration: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .prose .kcq-meta-link:hover {
+    color: var(--kcq-ink);
+  }
+}
+.kcq-endpoint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--klc-space-8);
+}
+.kcq-endpoint-method {
+  padding: 2px 8px;
+  border-radius: var(--klc-radius-full);
+  background: var(--kcq-ink);
+  color: var(--kcq-page);
+  font-family: var(--font-mono);
+  font-size: var(--klc-text-12-font-size);
+  font-weight: 500;
+}
+
+/* TOC: 13px, current section in ink with the accent rule (clerk style draws the rail). */
+#nd-toc a {
+  font-size: var(--klc-text-copy-13-font-size);
+  line-height: 1.5;
+  color: var(--kcq-ink-2);
+}
+#nd-toc a[data-active="true"] {
+  color: var(--kcq-ink);
+}
+#nd-toc h3,
+#nd-toc p:first-child {
+  color: var(--kcq-ink);
+  font-family: var(--kcq-font-heading);
+  font-size: var(--klc-text-label-13-font-size);
+  font-weight: 500;
+}
+
+/* Footer prev/next cards. */
+#nd-page footer a {
+  border-color: var(--kcq-rule);
+  border-radius: var(--klc-radius-lg);
+  box-shadow: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  #nd-page footer a:hover {
+    border-color: var(--kcq-rule-strong);
+    background: var(--kcq-page);
+  }
+}
+
+/* Search dialog: raised surface, hairline, the one shadow of the site. */
+[role="dialog"][data-state] {
+  border-color: var(--kcq-rule);
+  border-radius: var(--klc-radius-lg);
+  background: var(--kcq-raised);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
+
+/* Breadcrumb above the title: quiet, the accent stays for links in prose. */
+#nd-page > div:first-child a,
+#nd-page nav[aria-label] a {
+  color: var(--kcq-ink-2);
+}
+#nd-page h1 + p {
+  margin-bottom: var(--klc-space-4);
+}
+
+/* The search field sits in a dialog that already shows focus; no second ring on the input. */
+[role="dialog"] input:focus-visible {
+  outline: none;
+}

@@ -1,0 +1,75 @@
+---
+title: Agent 如何操作图表
+description: Agent 工具就是带 @Tool 注解的图表方法：一份实现、一份状态，模型与图表之间没有桥接层。
+---
+
+用户说“MACD 的信号线调快一点”，Agent 不会去描述该怎么改，而是直接改好：结果落在用户正在看的图表上，走的是和人手操作相同的入口。本页说明 Agent 如何触达图表、它能看到什么，以及一次运行是如何组装起来的。
+
+## 工具就是图表方法
+
+工具是 Core 领域对象上的普通方法，加上 `@Tool` 注解。注解补充名称、描述、TypeBox 参数 schema、安全等级和执行模式；方法体本身就是实现，不会再额外生成任何包装。
+
+```ts title="packages/core/src/features/agent/impl/chartAgentController.ts"
+@Tool({
+  name: 'indicators_query',
+  label: 'Query indicator',
+  description: 'Calculate a registered chart indicator over all active K-line data and return compact text. …',
+  parameters: IndicatorQueryToolParameters,
+  safety: 'read-only',
+  executionMode: 'parallel',
+})
+async queryIndicator(input: IndicatorQueryInput, _context?: ChartToolExecutionContext) {
+  await this.dependencies.loadIndicators([input.definitionId])
+  return this.dependencies.indicatorQuery.queryIndicator({ … })
+}
+```
+
+装饰器把每个工具记录到 `packages/core/src/foundation/agent/chartToolRegistry.ts` 的注册表中。`getRegisteredChartTools()`（来自 `@363045841yyt/klinechart-core/controllers`）返回全部工具，包括冻结的 schema、真实方法名，以及先校验输入再调用方法的统一 `execute` 入口。工具分布在几个宿主对象上：图表的 `ChartAgentController`，以及对比命令、设置命令等 `toolHosts`。宿主按函数身份匹配，同名方法不会被认错。
+
+界面调用的也是这些方法。设置对话框、命令面板和 Agent 通过同一组 `settingsCommands` 写入设置；画布工具栏的复制按钮与 `drawings_copy` 工具共用 `copyDrawings`，连位置策略和撤销步骤都一样。
+
+## 一份状态，没有桥接层
+
+每个工具都读写 StateKernel，也就是图表唯一的事实来源。只有 action 能写入，外部消费者拿到的都是只读信号。工具是这些 action 的子集，而不是另起一套系统，所以 Agent 改了什么，用户看到的就是什么，反过来也一样。
+
+项目经历过 JSON 配置和 MCP 两个阶段才走到今天。README 在 “No blind use of MCP” 一节说明了原因：中间协议会消耗 token、丢失信息，还要维护一份侵入前端逻辑的第二份状态。现在的设计里，工具直接注册在图表内核上，一次调用就能到达内核。
+
+## Agent 能看到什么
+
+Agent 对图表的认知来自内核派生的 `ChartAgentController.context`。它是只读信号，没有加载行情数据时为 `null`。
+
+| 字段 | 含义 |
+| --- | --- |
+| `symbol`、`symbolName`、`market`、`exchange` | 主品种。 |
+| `period`、`adjustMode`、`dataSource`、`timezone` | 当前序列的加载方式。 |
+| `dataRange` | 首尾时间戳与 K 线数量。 |
+| `visibleRange` | 用户用区间选择工具确认的范围，未选择时为 `null`。 |
+| `selectedKLineBars` | 该范围内已加载的 K 线，格式与 K 线查询工具的输出一致。 |
+| `activeIndicators` | 每个实例的 `instanceId`、`definitionId` 和数值参数。 |
+| `drawingSelection` | 当前选中图元的快照，未选择时为 `null`。 |
+| `dataRevision` | 当前数据的版本号。 |
+
+时区来自数据本身，与每份序列原子写入内核，所以日期按市场时区格式化，而不是浏览器时区。浏览器 bridge 把快照投影为上下文项（`chart-symbol`、`selected-time-range`、`selected-kline-bars`、`drawing-selection`）：面板展示它们，用户发起的每次运行也会附带它们。bridge 从不保存可写副本。切换品种或周期、重新加载数据、修改选择，快照都会自动重算。详见 [Agent 图表上下文](/zh/docs/architecture/notes/agent-chart-context-ssot)。
+
+## 运行时
+
+`@363045841yyt/klinechart-agent-runtime` 负责 Agent 循环。它与框架无关，基于 Pi agent 构建，负责 UI 契约、运行生命周期、持久会话、事件重放和脱敏，并把 Pi 事件投影为稳定的 UI 事件，例如 `tool.started`、`tool.progress`、`tool.finished` 以及流式助手文本。运行 10 分钟没有活动就会被取消，任何事件或工具进度都会重置这个计时。每个运行驱动器同一时间最多持有一个运行。
+
+在浏览器中，`BrowserToolRegistry` 负责把图表工具接到运行时。每次运行它都会：
+
+1. 把每个已注册的图表工具转换为运行时工具，并绑定到拥有该方法的宿主上。
+2. 没有绑定图表时不提供图表工具；只读运行时去掉所有非只读工具。
+3. 在描述末尾追加实时取值：行情、品种查询工具和 `comparison_create` 会拿到当前启用的精确 `sourceId`，`drawing_create` 会拿到此刻存在的 pane ID。模型从真实值里选，而不是去猜。
+4. 已知失败以数据形式返回而不是抛异常：`{ success: false, error, stateChanged: false }`，并附带建议操作，模型可以据此修正下一次调用。
+
+`web_search` 和 `ask_user` 由运行时提供，与图表工具一起注册。
+
+## 不确定时先问
+
+请求有歧义时，Agent 会先问。`instruments_query_name` 返回所有精确匹配；结果多于一行时，模型被要求调用 `ask_user`，每个候选一个选项，而不是自己挑一个。`ask_user` 在面板里显示提问卡片（1–8 个选项，可单选或多选）并等待回答。等待期间无活动计时会暂停，因为回答要多久由用户决定。
+
+<Cards>
+  <Card title="工具参考" href="/zh/docs/agent/tools" description="每个工具的参数，以及模型收到的原文描述。" />
+  <Card title="安全与权限" href="/zh/docs/agent/safety" description="只读运行、输入校验、脱敏与凭据。" />
+  <Card title="集成 Agent" href="/zh/docs/guides/agent-integration" description="在你的应用中接入 bridge、Provider 与会话。" />
+</Cards>

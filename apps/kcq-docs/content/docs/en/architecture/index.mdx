@@ -1,0 +1,87 @@
+---
+title: Architecture
+description: How KLineChartQuant is split into packages, how data becomes a frame, and where to read further.
+---
+
+KLineChartQuant is a pnpm monorepo built around one headless engine. Framework packages mount it, the Agent drives it through the same methods as the UI, and every pixel comes out of one frame pipeline. This page is the map; the in-depth pages it links carry the detail.
+
+Several in-depth pages are written in Chinese and shown in their original language.
+
+## Packages and boundaries
+
+| Package | Published as | Role |
+|---|---|---|
+| `packages/core` | `@363045841yyt/klinechart-core` | Headless engine and `ChartController`. Depends on no UI framework |
+| `packages/vue` | `@363045841yyt/klinechart` | Vue 3 component and `useChart`; also builds the `<kline-chart>` Web Component (`./web-component`) |
+| `packages/react` | `@363045841yyt/klinechart-react` | `KLineChartWC`, a React wrapper around the Vue-built Web Component |
+| `packages/angular` | `@363045841yyt/klinechart-angular` | Angular bindings |
+| `packages/agent-runtime` | `@363045841yyt/klinechart-agent-runtime` | Framework-neutral Agent runtime: orchestration and host contracts |
+| `packages/desktop-electron` | not published | Local desktop app |
+
+Three boundaries hold everything together:
+
+- **The core is framework-free.** Bindings depend on the core through `workspace:*`; the core never imports Vue, React or Angular. Bindings only mount the container, forward input and bridge signals into their own reactivity.
+- **One controller surface.** `ChartController` exposes readonly signals (viewport, data, indicators, theme, pane layout, interaction state and more) and command methods such as `setData`, `setSymbols` and `addIndicator`. Every binding talks to this surface.
+- **No Agent bridge.** Core methods decorated with `@Tool` are the Agent's tools. The Agent runtime calls them directly, against the same state the user sees.
+
+React takes the long way round on purpose: React → Web Component → controller. There is one UI implementation, not two.
+
+## From data to a frame
+
+```text
+Provider ── SourceRouter ── MarketDataCache
+                                 │
+                       chart data buffer
+                                 │
+                 StateKernel (data signal updates)
+                                 │
+                    scheduleDraw(level)
+                                 │
+     FrameTransaction: capture → derive → seal → render → publish
+                                 │
+                  Scene / Layer (per pane, by role and z)
+                                 │
+              Renderer ── WebGPU · WebGL2 · Canvas2D
+```
+
+1. A binding calls `setSymbols` or passes inline data. `ChartDataManager` finds or creates the buffer for that series.
+2. `MarketDataCache` fetches through `SourceRouter`, pages, retries and de-duplicates, then writes into the buffer. See [Market data](/docs/market-data).
+3. The buffer change updates the [StateKernel](/docs/architecture/state-kernel) data signal and calls `scheduleDraw()`.
+4. `FrameTransaction` merges every request that arrives before the next animation frame. It seals the input, derives the visible range and K-line geometry once, seals that geometry so hit-testing matches what is on screen, then paints.
+5. Each pane paints its layers through one `Renderer` contract (`drawInstances`, `drawLines`). Input that arrives mid-frame goes to the next generation; the current frame never changes underneath itself.
+
+Interaction takes a shorter path. Pointer, wheel and pinch events update interaction state and redraw the overlay layer only, so moving the crosshair never repaints the static main layer.
+
+## Rendering backends
+
+Business layers never touch a GPU API. They submit primitives to `Renderer`, and `RendererHost` decides what runs them.
+
+| `settings.rendererBackend` | Tried in order |
+|---|---|
+| `webgpu` | WebGPU → WebGL → Canvas |
+| `webgl` | WebGL → Canvas |
+| `canvas` | Canvas |
+
+When the active backend is below the preference, the runtime status is `degraded`. Switching backends is a hot swap: the scene and its layers are kept, and the old renderer is disposed after the new one takes over. A lost WebGPU device falls back to WebGL, then Canvas. If a GPU batch cannot complete, the layer runs its full Canvas2D path. Pixels are drawn at physical resolution from logical inputs, with one source for the device pixel ratio.
+
+## Read further
+
+| Page | What it covers | Language |
+|---|---|---|
+| [Rendering pipeline](/docs/architecture/rendering-pipeline) | Frame transaction, geometry sealing, Scene/Layer, Renderer, each backend, RendererHost | Chinese |
+| [System architecture](/docs/architecture/system) | The full architecture document this page summarizes, with key file index | Chinese |
+| [Adapters](/docs/architecture/adapters) | Signal + controller design behind every framework binding | English |
+| [Cross-framework compatibility](/docs/architecture/cross-framework) | Vue SFC, Web Component, React and plain usage | English |
+| [Package boundaries](/docs/architecture/package-boundaries) | How the Vue build stopped compiling core sources | English |
+| [Core exports](/docs/architecture/core-exports) | Generating source aliases from the core export map | Chinese |
+| [Decisions (ADR)](/docs/architecture/adr/0005-renderer-freeze) | Accepted and proposed decisions, one per page | English |
+| [Design notes](/docs/architecture/notes/layout-document) | Layout documents, persistence scope, panes, themes, BYOK, Agent context and more | Mostly Chinese |
+| [Engineering notes](/docs/architecture/engineering/frame-transaction-timing-effect) | Write-ups of real bugs and the fixes that shaped the engine | Chinese |
+
+## Next
+
+<Cards>
+  <Card title="StateKernel" href="/docs/architecture/state-kernel" description="The single source of truth every binding and the Agent read from." />
+  <Card title="Rendering pipeline" href="/docs/architecture/rendering-pipeline" description="The paint path in full detail." />
+  <Card title="Market data" href="/docs/market-data" description="Providers, routing and the per-chart cache." />
+</Cards>

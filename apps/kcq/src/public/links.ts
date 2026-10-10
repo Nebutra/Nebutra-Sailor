@@ -3,6 +3,7 @@
  * comes from the pinned chart source (virtual:kcq-facts), never typed here.
  */
 import facts from "virtual:kcq-facts";
+import { DOCS_PATHS, type PublicLocale } from "./routes";
 
 export const LINKS = {
   github: facts.upstream,
@@ -20,3 +21,11 @@ export const LINKS = {
 } as const;
 
 export const INSTALL_COMMAND = "pnpm add @363045841yyt/klinechart";
+
+/**
+ * The documentation (apps/kcq-docs, served by the same nginx): English at /docs, Chinese at /zh/docs.
+ * Plain links, not router links: the docs are a separate static app.
+ */
+export function docsPath(locale: PublicLocale, page = ""): string {
+  return page ? `${DOCS_PATHS[locale]}/${page}` : DOCS_PATHS[locale];
+}

@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "apps/kcq/**"
+      - "apps/kcq-docs/**"
       - "packages/iam/auth/**"
       - "packages/design/**"
       - "pnpm-lock.yaml"
@@ -17,6 +18,7 @@ on:
     branches: [main]
     paths:
       - "apps/kcq/**"
+      - "apps/kcq-docs/**"
       - "packages/iam/auth/**"
       - "packages/design/**"
       - "pnpm-lock.yaml"
@@ -54,7 +56,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version: "22.23.2"
-          install-command: pnpm install --frozen-lockfile --filter @nebutra/kcq...
+          install-command: pnpm install --frozen-lockfile --filter @nebutra/kcq... --filter @nebutra/kcq-docs...
       - name: Test KCQ Machine supervisor and proxy contract
         run: python3 -m unittest discover -s infra/fly -p 'test_kcq_*.py'
       - name: Validate proxy configuration
@@ -66,6 +68,14 @@ jobs:
       - name: Verify pinned product
         if: inputs.candidate_ref == ''
         run: node apps/kcq/scripts/verify.mjs
+      - name: Build documentation from the pinned chart
+        if: inputs.candidate_ref == ''
+        run: |
+          set -euo pipefail
+          pnpm turbo run build --filter=@nebutra/kcq-docs^...
+          pnpm --filter @nebutra/kcq-docs typecheck
+          pnpm --filter @nebutra/kcq-docs test
+          pnpm --filter @nebutra/kcq-docs build
       - name: Check candidate without changing production
         if: inputs.candidate_ref != ''
         env:

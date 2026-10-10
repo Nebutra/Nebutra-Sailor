@@ -1,0 +1,118 @@
+---
+title: 行情数据
+description: 由图表定义的统一品种与序列模型、负责转换上游协议的 Provider，以及决定由谁取数的路由层。
+---
+
+KLineChartQuant 的每一根 K 线、每一条分时和每一个品种，都经过同一套由前端定义的模型。数据源的私有协议不会直接进入图表，而是先由 Provider 转换。正因如此，同一张图、同一个比较功能、同一个 Agent 工具，才能同时跑在通达信、TradingView、MT5 或你自己的服务上。
+
+## 统一模型
+
+绝大多数数据由三种类型承载，均从 `@363045841yyt/klinechart-core/market-data` 导出。
+
+| 类型 | 内容 |
+|---|---|
+| `InstrumentDescriptor` | 身份字段（`id`、`sourceId`、`symbol`、`name`、`assetClass`、`exchange`），可选的 `sessionId`、`currency`、`tickSize`、`lotSize`，以及 `capabilities` |
+| `BarSeries` | 一页 K 线：`instrumentId`、`period`、`adjustment`、`barAggregation`、`timezone`、可选 `volumeUnit`、`data` 和 `olderData` |
+| `TimeShareSeries` | 单个交易日的分时：`instrumentId`、`tradingDate`、`timezone`、`preClose`、可选 `volumeUnit`、`data` |
+
+几条约定让模型保持干净：
+
+- `id` 是品种身份的唯一依据。代码相同、交易所不同，就是两个品种。
+- `providerRef` 是私有路由信息，只交给创建它的 Provider；搜索、UI、比较和图表都不读取。
+- 周期与复权选项读取 `instrument.capabilities.bars`。进入分时模式需要 `capabilities.timeShare === true`，且 `sessionId` 已注册。
+- 成交量按序列的 `volumeUnit`（`share`、`lot`、`contract` 或 `baseAsset`）展示，不默认所有市场都用“手”。
+- `olderData`（`available`、`exhausted` 或 `unknown`）由后端明确声明，前端不会从一页空数据去猜历史是否到头。
+
+## Provider 与注册表
+
+`MarketDataProvider` 按能力组合模块，缺少哪个模块就表示不支持哪项能力。
+
+```ts
+interface MarketDataProvider {
+  readonly source: DataSourceDescriptor
+  probe(signal?: AbortSignal): Promise<SourceProbeResult>
+  readonly catalog?: InstrumentCatalog
+  readonly bars?: BarDataSource
+  readonly tradingCalendar?: TradingCalendarDataSource
+  readonly liveBars?: LiveBarsDataSource
+  readonly timeShare?: TimeShareDataSource
+  readonly timeShareRange?: TimeShareRangeDataSource
+  readonly depth?: DepthDataSource
+}
+```
+
+Provider 统一登记在 `marketDataProviderRegistry`，每个 Provider 有一份运行时配置：`enabled`、`priority` 和可选的 `baseUrl`。注册表只保存当前会话的配置，持久化（比如写入 `localStorage`）由宿主负责。
+
+```ts
+import { marketDataProviderRegistry } from '@363045841yyt/klinechart-core/market-data'
+
+marketDataProviderRegistry.setConfig('gotdx', { baseUrl: 'http://127.0.0.1:8080' })
+marketDataProviderRegistry.setConfig('mock', { enabled: false })
+
+const enabled = marketDataProviderRegistry.getEnabled()
+```
+
+导入 `@363045841yyt/klinechart-core/market-data/sources` 会注册内置 Provider：`gotdx`、`baostock`、`finshare`、`tradingview`、`mock` 和 `mt5`。注册顺序决定同优先级数据源的尝试顺序。各数据源覆盖的范围见[连接器](/zh/docs/market-data/connectors)。
+
+## 路由
+
+图表运行时从不直接调用 Provider，而是由 `ChartDataManager` 交给 `SourceRouter`，由路由层决定谁来应答。
+
+- **显式 `sourceId`**（`preferredSourceId`）只走这一个源。源被禁用或不具备该能力时直接失败，不会悄悄换源。
+- **`auto`** 按优先级取出已启用的 Provider，再按源级能力筛选：能力本身、`assetClass`、`period` 和 `adjustment`。尚未声明能力的源会先探测一次。
+- **品种解析**在每个候选源的目录中按 `symbol` 查找，提供了 `exchange` 和 `assetClass` 时一并收窄。
+- **流转**只发生在确定性拒绝时，即 `UNSUPPORTED_CAPABILITY` 或 `INSTRUMENT_NOT_FOUND`。网络故障或取消会直接终止，上游不稳定时会如实报错，而不是拿另一个源的数据掩盖过去。
+
+所有候选源都拒绝时，路由层抛出 `SourceRoutingError`，附带完整的尝试链。
+
+### 代码有歧义时
+
+同一个代码可能对应多个品种，例如 `000012` 既可能是一只股票，也可能是一个国债指数。Core 不会替用户拍板。`comparison_create` 等 Agent 工具会返回 `{ status: "ambiguous", candidates }` 且不写入任何状态；Agent 必须调用 `ask_user`，每个候选一个选项，再用用户选中的 `source` 和 `exchange` 重试。用户和 Agent 走的是同一组命令，这条规则对两者同样成立。
+
+## 行情缓存
+
+每个图表实例持有一个 `MarketDataCache`。UI、Agent 和 `ChartDataManager` 都从它取数，滚动加载和 Agent 查询复用同一批分页结果，不会重复请求。它用 `limit`/`before` 游标分页拉取历史，失败自动重试，合并相同的进行中请求，超过容量上限时按最近最少使用淘汰。
+
+上限由设置项 `marketDataCacheMaxMiB` 控制：默认 50 MiB，可调范围 5 到 512。它位于设置面板的“数据”分组，修改即时生效，调低时立刻淘汰。
+
+```ts
+controller.settingsCommands.applyValues({ marketDataCacheMaxMiB: 128 })
+```
+
+## 三种接入方式
+
+| 方式 | 适用场景 | 参考 |
+|---|---|---|
+| REST 协议 | 你有自己的服务，能实现 `market-data-v1`：探测、品种搜索、K 线、分时 | [HTTP API](/zh/docs/market-data/http-api) |
+| 实时 K 线（SSE） | 你的服务能按数据源推送形成中和已收盘的 K 线 | [实时 K 线](/zh/docs/market-data/live-bars) |
+| 进程内 Provider | 数据已经在浏览器里，或者你想自己封装某个客户端 SDK | [Provider API](/zh/docs/market-data/provider-api) |
+
+走 REST 协议不需要写 Provider 代码，`createMarketDataProvider` 和 `createHttpMarketDataTransport` 根据地址直接装配：
+
+```ts
+import {
+  createHttpMarketDataTransport,
+  createMarketDataProvider,
+  marketDataProviderRegistry,
+} from '@363045841yyt/klinechart-core/market-data'
+
+const provider = createMarketDataProvider({
+  source: { id: 'my-feed', displayName: 'My feed', defaultBaseUrl: 'http://127.0.0.1:9000' },
+  transport: createHttpMarketDataTransport({
+    baseUrl: () => marketDataProviderRegistry.getConfig('my-feed').baseUrl ?? 'http://127.0.0.1:9000',
+    sourceLabel: 'my-feed',
+  }),
+})
+
+marketDataProviderRegistry.register(provider, { enabled: true })
+```
+
+如果只是展示一份现成数据、没有任何行情源，组件仍然支持直接传入（`customData` 属性，或控制器的 `setData`）。
+
+## 下一步
+
+<Cards>
+  <Card title="连接器" href="/zh/docs/market-data/connectors" description="GOTDX、TradingView、Binance 深度、BaoStock、MT5 与 mock：覆盖范围与启动方式。" />
+  <Card title="HTTP API" href="/zh/docs/market-data/http-api" description="你的服务需要实现的 market-data-v1 REST 契约。" />
+  <Card title="Provider API" href="/zh/docs/market-data/provider-api" description="在进程内基于同一套类型编写 Provider。" />
+</Cards>
