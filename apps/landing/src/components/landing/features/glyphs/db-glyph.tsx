@@ -31,7 +31,7 @@ export function DbGlyph({ copy }: SubpackageGlyphProps) {
   const t = copy as DbGlyphCopy;
 
   return (
-    <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
+    <div aria-hidden className="flex w-full flex-col justify-center" style={{ minHeight: 160 }}>
       <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Code line */}
         <div className="rounded-[var(--radius-md)] bg-muted px-2 py-1.5 ring-1 ring-border">

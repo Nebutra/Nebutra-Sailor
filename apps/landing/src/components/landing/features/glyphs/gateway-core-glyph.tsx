@@ -45,10 +45,10 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
     <div
       aria-hidden
       className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-lg)] bg-muted px-3 py-3"
-      style={{ height: 160 }}
+      style={{ minHeight: 160 }}
     >
       {/* Pipeline row */}
-      <div className="flex items-center gap-1.5">
+      <div className="flex flex-wrap items-center gap-1.5">
         <Badge variant="gray-subtle" size="sm" icon={<Api />}>
           REQ
         </Badge>
@@ -63,10 +63,12 @@ export function GatewayCoreGlyph(_props: SubpackageGlyphProps) {
           </div>
         ))}
 
-        <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground" />
-        <Badge variant="green-subtle" size="sm" icon={<Lightning />}>
-          RES 200
-        </Badge>
+        <div className="flex items-center gap-1.5">
+          <ArrowRight className="h-3 w-3 shrink-0 text-muted-foreground" />
+          <Badge variant="green-subtle" size="sm" icon={<Lightning />}>
+            RES 200
+          </Badge>
+        </div>
       </div>
 
       {/* Metrics row */}

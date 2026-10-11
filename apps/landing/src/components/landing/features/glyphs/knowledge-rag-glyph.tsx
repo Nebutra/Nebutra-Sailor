@@ -29,7 +29,7 @@ const CHUNKS: readonly Chunk[] = [
 export function KnowledgeRagGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      style={{ height: 160 }}
+      style={{ minHeight: 160 }}
       className="flex w-full flex-col gap-1.5 overflow-hidden p-3"
       aria-hidden="true"
     >
@@ -44,15 +44,15 @@ export function KnowledgeRagGlyph(_props: SubpackageGlyphProps) {
         />
       </div>
 
-      <div className="flex items-center gap-1">
+      <div className="flex flex-wrap items-center gap-1">
         {STAGES.map((stage, idx) => {
           const Icon = stage.icon;
           return (
-            <div key={stage.label} className="flex flex-1 items-center gap-1">
+            <div key={stage.label} className="flex items-center gap-1">
               <Badge
                 variant="outline"
                 size="sm"
-                className="flex w-full items-center justify-center gap-1 px-1 py-0.5 font-mono text-[10px] tabular-nums"
+                className="flex items-center justify-center gap-1 whitespace-nowrap px-1 py-0.5 font-mono text-[10px] tabular-nums"
               >
                 <Icon className="h-2.5 w-2.5 text-[color:hsl(var(--primary))]" />
                 <span className="truncate">{stage.label}</span>
@@ -84,7 +84,7 @@ export function KnowledgeRagGlyph(_props: SubpackageGlyphProps) {
       </ul>
 
       <div className="mt-auto flex items-center gap-1 font-mono text-[10px] tabular-nums text-muted-foreground">
-        <Lightning className="h-2.5 w-2.5 text-[color:var(--brand-accent)]" />
+        <Lightning className="h-2.5 w-2.5 shrink-0 text-[color:var(--brand-accent)]" />
         <span>pgvector · 1,536-dim · 118ms total</span>
       </div>
     </div>

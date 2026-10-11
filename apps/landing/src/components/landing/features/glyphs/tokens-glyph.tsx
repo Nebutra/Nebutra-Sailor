@@ -53,21 +53,20 @@ export function TokensGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       className="relative flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
-      style={{ height: 160 }}
+      style={{ minHeight: 160 }}
     >
-      <div className="absolute right-2 top-2 flex items-center gap-1">
-        <Badge variant="outline" className="text-[10px] font-normal">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-1 text-[10px] font-mono text-muted-foreground">
+          <BlendMode className="h-3 w-3 shrink-0" />
+          <span>--blue-1 → --blue-12</span>
+        </div>
+        <Badge variant="outline" className="shrink-0 text-[10px] font-normal">
           <Droplet className="mr-1 h-2.5 w-2.5" />
           12-step
         </Badge>
       </div>
 
-      <div className="flex items-center gap-1 text-[10px] font-mono text-muted-foreground">
-        <BlendMode className="h-3 w-3" />
-        <span>--blue-1 → --blue-12</span>
-      </div>
-
-      <div className="flex h-4 w-full overflow-hidden rounded-[var(--radius-sm)] border border-border">
+      <div className="flex h-4 w-full shrink-0 overflow-hidden rounded-[var(--radius-sm)] border border-border">
         {COLOR_SCALE_STEPS.map((color, idx) => (
           <div
             key={`step-${idx}`}
@@ -109,7 +108,7 @@ export function TokensGlyph(_props: SubpackageGlyphProps) {
         ))}
       </div>
 
-      <div className="mt-auto text-[9px] font-mono text-muted-foreground">
+      <div className="mt-auto break-words text-[9px] font-mono text-muted-foreground">
         runtime CSS vars · @import &quot;@nebutra/tokens/styles.css&quot;
       </div>
     </div>

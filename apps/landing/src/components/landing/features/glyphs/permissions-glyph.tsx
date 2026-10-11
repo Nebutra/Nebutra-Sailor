@@ -31,10 +31,10 @@ function Cell({ allow }: { allow: Allow }) {
 export function PermissionsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
-      className="flex flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
-      style={{ height: 160 }}
+      className="flex w-full min-w-0 flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
+      style={{ minHeight: 160 }}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <Badge variant="secondary" className="gap-1 font-mono text-[10px]">
           <Shield className="h-3 w-3" />
           RBAC / ABAC
@@ -44,11 +44,11 @@ export function PermissionsGlyph(_props: SubpackageGlyphProps) {
         </span>
       </div>
 
-      <div className="flex-1 overflow-hidden rounded border border-border bg-background">
-        <div className="grid grid-cols-[64px_1fr_1fr_1fr] border-b border-border bg-muted font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
+      <div className="shrink-0 overflow-hidden rounded border border-border bg-background">
+        <div className="grid grid-cols-[minmax(0,1fr)_repeat(3,minmax(0,1fr))] border-b border-border bg-muted font-mono text-[9px] uppercase text-muted-foreground">
           <div className="px-2 py-1.5"> </div>
           {ROLES.map((role) => (
-            <div key={role} className="border-l border-border px-2 py-1.5 text-center">
+            <div key={role} className="border-l border-border px-1 py-1.5 text-center">
               {role}
             </div>
           ))}
@@ -57,7 +57,7 @@ export function PermissionsGlyph(_props: SubpackageGlyphProps) {
         {ROWS.map((row, i) => (
           <div
             key={row.action}
-            className={`grid grid-cols-[64px_1fr_1fr_1fr] ${
+            className={`grid grid-cols-[minmax(0,1fr)_repeat(3,minmax(0,1fr))] ${
               i < ROWS.length - 1 ? "border-b border-border" : ""
             }`}
           >
