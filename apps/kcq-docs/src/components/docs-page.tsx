@@ -59,7 +59,12 @@ export function DocsPageView({ lang, slug }: { lang: Lang; slug: string[] | unde
   const MDX = page.data.body;
   const written = contentLanguage(page);
   const sourcePath = page.data.sourcePath;
-  const edit = sourcePath ? LINKS.editSource(sourcePath) : LINKS.editDocs(contentFile(page));
+  // 生成的参考页不入库，编辑入口必须指向生成器，原文与手写页指向各自源码。
+  const edit = sourcePath
+    ? LINKS.editSource(sourcePath)
+    : page.data.generated
+      ? LINKS.editGenerated
+      : LINKS.editDocs(contentFile(page));
   const note =
     written === lang ? null : lang === "zh" && !page.data.sourceLang ? t.fallback : t.onlyIn;
   return (

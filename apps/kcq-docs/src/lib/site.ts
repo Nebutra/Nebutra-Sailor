@@ -7,6 +7,7 @@ export const FACTS = facts;
 
 /** The Sailor repository that hosts the hand-written pages (apps/kcq-docs/content). */
 export const SAILOR_REPOSITORY = `${brand.social.github}/${brand.name}-Sailor`;
+const REFERENCE_GENERATOR_PATH = "apps/kcq-docs/scripts/lib/pages.mjs";
 
 export const LINKS = {
   github: facts.upstream,
@@ -16,4 +17,5 @@ export const LINKS = {
   blob: (file: string) => `${facts.repository}/blob/${facts.commit}/${file}`,
   editSource: (file: string) => `${facts.repository}/edit/main/${file}`,
   editDocs: (file: string) => `${SAILOR_REPOSITORY}/edit/main/${file}`,
+  editGenerated: `${SAILOR_REPOSITORY}/edit/main/${REFERENCE_GENERATOR_PATH}`,
 } as const;
