@@ -26,7 +26,11 @@
  *
  * Each face exposes a CSS variable; the browser only fetches a given file when
  * an element resolves to that variable, so declaring the whole registry is
- * cheap. Apply `fontRegistryClassName` to <html> so the `--font-*` variables
+ * cheap — provided nothing preloads it. next/font/local preloads by default,
+ * and with nineteen registry faces every page shipped ~900 KB of
+ * <link rel="preload"> fonts it never rendered, ahead of its own CSS (the
+ * landing's Lighthouse LCP was 10 s of that queue). So every registry face
+ * here is `preload: false`; the brand faces in ./next-cjk stay preloaded. Apply `fontRegistryClassName` to <html> so the `--font-*` variables
  * exist; the appearance layer then prepends the matching `var(--font-*)` (see
  * the client-safe map in `@nebutra/fonts`) when a theme / DESIGN.md font
  * matches. Keep the `variable` names in sync with FONT_REGISTRY in `../index.ts`.
@@ -70,6 +74,7 @@ const inter = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Inter'" }],
   variable: "--font-inter",
 });
@@ -82,6 +87,7 @@ const interTight = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Inter Tight'" }],
   variable: "--font-reg-inter-tight",
 });
@@ -94,6 +100,7 @@ const spaceGrotesk = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Space Grotesk'" }],
   variable: "--font-space-grotesk",
 });
@@ -106,6 +113,7 @@ const playfairDisplay = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Playfair Display'" }],
   adjustFontFallback: "Times New Roman",
   variable: "--font-playfair-display",
@@ -119,6 +127,7 @@ const fraunces = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Fraunces'" }],
   adjustFontFallback: "Times New Roman",
   variable: "--font-reg-fraunces",
@@ -132,6 +141,7 @@ const jetbrainsMono = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'JetBrains Mono'" }],
   variable: "--font-jetbrains-mono",
 });
@@ -144,6 +154,7 @@ const manrope = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Manrope'" }],
   variable: "--font-reg-manrope",
 });
@@ -156,6 +167,7 @@ const sora = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Sora'" }],
   variable: "--font-reg-sora",
 });
@@ -168,6 +180,7 @@ const workSans = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Work Sans'" }],
   variable: "--font-reg-work-sans",
 });
@@ -180,6 +193,7 @@ const dmSans = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'DM Sans'" }],
   variable: "--font-reg-dm-sans",
 });
@@ -192,6 +206,7 @@ const plusJakartaSans = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Plus Jakarta Sans'" }],
   variable: "--font-reg-plus-jakarta-sans",
 });
@@ -204,6 +219,7 @@ const outfit = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Outfit'" }],
   variable: "--font-reg-outfit",
 });
@@ -216,6 +232,7 @@ const figtree = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Figtree'" }],
   variable: "--font-reg-figtree",
 });
@@ -228,6 +245,7 @@ const montserrat = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Montserrat'" }],
   variable: "--font-reg-montserrat",
 });
@@ -240,6 +258,7 @@ const lexend = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Lexend'" }],
   variable: "--font-reg-lexend",
 });
@@ -252,6 +271,7 @@ const firaCode = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Fira Code'" }],
   variable: "--font-reg-fira-code",
 });
@@ -264,6 +284,7 @@ const robotoMono = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Roboto Mono'" }],
   variable: "--font-reg-roboto-mono",
 });
@@ -276,6 +297,7 @@ const sourceSerif4 = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Source Serif 4'" }],
   adjustFontFallback: "Times New Roman",
   variable: "--font-reg-source-serif-4",
@@ -289,6 +311,7 @@ const sourceCodePro = localFont({
     },
   ],
   display: "swap",
+  preload: false,
   declarations: [{ prop: "font-family", value: "'Source Code Pro'" }],
   variable: "--font-reg-source-code-pro",
 });

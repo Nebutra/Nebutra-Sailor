@@ -6,7 +6,7 @@ import { ToolRegistry } from "../src/index";
 const root = await mkdtemp(join(tmpdir(), "tool-registry-"));
 const registry = await ToolRegistry.open(root, { tenantId: "demo" });
 
-await registry.newSkill("brand_film_60s");
+await registry.newSkill("brand_kit");
 
 process.stdout.write(`${JSON.stringify(await registry.list(), null, 2)}\n`);
 await registry.close();

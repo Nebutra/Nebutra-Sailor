@@ -78,7 +78,6 @@ const GeneratedArtifactUpdateSchema = z.object({
   kind: z.enum([
     "company_context",
     "brand_system",
-    "brand_film_brief",
     "landing_page",
     "mvp_scaffold",
     "demand_signal_map",

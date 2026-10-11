@@ -2,7 +2,7 @@
 
 ## Owning Media Generation
 
-Do not add image, video, audio, voice, or mesh providers here. This package
+Do not add image or mesh providers here. This package
 delegates to the generation-capability packages and only sequences the Play.
 
 ## Creating Another BrandContext

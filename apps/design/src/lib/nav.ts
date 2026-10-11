@@ -57,6 +57,7 @@ export function navSections(): NavSection[] {
       ({
         id: group.id,
         label: group.label,
+        level: 2,
         meta: String(componentsInGroup(group.id).length),
         items: componentsInGroup(group.id).map((entry) => ({
           href: `/components/${entry.slug}`,
@@ -71,7 +72,10 @@ export function navSections(): NavSection[] {
     PATTERN_NAV,
     {
       id: "components-index",
-      label: "Components",
+      // The library heading; its groups below are nested under it, so the
+      // registry's own "Components" and "Patterns" groups do not read as
+      // siblings of the foundation pages with the same names.
+      label: "Library",
       items: [
         { href: "/components", label: "All components" },
         { href: "/showcase", label: "Showcase" },

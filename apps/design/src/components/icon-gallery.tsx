@@ -41,12 +41,14 @@ export function IconGallery() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 border-l border-t border-border rounded-lg overflow-hidden bg-background">
+      {/* Cell seams are the 1px gap over the border colour, so every line is one
+          hairline — never two adjacent borders doubling up at the joins. */}
+      <div className="grid grid-cols-3 gap-px overflow-hidden rounded-panel border border-border bg-border sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-6">
         {filteredIcons.map(([name, Icon]) => (
           <IconCard key={name} name={name} icon={Icon} />
         ))}
         {filteredIcons.length === 0 && (
-          <div className="col-span-full py-16 text-center text-muted-foreground border-r border-b border-border">
+          <div className="col-span-full bg-card py-16 text-center text-muted-foreground">
             No icons found matching "{query}"
           </div>
         )}
@@ -76,11 +78,11 @@ function IconCard({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="group relative h-[120px] flex-col gap-0 rounded-none border-r border-b border-border p-4 focus-visible:z-10"
+          className="group relative h-28 flex-col gap-0 rounded-none bg-card p-3 text-foreground focus-visible:z-10"
           aria-label={`Copy options for ${name}`}
         >
           <div className="flex-1 flex items-center justify-center min-h-0 mb-2">
-            <Icon size={24} className="shrink-0" />
+            <Icon size={20} className="shrink-0" />
           </div>
           <span
             className="text-2xs text-muted-foreground text-center px-1 font-medium truncate w-full transition-colors group-hover:text-current"

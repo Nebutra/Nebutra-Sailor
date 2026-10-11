@@ -35,14 +35,14 @@ describe("Startup OS canvas model", () => {
     const model = buildStartupCanvasModel(project);
     const nodeIds = new Set(model.nodes.map((node) => node.id));
     const brandSystem = project.artifacts.find((artifact) => artifact.kind === "brand_system");
-    const filmBrief = project.artifacts.find((artifact) => artifact.kind === "brand_film_brief");
+    const landingPage = project.artifacts.find((artifact) => artifact.kind === "landing_page");
 
     expect(
       model.edges.some(
         (edge) =>
           edge.kind === "dependency" &&
           edge.from === `artifact:${brandSystem?.id}` &&
-          edge.to === `artifact:${filmBrief?.id}`,
+          edge.to === `artifact:${landingPage?.id}`,
       ),
     ).toBe(true);
     expect(model.edges.some((edge) => edge.kind === "run_artifact")).toBe(true);

@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { siteLang } from "@/nebutra/i18n";
+import { RevealGroup } from "@/shared/animation/reveal-group";
 import { BrowserFrame } from "./browser-frame";
 import { ALSO_ON_PLATFORM, SHOWCASE } from "./showcase";
 
@@ -23,7 +24,10 @@ export async function ProductGallery({ lang }: { lang: string }) {
   const zh = siteLang(lang) === "zh";
   return (
     <>
-      <ul className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-16">
+      <RevealGroup
+        as="ul"
+        className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-16"
+      >
         {SHOWCASE.map((p, i) => (
           <li key={p.id} className={SPAN[i]}>
             <a
@@ -56,7 +60,7 @@ export async function ProductGallery({ lang }: { lang: string }) {
             </a>
           </li>
         ))}
-      </ul>
+      </RevealGroup>
       <p className="mt-10 text-sm text-muted-foreground">{t("caption")}</p>
       {ALSO_ON_PLATFORM.length ? (
         <div className="mt-12 max-w-4xl">

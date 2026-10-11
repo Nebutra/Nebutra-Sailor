@@ -17,11 +17,11 @@ describe("ToolRegistry", () => {
     const registry = await ToolRegistry.open(root, { tenantId: "tenant_a" });
 
     await registry.writeSkill(
-      "brand_film_60s",
+      "brand_kit",
       [
         "---",
-        "name: brand_film_60s",
-        "description: From idea to a 60s brand film",
+        "name: brand_kit",
+        "description: From idea to a brand kit",
         "version: 1.0.0",
         "allowed_tools:",
         "  - image.generate",
@@ -35,14 +35,14 @@ describe("ToolRegistry", () => {
     const all = await registry.list();
     expect(all).toEqual([
       expect.objectContaining({
-        name: "brand_film_60s",
-        description: "From idea to a 60s brand film",
+        name: "brand_kit",
+        description: "From idea to a brand kit",
         version: "1.0.0",
       }),
     ]);
     expect(JSON.stringify(all)).not.toContain("production checklist");
 
-    await expect(registry.load("brand_film_60s")).resolves.toMatchObject({
+    await expect(registry.load("brand_kit")).resolves.toMatchObject({
       body: expect.stringContaining("production checklist"),
       meta: expect.objectContaining({ allowedTools: ["image.generate"] }),
     });

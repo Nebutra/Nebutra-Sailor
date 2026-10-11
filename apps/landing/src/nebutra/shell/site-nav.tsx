@@ -104,8 +104,10 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         onMouseMove={barMove}
         onMouseLeave={hoverClose}
         className={cn(
-          "sticky top-0 z-50 grid shrink-0 grid-cols-[1fr_auto_1fr] items-center bg-background/85 px-3 backdrop-blur-xl sm:px-5",
-          compact ? "h-12 border-border/80 border-b" : "h-16",
+          // Opaque, with a hairline: the bar never shows the page sliding under
+          // it, and the hero's light starts cleanly below it.
+          "sticky top-0 z-50 grid shrink-0 grid-cols-[1fr_auto_1fr] items-center border-border/80 border-b bg-background px-3 sm:px-5",
+          compact ? "h-12" : "h-16",
         )}
       >
         <div
@@ -118,6 +120,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
             variant="ghost"
             shape="square"
             iconSize="lg"
+            className="size-10"
             aria-label={open ? t("nav.closeNavigation") : t("nav.openNavigation")}
             aria-expanded={Boolean(open)}
             aria-controls="site-drawer"
@@ -168,6 +171,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
             variant="ghost"
             shape="square"
             iconSize="md"
+            className="size-10"
             aria-label={t("nav.searchSite")}
             onClick={() => setSearching(true)}
           >

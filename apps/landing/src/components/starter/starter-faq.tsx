@@ -11,14 +11,13 @@ export async function StarterFaq({ locale, level = 2 }: { locale: string; level?
     <section
       id="faq"
       aria-labelledby="faq-title"
-      className="scroll-mt-20 px-4 py-20 md:px-6 md:py-28"
+      className="scroll-mt-20 px-4 py-16 md:px-6 md:py-28"
     >
       <div className="mx-auto grid max-w-content gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
         <SectionHeading
           id="faq-title"
           level={level}
           align="start"
-          eyebrow={t("eyebrow")}
           title={t("title")}
           lead={t("lead")}
         />

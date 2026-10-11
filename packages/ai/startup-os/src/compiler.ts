@@ -25,7 +25,6 @@ export type StartupProjectStatus = "compiled" | "review_ready";
 export type StartupArtifactKind =
   | "company_context"
   | "brand_system"
-  | "brand_film_brief"
   | "landing_page"
   | "mvp_scaffold"
   | "demand_signal_map"
@@ -63,7 +62,6 @@ export interface StartupOperatingRun {
   readonly adapter:
     | "company-context"
     | "brand-genesis"
-    | "reel"
     | "landing-builder"
     | "create-sailor"
     | "outreach-engine"
@@ -229,22 +227,6 @@ function buildArtifacts(slug: string, thesis: string, context: CompanyContext): 
       ],
     },
     {
-      id: artifactId(slug, "brand_film_brief"),
-      kind: "brand_film_brief",
-      title: "60-second brand-film brief",
-      status: "drafted",
-      owner: "brand-genesis",
-      dependencies: ["company_context", "brand_system"],
-      summary:
-        "The first proof artifact: a multimodal launch film brief, not the product category.",
-      payload: [
-        "Scene 1: founder toggles between disconnected tools and loses context.",
-        `Scene 2: ${name} creates one company graph from the startup thesis.`,
-        "Scene 3: brand, landing, MVP, launch, and support artifacts share one state model.",
-        "Scene 4: the cockpit shows next operating run, risk, cost, and review gates.",
-      ],
-    },
-    {
       id: artifactId(slug, "landing_page"),
       kind: "landing_page",
       title: "Landing page draft",
@@ -340,16 +322,6 @@ function buildRuns(
     },
     {
       id: runId(slug, 3),
-      stage: "film.plan",
-      adapter: "reel",
-      status: "planned",
-      approval: "auto_approved",
-      costEstimateUsd: 0.18,
-      artifactIds: [ids.brand_film_brief],
-      summary: "Plan brand-film brief generation; media rendering remains gated.",
-    },
-    {
-      id: runId(slug, 4),
       stage: "landing.draft",
       adapter: "landing-builder",
       status: "planned",
@@ -359,7 +331,7 @@ function buildRuns(
       summary: "Plan launch landing surface generation behind the Startup OS feature gate.",
     },
     {
-      id: runId(slug, 5),
+      id: runId(slug, 4),
       stage: "mvp.plan",
       adapter: "create-sailor",
       status: "planned",
@@ -369,7 +341,7 @@ function buildRuns(
       summary: "Plan MVP scaffold over Sailor infrastructure without creating a branch.",
     },
     {
-      id: runId(slug, 6),
+      id: runId(slug, 5),
       stage: "demand.map",
       adapter: "outreach-engine",
       status: "planned",
@@ -379,7 +351,7 @@ function buildRuns(
       summary: "Plan demand-signal mapping without sending outbound messages.",
     },
     {
-      id: runId(slug, 7),
+      id: runId(slug, 6),
       stage: "governance.review",
       adapter: "agent-runtime",
       status: "waiting_for_review",
@@ -474,7 +446,6 @@ export function approveGovernanceReview(
     updatedAt: now,
     runs,
     nextActions: [
-      "Render the brand-film media assets through approved providers.",
       "Create the tenant-scoped project record and artifact registry rows.",
       "Generate the MVP scaffold branch behind feature flags.",
       "Publish nothing until explicit production approval is recorded.",

@@ -17,16 +17,16 @@ export function AgentsGlyph(_props: SubpackageGlyphProps) {
   return (
     <div
       className="flex w-full flex-col justify-between gap-2 rounded-[var(--radius-md)] bg-muted px-3 py-2.5"
-      style={{ height: 160 }}
+      style={{ minHeight: 160 }}
     >
       <div className="flex items-center justify-between">
         <span className="font-mono text-[10px] text-muted-foreground">
           @nebutra/agents · unified surface
         </span>
-        <Sparkles className="h-3 w-3 text-primary" />
+        <Sparkles className="h-3 w-3 shrink-0 text-primary" />
       </div>
 
-      <ul className="flex flex-col gap-1">
+      <ul className="flex min-w-0 flex-col gap-1">
         {METHODS.map(({ signature, icon: Icon }) => (
           <li
             key={signature}

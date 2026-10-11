@@ -33,11 +33,10 @@ describe("compileStartupProject", () => {
       "Developer infrastructure operating system",
     );
     expect(companyMarket(project.companyContext)).toBe("");
-    expect(project.artifacts).toHaveLength(7);
+    expect(project.artifacts).toHaveLength(6);
     expect(project.artifacts.map((artifact) => artifact.kind)).toEqual([
       "company_context",
       "brand_system",
-      "brand_film_brief",
       "landing_page",
       "mvp_scaffold",
       "demand_signal_map",
@@ -46,7 +45,6 @@ describe("compileStartupProject", () => {
     expect(project.runs.map((run) => run.stage)).toEqual([
       "context.compile",
       "brand.generate",
-      "film.plan",
       "landing.draft",
       "mvp.plan",
       "demand.map",
@@ -59,7 +57,6 @@ describe("compileStartupProject", () => {
     });
     expect(project.runs.map((run) => run.status)).toEqual([
       "completed",
-      "planned",
       "planned",
       "planned",
       "planned",
@@ -135,18 +132,15 @@ describe("compileStartupProject", () => {
     });
 
     const plannedRuns = project.runs.filter((run) =>
-      ["brand.generate", "film.plan", "landing.draft", "mvp.plan", "demand.map"].includes(
-        run.stage,
-      ),
+      ["brand.generate", "landing.draft", "mvp.plan", "demand.map"].includes(run.stage),
     );
 
     expect(project.runs.find((run) => run.stage === "context.compile")).toMatchObject({
       status: "completed",
       finishedAt: "2026-05-29T00:00:00.000Z",
     });
-    expect(plannedRuns).toHaveLength(5);
+    expect(plannedRuns).toHaveLength(4);
     expect(plannedRuns.map((run) => run.status)).toEqual([
-      "planned",
       "planned",
       "planned",
       "planned",
@@ -156,7 +150,6 @@ describe("compileStartupProject", () => {
     expect(plannedRuns.every((run) => run.startedAt === undefined)).toBe(true);
     expect(plannedRuns.map((run) => run.summary)).toEqual([
       "Plan brand-system generation from CompanyContext through reviewed adapters.",
-      "Plan brand-film brief generation; media rendering remains gated.",
       "Plan launch landing surface generation behind the Startup OS feature gate.",
       "Plan MVP scaffold over Sailor infrastructure without creating a branch.",
       "Plan demand-signal mapping without sending outbound messages.",

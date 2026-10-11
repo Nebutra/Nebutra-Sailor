@@ -2089,7 +2089,7 @@
       "metaDescription": "{brandName} is building the operating layer for AI-native companies. For investors and strategic partners: the thesis, what is live today, and how to request the deck.",
       "hero": {
         "kicker": "For investors and partners",
-        "title": "AI gave every founder hands. We're building the <signature>judgment</signature>.",
+        "title": "We're building the <signature>judgment</signature> AI coding leaves out.",
         "lead": "{brandName} is an AI-native company ecosystem: Sailor, the source-available platform where products and agents start with engineering judgment built in; a practice that takes AI products from R&D to markets worldwide; and the products we ship on both.",
         "stage": "We're raising our angel round and talking with a small number of investors and strategic partners.",
         "primary": "Request the deck",
@@ -2106,7 +2106,7 @@
         "talk": "Talk to us"
       },
       "why": {
-        "title": "Code got cheap. Judgment didn't.",
+        "title": "Tenancy, billing and audit come after the demo.",
         "lead": "Anyone can ask a model for a working demo in a minute. What decides whether a company survives — tenancy, billing, audit, the architecture underneath — still needs a senior team most founders can't hire.",
         "timeline": {
           "label": "The first year of a vibe-coded company",
@@ -2136,7 +2136,7 @@
         }
       },
       "built": {
-        "title": "One foundation. Everything else grows on it.",
+        "title": "How the company fits together.",
         "lead": "Three lines of business share one platform, one account system and one set of rules.",
         "sailor": {
           "role": "The platform",
@@ -2161,7 +2161,7 @@
         "more": "More on Sailor"
       },
       "products": {
-        "title": "Shipped, not slideware.",
+        "title": "Every product here is live.",
         "lead": "Products we built on the same foundation. Every one is live — open it.",
         "caption": "Screenshots of the live sites, taken on 9 October 2026.",
         "router": "One market and one API for models, apps and tools.",
@@ -2172,7 +2172,7 @@
         "open": "Open {name}"
       },
       "practice": {
-        "title": "We take AI products to the world — ours, and our clients'.",
+        "title": "Enterprise AI and going global.",
         "lead": "The engineering that runs our own products runs client work too: AI built into businesses that already exist, and products carried from China to markets worldwide.",
         "rnd": {
           "title": "Enterprise AI R&D",
@@ -2188,15 +2188,15 @@
       "work": {
         "title": "How we work",
         "architecture": {
-          "title": "Good architecture means you can go far.",
+          "title": "Architecture first.",
           "body": "We hold our own products to the standard we sell: extension points, isolation and audit from the first commit."
         },
         "rules": {
-          "title": "Rules live in code, not in documents.",
+          "title": "Rules as code.",
           "body": "Design, data access and copy are checked by machine on every change. This page had to pass them to ship."
         },
         "tools": {
-          "title": "Use the best tools. Don't replace them.",
+          "title": "Works with your tools.",
           "body": "Codex, Claude Code, Vercel, every major model provider: we integrate what founders already love."
         },
         "open": {
@@ -2205,7 +2205,7 @@
         }
       },
       "next": {
-        "title": "One sentence, a <signature>whole company</signature>.",
+        "title": "Next, we're building <signature>{brandName} OS</signature>.",
         "lead": "{brandName} OS is where this goes: describe a company once, and brand, product, code and launch come from one context, with the judgment built in. It is in development, and we will show it when it is real.",
         "vision": "In five years, we want starting a company to mean starting with that judgment already in place."
       },
@@ -4417,7 +4417,7 @@
     },
     "pricing": {
       "eyebrow": "Pricing",
-      "title": "Start free, upgrade when you grow",
+      "title": "Plans for every team size",
       "lead": "Every plan includes the full product. Pay yearly and get two months free.",
       "monthly": "Monthly",
       "yearly": "Yearly",

@@ -15,7 +15,7 @@ try {
       {
         brand: result.brand.name,
         brandMd: result.brandMdPath,
-        film: result.film.path,
+        logo: result.logo.path,
         eventId: result.eventId,
       },
       null,

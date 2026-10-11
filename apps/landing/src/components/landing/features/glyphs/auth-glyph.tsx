@@ -34,7 +34,7 @@ export function AuthGlyph({ copy: rawCopy }: SubpackageGlyphProps) {
   ];
 
   return (
-    <div aria-hidden className="flex w-full flex-col justify-center" style={{ height: 160 }}>
+    <div aria-hidden className="flex w-full flex-col justify-center" style={{ minHeight: 160 }}>
       <div className="mx-auto flex w-full max-w-[300px] flex-col gap-2 rounded-[var(--radius-lg)] bg-background p-3 ring-1 ring-border shadow-sm">
         {/* Header */}
         <div className="flex items-center justify-between">
