@@ -185,7 +185,7 @@ describe("per-app robots posture", () => {
    * site's root robots.txt governs these pages; the zone contributes its sitemap
    * to that site's sitemap index instead.
    */
-  const ZONE_ON_ANOTHER_ORIGIN = ["sailor-docs"];
+  const ZONE_ON_ANOTHER_ORIGIN = ["sailor-docs", "kcq-docs"];
 
   /**
    * One origin, split per path: a few prerendered public pages are indexed and

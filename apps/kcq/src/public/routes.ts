@@ -21,6 +21,12 @@ export const DEFAULT_PUBLIC_LOCALE: PublicLocale = "en";
 export const KCQ_ORIGIN = `https://${brand.domains.kcq}`;
 export { APP_PATH } from "../main-route";
 
+/**
+ * Documentation roots per locale (apps/kcq-docs, a separate static app on the same origin). They
+ * are not public routes of this app: robots.txt allows them by prefix and they ship their own sitemap.
+ */
+export const DOCS_PATHS = { en: "/docs", zh: "/zh/docs" } as const satisfies Record<PublicLocale, string>;
+
 export interface PublicRoute {
   path: string;
   page: PublicPage;

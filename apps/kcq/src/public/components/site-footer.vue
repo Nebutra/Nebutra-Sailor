@@ -3,7 +3,7 @@
   one closing slab, not another band. The brand and credit, a sitemap by audience, then one quiet
   bar: the legal line, the live market-feed status (moved from the nav), the language switch and
   the theme control (both moved from the nav). No decoration: no wordmark watermark; the build hash
-  and the llms.txt view are in the sitemap and /docs instead.
+  and the llms.txt view are in the sitemap and the docs (/docs, apps/kcq-docs) instead.
 -->
 <script setup lang="ts">
 import { brand } from "@nebutra/brand/metadata";
@@ -11,7 +11,7 @@ import facts from "virtual:kcq-facts";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
-import { LINKS } from "../links";
+import { docsPath, LINKS } from "../links";
 import { APP_PATH, publicPath, type PublicLocale } from "../routes";
 import { useMarketFeed } from "../state/use-market-feed";
 import BrandMark from "./brand-mark.vue";
@@ -35,22 +35,22 @@ const columns = computed<{ heading: string; links: Link[] }[]>(() => [
       { label: t("footer.workstation"), href: APP_PATH },
       { label: t("footer.benchmark"), href: publicPath("benchmark", props.locale), route: true },
       { label: t("footer.investors"), href: publicPath("investors", props.locale), route: true },
-      { label: t("footer.changelog"), href: LINKS.releases, external: true },
+      { label: t("footer.changelog"), href: docsPath(props.locale, "changelog") },
       { label: brand.name, href: nebutra, external: true },
     ],
   },
   {
     heading: t("footer.developers"),
     links: [
-      { label: t("footer.readme"), href: LINKS.readme, external: true },
-      { label: t("footer.architecture"), href: LINKS.architecture, external: true },
+      { label: t("footer.readme"), href: docsPath(props.locale) },
+      { label: t("footer.architecture"), href: docsPath(props.locale, "architecture") },
       { label: "npm", href: LINKS.npm, external: true },
     ],
   },
   {
     heading: t("footer.agent"),
     links: [
-      { label: t("footer.registry", { tools: facts.tools.count }), href: facts.tools.href, external: true },
+      { label: t("footer.registry", { tools: facts.tools.count }), href: docsPath(props.locale, "agent/tools") },
       { label: "llms.txt", href: LINKS.llms },
     ],
   },
