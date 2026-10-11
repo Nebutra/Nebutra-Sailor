@@ -1,7 +1,25 @@
 import { describe, expect, it } from "vitest";
-import { detectLanguage, rewriteLinks, semverCompare, takeTitle } from "./markdown.mjs";
+import { detectLanguage, mdxCode, rewriteLinks, semverCompare, takeTitle } from "./markdown.mjs";
+import { decodeHtmlEntities } from "./og.mjs";
 import { splitRelease } from "./pages.mjs";
 import { groupTools, minimalInput, schemaRows } from "./tools.mjs";
+
+describe("reference text", () => {
+  it("preserves code punctuation without introducing MDX or table syntax", () => {
+    expect(mdxCode("\\d+ | `x` <T> {value} &amp;\nnext")).toBe(
+      "<code>&#92;d+ &#124; &#96;x&#96; &lt;T&gt; &#123;value&#125; &amp;amp; next</code>",
+    );
+    expect(mdxCode("*value* _value_ [value](url) ! ~value~")).toBe(
+      "<code>&#42;value&#42; &#95;value&#95; &#91;value&#93;(url) &#33; &#126;value&#126;</code>",
+    );
+  });
+
+  it("decodes metadata entities once, including literal entity examples", () => {
+    expect(decodeHtmlEntities("&amp;lt; &lt;T&gt; &quot;x&quot; &#x27;y&#39;")).toBe(
+      "&lt; <T> \"x\" 'y'",
+    );
+  });
+});
 
 describe("release notes", () => {
   it("splits each bilingual line pair into its language", () => {

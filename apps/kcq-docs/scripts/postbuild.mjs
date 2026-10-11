@@ -106,7 +106,7 @@ for (const file of walk(dist).filter((f) => f.endsWith(".html"))) {
       const code = `${bodies.join(";\n")};\n`;
       const name = `${hash(code)}.js`;
       const target = join(inlineDir, name);
-      if (!existsSync(target)) writeFileSync(target, code);
+      writeFileSync(target, code);
       externalized += bodies.length;
       return `<script src="/docs/_next/static/inline/${name}" defer></script>`;
     },

@@ -379,7 +379,7 @@ export function componentPages(vue, react, wc, { links, descriptions }) {
       "| --- | --- |",
       ...vue.events.map(
         (e) =>
-          `| ${mdxCode(kebab(e.name).replace(/^update:/, "update:"))} | ${e.args.length ? mdxCode(`[${e.args.map((a) => `${a.name}: ${a.type}`).join(", ")}]`) : "`[]`"} |`,
+          `| ${mdxCode(kebab(e.name))} | ${e.args.length ? mdxCode(`[${e.args.map((a) => `${a.name}: ${a.type}`).join(", ")}]`) : "`[]`"} |`,
       ),
       "",
     ];

@@ -6,7 +6,7 @@
  * .generated/manifest.json and gitignored (see .gitignore), and stale ones are removed each run.
  */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
 import { THEME_INIT_SCRIPT } from "../../kcq/scripts/landing-plugin.mjs";
 import { copyFonts, tokensCss, wordmark } from "./lib/brand.mjs";
@@ -41,8 +41,7 @@ const written = new Set();
 function write(path, content) {
   const target = resolve(APP_ROOT, path);
   mkdirSync(dirname(target), { recursive: true });
-  if (!existsSync(target) || readFileSync(target, "utf8") !== content)
-    writeFileSync(target, content);
+  writeFileSync(target, content);
   written.add(relative(APP_ROOT, target));
 }
 
@@ -177,7 +176,13 @@ write(
 
 // 4. Remove files a previous run generated and this one did not.
 const manifestPath = resolve(APP_ROOT, ".generated/manifest.json");
-const previous = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) : [];
+let previous = [];
+try {
+  previous = JSON.parse(readFileSync(manifestPath, "utf8"));
+} catch (error) {
+  // 首次生成时清单尚不存在，其他读取或解析错误必须中止构建。
+  if (error.code !== "ENOENT") throw error;
+}
 for (const file of previous) {
   if (!written.has(file)) rmSync(resolve(APP_ROOT, file), { force: true });
 }

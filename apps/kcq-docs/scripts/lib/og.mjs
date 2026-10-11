@@ -46,7 +46,7 @@ function loadFonts() {
   return fonts;
 }
 
-const isHan = (char) => /[⺀-鿿　-〿＀-￯]/.test(char);
+const isHan = (char) => /[⺀-鿿＀-￯]/.test(char);
 
 function advance(char, size, latin, han) {
   const face = isHan(char) ? han : latin;
@@ -55,7 +55,7 @@ function advance(char, size, latin, han) {
 
 /** Greedy wrap: break at spaces for Latin, anywhere between Han characters. */
 function wrap(text, size, maxWidth, latin, han, maxLines) {
-  const raw = text.match(/[⺀-鿿　-〿＀-￯]|[^\s⺀-鿿　-〿＀-￯]+|\s+/g) ?? [];
+  const raw = text.match(/[⺀-鿿＀-￯]|[^\s⺀-鿿＀-￯]+|\s+/g) ?? [];
   // Closing punctuation never starts a line (kinsoku): glue it to the token before.
   const tokens = [];
   for (const token of raw) {
@@ -151,13 +151,19 @@ function walk(dir) {
   });
 }
 
-const decode = (s) =>
-  s
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#x27;|&#39;/g, "'");
+const HTML_ENTITIES = {
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&quot;": '"',
+  "&#x27;": "'",
+  "&#39;": "'",
+};
+
+/** 一次解码 HTML 属性中的实体，保留原文中的嵌套实体字面量。 */
+export function decodeHtmlEntities(text) {
+  return text.replace(/&(?:amp|lt|gt|quot|#x27|#39);/g, (entity) => HTML_ENTITIES[entity]);
+}
 
 /** Merge every `--name: value;` of the blocks a selector pattern matches (later blocks win). */
 function readAll(css, pattern) {
@@ -193,8 +199,10 @@ export async function renderOgImages(dist) {
       /<meta property="og:image" content="https?:\/\/[^/]+(\/docs\/og\/[^"]+\.png)"/,
     )?.[1];
     if (!image) continue;
-    const title = decode(html.match(/<meta property="og:title" content="([^"]*)"/)?.[1] ?? "");
-    const description = decode(
+    const title = decodeHtmlEntities(
+      html.match(/<meta property="og:title" content="([^"]*)"/)?.[1] ?? "",
+    );
+    const description = decodeHtmlEntities(
       html.match(/<meta property="og:description" content="([^"]*)"/)?.[1] ?? "",
     );
     const lang = /<html[^>]*lang="zh/.test(html) ? "zh" : "en";

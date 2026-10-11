@@ -108,8 +108,27 @@ export function mdxText(text) {
     .replace(/\n+/g, " ");
 }
 
-/** Inline code safe inside an MDX table cell. */
+const CODE_ENTITIES = {
+  "&": "&amp;",
+  "\\": "&#92;",
+  "|": "&#124;",
+  "`": "&#96;",
+  "{": "&#123;",
+  "}": "&#125;",
+  "<": "&lt;",
+  ">": "&gt;",
+  "*": "&#42;",
+  _: "&#95;",
+  "[": "&#91;",
+  "]": "&#93;",
+  "!": "&#33;",
+  "~": "&#126;",
+};
+
+/** 将源码文本写为 MDX code 元素，保留反斜杠并防止破坏表格或 JSX。 */
 export function mdxCode(text) {
-  const value = String(text).replace(/\|/g, "\\|").replace(/\n+/g, " ");
-  return value.includes("`") ? `\`\` ${value} \`\`` : `\`${value}\``;
+  const value = String(text)
+    .replace(/[&\\|`{}<>*_[\]!~]/g, (character) => CODE_ENTITIES[character])
+    .replace(/\r?\n+/g, " ");
+  return `<code>${value}</code>`;
 }
