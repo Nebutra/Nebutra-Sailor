@@ -1,0 +1,111 @@
+---
+title: 指标
+description: 在图表上添加内置指标、设置参数、读取指标数值，并查到每个指标的规范 ID。
+---
+
+打开图表就在主图叠一条均线、下方放 MACD，让用户自己调周期，再在不开新窗格的情况下读出最近的 RSI 数值。这些操作共用同一套指标定义：工具栏选择器、你的代码和 Agent 用的都是它。
+
+## 在组件上声明指标
+
+Vue 组件接受受控的 `indicators` prop。每一项指明指标定义、所在窗格角色以及是否启用。
+
+```vue title="App.vue"
+<script setup lang="ts">
+import { KlineChart } from '@363045841yyt/klinechart'
+import type { ChartIndicatorConfig } from '@363045841yyt/klinechart-core'
+import '@363045841yyt/klinechart/style.css'
+
+const indicators: ChartIndicatorConfig[] = [
+  { definitionId: 'MA', role: 'main', enabled: true },
+  { definitionId: 'BOLL', role: 'main', enabled: true, params: { period: 20, multiplier: 2 } },
+  { definitionId: 'MACD', role: 'sub', enabled: true },
+  { definitionId: 'RSI', role: 'sub', enabled: false },
+]
+</script>
+
+<template>
+  <KlineChart :indicators="indicators" />
+</template>
+```
+
+| 字段 | 类型 | 含义 |
+| --- | --- | --- |
+| `definitionId` | `string` | 已注册指标定义的规范 ID（见下文列表）。 |
+| `role` | `'main' \| 'sub'` | `main` 叠加在主图上；`sub` 单独占一个副图窗格。 |
+| `enabled` | `boolean` | 未启用的项会被跳过。 |
+| `params` | `Record<string, unknown>` | 可选，覆盖计算参数。 |
+
+这是受控 prop：传入后，组件会先移除当前所有实例，再按顺序添加启用的项。添加前组件会先加载这些项引用的指标实现，无需你手动预加载。指标总是在数据源生效之前创建。
+
+当前提交下，React 与 Web Component 封装没有暴露这个 prop，详见 [Vue 参考](/zh/docs/reference/vue)。
+
+## 用代码添加指标
+
+需要命令式控制时，从 `controllerReady` 事件拿到 `ChartController`。指标实现按需加载，调用同步方法前先 `await` `loadIndicators`。
+
+```ts title="indicators.ts"
+import type { ChartController } from '@363045841yyt/klinechart-core'
+
+export async function addMomentum(chart: ChartController) {
+  await chart.loadIndicators(['MACD', 'KDJ'])
+  const macd = chart.addIndicator('MACD', 'sub', { fastPeriod: 8, slowPeriod: 21, signalPeriod: 5 })
+  chart.addIndicator('KDJ', 'sub')
+  if (macd) chart.updateIndicatorParams(macd, { signalPeriod: 9 })
+}
+```
+
+`addIndicator` 返回新实例的 ID，被拒绝时返回 `null`。其余生命周期操作也都在控制器上：`removeIndicator`、`moveMainIndicator`、`replaceMainIndicator`、`setMainIndicatorHidden`、`setSubIndicatorHidden`。`indicators` 信号保存当前实例；`catalog` 列出全部定义及其参数元数据，可直接用来搭建选择器。
+
+## 规范 ID
+
+每个指标只有一个对外身份：`@Indicator` 装饰器里声明的 `displayName`，在 Core、UI 和 Agent 中原样使用。内部 `name`（例如 KDJ 的 `stoch`）只是实现键。注册表也接受内部名称、别名和大小写变体，并解析为规范 ID，但保存配置时请使用规范写法。详见 [指标实例状态](/zh/docs/architecture/notes/indicator-instance-state)。
+
+固定提交下共内置 57 个定义，下表取自生成清单 `packages/core/src/engine/indicators/generated/builtinIndicators.ts`。
+
+| 分组 | 默认窗格 | 规范 ID |
+| --- | --- | --- |
+| 主图叠加 | `main` | `ALMA` `BOLL` `DEMA` `Donchian` `ENE` `EXPMA` `Fib` `frama` `GMMA` `HMA` `Ichimoku` `KAMA` `Keltner` `LSMA` `MA` `Pivot` `SAR` `SMMA` `t3` `TEMA` `TRIMA` `vidya` `VWMA` `WMA` `ZLEMA` `Zones` |
+| 结构类（可放主图） | 独立窗格 | `Structure` `SuperTrend` |
+| 振荡指标 | 独立窗格 | `AO` `ATR` `CCI` `ChaikinVol` `DMA` `DPO` `FASTK` `Fisher` `HV` `KDJ` `KST` `MACD` `MOM` `Parkinson` `ROC` `RSI` `STC` `StochRSI` `TRIX` `UO` `WMSR` |
+| 成交量类 | 独立窗格 | `CMF` `MFI` `OBV` `PVT` `VMA` `VP` `VWAP` `VOL` |
+
+`frama`、`t3`、`vidya` 是小写，因为它们声明的展示名本来就是小写。`VOL` 只负责展示：它没有声明计算 runtime，会被绘制，但不进入计算链路。
+
+## 参数分两层
+
+每个定义维护两组互不重叠的配置：
+
+- `runtime.defaultParams`：影响计算结果的参数，例如 `period`、`multiplier`。只有这一组会发送给 Worker 或 inline runtime。
+- `presentation.defaultOptions`：渲染开关，例如 `showUpper`。修改它们只重建绘制投影，不会重新计算。
+
+prop 或 `addIndicator` 里的 `params` 覆盖的是第一组，未提供的键保持默认值。例如 `MA` 默认 `period1`–`period5` 为 5、10、20、30、60，`MACD` 默认 `fastPeriod` 12、`slowPeriod` 26、`signalPeriod` 9。Agent 的限制更严格：只能覆盖 `defaultParams` 中默认值为有限数字的字段，其他字段一律拒绝。
+
+## 读取指标数值
+
+任何已注册指标都可以直接在已加载的 K 线上计算，不必先加到图表上。控制器上的 Agent facade 与 `indicators_query` 工具调用的是同一个方法。
+
+```ts
+const text = await chart.agent.queryIndicator({
+  definitionId: 'RSI',
+  params: { period1: 14 },
+  limit: 50,
+})
+```
+
+这个调用会按需加载指标实现，在当前全部 K 线数据上计算，返回紧凑文本。`limit` 默认 20，上限 2000。它不会创建实例，也不会打开窗格。Agent 调用的正是这个方法，参见 [指标工具](/zh/docs/agent/tools/indicators)。
+
+## 内置指标如何注册
+
+一个指标定义就是一个带 `@Indicator` 注解、具名导出的类。名称、身份、视图和工厂只在这个装饰器里声明一次。构建时，`scripts/generate-indicator-entrypoints.mjs` 用 TypeScript AST 扫描 Core 生产源码并写出生成入口，因此生产构建的 tree-shaking 不会悄悄删掉某个定义。定义未导出、名称重复或身份无法确定时，生成会直接失败。CI 还会把生成目录与真实生产 bundle 逐项比对。
+
+仓库外部的定义仍按原有 `@Indicator` 语义，在模块执行时自动注册。
+
+## 编写自己的指标
+
+新增指标需要写渲染状态、纯计算函数、契约登记，以及带 `@Indicator` 的 renderer 文件，生成入口会自动发现它。完整的文件清单与测试要求见 [贡献新指标](/zh/docs/contributing/indicators)。
+
+<Cards>
+  <Card title="贡献新指标" href="/zh/docs/contributing/indicators" description="按文件列出的新指标作者模板。" />
+  <Card title="指标工具" href="/zh/docs/agent/tools/indicators" description="Agent 查询指标时看到的内容。" />
+  <Card title="布局" href="/zh/docs/guides/layouts" description="按视图保存指标组合并随时恢复。" />
+</Cards>

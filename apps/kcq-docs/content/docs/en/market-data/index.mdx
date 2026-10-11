@@ -1,0 +1,118 @@
+---
+title: Market data
+description: One instrument and series model owned by the chart, providers that translate upstream protocols, and a router that picks the source.
+---
+
+KLineChartQuant reads every bar, intraday series and instrument through one model that the frontend defines. A feed never leaks its own wire format into the chart: a provider converts it first. That is what lets the same chart, the same comparison and the same Agent tool work over Tongdaxin, TradingView, MT5 or your own service.
+
+## The model
+
+Three types carry almost everything. They are exported from `@363045841yyt/klinechart-core/market-data`.
+
+| Type | What it holds |
+|---|---|
+| `InstrumentDescriptor` | Identity (`id`, `sourceId`, `symbol`, `name`, `assetClass`, `exchange`), optional `sessionId`, `currency`, `tickSize`, `lotSize`, and `capabilities` |
+| `BarSeries` | One page of K-lines: `instrumentId`, `period`, `adjustment`, `barAggregation`, `timezone`, optional `volumeUnit`, `data`, and `olderData` |
+| `TimeShareSeries` | One trading day of intraday points: `instrumentId`, `tradingDate`, `timezone`, `preClose`, optional `volumeUnit`, `data` |
+
+A few rules keep the model honest:
+
+- `id` is the only identity. Two descriptors with the same symbol on different exchanges are different instruments.
+- `providerRef` is private routing data. Only the provider that created it reads it; search, UI, comparison and the chart never do.
+- Period and adjustment menus come from `instrument.capabilities.bars`. Intraday mode needs `capabilities.timeShare === true` and a registered `sessionId`.
+- Volume is shown in the series' `volumeUnit` (`share`, `lot`, `contract` or `baseAsset`). No market is assumed to trade in lots.
+- `olderData` (`available`, `exhausted` or `unknown`) is declared by the backend, so the chart never guesses the end of history from an empty page.
+
+## Providers and the registry
+
+A `MarketDataProvider` is composed from optional modules. A missing module means the source does not support that capability.
+
+```ts
+interface MarketDataProvider {
+  readonly source: DataSourceDescriptor
+  probe(signal?: AbortSignal): Promise<SourceProbeResult>
+  readonly catalog?: InstrumentCatalog
+  readonly bars?: BarDataSource
+  readonly tradingCalendar?: TradingCalendarDataSource
+  readonly liveBars?: LiveBarsDataSource
+  readonly timeShare?: TimeShareDataSource
+  readonly timeShareRange?: TimeShareRangeDataSource
+  readonly depth?: DepthDataSource
+}
+```
+
+Providers live in `marketDataProviderRegistry`. Each one has a runtime config of `enabled`, `priority` and an optional `baseUrl`. The registry keeps only the current session; persisting choices (for example to `localStorage`) is the host's job.
+
+```ts
+import { marketDataProviderRegistry } from '@363045841yyt/klinechart-core/market-data'
+
+marketDataProviderRegistry.setConfig('gotdx', { baseUrl: 'http://127.0.0.1:8080' })
+marketDataProviderRegistry.setConfig('mock', { enabled: false })
+
+const enabled = marketDataProviderRegistry.getEnabled()
+```
+
+Importing `@363045841yyt/klinechart-core/market-data/sources` registers the built-in providers: `gotdx`, `baostock`, `finshare`, `tradingview`, `mock` and `mt5`. Registration order is the tie-breaker for sources with the same priority. See [Connectors](/docs/market-data/connectors) for what each one covers.
+
+## Routing
+
+The chart runtime never calls a provider directly. `ChartDataManager` asks `SourceRouter`, and the router decides which provider answers.
+
+- **An explicit `sourceId`** (`preferredSourceId`) means that source and nothing else. If it is disabled or lacks the capability, the request fails instead of silently switching.
+- **`auto`** builds a candidate list from enabled providers in priority order, filtered by declared source capabilities: the capability itself, `assetClass`, `period` and `adjustment`. Sources that have not declared capabilities are probed once first.
+- **Resolution** finds the instrument in each candidate's catalog by `symbol`, narrowed by `exchange` and `assetClass` when given.
+- **Fallthrough** happens only on deterministic rejections, `UNSUPPORTED_CAPABILITY` or `INSTRUMENT_NOT_FOUND`. A network failure or an abort stops the chain, so a flaky upstream is reported rather than masked by another source's data.
+
+When every candidate rejects, the router throws `SourceRoutingError` with the full list of attempts.
+
+### When a symbol is ambiguous
+
+A code can name more than one instrument. `000012`, for example, can resolve to a stock and to a bond index. Nothing in the core picks one on the user's behalf. Agent tools such as `comparison_create` return `{ status: "ambiguous", candidates }` and add nothing; the Agent is then required to call `ask_user` with one option per candidate and retry with the chosen candidate's `source` and `exchange`. People and the Agent go through the same commands, so the rule holds for both.
+
+## The cache
+
+Each chart instance owns one `MarketDataCache`. The UI, the Agent and `ChartDataManager` all read through it, so scrolling and Agent queries reuse the same pages instead of fetching twice. It pages history with a `limit`/`before` cursor, retries failed requests, merges identical in-flight requests, and evicts least-recently-used entries once it reaches its size limit.
+
+The limit is the `marketDataCacheMaxMiB` setting: 50 MiB by default, from 5 to 512. It sits in the Data group of the settings panel and applies immediately. Lowering it evicts at once.
+
+```ts
+controller.settingsCommands.applyValues({ marketDataCacheMaxMiB: 128 })
+```
+
+## Three ways to connect a feed
+
+| Path | Use it when | Reference |
+|---|---|---|
+| REST protocol | You run a service and can speak `market-data-v1`: probe, instrument search, bars, time share | [HTTP API](/docs/market-data/http-api) |
+| Live bars (SSE) | Your service can push forming and closed bars for a source | [Live bars](/docs/market-data/live-bars) |
+| In-process provider | The data is already in the browser, or you want to wrap a client SDK yourself | [Provider API](/docs/market-data/provider-api) |
+
+The REST path needs no provider code. `createMarketDataProvider` and `createHttpMarketDataTransport` assemble one from a base URL:
+
+```ts
+import {
+  createHttpMarketDataTransport,
+  createMarketDataProvider,
+  marketDataProviderRegistry,
+} from '@363045841yyt/klinechart-core/market-data'
+
+const provider = createMarketDataProvider({
+  source: { id: 'my-feed', displayName: 'My feed', defaultBaseUrl: 'http://127.0.0.1:9000' },
+  transport: createHttpMarketDataTransport({
+    baseUrl: () => marketDataProviderRegistry.getConfig('my-feed').baseUrl ?? 'http://127.0.0.1:9000',
+    sourceLabel: 'my-feed',
+  }),
+})
+
+marketDataProviderRegistry.register(provider, { enabled: true })
+```
+
+For a one-off dataset with no feed at all, the components still accept inline data (`customData`, or `setData` on the controller).
+
+## Next
+
+<Cards>
+  <Card title="Connectors" href="/docs/market-data/connectors" description="GOTDX, TradingView, Binance depth, BaoStock, MT5 and mock: what they cover and how to run them." />
+  <Card title="HTTP API" href="/docs/market-data/http-api" description="The market-data-v1 REST contract your service implements." />
+  <Card title="Provider API" href="/docs/market-data/provider-api" description="Write a provider in-process against the same types." />
+</Cards>

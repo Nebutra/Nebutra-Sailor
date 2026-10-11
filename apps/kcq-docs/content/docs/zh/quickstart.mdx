@@ -1,0 +1,172 @@
+---
+title: 第一张图表
+description: 在 Vue、React 或纯 HTML 中，用你自己的数据渲染一张 K 线图，无需任何行情后端。
+---
+
+想最快看到一张图表，就把数据直接交给它。本页通过 `customData` 传入几百根 K 线，图表直接绘制，不涉及任何行情服务。
+
+## 准备 K 线数据
+
+图表读取的是 `KLineData`：一个毫秒级 `timestamp`，加上 `open`、`high`、`low`、`close`，`volume` 可选。任何符合这个结构的数组都可以。下面的辅助函数会生成一段平滑的序列，方便上手。
+
+```ts title="bars.ts"
+import type { KLineData } from '@363045841yyt/klinechart-core'
+
+export function makeBars(count: number): KLineData[] {
+  const day = 86_400_000
+  const start = Date.UTC(2026, 0, 1)
+  let close = 100
+  return Array.from({ length: count }, (_, i) => {
+    const open = close
+    close = open + Math.sin(i / 8) * 1.5 + Math.cos(i / 3) * 0.6
+    return {
+      timestamp: start + i * day,
+      open,
+      high: Math.max(open, close) + 0.8,
+      low: Math.min(open, close) - 0.8,
+      close,
+      volume: 10_000 + Math.round(Math.abs(Math.sin(i / 5)) * 8_000),
+    }
+  })
+}
+```
+
+`customData` 在 K 线之外再补充一点上下文。`market` 和 `data` 必填，`symbol` 和 `period` 用于标注这条序列。
+
+```ts
+const customData = {
+  market: 'CN',
+  symbol: 'DEMO',
+  period: 'daily',
+  data: makeBars(240),
+}
+```
+
+## 渲染
+
+图表会撑满父容器。请给父容器，或 `<kline-chart>` 元素本身，设置一个明确的高度。
+
+<Tabs groupId="framework" persist items={["Vue", "React", "Web Component"]}>
+<Tab value="Vue">
+
+```vue title="App.vue"
+<script setup lang="ts">
+import { KlineChart, type CustomDataSource } from '@363045841yyt/klinechart'
+import { makeBars } from './bars'
+
+const customData: CustomDataSource = {
+  market: 'CN',
+  symbol: 'DEMO',
+  period: 'daily',
+  data: makeBars(240),
+}
+</script>
+
+<template>
+  <div class="chart-host">
+    <KlineChart :custom-data="customData" />
+  </div>
+</template>
+
+<style>
+.chart-host {
+  height: 480px;
+}
+</style>
+```
+
+别忘了在入口文件中引入一次 `@363045841yyt/klinechart/style.css`。
+
+</Tab>
+<Tab value="React">
+
+`KLineChartWC` 会把 `zoomLevels` 这类布局属性转成 attribute 传下去，但 `customData` 这样的对象不会转发。需要通过 ref 拿到元素，把它设为 JavaScript 属性。
+
+```tsx title="Chart.tsx"
+'use client'
+
+import { useEffect, useRef } from 'react'
+import { KLineChartWC, type KLineChartWCHandle } from '@363045841yyt/klinechart-react'
+import type { CustomDataSource } from '@363045841yyt/klinechart-core'
+import { makeBars } from './bars'
+
+const customData: CustomDataSource = {
+  market: 'CN',
+  symbol: 'DEMO',
+  period: 'daily',
+  data: makeBars(240),
+}
+
+type ChartElement = KLineChartWCHandle & { customData?: CustomDataSource }
+
+export function Chart() {
+  const ref = useRef<KLineChartWCHandle>(null)
+
+  useEffect(() => {
+    const el = ref.current as ChartElement | null
+    if (!el) return
+    // 封装组件会在客户端延迟注册 <kline-chart>。
+    void customElements.whenDefined('kline-chart').then(() => {
+      el.customData = customData // [!code highlight]
+    })
+  }, [])
+
+  return <KLineChartWC ref={ref} style={{ display: 'block', height: 480 }} />
+}
+```
+
+`'use client'` 用于支持服务端组件的框架，例如 Next.js App Router。
+
+</Tab>
+<Tab value="Web Component">
+
+```html title="index.html"
+<kline-chart id="chart" style="display: block; height: 480px"></kline-chart>
+
+<script type="module">
+  import '@363045841yyt/klinechart/web-component'
+
+  const day = 86_400_000
+  const start = Date.UTC(2026, 0, 1)
+  let close = 100
+  const data = Array.from({ length: 240 }, (_, i) => {
+    const open = close
+    close = open + Math.sin(i / 8) * 1.5
+    return {
+      timestamp: start + i * day,
+      open,
+      high: Math.max(open, close) + 0.8,
+      low: Math.min(open, close) - 0.8,
+      close,
+    }
+  })
+
+  const el = document.getElementById('chart')
+  el.customData = { market: 'CN', symbol: 'DEMO', period: 'daily', data } // [!code highlight]
+</script>
+```
+
+对象和数组要以属性（property）的形式设置。只有 `zoom-levels`、`timezone` 这类基本类型的属性可以写成 attribute。
+
+</Tab>
+</Tabs>
+
+你会看到 240 根日 K 线，顶部是工具栏，左侧是画线工具。滚轮缩放，拖动平移。
+
+## 更新数据
+
+`customData` 是响应式的。换成一个新对象，图表就会按新数据重绘。内联数据不分页：图表不会去请求你没有提供的更早的 K 线。
+
+如果想往现有序列里追加或推送实时 K 线，而不是整体替换，可以从 `controllerReady` 事件拿到 `ChartController`，调用 `updateBars` 或 `appendData`。详见[嵌入应用](/zh/docs/guides/embedding)。
+
+## 接入数据源
+
+内联数据适合初次体验，也适合你手里已有的数据。需要搜索、分页加载和实时更新时，请注册一个行情 Provider，并改用 `symbols` 属性。[行情数据与 BYOK](/zh/docs/guides/data-feeds) 介绍了整套模型，[HTTP API](/zh/docs/market-data/http-api) 和[实时 K 线](/zh/docs/market-data/live-bars)两页说明了连接器需要实现的协议。
+
+## 下一步
+
+<Cards>
+  <Card title="嵌入应用" href="/zh/docs/guides/embedding" description="受控属性、插槽、事件与控制器。" />
+  <Card title="行情数据与 BYOK" href="/zh/docs/guides/data-feeds" description="接入内置数据源或你自己的 Provider。" />
+  <Card title="主题" href="/zh/docs/guides/themes" description="明暗模式、五种预设与设计 Token。" />
+</Cards>

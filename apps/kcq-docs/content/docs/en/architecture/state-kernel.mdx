@@ -1,0 +1,121 @@
+---
+title: StateKernel
+description: The chart's single source of truth, the signal primitives it is built on, and why Agent tools are a subset of its actions.
+---
+
+Every piece of chart state lives in one place: the symbol, period, viewport, zoom, data, indicators, drawings, interaction, settings and theme. The UI, the framework bindings and the Agent all read the same signals and write through the same actions. Nothing keeps a second copy.
+
+## Four rules
+
+The contract is written down in `engine/state/stateKernel.ts` and enforced by the type system.
+
+1. **One writable signal per piece of state.** No shadow fields, no caches to keep in sync.
+2. **Derived values are `computed()`.** They re-evaluate when their sources change. There are no `syncXxx()` methods.
+3. **Consumers get `ReadonlySignal`.** It has no `.set()`, so a renderer or a component cannot write even by accident.
+4. **Only actions write.** Every change goes through a named action such as `scrollTo` or `zoomTo`, which is the one place to validate, batch or trigger side effects.
+
+`ChartStateKernel` composes the sub-states (options, zoom, data, data manager, viewport, pane, settings, theme, drawing, interaction, indicator, marker, renderer) and exposes their readonly views and actions. The kernel itself holds no business logic; it only wires modules together.
+
+## The primitives
+
+The kernel is built on a small push-based signal library with no dependencies. It is public at `@363045841yyt/klinechart-core/reactivity`.
+
+| Export | What it does |
+|---|---|
+| `createSignal(initial)` | A `WritableSignal`: call it to read, `.peek()` to read without tracking, `.set()` to write, `.subscribe()` to listen. `writableRef` is an alias |
+| `computed(fn)` | A `ReadonlySignal` derived from the signals `fn` reads |
+| `effect(fn)` | Re-runs `fn` when any signal it read changes; returns a cleanup function |
+| `batch(fn)` | Defers notifications until the outermost batch exits, then fires each subscriber once |
+| `selectSignal(source, selector, equal?)` | A readonly projection that only notifies when the selected value changes; call `dispose()` when done |
+| `createSubState(initial, computedFns?)` | Builds a sub-state: private `signals`, public `readonly`, and `snapshot()` |
+| `createFrameTransaction(options)` | Coalesces high-frequency input into one published snapshot per frame |
+
+The semantics are deliberately plain. Outside a batch, `set` notifies synchronously, with no microtask. Equality is `Object.is`. There is no Proxy and no deep tracking, only top-level reads and writes. `subscribe` returns an unsubscribe function, which is what lets React's `useSyncExternalStore`, Vue effects and Angular's `toSignal` consume the same signals.
+
+## Writing a sub-state
+
+A sub-state keeps its writable handles private and returns only readonly signals and actions.
+
+```ts title="viewportState.ts"
+import { batch, createSubState } from '@363045841yyt/klinechart-core/reactivity'
+
+export function createViewportState() {
+  const { signals, readonly } = createSubState(
+    { scrollLeft: 0, viewWidth: 0 },
+    { scrollRight: (s) => s.scrollLeft() + s.viewWidth() },
+  )
+
+  return {
+    readonly,
+    actions: {
+      scrollTo: (value: number) => signals.scrollLeft.set(Math.max(0, value)),
+      resize: (width: number, scrollLeft: number) =>
+        batch(() => { // [!code highlight]
+          signals.viewWidth.set(width)
+          signals.scrollLeft.set(scrollLeft)
+        }),
+    },
+  }
+}
+```
+
+`readonly` is not just a type-level promise. `createSubState` builds new wrapper functions without `.set`, so the write handle is absent at runtime too.
+
+## Reading from outside
+
+Bindings and host code see the kernel through `ChartController`, where every state field is a `ReadonlySignal`.
+
+```ts
+const theme = controller.settings().theme      // read
+const stop = controller.viewport.subscribe(() => {
+  const viewport = controller.viewport.peek()  // read without tracking
+  // update your own UI
+})
+
+stop()
+```
+
+## Atomic snapshots
+
+Two mechanisms make sure no one reads half an update.
+
+- **`batch()`** groups writes into one notification cycle. A subscriber that fires after `resize` sees both the new width and the new scroll position. The flush keeps draining until no listener is pending, because a `computed` can schedule further listeners while it runs.
+- **Frozen state.** Committed values are frozen. `deepFreezeSnapshot` copies and freezes JSON-like parameters so a nested object cannot be mutated around an action; `deepFreezeOwned` freezes large results in place without copying; `immutableMap` throws on `set`, `delete` and `clear`. `FrameTransaction` freezes the root of each published frame snapshot, and input written while a frame is rendering goes to the next generation.
+
+The kernel also controls when rendering happens. State changes ask for a draw; the frame transaction decides when to paint, so a burst of pointer events produces one frame, not one per event. The story behind that design is told in [frame transactions, timing and effect](/docs/architecture/engineering/frame-transaction-timing-effect) (in Chinese).
+
+## Why tools are a subset of actions
+
+An Agent tool is not a parallel API. It is an action with a schema attached. The `@Tool` decorator registers a public method on the same class the UI calls, and `getRegisteredChartTools()` hands those methods to the Agent runtime.
+
+```ts title="features/settings/settingsCommands.ts"
+export class SettingsCommands {
+  @Tool({
+    name: 'settings_update',
+    label: 'Update chart settings',
+    parameters: SettingsUpdateToolParameters,
+    safety: 'destructive',
+    executionMode: 'sequential',
+    // description omitted
+  })
+  async updateSettings(input: SettingsUpdateInput): Promise<SettingsChangeResult> {
+    return this.applyValues(input.values) // the same action the settings dialog calls
+  }
+}
+```
+
+The settings dialog, the command palette and the Agent all end up in `applyValues`. That gives three properties for free:
+
+- **One state.** The Agent reads exactly what the user sees, at no extra cost, because there is nothing to copy or sync.
+- **One execution path.** Validation, batching and undo data are written once. A fix applies to people and the Agent together.
+- **Not every action is a tool.** Only actions that make sense for the Agent are decorated, each with an input schema and a safety level (`read-only` or `destructive`). The set of tools can only ever be a subset of what the kernel allows.
+
+[ADR 0006](/docs/architecture/adr/0006-settings-instant-apply) records the settings side of this: settings apply instantly, with no draft copy.
+
+## Next
+
+<Cards>
+  <Card title="Architecture" href="/docs/architecture" description="Packages, the data-to-frame flow and rendering backends." />
+  <Card title="Rendering pipeline" href="/docs/architecture/rendering-pipeline" description="What happens inside a frame transaction (in Chinese)." />
+  <Card title="Agent tools" href="/docs/agent/tools" description="Every registered tool, generated from the core." />
+</Cards>

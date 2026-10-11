@@ -1,0 +1,54 @@
+---
+title: Introduction
+description: KLineChartQuant is an open-source K-line chart that people and AI agents operate through the same chart API.
+---
+
+KLineChartQuant is a financial K-line chart for the web. You can embed it in your own app, or open the hosted workstation and start reading charts right away.
+
+It is built around one idea: an AI agent should operate the chart the same way a person does. When the agent adds an indicator, moves the viewport or draws a trend line, it calls the same chart methods the toolbar calls. There is no separate bridge and no second copy of chart state.
+
+## Agent-native by design
+
+The chart core exposes its capabilities as methods annotated with `@Tool`. Each tool carries a parameter schema and a safety level, and the UI and the agent share one execution path through `ChartController`.
+
+```ts
+import { getRegisteredChartTools } from '@363045841yyt/klinechart-core/controllers'
+
+const tools = getRegisteredChartTools()
+```
+
+Hand these tools to `@363045841yyt/klinechart-agent-runtime` and the agent works on the chart the user is looking at. Its results show up as real changes on the chart: indicators, drawings, viewport moves. The conversation is how it gets there, not the result.
+
+All chart state lives in one reactive kernel (`StateKernel`). Only actions can write to it, and everyone else reads it through read-only signals. The agent sees exactly what the user sees.
+
+## What you get
+
+- **Crisp rendering on any display.** Sizing is driven by `ResizeObserver` and aligned to physical pixels, so candles, wicks and lines stay sharp at every device pixel ratio.
+- **Three rendering backends.** Drawing primitives are submitted once and rendered with WebGPU, WebGL2 or Canvas2D. If a backend is unavailable, the chart falls back in that order.
+- **Bindings for your framework.** Vue 3 components, a React wrapper, a `<kline-chart>` Web Component and headless Angular bindings all sit on the same framework-free core.
+- **A unified market-data model.** Built-in sources and your own providers go through one `MarketDataProvider` contract. You can also pass data inline.
+- **Indicators, drawings and markers.** Built-in indicators load on demand, drawing tools are included, and you can place your own semantic markers on the chart.
+- **Custom tooltips and legends.** Named slots replace the default tooltip and legend with your own markup.
+
+KLineChartQuant is released under the Apache-2.0 license.
+
+## The hosted workstation
+
+[kcq.nebutra.com/app](https://kcq.nebutra.com/app) is the product built on this library. Sign in with a Nebutra account to get workspaces, hosted market connections, your own data-provider keys and a managed AI agent, without running anything yourself. See [Open the workstation](/docs/workstation).
+
+## How the docs are organised
+
+- **Get started:** [Installation](/docs/installation), [Your first chart](/docs/quickstart) and [the hosted workstation](/docs/workstation).
+- **Guides:** task-focused pages such as [embedding](/docs/guides/embedding), [data feeds and BYOK](/docs/guides/data-feeds) and [themes](/docs/guides/themes).
+- **Agent:** how the agent drives the chart, and the [tool reference](/docs/agent/tools).
+- **Market data:** the [live bars contract](/docs/market-data/live-bars), the [HTTP API](/docs/market-data/http-api) and the built-in sources.
+- **Architecture:** the [system design](/docs/architecture/system), the [rendering pipeline](/docs/architecture/rendering-pipeline) and the decision records behind them.
+- **Reference:** props, events and exports for [Vue](/docs/reference/vue), [React](/docs/reference/react), the [Web Component](/docs/reference/web-component) and [each package](/docs/reference/packages).
+
+## Next
+
+<Cards>
+  <Card title="Installation" href="/docs/installation" description="Pick a package and add it to your project." />
+  <Card title="Your first chart" href="/docs/quickstart" description="Render a chart from inline data in Vue, React or plain HTML." />
+  <Card title="Agent" href="/docs/agent" description="See how an agent operates the chart through the same tools as the UI." />
+</Cards>

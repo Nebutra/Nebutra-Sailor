@@ -1,0 +1,113 @@
+---
+title: Drawings
+description: Draw trend lines, channels and levels by hand or from code, label them, select and copy them, and lock them in place.
+---
+
+A trader marks a support line, labels it, copies it one swing higher and locks the chart so nothing moves by accident. Your code can do the same, and so can the agent. All three write through one command path, so a line drawn by any of them behaves identically.
+
+## Drawing kinds
+
+A drawing's `kind` is its persisted type. The toolbar tool that creates it sometimes uses a shorter id. The tool ids are defined by the `DrawingTool` constants in `@363045841yyt/klinechart-core/engine/drawing`.
+
+| Kind | Toolbar tool id | Input anchors |
+| --- | --- | --- |
+| `horizontal-line` | `h-line` | 1 (price only) |
+| `horizontal-ray` | `h-ray` | 1 |
+| `vertical-line` | `v-line` | 1 |
+| `cross-line` | `crosshair-line` | 1 |
+| `trend-line` | `trend-line` | 2 |
+| `ray` | `ray` | 2 |
+| `extended-line` | — | 2 |
+| `fib-retracement` | `fib-retracement` | 2 |
+| `rectangle` | `rectangle` | 2 |
+| `arrow` | `arrow` | 2 |
+| `info-line` | `info-line` | 2 |
+| `regression-channel` | `regression-channel` | 2 |
+| `parallel-channel` | `parallel-channel` | 3 |
+| `flat-line` | `flat-line` | 3 |
+| `disjoint-channel` | `disjoint-channel` | 3 |
+
+Two more tool ids do not create drawings: `cursor` (the default) and `box-select`. The three channel kinds take three input anchors and save four. The derived points are calculated once at creation, and from then on only the coordinates are stored. `fib-retracement` draws levels at 0%, 23.6%, 38.2%, 50%, 61.8%, 78.6% and 100% of the range between its two anchors.
+
+## Anchors are time and price
+
+You never pass screen coordinates. Each anchor is a price plus one way to place it on the time axis:
+
+- `tradingDate` — a `YYYY-MM-DD` date matched against the bars' `date` field.
+- `timestamp` — an exact millisecond time, optionally with a positive `futureOffset` to land in the empty space after the last bar.
+- Price only — for `horizontal-line`.
+
+A saved anchor stores `time`, `price` and, when used, `futureOffset`. The bar index is never saved. Instead, it is resolved again on every frame, so loading older history does not move your drawings. A drawing is also bound to a `paneId` (its price scale) and to the `kline` or `timeshare` workspace that was active when it was created.
+
+When a trading date cannot be used, the error says why. `DRAWING_ANCHOR_DATE_OUT_OF_RANGE` means the date is outside the loaded range, and its details carry `earliest` and `latest`. `DRAWING_ANCHOR_DATE_NOT_TRADING` means the date is in range but has no bar. `DRAWING_ANCHOR_DATE_UNAVAILABLE` means the data has no per-bar date.
+
+## Create and change drawings from code
+
+```ts title="drawings.ts"
+import type { ChartController } from '@363045841yyt/klinechart-core'
+
+export function markSupport(chart: ChartController) {
+  const line = chart.createDrawing({
+    kind: 'trend-line',
+    paneId: 'main',
+    anchors: [
+      { tradingDate: '2025-03-03', price: 10.2 },
+      { tradingDate: '2025-04-15', price: 12.8 },
+    ],
+    style: { stroke: '#4A90D9', strokeWidth: 2, strokeStyle: 'dashed' },
+    labels: { line: { '0': { text: 'Support', position: 'end' } }, area: {} },
+  })
+
+  chart.createDrawing({ kind: 'horizontal-line', paneId: 'main', anchors: [{ price: 11.5 }] })
+  return line.id
+}
+```
+
+A new drawing becomes the current selection. The controller also offers these methods:
+
+| Method | Use |
+| --- | --- |
+| `updateDrawing(drawing)` | Replace one drawing with an edited copy from `drawings`. |
+| `updateBatch(ids, patch)` | Apply `style`, `visible`, `locked` or `zIndex` to several drawings at once. |
+| `getBatchStyleKeys(ids)` | The style fields every target shares; `updateBatch` accepts only these. |
+| `removeDrawing(id)` / `removeBatch(ids)` | Delete; locked drawings are skipped. |
+| `clearDrawings()` | Delete every drawing. |
+| `importDrawings(list)` | Replace the document as one undoable step. |
+| `replaceDrawings(list)` | Sync from an external source of truth and reset undo history. |
+| `undoDrawing()` / `redoDrawing()` | Step through history. |
+| `setDrawingTool(id)` | Switch the active tool; `null` means `cursor`. |
+
+Read state from the `drawings`, `selectedDrawingIds`, `globalDrawingLock`, `canUndoDrawing` and `canRedoDrawing` signals. A batch write is all or nothing: if any target is missing, or the patch touches a style field outside the shared set, nothing is written.
+
+## Styles
+
+`style` accepts `stroke`, `strokeWidth`, `strokeStyle` (`solid`, `dashed`, `dotted`), `fill`, `fillOpacity` (0–1), `pointRadius`, `textColor` and `fontSize`. Your code may use any colour.
+
+The agent is limited to a small palette that stays clear of the red and green used for candles: `#4A90D9`, `#7C6FCD`, `#C08457`, `#8B5E83` and `#9CA3AF`.
+
+## Labels
+
+Text belongs to its drawing. `labels.line` and `labels.area` are keyed by the index of the line or filled area the drawing outputs (`"0"`, `"1"`, …). This lets each level of a Fibonacci retracement carry its own text. Each value is `{ text, position }`, where `position` is `start`, `center` or `end` along the line's own direction.
+
+A literal `\n` is the only line break. Text is never wrapped or truncated automatically. When you update `labels`, you replace the whole label set, so read the current one first. In the UI, hovering a line shows a faint add-text hint; clicking it edits the label in place.
+
+## Selection, copy and lock
+
+Selection lives in the chart state as `selectedDrawingIds`. A plain click selects one drawing. Ctrl- or Shift-click toggles a drawing in or out of the selection. The `box-select` tool toggles every visible drawing whose lines cross the box, within the pane where the drag started. Dragging any selected drawing moves the whole selection as one commit.
+
+`copyDrawings(ids)` duplicates drawings with a shared offset of about 16 CSS px to the right and 48 px down, snapped to whole time slots. The copies are visible, unlocked and selected, and the whole group is a single undo step.
+
+Locking works at two levels that do not overwrite each other:
+
+- `locked` on a drawing freezes its geometry and protects it from deletion.
+- `setGlobalDrawingLock(true)` freezes movement for every drawing without changing any drawing's own `locked`. Deletion, style, visibility and text edits still work, and so do hit-testing and selection.
+
+## The agent draws the same way
+
+The agent's `drawing_create`, `drawing_update`, `drawings_copy`, `drawing_delete` and `drawings_clear` tools call the same `DrawingCommands` instance as the UI and the controller. A line the agent draws is selected, can be undone and is saved with your layout. The agent is told the exact pane ids that are available, and when a date fails it gets the valid range back so it can correct the call.
+
+<Cards>
+  <Card title="Drawing tools for the agent" href="/docs/agent/tools/drawings" description="Parameters and rules the model receives." />
+  <Card title="Layouts" href="/docs/guides/layouts" description="Drawings are saved with each layout." />
+  <Card title="Drawing tools note" href="/docs/architecture/notes/drawing-tools" description="Design notes on the drawing engine." />
+</Cards>

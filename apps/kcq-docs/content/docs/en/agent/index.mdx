@@ -1,0 +1,75 @@
+---
+title: How the agent operates the chart
+description: Agent tools are chart methods annotated with @Tool. One implementation and one state, with no bridge between the model and the chart.
+---
+
+When a user asks for "MACD with a faster signal line", the agent does not describe the change. It makes it. The result appears on the chart the user is looking at, through the same entry points a person would use. This page explains how the agent reaches the chart, what it sees, and how a run is put together.
+
+## Tools are chart methods
+
+A tool is an ordinary method on a Core domain object, annotated with `@Tool`. The annotation adds a name, a description, a TypeBox parameter schema, a safety level and an execution mode. The method body is the implementation, and nothing else is generated around it.
+
+```ts title="packages/core/src/features/agent/impl/chartAgentController.ts"
+@Tool({
+  name: 'indicators_query',
+  label: 'Query indicator',
+  description: 'Calculate a registered chart indicator over all active K-line data and return compact text. …',
+  parameters: IndicatorQueryToolParameters,
+  safety: 'read-only',
+  executionMode: 'parallel',
+})
+async queryIndicator(input: IndicatorQueryInput, _context?: ChartToolExecutionContext) {
+  await this.dependencies.loadIndicators([input.definitionId])
+  return this.dependencies.indicatorQuery.queryIndicator({ … })
+}
+```
+
+The decorator records each tool in a registry in `packages/core/src/foundation/agent/chartToolRegistry.ts`. `getRegisteredChartTools()` (from `@363045841yyt/klinechart-core/controllers`) returns every tool with its frozen schema, the real method name and a single `execute` entry that validates input before calling the method. Tools are grouped onto host objects: the chart's `ChartAgentController`, plus `toolHosts` such as the comparison commands and the settings commands. A host is matched by function identity, so two methods that share a name can never be confused.
+
+The UI calls these same methods. The settings dialog, the command palette and the agent all write settings through one set of `settingsCommands`. The canvas toolbar's copy button and the `drawings_copy` tool share `copyDrawings`, including its placement rules and undo step.
+
+## One state, no bridge
+
+Every tool reads from and writes to the StateKernel, the chart's single source of truth. Only actions can write to it, and outside consumers get read-only signals. Tools are a subset of those actions, not a parallel system. Whatever the agent changes is exactly what the user sees, and the reverse is also true.
+
+The project went through a JSON configuration stage and an MCP stage before arriving here. The README states the reason for the change under "No blind use of MCP": an intermediate protocol spends tokens, loses information and keeps a second copy of state that leaks into frontend logic. In the current design, tools register directly on the chart core, and a single call reaches the kernel.
+
+## What the agent sees
+
+The agent's view of the chart is derived from the kernel as `ChartAgentController.context`. It is a read-only signal, and it is `null` while no market data is loaded.
+
+| Field | Meaning |
+| --- | --- |
+| `symbol`, `symbolName`, `market`, `exchange` | The main instrument. |
+| `period`, `adjustMode`, `dataSource`, `timezone` | How the active series was loaded. |
+| `dataRange` | First and last timestamp plus the bar count. |
+| `visibleRange` | The range the user confirmed with the range-selection tool, or `null`. |
+| `selectedKLineBars` | Loaded bars inside that range, formatted like the bar query tool's output. |
+| `activeIndicators` | `instanceId`, `definitionId` and numeric params of each instance. |
+| `drawingSelection` | The selected drawings as snapshots, or `null`. |
+| `dataRevision` | Version of the active data. |
+
+The timezone comes from the data itself, written to the kernel atomically with each series. Dates are therefore formatted in the market's timezone, not the browser's. The browser bridge projects the snapshot into context items (`chart-symbol`, `selected-time-range`, `selected-kline-bars`, `drawing-selection`). The panel shows them, and they are attached to every run the user starts. The bridge never keeps a writable copy. Switching symbol or period, reloading data or changing the selection all recompute the snapshot automatically. See [agent chart context](/docs/architecture/notes/agent-chart-context-ssot).
+
+## The runtime
+
+`@363045841yyt/klinechart-agent-runtime` runs the agent loop. It is framework-neutral and built on the Pi agent. It owns the UI contracts, the run lifecycle, durable sessions, event replay and redaction. It turns Pi events into stable UI events such as `tool.started`, `tool.progress`, `tool.finished` and streamed assistant text. A run is cancelled after 10 minutes without activity, and any event or tool progress resets that timer. Each run driver holds at most one active run.
+
+In the browser, `BrowserToolRegistry` connects the chart tools to the runtime. On every run it:
+
+1. Turns each registered chart tool into a runtime tool and binds it to the host that owns the method.
+2. Leaves out chart tools when no chart is bound, and leaves out every tool that is not read-only when the run is read-only.
+3. Adds live values to the description. The market-data and instrument tools, and `comparison_create`, get the exact `sourceId`s that are enabled. `drawing_create` gets the pane ids that exist right now. The model picks from real values instead of guessing.
+4. Returns a known failure as data rather than as an exception: `{ success: false, error, stateChanged: false }` with a recommended action. The model can then correct its next call.
+
+`web_search` and `ask_user` come from the runtime and are added next to the chart tools.
+
+## Asking instead of guessing
+
+When a request is ambiguous, the agent asks. `instruments_query_name` returns every exact match. If there is more than one, the model is told to call `ask_user` with one option per candidate rather than pick one itself. `ask_user` shows a question card in the panel (1–8 options, single or multiple choice) and waits for the answer. The inactivity timer pauses while it waits, because only the user decides how long that takes.
+
+<Cards>
+  <Card title="Tool reference" href="/docs/agent/tools" description="Every tool, its parameters and the exact description the model receives." />
+  <Card title="Safety and permissions" href="/docs/agent/safety" description="Read-only runs, validation, redaction and credentials." />
+  <Card title="Agent integration" href="/docs/guides/agent-integration" description="Wire the bridge, providers and sessions into your app." />
+</Cards>

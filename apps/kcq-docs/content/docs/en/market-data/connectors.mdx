@@ -1,0 +1,111 @@
+---
+title: Connectors
+description: The data sources KLineChartQuant ships with, how to run them on your machine, and how kcq.nebutra.com hosts them.
+---
+
+A connector is a small backend that speaks to an upstream feed and answers the chart in the `market-data-v1` protocol. The chart ships a provider for each one, so once a connector is running, its instruments show up in search with no extra code.
+
+## At a glance
+
+| Source id | Connector | Covers | Local port |
+|---|---|---|---|
+| `gotdx` | GoTDX-Connector (`services/tdx-api`) | Tongdaxin quotes: A-shares, futures and other markets | 8080 |
+| — | GoTDX-Connector (`services/binance-api`) | Binance L2 order book and depth stream | 8081 |
+| `baostock` | Baostock-Tradingview-Connector | BaoStock A-share daily, weekly, monthly and minute K-lines | 8000 |
+| `tradingview` | Baostock-Tradingview-Connector | TradingView global instruments | 8000 |
+| `finshare` | Baostock-Tradingview-Connector | China futures through the FinShare SDK | 8000 |
+| `mt5` | KCQ-MT5-connector | MT5 (Exness) terminal: forex, metals and crypto CFDs, with live bars | 8090 |
+| `mock` | none | `MOCK-100` and `MOCK-10000`, generated in the browser | — |
+
+The default base URLs come from `dataSourceRegistry` in the core. Any of them can be overridden at runtime with `marketDataProviderRegistry.setConfig(id, { baseUrl })`.
+
+## Run them locally
+
+The connectors live in their own repositories, cloned next to the chart repository rather than inside it. You need git, Go 1.21 or later, and uv with Python 3.12; dependencies download on first run.
+
+<Steps>
+<Step>
+
+### Clone the backends
+
+```bash
+pnpm setup:backends
+```
+
+This clones GoTDX-Connector, Baostock-Tradingview-Connector and KCQ-MT5-connector into the parent directory. It is idempotent: existing directories are skipped.
+
+</Step>
+<Step>
+
+### Start the chart with connectors
+
+```bash
+pnpm dev -c all               # dev server + gotdx, binance, baostock (mt5 excluded)
+pnpm dev -c gotdx baostock    # dev server + the ones you name
+pnpm dev -c mt5               # MT5 must be named explicitly
+```
+
+Aliases work too: `tdx` or `g` for gotdx, `bnb` for binance, `b` for baostock, `m` for mt5. Shorthands exist for the common cases: `pnpm dev:all`, `pnpm dev:g`, `pnpm dev:b`, `pnpm dev:bnb`, `pnpm dev:mt5`. Add `--lan` to bind the dev server to `0.0.0.0`.
+
+</Step>
+<Step>
+
+### Or run only the backends
+
+```bash
+pnpm connector                # gotdx + binance + baostock
+pnpm connector baostock       # just one
+```
+
+</Step>
+</Steps>
+
+Logs from every process share one terminal, prefixed `[vite]`, `[gotdx]`, `[binance]`, `[baostock]` and `[mt5]`. The dev server proxies `/api/public` to port 8080 and `/api/stock` to port 8000.
+
+## Each source
+
+### GOTDX
+
+`gotdx` reads Tongdaxin quotes through [GoTDX-Connector](https://github.com/363045841/GoTDX-Connector). Start it with `pnpm connector gotdx` (it runs `go run ./services/tdx-api`).
+
+### TradingView and BaoStock
+
+[Baostock-Tradingview-Connector](https://github.com/363045841/Baostock-Tradingview-Connector) is one FastAPI service (`uv run python ./server.py`) behind three source ids: `tradingview` for global historical bars, `baostock` for A-share K-lines from BaoStock, and `finshare` for China futures. Start it with `pnpm connector baostock`.
+
+### Binance depth
+
+The Binance service in GoTDX-Connector proxies Binance's depth stream as server-sent events. It is not a K-line provider and has no source id. The core consumes it through `BinanceSSESource` and `DepthConnector`, which feed the order-book heatmap. `DEFAULT_BINANCE_SSE_URL` points at `http://localhost:8081/api/binance/depth-events`.
+
+### MT5
+
+[KCQ-MT5-connector](https://github.com/EliteOtaku/KCQ-MT5-connector) reads from a logged-in MT5 (Exness) terminal, so it only runs on Windows. That is why `all` leaves it out. Its provider in the core also wires a live-bars stream (`BarsLiveSource`) against the same base URL. Its instruments trade around the clock and use a UTC session.
+
+### Mock
+
+`mock` needs no backend and is always online. It offers two daily instruments, `MOCK-100` and `MOCK-10000`, and a generated live stream. Use it for rendering tests and demos.
+
+Setup notes for GoTDX-Connector, BaoStock/TradingView and MT5 are kept in their original Chinese: [GoTDX-Connector](/docs/market-data/sources/klinechartquantgo), [BaoStock / TradingView](/docs/market-data/sources/baostock), [MT5](/docs/market-data/sources/mt5).
+
+## How kcq.nebutra.com runs them
+
+The hosted workstation at [kcq.nebutra.com/app](https://kcq.nebutra.com/app) runs GOTDX, TradingView and Binance depth inside the same Fly Machine as the static site, in Singapore. A small supervisor starts nginx and the three connectors, restarts each one on its own with capped backoff, and prefixes their logs. If nginx itself cannot stay up, the Machine is replaced.
+
+| Public path | Process | Loopback port |
+|---|---|---|
+| `/market/tdx/api/v1/market-data/…` | GOTDX (`gotdx`) | 8081 |
+| `/market/python/api/v1/market-data/…` | TradingView (`tradingview`) | 8083 |
+| `/market/binance/api/binance/orderbook`, `/depth-events` | Binance depth | 8082 |
+
+nginx only forwards the protocol endpoints (probe, instrument search, bars, time share, time-share range, trading calendar) and each connector's live-bars stream. Everything else under `/market/` is a 404. Requests are rate-limited and connection-capped per client, and Binance depth accepts only `btcusdt` and `ethusdt`. GOTDX runs in the Asia/Shanghai time zone so upstream timestamps keep their meaning. Connectors receive no account or trading secrets.
+
+Connector revisions are pinned in `apps/kcq/connector-sources.json` in the Nebutra-Sailor repository: `TsekaLuk/GoTDX-Connector` and `TsekaLuk/Baostock-Tradingview-Connector`, each at a fixed commit. One image is built from those pins, and the deploy is verified with a real search and recent bars, not just process liveness.
+
+Only GOTDX and TradingView appear in the hosted source catalog. BaoStock is withheld until its upstream login succeeds, FinShare while its continuous-contract history is stale, and MT5 because it needs a Windows host.
+
+## Next
+
+<Cards>
+  <Card title="Market data" href="/docs/market-data" description="The model, the registry and how the router picks a source." />
+  <Card title="Live bars" href="/docs/market-data/live-bars" description="The SSE contract for streaming bars from a connector." />
+  <Card title="HTTP API" href="/docs/market-data/http-api" description="Implement market-data-v1 to add your own connector." />
+</Cards>

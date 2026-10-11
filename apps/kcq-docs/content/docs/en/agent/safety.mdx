@@ -1,0 +1,83 @@
+---
+title: Safety and permissions
+description: How tools declare side effects, what a read-only run can do, how input is validated and redacted, and where credentials live.
+---
+
+Sometimes a user wants the agent to look at the chart and explain it without touching anything. Sometimes they want it to rearrange the whole workspace. The permission model is built for both cases: every tool declares its side effects, a read-only run only ever sees tools that cannot change anything, and every input is checked before any code runs.
+
+## Every tool declares its side effects
+
+Each `@Tool` sets `safety` to one of two values.
+
+| Level | Meaning | Examples |
+| --- | --- | --- |
+| `read-only` | Reads state or external data; changes nothing. | `panes_list`, `indicators_query`, `instruments_query_name`, `market_bars_query`, `market_timeshare_query`, `market_timeshare_range_query`, `drawings_list`, `comparisons_list`, `settings_get`, `web_search`, `ask_user` |
+| `destructive` | Changes the chart, its settings or the outside world. | `pane_create`, `pane_replace_content`, `panes_clear`, `drawing_create`, `drawing_update`, `drawing_delete`, `drawings_copy`, `drawings_clear`, `comparison_create`, `comparisons_clear`, `settings_update`, `settings_reset`, `code_interpreter` |
+
+The level is part of the tool's frozen metadata and is listed for each tool in the [tool reference](/docs/agent/tools).
+
+## Read-only runs
+
+Read-only is a per-run policy, not part of the chart context. The agent workspace stores it separately and passes it as `readOnly` on `StartRunInput` when a run starts. Two independent checks enforce it:
+
+1. **Tool resolution.** When the browser bridge builds the tool list for a run, `BrowserToolRegistry` drops every chart tool whose `safety` is not `read-only`. The model never sees a write tool.
+2. **Execution.** The run driver checks again before executing anything. If a write tool somehow reaches a read-only run, for example because a provider misbehaves, the call fails with `TOOL_NOT_ALLOWED`.
+
+Users can also switch individual tools off in the agent settings. The selection is saved, and on first use every registered tool is enabled.
+
+At this commit the browser bridge does not ask for confirmation before each destructive call: `confirmTool` reports that nothing is pending. Choose a read-only run when the agent should only look. Changes the agent does make go through the same commands as the UI, so drawings it creates can be undone like any other.
+
+## Input is validated before the method runs
+
+Every tool call passes through the registry's single `execute` entry, which checks the input against the tool's TypeBox schema with `Value.Check`. Invalid input never reaches the domain method. The schemas are deep-frozen copies, so nothing outside the registry can loosen them.
+
+When validation fails, the model gets a short, bounded explanation. At most `TOOL_INPUT_ERROR_LIMIT` (5) field errors are collected, each written as `<path>: <message>`. They are returned as data:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "…",
+    "message": "The tool input is invalid: /anchors/0/price: …",
+    "retryable": true,
+    "recommendedAction": "Correct the invalid field and retry the request."
+  },
+  "stateChanged": false
+}
+```
+
+Domain errors from the chart are returned the same way, with a recovery hint for their code. `drawing_create` adds specific guidance, such as the valid pane ids or the loaded date range. Because `stateChanged` is `false`, the model knows a retry is safe.
+
+## Redaction
+
+Before a user's prompt is saved to the session or sent to the model, `redactString` (in `packages/agent-runtime/src/security`) rewrites:
+
+- `Bearer …` and `Basic …` authorization values, and `sk-`-style keys, to `[REDACTED]`;
+- home directory paths such as `/Users/<name>`, `/home/<name>` or `C:\Users\<name>`, to `[LOCAL_PATH]`;
+- the exact values of the active provider key and the Exa search key, to `[REDACTED]`.
+
+Redaction applies to the user's prompt only. Model output, tool results, errors, run events and usage metadata pass through unchanged, so a tool must never put a secret in its result.
+
+## Where credentials live
+
+Renderer code talks to the agent through `AgentBridgeClient` and `AgentUiEvent`. Provider payloads, credentials, Electron objects and raw tool results stay behind the runtime and the host adapter. Profile views sent to the UI never include the API key. Where the key itself is kept depends on the host:
+
+| Host | Key storage |
+| --- | --- |
+| Browser, default | The page's agent settings in `localStorage`, scoped per account and workspace when a [persistence scope](/docs/guides/layouts#isolate-storage-per-account-and-workspace) is configured. |
+| Electron | An injected `credentials` store (for example `safeStorage`); nothing is written to `localStorage`. |
+| Managed provider | No real key in the browser. A read-only placeholder is sent, and the host's `fetch` authenticates instead, as the hosted workstation does with its session cookie. |
+
+## Code interpreter isolation
+
+`code_interpreter` is `destructive` and `sequential`. It is only registered when you import its entry point. Its policy always requests a disabled network, but how strongly that is enforced depends on the provider. Only `cloud-run-sandbox` reports `enforcesNetworkPolicy: true`, and it has never run against a real Cloud Run sandbox. With `fly-machines`, egress is blocked inside this project's own runner image, not by fly.io. `LocalProvider` isolates nothing on macOS or Windows, nor on Linux hosts where `unshare -rn` is not usable. Never use it for untrusted code. The full table is in [Agent integration](/docs/guides/agent-integration#code-interpreter-opt-in).
+
+## Parallel and sequential tools
+
+`executionMode` tells the runtime how to schedule several tool calls from one model message. The runtime runs in parallel by default. If any call in a message targets a `sequential` tool, every call in that message runs one at a time, in order. Read tools are generally `parallel`. Every chart write, `ask_user` and `code_interpreter` are `sequential`, so two writes can never interleave. Tool results are still returned to the model in the order it requested them.
+
+<Cards>
+  <Card title="How the agent operates the chart" href="/docs/agent" description="Tools, context and the runtime." />
+  <Card title="Tool reference" href="/docs/agent/tools" description="Safety level and mode of every tool." />
+  <Card title="Agent integration" href="/docs/guides/agent-integration" description="Providers, credentials and sessions in your app." />
+</Cards>
