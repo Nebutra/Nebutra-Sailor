@@ -1,0 +1,166 @@
+---
+title: 行情数据与 BYOK
+description: 图表如何获取行情：从内联 K 线、内置数据源、自定义 Provider，到实时 K 线与宿主托管的 Key。
+---
+
+图表本身不认识任何行情供应商。它只通过一个接口 `MarketDataProvider` 获取品种和 K 线，再由路由层决定由哪个 Provider 响应。本指南的所有内容，都接入这套模型。
+
+## 三种喂数据的方式
+
+| 你手上有 | 使用 |
+| --- | --- |
+| 已在内存中的 K 线 | `customData`，或控制器上的 `setData` |
+| 实现了 KCQ V1 HTTP 协议的服务 | 内置数据源，或用你的 base URL 调用 `createMarketDataProvider` |
+| 其他任意 API | 自己实现一个 `MarketDataProvider` 对象 |
+
+## 内联数据
+
+像[第一张图表](/zh/docs/quickstart)那样，把 `customData` 传给组件即可。它需要 `market` 和 `data`，还可以通过 `comparisons` 按代码附带对比品种。图表会把该品种登记到品种目录中，但不会请求你提供范围之外的数据。
+
+通过控制器可以做更细的控制：
+
+| 方法 | 作用 |
+| --- | --- |
+| `applyCustomData(source)` | 与 `customData` 属性相同 |
+| `setData(bars)` | 替换当前序列 |
+| `appendData(bars)` | 在末尾追加 K 线 |
+| `updateBars(bars)` | 写入实时更新；时间戳相同的 K 线会被替换 |
+
+## Provider 模型
+
+整套模型由三个类型承载，均来自 `@363045841yyt/klinechart-core/market-data`。
+
+- **`InstrumentDescriptor`** 表示一个可交易品种。`id` 是它在任何地方的唯一身份。`capabilities` 列出它支持的周期、复权方式和分时能力。`providerRef` 只属于创建它的 Provider，其他任何地方都不读取。
+- **`MarketDataProvider`** 表示一个数据源。它包含 `source` 描述、`probe()` 健康检查，以及 `catalog`、`bars`、`timeShare`、`liveBars` 等可选能力模块。数据源不支持的能力，就不挂载对应模块。
+- **`SourceRouter`** 为每次请求选择 Provider。显式指定的数据源单独响应，出错时原样返回错误；在 `auto` 模式下，按优先级依次尝试已启用的 Provider，直到有一个接受请求。
+
+一个最小的 Provider：
+
+```ts
+import {
+  marketDataProviderRegistry,
+  type MarketDataProvider,
+} from '@363045841yyt/klinechart-core/market-data'
+
+const provider = {
+  source: { id: 'my-feed', displayName: 'My feed' },
+  async probe() {
+    return { status: 'online', checkedAt: Date.now() }
+  },
+  catalog: {
+    async search(query) {
+      return lookUp(query.keyword, query.limit) // InstrumentDescriptor[]
+    },
+  },
+  bars: {
+    async fetch(query) {
+      return {
+        instrumentId: query.instrument.id,
+        period: query.period,
+        adjustment: query.adjustment,
+        barAggregation: query.barAggregation,
+        timezone: 'UTC',
+        data: await loadBars(query), // KLineData[]，早于 query.beforeTimestamp
+        olderData: 'unknown', // 或 'available' | 'exhausted'
+      }
+    },
+  },
+} satisfies MarketDataProvider
+
+marketDataProviderRegistry.register(provider, { enabled: true })
+```
+
+注册之后，这个数据源会出现在图表的数据源列表和品种搜索中。完整契约见 [Provider API](/zh/docs/market-data/provider-api)。
+
+### 使用 V1 协议
+
+如果你的后端实现了 KCQ V1 HTTP API，就不必手写 Provider：
+
+```ts
+import {
+  createHttpMarketDataTransport,
+  createMarketDataProvider,
+  marketDataProviderRegistry,
+} from '@363045841yyt/klinechart-core/market-data'
+
+marketDataProviderRegistry.register(
+  createMarketDataProvider({
+    source: { id: 'my-v1', displayName: 'My V1 service' },
+    transport: createHttpMarketDataTransport({ baseUrl: 'https://data.example.com' }),
+  }),
+)
+```
+
+接口定义见 [HTTP API](/zh/docs/market-data/http-api)。
+
+## 内置数据源
+
+内核为以下数据源提供了 Provider。内核加载时它们会自动注册；也可以显式引入 `@363045841yyt/klinechart-core/market-data/sources`。
+
+| 数据源 id | 数据 | 服务提供方 |
+| --- | --- | --- |
+| `gotdx` | 通达信行情：A 股、期货等 | GoTDX-Connector |
+| `baostock` | A 股日、周、月线及分钟线 | Baostock-Tradingview-Connector |
+| `finshare` | 国内期货 | Baostock-Tradingview-Connector |
+| `tradingview` | 全球品种 | Baostock-Tradingview-Connector |
+| `mt5` | 已登录 MT5 终端的外汇、贵金属和加密货币 CFD，支持实时 K 线 | KCQ-MT5-connector |
+| `mock` | 测试序列 `MOCK-100` 与 `MOCK-10000`，无需后端 | — |
+
+除 `mock` 外，每个数据源都需要运行对应的连接器，默认指向本机地址。各自的部署方式见[数据源](/zh/docs/market-data/sources/klinechartquantgo)。
+
+## 实时 K 线
+
+Provider 通过 `liveBars` 模块获得实时更新。内置 `mt5` 数据源使用的 `BarsLiveSource`，会为一个品种、周期和聚合方式打开一条 Server-Sent Events 流，把 `forming` 和 `closed` K 线写入图表。只有数据源在能力声明中包含 `liveBars` 时，才会建立实时流。
+
+```ts
+import { BarsLiveSource, createMarketDataProvider } from '@363045841yyt/klinechart-core/market-data'
+
+createMarketDataProvider({
+  source,
+  transport,
+  liveBars: {
+    createStream: ({ symbol, period, barAggregation, instrumentId }) =>
+      new BarsLiveSource('my-v1', symbol, period, barAggregation, baseUrl, undefined, instrumentId),
+  },
+})
+```
+
+帧格式见[实时 K 线（SSE）](/zh/docs/market-data/live-bars)。
+
+## 宿主托管的连接（BYOK）
+
+很多行情供应商需要 API Key。KLineChartQuant 把 Key 交给宿主应用管理：图表不收集 Key，也从不把它写入设置、URL 或浏览器存储。
+
+职责划分如下：
+
+- **图表**提供 Provider 契约和 `source-management` 插槽，你的应用在其中渲染连接、测试、替换、断开等操作。
+- **你的应用**负责用户登录、在服务端加密保存 Key，并代理行情请求。每个连接注册一个 Provider，指向同源的代理地址，并设置 `endpointEditable: false`，避免图表偏好把它改到别处。
+- **你的代理**校验会话以及用户对该连接的归属，限制请求规模，并且绝不回传供应商的原始错误或 Key。
+
+```vue
+<KlineChart>
+  <template #source-management>
+    <MyConnections />
+  </template>
+</KlineChart>
+```
+
+用户显式选择的数据源出错时，路由层直接返回错误，不会回退到其他数据源。删除连接时，应同时注销对应的 Provider。
+
+[BYOK 设计说明](/zh/docs/architecture/notes/market-data-byok)列出了评估过的供应商，供宿主开发适配器参考；它们都不是内置适配器。
+
+### 托管工作台的做法
+
+[工作台](/zh/docs/workstation)以 Twelve Data 为例实践了这套模式：
+
+1. 已登录用户在 `source-management` 面板中保存 Key。Nebutra 网关按租户加密存储，浏览器只拿到名称和打码后的尾号。
+2. 页面为每个连接注册一个 Provider：id 为 `byok-<connectionId>`，base URL 为同源的 `/market/byok/connections/<connectionId>`，并设置 `endpointEditable: false`。
+3. 请求携带会话 Cookie 和当前工作区。Nginx 通过 TLS 把 `/market/byok/` 转发给网关，网关校验成员关系和连接归属后，再用保存的 Key 调用 Twelve Data。
+
+## 下一步
+
+<Cards>
+  <Card title="Provider API" href="/zh/docs/market-data/provider-api" description="行情契约中的全部类型。" />
+  <Card title="HTTP API" href="/zh/docs/market-data/http-api" description="连接器需要实现的 V1 接口。" />
+  <Card title="实时 K 线" href="/zh/docs/market-data/live-bars" description="实时 K 线的 SSE 流。" />
+</Cards>

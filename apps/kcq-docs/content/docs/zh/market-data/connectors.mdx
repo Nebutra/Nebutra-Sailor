@@ -1,0 +1,111 @@
+---
+title: 连接器
+description: KLineChartQuant 自带的行情数据源、如何在本机启动，以及 kcq.nebutra.com 如何托管它们。
+---
+
+连接器（connector）是一个小型后端：一头对接上游行情，另一头用 `market-data-v1` 协议应答图表。图表为每个连接器都内置了 Provider，连接器一启动，它的品种就能直接在搜索里找到，不需要额外代码。
+
+## 一览
+
+| 数据源 id | 连接器 | 覆盖范围 | 本地端口 |
+|---|---|---|---|
+| `gotdx` | GoTDX-Connector（`services/tdx-api`） | 通达信行情：A 股、期货等市场 | 8080 |
+| — | GoTDX-Connector（`services/binance-api`） | 币安 L2 订单簿与深度推送 | 8081 |
+| `baostock` | Baostock-Tradingview-Connector | BaoStock A 股日、周、月线与分钟 K 线 | 8000 |
+| `tradingview` | Baostock-Tradingview-Connector | TradingView 全球品种 | 8000 |
+| `finshare` | Baostock-Tradingview-Connector | 通过 FinShare SDK 获取的国内期货 | 8000 |
+| `mt5` | KCQ-MT5-connector | MT5（Exness）终端：外汇、贵金属、加密 CFD，含实时 K 线 | 8090 |
+| `mock` | 无 | 浏览器内生成的 `MOCK-100` 与 `MOCK-10000` | — |
+
+默认地址来自 Core 中的 `dataSourceRegistry`，运行时都可以用 `marketDataProviderRegistry.setConfig(id, { baseUrl })` 覆盖。
+
+## 本机运行
+
+连接器各有独立仓库，克隆到图表仓库的同级目录，而不是放进 monorepo。需要本机已安装 git、Go 1.21 及以上，以及 uv 与 Python 3.12；依赖会在首次运行时自动下载。
+
+<Steps>
+<Step>
+
+### 克隆后端
+
+```bash
+pnpm setup:backends
+```
+
+它会把 GoTDX-Connector、Baostock-Tradingview-Connector 和 KCQ-MT5-connector 克隆到上一级目录。重复执行是安全的，已存在的目录会跳过。
+
+</Step>
+<Step>
+
+### 连同连接器一起启动图表
+
+```bash
+pnpm dev -c all               # 开发服务器 + gotdx、binance、baostock（不含 mt5）
+pnpm dev -c gotdx baostock    # 开发服务器 + 指定的连接器
+pnpm dev -c mt5               # mt5 需要显式指定
+```
+
+也支持别名：gotdx 可写作 `tdx` 或 `g`，binance 写作 `bnb`，baostock 写作 `b`，mt5 写作 `m`。常用组合有简写：`pnpm dev:all`、`pnpm dev:g`、`pnpm dev:b`、`pnpm dev:bnb`、`pnpm dev:mt5`。加上 `--lan` 可以把开发服务器绑定到 `0.0.0.0`。
+
+</Step>
+<Step>
+
+### 只启动后端
+
+```bash
+pnpm connector                # gotdx + binance + baostock
+pnpm connector baostock       # 只启动一个
+```
+
+</Step>
+</Steps>
+
+所有进程的日志汇总在同一个终端，按来源加上 `[vite]`、`[gotdx]`、`[binance]`、`[baostock]`、`[mt5]` 前缀。开发服务器会把 `/api/public` 代理到 8080 端口，把 `/api/stock` 代理到 8000 端口。
+
+## 各数据源
+
+### GOTDX
+
+`gotdx` 通过 [GoTDX-Connector](https://github.com/363045841/GoTDX-Connector) 读取通达信行情。用 `pnpm connector gotdx` 启动（实际执行 `go run ./services/tdx-api`）。
+
+### TradingView 与 BaoStock
+
+[Baostock-Tradingview-Connector](https://github.com/363045841/Baostock-Tradingview-Connector) 是一个 FastAPI 服务（`uv run python ./server.py`），背后对应三个数据源 id：`tradingview` 提供全球品种历史 K 线，`baostock` 提供 BaoStock 的 A 股 K 线，`finshare` 提供国内期货。用 `pnpm connector baostock` 启动。
+
+### 币安深度
+
+GoTDX-Connector 中的币安服务把币安深度流转成 SSE 推送。它不是 K 线 Provider，也没有数据源 id。Core 通过 `BinanceSSESource` 和 `DepthConnector` 接入，驱动订单簿热力图。`DEFAULT_BINANCE_SSE_URL` 指向 `http://localhost:8081/api/binance/depth-events`。
+
+### MT5
+
+[KCQ-MT5-connector](https://github.com/EliteOtaku/KCQ-MT5-connector) 从本机已登录的 MT5（Exness）终端取数，因此只能跑在 Windows 上，`all` 也因此不包含它。它在 Core 里的 Provider 还接入了实时 K 线流（`BarsLiveSource`），使用同一个地址。MT5 品种接近全天交易，使用 UTC 会话。
+
+### Mock
+
+`mock` 不依赖后端，始终在线，提供 `MOCK-100` 与 `MOCK-10000` 两个日线品种和一条生成的实时流，适合渲染测试与演示。
+
+GoTDX-Connector、BaoStock/TradingView 和 MT5 的详细部署说明见：[GoTDX-Connector](/zh/docs/market-data/sources/klinechartquantgo)、[BaoStock / TradingView](/zh/docs/market-data/sources/baostock)、[MT5](/zh/docs/market-data/sources/mt5)。
+
+## kcq.nebutra.com 的部署方式
+
+托管工作台 [kcq.nebutra.com/app](https://kcq.nebutra.com/app) 把 GOTDX、TradingView 和币安深度三个连接器，与静态站点放在同一台位于新加坡的 Fly Machine 里。一个小型 supervisor 负责启动 nginx 和三个连接器，各进程独立重启、退避有上限，日志带进程前缀。如果 nginx 本身反复起不来，整台 Machine 会被替换。
+
+| 公开路径 | 进程 | 回环端口 |
+|---|---|---|
+| `/market/tdx/api/v1/market-data/…` | GOTDX（`gotdx`） | 8081 |
+| `/market/python/api/v1/market-data/…` | TradingView（`tradingview`） | 8083 |
+| `/market/binance/api/binance/orderbook`、`/depth-events` | 币安深度 | 8082 |
+
+nginx 只转发协议端点（探测、品种搜索、K 线、分时、多日分时、交易日历）和各连接器自己的实时 K 线流，`/market/` 下其他路径一律返回 404。请求按客户端限速、限制并发连接，币安深度只接受 `btcusdt` 和 `ethusdt`。GOTDX 运行在 Asia/Shanghai 时区，保证上游时间戳的含义不变。连接器拿不到任何账户或交易凭据。
+
+连接器版本固定在 Nebutra-Sailor 仓库的 `apps/kcq/connector-sources.json`：`TsekaLuk/GoTDX-Connector` 与 `TsekaLuk/Baostock-Tradingview-Connector`，各自锁定到一个提交。部署时据此构建同一个镜像，并用真实的搜索和最近 K 线做验证，而不只是检查进程是否存活。
+
+托管环境的数据源目录里只有 GOTDX 和 TradingView。BaoStock 在上游登录恢复前暂不提供，FinShare 在连续合约历史更新前暂不提供，MT5 则因为需要 Windows 主机而无法部署。
+
+## 下一步
+
+<Cards>
+  <Card title="行情数据" href="/zh/docs/market-data" description="统一模型、注册表，以及路由层如何选源。" />
+  <Card title="实时 K 线" href="/zh/docs/market-data/live-bars" description="连接器推送 K 线所用的 SSE 契约。" />
+  <Card title="HTTP API" href="/zh/docs/market-data/http-api" description="实现 market-data-v1，接入你自己的连接器。" />
+</Cards>

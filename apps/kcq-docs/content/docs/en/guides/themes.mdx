@@ -1,0 +1,127 @@
+---
+title: Themes, presets and tokens
+description: Switch light and dark, pick one of five visual presets, override colours, and style your own page with the chart's CSS variables.
+---
+
+The chart's look comes from four independent choices: light or dark, a visual preset, the market colour convention, and any colours you override. They resolve in that order into one theme, and the same theme drives the canvas, the chart UI and the CSS variables your page can use.
+
+## Light and dark
+
+`settings.theme` takes `'light'`, `'dark'` or `'auto'`. The default is `'dark'`. With `'auto'`, the chart follows the system `prefers-color-scheme` and switches when it changes.
+
+```vue
+<KlineChart :settings="{ theme: 'auto' }" @theme-change="onThemeChange" />
+```
+
+`themeChange` fires with the resolved `'light'` or `'dark'` whenever the effective theme changes, whether from your prop, the chart's own settings or an agent tool. Use it to keep the rest of your page in step.
+
+The component has no separate `theme` prop. Theme is a setting like any other, so a key you pass in `settings` wins over the user's saved choice, and leaving it out lets the user decide.
+
+## Presets
+
+Five presets change colour only. Spacing, type sizes and motion stay the same across all of them.
+
+| Preset id | Character |
+| --- | --- |
+| `pro` | The original light and dark themes. The default. |
+| `exchange` | Layered black-grey surfaces with an amber accent |
+| `terminal` | Cool grey panels, high-contrast borders and text, amber accent. Designed mainly for dark. |
+| `zen` | Grey-green surfaces, very faint grid, low-saturation accents |
+| `quant` | Blue-violet research look; the ten-colour categorical palette maps to MA, BOLL and other indicators |
+
+Every preset has a light and a dark variant, so choosing one never changes the user's light or dark preference. Up and down colours follow the base theme; a preset's accent colour is never used for rising or falling bars.
+
+Select a preset with `settings.colorPresetSettings.preset`:
+
+```vue
+<KlineChart :settings="{ theme: 'dark', colorPresetSettings: { preset: 'terminal' } }" />
+```
+
+Users can also pick one under Style, Colour in the chart settings. `THEME_PRESETS` and `findThemePreset` from `@363045841yyt/klinechart-core` list the presets with their labels if you want your own picker.
+
+## Override colours
+
+`colorPresetSettings.light` and `colorPresetSettings.dark` override individual colours for each mode, on top of the preset. Candle, volume, axis, grid, crosshair and tooltip colours are available, and a nested `ui` object covers interface colours such as `background`, `surface`, `accent` and `text`.
+
+```ts
+import type { ChartSettings } from '@363045841yyt/klinechart-core'
+
+const settings: ChartSettings = {
+  theme: 'dark',
+  colorPresetSettings: {
+    preset: 'zen',
+    dark: {
+      candleUpBody: '#e85d04',
+      candleDownBody: '#1b4332',
+      gridMajor: '#2a2f2c',
+      ui: { accent: '#e85d04' },
+    },
+  },
+}
+```
+
+Switching presets keeps these overrides.
+
+## Market colour convention
+
+By default, rising bars are green and falling bars are red. Set `isAsiaMarket: true` for the convention used in mainland China and much of Asia, where rising is red and falling is green.
+
+```vue
+<KlineChart :settings="{ isAsiaMarket: true }" />
+```
+
+It is independent of the preset: any preset in either mode works with either convention.
+
+## Design tokens
+
+Every theme value is also a CSS variable with the `--klc-` prefix: `--klc-color-candle-up-body`, `--klc-color-ui-accent`, `--klc-radius-md`, `--klc-space-16` and so on. The source of truth is a set of DTCG JSON files in the core package; a build step generates the TypeScript themes and the CSS from them, so the two cannot drift.
+
+Besides colours, the tokens include a foundation layer for radius, type scale, spacing, density, elevation, motion, z-index, breakpoints and the brand accent. The [design tokens v2 note](/docs/architecture/notes/design-tokens-v2) lists every group and where each value comes from.
+
+### Style your page with the chart's colours
+
+While a chart is mounted, it writes the resolved variables onto `document.body`, sets the page's `color-scheme`, and paints the body background. They update the moment the theme, preset or overrides change.
+
+That means anything on the page can follow the chart. Map your own components to the `--klc-color-ui-*` variables instead of keeping a second palette:
+
+```css title="app.css"
+.app-header {
+  background: var(--klc-color-ui-surface);
+  color: var(--klc-color-ui-text);
+  border-bottom: 1px solid var(--klc-color-ui-border);
+}
+
+.app-header button {
+  background: var(--klc-color-ui-accent);
+  color: var(--klc-color-ui-on-accent);
+  border-radius: var(--klc-radius-sm);
+}
+
+.app-header .hint {
+  color: var(--klc-color-ui-muted);
+}
+```
+
+The hosted workstation styles its account menu and dialogs this way, and they follow light, dark and every preset without extra code.
+
+### Before the chart mounts
+
+If a page needs the variables before any chart exists, for example a server-rendered shell, generate them yourself with the same resolver the chart uses:
+
+```ts
+import { resolveTheme, themeToCssVars, toCssDeclarationBlock } from '@363045841yyt/klinechart-core'
+
+const theme = resolveTheme('dark', false, { preset: 'quant' })
+const css = toCssDeclarationBlock(themeToCssVars(theme), ':root')
+// Insert css into a <style> element.
+```
+
+`resolveTheme(mode, isAsiaMarket, colorPresetSettings)` returns the full theme, and `themeToCssVars` flattens it into the same variable names.
+
+## Next
+
+<Cards>
+  <Card title="Embedding in an app" href="/docs/guides/embedding" description="How settings merge with the user's saved preferences." />
+  <Card title="Theme presets note" href="/docs/architecture/notes/theme-presets" description="How presets resolve and what they leave alone." />
+  <Card title="Design tokens v2" href="/docs/architecture/notes/design-tokens-v2" description="Token groups, sources and the contrast gate." />
+</Cards>

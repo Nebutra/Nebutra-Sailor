@@ -1,0 +1,107 @@
+---
+title: 参与贡献
+description: 搭建仓库、跑通 CI 会执行的检查，并弄清代码或文档的改动应该提交到哪里。
+---
+
+KLineChartQuant 以 Apache-2.0 协议开源，欢迎修复问题、贡献指标、接入连接器或改进文档。本页带你从一次全新克隆，走到一个能通过 CI 的 Pull Request。
+
+## 仓库
+
+开发在 [TsekaLuk/KLineChartQuant](https://github.com/TsekaLuk/KLineChartQuant) 进行，它是原仓库 [363045841/KLineChartQuant](https://github.com/363045841/KLineChartQuant) 的 fork。协议为 [Apache-2.0](https://github.com/TsekaLuk/KLineChartQuant/blob/main/LICENSE)，再分发时请保留 `NOTICE` 文件。
+
+## 环境搭建
+
+需要 Node `^22.19.0` 或 `>=24.11.0`，以及 pnpm。CI 在 Node 22 和 24 上使用 pnpm 12。
+
+<Steps>
+<Step>
+
+### 安装依赖
+
+```bash
+git clone https://github.com/TsekaLuk/KLineChartQuant.git
+cd KLineChartQuant
+pnpm install
+```
+
+</Step>
+<Step>
+
+### 启动开发服务器
+
+```bash
+pnpm dev
+```
+
+它会启动 Vue 包的 Vite 预览。内置的 `mock` 数据源不依赖后端，连接器还没启动时也能先把图表画出来。
+
+</Step>
+<Step>
+
+### 接入真实行情（可选）
+
+```bash
+pnpm setup:backends    # 把连接器克隆到本仓库同级目录
+pnpm dev -c all        # 开发服务器 + gotdx、binance、baostock
+```
+
+各数据源的端口和运行要求见[连接器](/zh/docs/market-data/connectors)。
+
+</Step>
+</Steps>
+
+## 提交 Pull Request 之前
+
+本地跑一遍 CI 会执行的检查：
+
+```bash
+pnpm lint              # Biome
+pnpm lint:ui           # 对 packages/vue/src 运行 ESLint + stylelint
+pnpm build:packages    # core → agent-runtime → vue
+pnpm type-check        # 源码与测试
+pnpm test:packages     # 各 workspace 的 vitest
+pnpm lint:types        # 对可发布包运行 are-the-types-wrong
+```
+
+`type-check` 和 `lint:types` 通过构建产物 `dist/*.d.ts` 解析 workspace 包，所以要先构建。改动了指标的话，再加跑 `pnpm indicators:check`。
+
+必过门禁（单元测试、类型检查、类型解析、UI lint 棘轮、指标自动发现）不通过会直接失败；包体积预算、`publint` 和递归的 `pnpm -r build` 目前只告警。完整矩阵以及每项告警转为必过的前置条件，见 [CI 门禁](/zh/docs/contributing/ci-gates)。
+
+`lint:ui` 是棘轮式的：存量违规记录在 suppression 文件里，只有当某个文件新增违规时 CI 才失败。清理存量后运行 `pnpm lint:ui:prune`，让基线只降不升。
+
+根目录的 `README.md` 和 `README_CN.md` 是生成的。请修改 `docs/fragments` 中的片段，再运行 `pnpm docs:generate`；`pnpm docs:check` 会校验两者是否一致。
+
+## 常见贡献
+
+### 新增指标
+
+指标通过 `@Indicator` 装饰器注册并被自动发现，不需要手动维护注册清单。[贡献新指标：作者模板](/zh/docs/contributing/indicators)按依赖顺序列出了要改的文件，以及每一步需要的测试。
+
+### 接入数据源
+
+在你的服务中实现 [HTTP API](/zh/docs/market-data/http-api) 并为它注册 Provider，或者基于 [Provider API](/zh/docs/market-data/provider-api) 编写进程内 Provider。新的内置数据源还需要同步登记到 `dataSourceRegistry`，并更新 README 的数据源片段。
+
+### 记录架构决策
+
+影响产品走向的决策放在 `docs/adr`，文件名为 `NNNN-kebab-title.md`，一条决策一个文件，编号永不重排。状态从 `Proposed` 到 `Accepted`，之后可能变为 `Superseded by NNNN` 或 `Deprecated`。已采纳的 ADR 不改其决策内容，而是用新 ADR 取代。可以参考 [0005：渲染器冻结](/zh/docs/architecture/adr/0005-renderer-freeze) 和 [0006：设置即时生效](/zh/docs/architecture/adr/0006-settings-instant-apply)。
+
+### 发版
+
+维护者通过推送版本 tag 发版。GitHub Actions 会构建并把 `@363045841yyt/klinechart-core`、`@363045841yyt/klinechart-agent-runtime` 和 `@363045841yyt/klinechart` 以可信发布的方式推到 npm，不需要保存 npm token。具体步骤见[发版流程指南](/zh/docs/contributing/releases)。
+
+## 这套文档如何构建
+
+本站有两类页面，修正时要去的地方不同。
+
+- **手写页面**（比如本页）位于 [Nebutra-Sailor](https://github.com/Nebutra/Nebutra-Sailor) 仓库的 `apps/kcq-docs/content/docs/en` 与 `/zh`，直接在那里修改。
+- **生成页面**来自 `apps/kcq/chart-source.json` 中固定的图表源码提交，包括组件与包参考、Agent 工具参考、HTTP API 与实时 K 线契约、更新日志，以及导入的架构文档、设计笔记、ADR 和贡献指南。它们在每次构建文档时重新生成，不提交到仓库。
+
+所以，修正生成页面就是修正图表源码：`docs/` 下的文档、组件 prop 上的 JSDoc、`@Tool` 方法上的工具描述。请向 KLineChartQuant 提交 Pull Request；合并后，等固定的提交更新到包含这次修改的版本，页面会在下一次构建时同步。
+
+## 下一步
+
+<Cards>
+  <Card title="CI 门禁" href="/zh/docs/contributing/ci-gates" description="每一道质量门禁及其当前执行状态。" />
+  <Card title="贡献指标" href="/zh/docs/contributing/indicators" description="新增指标的作者模板。" />
+  <Card title="架构" href="/zh/docs/architecture" description="动手之前，先了解包与边界。" />
+</Cards>

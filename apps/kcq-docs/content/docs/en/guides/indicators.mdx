@@ -1,0 +1,111 @@
+---
+title: Indicators
+description: Put built-in indicators on the chart, set their parameters, read their values, and find the canonical id for each one.
+---
+
+Start a chart with a moving average on price and MACD underneath, let the user change the periods, and read the latest RSI values without opening a pane. All of that goes through one set of indicator definitions, shared by the toolbar picker, your code and the agent.
+
+## Declare indicators on the component
+
+The Vue component takes a controlled `indicators` prop. Each entry names a definition, the pane role, and whether it is on.
+
+```vue title="App.vue"
+<script setup lang="ts">
+import { KlineChart } from '@363045841yyt/klinechart'
+import type { ChartIndicatorConfig } from '@363045841yyt/klinechart-core'
+import '@363045841yyt/klinechart/style.css'
+
+const indicators: ChartIndicatorConfig[] = [
+  { definitionId: 'MA', role: 'main', enabled: true },
+  { definitionId: 'BOLL', role: 'main', enabled: true, params: { period: 20, multiplier: 2 } },
+  { definitionId: 'MACD', role: 'sub', enabled: true },
+  { definitionId: 'RSI', role: 'sub', enabled: false },
+]
+</script>
+
+<template>
+  <KlineChart :indicators="indicators" />
+</template>
+```
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `definitionId` | `string` | Canonical id of a registered definition (see the list below). |
+| `role` | `'main' \| 'sub'` | `main` overlays the price pane; `sub` gets its own pane. |
+| `enabled` | `boolean` | Disabled entries are skipped. |
+| `params` | `Record<string, unknown>` | Optional overrides of calculation parameters. |
+
+The prop is controlled: when it is set, the component removes every current instance and adds the enabled entries in order. Before it does, it loads the implementations those entries reference, so you never have to preload them yourself. Indicators are always created before the data source is applied.
+
+The React and Web Component wrappers do not expose this prop at this commit; see [the Vue reference](/docs/reference/vue).
+
+## Add indicators from code
+
+For imperative control, take the `ChartController` from the `controllerReady` event. Implementations load on demand, so `await` `loadIndicators` before the synchronous methods.
+
+```ts title="indicators.ts"
+import type { ChartController } from '@363045841yyt/klinechart-core'
+
+export async function addMomentum(chart: ChartController) {
+  await chart.loadIndicators(['MACD', 'KDJ'])
+  const macd = chart.addIndicator('MACD', 'sub', { fastPeriod: 8, slowPeriod: 21, signalPeriod: 5 })
+  chart.addIndicator('KDJ', 'sub')
+  if (macd) chart.updateIndicatorParams(macd, { signalPeriod: 9 })
+}
+```
+
+`addIndicator` returns the new instance id, or `null` when it is rejected. Other methods on the controller cover the rest of the lifecycle: `removeIndicator`, `moveMainIndicator`, `replaceMainIndicator`, `setMainIndicatorHidden`, `setSubIndicatorHidden`. The `indicators` signal holds the current instances, and `catalog` lists every definition with its parameter metadata for building a picker.
+
+## Canonical ids
+
+Every indicator has one public identity: the `displayName` declared in its `@Indicator` decorator, used as-is in Core, the UI and the agent. The internal `name` (for example `stoch` for KDJ) is an implementation key. The registry also accepts the internal name, aliases and case variants and resolves them to the canonical id, but stored configuration should use the canonical form. See [indicator instance state](/docs/architecture/notes/indicator-instance-state).
+
+These 57 definitions are built in at the pinned commit. The list is taken from the generated manifest in `packages/core/src/engine/indicators/generated/builtinIndicators.ts`.
+
+| Group | Default pane | Canonical ids |
+| --- | --- | --- |
+| Price overlays | `main` | `ALMA` `BOLL` `DEMA` `Donchian` `ENE` `EXPMA` `Fib` `frama` `GMMA` `HMA` `Ichimoku` `KAMA` `Keltner` `LSMA` `MA` `Pivot` `SAR` `SMMA` `t3` `TEMA` `TRIMA` `vidya` `VWMA` `WMA` `ZLEMA` `Zones` |
+| Structure (main-capable) | own pane | `Structure` `SuperTrend` |
+| Oscillators | own pane | `AO` `ATR` `CCI` `ChaikinVol` `DMA` `DPO` `FASTK` `Fisher` `HV` `KDJ` `KST` `MACD` `MOM` `Parkinson` `ROC` `RSI` `STC` `StochRSI` `TRIX` `UO` `WMSR` |
+| Volume | own pane | `CMF` `MFI` `OBV` `PVT` `VMA` `VP` `VWAP` `VOL` |
+
+A few ids are lowercase (`frama`, `t3`, `vidya`) because that is their declared display name. `VOL` is display-only: it declares no calculation runtime, so it is drawn but never enters the calculation pipeline.
+
+## Parameters come in two layers
+
+Each definition keeps two configuration sets that never overlap:
+
+- `runtime.defaultParams` — values that change the calculation, such as `period` or `multiplier`. Only these are sent to the worker or inline runtime.
+- `presentation.defaultOptions` — renderer switches such as `showUpper`. Changing them rebuilds the drawing without recomputing.
+
+`params` on the prop or on `addIndicator` overrides the first set. Omitted keys keep their defaults. For example, `MA` defaults to `period1`–`period5` = 5, 10, 20, 30, 60, and `MACD` to `fastPeriod` 12, `slowPeriod` 26, `signalPeriod` 9. The agent is stricter: it may override only `defaultParams` fields whose default is a finite number, and anything else is rejected.
+
+## Read indicator values
+
+You can compute any registered indicator over the loaded bars without adding it to the chart. The agent facade on the controller uses the same method as the `indicators_query` tool.
+
+```ts
+const text = await chart.agent.queryIndicator({
+  definitionId: 'RSI',
+  params: { period1: 14 },
+  limit: 50,
+})
+```
+
+The call loads the implementation if needed, calculates over all active K-line data, and returns compact text. `limit` defaults to 20 and is capped at 2000. No instance is created and no pane opens. The agent calls the same method; see [the indicators tool](/docs/agent/tools/indicators).
+
+## Built-in registration
+
+A definition is a named, exported class annotated with `@Indicator`. That decorator is the single place where the name, identity, views and factory are declared. At build time, `scripts/generate-indicator-entrypoints.mjs` scans the Core production sources with the TypeScript AST and writes the generated entry points. Production tree-shaking therefore cannot drop a definition silently. A definition that is not exported, a duplicate name or an identity that cannot be resolved fails the build. In CI, the generated catalogue is checked against the real production bundle.
+
+Definitions from outside the repository still register when their module runs, with the same `@Indicator` semantics.
+
+## Write your own
+
+To add an indicator you write the render state, a pure calculator, a contract entry and a renderer file carrying `@Indicator`. The generated entry picks it up. The full checklist and test requirements are in [Contributing indicators](/docs/contributing/indicators).
+
+<Cards>
+  <Card title="Contributing indicators" href="/docs/contributing/indicators" description="File-by-file template for a new definition." />
+  <Card title="Indicator tool" href="/docs/agent/tools/indicators" description="What the agent sees when it queries values." />
+  <Card title="Layouts" href="/docs/guides/layouts" description="Save indicator sets per view and restore them." />
+</Cards>

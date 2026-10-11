@@ -1,0 +1,136 @@
+---
+title: 安装
+description: 为你的技术栈选择 KLineChartQuant 的包，完成安装，并了解浏览器会使用哪种渲染后端。
+---
+
+KLineChartQuant 由一个与框架无关的内核和若干轻量绑定组成。安装与你技术栈对应的绑定即可：它提供图表 UI，底层工作交给内核。
+
+## 选择包
+
+| 包 | 适用场景 | Peer 依赖 |
+| --- | --- | --- |
+| `@363045841yyt/klinechart` | 使用 Vue 3，或需要 `<kline-chart>` Web Component。包含完整图表 UI：工具栏、设置、画线工具和 Agent 面板。 | `vue ^3.4.0`、`@363045841yyt/klinechart-core`、`@363045841yyt/klinechart-agent-runtime` |
+| `@363045841yyt/klinechart-react` | 使用 React。`KLineChartWC` 渲染的是 Vue 包构建出的 Web Component。 | `react ^18.0.0 \|\| ^19.0.0`、`@363045841yyt/klinechart-core` |
+| `@363045841yyt/klinechart-angular` | 使用 Angular，需要一个带 signals 和依赖注入的 headless 图表画布，不需要 Vue 那套 UI。 | `@angular/core` 与 `@angular/common` 17、18 或 19，`rxjs ^7`，`@363045841yyt/klinechart-core` |
+| `@363045841yyt/klinechart-core` | 需要直接使用引擎、`ChartController`、行情模型或 Agent 工具。零框架依赖。 | — |
+| `@363045841yyt/klinechart-agent-runtime` | 在浏览器或 Node 中让 AI Agent 操作图表。 | — |
+
+包管理器不一定会自动安装 peer 依赖，所以下面的命令把它们都显式列了出来。
+
+## 安装
+
+### Vue
+
+<Tabs groupId="pm" persist items={["pnpm", "npm", "yarn"]}>
+<Tab value="pnpm">
+
+```bash
+pnpm add @363045841yyt/klinechart @363045841yyt/klinechart-core @363045841yyt/klinechart-agent-runtime vue
+```
+
+</Tab>
+<Tab value="npm">
+
+```bash
+npm install @363045841yyt/klinechart @363045841yyt/klinechart-core @363045841yyt/klinechart-agent-runtime vue
+```
+
+</Tab>
+<Tab value="yarn">
+
+```bash
+yarn add @363045841yyt/klinechart @363045841yyt/klinechart-core @363045841yyt/klinechart-agent-runtime vue
+```
+
+</Tab>
+</Tabs>
+
+在入口文件中引入一次样式：
+
+```ts title="main.ts"
+import '@363045841yyt/klinechart/style.css'
+import { createApp } from 'vue'
+import App from './App.vue'
+
+createApp(App).mount('#app')
+```
+
+### React
+
+<Tabs groupId="pm" persist items={["pnpm", "npm", "yarn"]}>
+<Tab value="pnpm">
+
+```bash
+pnpm add @363045841yyt/klinechart-react @363045841yyt/klinechart-core react
+```
+
+</Tab>
+<Tab value="npm">
+
+```bash
+npm install @363045841yyt/klinechart-react @363045841yyt/klinechart-core react
+```
+
+</Tab>
+<Tab value="yarn">
+
+```bash
+yarn add @363045841yyt/klinechart-react @363045841yyt/klinechart-core react
+```
+
+</Tab>
+</Tabs>
+
+React 包依赖 `@363045841yyt/klinechart`，并在客户端加载它的 Web Component 构建。该构建把样式放在 shadow root 内部，因此无需另外引入样式表。
+
+### Web Component
+
+按 Vue 的方式安装 `@363045841yyt/klinechart`，然后引入元素入口：
+
+```ts
+import '@363045841yyt/klinechart/web-component'
+```
+
+这个入口会注册 `<kline-chart>`，并把 Vue、内核和内置行情数据源打包进同一个模块，页面本身不需要再引入 Vue。样式会注入到元素的 shadow root 中。
+
+## 导出路径
+
+| 引入路径 | 内容 |
+| --- | --- |
+| `@363045841yyt/klinechart` | `KlineChart` 等 Vue 组件、组合式函数，以及 `CustomDataSource` 等类型 |
+| `@363045841yyt/klinechart/web-component` | 注册 `<kline-chart>`，导出 `KLineChartElement` |
+| `@363045841yyt/klinechart/style.css` | Vue 组件的样式 |
+| `@363045841yyt/klinechart-core/market-data` | `MarketDataProvider` 类型、Provider 注册表与 `SourceRouter` |
+| `@363045841yyt/klinechart-core/controllers` | `ChartController` 类型与 `getRegisteredChartTools` |
+
+各包的完整导出见[包参考](/zh/docs/reference/packages)。
+
+## Node 版本
+
+这些包以 ES 模块形式发布，供打包工具使用。Vue 包声明的引擎要求是 `node ^22.12.0 || >=24.0.0`，Agent runtime 为 `^22.19.0 || >=24.0.0`。如果你要参与 KLineChartQuant monorepo 本身的开发，需要 `^22.19.0 || >=24.11.0`。
+
+## 渲染后端
+
+图表使用 WebGPU、WebGL2 或 Canvas2D 绘制。具体用哪一个由 `rendererBackend` 设置决定，按以下顺序取值：
+
+1. `settings` 属性中显式传入的 `rendererBackend`。
+2. 用户此前保存在浏览器中的选择。
+3. 对浏览器做一次能力探测：优先 WebGPU，其次 WebGL2，最后 Canvas2D。
+
+运行时，如果首选后端启动失败，渲染宿主还会继续降级：`webgpu` 依次尝试 WebGPU、WebGL、Canvas；`webgl` 依次尝试 WebGL、Canvas。没有可用 DOM 时（例如服务端渲染），偏好默认为 `webgl`，直到图表在浏览器中挂载后才开始绘制。
+
+需要固定后端时（例如截图测试），可以这样写：
+
+```vue
+<KlineChart :settings="{ rendererBackend: 'canvas' }" />
+```
+
+帧是如何构建和提交的，见[渲染管线](/zh/docs/architecture/rendering-pipeline)。
+
+## 下一步
+
+<Cards>
+  <Card title="第一张图表" href="/zh/docs/quickstart" description="用内联数据渲染一张图表。" />
+  <Card title="嵌入应用" href="/zh/docs/guides/embedding" description="属性、插槽、事件与服务端渲染。" />
+  <Card title="包参考" href="/zh/docs/reference/packages" description="每个包的全部导出。" />
+</Cards>

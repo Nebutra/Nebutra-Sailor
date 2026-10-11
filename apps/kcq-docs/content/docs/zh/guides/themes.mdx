@@ -1,0 +1,127 @@
+---
+title: 主题、预设与 Token
+description: 切换明暗模式，选择五种视觉预设之一，覆盖颜色，并用图表的 CSS 变量为你自己的页面配色。
+---
+
+图表的外观由四个相互独立的选择决定：明暗模式、视觉预设、涨跌配色习惯，以及你覆盖的颜色。它们按这个顺序解析成一个主题，同一个主题同时驱动画布、图表 UI，以及你的页面可以使用的 CSS 变量。
+
+## 明暗模式
+
+`settings.theme` 可取 `'light'`、`'dark'` 或 `'auto'`，默认为 `'dark'`。设为 `'auto'` 时，图表跟随系统的 `prefers-color-scheme`，并在系统切换时同步切换。
+
+```vue
+<KlineChart :settings="{ theme: 'auto' }" @theme-change="onThemeChange" />
+```
+
+每当实际生效的主题变化时，`themeChange` 都会带着解析后的 `'light'` 或 `'dark'` 触发，无论变化来自你的属性、图表自身的设置，还是 Agent 工具。用它让页面其他部分保持一致。
+
+组件没有单独的 `theme` 属性。主题和其他设置一样：你在 `settings` 中传入的 key 优先于用户保存的选择；不传，则由用户决定。
+
+## 预设
+
+五种预设只改变颜色，间距、字号和动效在所有预设中保持一致。
+
+| 预设 id | 风格 |
+| --- | --- |
+| `pro` | 原版浅色与深色主题，默认值 |
+| `exchange` | 黑灰分层的表面，琥珀色强调 |
+| `terminal` | 冷灰面板、高对比的边框与文字、琥珀色强调，主要面向深色模式 |
+| `zen` | 灰绿表面、极淡的网格、低饱和度强调色 |
+| `quant` | 蓝紫色研究界面，十色分类色盘映射到 MA、BOLL 等指标 |
+
+每种预设都有浅色和深色两个变体，所以选择预设不会改变用户的明暗偏好。涨跌颜色沿用基础主题；预设的强调色从不用作上涨或下跌的颜色。
+
+通过 `settings.colorPresetSettings.preset` 选择预设：
+
+```vue
+<KlineChart :settings="{ theme: 'dark', colorPresetSettings: { preset: 'terminal' } }" />
+```
+
+用户也可以在图表设置的“样式 / 颜色”中自行选择。如果想做自己的选择器，可以用 `@363045841yyt/klinechart-core` 导出的 `THEME_PRESETS` 和 `findThemePreset` 获取预设列表及其名称。
+
+## 覆盖颜色
+
+`colorPresetSettings.light` 和 `colorPresetSettings.dark` 分别在预设之上覆盖两种模式下的单个颜色。可覆盖的包括 K 线、成交量、坐标轴、网格、十字光标和提示框颜色；嵌套的 `ui` 对象则用于界面颜色，例如 `background`、`surface`、`accent` 和 `text`。
+
+```ts
+import type { ChartSettings } from '@363045841yyt/klinechart-core'
+
+const settings: ChartSettings = {
+  theme: 'dark',
+  colorPresetSettings: {
+    preset: 'zen',
+    dark: {
+      candleUpBody: '#e85d04',
+      candleDownBody: '#1b4332',
+      gridMajor: '#2a2f2c',
+      ui: { accent: '#e85d04' },
+    },
+  },
+}
+```
+
+切换预设时，这些覆盖会被保留。
+
+## 涨跌配色
+
+默认是绿涨红跌。设置 `isAsiaMarket: true` 即切换为国内及亚洲多数市场习惯的红涨绿跌。
+
+```vue
+<KlineChart :settings="{ isAsiaMarket: true }" />
+```
+
+它与预设相互独立：任何预设、任何明暗模式都可以搭配任一种配色习惯。
+
+## 设计 Token
+
+每个主题取值都对应一个以 `--klc-` 为前缀的 CSS 变量，例如 `--klc-color-candle-up-body`、`--klc-color-ui-accent`、`--klc-radius-md`、`--klc-space-16`。唯一的源头是内核包中的一组 DTCG JSON 文件，构建步骤从它们生成 TypeScript 主题和 CSS，两者不会出现偏差。
+
+除颜色外，Token 还包含一层基础 Token：圆角、字阶、间距、密度、阴影层级、动效、层级（z-index）、断点和品牌强调色。各分组及每个取值的依据见[设计 Token v2 说明](/zh/docs/architecture/notes/design-tokens-v2)。
+
+### 让页面使用图表的颜色
+
+图表挂载期间，会把解析后的变量写到 `document.body` 上，同时设置页面的 `color-scheme` 并绘制 body 背景色。主题、预设或覆盖颜色一变，这些变量立即随之更新。
+
+这意味着页面上的任何元素都可以跟随图表。把你自己的组件映射到 `--klc-color-ui-*` 变量，而不是再维护一套色板：
+
+```css title="app.css"
+.app-header {
+  background: var(--klc-color-ui-surface);
+  color: var(--klc-color-ui-text);
+  border-bottom: 1px solid var(--klc-color-ui-border);
+}
+
+.app-header button {
+  background: var(--klc-color-ui-accent);
+  color: var(--klc-color-ui-on-accent);
+  border-radius: var(--klc-radius-sm);
+}
+
+.app-header .hint {
+  color: var(--klc-color-ui-muted);
+}
+```
+
+托管工作台的账户菜单和弹窗就是这样配色的，无需额外代码即可适配浅色、深色和每一种预设。
+
+### 图表挂载之前
+
+如果页面在任何图表出现之前就需要这些变量（例如服务端渲染的外壳），可以用图表所用的同一个解析器自行生成：
+
+```ts
+import { resolveTheme, themeToCssVars, toCssDeclarationBlock } from '@363045841yyt/klinechart-core'
+
+const theme = resolveTheme('dark', false, { preset: 'quant' })
+const css = toCssDeclarationBlock(themeToCssVars(theme), ':root')
+// 把 css 插入一个 <style> 元素。
+```
+
+`resolveTheme(mode, isAsiaMarket, colorPresetSettings)` 返回完整主题，`themeToCssVars` 把它展平为同样的变量名。
+
+## 下一步
+
+<Cards>
+  <Card title="嵌入应用" href="/zh/docs/guides/embedding" description="settings 如何与用户保存的偏好合并。" />
+  <Card title="主题预设说明" href="/zh/docs/architecture/notes/theme-presets" description="预设如何解析，以及哪些部分保持不变。" />
+  <Card title="设计 Token v2" href="/zh/docs/architecture/notes/design-tokens-v2" description="Token 分组、来源与对比度门槛。" />
+</Cards>
