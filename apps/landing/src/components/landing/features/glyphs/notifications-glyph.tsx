@@ -67,7 +67,7 @@ export function NotificationsGlyph({ copy }: SubpackageGlyphProps) {
                 />
                 {row.eventType}
               </Badge>
-              <p className="mt-0.5 text-[10px] text-muted-foreground">{row.title}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">{row.title}</p>
             </div>
             <span className="inline-flex shrink-0 items-center gap-1 font-mono text-[10px] text-muted-foreground">
               <Clock aria-hidden="true" className="size-3" />
