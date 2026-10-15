@@ -1,4 +1,4 @@
-import { ArrowRight } from "@nebutra/icons";
+import { ArrowRight, ChevronDown, ChevronUp } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -10,102 +10,183 @@ import {
   resolveListingProvider,
 } from "@/lib/listing-catalog";
 
+export type ShelfSort =
+  | "default"
+  | "price-asc"
+  | "price-desc"
+  | "output-asc"
+  | "output-desc"
+  | "context-asc"
+  | "context-desc";
+
+type SortableColumn = "context" | "price" | "output";
+
+/** Sort keys per column, ascending first. `price` is the input price. */
+const SORT_KEYS: Record<SortableColumn, readonly [ShelfSort, ShelfSort]> = {
+  context: ["context-asc", "context-desc"],
+  price: ["price-asc", "price-desc"],
+  output: ["output-asc", "output-desc"],
+};
+
+function detailHref(m: ListingModel) {
+  return `/product/detail/${encodeURIComponent(m.publicModel)}`;
+}
+
 /**
- * The shelf as a table, the way OpenRouter and Vercel AI Gateway list models:
- * one row per model, the numbers a buyer compares in fixed right-aligned
- * columns, the whole row a link. Server-rendered — no client JS.
+ * A secondary line worth reading: the catalogue's display name when it says
+ * something the id does not. Many entries carry the id again as their name,
+ * and repeating it is noise — so nothing is printed rather than a filler.
+ */
+function displayName(m: ListingModel): string | null {
+  const name = m.description || m.name;
+  if (!name) return null;
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return norm(name) === norm(m.publicModel) ? null : name;
+}
+
+/**
+ * The shelf as a comparison table, the way OpenRouter and Vercel AI Gateway
+ * list models: one 44px row per model, the numbers a buyer compares in fixed,
+ * right-aligned, tabular columns; the whole row is the link.
  *
- * Only fields the catalogue really has are shown: context, input and output
- * price. Latency, throughput and uptime are not measured per model yet, so
- * there is no column for them rather than an invented one.
+ * Only fields the catalogue really has: context and input/output price per 1M
+ * tokens. There is no latency, throughput or uptime column because none is
+ * measured per model yet. An unknown value is an empty cell with a screen-reader
+ * label, never a dash.
  *
- * Below `md` the columns fold into a two-line row: name over a meta line.
+ * Below `md` each row folds into a stacked row: id over a meta line, nothing
+ * truncated.
+ *
+ * `sortHref`, when given, turns the numeric headers into sort links (no JS).
  */
 export function ModelTable({
   models,
   className,
   caption,
+  sort = "default",
+  sortHref,
+  stickyHeader = false,
 }: {
   models: readonly ListingModel[];
   className?: string;
   /** Accessible name for the table; visually hidden. */
   caption: string;
+  sort?: ShelfSort;
+  sortHref?: (sort: ShelfSort) => string;
+  stickyHeader?: boolean;
 }) {
   const t = useTranslations("shelf");
   const tCat = useTranslations("category");
+  const sticky = stickyHeader && "sticky top-14 z-[var(--layer-raised)] bg-background";
+  const th =
+    "h-10 border-b border-border px-4 text-xs font-medium whitespace-nowrap text-muted-foreground";
+
+  const header = (column: SortableColumn, label: string) => {
+    const [asc, desc] = SORT_KEYS[column];
+    const active = sort === asc ? "asc" : sort === desc ? "desc" : null;
+    const content = (
+      <>
+        {label}
+        {active === "asc" ? (
+          <ChevronUp aria-hidden className="size-3.5" />
+        ) : active === "desc" ? (
+          <ChevronDown aria-hidden className="size-3.5" />
+        ) : null}
+      </>
+    );
+    return (
+      <th
+        scope="col"
+        aria-sort={active === "asc" ? "ascending" : active === "desc" ? "descending" : undefined}
+        className={cn(th, "w-32 text-right", sticky, active && "text-foreground")}
+      >
+        {sortHref ? (
+          <Link
+            href={sortHref(active === "asc" ? desc : asc)}
+            className="inline-flex items-center gap-1 transition-colors hover:text-foreground"
+          >
+            {content}
+          </Link>
+        ) : (
+          <span className="inline-flex items-center gap-1">{content}</span>
+        )}
+      </th>
+    );
+  };
+
+  const unknown = <span className="sr-only">{t("unknown")}</span>;
+  const cell = "border-b border-border";
+  const num = cn(cell, "hidden px-4 text-right font-mono text-sm tabular-nums md:table-cell");
 
   return (
-    <div
-      className={cn("overflow-hidden rounded-[var(--radius-lg)] border border-border", className)}
-    >
-      <table className="w-full border-collapse text-sm">
+    <div className={cn("rounded-[var(--radius-lg)] border border-border", className)}>
+      <table className="w-full border-separate border-spacing-0 text-sm">
         <caption className="sr-only">{caption}</caption>
-        <thead className="hidden bg-muted/40 text-xs text-muted-foreground md:table-header-group">
-          <tr className="border-b border-border">
-            <th scope="col" className="px-4 py-2.5 text-left font-medium">
+        <thead className="hidden md:table-header-group">
+          <tr>
+            <th scope="col" className={cn(th, "rounded-tl-[var(--radius-lg)] text-left", sticky)}>
               {t("col.model")}
             </th>
-            <th scope="col" className="w-28 px-4 py-2.5 text-right font-medium">
-              {t("col.context")}
-            </th>
-            <th scope="col" className="w-32 px-4 py-2.5 text-right font-medium">
-              {t("col.input")}
-            </th>
-            <th scope="col" className="w-32 px-4 py-2.5 text-right font-medium">
-              {t("col.output")}
-            </th>
-            <th scope="col" className="w-10 px-2 py-2.5">
+            {header("context", t("col.context"))}
+            {header("price", t("col.inputPerM"))}
+            {header("output", t("col.outputPerM"))}
+            <th scope="col" className={cn(th, "w-10 rounded-tr-[var(--radius-lg)]", sticky)}>
               <span className="sr-only">{t("col.open")}</span>
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="[&>tr:last-child>td]:border-b-0">
           {models.map((m) => {
             const provider = resolveListingProvider(m);
-            const href = `/product/detail/${encodeURIComponent(m.publicModel)}`;
-            const input = formatPrice(m.inputPerMTok);
-            const output = formatPrice(m.outputPerMTok);
+            const hasIn = m.inputPerMTok > 0;
+            const hasOut = m.outputPerMTok > 0;
+            // Narrow rows: who and what on one line, the numbers on the next,
+            // each number kept whole so a price never breaks across lines.
+            const numbers = [
+              m.context ? t("meta.context", { context: m.context }) : null,
+              hasIn ? t("meta.input", { price: formatPrice(m.inputPerMTok) }) : null,
+              hasOut ? t("meta.output", { price: formatPrice(m.outputPerMTok) }) : null,
+            ].filter((x): x is string => x !== null);
             return (
               <tr
                 key={m.publicModel}
-                className="group relative border-b border-border transition-colors last:border-b-0 hover:bg-accent/60"
+                className="group relative transition-colors hover:bg-muted/50"
               >
-                <td className="px-4 py-3">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-card">
-                      <BrandMark provider={provider} size={16} />
+                <td className={cn(cell, "px-4 py-3 md:h-11 md:py-0")}>
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <BrandMark provider={provider} size={16} className="shrink-0" />
+                    <Link
+                      href={detailHref(m)}
+                      className="min-w-0 font-mono text-sm font-medium break-all text-foreground after:absolute after:inset-0 md:truncate md:break-normal"
+                    >
+                      {m.publicModel}
+                    </Link>
+                    <span className="hidden shrink-0 text-sm text-muted-foreground lg:inline">
+                      {PROVIDER_LABEL[provider]}
                     </span>
-                    <div className="min-w-0">
-                      <Link
-                        href={href}
-                        className="block truncate font-mono text-sm font-medium text-foreground after:absolute after:inset-0"
-                      >
-                        {m.publicModel}
-                      </Link>
-                      <p className="text-xs text-muted-foreground">
-                        {PROVIDER_LABEL[provider]} · {tCat(m.category)}
-                        {m.context ? <span className="md:hidden"> · {m.context}</span> : null}
-                        <span className="md:hidden">
-                          {" · "}
-                          {t("metaLine", { input, output })}
-                        </span>
+                  </div>
+                  <div className="mt-1 space-y-0.5 pl-[1.625rem] text-xs text-muted-foreground tabular-nums md:hidden">
+                    <p>
+                      {PROVIDER_LABEL[provider]} · {tCat(m.category)}
+                    </p>
+                    {numbers.length > 0 ? (
+                      <p className="flex flex-wrap gap-x-3">
+                        {numbers.map((n) => (
+                          <span key={n} className="whitespace-nowrap">
+                            {n}
+                          </span>
+                        ))}
                       </p>
-                    </div>
+                    ) : null}
                   </div>
                 </td>
-                <td className="hidden px-4 py-3 text-right font-mono text-sm tabular-nums text-foreground md:table-cell">
-                  {m.context || "—"}
-                </td>
-                <td className="hidden px-4 py-3 text-right font-mono text-sm tabular-nums text-foreground md:table-cell">
-                  {input}
-                </td>
-                <td className="hidden px-4 py-3 text-right font-mono text-sm tabular-nums text-foreground md:table-cell">
-                  {output}
-                </td>
-                <td className="hidden px-2 py-3 text-muted-foreground md:table-cell">
+                <td className={num}>{m.context || unknown}</td>
+                <td className={num}>{hasIn ? formatPrice(m.inputPerMTok) : unknown}</td>
+                <td className={num}>{hasOut ? formatPrice(m.outputPerMTok) : unknown}</td>
+                <td className={cn(cell, "hidden pr-4 text-muted-foreground md:table-cell")}>
                   <ArrowRight
                     aria-hidden
-                    className="size-4 transition-transform group-hover:translate-x-0.5"
+                    className="size-4 opacity-0 transition-[opacity,transform] group-hover:translate-x-0.5 group-hover:opacity-100"
                   />
                 </td>
               </tr>
@@ -114,5 +195,74 @@ export function ModelTable({
         </tbody>
       </table>
     </div>
+  );
+}
+
+/**
+ * The shelf as a list, OpenRouter's default: id and provider, the catalogue's
+ * own display name when it adds something, then a meta line of the real
+ * numbers. Rows without a known value simply have a shorter meta line.
+ */
+export function ModelList({
+  models,
+  className,
+  label,
+}: {
+  models: readonly ListingModel[];
+  className?: string;
+  label: string;
+}) {
+  const t = useTranslations("shelf");
+  const tCat = useTranslations("category");
+  return (
+    <ul
+      aria-label={label}
+      className={cn(
+        "divide-y divide-border rounded-[var(--radius-lg)] border border-border",
+        className,
+      )}
+    >
+      {models.map((m) => {
+        const provider = resolveListingProvider(m);
+        const name = displayName(m);
+        const meta = [
+          tCat(m.category),
+          m.context ? t("meta.context", { context: m.context }) : null,
+          m.inputPerMTok > 0 ? t("meta.input", { price: formatPrice(m.inputPerMTok) }) : null,
+          m.outputPerMTok > 0 ? t("meta.output", { price: formatPrice(m.outputPerMTok) }) : null,
+        ].filter(Boolean);
+        return (
+          <li
+            key={m.publicModel}
+            className="group relative px-4 py-4 transition-colors hover:bg-muted/50"
+          >
+            <div className="flex items-start gap-3">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-card">
+                <BrandMark provider={provider} size={16} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <Link
+                    href={detailHref(m)}
+                    className="font-mono text-sm font-medium break-all text-foreground after:absolute after:inset-0"
+                  >
+                    {m.publicModel}
+                  </Link>
+                  <span className="text-sm text-muted-foreground">{PROVIDER_LABEL[provider]}</span>
+                </div>
+                {name ? <p className="mt-1 text-sm text-muted-foreground">{name}</p> : null}
+                <p className="mt-1.5 text-xs text-muted-foreground tabular-nums">
+                  {meta.join(" · ")}
+                </p>
+              </div>
+              <ArrowRight
+                aria-hidden
+                className="mt-2 hidden size-4 shrink-0 text-muted-foreground opacity-0 transition-[opacity,transform] group-hover:translate-x-0.5 group-hover:opacity-100 md:block"
+              />
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

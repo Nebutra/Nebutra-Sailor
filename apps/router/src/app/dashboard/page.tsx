@@ -25,7 +25,7 @@ function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: 
   return (
     <div className="rounded-[var(--radius-lg)] border border-border bg-card px-4 py-3">
       <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="mt-1 text-xl font-semibold tabular-nums tracking-tight">{value}</p>
+      <p className="mt-1 text-xl font-semibold tabular-nums">{value}</p>
       {hint ? (
         <p className="mt-0.5 truncate font-mono text-xs text-muted-foreground">{hint}</p>
       ) : null}

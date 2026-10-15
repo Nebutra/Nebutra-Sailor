@@ -96,7 +96,10 @@ export interface ListingModel {
   description: string;
   category: ListingCategory;
   provider: ListingProvider;
+  /** Display form ("128k", "1M"); empty when the upstream does not publish one. */
   context: string;
+  /** Context window in tokens; 0 when unknown. Used to filter and sort. */
+  contextTokens: number;
   inputPerMTok: number;
   outputPerMTok: number;
   routes: ModelRouteRow["routes"];
@@ -187,8 +190,9 @@ export function formatPrice(n: number): string {
   return `$${n % 1 === 0 ? n.toFixed(0) : n.toFixed(2)}`;
 }
 
+/** Empty for an unknown window: callers omit the field rather than print a dash. */
 export function formatContext(n?: number): string {
-  if (!n || n <= 0) return "—";
+  if (!n || n <= 0) return "";
   if (n >= 1_000_000) {
     const m = n / 1_000_000;
     return `${m % 1 === 0 ? m.toFixed(0) : m.toFixed(1)}M`;
@@ -324,6 +328,8 @@ function toListing(
     category: classifyCategory(publicModel, name, caps),
     provider,
     context: formatContext(offering?.contextWindow),
+    contextTokens:
+      offering?.contextWindow && offering.contextWindow > 0 ? offering.contextWindow : 0,
     inputPerMTok: offering?.pricing?.inputPerMTok ?? 0,
     outputPerMTok: offering?.pricing?.outputPerMTok ?? 0,
     routes,

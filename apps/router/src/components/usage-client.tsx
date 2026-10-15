@@ -10,6 +10,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  ToggleGroup,
+  ToggleGroupItem,
 } from "@nebutra/ui/primitives";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -108,29 +110,23 @@ export function UsageClient() {
   const refreshAll = () => setNonce((value) => value + 1);
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="flex flex-wrap gap-1.5">
-          {RANGE_OPTIONS.map((option) => {
-            const active = option.key === range;
-            return (
-              <Button
-                key={option.key}
-                type="button"
-                variant="outline"
-                size="sm"
-                aria-pressed={active}
-                onClick={() => setParam({ range: option.key })}
-                className={[
-                  "h-7 rounded-full px-3 text-xs font-medium",
-                  active ? "border-neutral-8 bg-neutral-3" : "border-neutral-6 text-neutral-11",
-                ].join(" ")}
-              >
-                {t(`range.${option.key}`)}
-              </Button>
-            );
-          })}
-        </div>
+    <div className="space-y-6">
+      <div className="flex flex-wrap items-end gap-3">
+        <ToggleGroup
+          type="single"
+          size="sm"
+          aria-label={t("range.label")}
+          value={range}
+          onValueChange={(value) => {
+            if (typeof value === "string" && value) setParam({ range: value });
+          }}
+        >
+          {RANGE_OPTIONS.map((option) => (
+            <ToggleGroupItem key={option.key} value={option.key} className="px-2.5 text-xs">
+              {t(`range.${option.key}`)}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
 
         <div className="ml-auto flex flex-wrap items-center gap-2">
           <div className="w-44">
@@ -167,16 +163,16 @@ export function UsageClient() {
               ]}
             />
           </div>
-          <Button type="button" variant="outline" size="sm" className="h-8" onClick={refreshAll}>
+          <Button type="button" variant="outline" size="sm" onClick={refreshAll}>
             {t("refresh")}
           </Button>
-          <Button asChild variant="outline" size="sm" className="h-8">
+          <Button asChild variant="outline" size="sm">
             <a
               href={usageExportHref({ ...period, model, keyId })}
               download
               className="inline-flex items-center gap-1"
             >
-              <Download className="h-3.5 w-3.5" />
+              <Download aria-hidden className="size-4" />
               {t("export")}
             </a>
           </Button>
@@ -192,51 +188,20 @@ export function UsageClient() {
         <AsyncSection
           resource={history.resource}
           onRetry={history.reload}
-          isEmpty={(data) => data.buckets.every((bucket) => bucket.cost === 0)}
-          emptyTitle={t("trend.emptyTitle")}
-          emptyDescription={t("trend.emptyDescription")}
-          skeleton={<Skeleton className="m-3 h-32" />}
+          skeleton={<Skeleton className="m-4 h-48" />}
         >
           {(data) => <HistoryChart history={data} />}
         </AsyncSection>
       </Panel>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
         <Panel title={t("byModel.title")}>
           <AsyncSection
             resource={byModel.resource}
             onRetry={byModel.reload}
-            isEmpty={(data) => data.length === 0}
-            emptyTitle={t("byModel.emptyTitle")}
-            skeleton={<SkeletonRows rows={3} columns={4} />}
+            skeleton={<SkeletonRows rows={3} columns={3} />}
           >
-            {(data) => (
-              <Table bare className="w-full text-xs">
-                <TableHeader>
-                  <HeadRow
-                    labels={[t("col.model"), t("col.requests"), t("col.tokens"), t("col.cost")]}
-                  />
-                </TableHeader>
-                <TableBody bordered>
-                  {data.map((row) => (
-                    <TableRow key={row.model}>
-                      <TableCell alignment="start" className="font-mono text-xs">
-                        {row.model}
-                      </TableCell>
-                      <TableCell alignment="end" className="tabular-nums">
-                        {formatCount(row.requests)}
-                      </TableCell>
-                      <TableCell alignment="end" className="tabular-nums text-xs">
-                        {formatTokens(row.promptTokens)} / {formatTokens(row.completionTokens)}
-                      </TableCell>
-                      <TableCell alignment="end" className="tabular-nums font-medium">
-                        {formatAmount(row.cost)}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            )}
+            {(data) => <ModelShare rows={data} />}
           </AsyncSection>
         </Panel>
 
@@ -310,9 +275,9 @@ function Panel({
   children: ReactNode;
 }) {
   return (
-    <section className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-6">
-      <div className="flex items-center gap-2 border-b border-neutral-6 bg-neutral-2/40 px-3 py-2">
-        <h2 className="text-xs font-semibold">{title}</h2>
+    <section className="overflow-hidden rounded-[var(--radius-lg)] border border-border">
+      <div className="flex h-11 items-center gap-2 border-b border-border px-4">
+        <h2 className="text-sm font-medium">{title}</h2>
         {subtitle ? <span className="text-xs text-muted-foreground">{subtitle}</span> : null}
         {actions ? <div className="ml-auto">{actions}</div> : null}
       </div>
@@ -330,14 +295,14 @@ function SummaryTiles({
 }) {
   const t = useTranslations("console.usage.tiles");
   return (
-    <div className="rounded-[var(--radius-md)] border border-neutral-6">
+    <div>
       <AsyncSection
         resource={resource}
         onRetry={onRetry}
         skeleton={
-          <div className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {["cost", "requests", "tokens", "avg"].map((slot) => (
-              <Skeleton key={slot} className="h-12" />
+              <Skeleton key={slot} className="h-[5.25rem]" />
             ))}
           </div>
         }
@@ -345,7 +310,7 @@ function SummaryTiles({
         {(data) => {
           const average = data.requestCount > 0 ? data.totalCost / data.requestCount : 0;
           return (
-            <div className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <Tile label={t("cost")} value={formatMoney(data.totalCost, data.currency)} />
               <Tile label={t("requests")} value={formatCount(data.requestCount)} />
               <Tile
@@ -358,7 +323,7 @@ function SummaryTiles({
               />
               <Tile
                 label={t("average")}
-                value={data.requestCount > 0 ? formatAmount(average) : "—"}
+                value={data.requestCount > 0 ? formatAmount(average) : null}
                 hint={data.requestCount > 0 ? data.currency : t("averageEmpty")}
               />
             </div>
@@ -369,56 +334,186 @@ function SummaryTiles({
   );
 }
 
-function Tile({ label, value, hint }: { label: string; value: string; hint?: string }) {
+/** A metric tile. A value that cannot exist yet (no requests → no average) is omitted, not dashed. */
+function Tile({ label, value, hint }: { label: string; value: string | null; hint?: string }) {
   return (
-    <div className="rounded-[var(--radius-md)] bg-neutral-2/50 px-3 py-2">
+    <div className="rounded-[var(--radius-lg)] border border-border px-4 py-3">
       <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="mt-0.5 text-lg font-semibold tabular-nums tracking-tight">{value}</p>
-      {hint ? <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p> : null}
+      {value !== null ? <p className="mt-1 text-xl font-semibold tabular-nums">{value}</p> : null}
+      {hint ? <p className="mt-1 text-xs text-muted-foreground">{hint}</p> : null}
+    </div>
+  );
+}
+
+/** Axis labels carry only the precision the scale needs: 0.25, not 0.2500. */
+function formatTick(value: number, ceiling: number): string {
+  if (value === 0) return "0";
+  const digits = ceiling >= 10 ? 0 : ceiling >= 1 ? 1 : ceiling >= 0.1 ? 2 : 4;
+  return value.toFixed(digits);
+}
+
+/** Three gridlines at round fractions of a "nice" ceiling above the peak. */
+function niceCeiling(peak: number): number {
+  if (peak <= 0) return 1;
+  const exp = 10 ** Math.floor(Math.log10(peak));
+  for (const step of [1, 2, 2.5, 5, 10]) if (peak <= step * exp) return step * exp;
+  return 10 * exp;
+}
+
+/**
+ * Spend per bucket. Empty buckets come back from the API as zeros, so a gap
+ * means "nothing was spent", never "no data" — the bars are drawn from the full
+ * bucket list. Hovering a bar reads it out in the header line; each bar carries
+ * the same reading as its accessible name.
+ *
+ * With no spend at all the chart keeps its frame as a ghost: the axis and a
+ * faint baseline stay, so the page has the same shape before the first call as
+ * after it, and the empty message sits where the bars will be.
+ */
+function HistoryChart({ history }: { history: UsageHistory }) {
+  const t = useTranslations("console.usage.trend");
+  const [active, setActive] = useState<number | null>(null);
+  const peak = history.buckets.reduce((max, bucket) => Math.max(max, bucket.cost), 0);
+  const empty = peak === 0;
+  const ceiling = niceCeiling(peak);
+  const total = history.buckets.reduce((sum, bucket) => sum + bucket.cost, 0);
+  const focus = active !== null ? history.buckets[active] : undefined;
+  const ticks = [1, 0.5, 0];
+  const first = history.buckets[0]?.bucket ?? "";
+  const last = history.buckets[history.buckets.length - 1]?.bucket ?? "";
+
+  return (
+    <div className="px-4 pt-3 pb-4">
+      <p className="h-5 text-xs text-muted-foreground tabular-nums" aria-live="polite">
+        {focus
+          ? t("readout", {
+              bucket: formatBucket(focus.bucket, history.granularity),
+              amount: formatAmount(focus.cost),
+              count: Math.round(focus.requests),
+            })
+          : empty
+            ? null
+            : t("total", { amount: formatAmount(total) })}
+      </p>
+      <div className="relative mt-2 flex h-48 gap-3">
+        <div
+          aria-hidden
+          className="flex w-12 shrink-0 flex-col justify-between text-right text-xs text-muted-foreground tabular-nums"
+        >
+          {ticks.map((tick) => (
+            <span key={tick} className="-translate-y-1/2 first:translate-y-0 last:translate-y-0">
+              {empty ? "" : formatTick(ceiling * tick, ceiling)}
+            </span>
+          ))}
+        </div>
+        <div className="relative min-w-0 flex-1">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 flex flex-col justify-between"
+          >
+            {ticks.map((tick) => (
+              <span
+                key={tick}
+                className={
+                  tick === 0 ? "border-t border-border" : "border-t border-dashed border-border/70"
+                }
+              />
+            ))}
+          </div>
+          {empty ? (
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+              <p className="text-sm font-medium">{t("emptyTitle")}</p>
+              <p className="mt-1 max-w-sm text-xs text-muted-foreground">{t("emptyDescription")}</p>
+            </div>
+          ) : (
+            <ul
+              className="relative flex h-full items-end gap-px"
+              onMouseLeave={() => setActive(null)}
+            >
+              {history.buckets.map((bucket, index) => {
+                const height = bucket.cost > 0 ? Math.max(1.5, (bucket.cost / ceiling) * 100) : 0;
+                const label = t("bar", {
+                  bucket: formatBucket(bucket.bucket, history.granularity),
+                  amount: formatAmount(bucket.cost),
+                  count: Math.round(bucket.requests),
+                });
+                return (
+                  <li
+                    key={bucket.bucket}
+                    className="flex h-full min-w-0 flex-1 items-end"
+                    onMouseEnter={() => setActive(index)}
+                  >
+                    <span
+                      role="img"
+                      aria-label={label}
+                      className={[
+                        "block w-full rounded-t-[2px] transition-colors",
+                        active === index ? "bg-foreground" : "bg-foreground/35",
+                      ].join(" ")}
+                      style={{ height: `${height}%` }}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      </div>
+      <div className="mt-2 flex justify-between pl-15 text-xs text-muted-foreground tabular-nums">
+        <span>{formatBucket(first, history.granularity)}</span>
+        <span>{formatBucket(last, history.granularity)}</span>
+      </div>
     </div>
   );
 }
 
 /**
- * A bar per bucket. Empty buckets are returned as zeros by the API, so a gap in
- * this chart means "nothing was spent", never "we have no data" — which is why
- * the bars are drawn from the full bucket list rather than from the rows that
- * happen to be non-zero.
+ * Where the money went, by model: one bar per model scaled to the largest
+ * spender, with cost, share and requests. Empty keeps the panel's shape.
  */
-function HistoryChart({ history }: { history: UsageHistory }) {
-  const t = useTranslations("console.usage.trend");
-  const peak = history.buckets.reduce((max, bucket) => Math.max(max, bucket.cost), 0);
-  return (
-    <div className="p-3">
-      <ul className="flex h-32 items-end gap-[2px]">
-        {history.buckets.map((bucket) => {
-          const height = peak > 0 ? Math.max(2, Math.round((bucket.cost / peak) * 100)) : 2;
-          const label = t("bar", {
-            bucket: formatBucket(bucket.bucket, history.granularity),
-            amount: formatAmount(bucket.cost),
-            count: Math.round(bucket.requests),
-          });
-          return (
-            <li
-              key={bucket.bucket}
-              className="min-w-[3px] flex-1 rounded-t-[2px] bg-neutral-8"
-              style={{ height: `${height}%` }}
-              aria-label={label}
-            />
-          );
-        })}
-      </ul>
-      <div className="mt-1 flex justify-between text-xs text-muted-foreground">
-        <span>{formatBucket(history.buckets[0]?.bucket ?? "", history.granularity)}</span>
-        <span>{t("peak", { amount: formatAmount(peak) })}</span>
-        <span>
-          {formatBucket(
-            history.buckets[history.buckets.length - 1]?.bucket ?? "",
-            history.granularity,
-          )}
-        </span>
+function ModelShare({ rows }: { rows: readonly UsageByModelRow[] }) {
+  const t = useTranslations("console.usage");
+  if (rows.length === 0) {
+    return (
+      <div className="flex h-48 flex-col items-center justify-center px-4 text-center">
+        <p className="text-sm font-medium">{t("byModel.emptyTitle")}</p>
+        <p className="mt-1 max-w-xs text-xs text-muted-foreground">
+          {t("byModel.emptyDescription")}
+        </p>
       </div>
-    </div>
+    );
+  }
+  const sorted = [...rows].sort((a, b) => b.cost - a.cost);
+  const max = sorted[0]?.cost ?? 0;
+  const total = sorted.reduce((sum, row) => sum + row.cost, 0);
+  return (
+    <ul className="divide-y divide-border">
+      {sorted.map((row) => {
+        const share = total > 0 ? row.cost / total : 0;
+        return (
+          <li key={row.model} className="px-4 py-3">
+            <div className="flex items-baseline justify-between gap-3 text-sm">
+              <span className="min-w-0 truncate font-mono">{row.model}</span>
+              <span className="shrink-0 font-mono tabular-nums">{formatAmount(row.cost)}</span>
+            </div>
+            <div className="mt-2 flex items-center gap-3">
+              <span className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-muted">
+                <span
+                  className="block h-full rounded-full bg-foreground/70"
+                  style={{ width: `${max > 0 ? (row.cost / max) * 100 : 0}%` }}
+                />
+              </span>
+              <span className="w-28 shrink-0 text-right text-xs text-muted-foreground tabular-nums">
+                {t("byModel.share", {
+                  share: Math.round(share * 100),
+                  count: formatCount(row.requests),
+                })}
+              </span>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 
@@ -495,7 +590,7 @@ function RecordsPanel({
                         ) : null}
                       </TableCell>
                       <TableCell alignment="end" className="font-mono text-xs">
-                        {row.model ?? "—"}
+                        {row.model ?? <Blank />}
                       </TableCell>
                       <TableCell alignment="end" className="tabular-nums">
                         <StatusPill status={row.status} />
@@ -504,10 +599,10 @@ function RecordsPanel({
                         {formatTokens(row.promptTokens)} / {formatTokens(row.completionTokens)}
                       </TableCell>
                       <TableCell alignment="end" className="tabular-nums text-xs">
-                        {formatLatency(row.latencyMs)}
+                        {row.latencyMs === null ? <Blank /> : formatLatency(row.latencyMs)}
                       </TableCell>
                       <TableCell alignment="end" className="tabular-nums text-xs">
-                        {formatOptionalAmount(row.unitCost)}
+                        {row.unitCost === null ? <Blank /> : formatOptionalAmount(row.unitCost)}
                       </TableCell>
                       <TableCell alignment="end" className="tabular-nums font-medium">
                         {formatAmount(row.totalCost)}
@@ -548,8 +643,14 @@ function RecordsPanel({
   );
 }
 
+/** An unrecorded value: an empty cell for the eye, a word for a screen reader — never a dash. */
+function Blank() {
+  const t = useTranslations("console.usage");
+  return <span className="sr-only">{t("notRecorded")}</span>;
+}
+
 function StatusPill({ status }: { status: number | null }) {
-  if (status === null) return <span className="text-muted-foreground">—</span>;
+  if (status === null) return <Blank />;
   const ok = status >= 200 && status < 300;
   return (
     <span

@@ -12,8 +12,9 @@ describe("listPublicCdnSeedObjects", () => {
     expect(keys).toContain("landing/images/about/hero-premium.png");
     expect(keys).toContain("landing/screenshots/demo-dashboard-command.webp");
     expect(keys).toContain("landing/animations/hero.lottie");
-    expect(keys).toContain("router/banners/router-banner-llm.png");
     expect(keys).toContain("router/product/router-repeater.png");
+    // The 302-era banner art left the shelf with the redesign; nothing seeds it.
+    expect(keys.some((key) => key.startsWith("router/banners/"))).toBe(false);
     expect(keys).toContain("forge/product/forge-anvil.png");
     expect(keys).toContain("pebble/assets/hero.jpg");
     expect(keys).toContain("brand/logo/logo-color.svg");

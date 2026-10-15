@@ -1,5 +1,6 @@
 import { brand } from "@nebutra/brand/metadata";
 import { Button, CopyButton } from "@nebutra/ui/primitives";
+import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { BrandMark } from "@/components/brand-marks";
@@ -75,7 +76,10 @@ function sampleFor(model: ListingModel, baseUrl: string): string {
   }
   return [
     ...head("/v1/chat/completions"),
-    `  -d '{"model": "${model.publicModel}", "messages": [{"role": "user", "content": "Hello"}]}'`,
+    "  -d '{",
+    `    "model": "${model.publicModel}",`,
+    `    "messages": [{ "role": "user", "content": "Hello" }]`,
+    "  }'",
   ].join("\n");
 }
 
@@ -105,11 +109,22 @@ export function ProductDetail({
   const categoryLabel = tCat(model.category);
   const live = model.sellable || model.routed;
   const apis = endpointsFor(model.category);
+  // Unknown values are omitted everywhere on this page, never printed as "—".
+  const hasInput = model.inputPerMTok > 0;
+  const hasOutput = model.outputPerMTok > 0;
+  const priced = hasInput || hasOutput;
   const input = formatPrice(model.inputPerMTok);
   const output = formatPrice(model.outputPerMTok);
 
+  // The catalogue's display name when it adds something to the id; otherwise the id.
+  const norm = (v: string) => v.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const named = model.name && norm(model.name) !== norm(model.publicModel) ? model.name : null;
+  const title = named ?? model.publicModel;
+
   const blurb =
-    model.description && model.description !== model.publicModel
+    model.description &&
+    norm(model.description) !== norm(model.publicModel) &&
+    norm(model.description) !== norm(model.name)
       ? model.description
       : model.context
         ? t("blurb", { provider: providerLabel, category: categoryLabel, context: model.context })
@@ -123,8 +138,13 @@ export function ProductDetail({
 
   const capabilities: Array<{ title: string; body: string }> = [
     { title: t("cap.unifiedTitle"), body: t("cap.unifiedBody") },
-    { title: t("cap.meteredTitle"), body: t("cap.meteredBody", { input, output }) },
   ];
+  if (hasInput && hasOutput) {
+    capabilities.push({
+      title: t("cap.meteredTitle"),
+      body: t("cap.meteredBody", { input, output }),
+    });
+  }
   // An unknown window is left out, not printed as "about —".
   if (model.context) {
     capabilities.push({
@@ -144,23 +164,29 @@ export function ProductDetail({
     `Model: ${model.publicModel}`,
     `Provider: ${providerLabel}`,
     `Category: ${model.category}`,
-    `Input: ${input}/1M`,
-    `Output: ${output}/1M`,
-    `Context: ${model.context || "—"}`,
+    ...(hasInput ? [`Input: ${input}/1M tokens`] : []),
+    ...(hasOutput ? [`Output: ${output}/1M tokens`] : []),
+    ...(model.context ? [`Context: ${model.context} tokens`] : []),
     `Endpoint: ${brand.name} Router OpenAI-compatible ${apis[0]?.path ?? "/v1/chat/completions"}`,
   ].join("\n");
 
-  const stats: Array<{ label: string; value: string; text?: boolean }> = [
-    { label: tShelf("col.input"), value: input },
-    { label: tShelf("col.output"), value: output },
-    { label: tShelf("col.context"), value: model.context || "—" },
+  const stats: Array<{ label: string; value: string; unit?: string; text?: boolean }> = [
+    ...(hasInput ? [{ label: tShelf("col.input"), value: input, unit: tShelf("perM") }] : []),
+    ...(hasOutput ? [{ label: tShelf("col.output"), value: output, unit: tShelf("perM") }] : []),
+    ...(model.context
+      ? [{ label: tShelf("col.context"), value: model.context, unit: tShelf("tokens") }]
+      : []),
     { label: t("status"), value: live ? t("sellable") : t("catalogOnly"), text: true },
   ];
 
-  const sectionTitle = "scroll-mt-24 text-lg font-semibold tracking-tight";
+  const sections = SECTIONS.filter((id) => id !== "pricing" || priced).filter(
+    (id) => id !== "related" || related.length > 0,
+  );
+  const sectionTitle = "scroll-mt-24 text-base font-semibold";
+  const tableHead = "h-10 px-4 text-xs font-medium text-muted-foreground";
 
   return (
-    <div className="router-market-shell pt-6 pb-16 md:pt-8">
+    <div className="router-market-shell pt-8 pb-20">
       <nav aria-label={t("breadcrumb")} className="text-sm text-muted-foreground">
         <ol className="flex flex-wrap items-center gap-1.5">
           <li>
@@ -168,7 +194,9 @@ export function ProductDetail({
               {tShelf("nav.models")}
             </Link>
           </li>
-          <li aria-hidden>/</li>
+          <li aria-hidden className="text-border">
+            /
+          </li>
           <li>
             <Link
               href={`/models?brand=${encodeURIComponent(provider)}`}
@@ -177,27 +205,32 @@ export function ProductDetail({
               {providerLabel}
             </Link>
           </li>
-          <li aria-hidden>/</li>
-          <li aria-current="page" className="truncate text-foreground">
+          <li aria-hidden className="text-border">
+            /
+          </li>
+          <li aria-current="page" className="min-w-0 break-all text-foreground">
             {model.publicModel}
           </li>
         </ol>
       </nav>
 
-      <header className="mt-6 flex flex-col gap-5 md:flex-row md:items-start md:justify-between">
+      <header className="mt-6 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="min-w-0">
           <div className="flex items-center gap-3">
             <span className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-card">
-              <BrandMark provider={provider} size={22} />
+              <BrandMark provider={provider} size={20} />
             </span>
-            <h1 className="min-w-0 truncate font-mono text-2xl font-semibold tracking-tight md:text-3xl">
-              {model.publicModel}
-            </h1>
-            <CopyButton value={model.publicModel} aria-label={t("copyId")} />
+            <div className="min-w-0">
+              <h1 className="text-2xl font-semibold text-balance">
+                {providerLabel}: {title}
+              </h1>
+              <div className="mt-0.5 flex items-center gap-1 text-sm text-muted-foreground">
+                <code className="font-mono break-all">{model.publicModel}</code>
+                <CopyButton value={model.publicModel} aria-label={t("copyId")} size="icon" />
+              </div>
+            </div>
           </div>
-          <p className="mt-3 max-w-2xl text-sm text-pretty text-muted-foreground md:text-base">
-            {blurb}
-          </p>
+          <p className="mt-4 max-w-[65ch] text-sm text-pretty text-muted-foreground">{blurb}</p>
         </div>
         <div className="flex shrink-0 flex-wrap items-center gap-2">
           <CopyButton
@@ -215,36 +248,41 @@ export function ProductDetail({
         </div>
       </header>
 
-      <dl className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-lg)] border border-border bg-border md:grid-cols-4">
+      <dl
+        className={cn(
+          "mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-lg)] border border-border bg-border",
+          stats.length >= 4 ? "md:grid-cols-4" : stats.length === 3 ? "md:grid-cols-3" : "",
+        )}
+      >
         {stats.map((s) => (
-          <div key={s.label} className="bg-background px-4 py-3.5">
+          <div key={s.label} className="bg-background px-4 py-3">
             <dt className="text-xs text-muted-foreground">{s.label}</dt>
-            <dd
-              className={
-                s.text
-                  ? "mt-1 text-base font-medium"
-                  : "mt-1 font-mono text-base font-medium tabular-nums"
-              }
-            >
-              {s.value}
+            <dd className="mt-1 flex items-baseline gap-1.5">
+              <span
+                className={
+                  s.text ? "text-base font-medium" : "font-mono text-lg font-medium tabular-nums"
+                }
+              >
+                {s.value}
+              </span>
+              {s.unit ? <span className="text-xs text-muted-foreground">{s.unit}</span> : null}
             </dd>
           </div>
         ))}
       </dl>
-      <p className="mt-2 text-xs text-muted-foreground">
-        {tShelf("perMillion")} · {t("volume")}
-      </p>
 
-      <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_12rem]">
-        <div className="min-w-0 space-y-12">
+      <div className="mt-16 grid gap-12 lg:grid-cols-[minmax(0,1fr)_11rem] lg:gap-16">
+        <div className="min-w-0 space-y-14">
           <section aria-labelledby="pd-intro">
             <h2 id="pd-intro" className={sectionTitle}>
               {t("toc.intro")}
             </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">{intro}</p>
-            <dl className="mt-5 grid gap-4 sm:grid-cols-2">
+            <p className="mt-4 max-w-[70ch] text-sm leading-relaxed text-muted-foreground">
+              {intro}
+            </p>
+            <dl className="mt-6 grid gap-x-10 gap-y-5 sm:grid-cols-2">
               {capabilities.map((c) => (
-                <div key={c.title}>
+                <div key={c.title} className="border-t border-border pt-4">
                   <dt className="text-sm font-medium">{c.title}</dt>
                   <dd className="mt-1 text-sm leading-relaxed text-muted-foreground">{c.body}</dd>
                 </div>
@@ -256,7 +294,7 @@ export function ProductDetail({
             <h2 id="pd-quickstart" className={sectionTitle}>
               {t("toc.quickstart")}
             </h2>
-            <div className="mt-3">
+            <div className="mt-4">
               <CodeSample title="cURL" code={sampleFor(model, baseUrl)} />
             </div>
           </section>
@@ -265,17 +303,17 @@ export function ProductDetail({
             <h2 id="pd-apis" className={sectionTitle}>
               {t("toc.apis")}
             </h2>
-            <div className="mt-3 overflow-x-auto rounded-[var(--radius-lg)] border border-border">
-              <table className="w-full min-w-[480px] text-sm">
-                <thead className="bg-muted/40 text-xs text-muted-foreground">
+            <div className="mt-4 overflow-x-auto rounded-[var(--radius-lg)] border border-border">
+              <table className="w-full min-w-[30rem] text-sm">
+                <thead>
                   <tr className="border-b border-border">
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                    <th scope="col" className={cn(tableHead, "text-left")}>
                       {t("col.api")}
                     </th>
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                    <th scope="col" className={cn(tableHead, "w-24 text-left")}>
                       {t("col.method")}
                     </th>
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
+                    <th scope="col" className={cn(tableHead, "text-left")}>
                       {t("col.path")}
                     </th>
                   </tr>
@@ -283,11 +321,13 @@ export function ProductDetail({
                 <tbody>
                   {apis.map((a) => (
                     <tr key={a.key} className="border-b border-border last:border-b-0">
-                      <td className="px-4 py-3">{t(`api.${a.key}`)}</td>
-                      <td className="px-4 py-3 font-mono text-xs text-muted-foreground">
-                        {a.method}
+                      <td className="h-11 px-4">{t(`api.${a.key}`)}</td>
+                      <td className="h-11 px-4">
+                        <span className="rounded-[var(--radius-sm)] bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground">
+                          {a.method}
+                        </span>
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs">{a.path}</td>
+                      <td className="h-11 px-4 font-mono text-sm">{a.path}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -295,58 +335,68 @@ export function ProductDetail({
             </div>
           </section>
 
-          <section aria-labelledby="pd-pricing">
-            <h2 id="pd-pricing" className={sectionTitle}>
-              {t("toc.pricing")}
-            </h2>
-            <div className="mt-3 overflow-x-auto rounded-[var(--radius-lg)] border border-border">
-              <table className="w-full min-w-[480px] text-sm">
-                <thead className="bg-muted/40 text-xs text-muted-foreground">
-                  <tr className="border-b border-border">
-                    <th scope="col" className="px-4 py-2.5 text-left font-medium">
-                      {t("col.unit")}
-                    </th>
-                    <th scope="col" className="px-4 py-2.5 text-right font-medium">
-                      {t("col.price")}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="font-mono tabular-nums">
-                  <tr className="border-b border-border">
-                    <td className="px-4 py-3 font-sans">{t("input")}</td>
-                    <td className="px-4 py-3 text-right">{input} / 1M</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 font-sans">{t("output")}</td>
-                    <td className="px-4 py-3 text-right">{output} / 1M</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p className="mt-2 text-xs text-muted-foreground">{t("listPrice")}</p>
-          </section>
+          {priced ? (
+            <section aria-labelledby="pd-pricing">
+              <h2 id="pd-pricing" className={sectionTitle}>
+                {t("toc.pricing")}
+              </h2>
+              <div className="mt-4 overflow-x-auto rounded-[var(--radius-lg)] border border-border">
+                <table className="w-full min-w-[20rem] text-sm">
+                  <thead>
+                    <tr className="border-b border-border">
+                      <th scope="col" className={cn(tableHead, "text-left")}>
+                        {t("col.unit")}
+                      </th>
+                      <th scope="col" className={cn(tableHead, "text-right")}>
+                        {t("col.price")}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {hasInput ? (
+                      <tr className="border-b border-border last:border-b-0">
+                        <td className="h-11 px-4">{t("inputTokens")}</td>
+                        <td className="h-11 px-4 text-right font-mono tabular-nums">
+                          {t("perMillion", { price: input })}
+                        </td>
+                      </tr>
+                    ) : null}
+                    {hasOutput ? (
+                      <tr>
+                        <td className="h-11 px-4">{t("outputTokens")}</td>
+                        <td className="h-11 px-4 text-right font-mono tabular-nums">
+                          {t("perMillion", { price: output })}
+                        </td>
+                      </tr>
+                    ) : null}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-3 text-xs text-muted-foreground">
+                {t("listPrice")} {t("volume")}
+              </p>
+            </section>
+          ) : null}
 
-          <section aria-labelledby="pd-related">
-            <h2 id="pd-related" className={sectionTitle}>
-              {t("toc.related")}
-            </h2>
-            {related.length === 0 ? (
-              <p className="mt-3 text-sm text-muted-foreground">{t("noRelated")}</p>
-            ) : (
-              <ModelTable className="mt-3" models={related} caption={t("toc.related")} />
-            )}
-          </section>
+          {related.length > 0 ? (
+            <section aria-labelledby="pd-related">
+              <h2 id="pd-related" className={sectionTitle}>
+                {t("toc.related")}
+              </h2>
+              <ModelTable className="mt-4" models={related} caption={t("toc.related")} />
+            </section>
+          ) : null}
         </div>
 
         <nav aria-label={t("onThisPage")} className="hidden lg:block">
           <div className="sticky top-24">
             <p className="text-xs font-medium text-muted-foreground">{t("onThisPage")}</p>
-            <ul className="mt-3 space-y-2 text-sm">
-              {SECTIONS.map((id) => (
+            <ul className="mt-3 space-y-1 border-l border-border">
+              {sections.map((id) => (
                 <li key={id}>
                   <a
                     href={`#pd-${id}`}
-                    className="text-muted-foreground transition-colors hover:text-foreground"
+                    className="-ml-px block border-l border-transparent py-1 pl-3 text-sm text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
                   >
                     {t(`toc.${id}`)}
                   </a>

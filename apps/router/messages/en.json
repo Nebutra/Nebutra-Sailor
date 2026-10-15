@@ -118,8 +118,7 @@
     "signInMore": "Sign in to do more.",
     "openPlayground": "Open the playground · {model}",
     "viewDetails": "View details",
-    "listPrice": "List price · pay per use",
-    "noRelated": "Nothing related on the shelf yet.",
+    "listPrice": "List price, billed per token.",
     "toc": {
       "intro": "Overview",
       "playground": "Playground",
@@ -157,7 +156,10 @@
     "copyId": "Copy model id",
     "tryIt": "Try in playground",
     "onThisPage": "On this page",
-    "blurbNoContext": "{provider} · {category} · one endpoint through Router."
+    "blurbNoContext": "{provider} · {category} · one endpoint through Router.",
+    "inputTokens": "Input tokens",
+    "outputTokens": "Output tokens",
+    "perMillion": "{price} / 1M"
   },
   "console": {
     "states": {
@@ -275,7 +277,8 @@
         "24h": "Last 24 hours",
         "7d": "Last 7 days",
         "30d": "Last 30 days",
-        "mtd": "Month to date"
+        "mtd": "Month to date",
+        "label": "Time range"
       },
       "filter": {
         "model": "Model",
@@ -293,11 +296,14 @@
         "emptyTitle": "Nothing was spent in this period",
         "emptyDescription": "Pick another range, or run a request from Quick use.",
         "bar": "{bucket} · {amount} · {count, plural, one {# request} other {# requests}}",
-        "peak": "Peak {amount}"
+        "readout": "{bucket} · {amount} USD · {count, plural, one {# request} other {# requests}}",
+        "total": "{amount} USD in this window"
       },
       "byModel": {
         "title": "By model",
-        "emptyTitle": "Models you call in this period show up here"
+        "emptyTitle": "Models you call in this period show up here",
+        "share": "{share}% · {count} req",
+        "emptyDescription": "Spend by model appears after the first billed call."
       },
       "byKey": {
         "title": "By key",
@@ -332,7 +338,8 @@
         "loading": "Loading…",
         "more": "Load more",
         "end": "End of list"
-      }
+      },
+      "notRecorded": "Not recorded"
     },
     "dashboard": {
       "title": "Overview",
@@ -403,7 +410,6 @@
       "model": "Model",
       "message": "Message",
       "send": "Send",
-      "sending": "Sending…",
       "stop": "Stop",
       "billingNote": "Billed to the newest key on your account",
       "reply": "Reply",
@@ -412,7 +418,13 @@
       "createKey": "Create a key",
       "stopped": "Stopped",
       "tokens": "In {input} · out {output}",
-      "settling": "Settling…"
+      "settling": "Settling…",
+      "request": "Request",
+      "code": "Code",
+      "paneLabel": "Output",
+      "language": "Language",
+      "copy": "Copy",
+      "copied": "Copied"
     },
     "wallet": {
       "title": "Wallet",
@@ -457,9 +469,10 @@
       "context": "Context",
       "input": "Input",
       "output": "Output",
-      "open": "Open"
+      "open": "Open",
+      "inputPerM": "Input / 1M",
+      "outputPerM": "Output / 1M"
     },
-    "metaLine": "{input} in · {output} out",
     "perMillion": "Prices per 1M tokens",
     "copy": "Copy",
     "copied": "Copied",
@@ -468,16 +481,40 @@
       "subtitle": "{count} models, priced at what the API charges.",
       "searchPlaceholder": "Search models",
       "search": "Search",
-      "categories": "Categories",
-      "providers": "Providers",
       "all": "All",
       "count": "{count, plural, one {# model} other {# models}}",
       "clear": "Clear filters",
-      "sortPrice": "Sort by price",
-      "sortPriceAsc": "Price: low to high",
-      "sortPriceDesc": "Price: high to low",
       "noMatchTitle": "Nothing matches these filters",
-      "noMatchBody": "Try a broader search or clear the filters."
-    }
+      "noMatchBody": "Try a broader search or clear the filters.",
+      "filters": "Filters",
+      "filtersActive": "Active",
+      "filter": {
+        "modality": "Modality",
+        "provider": "Provider",
+        "context": "Context length",
+        "price": "Input price",
+        "any": "Any",
+        "priceUpTo": "Up to ${price} / 1M",
+        "ctx": {
+          "32k": "32k+ tokens",
+          "128k": "128k+ tokens",
+          "200k": "200k+ tokens",
+          "1m": "1M+ tokens"
+        }
+      },
+      "view": {
+        "label": "View",
+        "table": "Table",
+        "list": "List"
+      }
+    },
+    "unknown": "Not published",
+    "meta": {
+      "context": "{context} context",
+      "input": "{price}/1M in",
+      "output": "{price}/1M out"
+    },
+    "perM": "per 1M tokens",
+    "tokens": "tokens"
   }
 }

@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { PlaygroundClient } from "@/components/playground-client";
 import { requireAuth } from "@/lib/auth";
 import { getListedModelIds } from "@/lib/listing-catalog";
+import { getBaseUrlHint } from "@/lib/model-routes";
 
 export async function generateMetadata() {
   const t = await getTranslations("console.playground");
@@ -35,11 +36,15 @@ export default async function UsePage({ searchParams }: Props) {
           : [];
 
   return (
-    <div className="mx-auto max-w-[1200px] px-4 py-6 md:px-6">
-      <h1 className="text-xl font-semibold tracking-tight text-neutral-12">{t("title")}</h1>
+    <div className="mx-auto max-w-[1280px] px-4 py-8 md:px-6">
+      <h1 className="text-2xl font-semibold text-foreground">{t("title")}</h1>
       <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
-      <div className="mt-5">
-        <PlaygroundClient models={list} {...(seed ? { initialModel: seed } : {})} />
+      <div className="mt-6">
+        <PlaygroundClient
+          models={list}
+          baseUrl={getBaseUrlHint()}
+          {...(seed ? { initialModel: seed } : {})}
+        />
       </div>
     </div>
   );

@@ -42,26 +42,26 @@ export function MarketHome({
     .sort((a, b) => b[1] - a[1]);
 
   return (
-    <div className="router-market-shell pb-16">
-      <section className="grid gap-10 pt-12 pb-12 md:pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)] lg:items-center lg:gap-16">
+    <div className="router-market-shell pb-20">
+      <section className="grid gap-10 pt-14 pb-16 md:pt-20 lg:grid-cols-2 lg:items-center lg:gap-14">
         <div className="min-w-0">
-          <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-balance md:text-5xl">
+          <h1 className="max-w-[16ch] text-4xl font-semibold text-balance md:text-5xl">
             {t("hero.title")}
           </h1>
-          <p className="mt-4 max-w-xl text-base text-pretty text-muted-foreground md:text-lg">
+          <p className="mt-5 max-w-[46ch] text-base text-pretty text-muted-foreground md:text-lg">
             {t("hero.subtitle", { models: models.length, providers: providers.length })}
           </p>
           <SearchForm
-            className="mt-8 max-w-xl"
+            className="mt-8 max-w-lg"
             placeholder={t("hero.searchPlaceholder")}
             label={t("hero.searchLabel")}
             submitLabel={t("hero.searchSubmit")}
           />
-          <div className="mt-4 flex flex-wrap items-center gap-2">
+          <div className="mt-3 flex flex-wrap items-center gap-2">
             <Button asChild>
               <Link href="/keys">{t("hero.getKey")}</Link>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="ghost">
               <Link href="/docs">{t("hero.readDocs")}</Link>
             </Button>
           </div>
@@ -72,15 +72,18 @@ export function MarketHome({
             `curl ${baseUrl}/chat/completions \\`,
             `  -H "Authorization: Bearer $ROUTER_API_KEY" \\`,
             `  -H "Content-Type: application/json" \\`,
-            `  -d '{"model": "${sampleModel}", "messages": [{"role": "user", "content": "Hello"}]}'`,
+            "  -d '{",
+            `    "model": "${sampleModel}",`,
+            `    "messages": [{ "role": "user", "content": "Hello" }]`,
+            "  }'",
           ].join("\n")}
         />
       </section>
 
-      <section aria-labelledby="home-models" className="pt-2">
+      <section aria-labelledby="home-models">
         <div className="mb-4 flex items-end justify-between gap-4">
           <div>
-            <h2 id="home-models" className="text-lg font-semibold tracking-tight">
+            <h2 id="home-models" className="text-xl font-semibold">
               {t("home.modelsTitle")}
             </h2>
             <p className="mt-1 text-sm text-muted-foreground">
@@ -102,8 +105,8 @@ export function MarketHome({
       </section>
 
       {providers.length > 0 ? (
-        <section aria-labelledby="home-providers" className="pt-14">
-          <h2 id="home-providers" className="text-lg font-semibold tracking-tight">
+        <section aria-labelledby="home-providers" className="mt-16">
+          <h2 id="home-providers" className="text-xl font-semibold">
             {t("home.providersTitle")}
           </h2>
           <ul className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
@@ -111,14 +114,14 @@ export function MarketHome({
               <li key={provider}>
                 <Link
                   href={`/models?brand=${provider}`}
-                  className="flex h-full items-center gap-3 rounded-[var(--radius-lg)] border border-border px-4 py-3 transition-colors hover:border-foreground/20 hover:bg-accent"
+                  className="flex h-full items-center gap-3 rounded-[var(--radius-lg)] border border-border px-4 py-3 transition-colors hover:border-foreground/20 hover:bg-muted/50"
                 >
-                  <BrandMark provider={provider} size={18} />
+                  <BrandMark provider={provider} size={16} />
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-medium">
                       {PROVIDER_LABEL[provider]}
                     </span>
-                    <span className="block text-xs text-muted-foreground">
+                    <span className="block text-xs text-muted-foreground tabular-nums">
                       {t("home.providerCount", { count })}
                     </span>
                   </span>

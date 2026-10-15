@@ -126,9 +126,9 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
         href={href}
         aria-current={active ? "page" : undefined}
         className={cn(
-          "inline-flex h-8 shrink-0 items-center rounded-[var(--radius-md)] px-2.5 text-sm transition-colors",
+          "inline-flex h-8 shrink-0 items-center rounded-[var(--radius-md)] px-2.5 text-sm font-medium transition-colors",
           active
-            ? "text-foreground"
+            ? "bg-muted text-foreground"
             : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
         )}
       >
@@ -147,7 +147,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
             aria-label={`${brand.name} Router`}
           >
             <BrandLogo variant="mark" className="h-6 w-6" />
-            <span className="text-sm font-semibold tracking-tight">Router</span>
+            <span className="text-sm font-semibold">Router</span>
           </Link>
           <nav aria-label={tNav("label")} className="hidden items-center md:flex">
             {MARKET_NAV.map((item) => navLink(item.href, tNav(item.key)))}

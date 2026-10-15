@@ -67,7 +67,7 @@ export function WalletClient() {
           skeleton={<Skeleton className="mt-2 h-7 w-24" />}
         >
           {(data) => (
-            <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight">
+            <p className="mt-1 text-2xl font-semibold tabular-nums">
               {formatAmount(data.balance)}
               <span className="ml-1.5 text-sm font-medium text-muted-foreground">
                 {data.currency}

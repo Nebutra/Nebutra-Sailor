@@ -26,7 +26,10 @@ interface CatalogueEntry {
   description: string;
   category: string;
   provider: string;
-  context: string;
+  /** Display form ("128k"); null when the upstream publishes no window. */
+  context: string | null;
+  /** Window in tokens; null when unknown. */
+  contextTokens: number | null;
   pricing: {
     unit: string;
     currency: string;
@@ -45,7 +48,8 @@ function toEntry(model: ListingModel, price: RouterPriceRow): CatalogueEntry {
     description: model.description,
     category: model.category,
     provider: model.provider,
-    context: model.context,
+    context: model.context || null,
+    contextTokens: model.contextTokens || null,
     pricing: {
       unit: price.unit,
       currency: price.currency,

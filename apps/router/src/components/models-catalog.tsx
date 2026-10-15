@@ -2,8 +2,9 @@ import { Button, EmptyState } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 import { BrandMark } from "@/components/brand-marks";
-import { ModelTable } from "@/components/model-table";
+import { ModelList, ModelTable, type ShelfSort } from "@/components/model-table";
 import { SearchForm } from "@/components/search-form";
 import {
   CATEGORY_LABEL,
@@ -13,7 +14,7 @@ import {
   PROVIDER_LABEL,
 } from "@/lib/listing-catalog";
 
-/** 302 模态序：语言 → 图 → 视频 → 音 → 数据/RAG → 工具 → 其余 */
+/** Modality order: language → image → video → audio → data/RAG → tools → rest. */
 const CAT_ORDER: ListingCategory[] = [
   "chat",
   "reasoning",
@@ -81,109 +82,236 @@ function parseTag(raw?: string): ListingCategory | "all" {
   return "all";
 }
 
+/** Minimum context window, in tokens. */
+const CONTEXT_STEPS = [
+  { id: "32k", min: 32_000 },
+  { id: "128k", min: 128_000 },
+  { id: "200k", min: 200_000 },
+  { id: "1m", min: 1_000_000 },
+] as const;
+type ContextStep = (typeof CONTEXT_STEPS)[number]["id"] | "any";
+
+/** Maximum input price, $ per 1M tokens. */
+const PRICE_STEPS = [
+  { id: "0.5", max: 0.5 },
+  { id: "2", max: 2 },
+  { id: "10", max: 10 },
+] as const;
+type PriceStep = (typeof PRICE_STEPS)[number]["id"] | "any";
+
+const SORTS: readonly ShelfSort[] = [
+  "default",
+  "price-asc",
+  "price-desc",
+  "output-asc",
+  "output-desc",
+  "context-asc",
+  "context-desc",
+];
+
 type Filters = {
   tag: ListingCategory | "all";
   brand: ListingProvider | "all";
   q: string;
-  sort: "default" | "price-asc" | "price-desc";
+  sort: ShelfSort;
+  ctx: ContextStep;
+  price: PriceStep;
+  view: "list" | "table";
 };
 
-function parseSort(raw?: string): Filters["sort"] {
-  return raw === "price-asc" || raw === "price-desc" ? raw : "default";
+function parseSort(raw?: string): ShelfSort {
+  return SORTS.includes(raw as ShelfSort) ? (raw as ShelfSort) : "default";
 }
 
-function buildModelsHref(opts: {
-  tag?: ListingCategory | "all";
-  brand?: ListingProvider | "all";
+function parseCtx(raw?: string): ContextStep {
+  return CONTEXT_STEPS.some((s) => s.id === raw) ? (raw as ContextStep) : "any";
+}
+
+function parsePrice(raw?: string): PriceStep {
+  return PRICE_STEPS.some((s) => s.id === raw) ? (raw as PriceStep) : "any";
+}
+
+export type CatalogParams = {
   q?: string;
-  sort?: "default" | "price-asc" | "price-desc";
-}): string {
+  brand?: string;
+  tag?: string;
+  sort?: string;
+  ctx?: string;
+  price?: string;
+  view?: string;
+};
+
+function href(f: Filters): string {
   const sp = new URLSearchParams();
-  if (opts.tag && opts.tag !== "all") sp.set("tag", opts.tag);
-  if (opts.brand && opts.brand !== "all") sp.set("brand", opts.brand);
-  if (opts.q?.trim()) sp.set("q", opts.q.trim());
-  if (opts.sort && opts.sort !== "default") sp.set("sort", opts.sort);
+  if (f.tag !== "all") sp.set("tag", f.tag);
+  if (f.brand !== "all") sp.set("brand", f.brand);
+  if (f.ctx !== "any") sp.set("ctx", f.ctx);
+  if (f.price !== "any") sp.set("price", f.price);
+  if (f.q.trim()) sp.set("q", f.q.trim());
+  if (f.sort !== "default") sp.set("sort", f.sort);
+  if (f.view !== "table") sp.set("view", f.view);
   const qs = sp.toString();
   return qs ? `/models?${qs}` : "/models";
 }
 
-/**
- * The catalogue. Server-rendered and URL-driven: every filter is a link and
- * search is a GET form, so the page works before hydration, every state is a
- * shareable URL, and the list ships no client JavaScript.
- *
- * It replaced a client-side 302-style mega-panel (category rows × brand chips)
- * over a card grid; the layout now follows OpenRouter / Vercel AI Gateway — a
- * filter row over a comparable table.
- *
- * URL: ?tag=&brand=&q=&sort= (legacy `cate=api` is accepted and ignored).
- */
-export function ModelsCatalog({
-  models,
-  initialQuery = "",
-  initialBrand,
-  initialTag,
-  initialSort = "default",
-}: {
-  models: readonly ListingModel[];
-  initialQuery?: string;
-  initialBrand?: string;
-  initialTag?: string;
-  initialSort?: string;
-}) {
-  const t = useTranslations("shelf.catalog");
-  const tCat = useTranslations("category");
-  const f: Filters = {
-    tag: parseTag(initialTag),
-    brand: parseBrand(initialBrand),
-    q: initialQuery,
-    sort: parseSort(initialSort),
-  };
-
-  const categories = CAT_ORDER.map((c) => ({
-    c,
-    count: models.filter((m) => m.category === c && (f.brand === "all" || m.provider === f.brand))
-      .length,
-  })).filter((x) => x.count > 0);
-
-  const brandCounts = new Map<ListingProvider, number>();
-  for (const m of models) {
-    if (f.tag !== "all" && m.category !== f.tag) continue;
-    brandCounts.set(m.provider, (brandCounts.get(m.provider) ?? 0) + 1);
+function matches(m: ListingModel, f: Filters, skip?: keyof Filters): boolean {
+  if (skip !== "tag" && f.tag !== "all" && m.category !== f.tag) return false;
+  if (skip !== "brand" && f.brand !== "all" && m.provider !== f.brand) return false;
+  if (skip !== "ctx" && f.ctx !== "any") {
+    const min = CONTEXT_STEPS.find((s) => s.id === f.ctx)?.min ?? 0;
+    if (m.contextTokens < min) return false;
   }
-  const brands = [...brandCounts.entries()].sort((a, b) => b[1] - a[1]);
-
+  if (skip !== "price" && f.price !== "any") {
+    const max = PRICE_STEPS.find((s) => s.id === f.price)?.max ?? Number.POSITIVE_INFINITY;
+    // An unpriced model is not "cheap": it has no price to compare.
+    if (!(m.inputPerMTok > 0 && m.inputPerMTok <= max)) return false;
+  }
   const needle = f.q.trim().toLowerCase();
-  let list = models.filter((m) => {
-    if (f.tag !== "all" && m.category !== f.tag) return false;
-    if (f.brand !== "all" && m.provider !== f.brand) return false;
-    if (!needle) return true;
+  if (needle) {
     return (
       m.publicModel.toLowerCase().includes(needle) ||
       m.name.toLowerCase().includes(needle) ||
       m.description.toLowerCase().includes(needle)
     );
-  });
-  if (f.sort === "price-asc") {
-    list = [...list].sort((a, b) => (a.inputPerMTok || 999) - (b.inputPerMTok || 999));
-  } else if (f.sort === "price-desc") {
-    list = [...list].sort((a, b) => (b.inputPerMTok || 0) - (a.inputPerMTok || 0));
   }
+  return true;
+}
 
-  const chip = (active: boolean) =>
-    cn(
-      "inline-flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3 text-sm transition-colors",
-      active
-        ? "border-foreground bg-foreground text-background"
-        : "border-border text-muted-foreground hover:bg-accent hover:text-accent-foreground",
-    );
-  const filtered = f.tag !== "all" || f.brand !== "all" || f.q !== "";
+/** Unknown values sort last in both directions — they are not zero. */
+function sortModels(list: ListingModel[], sort: ShelfSort): ListingModel[] {
+  if (sort === "default") return list;
+  const [field, dir] = sort.split("-") as ["price" | "output" | "context", "asc" | "desc"];
+  const value = (m: ListingModel) =>
+    field === "price" ? m.inputPerMTok : field === "output" ? m.outputPerMTok : m.contextTokens;
+  return [...list].sort((a, b) => {
+    const va = value(a);
+    const vb = value(b);
+    if (!(va > 0) && !(vb > 0)) return 0;
+    if (!(va > 0)) return 1;
+    if (!(vb > 0)) return -1;
+    return dir === "asc" ? va - vb : vb - va;
+  });
+}
+
+/**
+ * The catalogue, at OpenRouter's density: a filter rail (modality, provider,
+ * context length, input price), search, a list/table toggle and sortable
+ * columns. Everything is a link or a GET form, rendered on the server — it
+ * works before hydration, every state is a shareable URL, and the page ships
+ * no client JavaScript of its own.
+ *
+ * Counts beside each filter are computed with every *other* filter applied,
+ * so a number always predicts the result of clicking it.
+ */
+export function ModelsCatalog({
+  models,
+  params,
+}: {
+  models: readonly ListingModel[];
+  params: CatalogParams;
+}) {
+  const t = useTranslations("shelf.catalog");
+  const tCat = useTranslations("category");
+  const f: Filters = {
+    tag: parseTag(params.tag),
+    brand: parseBrand(params.brand),
+    q: params.q?.trim() ?? "",
+    sort: parseSort(params.sort),
+    ctx: parseCtx(params.ctx),
+    price: parsePrice(params.price),
+    view: params.view === "list" ? "list" : "table",
+  };
+
+  const count = (skip: keyof Filters, test: (m: ListingModel) => boolean) =>
+    models.filter((m) => matches(m, f, skip) && test(m)).length;
+
+  const categories = CAT_ORDER.map((c) => ({ c, n: count("tag", (m) => m.category === c) })).filter(
+    (x) => x.n > 0 || f.tag === x.c,
+  );
+  const providers = [...new Set(models.map((m) => m.provider))]
+    .map((p) => ({ p, n: count("brand", (m) => m.provider === p) }))
+    .filter((x) => x.n > 0 || f.brand === x.p)
+    .sort((a, b) => b.n - a.n);
+  const hasContext = models.some((m) => m.contextTokens > 0);
+  const hasPrice = models.some((m) => m.inputPerMTok > 0);
+
+  const list = sortModels(
+    models.filter((m) => matches(m, f)),
+    f.sort,
+  );
+  const filtered =
+    f.tag !== "all" || f.brand !== "all" || f.q !== "" || f.ctx !== "any" || f.price !== "any";
+
+  const rail = (
+    <div className="space-y-8">
+      <FilterGroup title={t("filter.modality")}>
+        <FilterLink href={href({ ...f, tag: "all" })} active={f.tag === "all"}>
+          {t("all")}
+        </FilterLink>
+        {categories.map(({ c, n }) => (
+          <FilterLink key={c} href={href({ ...f, tag: c })} active={f.tag === c} count={n}>
+            {tCat(c)}
+          </FilterLink>
+        ))}
+      </FilterGroup>
+      <FilterGroup title={t("filter.provider")}>
+        <FilterLink href={href({ ...f, brand: "all" })} active={f.brand === "all"}>
+          {t("all")}
+        </FilterLink>
+        {providers.map(({ p, n }) => (
+          <FilterLink
+            key={p}
+            href={href({ ...f, brand: p })}
+            active={f.brand === p}
+            count={n}
+            icon={<BrandMark provider={p} size={16} />}
+          >
+            {PROVIDER_LABEL[p]}
+          </FilterLink>
+        ))}
+      </FilterGroup>
+      {hasContext ? (
+        <FilterGroup title={t("filter.context")}>
+          <FilterLink href={href({ ...f, ctx: "any" })} active={f.ctx === "any"}>
+            {t("filter.any")}
+          </FilterLink>
+          {CONTEXT_STEPS.map((s) => (
+            <FilterLink
+              key={s.id}
+              href={href({ ...f, ctx: s.id })}
+              active={f.ctx === s.id}
+              count={count("ctx", (m) => m.contextTokens >= s.min)}
+            >
+              {t(`filter.ctx.${s.id}`)}
+            </FilterLink>
+          ))}
+        </FilterGroup>
+      ) : null}
+      {hasPrice ? (
+        <FilterGroup title={t("filter.price")}>
+          <FilterLink href={href({ ...f, price: "any" })} active={f.price === "any"}>
+            {t("filter.any")}
+          </FilterLink>
+          {PRICE_STEPS.map((s) => (
+            <FilterLink
+              key={s.id}
+              href={href({ ...f, price: s.id })}
+              active={f.price === s.id}
+              count={count("price", (m) => m.inputPerMTok > 0 && m.inputPerMTok <= s.max)}
+            >
+              {t("filter.priceUpTo", { price: s.id })}
+            </FilterLink>
+          ))}
+        </FilterGroup>
+      ) : null}
+    </div>
+  );
 
   return (
-    <div className="router-market-shell pt-8 pb-16 md:pt-10">
+    <div className="router-market-shell pt-10 pb-16">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">{t("title")}</h1>
+          <h1 className="text-2xl font-semibold">{t("title")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {t("subtitle", { count: models.length })}
           </p>
@@ -197,94 +325,136 @@ export function ModelsCatalog({
           keep={{
             tag: f.tag === "all" ? undefined : f.tag,
             brand: f.brand === "all" ? undefined : f.brand,
+            ctx: f.ctx === "any" ? undefined : f.ctx,
+            price: f.price === "any" ? undefined : f.price,
             sort: f.sort === "default" ? undefined : f.sort,
+            view: f.view === "table" ? undefined : f.view,
           }}
         />
       </div>
 
-      <nav aria-label={t("categories")} className="mt-6">
-        <ul className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
-          <li>
-            <Link
-              href={buildModelsHref({ ...f, tag: "all" })}
-              className={chip(f.tag === "all")}
-              aria-current={f.tag === "all" ? "true" : undefined}
+      <div className="mt-8 grid gap-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-10">
+        <aside aria-label={t("filters")} className="hidden lg:block">
+          <div className="sticky top-20">{rail}</div>
+        </aside>
+        {/* Below lg the rail folds into a disclosure: native, no JS. */}
+        <details className="group rounded-[var(--radius-lg)] border border-border lg:hidden">
+          <summary className="flex h-10 cursor-pointer list-none items-center justify-between px-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
+            {t("filters")}
+            <span className="text-muted-foreground tabular-nums">
+              {filtered ? t("filtersActive") : null}
+            </span>
+          </summary>
+          <div className="border-t border-border p-4">{rail}</div>
+        </details>
+
+        <div className="min-w-0">
+          <div className="mb-3 flex items-center justify-between gap-3 text-sm">
+            <p aria-live="polite" className="text-muted-foreground tabular-nums">
+              {t("count", { count: list.length })}
+              {filtered ? (
+                <>
+                  {" · "}
+                  <Link
+                    href={href({ ...f, tag: "all", brand: "all", q: "", ctx: "any", price: "any" })}
+                    className="text-foreground underline-offset-4 hover:underline"
+                  >
+                    {t("clear")}
+                  </Link>
+                </>
+              ) : null}
+            </p>
+            <nav
+              aria-label={t("view.label")}
+              className="flex items-center gap-1 rounded-[var(--radius-lg)] bg-muted p-1"
             >
-              {t("all")}
-            </Link>
-          </li>
-          {categories.map(({ c, count }) => (
-            <li key={c}>
-              <Link
-                href={buildModelsHref({ ...f, tag: c })}
-                className={chip(f.tag === c)}
-                aria-current={f.tag === c ? "true" : undefined}
-              >
-                {tCat(c)}
-                <span className="tabular-nums opacity-70">{count}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+              {(["table", "list"] as const).map((v) => (
+                <Link
+                  key={v}
+                  href={href({ ...f, view: v })}
+                  aria-current={f.view === v ? "true" : undefined}
+                  className={cn(
+                    "inline-flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-xs font-medium transition-colors",
+                    f.view === v
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  {t(`view.${v}`)}
+                </Link>
+              ))}
+            </nav>
+          </div>
 
-      <nav aria-label={t("providers")} className="mt-3">
-        <ul className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
-          {brands.map(([p, count]) => (
-            <li key={p}>
-              <Link
-                href={buildModelsHref({ ...f, brand: f.brand === p ? "all" : p })}
-                className={chip(f.brand === p)}
-                aria-current={f.brand === p ? "true" : undefined}
-              >
-                <BrandMark provider={p} size={14} />
-                {PROVIDER_LABEL[p]}
-                <span className="tabular-nums opacity-70">{count}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <div className="mt-6 mb-3 flex items-center justify-between gap-3 text-sm text-muted-foreground">
-        <p aria-live="polite" className="tabular-nums">
-          {t("count", { count: list.length })}
-        </p>
-        <div className="flex items-center gap-3">
-          {filtered ? (
-            <Link href="/models" className="transition-colors hover:text-foreground">
-              {t("clear")}
-            </Link>
-          ) : null}
-          <Link
-            href={buildModelsHref({
-              ...f,
-              sort: f.sort === "price-asc" ? "price-desc" : "price-asc",
-            })}
-            className="transition-colors hover:text-foreground"
-          >
-            {f.sort === "price-asc"
-              ? t("sortPriceDesc")
-              : f.sort === "price-desc"
-                ? t("sortPriceAsc")
-                : t("sortPrice")}
-          </Link>
+          {list.length === 0 ? (
+            <EmptyState
+              title={t("noMatchTitle")}
+              description={t("noMatchBody")}
+              action={
+                <Button asChild variant="outline">
+                  <Link href="/models">{t("clear")}</Link>
+                </Button>
+              }
+            />
+          ) : f.view === "list" ? (
+            <ModelList models={list} label={t("title")} />
+          ) : (
+            <ModelTable
+              models={list}
+              caption={t("title")}
+              sort={f.sort}
+              sortHref={(sort) => href({ ...f, sort })}
+              stickyHeader
+            />
+          )}
         </div>
       </div>
-
-      {list.length === 0 ? (
-        <EmptyState
-          title={t("noMatchTitle")}
-          description={t("noMatchBody")}
-          action={
-            <Button asChild variant="outline">
-              <Link href="/models">{t("clear")}</Link>
-            </Button>
-          }
-        />
-      ) : (
-        <ModelTable models={list} caption={t("title")} />
-      )}
     </div>
+  );
+}
+
+function FilterGroup({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section>
+      <h2 className="mb-2 text-xs font-medium text-muted-foreground">{title}</h2>
+      <ul className="space-y-0.5">{children}</ul>
+    </section>
+  );
+}
+
+function FilterLink({
+  href: to,
+  active,
+  count,
+  icon,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  count?: number;
+  icon?: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <li>
+      <Link
+        href={to}
+        aria-current={active ? "true" : undefined}
+        className={cn(
+          "flex h-8 items-center gap-2 rounded-[var(--radius-md)] px-2 text-sm transition-colors",
+          active
+            ? "bg-muted text-foreground"
+            : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+        )}
+      >
+        {icon ? (
+          <span className="flex size-4 shrink-0 items-center justify-center">{icon}</span>
+        ) : null}
+        <span className="min-w-0 flex-1 truncate">{children}</span>
+        {count !== undefined ? (
+          <span className="text-xs text-muted-foreground tabular-nums">{count}</span>
+        ) : null}
+      </Link>
+    </li>
   );
 }

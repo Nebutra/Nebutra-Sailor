@@ -113,7 +113,6 @@
     "openPlayground": "打开 Playground · {model}",
     "viewDetails": "查看详情",
     "listPrice": "目录价 · 按量",
-    "noRelated": "货架上还没有相关模型。",
     "toc": {
       "intro": "API 介绍",
       "apis": "API 列表",
@@ -274,8 +273,7 @@
         "daily": "按天 · UTC",
         "emptyTitle": "这段时间没有产生费用",
         "emptyDescription": "换个时间范围，或者到快捷使用跑一次请求。",
-        "bar": "{bucket} · {amount} · {count} 次",
-        "peak": "峰值 {amount}"
+        "bar": "{bucket} · {amount} · {count} 次"
       },
       "byModel": {
         "title": "按模型",
@@ -379,7 +377,6 @@
       "model": "模型",
       "message": "消息",
       "send": "发送",
-      "sending": "请求中…",
       "stop": "停止",
       "billingNote": "用你账号下最新的一把 Key 计费",
       "reply": "回复",

@@ -3363,7 +3363,6 @@
       "apps/para/src/components/canvas/media-node.tsx": 1,
       "apps/para/src/components/canvas/storyboard-view.tsx": 1,
       "apps/para/src/components/shell/command-menu.tsx": 1,
-      "apps/router/src/components/console-shell.tsx": 1,
       "apps/web/src/app/(app)/admin/page.tsx": 2,
       "apps/web/src/app/(app)/cofounder/page.tsx": 2,
       "apps/web/src/app/(app)/integrations/page.tsx": 3,

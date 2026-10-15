@@ -2,7 +2,14 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
-import { Button, Select, Textarea } from "@nebutra/ui/primitives";
+import {
+  Button,
+  CopyButton,
+  Select,
+  Textarea,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -62,13 +69,65 @@ interface Turn {
   settling: boolean;
 }
 
+type CodeLang = "curl" | "python" | "typescript";
+
+/** The request on screen, as code a buyer can paste. Key read from the environment. */
+function codeFor(lang: CodeLang, baseUrl: string, model: string, prompt: string): string {
+  const content = JSON.stringify(prompt);
+  if (lang === "python") {
+    return [
+      "from openai import OpenAI",
+      "",
+      `client = OpenAI(base_url="${baseUrl}", api_key=os.environ["ROUTER_API_KEY"])`,
+      "",
+      "stream = client.chat.completions.create(",
+      `    model="${model}",`,
+      `    messages=[{"role": "user", "content": ${content}}],`,
+      "    stream=True,",
+      ")",
+      "for chunk in stream:",
+      '    print(chunk.choices[0].delta.content or "", end="")',
+    ]
+      .join("\n")
+      .replace("from openai import OpenAI", "import os\nfrom openai import OpenAI");
+  }
+  if (lang === "typescript") {
+    return [
+      'import OpenAI from "openai";',
+      "",
+      `const client = new OpenAI({ baseURL: "${baseUrl}", apiKey: process.env.ROUTER_API_KEY });`,
+      "",
+      "const stream = await client.chat.completions.create({",
+      `  model: "${model}",`,
+      `  messages: [{ role: "user", content: ${content} }],`,
+      "  stream: true,",
+      "});",
+      "for await (const chunk of stream) {",
+      '  process.stdout.write(chunk.choices[0]?.delta?.content ?? "");',
+      "}",
+    ].join("\n");
+  }
+  return [
+    `curl ${baseUrl}/chat/completions \\`,
+    '  -H "Authorization: Bearer $ROUTER_API_KEY" \\',
+    '  -H "Content-Type: application/json" \\',
+    "  -d '{",
+    `    "model": "${model}",`,
+    `    "messages": [{ "role": "user", "content": ${content.replace(/'/g, "'\\''")} }],`,
+    '    "stream": true',
+    "  }'",
+  ].join("\n");
+}
+
 export function PlaygroundClient({
   models,
   initialModel,
+  baseUrl,
   variant = "usage",
 }: {
   models: readonly string[];
   initialModel?: string;
+  baseUrl: string;
   variant?: "usage" | "embedded";
 }) {
   const t = useTranslations("console.playground");
@@ -78,6 +137,8 @@ export function PlaygroundClient({
   const [prompt, setPrompt] = useState(() => t("defaultPrompt", { brand: brand.name }));
   const [turns, setTurns] = useState<Turn[]>([]);
   const [running, setRunning] = useState(false);
+  const [pane, setPane] = useState<"response" | "code">("response");
+  const [lang, setLang] = useState<CodeLang>("curl");
   const laneRef = useRef(createRequestLane());
 
   const patchTurn = useCallback((id: string, patch: Partial<Turn>) => {
@@ -198,76 +259,138 @@ export function PlaygroundClient({
   };
 
   const tall = variant === "usage";
+  const code = codeFor(
+    lang,
+    baseUrl,
+    model,
+    prompt.trim() || t("defaultPrompt", { brand: brand.name }),
+  );
 
   return (
     <div
       className={
         tall
-          ? "grid min-h-0 flex-1 gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]"
-          : "grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+          ? "grid min-h-0 flex-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"
+          : "grid gap-6 lg:grid-cols-2"
       }
     >
-      <div className="flex min-h-0 flex-col space-y-3 rounded-[var(--radius-lg)] border border-neutral-6 p-3 md:p-4">
-        <Select
-          label={t("model")}
-          id="router-model"
-          size="small"
-          className="font-mono text-xs"
-          value={model}
-          onValueChange={(value) => {
-            if (value) setModel(value);
-          }}
-          options={options.map((candidate) => ({ value: candidate, label: candidate }))}
-        />
-        <Textarea
-          label={t("message")}
-          id="router-prompt"
-          value={prompt}
-          onChange={(event) => setPrompt(event.target.value)}
-          rows={tall ? 12 : 8}
-          className={
-            tall ? "min-h-[200px] flex-1 font-mono text-sm" : "min-h-[160px] font-mono text-xs"
-          }
-        />
-        <div className="flex flex-wrap items-center gap-2">
-          <Button
-            type="button"
-            variant="ink"
-            size="sm"
-            className="h-9 px-4"
-            disabled={running || prompt.trim() === ""}
-            onClick={() => void send()}
-          >
-            {running ? t("sending") : t("send")}
-          </Button>
-          {running ? (
-            <Button type="button" variant="outline" size="sm" className="h-9" onClick={stop}>
-              {t("stop")}
-            </Button>
-          ) : null}
-          <span className="text-xs text-muted-foreground">{t("billingNote")}</span>
+      <section
+        aria-label={t("request")}
+        className="flex min-h-0 flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border"
+      >
+        <div className="flex h-11 items-center border-b border-border px-4">
+          <h2 className="text-sm font-medium">{t("request")}</h2>
         </div>
-      </div>
+        <div className="flex min-h-0 flex-1 flex-col gap-4 p-4">
+          <Select
+            label={t("model")}
+            id="router-model"
+            className="font-mono"
+            value={model}
+            onValueChange={(value) => {
+              if (value) setModel(value);
+            }}
+            options={options.map((candidate) => ({ value: candidate, label: candidate }))}
+          />
+          <Textarea
+            label={t("message")}
+            id="router-prompt"
+            value={prompt}
+            onChange={(event) => setPrompt(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && (event.metaKey || event.ctrlKey)) {
+                event.preventDefault();
+                void send();
+              }
+            }}
+            rows={tall ? 12 : 8}
+            className={tall ? "min-h-[200px] flex-1 text-sm" : "min-h-[160px] text-sm"}
+          />
+          <div className="flex flex-wrap items-center gap-3">
+            {running ? (
+              <Button type="button" variant="outline" onClick={stop}>
+                {t("stop")}
+              </Button>
+            ) : (
+              <Button type="button" disabled={prompt.trim() === ""} onClick={() => void send()}>
+                {t("send")}
+              </Button>
+            )}
+            <span className="text-xs text-muted-foreground">{t("billingNote")}</span>
+          </div>
+        </div>
+      </section>
 
-      <div className="flex min-h-[240px] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-neutral-6 lg:min-h-0">
-        <div className="flex items-center justify-between border-b border-neutral-6 bg-neutral-2/50 px-3 py-2">
-          <span className="text-xs font-semibold">{t("reply")}</span>
-          <span className="font-mono text-xs text-muted-foreground">{model}</span>
+      <section
+        aria-label={t("reply")}
+        className="flex min-h-[320px] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border lg:min-h-0"
+      >
+        <div className="flex h-11 items-center justify-between gap-3 border-b border-border pr-2 pl-1">
+          <ToggleGroup
+            type="single"
+            size="sm"
+            variant="outline"
+            aria-label={t("paneLabel")}
+            value={pane}
+            onValueChange={(value) => {
+              if (value === "response" || value === "code") setPane(value);
+            }}
+            className="border-0 p-0"
+          >
+            <ToggleGroupItem value="response" className="border-0 text-sm">
+              {t("reply")}
+            </ToggleGroupItem>
+            <ToggleGroupItem value="code" className="border-0 text-sm">
+              {t("code")}
+            </ToggleGroupItem>
+          </ToggleGroup>
+          {pane === "code" ? (
+            <div className="flex items-center gap-1">
+              <ToggleGroup
+                type="single"
+                size="sm"
+                aria-label={t("language")}
+                value={lang}
+                onValueChange={(value) => {
+                  if (value === "curl" || value === "python" || value === "typescript")
+                    setLang(value);
+                }}
+                className="p-0.5"
+              >
+                <ToggleGroupItem value="curl" className="h-7 px-2 text-xs">
+                  cURL
+                </ToggleGroupItem>
+                <ToggleGroupItem value="python" className="h-7 px-2 text-xs">
+                  Python
+                </ToggleGroupItem>
+                <ToggleGroupItem value="typescript" className="h-7 px-2 text-xs">
+                  TypeScript
+                </ToggleGroupItem>
+              </ToggleGroup>
+              <CopyButton value={code} label={t("copy")} copiedLabel={t("copied")} size="sm" />
+            </div>
+          ) : (
+            <span className="truncate font-mono text-xs text-muted-foreground">{model}</span>
+          )}
         </div>
         <div className="flex-1 overflow-auto">
-          {turns.length === 0 ? (
+          {pane === "code" ? (
+            <pre className="p-4 font-mono text-xs leading-relaxed text-foreground">
+              <code>{code}</code>
+            </pre>
+          ) : turns.length === 0 ? (
             <StatePanel title={t("emptyTitle")} description={t("emptyDescription")} />
           ) : (
-            <ul className="divide-y divide-neutral-6">
+            <ul className="divide-y divide-border">
               {turns.map((turn) => (
-                <li key={turn.id} className="p-3">
+                <li key={turn.id} className="p-4">
                   <TurnView turn={turn} />
                 </li>
               ))}
             </ul>
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }
@@ -277,7 +400,7 @@ function TurnView({ turn }: { turn: Turn }) {
   const tErrors = useTranslations("console.errors");
   return (
     <>
-      <p className="mb-1.5 line-clamp-2 text-xs text-muted-foreground">{turn.prompt}</p>
+      <p className="mb-2 line-clamp-2 text-xs text-muted-foreground">{turn.prompt}</p>
       {turn.status === "failed" ? (
         <div
           role="alert"
@@ -294,14 +417,14 @@ function TurnView({ turn }: { turn: Turn }) {
           ) : null}
         </div>
       ) : (
-        <pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-neutral-12">
+        <pre className="whitespace-pre-wrap text-sm leading-relaxed text-foreground">
           {turn.answer}
           {turn.status === "streaming" ? (
             <span className="ml-0.5 inline-block h-3 w-1.5 animate-pulse bg-neutral-9" />
           ) : null}
         </pre>
       )}
-      <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-muted-foreground">
+      <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-muted-foreground tabular-nums">
         <span>{turn.model}</span>
         {turn.status === "cancelled" ? <span>{t("stopped")}</span> : null}
         {turn.promptTokens !== null && turn.completionTokens !== null ? (
@@ -313,7 +436,7 @@ function TurnView({ turn }: { turn: Turn }) {
           </span>
         ) : null}
         {turn.cost !== null ? (
-          <span className="font-semibold text-neutral-12">
+          <span className="font-medium text-foreground">
             {formatAmount(turn.cost)} {turn.currency}
           </span>
         ) : turn.settling ? (
