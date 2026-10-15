@@ -3430,34 +3430,6 @@
         "count": 1
       },
       {
-        "file": "apps/router/src/app/use/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/market-banner-carousel.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/router/src/components/market-home.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/models-catalog.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/page-frame.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/product-detail.tsx",
-        "count": 7
-      },
-      {
-        "file": "apps/router/src/components/usage-client.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/web/src/app/(app)/admin/page.tsx",
         "count": 1
       },

@@ -277,7 +277,7 @@ function Panel({
   return (
     <section className="overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-glass-sm">
       <div className="flex h-11 items-center gap-2 border-b border-border px-4">
-        <h2 className="text-sm font-medium">{title}</h2>
+        <h2 className="text-sm">{title}</h2>
         {subtitle ? <span className="text-xs text-muted-foreground">{subtitle}</span> : null}
         {actions ? <div className="ml-auto">{actions}</div> : null}
       </div>

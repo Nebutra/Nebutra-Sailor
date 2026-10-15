@@ -425,7 +425,7 @@ export function ModelsCatalog({
 function FilterGroup({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section>
-      <h2 className="mb-2 text-xs font-medium text-muted-foreground">{title}</h2>
+      <h2 className="mb-2 text-xs text-muted-foreground">{title}</h2>
       <ul className="space-y-0.5">{children}</ul>
     </section>
   );

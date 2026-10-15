@@ -278,7 +278,7 @@ export function PlaygroundClient({
         className="flex min-h-0 flex-col overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-glass-sm"
       >
         <div className="flex h-11 items-center border-b border-border px-4">
-          <h2 className="text-sm font-medium">{t("request")}</h2>
+          <h2 className="text-sm">{t("request")}</h2>
         </div>
         <div className="flex min-h-0 flex-1 flex-col gap-4 p-4">
           <Select
