@@ -28,6 +28,7 @@ import { BrandLogo } from "@/components/brand-logo";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { MarketFooter } from "@/components/market-footer";
 import { RouterMark } from "@/components/router-mark";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { MarketIcon } from "@/lib/market-icons";
 import { MARKET_CHANNELS } from "@/lib/market-taxonomy";
 
@@ -182,6 +183,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
                 (Batch D); until it exists this says what is true. */}
             <span aria-label={t("currencyNote")}>USD $</span>
             <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-xs" />
+            <ThemeToggle className="size-7" />
             <span className="text-neutral-7" aria-hidden>
               |
             </span>
@@ -235,7 +237,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
               name="q"
               defaultValue={seededQuery}
               placeholder={t("searchPlaceholder")}
-              className="h-12 w-full rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 pr-[6rem] pl-11 text-base shadow-[0_1px_2px_rgb(15_23_42/0.03)] outline-none transition placeholder:text-muted-foreground focus:border-neutral-8 focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--neutral-6)_65%,transparent)]"
+              className="h-12 w-full rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 pr-[6rem] pl-11 text-base shadow-ambient-sm outline-none transition placeholder:text-muted-foreground focus:border-neutral-8 focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--neutral-6)_65%,transparent)]"
             />
             <button
               type="submit"
@@ -246,7 +248,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
           </div>
           <Link
             href="/models"
-            className="hidden h-12 shrink-0 items-center rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 px-5 text-sm font-medium text-neutral-11 shadow-[0_1px_2px_rgb(15_23_42/0.03)] transition hover:border-neutral-7 hover:bg-neutral-2 hover:text-neutral-12 sm:inline-flex"
+            className="hidden h-12 shrink-0 items-center rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 px-5 text-sm font-medium text-neutral-11 shadow-ambient-sm transition hover:border-neutral-7 hover:bg-neutral-2 hover:text-neutral-12 sm:inline-flex"
           >
             {t("aiRecommend")}
           </Link>
@@ -323,6 +325,7 @@ function AdminShell({
           </Link>
           <div className="ml-auto flex items-center gap-2 text-xs text-neutral-11 sm:gap-3">
             <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-xs" />
+            <ThemeToggle />
             <Link href="/" className="hover:text-neutral-12">
               {t("backToMarket")}
             </Link>

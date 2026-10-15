@@ -323,6 +323,15 @@ const CASES: Case[] = [
     path: "apps/landing/src/__lint_guard_probe.tsx",
   },
   {
+    // A light-only literal in Router — how it shipped with no dark mode: one
+    // value where a token has one per theme. Each of the four literal families
+    // is present, so the probe fails even if one pattern regresses.
+    guard: "lint-router-raw-colors",
+    violation:
+      'export const C = () => (\n  <div className="bg-white ring-black/5" style={{ color: "#0f172a", boxShadow: "0 1px 2px rgb(15 23 42 / 0.04)" }} />\n);\n',
+    path: "apps/router/src/__lint_guard_probe.tsx",
+  },
+  {
     // Erasing a shared primitive's surface instead of using its variant.
     guard: "lint-primitive-override",
     violation:

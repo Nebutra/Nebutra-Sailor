@@ -6,6 +6,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { loadUiLabels } from "@nebutra/i18n/ui-labels";
+import { THEME_STORAGE_KEY, ThemeProvider } from "@nebutra/tokens";
 import { UiLabelsProvider } from "@nebutra/ui/primitives";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -16,6 +17,7 @@ import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
 import { ConsoleShell, SIDEBAR_COOKIE } from "@/components/console-shell";
+import { THEME_BOOT_SCRIPT } from "@/lib/theme-boot";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("meta");
@@ -55,25 +57,36 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const messages = await getMessages();
   // The admin sidebar's width is on the request, so it renders collapsed on the
   // server rather than expanding and snapping shut after hydration.
-  const sidebarCollapsed = (await cookies()).get(SIDEBAR_COOKIE)?.value === "1";
+  const cookieStore = await cookies();
+  const sidebarCollapsed = cookieStore.get(SIDEBAR_COOKIE)?.value === "1";
+  // ThemeProvider mirrors the resolved theme into this cookie, so a returning
+  // visitor's <html> is rendered in the right mode; THEME_BOOT_SCRIPT covers a
+  // first visit (no cookie yet) before paint.
+  const themeCookie = cookieStore.get(THEME_STORAGE_KEY)?.value;
+  const themeClass = themeCookie === "dark" || themeCookie === "light" ? themeCookie : "";
 
   return (
     <html
       lang={toHtmlLang(locale)}
       dir={toTextDir(locale)}
-      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
+      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`.trim()}
       suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
         <CjkFontFace />
 
         <NextIntlClientProvider locale={locale} messages={messages}>
           <UiLabelsProvider labels={await loadUiLabels(locale)}>
-            <AuthProvider provider={authProvider} config={authProviderConfig}>
-              <Suspense fallback={<div className="min-h-screen bg-neutral-1" />}>
-                <ConsoleShell sidebarCollapsed={sidebarCollapsed}>{children}</ConsoleShell>
-              </Suspense>
-            </AuthProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <AuthProvider provider={authProvider} config={authProviderConfig}>
+                <Suspense fallback={<div className="min-h-screen bg-neutral-1" />}>
+                  <ConsoleShell sidebarCollapsed={sidebarCollapsed}>{children}</ConsoleShell>
+                </Suspense>
+              </AuthProvider>
+            </ThemeProvider>
           </UiLabelsProvider>
         </NextIntlClientProvider>
       </body>

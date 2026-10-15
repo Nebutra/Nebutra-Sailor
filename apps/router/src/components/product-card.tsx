@@ -29,9 +29,8 @@ export function ProductCard({ m, layout = "tile" }: { m: ListingModel; layout?: 
             className="relative flex w-[140px] shrink-0 items-center justify-center sm:w-[168px]"
             style={{ background: cover.wash }}
           >
-            {/* allow-palette: chip surface pinned to match BrandPill tone="light" over cover wash art */}
-            <span className="inline-flex max-w-[88%] items-center rounded-xl bg-white/95 px-2.5 py-2 shadow-sm ring-1 ring-black/5">
-              <BrandPill provider={provider} size={18} tone="light" />
+            <span className="inline-flex max-w-[88%] items-center rounded-xl bg-card/95 px-2.5 py-2 shadow-ambient-sm ring-1 ring-border">
+              <BrandPill provider={provider} size={18} />
             </span>
           </span>
           <span className="flex min-w-0 flex-1 flex-col justify-center gap-1.5 px-4 py-3">
@@ -57,9 +56,8 @@ export function ProductCard({ m, layout = "tile" }: { m: ListingModel; layout?: 
       >
         <div className="absolute inset-0" style={{ background: cover.wash }} aria-hidden />
         <span className="absolute inset-0 flex items-center justify-center p-3">
-          {/* allow-palette: chip surface pinned to match BrandPill tone="light" over cover wash art */}
-          <span className="inline-flex max-w-[92%] items-center rounded-2xl bg-white/96 px-3 py-2 shadow-md ring-1 ring-black/[0.04]">
-            <BrandPill provider={provider} size={20} tone="light" />
+          <span className="inline-flex max-w-[92%] items-center rounded-2xl bg-card/95 px-3 py-2 shadow-ambient-md ring-1 ring-border">
+            <BrandPill provider={provider} size={20} />
           </span>
         </span>
       </Link>

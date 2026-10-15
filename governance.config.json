@@ -2197,7 +2197,6 @@
       "packages/design/tokens/src/brand-package/presets/vercel.ts": "Another design language's own palette; overlap with House hex is coincidence, not a copy.",
       "packages/design/tokens/src/brand-package/presets/generic.ts": "Another design language's own palette; overlap with House hex is coincidence, not a copy.",
       "scripts/lint-token-mirrors.mjs": "This guard.",
-      "apps/router/src/components/brand-marks.tsx": "Per-product cover washes — art direction for each product card, not token restatements.",
       "scripts/verify-brand-token-sync.ts": "The brand:apply drift verifier: names the values it asserts."
     },
     "allowlist": {}
@@ -3384,5 +3383,13 @@
   "hardcodedCopy": {
     "$description": "Shrink-only ratchet for user-facing English written straight into JSX in apps/web, apps/auth, apps/idp (scripts/lint-hardcoded-copy.mjs). Move strings to packages/platform/i18n/locales/en.json and lower the count.",
     "allowlist": []
+  },
+  "routerRawColors": {
+    "allowlist": [
+      {
+        "file": "apps/router/src/components/market-footer.tsx",
+        "count": 13
+      }
+    ]
   }
 }

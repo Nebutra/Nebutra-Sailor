@@ -48,8 +48,7 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
 
   return (
     <section
-      // allow-palette: subtle depth ring on fixed-light promo banner artwork, not app chrome
-      className="relative h-full min-h-[300px] overflow-hidden rounded-[22px] bg-[color-mix(in_srgb,var(--blue-3)_22%,white)] text-neutral-12 shadow-[0_16px_48px_rgb(15_23_42/0.09)] ring-1 ring-black/[0.04] md:min-h-[320px] xl:min-h-[340px]"
+      className="relative h-full min-h-[300px] overflow-hidden rounded-[22px] bg-[color-mix(in_srgb,var(--blue-3)_22%,hsl(var(--card)))] text-neutral-12 shadow-ambient-md ring-1 ring-border md:min-h-[320px] xl:min-h-[340px]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -68,8 +67,7 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
             type="button"
             aria-label={t("previous")}
             onClick={() => go(-1)}
-            // allow-palette: glass nav chip over promo banner art, must read on any banner regardless of theme
-            className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/55 text-neutral-12 shadow-sm backdrop-blur-md transition hover:bg-white/80"
+            className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-border/60 bg-card/60 text-foreground shadow-ambient-sm backdrop-blur-md transition-colors hover:bg-card/85"
           >
             <ChevronLeft className="h-4 w-4" aria-hidden />
           </button>
@@ -77,8 +75,7 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
             type="button"
             aria-label={t("next")}
             onClick={() => go(1)}
-            // allow-palette: glass nav chip over promo banner art, must read on any banner regardless of theme
-            className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/55 text-neutral-12 shadow-sm backdrop-blur-md transition hover:bg-white/80"
+            className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-border/60 bg-card/60 text-foreground shadow-ambient-sm backdrop-blur-md transition-colors hover:bg-card/85"
           >
             <ChevronRight className="h-4 w-4" aria-hidden />
           </button>
@@ -147,19 +144,20 @@ function Slide({
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(120% 90% at 85% 30%, color-mix(in srgb, var(--blue-4) 55%, white) 0%, transparent 55%), radial-gradient(90% 80% at 20% 80%, color-mix(in srgb, var(--cyan-4) 40%, white) 0%, transparent 50%), linear-gradient(135deg, #f4f6ff 0%, #eef2ff 45%, #f8fafc 100%)",
+              "radial-gradient(120% 90% at 85% 30%, color-mix(in srgb, var(--blue-4) 55%, hsl(var(--card))) 0%, transparent 55%), radial-gradient(90% 80% at 20% 80%, color-mix(in srgb, var(--cyan-4) 40%, hsl(var(--card))) 0%, transparent 50%), linear-gradient(135deg, color-mix(in srgb, var(--blue-2) 60%, hsl(var(--card))) 0%, color-mix(in srgb, var(--blue-3) 30%, hsl(var(--card))) 45%, hsl(var(--card)) 100%)",
           }}
           aria-hidden
         />
       )}
 
-      {/* 轻磨砂叠层：保留弥散色，只抬文字可读 */}
+      {/* 轻磨砂叠层：保留弥散色，只抬文字可读。The veil is the page canvas, so in
+          dark mode it dims the light art under the text instead of whitening it. */}
       <div
         className="absolute inset-0"
         style={{
           background: isArt
-            ? "linear-gradient(105deg, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.28) 36%, rgba(255,255,255,0.05) 58%, rgba(255,255,255,0.35) 100%)"
-            : "linear-gradient(105deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.4) 100%)",
+            ? "linear-gradient(105deg, hsl(var(--background) / 0.78) 0%, hsl(var(--background) / 0.4) 40%, hsl(var(--background) / 0.12) 62%, hsl(var(--background) / 0.35) 100%)"
+            : "linear-gradient(105deg, hsl(var(--background) / 0.55) 0%, hsl(var(--background) / 0.15) 50%, hsl(var(--background) / 0.4) 100%)",
         }}
         aria-hidden
       />
@@ -193,9 +191,8 @@ function Slide({
                   {PROVIDER_LABEL[banner.provider]} · {t("liveKicker")}
                 </p>
                 <div className="flex items-center gap-3.5">
-                  {/* allow-palette: chip surface pinned to match BrandMark surface="light" */}
-                  <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl border border-white/70 bg-white/70 shadow-sm ring-1 ring-black/[0.04] backdrop-blur-md">
-                    <BrandMark provider={banner.provider} size={36} surface="light" />
+                  <span className="inline-flex h-16 w-16 items-center justify-center rounded-2xl border border-border/60 bg-card/70 shadow-ambient-sm backdrop-blur-md">
+                    <BrandMark provider={banner.provider} size={36} />
                   </span>
                   <div className="min-w-0">
                     <h2 className="truncate font-mono text-3xl leading-none font-semibold tracking-tight text-neutral-12 md:text-4xl">
@@ -219,9 +216,8 @@ function Slide({
             </div>
             <div className="flex items-end justify-between gap-3">
               <div className="flex items-center gap-2">
-                {/* allow-palette: chip surface pinned to match BrandPill tone="light" */}
-                <span className="inline-flex items-center rounded-xl border border-white/80 bg-white/85 px-2 py-1.5 shadow-sm backdrop-blur-sm">
-                  <BrandPill provider={banner.provider} size={16} tone="light" />
+                <span className="inline-flex items-center rounded-xl border border-border/60 bg-card/85 px-2 py-1.5 shadow-ambient-sm backdrop-blur-sm">
+                  <BrandPill provider={banner.provider} size={16} />
                 </span>
                 {banner.price ? (
                   <span className="font-mono text-xs text-neutral-11">

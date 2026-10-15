@@ -30,7 +30,13 @@
     "aiRecommend": "AI picks",
     "market": "Market",
     "usageTitle": "Quick use",
-    "currencyNote": "Priced and settled in US dollars"
+    "currencyNote": "Priced and settled in US dollars",
+    "theme": {
+      "toggle": "Theme: {current}. Switch to {next}",
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    }
   },
   "channels": {
     "app": "App market",

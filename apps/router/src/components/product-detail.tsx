@@ -162,39 +162,38 @@ export function ProductDetail({
         <Link href="/?product_type=api" className="hover:text-neutral-12">
           API
         </Link>
-        <span className="text-neutral-7">/</span>
+        <span className="text-muted-foreground" aria-hidden>
+          /
+        </span>
         <Link
           href={`/models?cate=api&tag=${encodeURIComponent(model.category)}`}
           className="hover:text-neutral-12"
         >
           {categoryLabel}
         </Link>
-        <span className="text-neutral-7">/</span>
+        <span className="text-muted-foreground" aria-hidden>
+          /
+        </span>
         <Link
           href={`/models?cate=api&brand=${encodeURIComponent(provider)}`}
           className="hover:text-neutral-12"
         >
           {providerLabel}
         </Link>
-        <span className="text-neutral-7">/</span>
+        <span className="text-muted-foreground" aria-hidden>
+          /
+        </span>
         <span className="font-medium text-neutral-12">{model.publicModel}</span>
       </nav>
 
       {/* 顶区：封面 + 信息 + 指标 */}
       <section className="grid gap-5 lg:grid-cols-[240px_minmax(0,1.1fr)_minmax(240px,280px)] xl:grid-cols-[260px_minmax(0,1.15fr)_minmax(260px,300px)] xl:gap-6">
         <div
-          // allow-palette: depth ring on provider cover wash artwork, not app chrome
-          className="flex min-h-[200px] items-center justify-center overflow-hidden rounded-[20px] p-6 shadow-[0_8px_28px_rgb(15_23_42/0.06)] ring-1 ring-black/[0.04]"
+          className="flex min-h-[200px] items-center justify-center overflow-hidden rounded-[20px] p-6 shadow-ambient-md ring-1 ring-border"
           style={{ background: cover.wash }}
         >
-          <span
-            className={[
-              "inline-flex max-w-full items-center rounded-2xl px-4 py-3 shadow-md ring-1",
-              // allow-palette: chip surface pinned to provider cover art (light/dark chosen by cover.dark, not app theme)
-              cover.dark ? "bg-white ring-white/10" : "bg-white/96 ring-black/[0.04]",
-            ].join(" ")}
-          >
-            <BrandPill provider={provider} size={24} tone="light" />
+          <span className="inline-flex max-w-full items-center rounded-2xl bg-card/95 px-4 py-3 shadow-ambient-md ring-1 ring-border">
+            <BrandPill provider={provider} size={24} />
           </span>
         </div>
 
@@ -217,11 +216,11 @@ export function ProductDetail({
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-3 px-2.5 py-1 text-xs font-medium text-neutral-11">
-              <BrandMark provider={provider} size={14} surface="light" />
+              <BrandMark provider={provider} size={14} />
               {categoryLabel}
             </span>
             {model.sellable || model.routed ? (
-              <span className="rounded-full bg-success/16 px-2.5 py-1 text-xs font-medium text-success-strong">
+              <span className="rounded-full bg-success/10 px-2.5 py-1 text-xs font-medium text-success-strong">
                 {t("sellable")}
               </span>
             ) : (
@@ -517,11 +516,11 @@ function PlaygroundEmptyArt() {
       />
       {/* phone */}
       <rect x="148" y="36" width="88" height="128" rx="16" fill="var(--blue-3)" />
-      <rect x="156" y="48" width="72" height="104" rx="8" fill="white" />
+      <rect x="156" y="48" width="72" height="104" rx="8" fill="hsl(var(--card))" />
       <rect x="168" y="60" width="48" height="36" rx="8" fill="var(--blue-4)" opacity="0.55" />
       <rect x="168" y="106" width="48" height="28" rx="8" fill="var(--blue-4)" opacity="0.35" />
       {/* locks */}
-      <circle cx="192" cy="78" r="10" fill="white" />
+      <circle cx="192" cy="78" r="10" fill="hsl(var(--card))" />
       <rect x="186" y="76" width="12" height="10" rx="2" fill="hsl(var(--primary))" opacity="0.7" />
       <path
         d="M188 76v-4a4 4 0 018 0v4"
@@ -530,7 +529,7 @@ function PlaygroundEmptyArt() {
         fill="none"
         opacity="0.7"
       />
-      <circle cx="192" cy="120" r="8" fill="white" />
+      <circle cx="192" cy="120" r="8" fill="hsl(var(--card))" />
       <rect
         x="187"
         y="118"

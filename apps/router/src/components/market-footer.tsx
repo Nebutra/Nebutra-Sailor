@@ -114,9 +114,12 @@ export function MarketFooter() {
                   key={p.id}
                   role="img"
                   aria-label={p.label}
+                  // A deliberate light plate: acceptance marks are specified on white,
+                  // and several (Visa navy, Amex) vanish on a dark surface.
+                  data-logo-plate
                   className={[
-                    // allow-palette: payment network mark (Visa/MC/Amex) badge requires fixed white per brand guidelines
-                    "inline-flex h-7 items-center justify-center overflow-hidden rounded-md border border-neutral-6 bg-white shadow-[0_1px_1px_rgb(15_23_42/0.04)]",
+                    // allow-palette: payment network mark (Visa/MC/Amex) badge requires fixed white per brand guidelines (@allow-raw-color)
+                    "inline-flex h-7 items-center justify-center overflow-hidden rounded-md border border-neutral-6 bg-white shadow-ambient-sm",
                     p.wide ? "px-1.5" : "w-10",
                   ].join(" ")}
                 >

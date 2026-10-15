@@ -377,7 +377,7 @@ export function MarketHome({
           ))}
 
           <div className="ml-auto flex items-center gap-2">
-            <div className="flex rounded-[10px] border border-[var(--rm-panel-border)] bg-neutral-1 p-0.5 shadow-[0_1px_2px_rgb(15_23_42/0.03)]">
+            <div className="flex rounded-[10px] border border-[var(--rm-panel-border)] bg-neutral-1 p-0.5 shadow-ambient-sm">
               <button
                 type="button"
                 aria-label={tMarket("gridView")}
@@ -437,7 +437,7 @@ export function MarketHome({
 function CategoryFlyout({ row }: { row: CategoryRow }) {
   const tMarket = useTranslations("market");
   return (
-    <div className="rounded-2xl border border-neutral-6 bg-neutral-1 p-3 shadow-[0_20px_56px_rgb(15_23_42/0.18)]">
+    <div className="rounded-2xl border border-neutral-6 bg-neutral-1 p-3 shadow-ambient-lg">
       <p className="px-1 pb-2.5 text-sm font-semibold text-neutral-12">{row.label}</p>
       <div className="grid max-h-[min(440px,70vh)] grid-cols-2 gap-2 overflow-y-auto pr-0.5 xl:grid-cols-3">
         {row.brands.map((b) => {
@@ -465,7 +465,7 @@ function CategoryFlyout({ row }: { row: CategoryRow }) {
                 </span>
               </span>
               <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-neutral-2 ring-1 ring-neutral-6/80">
-                <BrandMark provider={b.provider} size={26} surface="light" />
+                <BrandMark provider={b.provider} size={26} />
               </span>
             </Link>
           );
