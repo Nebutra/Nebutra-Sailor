@@ -37,44 +37,48 @@ const OUTPUT: { text: string; tone?: "muted" | "strong" }[] = [
 
 export function SailorCli() {
   return (
-    <figure className="relative">
-      {/* The one thing a visitor would take from the recording. The check that
-          replaces the icon for two seconds is the confirmation. */}
-      <CopyButton
-        value={COMMAND}
-        showToast={false}
-        tooltipText="Copy command"
-        successMessage="Command copied"
-        className="absolute top-0 right-1 z-10"
-      />
-      <Terminal className="w-full max-w-4xl max-h-none">
-        <TypingAnimation>{COMMAND}</TypingAnimation>
-        {OUTPUT.map((l) => (
-          <AnimatedSpan
-            key={l.text}
-            className={l.tone === "strong" ? "text-foreground" : "text-muted-foreground"}
-          >
-            {l.text.endsWith(LOCAL_URL) ? (
-              <span className="whitespace-pre">
-                {l.text.slice(0, -LOCAL_URL.length)}
-                <a
-                  href={ACME_SITE}
-                  target="_blank"
-                  rel="noreferrer"
-                  title="Open acme — this template, deployed"
-                  // The CLI's verbatim output, shown — the link itself goes to ACME_SITE.
-                  data-localhost-sample=""
-                  className="text-foreground underline decoration-dotted underline-offset-4 hover:decoration-solid"
-                >
-                  {LOCAL_URL}
-                </a>
-              </span>
-            ) : (
-              l.text
-            )}
-          </AnimatedSpan>
-        ))}
-      </Terminal>
+    <figure>
+      {/* The wrapper carries the terminal's width so the button anchors to the
+          terminal's title bar, not to the full-width figure. */}
+      <div className="relative w-full max-w-4xl">
+        {/* The one thing a visitor would take from the recording. The check that
+            replaces the icon for two seconds is the confirmation. */}
+        <CopyButton
+          value={COMMAND}
+          showToast={false}
+          tooltipText="Copy command"
+          successMessage="Command copied"
+          className="absolute top-1 right-2 z-10"
+        />
+        <Terminal className="w-full max-w-none max-h-none">
+          <TypingAnimation>{COMMAND}</TypingAnimation>
+          {OUTPUT.map((l) => (
+            <AnimatedSpan
+              key={l.text}
+              className={l.tone === "strong" ? "text-foreground" : "text-muted-foreground"}
+            >
+              {l.text.endsWith(LOCAL_URL) ? (
+                <span className="whitespace-pre">
+                  {l.text.slice(0, -LOCAL_URL.length)}
+                  <a
+                    href={ACME_SITE}
+                    target="_blank"
+                    rel="noreferrer"
+                    title="Open acme — this template, deployed"
+                    // The CLI's verbatim output, shown — the link itself goes to ACME_SITE.
+                    data-localhost-sample=""
+                    className="text-foreground underline decoration-dotted underline-offset-4 hover:decoration-solid"
+                  >
+                    {LOCAL_URL}
+                  </a>
+                </span>
+              ) : (
+                l.text
+              )}
+            </AnimatedSpan>
+          ))}
+        </Terminal>
+      </div>
       <figcaption className="mt-4 text-sm text-muted-foreground">
         A real run of the published CLI, recorded on 27 September 2026 — install and git skipped.
         The localhost link opens{" "}
