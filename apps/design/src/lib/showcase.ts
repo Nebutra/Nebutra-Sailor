@@ -106,6 +106,8 @@ const EXCLUDED: ReadonlySet<string> = new Set([
   "command-dialog-simple-demo",
   "command-dialog-demo",
   "popover-controlled-demo",
+  // A viewport-fixed island portalled to <body>: it is meant to escape any frame.
+  "dynamic-island-toc-demo",
 
   // Layout primitives; /patterns/layout covers this properly and to scale.
   "flex-demo",

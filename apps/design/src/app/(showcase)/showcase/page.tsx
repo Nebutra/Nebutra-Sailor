@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { FitStage } from "@/components/fit-stage";
 import { ShowcaseDemo } from "@/components/showcase-demo";
 import { showcaseGroups } from "@/lib/showcase";
 import { SITE_NAME } from "@/lib/site";
@@ -19,10 +20,6 @@ export const metadata: Metadata = {
  * against Geist's component overview (category bands, one framed preview per
  * component) and shadcn's blocks (uniform frame, centred preview, plain title).
  */
-
-/** Width a demo lays out at — a narrow column, so most fill their card. */
-const STAGE_WIDTH = 560;
-const STAGE_SCALE = 0.55;
 
 export default function ShowcasePage() {
   const groups = showcaseGroups();
@@ -79,16 +76,9 @@ export default function ShowcasePage() {
                 className="flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card"
                 key={item.id}
               >
-                {/* Fixed stage, scaled and centred; inert because a thumbnail is a picture. */}
-                <div className="relative flex h-[220px] items-center justify-center overflow-hidden bg-background">
-                  <div
-                    className="pointer-events-none shrink-0 p-6"
-                    inert
-                    style={{ width: STAGE_WIDTH, transform: `scale(${STAGE_SCALE})` }}
-                  >
-                    <ShowcaseDemo id={item.demo} />
-                  </div>
-                </div>
+                <FitStage>
+                  <ShowcaseDemo id={item.demo} />
+                </FitStage>
                 <div className="flex items-center justify-between gap-3 border-border border-t px-4 py-3">
                   <span className="font-medium text-foreground text-sm">{item.title}</span>
                   <span className="flex items-center gap-2 text-muted-foreground text-xs">
