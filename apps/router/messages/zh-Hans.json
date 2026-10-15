@@ -294,7 +294,6 @@
     "noRelated": "货架上还没有相关模型。",
     "toc": {
       "intro": "API 介绍",
-      "playground": "Playground",
       "apis": "API 列表",
       "pricing": "API 价格表",
       "related": "猜你喜欢"
@@ -362,7 +361,6 @@
       "requestFailed": "这次请求失败了。"
     },
     "keys": {
-      "title": "API Keys",
       "description": "创建后完整密钥只显示一次。默认 scopes: models:* + tools:*。",
       "status": {
         "active": "启用中",
@@ -443,7 +441,6 @@
       "filter": {
         "model": "模型",
         "allModels": "全部模型",
-        "key": "Key",
         "allKeys": "全部 Key",
         "deletedKey": "{label}（已删除）"
       },
@@ -472,7 +469,6 @@
         "requests": "请求",
         "tokens": "输入 / 输出",
         "cost": "花费",
-        "key": "Key",
         "time": "时间",
         "status": "状态",
         "latency": "耗时",
@@ -507,8 +503,6 @@
       },
       "stat": {
         "balance": "余额",
-        "balanceHint": "prepaid wallet",
-        "keys": "API Keys",
         "keysHint": "{count} 把在用",
         "monthSpend": "本月花费",
         "requestsHint": "{count} 次请求",
@@ -544,8 +538,6 @@
         "quota": "Key 上还可以设总额度与单日额度，单日额度按 UTC 零点重置；触顶返回 <mono>402 key_quota_exceeded</mono>，余额不足返回 <mono>402 insufficient_balance</mono>。当前生效的数值由 <mono>GET {base}/limits</mono> 返回，用同一把 Key 调用即可。"
       },
       "col": {
-        "method": "Method",
-        "path": "Path",
         "note": "说明"
       },
       "endpoints": {
