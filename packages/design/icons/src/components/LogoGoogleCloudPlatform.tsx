@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoGoogleCloudPlatform = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoGoogleCloudPlatform = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -38,9 +38,9 @@ const LogoGoogleCloudPlatform = forwardRef<SVGSVGElement, IconProps>(
         d="M4.492 5.37a4.5 4.5 0 0 0-2.62.865A4.56 4.56 0 0 0 .235 8.476c-.3.901-.314 1.874-.04 2.784.273.91.822 1.71 1.568 2.289l2.015-2.035a1.74 1.74 0 0 1-.993-1.283 1.77 1.77 0 0 1 .48-1.556 1.73 1.73 0 0 1 1.54-.485 1.73 1.73 0 0 1 1.272 1.004l2.015-2.035A4.5 4.5 0 0 0 6.5 5.839a4.5 4.5 0 0 0-2.008-.469"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoGoogleCloudPlatform" },
 );
-LogoGoogleCloudPlatform.displayName = "LogoGoogleCloudPlatform";
 
 export { LogoGoogleCloudPlatform };
 export default LogoGoogleCloudPlatform;

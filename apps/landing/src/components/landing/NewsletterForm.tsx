@@ -3,11 +3,13 @@
 import { Button, Input } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
-import { z } from "zod";
 
-// Mirrors the server-side guard in app/api/newsletter/route.ts so malformed
-// addresses are rejected before the network round-trip.
-const emailSchema = z.string().email();
+// Mirrors the server-side guard in app/api/newsletter/route.ts (zod's
+// `z.string().email()`, whose pattern this is) so malformed addresses are
+// rejected before the network round-trip. A regex rather than zod itself: zod
+// is ~29 KB gzip, and this form sits on the home page's first load.
+const EMAIL_PATTERN =
+  /^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9-]*\.)+[A-Za-z]{2,}$/;
 
 export function NewsletterForm() {
   const t = useTranslations("footer");
@@ -22,7 +24,7 @@ export function NewsletterForm() {
       setStatus("success"); // silent drop for bots
       return;
     }
-    if (!emailSchema.safeParse(email.trim()).success) {
+    if (!EMAIL_PATTERN.test(email.trim())) {
       setStatus("error");
       return;
     }

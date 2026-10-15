@@ -4,11 +4,10 @@ import { SiteShell } from "@/site-shell";
 import { MarketingClientProviders } from "./marketing-client-providers";
 
 /**
- * Marketing route group provides a single LazyMotion provider for the entire
- * subtree. Children remain RSC — Next.js renders them server-side and threads
- * them through this client wrapper. AnimateIn uses the shared Motion element
- * facade and relies on this provider for feature registration, so framer's `domAnimation`
- * features module is loaded exactly once per session.
+ * Marketing route group: the client providers (Google One Tap) and the site
+ * frame. Children remain RSC — Next.js renders them server-side and threads
+ * them through the client wrapper. There is no motion provider: AnimateIn
+ * loads GSAP itself, so pages that never animate do not download it.
  *
  * `SiteShell` draws the frame (the rail on the Nebutra site, the top nav in the
  * template), so pages render content only.

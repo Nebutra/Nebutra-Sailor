@@ -49,6 +49,37 @@ function getPostLoginUrl(appUrl: string): string {
   return new URL("/workspace", appUrl).toString();
 }
 
+/**
+ * How long after the page has loaded the prompt is fetched. One Tap is the
+ * heaviest thing a marketing page asks for — the Better Auth client chunks and
+ * Google's ~90 KB GSI script, which then evaluates on the main thread — and it
+ * is never what the visitor came to read. Fetching it once the page has
+ * settled keeps it off the first load (LCP, TBT, and the first interactions).
+ */
+const ONE_TAP_DELAY_MS = 3000;
+
+/** Run `task` once the page has loaded, waited `delayMs`, and the main thread is idle. */
+function whenPageSettles(task: () => void, delayMs: number): () => void {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  let idle: number | undefined;
+  const schedule = () => {
+    timer = setTimeout(() => {
+      if (typeof window.requestIdleCallback === "function") {
+        idle = window.requestIdleCallback(task, { timeout: 2000 });
+      } else {
+        task();
+      }
+    }, delayMs);
+  };
+  if (document.readyState === "complete") schedule();
+  else window.addEventListener("load", schedule, { once: true });
+  return () => {
+    window.removeEventListener("load", schedule);
+    if (timer !== undefined) clearTimeout(timer);
+    if (idle !== undefined) window.cancelIdleCallback?.(idle);
+  };
+}
+
 function BetterAuthOneTap({ appUrl, clientId }: { appUrl: string; clientId: string }) {
   const authBaseUrl = new URL("/api/auth", appUrl).toString();
   const callbackUrl = getPostLoginUrl(appUrl);
@@ -86,9 +117,12 @@ function BetterAuthOneTap({ appUrl, clientId }: { appUrl: string; clientId: stri
       });
     }
 
-    void openOneTap().catch(() => undefined);
+    const cancelSchedule = whenPageSettles(() => {
+      void openOneTap().catch(() => undefined);
+    }, ONE_TAP_DELAY_MS);
     return () => {
       cancelled = true;
+      cancelSchedule();
     };
   }, [authBaseUrl, callbackUrl, clientId, stateCookieDomain]);
 

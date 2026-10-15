@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoRust = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoRust = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -42,9 +42,9 @@ const LogoRust = forwardRef<SVGSVGElement, IconProps>(
         d="M6.943 1.66 8 2.717 9.057 1.66zM13.703 5.036l-.679 1.331 1.332.679zM12.581 12.508l-1.476-.234-.234 1.476zM5.128 13.75l-.233-1.476-1.476.234zM1.644 7.046l1.331-.679-.678-1.33z"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoRust" },
 );
-LogoRust.displayName = "LogoRust";
 
 export { LogoRust };
 export default LogoRust;

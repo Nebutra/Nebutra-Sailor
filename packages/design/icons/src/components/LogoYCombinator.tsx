@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoYCombinator = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoYCombinator = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -23,9 +23,9 @@ const LogoYCombinator = forwardRef<SVGSVGElement, IconProps>(
         d="M7.46 9.047 4.716 3.902H5.97l1.615 3.256q.038.087.087.18.05.093.087.193a.4.4 0 0 1 .037.068l.025.056a4 4 0 0 1 .2.46q.098-.211.217-.454l.242-.503 1.64-3.256h1.168l-2.77 5.207v3.318H7.46z"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoYCombinator" },
 );
-LogoYCombinator.displayName = "LogoYCombinator";
 
 export { LogoYCombinator };
 export default LogoYCombinator;

@@ -1789,15 +1789,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} rakentaa AI-luontuisille yrityksille toiminnallisen kerroksen. Sijoittajille ja strategisille kumppaneille: teesi, mikä on jo käytössä ja miten hakea esitysmateriaalin.",
       "hero": {
         "kicker": "Sijoittajille ja kumppaneille",
         "title": "AI antoi jokaiselle perustajalle kädet. Me rakennamme <signature>arvion</signature>.",
-        "lead": "{brandName} on AI-luontainen yritysekosysteemi: Sailor, lähdekoodin saatavilla oleva alusta, jossa tuotteet ja agentit lähtevät liikkeelle sisäänrakennetulla insinöörimäisellä arviointikyvyllä; käytäntö, joka vie AI-tuotteet tutkimus- ja kehitysvaiheesta markkinoille ympäri maailman; sekä tuotteet, joita toimitamme molemmissa.",
         "stage": "Keräämme enkelirahoitusta ja keskustelemme pienen joukon sijoittajien ja strategisten kumppanien kanssa.",
         "primary": "Hae esitysmateriaalin",
-        "secondary": "Varaa puhelu",
-        "reelLabel": "Alustalla toimivat tuotteet"
+        "secondary": "Varaa puhelu"
       },
       "chapters": {
         "label": "Tällä sivulla",
@@ -1840,16 +1837,6 @@
       },
       "built": {
         "title": "Yksi perusta. Kaikki muu kasvaa sen päälle.",
-        "lead": "Kolme liiketoimintalinjaa jakavat yhden alustan, yhden tilijärjestelmän ja yhden sääntökokonaisuuden.",
-        "sailor": {
-          "role": "Alusta",
-          "body": "Lähdekoodin saatavilla oleva tuote- ja agenttios, joka on lisensoitu Functional Source License -lisenssillä (FSL): vuokraus, tunnistautuminen, laskutus, tilaus ja suunnittelujärjestelmä, hallittu koodilla."
-        },
-        "products": {
-          "name": "Tuotteet",
-          "role": "Rakennettu sen päälle",
-          "body": "Käytössä olevat tuotteet kehittäjille, suunnittelijoille ja luoville tekijöille, jokainen kasvatettu Sailorin päällä."
-        },
         "practice": {
           "name": "Yritysten tekoäly ja kansainvälistyminen",
           "role": "Toimintoinen",
@@ -1857,21 +1844,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor antaa jokaiselle perustajalle sen perustan, jonka kokenut tiimi rakentaisi.",
         "lead": "Yksi komento luo monivuokraajatuotteen, jossa on valmiina todennus, laskutus, auditointi ja suunnittelujärjestelmä. Palveluntarjoajat vaihtavat globaalin ja Kiinan stackkien välillä konfiguraatiolla, ja agentit lukevat samoja sääntöjä, joiden mukaan koodia arvioidaan.",
         "acme": "Malli sellaisenaan, julkaisuna.",
         "source": "Lue lähdekoodi",
         "more": "Lisää tietoa Sailorista"
       },
       "products": {
-        "title": "Julkaistu, ei vain esityksiä.",
-        "lead": "Tuotteita, jotka rakensimme samalle pohjalle. Jokainen on käytössä — avaa se.",
-        "caption": "Kuvakaappaukset live-sivustoista, otettu 9. lokakuuta 2026.",
-        "router": "Yksi markkina ja yksi API malleille, sovelluksille ja työkaluille.",
-        "forge": "184 työkalua selaimessa ja sama moottori myös API:n ja MCP:n kautta.",
-        "typelens": "Todellisen maailman typografiset parit suunnittelijoille ja suunnitteluagentteille.",
-        "kcq": "Kaavio- ja kvanttitutkimustyötila, jossa agentti mukana.",
-        "also": "Myös alustalla",
         "open": "Avaa {name}"
       },
       "practice": {
@@ -1906,11 +1884,6 @@
           "title": "Rakenna avoimesti.",
           "body": "Sailorin lähdekoodi on julkinen, ja kaikki tämän sivun sisältö on live. Due diligence alkaa linkistä."
         }
-      },
-      "next": {
-        "title": "Yksi lause, <signature>koko yritys</signature>.",
-        "lead": "{brandName} OS on se paikka, jonne tämä vie: kuvaa yritys kerran, ja brändi, tuote, koodi sekä julkaisu syntyvät yhdestä kontekstista, jossa arviointi on sisäänrakennettu. Se on kehitysvaiheessa, ja esittelemme sen, kun se on valmis.",
-        "vision": "Viiden vuoden kuluttua haluamme, että yrityksen perustaminen tarkoittaa sitä, että aloitat jo valmiilla arviointikyvyllä."
       },
       "talk": {
         "title": "Puhutaan.",

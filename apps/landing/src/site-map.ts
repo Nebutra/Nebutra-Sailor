@@ -53,21 +53,40 @@ export const SECTIONS: readonly Section[] = [
     path: "/sailor",
     nav: true,
   },
+  // Sleptons and Building are the vision: reached from the footer's "More" and
+  // the Journal, not the navigation (owner, 2026-10-10).
   {
     id: "sleptons",
     path: "/sleptons",
-    nav: true,
+    nav: false,
   },
   {
     id: "building",
     path: "/building",
-    nav: true,
+    nav: false,
   },
   {
     id: "company",
     path: "/about",
     nav: true,
   },
+];
+
+/**
+ * The navigation, in order. Sailor and Consulting are the two businesses; the
+ * Journal is the thinking; About and Investors are the company. A section
+ * opens its pages beside it; a page is a plain link. Nebutra's products that
+ * are not one of the businesses (KCQ, Router, Forge…) live in the footer's
+ * "More" (owner, 2026-10-10: "现在只有这三样拿得出手").
+ */
+export type NavItem = { section: SectionId } | { page: string };
+
+export const NAV: readonly NavItem[] = [
+  { section: "sailor" },
+  { page: "/consulting" },
+  { section: "journal" },
+  { section: "company" },
+  { page: "/investors" },
 ];
 
 export type PageStatus =
@@ -419,10 +438,19 @@ export const SITE_MAP: readonly SitePage[] = [
     template: false,
   },
   {
+    // Enterprise AI product delivery and going global: the second business.
+    // In the navigation itself (NAV), so not in the company rail.
+    path: "/consulting",
+    section: "company",
+    key: "consulting",
+    status: "live",
+    template: false,
+  },
+  {
     // For investors and strategic partners: the story, what is live, and a way
-    // to ask for the deck. The deck itself is never on the page.
+    // to ask for the deck. The deck itself is never on the page. In the
+    // navigation itself (NAV), so not in the company rail.
     path: "/investors",
-    rail: true,
     section: "company",
     key: "investors",
     status: "live",

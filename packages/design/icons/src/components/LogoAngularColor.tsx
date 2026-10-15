@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoAngularColor = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoAngularColor = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -24,9 +24,9 @@ const LogoAngularColor = forwardRef<SVGSVGElement, IconProps>(
         d="m8 1.768-4.688 10.44H5.06l.942-2.336h3.98l.942 2.336h1.748zm1.37 6.664H6.63L8 5.16z"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoAngularColor" },
 );
-LogoAngularColor.displayName = "LogoAngularColor";
 
 export { LogoAngularColor };
 export default LogoAngularColor;

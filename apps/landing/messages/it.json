@@ -1789,15 +1789,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} sta costruendo il livello operativo per le aziende AI-native. Per investitori e partner strategici: la tesi, ciò che è già attivo e come richiedere la presentazione.",
       "hero": {
         "kicker": "Per investitori e partner",
         "title": "L'AI ha dato a ogni founder le mani. Noi stiamo costruendo il <signature>giudizio</signature>.",
-        "lead": "{brandName} è un ecosistema aziendale nativo AI: Sailor, la piattaforma source-available dove prodotti e agenti nascono con il giudizio ingegneristico integrato; una practice che porta i prodotti AI dalla R&D ai mercati di tutto il mondo; e i prodotti che rilasciamo su entrambi.",
         "stage": "Stiamo raccogliendo il round angel e parlando con un numero ridotto di investitori e partner strategici.",
         "primary": "Richiedi la presentazione",
-        "secondary": "Prenota una call",
-        "reelLabel": "Prodotti attivi sulla piattaforma"
+        "secondary": "Prenota una call"
       },
       "chapters": {
         "label": "In questa pagina",
@@ -1840,16 +1837,6 @@
       },
       "built": {
         "title": "Una sola base. Tutto il resto cresce su di essa.",
-        "lead": "Tre linee di business condividono una piattaforma, un sistema di account e un unico insieme di regole.",
-        "sailor": {
-          "role": "La piattaforma",
-          "body": "Un OS per prodotti e agenti source-available sotto la Functional Source License (FSL): tenancy, auth, billing, audit e un design system, governati nel codice."
-        },
-        "products": {
-          "name": "Prodotti",
-          "role": "Costruiti su di essa",
-          "body": "Prodotti live per sviluppatori, designer e creator, ognuno cresciuto su Sailor."
-        },
         "practice": {
           "name": "Enterprise AI e espansione globale",
           "role": "La practice",
@@ -1857,21 +1844,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor fornisce a ogni founder le fondamenta che costruirebbe un team senior.",
         "lead": "Un solo comando genera un prodotto multi-tenant con auth, billing, audit e un design system già definito. I provider passano tra stack globali e cinesi tramite configurazione, e gli agenti leggono le stesse regole a cui è soggetto il codice.",
         "acme": "Il template così come viene rilasciato, già deployato.",
         "source": "Leggi il codice sorgente",
         "more": "Maggiori informazioni su Sailor"
       },
       "products": {
-        "title": "Prodotto reale, non slide.",
-        "lead": "Prodotti costruiti sulla stessa base. Tutti sono online — aprili.",
-        "caption": "Screenshot dei siti live, scattati il 9 ottobre 2026.",
-        "router": "Un mercato e un'unica API per modelli, app e strumenti.",
-        "forge": "184 strumenti nel browser, e lo stesso motore come API e MCP.",
-        "typelens": "Abbinamenti tipografici reali per designer e agenti di design.",
-        "kcq": "Un workbench per grafici e ricerca quantitativa, con un agente al fianco.",
-        "also": "Anche sulla piattaforma",
         "open": "Apri {name}"
       },
       "practice": {
@@ -1906,11 +1884,6 @@
           "title": "Costruisci in pubblico.",
           "body": "Il codice sorgente di Sailor è pubblico e tutto su questa pagina è live. La due diligence inizia con un link."
         }
-      },
-      "next": {
-        "title": "Una frase, un'intera <signature>azienda</signature>.",
-        "lead": "{brandName} OS è la direzione: descrivi un'azienda una volta e brand, prodotto, codice e lancio derivano da un unico contesto, con il giudizio integrato. È in sviluppo e lo mostreremo quando sarà reale.",
-        "vision": "In cinque anni, vogliamo che avviare un'azienda significhi iniziare con quel giudizio già in atto."
       },
       "talk": {
         "title": "Parliamone.",

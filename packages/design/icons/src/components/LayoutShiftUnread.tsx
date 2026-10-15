@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LayoutShiftUnread = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LayoutShiftUnread = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -40,9 +40,9 @@ const LayoutShiftUnread = forwardRef<SVGSVGElement, IconProps>(
         </clipPath>
       </defs>
     </svg>
-  ),
+  )),
+  { displayName: "LayoutShiftUnread" },
 );
-LayoutShiftUnread.displayName = "LayoutShiftUnread";
 
 export { LayoutShiftUnread };
 export default LayoutShiftUnread;

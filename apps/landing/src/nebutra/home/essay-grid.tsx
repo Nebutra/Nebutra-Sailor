@@ -76,7 +76,10 @@ export function EssayGrid({ posts, filter = false }: { posts: EssayCardData[]; f
                 src={p.cover.src}
                 alt={p.cover.alt}
                 fill
-                sizes="(min-width: 1280px) 30vw, (min-width: 768px) 45vw, 100vw"
+                // The column's real width: the band's gutters (px-8, xl:px-16) and
+                // the grid gaps (gap-x-10) come off the viewport. "100vw" on a
+                // phone fetched the 750w file for a 348px card.
+                sizes="(min-width: 1280px) calc((100vw - 208px) / 3), (min-width: 768px) calc((100vw - 104px) / 2), calc(100vw - 64px)"
                 className="object-cover motion-safe:transition-transform motion-safe:duration-reveal motion-safe:ease-brand group-hover:scale-[1.02]"
               />
             </div>

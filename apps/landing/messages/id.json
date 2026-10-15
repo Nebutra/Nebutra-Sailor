@@ -1790,15 +1790,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} sedang membangun lapisan operasional untuk perusahaan AI-native. Untuk investor dan mitra strategis: tesis kami, apa yang sudah berjalan hari ini, dan cara meminta deck.",
       "hero": {
         "kicker": "Untuk investor dan mitra",
         "title": "AI memberi setiap founder tangan. Kami membangun <signature>penilaian</signature>.",
-        "lead": "{brandName} adalah ekosistem perusahaan AI-native: Sailor, platform source-available tempat produk dan agen dimulai dengan pertimbangan engineering yang sudah tertanam; praktik yang membawa produk AI dari R&D ke pasar di seluruh dunia; serta produk-produk yang kami rilis di keduanya.",
         "stage": "Kami sedang mengumpulkan putaran angel dan berdiskusi dengan sejumlah kecil investor dan mitra strategis.",
         "primary": "Minta deck-nya",
-        "secondary": "Jadwalkan panggilan",
-        "reelLabel": "Produk yang berjalan di platform"
+        "secondary": "Jadwalkan panggilan"
       },
       "chapters": {
         "label": "Di halaman ini",
@@ -1841,37 +1838,18 @@
       },
       "built": {
         "title": "Satu fondasi. Segala hal lain tumbuh di atasnya.",
-        "lead": "Tiga lini bisnis berbagi satu platform, satu sistem akun, dan satu set aturan.",
-        "sailor": {
-          "role": "Platformnya",
-          "body": "OS produk dan agen source-available di bawah Functional Source License (FSL): tenancy, auth, billing, audit, dan design system, diatur melalui kode."
-        },
-        "products": {
-          "name": "Produk",
-          "role": "Dibangun di atasnya",
-          "body": "Produk live untuk developer, desainer, dan kreator, masing-masing tumbuh di atas Sailor."
-        },
         "practice": {
           "role": "Practice ini",
           "body": "R&D aplikasi AI untuk perusahaan, serta membawa produk AI dari Tiongkok ke pasar di seluruh dunia."
         }
       },
       "sailor": {
-        "title": "Sailor memberikan setiap founder fondasi yang akan dibangun oleh tim senior.",
         "lead": "Satu perintah membuat kerangka produk multi-tenant lengkap dengan auth, billing, audit, dan design system yang sudah ditentukan. Provider dapat beralih antara stack global dan Tiongkok melalui konfigurasi, dan agen membaca aturan yang sama yang diterapkan pada kode.",
         "acme": "Template sebagaimana dikirim, sudah di-deploy.",
         "source": "Baca sumbernya",
         "more": "Lainnya tentang Sailor"
       },
       "products": {
-        "title": "Sudah dirilis, bukan sekadar slide.",
-        "lead": "Produk yang kami bangun di atas fondasi yang sama. Semuanya sudah live — buka saja.",
-        "caption": "Tangkapan layar situs live, diambil pada 9 Oktober 2026.",
-        "router": "Satu pasar dan satu API untuk model, aplikasi, dan tools.",
-        "forge": "184 tools di browser, dengan engine yang sama sebagai API dan MCP.",
-        "typelens": "Pasangan type dunia nyata untuk desainer dan agen desain.",
-        "kcq": "Meja kerja riset chart dan kuantitatif, dengan agen di sampingnya.",
-        "also": "Juga di platform ini",
         "open": "Buka {name}"
       },
       "practice": {
@@ -1906,11 +1884,6 @@
           "title": "Bangun secara terbuka.",
           "body": "Sumber Sailor bersifat publik, dan semua yang ada di halaman ini berjalan langsung. Due diligence dimulai dari sebuah tautan."
         }
-      },
-      "next": {
-        "title": "Satu kalimat, sebuah <signature>perusahaan utuh</signature>.",
-        "lead": "{brandName} OS adalah ke arah mana ini menuju: jelaskan sebuah perusahaan sekali, lalu brand, produk, kode, dan peluncuran berasal dari satu konteks, dengan penilaian yang sudah dibangun di dalamnya. Ini sedang dalam pengembangan, dan kami akan menunjukkannya saat sudah nyata.",
-        "vision": "Dalam lima tahun, kami ingin memulai sebuah perusahaan berarti memulai dengan penilaian itu sudah ada di tempatnya."
       },
       "talk": {
         "title": "Mari bicara.",

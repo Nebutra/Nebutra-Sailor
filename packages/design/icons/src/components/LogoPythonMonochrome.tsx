@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoPythonMonochrome = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoPythonMonochrome = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -26,9 +26,9 @@ const LogoPythonMonochrome = forwardRef<SVGSVGElement, IconProps>(
         d="M12.326 4.08v1.695c0 1.314-1.126 2.42-2.41 2.42H6.06c-1.055 0-1.93.894-1.93 1.94v3.634c0 1.035.91 1.643 1.93 1.94 1.222.355 2.394.42 3.855 0 .972-.278 1.93-.838 1.93-1.94v-1.454H7.99v-.485h5.785c1.121 0 1.54-.774 1.93-1.936.402-1.195.385-2.345 0-3.88-.278-1.103-.807-1.934-1.93-1.934zm-2.168 9.204a.727.727 0 0 1 0 1.455.728.728 0 0 1 0-1.455"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoPythonMonochrome" },
 );
-LogoPythonMonochrome.displayName = "LogoPythonMonochrome";
 
 export { LogoPythonMonochrome };
 export default LogoPythonMonochrome;

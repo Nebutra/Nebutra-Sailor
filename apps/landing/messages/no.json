@@ -1790,15 +1790,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} bygger operasjonslaget for AI-native selskaper. For investorer og strategiske partnere: tesen, hva som er live i dag, og hvordan du kan be om presentasjonen.",
       "hero": {
         "kicker": "For investorer og partnere",
         "title": "AI ga hver gründer hender. Vi bygger <signature>dømmekraften</signature>.",
-        "lead": "{brandName} er et AI-native selskapsekosystem: Sailor, den kildeåpne plattformen der produkter og agenter starter med ingeniørdom innebygd; en praksis som tar AI-produkter fra FoU til markeder over hele verden; og produktene vi lanserer på begge.",
         "stage": "Vi hever vår engelrunde og snakker med et lite antall investorer og strategiske partnere.",
         "primary": "Be om presentasjonen",
-        "secondary": "Book en samtale",
-        "reelLabel": "Produkter live på plattformen"
+        "secondary": "Book en samtale"
       },
       "chapters": {
         "label": "På denne siden",
@@ -1841,16 +1838,6 @@
       },
       "built": {
         "title": "Én grunnlag. Alt annet vokser på det.",
-        "lead": "Tre forretningslinjer deler én plattform, ett kontosystem og én regelsett.",
-        "sailor": {
-          "role": "Plattformen",
-          "body": "Et kildeåpent produkt- og agent-OS under Functional Source License (FSL): tenancy, auth, fakturering, audit og et designsystem, styrt i kode."
-        },
-        "products": {
-          "name": "Produkter",
-          "role": "Bygget på det",
-          "body": "Live-produkter for utviklere, designere og skapere, hvert vokst på Sailor."
-        },
         "practice": {
           "name": "Enterprise AI & global expansion",
           "role": "Praksisen",
@@ -1858,21 +1845,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor gives every founder the foundation a senior team would build.",
         "lead": "Én kommando skaper et multi-tenant-produkt med auth, fakturering, audit og et designsystem som allerede er bestemt. Leverandører bytter mellom globale og kinesiske stacker via konfigurasjon, og agenter leser samme regler som koden må følge.",
         "acme": "Maleret slik det leveres, deployet.",
         "source": "Les kildekoden",
         "more": "Mer om Sailor"
       },
       "products": {
-        "title": "Leverert, ikke presentasjoner.",
-        "lead": "Produkter vi bygget på samme grunnlag. Alle er live — åpne dem.",
-        "caption": "Skjermbilder av de live nettstedene, tatt 9. oktober 2026.",
-        "router": "Én marked og én API for modeller, apper og verktøy.",
-        "forge": "184 verktøy i nettleseren, og samme motor som API og MCP.",
-        "typelens": "Reelle skrifttypekombinasjoner for designere og designagenter.",
-        "kcq": "Et arbeidsområde for chart- og kvanteforskning, med en agent ved siden av.",
-        "also": "Også på plattformen",
         "open": "Åpne {name}"
       },
       "practice": {
@@ -1907,11 +1885,6 @@
           "title": "Bygg i det åpne.",
           "body": "Sailor sin kildekode er offentlig, og alt på denne siden er live. Due diligence starter med en lenke."
         }
-      },
-      "next": {
-        "title": "Én setning, et <signature>helt selskap</signature>.",
-        "lead": "{brandName} OS er dit dette går: beskriv et selskap én gang, og merkevare, produkt, kode og lansering kommer fra én kontekst, med dømmekraften innebygd. Det er under utvikling, og vi viser det når det er virkelig.",
-        "vision": "Om fem år vil vi at å starte et selskap betyr å starte med den dømmekraften allerede på plass."
       },
       "talk": {
         "title": "La oss snakke.",

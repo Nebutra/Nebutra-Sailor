@@ -23,6 +23,7 @@ import { BlogCopyButton } from "@/components/landing/blog-copy-button";
 import { BlogImage } from "@/components/landing/blog-image";
 import { BlogPortableText } from "@/components/landing/blog-portable-text";
 import { BlogShareActions } from "@/components/landing/blog-share-actions";
+import { QueryProvider } from "@/components/landing/query-provider";
 import { StructuredData } from "@/components/seo/structured-data";
 import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
@@ -422,29 +423,31 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
 
         <AnimateIn preset="fadeUp" inView>
           <div id="comments" className="mx-auto max-w-3xl scroll-mt-28">
-            <BlogComments
-              appUrl={env.NEXT_PUBLIC_APP_URL}
-              translationKey={post.translationKey ?? post.slug}
-              slug={post.slug}
-              language={blogLanguage}
-              labels={{
-                title: tComments("title"),
-                subtitle: tComments("subtitle"),
-                empty: tComments("empty"),
-                signIn: tComments("signIn"),
-                placeholder: tComments("placeholder"),
-                submit: tComments("submit"),
-                submitting: tComments("submitting"),
-                pending: tComments("pending"),
-                error: tComments("error"),
-                like: tComments("like"),
-                liked: tComments("liked"),
-                save: tComments("save"),
-                saved: tComments("saved"),
-                signInToLike: tComments("signInToLike"),
-                signInToSave: tComments("signInToSave"),
-              }}
-            />
+            <QueryProvider>
+              <BlogComments
+                appUrl={env.NEXT_PUBLIC_APP_URL}
+                translationKey={post.translationKey ?? post.slug}
+                slug={post.slug}
+                language={blogLanguage}
+                labels={{
+                  title: tComments("title"),
+                  subtitle: tComments("subtitle"),
+                  empty: tComments("empty"),
+                  signIn: tComments("signIn"),
+                  placeholder: tComments("placeholder"),
+                  submit: tComments("submit"),
+                  submitting: tComments("submitting"),
+                  pending: tComments("pending"),
+                  error: tComments("error"),
+                  like: tComments("like"),
+                  liked: tComments("liked"),
+                  save: tComments("save"),
+                  saved: tComments("saved"),
+                  signInToLike: tComments("signInToLike"),
+                  signInToSave: tComments("signInToSave"),
+                }}
+              />
+            </QueryProvider>
           </div>
         </AnimateIn>
       </article>

@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const Traces = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const Traces = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -25,9 +25,9 @@ const Traces = forwardRef<SVGSVGElement, IconProps>(
         <path strokeLinecap="round" d="M4.5 5h5M7.5 8h5M4.5 11h5" />
       </g>
     </svg>
-  ),
+  )),
+  { displayName: "Traces" },
 );
-Traces.displayName = "Traces";
 
 export { Traces };
 export default Traces;

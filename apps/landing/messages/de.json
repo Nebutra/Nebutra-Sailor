@@ -1789,15 +1789,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} baut die Betriebssystemebene für KI-native Unternehmen. Für Investoren und strategische Partner: die These, was heute live ist und wie Sie die Präsentation anfordern.",
       "hero": {
         "kicker": "Für Investoren und Partner",
         "title": "KI hat jedem Gründer Hände gegeben. Wir bauen das <signature>Urteilsvermögen</signature>.",
-        "lead": "{brandName} ist ein KI-natives Unternehmensökosystem: Sailor, die source-available Plattform, auf der Produkte und Agenten mit eingebautem Engineering-Urteil starten; eine Praxis, die KI-Produkte von der Forschung und Entwicklung auf Märkte weltweit bringt; und die Produkte, die wir auf beiden ausliefern.",
         "stage": "Wir führen unsere Angel-Runde durch und sprechen mit einer kleinen Gruppe von Investoren und strategischen Partnern.",
         "primary": "Präsentation anfordern",
-        "secondary": "Termin vereinbaren",
-        "reelLabel": "Produkte live auf der Plattform"
+        "secondary": "Termin vereinbaren"
       },
       "chapters": {
         "label": "Auf dieser Seite",
@@ -1840,16 +1837,6 @@
       },
       "built": {
         "title": "Eine Grundlage. Alles andere wächst darauf auf.",
-        "lead": "Drei Geschäftsbereiche teilen sich eine Plattform, ein Kontosystem und einen Satz von Regeln.",
-        "sailor": {
-          "role": "Die Plattform",
-          "body": "Ein source-available Produkt- und Agenten-OS unter der Functional Source License (FSL): Tenancy, Auth, Billing, Audit und ein Design-System, alles in Code verwaltet."
-        },
-        "products": {
-          "name": "Produkte",
-          "role": "Darauf aufgebaut",
-          "body": "Live-Produkte für Entwickler, Designer und Kreative – jedes davon auf Sailor aufgebaut."
-        },
         "practice": {
           "name": "Enterprise KI & Global Expansion",
           "role": "Die Practice",
@@ -1857,21 +1844,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor gibt jedem Gründer das Fundament, das ein erfahrenes Team aufbauen würde.",
         "lead": "Ein Befehl erstellt das Gerüst für ein Multi-Tenant-Produkt mit Auth, Billing, Audit und einem bereits festgelegten Design-System. Anbieter wechseln per Konfiguration zwischen globalen und China-Stacks, und Agenten lesen dieselben Regeln, nach denen der Code gemessen wird.",
         "acme": "Die Vorlage im ausgelieferten Zustand, deployed.",
         "source": "Quellcode ansehen",
         "more": "Mehr zu Sailor"
       },
       "products": {
-        "title": "Ausgeliefert, keine Folien.",
-        "lead": "Produkte, die wir auf derselben Grundlage gebaut haben. Jedes davon ist live — öffne es.",
-        "caption": "Screenshots der Live-Sites, aufgenommen am 9. Oktober 2026.",
-        "router": "Ein Markt und eine API für Modelle, Apps und Tools.",
-        "forge": "184 Tools im Browser – und derselbe Engine als API und MCP.",
-        "typelens": "Echte Typ-Paarungen für Designer und Design-Agenten.",
-        "kcq": "Eine Chart- und Quant-Forschungs-Workbench mit Agent an der Seite.",
-        "also": "Auch auf der Plattform",
         "open": "{name} öffnen"
       },
       "practice": {
@@ -1906,11 +1884,6 @@
           "title": "Offen entwickeln.",
           "body": "Der Quellcode von Sailor ist öffentlich, und alles auf dieser Seite ist live. Due Diligence beginnt mit einem Link."
         }
-      },
-      "next": {
-        "title": "Ein Satz, ein <signature>gesamtes Unternehmen</signature>.",
-        "lead": "{brandName} OS ist der nächste Schritt: Beschreibe ein Unternehmen einmal, und Marke, Produkt, Code und Launch entstehen aus einem Kontext – mit eingebauter Urteilskraft. Es ist in Entwicklung, und wir zeigen es, wenn es real ist.",
-        "vision": "In fünf Jahren soll der Start eines Unternehmens bedeuten, dass man mit dieser Urteilskraft bereits antritt."
       },
       "talk": {
         "title": "Lass uns sprechen.",
