@@ -137,10 +137,14 @@ export function CopyButton({
   timeout = 2000,
   onCopied,
   variant = "ghost",
-  size = "icon",
+  size: sizeProp,
   className,
   ...props
 }: CopyButtonProps) {
+  // `icon` is a 40×40 square: right for the icon-only button, wrong once a
+  // label is passed — every labelled CopyButton that did not set `size` was
+  // squeezed into that square and its label truncated to "C..".
+  const size = sizeProp ?? (label ? "default" : "icon");
   // Single clipboard implementation for the whole file — the hook owns the
   // timeout, the toast, and the failure path.
   const { copied, failed, status, copy } = useCopyToClipboard({

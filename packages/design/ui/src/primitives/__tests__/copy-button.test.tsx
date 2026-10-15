@@ -240,3 +240,17 @@ describe("CopyButton — refused clipboard writes", () => {
     await waitFor(() => expect(button).toHaveAttribute("data-copy-status", "idle"));
   });
 });
+
+describe("CopyButton default size", () => {
+  it("is the icon square without a label and a text button with one", () => {
+    const { getAllByRole } = render(
+      <>
+        <CopyButton showToast={false} value="a" />
+        <CopyButton label="Copy command" showToast={false} value="b" />
+      </>,
+    );
+    const [iconOnly, labelled] = getAllByRole("button");
+    expect(iconOnly?.className).toContain("w-[var(--control-height-md");
+    expect(labelled?.className).not.toContain("w-[var(--control-height-md");
+  });
+});

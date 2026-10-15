@@ -97,7 +97,7 @@ export function ShowcaseDemo({ id }: { id: string }) {
   const Demo = React.useMemo(() => (near ? loader(id) : null), [near, id]);
 
   return (
-    <div className="flex items-center justify-center" ref={ref}>
+    <div className="w-full" ref={ref}>
       {Demo ? (
         <DemoBoundary id={id}>
           <Demo />
