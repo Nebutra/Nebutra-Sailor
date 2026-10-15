@@ -15,6 +15,8 @@
 @import "@nebutra/tokens/recipe.css";
 /* UI CVA source scan + fonts — owned by @nebutra/ui */
 @import "@nebutra/ui/styles/sources.css";
+/* Shared sign-in components (AuthSplitShell, OAuthButtons) — owned by @nebutra/auth */
+@import "@nebutra/auth/sign-in/sources.css";
 @import "@nebutra/ui/typography/fonts.css";
 /* Product-tour theme overrides (driver.js → our tokens) */
 @import "@nebutra/onboarding/styles.css";

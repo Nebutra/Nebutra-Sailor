@@ -1,0 +1,7 @@
+/*
+ * Tailwind source scan for the shared sign-in components. Apps that render
+ * them import this once (as they import @nebutra/ui/styles/sources.css), so
+ * the classes in AuthSplitShell / OAuthButtons are generated: without it the
+ * split grid's arbitrary columns did not exist and the banner filled the page.
+ */
+@source "./**/*.{ts,tsx}";
