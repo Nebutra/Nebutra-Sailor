@@ -8,6 +8,7 @@ import {
   Sparkles,
 } from "@nebutra/icons";
 import { toast } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 
 /**
@@ -82,6 +83,7 @@ export function CommunicationPreferences({
   value = DEFAULT_COMMUNICATION_PREFERENCES,
   onSave = DEFAULT_SAVE,
 }: Props) {
+  const tc = useTranslations("copy.personalizationCommunicationPreferences");
   const [current, setCurrent] = useState<CommunicationPreferenceValue>(value);
   const [busyKey, setBusyKey] = useState<keyof CommunicationPreferenceValue | null>(null);
 
@@ -110,10 +112,8 @@ export function CommunicationPreferences({
   return (
     <section className="space-y-3">
       <header>
-        <h2 className="text-sm font-semibold text-neutral-12">Communication preferences</h2>
-        <p className="mt-0.5 text-xs text-neutral-10">
-          Decide what reaches your inbox. You can change these anytime.
-        </p>
+        <h2 className="text-sm font-semibold text-neutral-12">{tc("communicationPreferences")}</h2>
+        <p className="mt-0.5 text-xs text-neutral-10">{tc("decideWhatReachesYour")}</p>
       </header>
 
       <div className="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7">

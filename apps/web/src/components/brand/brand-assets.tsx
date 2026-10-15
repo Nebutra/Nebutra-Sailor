@@ -12,6 +12,7 @@ import { LogomarkSVG, WordmarkEnSVG } from "@nebutra/brand";
 import logoColorMark from "@nebutra/brand/assets/logo/logo-color.svg";
 import { cn } from "@nebutra/ui/utils";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const logoColorMarkSrc =
   typeof logoColorMark === "string" ? logoColorMark : (logoColorMark as { src: string }).src;
@@ -58,6 +59,7 @@ export function BrandLogo({
   variant = "horizontal",
   tenantLogoUrl,
 }: BrandLogoProps) {
+  const tc = useTranslations("copy.brandBrandAssets");
   if (tenantLogoUrl) {
     return (
       <span
@@ -110,7 +112,7 @@ export function BrandLogo({
           draggable={false}
           className={colorMarkClass}
         />
-        <LogomarkSVG width={28} height={26} className={monoMarkClass} aria-label="Nebutra" />
+        <LogomarkSVG width={28} height={26} className={monoMarkClass} aria-label={tc("nebutra")} />
       </span>
     );
   }
@@ -141,7 +143,7 @@ export function BrandLogo({
           forceLight ? "hidden" : "hidden dark:block",
           imgClassName,
         )}
-        aria-label="Nebutra"
+        aria-label={tc("nebutra")}
       />
       <WordmarkEnSVG
         width={100}

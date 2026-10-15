@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import {
   CreateProviderKeyDialog,
@@ -49,6 +50,7 @@ async function deleteKey(provider: ProviderId): Promise<void> {
 }
 
 export function ProviderKeysClient() {
+  const tc = useTranslations("copy.providerKeysProviderKeysClient");
   const [dialogOpen, setDialogOpen] = useState(false);
   const queryClient = useQueryClient();
   const { can } = usePermission();
@@ -112,7 +114,7 @@ export function ProviderKeysClient() {
             onClick={() => setDialogOpen(true)}
             className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-[background-color] hover:bg-primary/90"
           >
-            Add provider key
+            {tc("addProviderKey")}
           </button>
         </div>
       ) : null}
@@ -124,7 +126,7 @@ export function ProviderKeysClient() {
       ) : null}
 
       {keysQuery.isPending ? (
-        <p className="text-sm text-muted-foreground">Loading…</p>
+        <p className="text-sm text-muted-foreground">{tc("loading")}</p>
       ) : (
         <ProviderKeysList
           keys={keys}

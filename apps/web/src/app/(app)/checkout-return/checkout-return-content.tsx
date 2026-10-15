@@ -3,6 +3,7 @@
 import { Spinner } from "@nebutra/ui/primitives";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { queryKeys } from "@/lib/query-keys";
 
@@ -55,6 +56,7 @@ async function fetchActivePlan(
  * `/choose-plan` so they can retry.
  */
 export function CheckoutReturnContent({ organizationId }: CheckoutReturnContentProps) {
+  const tc = useTranslations("copy.checkoutReturnCheckoutReturnContent");
   const router = useRouter();
   // Keep the latest router behind a ref so `settle` (and the effects depending
   // on it) stay identity-stable even if `useRouter()` returns a fresh object
@@ -128,8 +130,10 @@ export function CheckoutReturnContent({ organizationId }: CheckoutReturnContentP
 
   return (
     <div className="flex min-h-[40vh] flex-col items-center justify-center gap-4 py-12">
-      <Spinner aria-label="Processing payment" size={32} />
-      <p className="text-center text-muted-foreground text-sm">Confirming your subscription...</p>
+      <Spinner aria-label={tc("processingPayment")} size={32} />
+      <p className="text-center text-muted-foreground text-sm">
+        {tc("confirmingYourSubscription")}
+      </p>
     </div>
   );
 }

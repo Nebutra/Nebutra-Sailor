@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { WebhookEndpointForm, type WebhookEndpointFormValues } from "./webhook-endpoint-form";
 import type { WebhookEndpointView } from "./webhooks-list";
 
@@ -44,6 +45,7 @@ export function EditWebhookDialog({
   onSubmit,
   onUpdated,
 }: EditWebhookDialogProps) {
+  const tc = useTranslations("copy.webhooksEditWebhookDialog");
   async function submit(values: WebhookEndpointFormValues) {
     if (!endpoint) return;
     const runSubmit = onSubmit ?? defaultSubmit;
@@ -60,11 +62,8 @@ export function EditWebhookDialog({
         // short viewport: the shared modal surface sets no max height.
         <DialogContent className="max-h-[85dvh] w-full max-w-lg overflow-y-auto p-6">
           <DialogHeader className="mb-4">
-            <DialogTitle>Edit endpoint</DialogTitle>
-            <DialogDescription>
-              Changing the URL or the event list takes effect on the next delivery. The signing
-              secret stays the same.
-            </DialogDescription>
+            <DialogTitle>{tc("editEndpoint")}</DialogTitle>
+            <DialogDescription>{tc("changingTheURLOr")}</DialogDescription>
           </DialogHeader>
           <WebhookEndpointForm
             // Remount when the row changes so the prefill follows the selection.
@@ -75,7 +74,7 @@ export function EditWebhookDialog({
             secondaryAction={
               <DialogClose asChild>
                 <Button type="button" variant="outline">
-                  Cancel
+                  {tc("cancel")}
                 </Button>
               </DialogClose>
             }

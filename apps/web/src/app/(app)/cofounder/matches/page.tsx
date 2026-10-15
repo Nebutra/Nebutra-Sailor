@@ -1,6 +1,8 @@
+import { useTranslations } from "next-intl";
 import { MatchesList } from "@/components/cofounder-match/matches-list";
 
 export default function CofounderMatchesPage() {
+  const tc = useTranslations("copy.matchesPage");
   return (
     <section className="relative overflow-hidden">
       <div
@@ -20,11 +22,10 @@ export default function CofounderMatchesPage() {
               backgroundClip: "text",
             }}
           >
-            Your matches
+            {tc("yourMatches")}
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-neutral-10">
-            Founders you and they both signalled interest in. The Cofounder Room — where the
-            initiator opens the conversation — is the next step.
+            {tc("foundersYouAndThey")}
           </p>
         </div>
 

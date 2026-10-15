@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { relativeTime } from "@/lib/admin-platform/format";
 import { runContractAction } from "@/lib/admin-platform/server-actions";
@@ -82,6 +83,7 @@ export function ActionButton({
   variant = "outline",
   className,
 }: ActionButtonProps) {
+  const tc = useTranslations("copy.adminPlatformActionButton");
   const [open, setOpen] = useState(false);
   const [phase, setPhase] = useState<Phase>("idle");
   const [plan, setPlan] = useState<ActionPlan | null>(null);
@@ -158,7 +160,9 @@ export function ActionButton({
           </div>
 
           <div className="max-h-[60vh] space-y-4 overflow-y-auto px-5 py-4 text-sm">
-            {phase === "planning" ? <p className="text-muted-foreground">Planning…</p> : null}
+            {phase === "planning" ? (
+              <p className="text-muted-foreground">{tc("planning")}</p>
+            ) : null}
 
             {plan && phase !== "done" ? (
               <>
@@ -183,12 +187,15 @@ export function ActionButton({
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-muted-foreground text-xs">No changes in this plan.</p>
+                  <p className="text-muted-foreground text-xs">{tc("noChangesInThis")}</p>
                 )}
                 {plan.affected.length > 0 ? (
                   <p className="text-muted-foreground text-xs">
-                    Affects{" "}
-                    {plan.affected.map((a) => a.label ?? `${a.resource}/${a.id}`).join(", ")}
+                    {tc("affects", {
+                      value0: String(
+                        plan.affected.map((a) => a.label ?? `${a.resource}/${a.id}`).join(", "),
+                      ),
+                    })}
                   </p>
                 ) : null}
                 {plan.warnings.length > 0 ? (
@@ -199,7 +206,10 @@ export function ActionButton({
                   </ul>
                 ) : null}
                 <p className="text-muted-foreground text-xs">
-                  Plan {plan.planId} · expires {relativeTime(plan.expiresAt)}
+                  {tc("planExpires", {
+                    planId: String(plan.planId),
+                    value1: String(relativeTime(plan.expiresAt)),
+                  })}
                 </p>
               </>
             ) : null}
@@ -208,7 +218,7 @@ export function ActionButton({
               <div className="rounded-md border border-border bg-background px-3 py-2">
                 <p className="leading-5">{result.summary}</p>
                 <p className="mt-1 font-mono text-muted-foreground text-xs">
-                  audit {result.auditId}
+                  {tc("audit", { auditId: String(result.auditId) })}
                 </p>
               </div>
             ) : null}

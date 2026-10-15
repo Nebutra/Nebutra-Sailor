@@ -19,6 +19,7 @@ import type {
 } from "@nebutra/startup-os/compiler";
 import type { StartupOSFile } from "@nebutra/startup-os/files";
 import { Tabs, TabsList, TabsTrigger } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useSidebar } from "@/components/navigation/sidebar-context";
 import { StartupCanvasPanel } from "./startup-canvas-panel";
@@ -78,6 +79,7 @@ export function StartupWorkspaceShell({
   selectedFile,
   selectedRun,
 }: StartupWorkspaceShellProps) {
+  const tc = useTranslations("copy.startupOsStartupWorkspaceShell");
   // Chat is not a separate surface — it lives in the thread column. The tabs
   // switch only the working surface.
   const [activeSurface, setActiveSurface] = useState<WorkspaceSurface>("preview");
@@ -124,16 +126,16 @@ export function StartupWorkspaceShell({
                     value="preview"
                     icon={<PreviewEye className="size-3.5" aria-hidden="true" />}
                   >
-                    Preview
+                    {tc("preview")}
                   </TabsTrigger>
                   <TabsTrigger value="code" icon={<Code className="size-3.5" aria-hidden="true" />}>
-                    Code
+                    {tc("code")}
                   </TabsTrigger>
                   <TabsTrigger
                     value="canvas"
                     icon={<Layers className="size-3.5" aria-hidden="true" />}
                   >
-                    Canvas
+                    {tc("canvas")}
                   </TabsTrigger>
                 </TabsList>
               </Tabs>

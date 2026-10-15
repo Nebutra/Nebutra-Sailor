@@ -1,5 +1,6 @@
 import { brand } from "@nebutra/brand/metadata";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { getAuth } from "@/lib/auth";
 import { CheckoutReturnContent } from "./checkout-return-content";
 
@@ -15,6 +16,7 @@ interface CheckoutReturnPageProps {
 }
 
 export default async function CheckoutReturnPage({ searchParams }: CheckoutReturnPageProps) {
+  const tc = await getTranslations("copy.checkoutReturnPage");
   const { userId } = await getAuth();
   if (!userId) {
     redirect("/sign-in");
@@ -27,10 +29,8 @@ export default async function CheckoutReturnPage({ searchParams }: CheckoutRetur
   return (
     <section className="mx-auto w-full max-w-2xl px-4 py-12 md:px-6">
       <header className="mb-6 text-center">
-        <h1 className="font-bold text-2xl text-foreground lg:text-3xl">Almost there</h1>
-        <p className="mt-2 text-muted-foreground text-sm">
-          We are confirming your subscription with the payment provider.
-        </p>
+        <h1 className="font-bold text-2xl text-foreground lg:text-3xl">{tc("almostThere")}</h1>
+        <p className="mt-2 text-muted-foreground text-sm">{tc("weAreConfirmingYour")}</p>
       </header>
 
       <CheckoutReturnContent organizationId={organizationId} />

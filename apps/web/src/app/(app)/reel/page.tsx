@@ -11,10 +11,12 @@
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
 import { PageHeader } from "@nebutra/ui/layout";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { ReelStudio } from "@/components/reel/reel-studio";
 import { getAuth, getTenantContext } from "@/lib/auth";
 
 export default async function ReelPage() {
+  const tc = await getTranslations("copy.reelPage");
   const { userId } = await getAuth();
   const { tenantId, plan } = await getTenantContext();
 
@@ -27,10 +29,7 @@ export default async function ReelPage() {
 
   return (
     <section className="mx-auto w-full max-w-wide">
-      <PageHeader
-        title="Reel"
-        description="Split a script into shots — each becomes a typed node whose generated output flows through a versioned IO envelope."
-      />
+      <PageHeader title={tc("reel")} description={tc("splitAScriptInto")} />
 
       <ReelStudio graphId="demo" />
     </section>

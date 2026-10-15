@@ -443,9 +443,10 @@ function NotificationsToolbar({
   onFilterChange,
   onMarkAllRead,
 }: NotificationsToolbarProps): React.ReactElement {
+  const tc = useTranslations("copy.notificationsNotificationsPageClient");
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
-      <div role="tablist" aria-label="Notification filter" className="flex gap-1">
+      <div role="tablist" aria-label={tc("notificationFilter")} className="flex gap-1">
         <FilterTabButton
           active={filter === "all"}
           onClick={() => onFilterChange("all")}

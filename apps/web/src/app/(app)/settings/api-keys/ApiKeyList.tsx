@@ -40,6 +40,7 @@ function RevokeButton({ keyId, orgId }: { keyId: string; orgId: string }) {
 }
 
 export function ApiKeyList({ orgId, keys = [] }: Props) {
+  const tc = useTranslations("copy.apiKeysApiKeyList");
   const t = useTranslations("startupOs");
 
   if (keys.length === 0) {
@@ -56,14 +57,18 @@ export function ApiKeyList({ orgId, keys = [] }: Props) {
             <p className="text-sm font-medium text-foreground">{k.name}</p>
             <p className="mt-0.5 text-xs font-mono text-muted-foreground">{k.keyPrefix}…</p>
             <p className="mt-0.5 text-xs text-muted-foreground">
-              Created {new Date(k.createdAt).toLocaleDateString()}
-              {k.lastUsedAt && ` · Last used ${new Date(k.lastUsedAt).toLocaleDateString()}`}
+              {tc("created", {
+                value0: String(new Date(k.createdAt).toLocaleDateString()),
+                value1: String(
+                  k.lastUsedAt && ` · Last used ${new Date(k.lastUsedAt).toLocaleDateString()}`,
+                ),
+              })}
             </p>
           </div>
 
           {k.revokedAt ? (
             <span className="rounded-full border border-destructive/30 bg-destructive/10 px-2 py-0.5 text-xs font-medium text-destructive-strong">
-              Revoked
+              {tc("revoked")}
             </span>
           ) : (
             <PermissionGate require="api_key:delete">

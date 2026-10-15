@@ -2068,6 +2068,220 @@
       "executeSelectedRun": "Execute selected run",
       "recordedAction": "{activityCount} recorded action{value1}.",
       "toggleNavigation": "Toggle navigation"
+    },
+    "startupOsStartupWorkspaceShell": {
+      "preview": "Preview",
+      "code": "Code",
+      "canvas": "Canvas"
+    },
+    "webhooksEditWebhookDialog": {
+      "editEndpoint": "Edit endpoint",
+      "changingTheURLOr": "Changing the URL or the event list takes effect on the next delivery. The signing secret stays the same.",
+      "cancel": "Cancel"
+    },
+    "atelierPage": {
+      "atelier": "Atelier",
+      "describeWhatYouWant": "Describe what you want — the agent generates it and the server places it on the canvas."
+    },
+    "checkoutReturnCheckoutReturnContent": {
+      "processingPayment": "Processing payment",
+      "confirmingYourSubscription": "Confirming your subscription..."
+    },
+    "checkoutReturnPage": {
+      "almostThere": "Almost there",
+      "weAreConfirmingYour": "We are confirming your subscription with the payment provider."
+    },
+    "choosePlanPage": {
+      "chooseYourPlan": "Choose your plan",
+      "pickThePlanThat": "Pick the plan that fits your workspace. You can switch anytime from the billing page."
+    },
+    "discoverPage": {
+      "discoverCofounders": "Discover cofounders",
+      "oneCompanyAtA": "One company at a time. Pass, signal interest, or pitch — a mutual signal opens a Cofounder Room."
+    },
+    "matchesPage": {
+      "yourMatches": "Your matches",
+      "foundersYouAndThey": "Founders you and they both signalled interest in. The Cofounder Room — where the initiator opens the conversation — is the next step."
+    },
+    "profileIdPage": {
+      "cofounderRoom": "Cofounder Room",
+      "whereAMutualMatch": "Where a mutual match becomes a team."
+    },
+    "reelPage": {
+      "reel": "Reel",
+      "splitAScriptInto": "Split a script into shots — each becomes a typed node whose generated output flows through a versioned IO envelope."
+    },
+    "apiKeysApiKeysClient": {
+      "createAPIKey": "Create API key",
+      "loading": "Loading…"
+    },
+    "apiKeysCreateApiKeyForm": {
+      "thisKeyAppearsOnce": "This key appears once. Store it before closing.",
+      "eGProductionBackend": "e.g. Production backend"
+    },
+    "apiKeysPage": {
+      "aPIKeys": "API Keys",
+      "generateAndManageAPI": "Generate and manage API keys for programmatic access to {name}.",
+      "youDoNotHave": "You do not have permission to view API keys."
+    },
+    "settingsLayout": {
+      "settings": "Settings",
+      "manageYourOrganizationAnd": "Manage your organization and account settings"
+    },
+    "providerKeysPage": {
+      "providerKeys": "Provider Keys",
+      "bringYourOwnAI": "Bring your own AI provider keys. {name} prefers your key for matching models and falls back to the platform key unless you pin it.",
+      "youDoNotHave": "You do not have permission to view provider keys."
+    },
+    "providerKeysProviderKeysClient": {
+      "addProviderKey": "Add provider key",
+      "loading": "Loading…"
+    },
+    "completePage": {
+      "desktopSignIn": "Desktop sign-in",
+      "thisDesktopSignIn": "This desktop sign-in link is invalid",
+      "restartSignInFrom": "Restart sign-in from {DESKTOP_APP_NAME} to create a fresh, short-lived handoff."
+    },
+    "canvasCanvasDemoClient": {
+      "nodes": "nodes,",
+      "edges": "edges."
+    },
+    "webNotFound": {
+      "thisPageIsNot": "This page is not available.",
+      "checkTheURLOr": "Check the URL, or return to your dashboard."
+    },
+    "accountAvatarUploadForm": {
+      "userAvatar": "User avatar",
+      "avatarPreview": "Avatar preview"
+    },
+    "adminPlatformActionButton": {
+      "planning": "Planning…",
+      "noChangesInThis": "No changes in this plan.",
+      "affects": "Affects {value0}",
+      "planExpires": "Plan {planId} · expires {value1}",
+      "audit": "audit {auditId}"
+    },
+    "adminPlatformCommandPalette": {
+      "jumpTo": "Jump to…",
+      "jumpTo2": "Jump to"
+    },
+    "adminPlatformConsoleTabs": {
+      "console": "Console",
+      "shipsInBatch": "Ships in batch 2"
+    },
+    "brandBrandAssets": {
+      "nebutra": "Nebutra"
+    },
+    "cofounderMatchCofounderCard": {
+      "compiledCompany": "Compiled company",
+      "complementarity": "Complementarity"
+    },
+    "growthRedemptionCodeInput": {
+      "haveARedemptionCode": "Have a redemption code?",
+      "eNTERCODE": "ENTER-CODE",
+      "redeem": "Redeem"
+    },
+    "navigationThemeToggle": {
+      "toggleTheme": "Toggle theme",
+      "theme": "Theme"
+    },
+    "personalizationCommunicationPreferences": {
+      "communicationPreferences": "Communication preferences",
+      "decideWhatReachesYour": "Decide what reaches your inbox. You can change these anytime."
+    },
+    "companyTowerBrandKitFloor": {
+      "addABrandKit": "Add a brand-kit field",
+      "field": "field"
+    },
+    "companyTowerFieldCard": {
+      "lockedHumanApproved": "Locked — human-approved",
+      "locked": "Locked"
+    },
+    "webhooksWebhookEndpointForm": {
+      "endpointURL": "Endpoint URL",
+      "events": "Events"
+    },
+    "authError": {
+      "thisPageDidnT": "This page didn’t load.",
+      "somethingWentWrongOn": "Something went wrong on our side. Try again; it usually works the second time."
+    },
+    "authNotFound": {
+      "weCouldnTFind": "We couldn’t find that page.",
+      "theAddressMayBe": "The address may be mistyped, or the page has moved."
+    },
+    "authWechatLoginButton": {
+      "weChat": "WeChat"
+    },
+    "auditError": {
+      "failedToLoadAudit": "Failed to load audit log."
+    },
+    "billingError": {
+      "failedToLoadBilling": "Failed to load billing."
+    },
+    "webError": {
+      "somethingWentWrong": "Something went wrong.",
+      "thisPageDidnT": "This page didn’t load.",
+      "somethingWentWrongOn": "Something went wrong on our side. Try again; it usually works the second time."
+    },
+    "apiKeysApiKeyList": {
+      "created": "Created {value0} {value1}",
+      "revoked": "Revoked"
+    },
+    "developersPage": {
+      "openPlatform": "Open Platform",
+      "credentialsAndEventSubscriptions": "Credentials and event subscriptions for"
+    },
+    "notificationsPage": {
+      "notifications": "Notifications",
+      "tuneHowReachesYou": "Tune how {name} reaches you for workspace activity, billing risk, security events, and product operations. Managed providers can save these preferences immediately; preview mode shows the product defaults without pretending they are persisted."
+    },
+    "referralsPage": {
+      "referrals": "Referrals",
+      "shareYourCodeTrack": "Share your code, track who joined, and see where you sit on the {name} referral ladder."
+    },
+    "settingsSettingsNav": {
+      "settingsNavigation": "Settings navigation"
+    },
+    "tenantsError": {
+      "failedToLoadTenants": "Failed to load tenants."
+    },
+    "webLayout": {
+      "skipToContent": "Skip to content"
+    },
+    "adminPlatformConsoleShell": {
+      "admin": "Admin"
+    },
+    "billingBillingSelfService": {
+      "activePlan": "Active plan"
+    },
+    "billingPlanBadge": {
+      "upgrade": "Upgrade"
+    },
+    "cofounderMatchMatchesList": {
+      "openCofounderRoom": "Open Cofounder Room"
+    },
+    "commandPaletteModePills": {
+      "commandMode": "Command mode"
+    },
+    "notificationsNotificationsPageClient": {
+      "notificationFilter": "Notification filter"
+    },
+    "organizationsOrganizationLogoForm": {
+      "organizationLogoPreview": "Organization logo preview"
+    },
+    "securityConnectedAccountsBlock": {
+      "providerManaged": "Provider managed"
+    },
+    "securityPasskeysBlock": {
+      "available": "Available"
+    },
+    "valuesValuesStatement": {
+      "ourValuesCommitment": "Our values commitment"
+    },
+    "webhooksCreateWebhookDialog": {
+      "endpointCreatedTheSigning": "Endpoint created. The signing secret appears once.",
+      "storeItInYour": "Store it in your application’s secret manager before closing.",
+      "endpointURL": "Endpoint URL: {url}"
     }
   }
 }

@@ -7,6 +7,7 @@ import {
   ShieldOff as ShieldAlert,
   Sparkles,
 } from "@nebutra/icons";
+import { useTranslations } from "next-intl";
 
 export type BillingPlanId = "free" | "pro_monthly" | "pro_yearly" | "enterprise";
 export type BillingProviderStatus = "disabled" | "ready" | "degraded";
@@ -325,12 +326,13 @@ export function BillingProviderNotice({ model }: { model: BillingSelfServiceMode
 }
 
 export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
+  const tc = useTranslations("copy.billingBillingSelfService");
   return (
     <div className="rounded-[var(--radius-3xl)] border border-border bg-background p-5 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-10">
-            Active plan
+            {tc("activePlan")}
           </p>
           <h2 className="mt-3 flex items-center gap-2 text-2xl font-semibold text-neutral-12">
             <Sparkles className="size-5 text-primary" aria-hidden="true" />

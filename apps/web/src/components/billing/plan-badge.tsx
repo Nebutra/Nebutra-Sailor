@@ -1,5 +1,6 @@
 import { Sparkles } from "@nebutra/icons";
 import { API_CALLS, getMetering } from "@nebutra/metering";
+import { getTranslations } from "next-intl/server";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getTenantContext } from "@/lib/auth";
 
@@ -59,6 +60,7 @@ async function readApiQuota(tenantId: string): Promise<QuotaSnapshot | null> {
  *   - Returns null on auth failure
  */
 export async function PlanBadge() {
+  const tc = await getTranslations("copy.billingPlanBadge");
   let plan = "free";
   let tenantId: string | null = null;
 
@@ -118,7 +120,7 @@ export async function PlanBadge() {
           className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold bg-primary text-primary-foreground transition-[background-color] hover:bg-primary/90"
         >
           <Sparkles className="size-3" />
-          Upgrade
+          {tc("upgrade")}
         </ViewTransitionLink>
       )}
     </div>

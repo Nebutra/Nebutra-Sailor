@@ -1,6 +1,7 @@
 "use client";
 
 import { Compass, Layers, ShieldCheck, Sparkles } from "@nebutra/icons";
+import { useTranslations } from "next-intl";
 
 /**
  * The Match-Your-Cofounder card — a founder × company, not a face.
@@ -31,6 +32,7 @@ export function CofounderCard({
   data: CofounderCardData;
   preview?: boolean;
 }) {
+  const tc = useTranslations("copy.cofounderMatchCofounderCard");
   return (
     <div className="flex min-h-[380px] w-full max-w-sm flex-col overflow-hidden rounded-[28px] border border-neutral-7 bg-neutral-1 shadow-lg shadow-neutral-12/5">
       {/* Brand-tinted header band */}
@@ -45,7 +47,7 @@ export function CofounderCard({
         {data.trustVerified ? (
           <span className="inline-flex items-center gap-1 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-success-strong backdrop-blur">
             <ShieldCheck className="size-3.5" aria-hidden="true" />
-            Compiled company
+            {tc("compiledCompany")}
           </span>
         ) : null}
       </div>
@@ -65,7 +67,7 @@ export function CofounderCard({
         <div className="rounded-xl border border-neutral-6 bg-neutral-2 px-3 py-2.5">
           <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-neutral-9">
             <Sparkles className="size-3.5 text-primary" aria-hidden="true" />
-            Complementarity
+            {tc("complementarity")}
           </div>
           <p className="mt-1 text-xs text-neutral-10">
             {data.complementarity ??

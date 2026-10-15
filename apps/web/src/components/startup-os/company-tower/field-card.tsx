@@ -9,6 +9,7 @@ import type {
 } from "@nebutra/startup-os/company-context/model";
 import { Badge, Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import { ProvenanceBadge } from "./provenance-badge";
 import type { FieldActionHandlers } from "./types";
 import { isFieldFilled } from "./types";
@@ -175,6 +176,7 @@ export function FieldCard({
   onEditField,
   className,
 }: FieldCardProps) {
+  const tc = useTranslations("copy.companyTowerFieldCard");
   const filled = isFieldFilled(value);
   const locked = value?.status === "locked";
 
@@ -207,10 +209,10 @@ export function FieldCard({
         {locked ? (
           <span
             className="inline-flex items-center px-1 text-neutral-9"
-            title="Locked — human-approved"
+            title={tc("lockedHumanApproved")}
           >
             <LockClosed aria-hidden="true" className="size-3.5" />
-            <span className="sr-only">Locked</span>
+            <span className="sr-only">{tc("locked")}</span>
           </span>
         ) : (
           <div className="flex items-center opacity-0 transition-opacity focus-within:opacity-100 group-hover/field:opacity-100">

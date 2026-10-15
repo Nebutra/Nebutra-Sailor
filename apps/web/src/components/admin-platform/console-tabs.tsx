@@ -3,6 +3,7 @@
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export interface ConsoleTab {
   href: string;
@@ -28,9 +29,10 @@ function isActive(pathname: string, href: string): boolean {
 }
 
 export function ConsoleTabs({ tabs }: { tabs: ConsoleTab[] }) {
+  const tc = useTranslations("copy.adminPlatformConsoleTabs");
   const pathname = usePathname();
   return (
-    <nav aria-label="Console" className="border-border border-b bg-card">
+    <nav aria-label={tc("console")} className="border-border border-b bg-card">
       <div className="mx-auto flex max-w-wide items-center px-3">
         {tabs.map((tab) => {
           const active = !tab.disabled && isActive(pathname, tab.href);
@@ -53,7 +55,7 @@ export function ConsoleTabs({ tabs }: { tabs: ConsoleTab[] }) {
           );
           if (tab.disabled) {
             return (
-              <span key={tab.label} aria-disabled className={className} title="Ships in batch 2">
+              <span key={tab.label} aria-disabled className={className} title={tc("shipsInBatch")}>
                 {body}
               </span>
             );

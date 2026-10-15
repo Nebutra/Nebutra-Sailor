@@ -31,6 +31,7 @@ const ICON_FOR_THEME: Record<ThemeChoice, typeof Monitor> = {
 };
 
 export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
+  const tc = useTranslations("copy.navigationThemeToggle");
   const { theme, setTheme } = useTheme();
   const t = useTranslations("theme");
   const [mounted, setMounted] = useState(false);
@@ -62,7 +63,7 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
         variant="ghost"
         shape="circle"
         size="sm"
-        aria-label="Toggle theme"
+        aria-label={tc("toggleTheme")}
         title={`${t(active)} → ${t(next)}`}
         onClick={() => setTheme(next)}
         className={className ?? "text-neutral-11 hover:bg-neutral-3 hover:text-neutral-12"}
@@ -79,7 +80,7 @@ export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
       variant="pill"
       value={active}
       onValueChange={(value) => setTheme(value as ThemeChoice)}
-      aria-label="Theme"
+      aria-label={tc("theme")}
       className={cn("border border-neutral-7 bg-neutral-1 p-0.5", className)}
     >
       {choices.map((choice) => {

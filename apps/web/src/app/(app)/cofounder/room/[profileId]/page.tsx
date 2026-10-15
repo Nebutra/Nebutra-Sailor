@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { RoomView } from "@/components/cofounder-match/room-view";
 
 export default async function CofounderRoomPage({
@@ -5,6 +6,7 @@ export default async function CofounderRoomPage({
 }: {
   params: Promise<{ profileId: string }>;
 }) {
+  const tc = await getTranslations("copy.profileIdPage");
   const { profileId } = await params;
 
   return (
@@ -26,10 +28,10 @@ export default async function CofounderRoomPage({
               backgroundClip: "text",
             }}
           >
-            Cofounder Room
+            {tc("cofounderRoom")}
           </h1>
           <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-neutral-10">
-            Where a mutual match becomes a team.
+            {tc("whereAMutualMatch")}
           </p>
         </div>
 

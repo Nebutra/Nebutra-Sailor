@@ -61,6 +61,7 @@ export function ConnectedAccountsBlock({
   onUnlink,
   onChanged,
 }: ConnectedAccountsBlockProps) {
+  const tc = useTranslations("copy.securityConnectedAccountsBlock");
   const t = useTranslations("auth.security.connectedAccounts");
   const tErrors = useTranslations("auth.errors");
   const [pendingProvider, setPendingProvider] = useState<string | null>(null);
@@ -75,7 +76,7 @@ export function ConnectedAccountsBlock({
             <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
           </div>
           <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
-            Provider managed
+            {tc("providerManaged")}
           </span>
         </div>
         <p className="text-sm text-muted-foreground">{capability.reason}</p>

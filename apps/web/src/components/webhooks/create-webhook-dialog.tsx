@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, useCopyToClipboard } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { WebhookEndpointForm, type WebhookEndpointFormValues } from "./webhook-endpoint-form";
 
@@ -42,6 +43,7 @@ async function defaultSubmit(input: {
 }
 
 export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialogProps) {
+  const tc = useTranslations("copy.webhooksCreateWebhookDialog");
   const [result, setResult] = useState<CreateWebhookResult | null>(null);
   const { copied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
 
@@ -67,10 +69,8 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
         role="alert"
         className="rounded-[var(--radius-md)] bg-warning/10 p-4 text-sm text-warning-strong"
       >
-        <p className="mb-2 font-medium">Endpoint created. The signing secret appears once.</p>
-        <p className="mb-3 text-xs">
-          Store it in your application&apos;s secret manager before closing.
-        </p>
+        <p className="mb-2 font-medium">{tc("endpointCreatedTheSigning")}</p>
+        <p className="mb-3 text-xs">{tc("storeItInYour")}</p>
         <div className="mb-3 flex items-center gap-2">
           <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap rounded bg-neutral-1 px-3 py-2 font-mono text-xs text-neutral-12">
             {signingSecret}
@@ -84,7 +84,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
             {copied ? "Copied" : "Copy"}
           </Button>
         </div>
-        <p className="text-xs">Endpoint URL: {endpoint.url}</p>
+        <p className="text-xs">{tc("endpointURL", { url: String(endpoint.url) })}</p>
       </div>
     );
   }

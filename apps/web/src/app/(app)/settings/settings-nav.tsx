@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const NAV_ITEMS = [
   { href: "/settings", label: "General" },
@@ -21,11 +22,12 @@ const NAV_ITEMS = [
 ];
 
 export function SettingsNav() {
+  const tc = useTranslations("copy.settingsSettingsNav");
   const pathname = usePathname();
 
   return (
     <nav
-      aria-label="Settings navigation"
+      aria-label={tc("settingsNavigation")}
       className="-mx-4 overflow-x-auto px-4 md:mx-0 md:w-44 md:shrink-0 md:overflow-visible md:px-0"
     >
       {/* Responsive: Scroll — a horizontal strip below md, a rail from md up. */}

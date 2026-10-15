@@ -153,6 +153,7 @@ export function OrganizationLogoForm({
   deletePipeline,
   onUpdated,
 }: OrganizationLogoFormProps) {
+  const tc = useTranslations("copy.organizationsOrganizationLogoForm");
   const t = useTranslations();
   const [logoUrl, setLogoUrl] = useState<string | null>(initialLogoUrl ?? null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -259,7 +260,7 @@ export function OrganizationLogoForm({
           <div
             role="img"
             className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-border bg-muted"
-            aria-label="Organization logo preview"
+            aria-label={tc("organizationLogoPreview")}
           >
             <span className="text-sm font-semibold text-muted-foreground">
               {initialsFor(orgName)}
