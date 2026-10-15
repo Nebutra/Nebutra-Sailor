@@ -20,6 +20,7 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { siteLang } from "@/i18n/site-language";
 import { getAllPosts } from "@/lib/blog";
@@ -31,6 +32,19 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
  * reader without JavaScript as its fallback (scripts/verify-landing-ssr.mjs).
  */
 export const instant = false;
+
+/**
+ * A facet nobody prerenders, so the segment ships no real params; this
+ * sentinel only gives Next one known author to build against. Without any
+ * static param the `author` param is runtime data, the layout shell streams
+ * before the page decides, and notFound() could only reach the reader as a
+ * 404 document inside a 200 response.
+ */
+const PLACEHOLDER_AUTHOR = "empty-placeholder-do-not-fetch";
+
+export function generateStaticParams() {
+  return prerenderDefaultLocale([PLACEHOLDER_AUTHOR], (author) => ({ author }));
+}
 
 type Params = { author: string; lang: string };
 
@@ -141,6 +155,9 @@ async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
     const name = getAuthorName(post.author);
     return name ? matchesSegment(name, author) : false;
   });
+  // A facet with no posts is not a page: answer 404, not an empty list served
+  // as 200 (a soft 404 that crawlers index as thin content).
+  if (posts.length === 0) notFound();
   const firstPost = posts[0];
   const authorName = firstPost ? getAuthorName(firstPost.author) : decodeURIComponent(author);
   const avatarUrl = firstPost ? getAuthorAvatarUrl(firstPost.author, 160) : null;

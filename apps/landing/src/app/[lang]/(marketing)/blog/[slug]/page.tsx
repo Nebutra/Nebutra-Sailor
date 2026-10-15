@@ -12,7 +12,7 @@ import { AnimateIn } from "@nebutra/ui/components";
 import { DynamicIslandTOC } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { connection } from "next/server";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -75,10 +75,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
     return unpublished();
   }
-  // A slug with no article answers 404 from the page before it touches
-  // request data, so its metadata must not either: runtime data here with a
-  // static page body is a prerender bailout, which Next serves as a 500.
-  if ((await loadCachedBlogArticle(lang, slug)).kind === "not-found") {
+  // A slug with no article answers 404, and a slug that belongs to the other
+  // language answers a redirect, from the page before it touches request data
+  // — so its metadata must not touch it either: runtime data here with a
+  // static page body is a prerender bailout, which Next serves as a 500. Only
+  // a slug that renders an article reaches `connection()`.
+  if ((await loadCachedBlogArticle(lang, slug)).kind !== "ok") {
     return unpublished();
   }
   await connection();
@@ -221,7 +223,10 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
   // an empty page instead of a 404 or a 307.
   const article = await loadCachedBlogArticle(lang, slug);
   if (article.kind === "not-found") notFound();
-  if (article.kind === "redirect") redirect(article.href);
+  // The slug names this essay's other-language version (an `-zh` slug read
+  // in English, or the English slug read in Chinese): the localized article
+  // lives at its own slug, permanently.
+  if (article.kind === "redirect") permanentRedirect(article.href);
   await connection();
   const t = (await getTranslations({
     locale: lang,

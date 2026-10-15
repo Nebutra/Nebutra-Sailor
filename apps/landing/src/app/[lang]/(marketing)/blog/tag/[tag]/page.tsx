@@ -19,6 +19,7 @@ import { notFound } from "next/navigation";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { BlogIndexExplorer, type BlogIndexPost } from "@/components/landing/blog-index-explorer";
+import { prerenderDefaultLocale } from "@/i18n/prerender";
 import { type Locale, routing } from "@/i18n/routing";
 import { siteLang } from "@/i18n/site-language";
 import { getAllPosts } from "@/lib/blog";
@@ -30,6 +31,19 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
  * reader without JavaScript as its fallback (scripts/verify-landing-ssr.mjs).
  */
 export const instant = false;
+
+/**
+ * A facet nobody prerenders, so the segment ships no real params; this
+ * sentinel only gives Next one known tag to build against. Without any
+ * static param the `tag` param is runtime data, the layout shell streams
+ * before the page decides, and notFound() could only reach the reader as a
+ * 404 document inside a 200 response.
+ */
+const PLACEHOLDER_TAG = "empty-placeholder-do-not-fetch";
+
+export function generateStaticParams() {
+  return prerenderDefaultLocale([PLACEHOLDER_TAG], (tag) => ({ tag }));
+}
 
 type Params = { lang: string; tag: string };
 
@@ -133,6 +147,9 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
   const posts = (await getCachedAllPosts(toBlogLanguage(lang))).filter((post) =>
     post.tags.some((postTag) => matchesSegment(postTag, tag)),
   );
+  // A facet with no posts is not a page: answer 404, not an empty list served
+  // as 200 (a soft 404 that crawlers index as thin content).
+  if (posts.length === 0) notFound();
   const tagLabel = decodeURIComponent(tag).replace(/-/g, " ");
 
   return (
