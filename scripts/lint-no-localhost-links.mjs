@@ -3,7 +3,7 @@
 // CI guard: no dev-server URLs (`http://localhost:3105`, `http://127.0.0.1:…`)
 // written into app source.
 //
-// On 2026-10-10 router.nebutra.com shipped four links to http://localhost:3105
+// On 2026-10-10 a production site shipped four links to http://localhost:3105
 // (the "Client" channel, the footer, every App-market category, the Forge
 // card) and a sign-in returnTo that started at http://localhost:3106 until
 // hydration. Each was a "temporary" literal or an `?? "http://localhost…"`
