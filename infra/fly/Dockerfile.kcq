@@ -14,7 +14,9 @@ RUN CGO_ENABLED=0 go build -trimpath -o /out/kcq-tdx ./services/tdx-api
 FROM golang:1.27-alpine AS binance
 WORKDIR /src
 COPY binance/ .
-RUN go test ./... && CGO_ENABLED=0 go build -trimpath -o /out/kcq-binance ./cmd/binance-connector
+# The connector defaults to the proxy http://127.0.0.1:6666; tests and the runtime
+# (kcq-supervisor.py) connect directly.
+RUN BINANCE_PROXY=direct go test ./... && CGO_ENABLED=0 go build -trimpath -o /out/kcq-binance ./cmd/binance-connector
 
 FROM ghcr.io/astral-sh/uv:0.11.6 AS uv
 
