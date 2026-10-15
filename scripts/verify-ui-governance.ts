@@ -40,6 +40,10 @@ const FORM_CONTROL_FOCUS_VISIBLE_RE =
 const FORM_CONTROL_INLINE_FOCUS_RE =
   /\b(?:focus:(?:border-ring|ring-\[length:var\(--(?:input|textarea|select)-focus-ring-width\)\]|ring-ring\/30)|aria-invalid:focus:(?:border-destructive|ring-destructive\/20))\b/g;
 const FOCUS_GOVERNANCE_ROOTS = ["packages/design/ui/src", "apps/landing/src"] as const;
+// Native outline suppression lives in the shared contract (contractMarkers carry
+// "outline-none"); consumers prove they use it. Since the control-ladder change
+// (fc46db420) they no longer set an inline `outline: none`, which would beat
+// the global :focus-visible rule on Input's clear and reveal buttons.
 const FORM_CONTROL_FOCUS_REQUIREMENTS = [
   {
     slot: "input",
@@ -56,8 +60,7 @@ const FORM_CONTROL_FOCUS_REQUIREMENTS = [
     consumerMarkers: [
       "formControlFocusClassNames.input",
       "formControlInvalidClassNames.input",
-      'borderRadius: "var(--input-radius)"',
-      'outline: "none"',
+      "rounded-[var(--input-radius)]",
     ],
   },
   {
@@ -76,7 +79,6 @@ const FORM_CONTROL_FOCUS_REQUIREMENTS = [
       "formControlFocusClassNames.textarea",
       "formControlInvalidClassNames.textarea",
       'borderRadius: "var(--textarea-radius)"',
-      'outline: "none"',
     ],
   },
   {
@@ -95,7 +97,6 @@ const FORM_CONTROL_FOCUS_REQUIREMENTS = [
       "formControlFocusClassNames.select",
       "formControlInvalidClassNames.select",
       'borderRadius: "var(--select-radius)"',
-      'outline: "none"',
     ],
   },
 ] as const;
