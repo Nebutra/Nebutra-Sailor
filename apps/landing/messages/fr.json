@@ -1791,15 +1791,12 @@
       }
     },
     "investors": {
-      "metaDescription": "{brandName} construit la couche opérationnelle pour les entreprises natives de l'IA. Pour les investisseurs et partenaires stratégiques : la thèse, ce qui est en ligne aujourd'hui et comment demander le deck.",
       "hero": {
         "kicker": "Pour les investisseurs et les partenaires",
         "title": "L'IA a donné des mains à chaque fondateur. Nous construisons le <signature>jugement</signature>.",
-        "lead": "{brandName} est un écosystème d'entreprises natif de l'IA : Sailor, la plateforme source-available où les produits et les agents démarrent avec un jugement d'ingénierie intégré ; une pratique qui accompagne les produits IA de la R&D jusqu'aux marchés du monde entier ; et les produits que nous livrons sur les deux.",
         "stage": "Nous levons notre tour angel et échangeons avec un petit nombre d'investisseurs et de partenaires stratégiques.",
         "primary": "Demander le deck",
-        "secondary": "Prendre rendez-vous",
-        "reelLabel": "Produits en ligne sur la plateforme"
+        "secondary": "Prendre rendez-vous"
       },
       "chapters": {
         "label": "Sur cette page",
@@ -1842,16 +1839,6 @@
       },
       "built": {
         "title": "Une seule fondation. Tout le reste s'y construit.",
-        "lead": "Trois lignes de produits partagent une seule plateforme, un seul système de comptes et un seul ensemble de règles.",
-        "sailor": {
-          "role": "La plateforme",
-          "body": "Un OS produit et agent source-available sous licence Functional Source License (FSL) : multi-tenant, authentification, facturation, audit et un système de design, le tout gouverné par le code."
-        },
-        "products": {
-          "name": "Produits",
-          "role": "Construits dessus",
-          "body": "Des produits en production pour les développeurs, les designers et les créateurs, chacun développé sur Sailor."
-        },
         "practice": {
           "name": "IA d'entreprise et expansion à l'international",
           "role": "Le pôle",
@@ -1859,21 +1846,12 @@
         }
       },
       "sailor": {
-        "title": "Sailor donne à chaque fondateur les fondations qu'une équipe senior construirait.",
         "lead": "Une seule commande génère un produit multi-tenant avec auth, facturation, audit et un design system déjà décidé. Les fournisseurs basculent entre les stacks globales et chinoises par configuration, et les agents lisent les mêmes règles que celles auxquelles le code est tenu.",
         "acme": "Le modèle tel qu'il est livré, déployé.",
         "source": "Lire le code source",
         "more": "En savoir plus sur Sailor"
       },
       "products": {
-        "title": "Livré, pas des diapositives.",
-        "lead": "Des produits que nous avons construits sur la même base. Tous sont en ligne — ouvrez-les.",
-        "caption": "Captures d'écran des sites en ligne, prises le 9 octobre 2026.",
-        "router": "Un seul marché et une seule API pour les modèles, les applications et les outils.",
-        "forge": "184 outils dans le navigateur, et le même moteur en tant qu'API et MCP.",
-        "typelens": "Des associations de polices réelles pour les designers et les agents de conception.",
-        "kcq": "Un poste de travail de recherche chart et quant, avec un agent à côté.",
-        "also": "Aussi sur la plateforme",
         "open": "Ouvrir {name}"
       },
       "practice": {
@@ -1908,11 +1886,6 @@
           "title": "Construisez en toute transparence.",
           "body": "Le code source de Sailor est public et tout sur cette page est en direct. La diligence commence par un lien."
         }
-      },
-      "next": {
-        "title": "Une phrase, une <signature>entreprise entière</signature>.",
-        "lead": "{brandName} OS est là où tout cela va : décrivez une entreprise une fois, et la marque, le produit, le code et le lancement découlent d'un même contexte, avec le jugement intégré. C'est en développement, et nous le présenterons quand il sera réel.",
-        "vision": "Dans cinq ans, nous voulons que lancer une entreprise signifie commencer avec ce jugement déjà en place."
       },
       "talk": {
         "title": "Parlons-en.",

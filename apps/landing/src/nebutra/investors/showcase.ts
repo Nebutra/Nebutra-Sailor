@@ -1,6 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
 import type { StaticImageData } from "next/image";
-import { PRODUCTS } from "@/nebutra/data/products";
 import acme from "./shots/acme.webp";
 import forge from "./shots/forge.webp";
 import kcq from "./shots/kcq.webp";
@@ -41,9 +40,3 @@ export const SHOWCASE: readonly ShowcaseItem[] = [
 
 /** The deployed Sailor template — what `npx create-sailor` produces, live. */
 export const ACME_SHOT = acme;
-
-/**
- * Products on the platform that this page names without a shot: they are
- * listed on the Building page, and the capture run could not reach them.
- */
-export const ALSO_ON_PLATFORM = PRODUCTS.filter((p) => !SHOWCASE.some((s) => s.id === p.id));

@@ -61,21 +61,21 @@ function readSiteId() {
 const NEBUTRA_ROUTES = [
   {
     path: "/",
-    h1: "No company should be hard to start",
-    text: ["Founder Tax", "Read it as it's written.", "What we're building"],
+    h1: "Nebutra helps teams build AI products",
+    text: ["Incubated on Sailor", "Read it as it's written.", "What we're building"],
     jsonLd: ["Organization", "WebSite", "SoftwareApplication"],
   },
   {
     path: "/zh-Hans",
     // The Chinese home leads in Chinese since the site gained 中文 (#700).
-    h1: "让世界上没有难创的业",
+    h1: "Nebutra 帮团队做出 AI 产品",
     text: [],
     jsonLd: ["Organization", "WebSite"],
   },
   {
     path: "/sailor",
     h1: "Sailor",
-    text: ["The open-source platform we build everything on", "npx create-sailor"],
+    text: ["Run your startup on Sailor.", "npx create-sailor"],
   },
   { path: "/ja/sailor", h1: "Sailor", text: ["npx create-sailor"] },
   { path: "/about", text: [] },
