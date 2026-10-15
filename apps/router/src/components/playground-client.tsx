@@ -13,7 +13,6 @@ import {
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { StatePanel } from "@/components/console-states";
 import { consoleApi } from "@/lib/console-api";
 import {
   ConsoleError,
@@ -276,7 +275,7 @@ export function PlaygroundClient({
     >
       <section
         aria-label={t("request")}
-        className="flex min-h-0 flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border"
+        className="flex min-h-0 flex-col overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-glass-sm"
       >
         <div className="flex h-11 items-center border-b border-border px-4">
           <h2 className="text-sm font-medium">{t("request")}</h2>
@@ -323,7 +322,7 @@ export function PlaygroundClient({
 
       <section
         aria-label={t("reply")}
-        className="flex min-h-[320px] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border lg:min-h-0"
+        className="flex min-h-[320px] flex-col overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-glass-sm lg:min-h-0"
       >
         <div className="flex h-11 items-center justify-between gap-3 border-b border-border pr-2 pl-1">
           <ToggleGroup
@@ -379,7 +378,21 @@ export function PlaygroundClient({
               <code>{code}</code>
             </pre>
           ) : turns.length === 0 ? (
-            <StatePanel title={t("emptyTitle")} description={t("emptyDescription")} />
+            <div className="relative flex h-full min-h-[18rem] items-center justify-center p-6">
+              {/* Ghost reply: the shape the answer will take, so the pane is never a void. */}
+              <div aria-hidden className="absolute inset-x-6 top-6 space-y-2.5 opacity-60">
+                <span className="block h-2.5 w-24 rounded-full bg-muted" />
+                <span className="block h-2.5 w-11/12 rounded-full bg-muted" />
+                <span className="block h-2.5 w-4/5 rounded-full bg-muted" />
+                <span className="block h-2.5 w-2/3 rounded-full bg-muted" />
+              </div>
+              <div className="relative rounded-[var(--radius-xl)] border border-border bg-card/90 px-5 py-4 text-center shadow-glass-sm backdrop-blur">
+                <p className="text-sm font-medium">{t("emptyTitle")}</p>
+                <p className="mt-1 max-w-xs text-xs text-muted-foreground">
+                  {t("emptyDescription")}
+                </p>
+              </div>
+            </div>
           ) : (
             <ul className="divide-y divide-border">
               {turns.map((turn) => (

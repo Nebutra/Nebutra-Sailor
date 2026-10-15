@@ -69,6 +69,12 @@
       "privacy": "Privacy policy",
       "refund": "Refund policy",
       "cookies": "Cookie policy"
+    },
+    "cta": {
+      "title": "Every model, one key, billed per token.",
+      "body": "Create a key, point any OpenAI SDK at Router and switch models by changing one string.",
+      "primary": "Get an API key",
+      "secondary": "Browse models"
     }
   },
   "category": {
@@ -295,9 +301,9 @@
         "daily": "Daily · UTC",
         "emptyTitle": "Nothing was spent in this period",
         "emptyDescription": "Pick another range, or run a request from Quick use.",
-        "bar": "{bucket} · {amount} · {count, plural, one {# request} other {# requests}}",
         "readout": "{bucket} · {amount} USD · {count, plural, one {# request} other {# requests}}",
-        "total": "{amount} USD in this window"
+        "windowTotal": "Total in this window",
+        "chartLabel": "Spend over time, {amount} USD in total"
       },
       "byModel": {
         "title": "By model",
@@ -455,14 +461,15 @@
       "searchSubmit": "Search",
       "getKey": "Get an API key",
       "readDocs": "Read the docs",
-      "codeTitle": "Your first request"
+      "codeTitle": "Your first request",
+      "eyebrow": "{count} models live on one endpoint"
     },
     "home": {
       "modelsTitle": "Models",
       "modelsSubtitle": "{live} on sale now. Prices are per 1M tokens.",
       "allModels": "All {count} models",
-      "providersTitle": "Providers",
-      "providerCount": "{count, plural, one {# model} other {# models}}"
+      "routedTo": "Routed to",
+      "providerLink": "{provider}: {count, plural, one {# model} other {# models}}"
     },
     "col": {
       "model": "Model",
@@ -515,6 +522,22 @@
       "output": "{price}/1M out"
     },
     "perM": "per 1M tokens",
-    "tokens": "tokens"
+    "tokens": "tokens",
+    "stats": {
+      "label": "Router at a glance",
+      "models": "Models on the shelf",
+      "providers": "Providers",
+      "live": "On sale now",
+      "endpoint": "OpenAI-compatible endpoint"
+    },
+    "preview": {
+      "prompt": "What is model routing?",
+      "reply": "Model routing sends each request to the provider that serves the model you named, behind one OpenAI-compatible endpoint, so switching models is a one-line change.",
+      "streaming": "Streaming",
+      "done": "Complete",
+      "example": "Example reply",
+      "copy": "Copy request",
+      "models": "Model"
+    }
   }
 }

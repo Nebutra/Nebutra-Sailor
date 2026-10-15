@@ -308,105 +308,114 @@ export function ModelsCatalog({
   );
 
   return (
-    <div className="router-market-shell pt-10 pb-16">
-      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold">{t("title")}</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {t("subtitle", { count: models.length })}
-          </p>
-        </div>
-        <SearchForm
-          className="w-full md:max-w-sm"
-          defaultValue={f.q}
-          placeholder={t("searchPlaceholder")}
-          label={t("searchPlaceholder")}
-          submitLabel={t("search")}
-          keep={{
-            tag: f.tag === "all" ? undefined : f.tag,
-            brand: f.brand === "all" ? undefined : f.brand,
-            ctx: f.ctx === "any" ? undefined : f.ctx,
-            price: f.price === "any" ? undefined : f.price,
-            sort: f.sort === "default" ? undefined : f.sort,
-            view: f.view === "table" ? undefined : f.view,
-          }}
-        />
-      </div>
-
-      <div className="mt-8 grid gap-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-10">
-        <aside aria-label={t("filters")} className="hidden lg:block">
-          <div className="sticky top-20">{rail}</div>
-        </aside>
-        {/* Below lg the rail folds into a disclosure: native, no JS. */}
-        <details className="group rounded-[var(--radius-lg)] border border-border lg:hidden">
-          <summary className="flex h-10 cursor-pointer list-none items-center justify-between px-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
-            {t("filters")}
-            <span className="text-muted-foreground tabular-nums">
-              {filtered ? t("filtersActive") : null}
-            </span>
-          </summary>
-          <div className="border-t border-border p-4">{rail}</div>
-        </details>
-
-        <div className="min-w-0">
-          <div className="mb-3 flex items-center justify-between gap-3 text-sm">
-            <p aria-live="polite" className="text-muted-foreground tabular-nums">
-              {t("count", { count: list.length })}
-              {filtered ? (
-                <>
-                  {" · "}
-                  <Link
-                    href={href({ ...f, tag: "all", brand: "all", q: "", ctx: "any", price: "any" })}
-                    className="text-foreground underline-offset-4 hover:underline"
-                  >
-                    {t("clear")}
-                  </Link>
-                </>
-              ) : null}
+    <div className="router-glow">
+      <div className="router-market-shell pt-14 pb-24">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <h1 className="text-4xl">{t("title")}</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {t("subtitle", { count: models.length })}
             </p>
-            <nav
-              aria-label={t("view.label")}
-              className="flex items-center gap-1 rounded-[var(--radius-lg)] bg-muted p-1"
-            >
-              {(["table", "list"] as const).map((v) => (
-                <Link
-                  key={v}
-                  href={href({ ...f, view: v })}
-                  aria-current={f.view === v ? "true" : undefined}
-                  className={cn(
-                    "inline-flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-xs font-medium transition-colors",
-                    f.view === v
-                      ? "bg-background text-foreground shadow-sm"
-                      : "text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  {t(`view.${v}`)}
-                </Link>
-              ))}
-            </nav>
           </div>
+          <SearchForm
+            className="w-full md:max-w-sm"
+            defaultValue={f.q}
+            placeholder={t("searchPlaceholder")}
+            label={t("searchPlaceholder")}
+            submitLabel={t("search")}
+            keep={{
+              tag: f.tag === "all" ? undefined : f.tag,
+              brand: f.brand === "all" ? undefined : f.brand,
+              ctx: f.ctx === "any" ? undefined : f.ctx,
+              price: f.price === "any" ? undefined : f.price,
+              sort: f.sort === "default" ? undefined : f.sort,
+              view: f.view === "table" ? undefined : f.view,
+            }}
+          />
+        </div>
 
-          {list.length === 0 ? (
-            <EmptyState
-              title={t("noMatchTitle")}
-              description={t("noMatchBody")}
-              action={
-                <Button asChild variant="outline">
-                  <Link href="/models">{t("clear")}</Link>
-                </Button>
-              }
-            />
-          ) : f.view === "list" ? (
-            <ModelList models={list} label={t("title")} />
-          ) : (
-            <ModelTable
-              models={list}
-              caption={t("title")}
-              sort={f.sort}
-              sortHref={(sort) => href({ ...f, sort })}
-              stickyHeader
-            />
-          )}
+        <div className="mt-8 grid gap-8 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-10">
+          <aside aria-label={t("filters")} className="hidden lg:block">
+            <div className="sticky top-20">{rail}</div>
+          </aside>
+          {/* Below lg the rail folds into a disclosure: native, no JS. */}
+          <details className="group rounded-[var(--radius-lg)] border border-border lg:hidden">
+            <summary className="flex h-10 cursor-pointer list-none items-center justify-between px-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
+              {t("filters")}
+              <span className="text-muted-foreground tabular-nums">
+                {filtered ? t("filtersActive") : null}
+              </span>
+            </summary>
+            <div className="border-t border-border p-4">{rail}</div>
+          </details>
+
+          <div className="min-w-0">
+            <div className="mb-3 flex items-center justify-between gap-3 text-sm">
+              <p aria-live="polite" className="text-muted-foreground tabular-nums">
+                {t("count", { count: list.length })}
+                {filtered ? (
+                  <>
+                    {" · "}
+                    <Link
+                      href={href({
+                        ...f,
+                        tag: "all",
+                        brand: "all",
+                        q: "",
+                        ctx: "any",
+                        price: "any",
+                      })}
+                      className="text-foreground underline-offset-4 hover:underline"
+                    >
+                      {t("clear")}
+                    </Link>
+                  </>
+                ) : null}
+              </p>
+              <nav
+                aria-label={t("view.label")}
+                className="flex items-center gap-1 rounded-[var(--radius-lg)] bg-muted p-1"
+              >
+                {(["table", "list"] as const).map((v) => (
+                  <Link
+                    key={v}
+                    href={href({ ...f, view: v })}
+                    aria-current={f.view === v ? "true" : undefined}
+                    className={cn(
+                      "inline-flex h-8 items-center rounded-[var(--radius-md)] px-2.5 text-xs font-medium transition-colors",
+                      f.view === v
+                        ? "bg-background text-foreground shadow-sm"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    {t(`view.${v}`)}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+
+            {list.length === 0 ? (
+              <EmptyState
+                title={t("noMatchTitle")}
+                description={t("noMatchBody")}
+                action={
+                  <Button asChild variant="outline">
+                    <Link href="/models">{t("clear")}</Link>
+                  </Button>
+                }
+              />
+            ) : f.view === "list" ? (
+              <ModelList models={list} label={t("title")} />
+            ) : (
+              <ModelTable
+                models={list}
+                caption={t("title")}
+                sort={f.sort}
+                sortHref={(sort) => href({ ...f, sort })}
+                stickyHeader
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

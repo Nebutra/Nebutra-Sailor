@@ -272,8 +272,7 @@
         "hourly": "按小時 · UTC",
         "daily": "按天 · UTC",
         "emptyTitle": "這段時間沒有產生費用",
-        "emptyDescription": "換個時間範圍，或者到快捷使用跑一次請求。",
-        "bar": "{bucket} · {amount} · {count} 次"
+        "emptyDescription": "換個時間範圍，或者到快捷使用跑一次請求。"
       },
       "byModel": {
         "title": "按模型",

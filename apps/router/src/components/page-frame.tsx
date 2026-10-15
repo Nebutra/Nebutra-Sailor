@@ -29,7 +29,7 @@ export function PageFrame({
       {title ? (
         <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div className="min-w-0">
-            <h1 className="text-xl font-semibold text-foreground">{title}</h1>
+            <h1 className="text-3xl text-foreground">{title}</h1>
             {description ? (
               <p className="mt-1 max-w-3xl text-sm text-muted-foreground">{description}</p>
             ) : null}

@@ -77,7 +77,7 @@ export function ModelTable({
 }) {
   const t = useTranslations("shelf");
   const tCat = useTranslations("category");
-  const sticky = stickyHeader && "sticky top-14 z-[var(--layer-raised)] bg-background";
+  const sticky = stickyHeader && "sticky top-14 z-[var(--layer-raised)] bg-card";
   const th =
     "h-10 border-b border-border px-4 text-xs font-medium whitespace-nowrap text-muted-foreground";
 
@@ -119,23 +119,28 @@ export function ModelTable({
   const num = cn(cell, "hidden px-4 text-right font-mono text-sm tabular-nums md:table-cell");
 
   return (
-    <div className={cn("rounded-[var(--radius-lg)] border border-border", className)}>
+    <div
+      className={cn(
+        "rounded-[var(--radius-xl)] border border-border bg-card shadow-glass-sm",
+        className,
+      )}
+    >
       <table className="w-full border-separate border-spacing-0 text-sm">
         <caption className="sr-only">{caption}</caption>
         <thead className="hidden md:table-header-group">
           <tr>
-            <th scope="col" className={cn(th, "rounded-tl-[var(--radius-lg)] text-left", sticky)}>
+            <th scope="col" className={cn(th, "rounded-tl-[var(--radius-xl)] text-left", sticky)}>
               {t("col.model")}
             </th>
             {header("context", t("col.context"))}
             {header("price", t("col.inputPerM"))}
             {header("output", t("col.outputPerM"))}
-            <th scope="col" className={cn(th, "w-10 rounded-tr-[var(--radius-lg)]", sticky)}>
+            <th scope="col" className={cn(th, "w-10 rounded-tr-[var(--radius-xl)]", sticky)}>
               <span className="sr-only">{t("col.open")}</span>
             </th>
           </tr>
         </thead>
-        <tbody className="[&>tr:last-child>td]:border-b-0">
+        <tbody className="[&>tr:last-child>td]:border-b-0 [&>tr:last-child>td:first-child]:rounded-bl-[var(--radius-xl)] [&>tr:last-child>td:last-child]:rounded-br-[var(--radius-xl)]">
           {models.map((m) => {
             const provider = resolveListingProvider(m);
             const hasIn = m.inputPerMTok > 0;
@@ -152,9 +157,11 @@ export function ModelTable({
                 key={m.publicModel}
                 className="group relative transition-colors hover:bg-muted/50"
               >
-                <td className={cn(cell, "px-4 py-3 md:h-11 md:py-0")}>
-                  <div className="flex min-w-0 items-center gap-2.5">
-                    <BrandMark provider={provider} size={16} className="shrink-0" />
+                <td className={cn(cell, "px-4 py-3 md:h-14 md:py-0")}>
+                  <div className="flex min-w-0 items-center gap-3">
+                    <span className="flex size-7 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-card shadow-glass-sm">
+                      <BrandMark provider={provider} size={14} />
+                    </span>
                     <Link
                       href={detailHref(m)}
                       className="min-w-0 font-mono text-sm font-medium break-all text-foreground after:absolute after:inset-0 md:truncate md:break-normal"
@@ -165,7 +172,7 @@ export function ModelTable({
                       {PROVIDER_LABEL[provider]}
                     </span>
                   </div>
-                  <div className="mt-1 space-y-0.5 pl-[1.625rem] text-xs text-muted-foreground tabular-nums md:hidden">
+                  <div className="mt-1 space-y-0.5 pl-10 text-xs text-muted-foreground tabular-nums md:hidden">
                     <p>
                       {PROVIDER_LABEL[provider]} · {tCat(m.category)}
                     </p>
@@ -218,7 +225,7 @@ export function ModelList({
     <ul
       aria-label={label}
       className={cn(
-        "divide-y divide-border rounded-[var(--radius-lg)] border border-border",
+        "divide-y divide-border rounded-[var(--radius-xl)] border border-border bg-card shadow-glass-sm",
         className,
       )}
     >
@@ -237,7 +244,7 @@ export function ModelList({
             className="group relative px-4 py-4 transition-colors hover:bg-muted/50"
           >
             <div className="flex items-start gap-3">
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-card">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-card shadow-glass-sm">
                 <BrandMark provider={provider} size={16} />
               </span>
               <div className="min-w-0 flex-1">

@@ -11,3 +11,56 @@
   width: min(100% - 2 * clamp(1rem, 3vw, 2rem), 1280px);
   margin-inline: auto;
 }
+
+/**
+ * The one light source on the public canvas: a wide, low radial of the House
+ * blue (--ring) behind the hero, fading to the page background. Stronger in
+ * dark mode, where a near-black canvas needs the lift; in light it is a tint.
+ * Tokens only; no image, no grain.
+ */
+.router-glow {
+  position: relative;
+  isolation: isolate;
+}
+.router-glow::before {
+  content: "";
+  position: absolute;
+  inset: -12rem 0 auto;
+  height: 44rem;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      60% 55% at 70% 30%,
+      color-mix(in oklab, hsl(var(--ring)) 9%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      40% 40% at 15% 10%,
+      color-mix(in oklab, hsl(var(--ring)) 5%, transparent),
+      transparent 70%
+    );
+}
+.dark .router-glow::before {
+  background:
+    radial-gradient(
+      60% 55% at 70% 30%,
+      color-mix(in oklab, hsl(var(--ring)) 16%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      40% 40% at 15% 10%,
+      color-mix(in oklab, hsl(var(--ring)) 8%, transparent),
+      transparent 70%
+    );
+}
+
+/** A faint grid under the hero, masked to nothing at the edges. Hairline ink. */
+.router-grid {
+  background-image:
+    linear-gradient(to right, hsl(var(--border) / 0.6) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
+  background-size: 48px 48px;
+  /* A mask reads alpha only; any opaque token works as the solid stop. */
+  mask-image: radial-gradient(70% 60% at 60% 35%, hsl(var(--background)), transparent 75%);
+}

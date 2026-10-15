@@ -10,6 +10,7 @@ import {
   LogoTwitterX,
   LogoVisa,
 } from "@nebutra/icons";
+import { Button } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { ComponentType, SVGProps } from "react";
@@ -77,73 +78,93 @@ export function MarketFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-12 border-t border-border">
-      <div className="router-market-shell grid gap-10 py-14 md:grid-cols-[1.15fr_1fr] md:gap-14 lg:grid-cols-[1.2fr_1.6fr]">
-        {/* Brand column */}
-        <div className="min-w-0">
-          <Link href="/" className="inline-flex items-center" aria-label={brand.name}>
-            <BrandLogo variant="horizontal" className="h-7 w-auto" />
-          </Link>
-          <p className="mt-4 max-w-xs text-sm text-muted-foreground">{t("tagline")}</p>
-
-          <div className="mt-5 flex flex-wrap items-center gap-2">
-            {SOCIAL.map((s) => {
-              const Icon = s.Icon;
-              return (
-                <a
-                  key={s.id}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                >
-                  <Icon size={15} className="h-[15px] w-[15px]" />
-                </a>
-              );
-            })}
+    <footer className="mt-12">
+      {/* Closing call to action: the one place the page asks for the sale. */}
+      <div className="router-market-shell">
+        <div className="router-glow relative overflow-hidden rounded-[var(--radius-2xl)] border border-border bg-card px-6 py-12 shadow-glass-md md:px-12 md:py-16">
+          <div aria-hidden className="router-grid pointer-events-none absolute inset-0 -z-10" />
+          <h2 className="max-w-[18ch] text-3xl text-balance md:text-4xl">{t("cta.title")}</h2>
+          <p className="mt-3 max-w-[48ch] text-sm text-muted-foreground md:text-base">
+            {t("cta.body")}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button asChild size="lg" className="shadow-sheen">
+              <Link href="/keys">{t("cta.primary")}</Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link href="/models">{t("cta.secondary")}</Link>
+            </Button>
           </div>
-
-          <div className="mt-5 flex flex-wrap items-center gap-1.5">
-            {PAY_BADGES.map((p) => {
-              const Icon = p.Icon;
-              return (
-                <span
-                  key={p.id}
-                  role="img"
-                  aria-label={p.label}
-                  // A deliberate light plate: acceptance marks are specified on white,
-                  // and several (Visa navy, Amex) vanish on a dark surface.
-                  data-logo-plate
-                  className={[
-                    // allow-palette: payment network mark (Visa/MC/Amex) badge requires fixed white per brand guidelines (@allow-raw-color)
-                    "inline-flex h-7 items-center justify-center overflow-hidden rounded-md border border-neutral-6 bg-white shadow-ambient-sm",
-                    p.wide ? "px-1.5" : "w-10",
-                  ].join(" ")}
-                >
-                  <Icon
-                    size={p.wide ? 28 : 22}
-                    className={p.wide ? "h-[18px] w-auto" : "h-[18px] w-[18px]"}
-                    aria-hidden
-                  />
-                </span>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Link columns */}
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-          <FooterCol title={t("quickAccess")} links={QUICK_ACCESS} t={t} />
-          <FooterCol title={t("support")} links={SUPPORT} t={t} />
-          <FooterCol title={t("legal")} links={LEGAL} t={t} />
         </div>
       </div>
+      <div className="mt-16 border-t border-border">
+        <div className="router-market-shell grid gap-10 py-14 md:grid-cols-[1.15fr_1fr] md:gap-14 lg:grid-cols-[1.2fr_1.6fr]">
+          {/* Brand column */}
+          <div className="min-w-0">
+            <Link href="/" className="inline-flex items-center" aria-label={brand.name}>
+              <BrandLogo variant="horizontal" className="h-7 w-auto" />
+            </Link>
+            <p className="mt-4 max-w-xs text-sm text-muted-foreground">{t("tagline")}</p>
 
-      <div className="border-t border-border">
-        <div className="router-market-shell flex flex-col gap-1 py-5 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p>{t("copyright", { year, brandName: brand.name })}</p>
-          <p>{t("strapline")}</p>
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              {SOCIAL.map((s) => {
+                const Icon = s.Icon;
+                return (
+                  <a
+                    key={s.id}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                  >
+                    <Icon size={15} className="h-[15px] w-[15px]" />
+                  </a>
+                );
+              })}
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center gap-1.5">
+              {PAY_BADGES.map((p) => {
+                const Icon = p.Icon;
+                return (
+                  <span
+                    key={p.id}
+                    role="img"
+                    aria-label={p.label}
+                    // A deliberate light plate: acceptance marks are specified on white,
+                    // and several (Visa navy, Amex) vanish on a dark surface.
+                    data-logo-plate
+                    className={[
+                      // allow-palette: payment network mark (Visa/MC/Amex) badge requires fixed white per brand guidelines (@allow-raw-color)
+                      "inline-flex h-7 items-center justify-center overflow-hidden rounded-md border border-neutral-6 bg-white shadow-ambient-sm",
+                      p.wide ? "px-1.5" : "w-10",
+                    ].join(" ")}
+                  >
+                    <Icon
+                      size={p.wide ? 28 : 22}
+                      className={p.wide ? "h-[18px] w-auto" : "h-[18px] w-[18px]"}
+                      aria-hidden
+                    />
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Link columns */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+            <FooterCol title={t("quickAccess")} links={QUICK_ACCESS} t={t} />
+            <FooterCol title={t("support")} links={SUPPORT} t={t} />
+            <FooterCol title={t("legal")} links={LEGAL} t={t} />
+          </div>
+        </div>
+
+        <div className="border-t border-border">
+          <div className="router-market-shell flex flex-col gap-1 py-5 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
+            <p>{t("copyright", { year, brandName: brand.name })}</p>
+            <p>{t("strapline")}</p>
+          </div>
         </div>
       </div>
     </footer>
@@ -161,21 +182,21 @@ function FooterCol({
 }) {
   return (
     <div>
-      <p className="text-sm font-medium text-neutral-12">{title}</p>
+      <p className="text-xs font-medium text-foreground">{title}</p>
       <ul className="mt-3 space-y-2">
         {links.map((l) => (
           <li key={l.key}>
             {l.external ? (
               <a
                 href={l.href}
-                className="text-sm text-neutral-11 transition-colors hover:text-neutral-12"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 {t(`links.${l.key}`)}
               </a>
             ) : (
               <Link
                 href={l.href}
-                className="text-sm text-neutral-11 transition-colors hover:text-neutral-12"
+                className="text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 {t(`links.${l.key}`)}
               </Link>

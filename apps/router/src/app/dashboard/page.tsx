@@ -23,7 +23,7 @@ export async function generateMetadata() {
 
 function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: string }) {
   return (
-    <div className="rounded-[var(--radius-lg)] border border-border bg-card px-4 py-3">
+    <div className="rounded-[var(--radius-xl)] border border-border bg-card px-4 py-4 shadow-glass-sm">
       <p className="text-xs text-muted-foreground">{label}</p>
       <p className="mt-1 text-xl font-semibold tabular-nums">{value}</p>
       {hint ? (
@@ -146,7 +146,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mb-4 grid gap-3 lg:grid-cols-[1.4fr_1fr]">
-        <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
+        <div className="rounded-[var(--radius-xl)] border border-border bg-card p-4 shadow-glass-sm">
           <p className="mb-2 text-xs font-semibold">{t("connect.title")}</p>
           <div className="space-y-2">
             <CopyField label="baseURL" value={baseUrl} />
@@ -158,7 +158,7 @@ export default async function DashboardPage() {
   -d '{"model":"${sample}","messages":[{"role":"user","content":"ping"}]}'`}
           </pre>
         </div>
-        <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
+        <div className="rounded-[var(--radius-xl)] border border-border bg-card p-4 shadow-glass-sm">
           <p className="mb-2 text-xs font-semibold">{t("checklist.title")}</p>
           <ul className="space-y-1">
             {checklist.map((c) => (

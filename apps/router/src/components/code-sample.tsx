@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 export function CodeSample({ title, code }: { title: string; code: string }) {
   const t = useTranslations("shelf");
   return (
-    <figure className="min-w-0 overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card">
+    <figure className="min-w-0 overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-glass-sm">
       <figcaption className="flex h-10 items-center justify-between gap-2 border-b border-border pr-1.5 pl-4">
         <span className="text-xs font-medium text-muted-foreground">{title}</span>
         <CopyButton value={code} label={t("copy")} copiedLabel={t("copied")} size="sm" />

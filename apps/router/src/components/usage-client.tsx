@@ -15,7 +15,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { type ReactNode, useCallback, useMemo, useState } from "react";
+import { type MouseEvent, type ReactNode, useCallback, useId, useMemo, useState } from "react";
 import { AsyncSection, Skeleton, SkeletonRows } from "@/components/console-states";
 import {
   consoleApi,
@@ -275,7 +275,7 @@ function Panel({
   children: ReactNode;
 }) {
   return (
-    <section className="overflow-hidden rounded-[var(--radius-lg)] border border-border">
+    <section className="overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-glass-sm">
       <div className="flex h-11 items-center gap-2 border-b border-border px-4">
         <h2 className="text-sm font-medium">{title}</h2>
         {subtitle ? <span className="text-xs text-muted-foreground">{subtitle}</span> : null}
@@ -372,33 +372,52 @@ function niceCeiling(peak: number): number {
  */
 function HistoryChart({ history }: { history: UsageHistory }) {
   const t = useTranslations("console.usage.trend");
+  const gradientId = useId();
   const [active, setActive] = useState<number | null>(null);
-  const peak = history.buckets.reduce((max, bucket) => Math.max(max, bucket.cost), 0);
+  const buckets = history.buckets;
+  const peak = buckets.reduce((max, bucket) => Math.max(max, bucket.cost), 0);
   const empty = peak === 0;
   const ceiling = niceCeiling(peak);
-  const total = history.buckets.reduce((sum, bucket) => sum + bucket.cost, 0);
-  const focus = active !== null ? history.buckets[active] : undefined;
+  const total = buckets.reduce((sum, bucket) => sum + bucket.cost, 0);
+  const focus = active !== null ? buckets[active] : undefined;
   const ticks = [1, 0.5, 0];
-  const first = history.buckets[0]?.bucket ?? "";
-  const last = history.buckets[history.buckets.length - 1]?.bucket ?? "";
+  const first = buckets[0]?.bucket ?? "";
+  const last = buckets[buckets.length - 1]?.bucket ?? "";
+
+  // Plot in a 0..100 box; the SVG stretches to the frame.
+  const n = Math.max(buckets.length - 1, 1);
+  const x = (i: number) => (i / n) * 100;
+  const y = (cost: number) => 100 - (cost / ceiling) * 100;
+  const line = buckets.map((b, i) => `${i === 0 ? "M" : "L"}${x(i)},${y(b.cost)}`).join(" ");
+  const area = `${line} L100,100 L0,100 Z`;
+
+  const onMove = (event: MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const ratio = (event.clientX - rect.left) / rect.width;
+    setActive(Math.max(0, Math.min(buckets.length - 1, Math.round(ratio * n))));
+  };
 
   return (
-    <div className="px-4 pt-3 pb-4">
-      <p className="h-5 text-xs text-muted-foreground tabular-nums" aria-live="polite">
-        {focus
-          ? t("readout", {
-              bucket: formatBucket(focus.bucket, history.granularity),
-              amount: formatAmount(focus.cost),
-              count: Math.round(focus.requests),
-            })
-          : empty
-            ? null
-            : t("total", { amount: formatAmount(total) })}
-      </p>
-      <div className="relative mt-2 flex h-48 gap-3">
+    <div className="px-4 pt-4 pb-4">
+      <div className="flex items-baseline justify-between gap-3">
+        <p className="text-2xl tabular-nums">
+          {formatAmount(focus ? focus.cost : total)}
+          <span className="ml-1.5 text-xs text-muted-foreground">USD</span>
+        </p>
+        <p className="text-xs text-muted-foreground tabular-nums" aria-live="polite">
+          {focus
+            ? t("readout", {
+                bucket: formatBucket(focus.bucket, history.granularity),
+                amount: formatAmount(focus.cost),
+                count: Math.round(focus.requests),
+              })
+            : t("windowTotal")}
+        </p>
+      </div>
+      <div className="relative mt-4 flex h-52 gap-3">
         <div
           aria-hidden
-          className="flex w-12 shrink-0 flex-col justify-between text-right text-xs text-muted-foreground tabular-nums"
+          className="flex w-10 shrink-0 flex-col justify-between text-right text-xs text-muted-foreground tabular-nums"
         >
           {ticks.map((tick) => (
             <span key={tick} className="-translate-y-1/2 first:translate-y-0 last:translate-y-0">
@@ -406,7 +425,11 @@ function HistoryChart({ history }: { history: UsageHistory }) {
             </span>
           ))}
         </div>
-        <div className="relative min-w-0 flex-1">
+        <div
+          className="relative min-w-0 flex-1"
+          onMouseMove={empty ? undefined : onMove}
+          onMouseLeave={() => setActive(null)}
+        >
           <div
             aria-hidden
             className="pointer-events-none absolute inset-0 flex flex-col justify-between"
@@ -421,45 +444,81 @@ function HistoryChart({ history }: { history: UsageHistory }) {
             ))}
           </div>
           {empty ? (
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-              <p className="text-sm font-medium">{t("emptyTitle")}</p>
-              <p className="mt-1 max-w-sm text-xs text-muted-foreground">{t("emptyDescription")}</p>
-            </div>
+            <>
+              {/* Ghost: the shape of a chart, so the page reads the same before the first call. */}
+              <svg
+                aria-hidden
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                className="absolute inset-0 h-full w-full text-muted-foreground opacity-15"
+              >
+                <path
+                  d="M0,80 C15,70 25,74 38,60 S60,52 72,44 S90,40 100,30 L100,100 L0,100 Z"
+                  fill="currentColor"
+                />
+              </svg>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <p className="text-sm font-medium">{t("emptyTitle")}</p>
+                <p className="mt-1 max-w-sm text-xs text-muted-foreground">
+                  {t("emptyDescription")}
+                </p>
+              </div>
+            </>
           ) : (
-            <ul
-              className="relative flex h-full items-end gap-px"
-              onMouseLeave={() => setActive(null)}
-            >
-              {history.buckets.map((bucket, index) => {
-                const height = bucket.cost > 0 ? Math.max(1.5, (bucket.cost / ceiling) * 100) : 0;
-                const label = t("bar", {
-                  bucket: formatBucket(bucket.bucket, history.granularity),
-                  amount: formatAmount(bucket.cost),
-                  count: Math.round(bucket.requests),
-                });
-                return (
-                  <li
-                    key={bucket.bucket}
-                    className="flex h-full min-w-0 flex-1 items-end"
-                    onMouseEnter={() => setActive(index)}
-                  >
-                    <span
-                      role="img"
-                      aria-label={label}
-                      className={[
-                        "block w-full rounded-t-[2px] transition-colors",
-                        active === index ? "bg-foreground" : "bg-foreground/35",
-                      ].join(" ")}
-                      style={{ height: `${height}%` }}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
+            <>
+              <svg
+                role="img"
+                aria-label={t("chartLabel", { amount: formatAmount(total) })}
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                className="absolute inset-0 h-full w-full overflow-visible"
+              >
+                <defs>
+                  <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(var(--ring))" stopOpacity="0.28" />
+                    <stop offset="100%" stopColor="hsl(var(--ring))" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <path d={area} fill={`url(#${gradientId})`} />
+                <path
+                  d={line}
+                  fill="none"
+                  stroke="hsl(var(--ring))"
+                  strokeWidth="1.5"
+                  vectorEffect="non-scaling-stroke"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              {focus && active !== null ? (
+                <>
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-y-0 border-l border-foreground/30"
+                    style={{ left: `${x(active)}%` }}
+                  />
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-card bg-ring shadow-sm"
+                    style={{ left: `${x(active)}%`, top: `${y(focus.cost)}%` }}
+                  />
+                </>
+              ) : null}
+              <table className="sr-only">
+                <caption>{t("title")}</caption>
+                <tbody>
+                  {buckets.map((bucket) => (
+                    <tr key={bucket.bucket}>
+                      <th scope="row">{formatBucket(bucket.bucket, history.granularity)}</th>
+                      <td>{formatAmount(bucket.cost)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
           )}
         </div>
       </div>
-      <div className="mt-2 flex justify-between pl-15 text-xs text-muted-foreground tabular-nums">
+      <div className="mt-2 flex justify-between pl-13 text-xs text-muted-foreground tabular-nums">
         <span>{formatBucket(first, history.granularity)}</span>
         <span>{formatBucket(last, history.granularity)}</span>
       </div>
@@ -499,7 +558,7 @@ function ModelShare({ rows }: { rows: readonly UsageByModelRow[] }) {
             <div className="mt-2 flex items-center gap-3">
               <span className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-muted">
                 <span
-                  className="block h-full rounded-full bg-foreground/70"
+                  className="block h-full rounded-full bg-ring"
                   style={{ width: `${max > 0 ? (row.cost / max) * 100 : 0}%` }}
                 />
               </span>
