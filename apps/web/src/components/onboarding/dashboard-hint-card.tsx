@@ -51,13 +51,14 @@ export function DashboardHintCard({ cookieName }: Props) {
           <div className="flex-1 pr-6">
             <p className="text-sm font-semibold text-neutral-12">{tc("welcomeToYourSailor")}</p>
             <p className="mt-1 text-xs leading-relaxed text-neutral-11">
-              {tc("press")}{" "}
-              <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] text-neutral-12">
-                ⌘K
-              </kbd>{" "}
-              {tc("toOpenTheCommand")}{" "}
-              <span className="font-medium text-neutral-12">{tc("mode")}</span>{" "}
-              {tc("belowToFocusYour")}
+              {tc.rich("intro", {
+                kbd: (chunks) => (
+                  <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs text-neutral-12">
+                    {chunks}
+                  </kbd>
+                ),
+                strong: (chunks) => <span className="font-medium text-neutral-12">{chunks}</span>,
+              })}
             </p>
 
             <div className="mt-3 flex items-center gap-2">

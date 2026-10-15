@@ -78,19 +78,13 @@ export default function ShortcutsPage() {
       <header>
         <h1 className="text-base font-semibold text-neutral-12">{tc("keyboardShortcuts")}</h1>
         <p className="mt-1 text-sm text-neutral-11">
-          {tc("press")}{" "}
-          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs">
-            ⌘K
-          </kbd>{" "}
-          {tc("anywhereToRunAny")}{" "}
-          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs">
-            ↑
-          </kbd>
-          /
-          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs">
-            ↓
-          </kbd>{" "}
-          {tc("toNavigateTheList")}
+          {tc.rich("intro", {
+            kbd: (chunks) => (
+              <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs">
+                {chunks}
+              </kbd>
+            ),
+          })}
         </p>
       </header>
 

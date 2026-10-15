@@ -1830,13 +1830,10 @@
     },
     "onboardingDashboardHintCard": {
       "welcomeToYourSailor": "欢迎来到你的 Sailor 工作区。",
-      "press": "按",
-      "toOpenTheCommand": "打开命令面板。在下方选择一个",
-      "mode": "模式",
-      "belowToFocusYour": "来聚焦你的工作：对话、数据、工作流或搜索。",
       "takeTheStepTour": "开始 4 步导览",
       "skip": "跳过",
-      "dismissHint": "关闭提示"
+      "dismissHint": "关闭提示",
+      "intro": "按 <kbd>⌘K</kbd> 打开命令面板。在下方选择一个<strong>模式</strong>来聚焦你的工作：对话、数据、工作流或搜索。"
     },
     "securitySecuritySettingsClient": {
       "loadingSecuritySettings": "正在加载安全设置…",
@@ -1965,11 +1962,9 @@
     },
     "shortcutsPage": {
       "keyboardShortcuts": "键盘快捷键",
-      "press": "在任意位置按",
-      "anywhereToRunAny": "即可运行任何命令。使用",
-      "toNavigateTheList": "在列表中移动。",
       "global": "全局",
-      "viaK": "通过 ⌘K"
+      "viaK": "通过 ⌘K",
+      "intro": "在任意位置按 <kbd>⌘K</kbd> 即可运行任何命令。用 <kbd>↑</kbd>/<kbd>↓</kbd> 在列表中移动。"
     },
     "webhooksPage": {
       "subscribeToEventsEmitted": "订阅工作区发出的事件。每个请求体都会用你端点的密钥签名，方便你校验真实性。",
