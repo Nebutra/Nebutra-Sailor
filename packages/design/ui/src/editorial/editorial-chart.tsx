@@ -153,9 +153,7 @@ export function EditorialChart({
         {(label || title) && (
           <div className="mb-5">
             {label && <div className={EDITORIAL_EYEBROW}>{label}</div>}
-            {title && (
-              <h3 className="mt-2 text-base font-semibold leading-6 text-foreground">{title}</h3>
-            )}
+            {title && <h3 className="mt-2 text-base leading-6 text-foreground">{title}</h3>}
           </div>
         )}
         {variant === "line" ? (

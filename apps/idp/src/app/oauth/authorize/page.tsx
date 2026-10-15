@@ -23,7 +23,7 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
     return (
       <div className="flex min-h-screen items-center justify-center p-4">
         <div className="rounded-[var(--radius-xl)] border border-destructive/20 bg-destructive/10 px-8 py-6 text-center">
-          <h1 className="text-xl font-semibold text-destructive-strong">Invalid Request</h1>
+          <h1 className="text-xl text-destructive-strong">Invalid Request</h1>
           <p className="mt-2 text-sm text-destructive-strong/80">Missing interaction ID.</p>
         </div>
       </div>
@@ -34,7 +34,7 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
     return (
       <div className="flex min-h-screen items-center justify-center p-4">
         <div className="max-w-md rounded-[var(--radius-xl)] border border-border bg-background px-8 py-6 text-center shadow-[var(--elevation-md)]">
-          <h1 className="text-xl font-semibold text-foreground">Authorization UI unavailable</h1>
+          <h1 className="text-xl text-foreground">Authorization UI unavailable</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Nebutra-owned SSO is deployed only after the login and consent interaction handlers are
             connected to the canonical user session.
@@ -88,9 +88,7 @@ export default async function AuthorizePage({ searchParams }: AuthorizePageProps
             >
               N
             </div>
-            <h1 className="text-xl font-semibold tracking-tight text-foreground">
-              Authorize Access
-            </h1>
+            <h1 className="text-xl tracking-tight text-foreground">Authorize Access</h1>
             <p className="mt-2 text-sm text-muted-foreground">
               <span className="font-medium text-foreground">
                 {interactionDetails.params.client_id}

@@ -149,7 +149,7 @@ export function W3EncodingDetectRunner({ toolId }: { toolId: string }) {
   const renderDetail = (o: EncodingDetectOutput) => (
     <div className="space-y-4">
       <section className="space-y-2">
-        <h3 className="text-sm font-medium text-neutral-11">{t("encodingDetect.candidates")}</h3>
+        <h3 className="text-sm text-neutral-11">{t("encodingDetect.candidates")}</h3>
         <ul className="space-y-1.5">
           {o.candidates.map((c) => (
             <li key={c.encoding} className="flex items-center gap-3">
@@ -170,7 +170,7 @@ export function W3EncodingDetectRunner({ toolId }: { toolId: string }) {
       </section>
 
       <section className="space-y-2">
-        <h3 className="text-sm font-medium text-neutral-11">{t("encodingDetect.lineEndings")}</h3>
+        <h3 className="text-sm text-neutral-11">{t("encodingDetect.lineEndings")}</h3>
         <dl className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm sm:grid-cols-3">
           <Stat label="LF" value={o.lineEndings.lf} />
           <Stat label="CR" value={o.lineEndings.cr} />
@@ -179,7 +179,7 @@ export function W3EncodingDetectRunner({ toolId }: { toolId: string }) {
       </section>
 
       <section className="space-y-2">
-        <h3 className="text-sm font-medium text-neutral-11">{t("encodingDetect.byteStats")}</h3>
+        <h3 className="text-sm text-neutral-11">{t("encodingDetect.byteStats")}</h3>
         <dl className="grid grid-cols-2 gap-x-6 gap-y-1 text-sm sm:grid-cols-4">
           <Stat label={t("encodingDetect.totalBytes")} value={o.byteStats.totalBytes} />
           <Stat label={t("encodingDetect.asciiBytes")} value={o.byteStats.asciiCount} />
@@ -190,7 +190,7 @@ export function W3EncodingDetectRunner({ toolId }: { toolId: string }) {
 
       {o.mojibake ? (
         <section className="space-y-2">
-          <h3 className="text-sm font-medium text-neutral-11">{t("encodingDetect.mojibake")}</h3>
+          <h3 className="text-sm text-neutral-11">{t("encodingDetect.mojibake")}</h3>
           <ShellCode label={t("encodingDetect.mojibake")}>{o.mojibake.recovered}</ShellCode>
         </section>
       ) : null}

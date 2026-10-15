@@ -86,7 +86,7 @@ export default function ComponentsIndexPage() {
   return (
     <div className="flex flex-col gap-12">
       <header className="flex max-w-3xl flex-col gap-4">
-        <h1 className="font-semibold text-3xl text-foreground tracking-tight">Components</h1>
+        <h1 className="text-3xl text-foreground tracking-tight">Components</h1>
         <p className="text-muted-foreground">
           Real components from <code className="font-mono text-sm">@nebutra/ui</code>, imported and
           rendered on this page against the live tokens. Nothing here is a screenshot or a code
@@ -104,7 +104,7 @@ export default function ComponentsIndexPage() {
 
       {drift.length > 0 ? (
         <section className="rounded-xl bg-destructive/10 p-6" aria-labelledby="drift-heading">
-          <h2 className="font-medium text-destructive-strong text-base" id="drift-heading">
+          <h2 className="text-destructive-strong text-base" id="drift-heading">
             Registry drift — {drift.length} claimed export{drift.length === 1 ? "" : "s"} not found
           </h2>
           <p className="mt-2 max-w-prose text-muted-foreground text-sm">
@@ -146,7 +146,7 @@ function GroupSection({ group }: { group: GroupView }) {
     <section aria-labelledby={`${group.id}-heading`} className="flex flex-col gap-6">
       <div className="flex flex-col gap-1">
         <div className="flex flex-wrap items-baseline gap-3">
-          <h2 className="font-medium text-foreground text-xl" id={`${group.id}-heading`}>
+          <h2 className="text-foreground text-xl" id={`${group.id}-heading`}>
             {group.label}
           </h2>
           <code className="font-mono text-muted-foreground text-xs">{group.importPath}</code>
@@ -245,7 +245,7 @@ function LegacyClaims() {
   return (
     <section aria-labelledby="legacy-heading" className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        <h2 className="font-medium text-foreground text-xl" id="legacy-heading">
+        <h2 className="text-foreground text-xl" id="legacy-heading">
           Claimed by design-docs, never built
         </h2>
         <p className="max-w-prose text-muted-foreground text-sm">

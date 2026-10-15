@@ -165,10 +165,7 @@ export function CookieBanner({
       >
         <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0 flex-1">
-            <h2
-              id="cookie-banner-title"
-              className="text-base font-semibold text-[var(--neutral-12)]"
-            >
+            <h2 id="cookie-banner-title" className="text-base text-[var(--neutral-12)]">
               {translations.title}
             </h2>
             <p className="mt-1 max-w-3xl text-sm leading-6 text-[var(--neutral-11)]">

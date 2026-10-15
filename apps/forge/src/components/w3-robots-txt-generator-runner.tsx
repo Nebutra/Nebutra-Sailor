@@ -224,18 +224,18 @@ export function W3RobotsTxtGeneratorRunner({ toolId }: { toolId: string }) {
         </div>
 
         <section className="space-y-2" aria-label={t("robotsTxt.searchAgents")}>
-          <h3 className="text-sm font-medium text-neutral-12">{t("robotsTxt.searchAgents")}</h3>
+          <h3 className="text-sm text-neutral-12">{t("robotsTxt.searchAgents")}</h3>
           <div className="space-y-2">{SEARCH_AGENTS.map(renderAgentRow)}</div>
         </section>
 
         <section className="space-y-2" aria-label={t("robotsTxt.aiAgents")}>
-          <h3 className="text-sm font-medium text-neutral-12">{t("robotsTxt.aiAgents")}</h3>
+          <h3 className="text-sm text-neutral-12">{t("robotsTxt.aiAgents")}</h3>
           <ShellNote>{t("robotsTxt.aiAgentsNote")}</ShellNote>
           <div className="space-y-2">{AI_AGENTS.map(renderAgentRow)}</div>
         </section>
 
         <section className="space-y-2" aria-label={t("robotsTxt.rules")}>
-          <h3 className="text-sm font-medium text-neutral-12">{t("robotsTxt.rules")}</h3>
+          <h3 className="text-sm text-neutral-12">{t("robotsTxt.rules")}</h3>
           <ShellNote>{t("robotsTxt.rulesNote")}</ShellNote>
           {rules.map((rule, index) => (
             <div key={rule.id} className="flex flex-wrap items-end gap-2">
@@ -291,7 +291,7 @@ export function W3RobotsTxtGeneratorRunner({ toolId }: { toolId: string }) {
         </section>
 
         <section className="space-y-2" aria-label={t("robotsTxt.sitemaps")}>
-          <h3 className="text-sm font-medium text-neutral-12">{t("robotsTxt.sitemaps")}</h3>
+          <h3 className="text-sm text-neutral-12">{t("robotsTxt.sitemaps")}</h3>
           <ShellNote>{t("robotsTxt.sitemapsNote")}</ShellNote>
           {sitemaps.map((row, index) => (
             <div key={row.id} className="flex flex-wrap items-end gap-2">

@@ -34,7 +34,7 @@ export const Default: Story = {
     <div className="relative h-[400px] w-full overflow-hidden bg-background rounded-xl">
       <StarsCanvas position="absolute" zIndex={0} />
       <div className="relative z-10 flex h-full items-center justify-center">
-        <h2 className="text-3xl font-bold text-white">Starfield</h2>
+        <h2 className="text-3xl text-white">Starfield</h2>
       </div>
     </div>
   ),

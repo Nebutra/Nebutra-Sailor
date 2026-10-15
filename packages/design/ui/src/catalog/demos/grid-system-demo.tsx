@@ -28,7 +28,7 @@ export function GridSystemDemo() {
   return (
     <div className="mx-auto flex w-full max-w-4xl flex-col gap-6 px-4 py-8">
       <div className="space-y-2">
-        <h3 className="text-lg font-semibold tracking-tight">Responsive guide grid</h3>
+        <h3 className="text-lg tracking-tight">Responsive guide grid</h3>
         <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
           Guide lines belong to the grid system. Solid cells intentionally clip the guides behind
           dense content.

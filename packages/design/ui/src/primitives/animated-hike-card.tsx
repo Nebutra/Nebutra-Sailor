@@ -74,7 +74,7 @@ export const AnimatedHikeCard = ({
       <div className="flex flex-col">
         {/* Card Header: Title and Arrow */}
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-3xl font-bold tracking-tighter">{title}</h2>
+          <h2 className="text-3xl tracking-tighter">{title}</h2>
           <ArrowRight className="h-6 w-6 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
         </div>
 

@@ -82,7 +82,7 @@ export default async function RootHubPage({ params }: Props) {
         </Section>
 
         <section aria-labelledby="other-roots" className="space-y-3">
-          <h2 id="other-roots" className="text-sm font-semibold text-neutral-12">
+          <h2 id="other-roots" className="text-sm text-neutral-12">
             {tRoot("otherRoots")}
           </h2>
           <ul className="flex flex-wrap gap-2">

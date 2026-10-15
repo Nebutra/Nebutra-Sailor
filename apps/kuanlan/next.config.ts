@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
     "@nebutra/logger",
     "@nebutra/rate-limit",
     "@nebutra/storage",
+    "@nebutra/tokens",
   ],
   // Prisma and its pg driver adapter are Node-only; keep them out of the
   // client bundle and let output-file tracing carry them as externals — the

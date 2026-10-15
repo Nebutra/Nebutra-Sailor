@@ -108,7 +108,7 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
           </section>
 
           <section>
-            <h2 className="mb-4 text-2xl font-semibold tracking-tight">Typefaces</h2>
+            <h2 className="mb-4 text-2xl tracking-tight">Typefaces</h2>
             <ul className="divide-y divide-[var(--tl-line-soft)] border-y border-[var(--tl-ink)]">
               {specimen.typefaces.map((ref) => {
                 const tf = getTypeface(ref.typefaceId);
@@ -143,7 +143,7 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
 
           {specimen.hierarchy ? (
             <section>
-              <h2 className="mb-4 text-2xl font-semibold tracking-tight">Hierarchy</h2>
+              <h2 className="mb-4 text-2xl tracking-tight">Hierarchy</h2>
               <table className="w-full text-left text-sm">
                 <thead>
                   <tr className="border-b-2 border-[var(--tl-ink)] text-[var(--tl-muted)]">
@@ -175,7 +175,7 @@ export default async function WorkDetailPage({ params }: { params: Params }) {
       {extract ? (
         <section className="mx-auto mt-16 max-w-[52rem] border-2 border-[var(--tl-ink)] bg-[var(--tl-paper)] p-8 md:p-10">
           <p className="tl-kicker mb-2">For agents</p>
-          <h2 className="text-2xl font-semibold tracking-tight">Extract pack</h2>
+          <h2 className="text-2xl tracking-tight">Extract pack</h2>
           <p className="mt-2 text-sm text-[var(--tl-muted)]">
             schema v{extract.schemaVersion} · faces as listed by the source · licenses included
           </p>

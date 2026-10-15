@@ -303,7 +303,7 @@ function EntryDetail({ entry }: { entry: CatalogEntry }) {
     <div className="mx-auto flex w-full max-w-content flex-col gap-5 p-6">
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="font-semibold text-2xl text-foreground">{entry.title}</h2>
+          <h2 className="text-2xl text-foreground">{entry.title}</h2>
           <Badge variant={entry.status === "stable" ? "green-subtle" : "gray-subtle"} size="sm">
             {entry.status === "stable" ? "Stable" : "Experimental"}
           </Badge>
@@ -363,7 +363,7 @@ export function StudioFrame() {
       ) : null}
       {groups.map((group) => (
         <section key={group.id} className="flex flex-col gap-3">
-          <h2 className="font-medium text-muted-foreground text-xs">
+          <h2 className="text-muted-foreground text-xs">
             {group.title} <span className="tabular-nums">{group.entries.length}</span>
           </h2>
           <ul

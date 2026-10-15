@@ -1,7 +1,5 @@
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
 import "./globals.css";
-import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Suspense } from "react";
@@ -28,11 +26,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       // catalog names. next/font reaches a self-hosted face only through its
       // variable, so without this every specimen on a type-specimen site fell
       // through to the page font — 128 faces rendering as one.
-      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName} ${catalogFontClassName}`}
+      className={`${fontClassName} ${catalogFontClassName}`}
       suppressHydrationWarning
     >
       <body className="min-h-screen font-sans antialiased" suppressHydrationWarning>
-        <CjkFontFace />
+        <FontFaces />
 
         <TypeLensMotion>
           {/* Suspense: useSearchParams requires a boundary during static render */}

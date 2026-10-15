@@ -16,7 +16,7 @@ export function TreeViewDemo() {
     <div className="max-w-md p-4 md:p-8 mx-auto w-full">
       <div className="overflow-hidden rounded-xl border bg-card text-card-foreground shadow-sm">
         <div className="p-4 border-b bg-muted/50">
-          <h3 className="font-semibold text-sm">Project Structure</h3>
+          <h3 className="text-sm">Project Structure</h3>
         </div>
 
         <div className="p-2 h-[400px] overflow-y-auto">

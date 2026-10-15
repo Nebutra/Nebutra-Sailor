@@ -108,7 +108,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
 
           <AnimateIn preset="emerge">
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance text-foreground mb-14"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance text-foreground mb-14"
               style={{
                 letterSpacing: "var(--tracking-display)",
                 lineHeight: "var(--leading-display)",
@@ -179,7 +179,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             </div>
             <AnimateIn preset="emerge">
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground"
+                className="text-3xl md:text-4xl lg:text-5xl text-balance text-foreground"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -205,7 +205,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   className="h-full rounded-[var(--radius-2xl)] border border-border/60 bg-background p-6 md:p-7"
                 >
                   <span className="text-sm text-muted-foreground mb-4 block">0{idx + 1}</span>
-                  <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground mb-3">
+                  <h3 className="text-lg md:text-xl tracking-tight text-foreground mb-3">
                     {goal.title}
                   </h3>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
@@ -240,7 +240,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             </div>
             <AnimateIn preset="emerge">
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-8"
+                className="text-3xl md:text-4xl lg:text-5xl text-balance text-foreground mb-8"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -270,7 +270,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   className="group h-full rounded-[var(--radius-card)] border border-border/60 bg-muted/20 p-8 md:p-10 transition-colors duration-500 hover:border-border hover:bg-muted/40"
                 >
                   <span className="text-sm text-muted-foreground mb-6 block">0{idx + 1} / 03</span>
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-2">
+                  <h3 className="text-2xl md:text-3xl tracking-tight text-foreground mb-2">
                     {content.category}
                   </h3>
                   <p className="text-sm text-muted-foreground mb-6">{content.subtitle}</p>
@@ -306,7 +306,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             </div>
             <AnimateIn preset="emerge">
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-8"
+                className="text-3xl md:text-4xl lg:text-5xl text-balance text-foreground mb-8"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -333,7 +333,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                 </span>
               </div>
               <h3
-                className="text-2xl md:text-3xl font-semibold text-foreground mb-4"
+                className="text-2xl md:text-3xl text-foreground mb-4"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -382,7 +382,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                 </span>
               </div>
               <h3
-                className="text-2xl md:text-3xl font-semibold text-foreground mb-4"
+                className="text-2xl md:text-3xl text-foreground mb-4"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -447,7 +447,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             </div>
             <AnimateIn preset="emerge">
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance text-foreground mb-8"
+                className="text-3xl md:text-4xl lg:text-5xl text-balance text-foreground mb-8"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -485,7 +485,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   <span className="relative text-sm text-muted-foreground mb-6 block">
                     {tp("label", { number: content.number })}
                   </span>
-                  <h3 className="relative text-xl md:text-2xl font-bold tracking-tight text-foreground mb-5 leading-snug">
+                  <h3 className="relative text-xl md:text-2xl tracking-tight text-foreground mb-5 leading-snug">
                     {content.title}
                   </h3>
                   <p className="relative text-sm md:text-base text-muted-foreground leading-relaxed">

@@ -39,7 +39,11 @@ export const FONT_REGISTRY: Record<string, string> = {
   manrope: "--font-reg-manrope",
   sora: "--font-reg-sora",
   "work sans": "--font-reg-work-sans",
-  "dm sans": "--font-reg-dm-sans",
+  // The registry used to carry a second DM Sans face (--font-reg-dm-sans) from
+  // the same file as the brand heading face. A skin naming DM Sans then made the
+  // page download both: nebutra.com fetched two DM Sans files and rendered h1 in
+  // one and h3 in the other (2026-10-16 audit). One family, one face.
+  "dm sans": "--font-dm-sans",
   "plus jakarta sans": "--font-reg-plus-jakarta-sans",
   outfit: "--font-reg-outfit",
   figtree: "--font-reg-figtree",
@@ -76,7 +80,22 @@ export function resolveRegistryVar(stack: string): string | undefined {
 export function withRegistryFont(stack: string | undefined): string | undefined {
   if (!stack) return stack;
   const variable = resolveRegistryVar(stack);
-  return variable ? `var(${variable}), ${stack}` : stack;
+  return variable ? `${registryVar(variable, stack.split(",")[0] ?? "")}, ${stack}` : stack;
+}
+
+/**
+ * `var(--font-x, <family>)` — ALWAYS with the declared family as the fallback.
+ *
+ * A `var()` with no fallback whose variable is undefined does not skip itself:
+ * it makes the whole font-family declaration invalid at computed-value time,
+ * and the element drops to the inherited face or the UA default. That is how
+ * auth.nebutra.com rendered in ui-sans-serif and sso.nebutra.com in Times
+ * (2026-10-16 audit): their layouts never applied the loader class, so every
+ * stack that opened with a bare var() was void.
+ */
+export function registryVar(variable: string, family: string): string {
+  const fallback = family.trim().replace(/'/g, '"');
+  return fallback ? `var(${variable}, ${fallback})` : `var(${variable})`;
 }
 
 /**
@@ -99,7 +118,7 @@ export function withNearestRegistryFont(stack: string | undefined): string | und
   if (!stack) return stack;
   for (const token of stack.split(",")) {
     const variable = FONT_REGISTRY[normalizeFamily(token)];
-    if (variable) return `var(${variable}), ${stack}`;
+    if (variable) return `${registryVar(variable, token)}, ${stack}`;
   }
   return stack;
 }

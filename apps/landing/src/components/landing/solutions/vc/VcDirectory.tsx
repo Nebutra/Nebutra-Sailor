@@ -82,7 +82,7 @@ function VcCard({
       <div className="flex items-start gap-3">
         <VcLogo src={logoSrc} name={org.name} />
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-base font-semibold text-neutral-12" title={org.name}>
+          <h3 className="truncate text-base text-neutral-12" title={org.name}>
             <Link
               href={`${hrefBase}/${org.id}` as LocalizedHref}
               className="outline-none after:absolute after:inset-0 after:content-['']"

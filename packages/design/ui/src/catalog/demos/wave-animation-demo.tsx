@@ -27,7 +27,7 @@ export function WaveAnimationDemo() {
           <div className="p-3 bg-indigo-500/20 text-indigo-400 rounded-full">
             <Activity className="w-6 h-6" />
           </div>
-          <h2 className="text-2xl font-bold tracking-tighter text-white">Audio Visualizer</h2>
+          <h2 className="text-2xl tracking-tighter text-white">Audio Visualizer</h2>
         </div>
 
         <p className="text-zinc-300 max-w-sm text-sm leading-relaxed">

@@ -68,7 +68,7 @@ function Block({
     <section className="grid min-w-0 gap-2">
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="font-medium text-foreground text-xs">{title}</h3>
+          <h3 className="text-foreground text-xs">{title}</h3>
           {hint ? <p className="text-2xs text-muted-foreground">{hint}</p> : null}
         </div>
         {action}

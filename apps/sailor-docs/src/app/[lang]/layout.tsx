@@ -1,15 +1,14 @@
 // Decoupled nav logo: VI color mark (light) / mono mark (dark) + independent wordmark.
+
 import { LogomarkSVG, WordmarkEnSVG } from "@nebutra/brand";
 import logoColorMark from "@nebutra/brand/assets/logo/logo-color.svg";
 import { brand } from "@nebutra/brand/metadata";
-import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { Banner } from "fumadocs-ui/components/banner";
 import { I18nProvider } from "fumadocs-ui/contexts/i18n";
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { RootProvider } from "fumadocs-ui/provider/next";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -32,12 +31,8 @@ import "../globals.css";
 const logoColorMarkSrc =
   typeof logoColorMark === "string" ? logoColorMark : (logoColorMark as { src: string }).src;
 
-// GeistSans → --font-geist-sans | GeistMono → --font-geist-mono
-// Matches the Precision Stack used across apps/web and apps/landing
-// cjkFontClassName -> --font-dm-sans (headings, next/font/local — no build-time
-// fetch); <CjkFontFace /> declares MiSans from the asset CDN. Geist has no CJK
-// coverage; it stays first in --font-sans and keeps Latin + numerals, and only
-// CJK falls through to MiSans — whose unicode-range carries no Latin at all.
+// Fonts: `fontClassName` + <FontFaces /> from @nebutra/tokens/fonts — the one
+// loader every app uses (Geist, Geist Mono, DM Sans headings, MiSans for CJK).
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_DOCS_ORIGIN_URL || "https://nebutra.com/docs"),
@@ -103,13 +98,9 @@ export default async function RootLayout({
   const dynamicTree = filterSidebarTree(originalTree, userRole);
 
   return (
-    <html
-      lang={htmlLangForLanguage(lang)}
-      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
-      suppressHydrationWarning
-    >
+    <html lang={htmlLangForLanguage(lang)} className={`${fontClassName}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <CjkFontFace />
+        <FontFaces />
 
         <RootProvider
           search={{

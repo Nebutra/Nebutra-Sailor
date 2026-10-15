@@ -74,14 +74,14 @@ function PortableTextRenderer({ blocks }: { blocks: PortableTextBlock[] }) {
           const text = block.children?.map((child) => child.text ?? "").join("") || "";
           if (block.style === "h2") {
             return (
-              <h2 key={blockKey} className="text-lg font-semibold mt-6 mb-3">
+              <h2 key={blockKey} className="text-lg mt-6 mb-3">
                 {text}
               </h2>
             );
           }
           if (block.style === "h3") {
             return (
-              <h3 key={blockKey} className="text-base font-semibold mt-4 mb-2">
+              <h3 key={blockKey} className="text-base mt-4 mb-2">
                 {text}
               </h3>
             );

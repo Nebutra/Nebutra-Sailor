@@ -39,7 +39,7 @@ export const Default: Story = {
 export const HeroHeadline: Story = {
   name: "In Hero Heading",
   render: () => (
-    <h1 className="text-5xl font-bold">
+    <h1 className="text-5xl">
       Build <AuroraText>beautiful</AuroraText> apps
     </h1>
   ),

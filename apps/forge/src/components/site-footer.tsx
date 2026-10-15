@@ -88,7 +88,7 @@ export function SiteFooter() {
           >
             {cols.map((col) => (
               <div key={col.title} className="flex flex-col gap-3">
-                <h2 className="text-[11px] font-semibold tracking-[0.08em] text-neutral-10 uppercase">
+                <h2 className="text-[11px] tracking-[0.08em] text-neutral-10 uppercase">
                   {col.title}
                 </h2>
                 <ul className="flex flex-col gap-2.5">

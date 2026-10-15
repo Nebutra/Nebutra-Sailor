@@ -77,7 +77,7 @@ export interface AuroraTextProps {
  * <AuroraText speed={2}>Fast Aurora</AuroraText>
  *
  * // As heading
- * <h1 className="text-6xl font-bold">
+ * <h1 className="text-6xl">
  *   <AuroraText>Welcome</AuroraText>
  * </h1>
  * ```

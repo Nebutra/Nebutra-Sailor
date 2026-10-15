@@ -131,7 +131,7 @@ function Header({
   return (
     <header className="flex items-start justify-between gap-4 border-b border-border px-6 py-4">
       <div className="min-w-0">
-        <h2 className="text-base font-semibold text-foreground">{template.label}</h2>
+        <h2 className="text-base text-foreground">{template.label}</h2>
         <p className="mt-0.5 truncate text-xs text-muted-foreground">{template.description}</p>
         <p className="mt-2 text-sm text-muted-foreground">
           <span className="text-muted-foreground">Subject: </span>

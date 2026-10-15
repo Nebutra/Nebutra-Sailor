@@ -1,29 +1,19 @@
 import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
-import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
-import { Fraunces } from "next/font/google";
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
+import { fontRegistryClassName } from "@nebutra/tokens/fonts/registry";
 import type { ReactNode } from "react";
 import { BRAND } from "@/lib/brand";
 import "./globals.css";
 
 /**
- * The Cosmos skin emits every font stack headed by `var(--font-reg-fraunces)`,
- * because next/font registers a face under a hashed family name reachable only
- * through its variable — a bare `"Fraunces"` in the stack renders nothing.
- * The variable name is FONT_REGISTRY["fraunces"] in @nebutra/fonts and must
- * stay in step with it.
- *
- * Declared here rather than through `@nebutra/fonts/next` so this app pulls one
- * Google face instead of the registry's seventeen. The CJK face comes from the
- * self-hosted `./next/cjk` entry; the skin already places it ahead of the
- * generic families in each stack, which is what keeps Chinese off the OS font.
+ * The Cosmos skin heads every stack with `var(--font-reg-fraunces, "Fraunces")`.
+ * Fraunces comes from the shared registry (@nebutra/tokens/fonts/registry):
+ * every registry face is declared preload:false, so only the faces this skin's
+ * stacks resolve to are downloaded. It used to be a next/font/google call here,
+ * which failed the build wherever Google is unreachable.
  */
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-reg-fraunces",
-});
 
 export const dynamic = "force-dynamic";
 
@@ -47,9 +37,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <html lang="zh-CN" data-brand="cosmos" className={`${fraunces.variable} ${cjkFontClassName}`}>
+    <html lang="zh-CN" data-brand="cosmos" className={`${fontClassName} ${fontRegistryClassName}`}>
       <body className="shell">
-        <CjkFontFace />
+        <FontFaces />
 
         <AuthProvider provider={authProvider} config={authProviderConfig}>
           {children}

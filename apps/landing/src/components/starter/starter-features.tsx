@@ -26,7 +26,7 @@ export async function StarterFeatures({ locale }: { locale: string }) {
               <span className="text-foreground">
                 <StarterIcon name={item.icon} size={20} />
               </span>
-              <h3 className="mt-5 font-medium text-foreground">{t(`items.${item.icon}.title`)}</h3>
+              <h3 className="mt-5 text-foreground">{t(`items.${item.icon}.title`)}</h3>
               <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
                 {t(`items.${item.icon}.body`)}
               </p>

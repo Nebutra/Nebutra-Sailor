@@ -22,7 +22,7 @@ export default function PairingsPage() {
     <div className={`${TL_CONTAINER} py-12 md:py-16`}>
       <header className="mb-10 max-w-2xl pb-8 md:mb-12">
         <p className="tl-kicker mb-3">Systems</p>
-        <h1 className="text-[clamp(2rem,4.2vw,3rem)] font-semibold tracking-[-0.03em] text-[var(--tl-ink)]">
+        <h1 className="text-[clamp(2rem,4.2vw,3rem)] tracking-[-0.03em] text-[var(--tl-ink)]">
           Pairings
         </h1>
         <p className="mt-4 max-w-xl text-[1.05rem] leading-[1.65] text-[var(--tl-muted)]">
@@ -67,7 +67,7 @@ export default function PairingsPage() {
                     <p className="text-[0.62rem] font-semibold tracking-[0.14em] text-[var(--tl-muted)] uppercase">
                       Combination · {g.faces.length} faces
                     </p>
-                    <h2 className="mt-2.5 text-[clamp(1.25rem,2vw,1.65rem)] font-semibold tracking-[-0.025em] text-[var(--tl-ink)] text-balance">
+                    <h2 className="mt-2.5 text-[clamp(1.25rem,2vw,1.65rem)] tracking-[-0.025em] text-[var(--tl-ink)] text-balance">
                       {title}
                     </h2>
                     <p className="mt-2 text-sm leading-relaxed text-[var(--tl-muted)]">

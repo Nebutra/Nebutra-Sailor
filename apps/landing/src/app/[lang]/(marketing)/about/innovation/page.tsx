@@ -98,7 +98,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
           <span className="text-sm text-muted-foreground mb-8 block">{t("hero.eyebrow")}</span>
           <AnimateIn preset="fadeUp">
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10 max-w-4xl"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance mb-10 max-w-4xl"
               style={{
                 letterSpacing: "var(--tracking-display)",
                 lineHeight: "var(--leading-display)",
@@ -124,7 +124,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             <span className="text-sm text-muted-foreground mb-4 block">{t("harness.eyebrow")}</span>
             <AnimateIn preset="fadeUp">
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                className="text-3xl md:text-4xl lg:text-5xl text-balance mb-8"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -166,7 +166,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   </span>
                 </div>
                 <h3
-                  className="text-2xl md:text-3xl font-semibold text-foreground mb-5"
+                  className="text-2xl md:text-3xl text-foreground mb-5"
                   style={{
                     letterSpacing: "var(--tracking-heading)",
                     lineHeight: "var(--leading-heading)",
@@ -193,7 +193,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                     </span>
                   </div>
                   <h3
-                    className="text-xl md:text-2xl font-semibold text-foreground/90 mb-4"
+                    className="text-xl md:text-2xl text-foreground/90 mb-4"
                     style={{
                       letterSpacing: "var(--tracking-heading)",
                       lineHeight: "var(--leading-heading)",
@@ -220,7 +220,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                       </span>
                     </div>
                     <h3
-                      className="text-lg md:text-xl font-semibold text-foreground/70 mb-3"
+                      className="text-lg md:text-xl text-foreground/70 mb-3"
                       style={{ letterSpacing: "var(--tracking-tight)" }}
                     >
                       {weightsLayer.layer}
@@ -257,7 +257,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               </span>
               <AnimateIn preset="fadeUp">
                 <h2
-                  className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                  className="text-3xl md:text-4xl lg:text-5xl text-balance mb-8"
                   style={{
                     letterSpacing: "var(--tracking-heading)",
                     lineHeight: "var(--leading-heading)",
@@ -292,7 +292,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                         </span>
                       </div>
                       <h3
-                        className="text-lg font-semibold text-foreground mb-2"
+                        className="text-lg text-foreground mb-2"
                         style={{ letterSpacing: "var(--tracking-tight)" }}
                       >
                         {item.name}
@@ -317,7 +317,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               </span>
               <AnimateIn preset="fadeUp">
                 <h2
-                  className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                  className="text-3xl md:text-4xl lg:text-5xl text-balance mb-8"
                   style={{
                     letterSpacing: "var(--tracking-heading)",
                     lineHeight: "var(--leading-heading)",
@@ -369,7 +369,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             </span>
             <AnimateIn preset="fadeUp">
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                className="text-3xl md:text-4xl lg:text-5xl text-balance mb-8"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -403,7 +403,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                     </span>
                   </div>
                   <h3
-                    className="text-xl font-semibold text-foreground mb-2"
+                    className="text-xl text-foreground mb-2"
                     style={{ letterSpacing: "var(--tracking-tight)" }}
                   >
                     {principle.name}
@@ -425,7 +425,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             </span>
             <AnimateIn preset="fadeUp">
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+                className="text-3xl md:text-4xl lg:text-5xl text-balance mb-8"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -463,7 +463,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                       {tp("label", { number: principle.number })}
                     </span>
                     <h3
-                      className="text-xl md:text-2xl font-semibold text-foreground mb-4 text-balance"
+                      className="text-xl md:text-2xl text-foreground mb-4 text-balance"
                       style={{ letterSpacing: "var(--tracking-heading)" }}
                     >
                       {principle.title}
@@ -488,7 +488,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
             </span>
             <AnimateIn preset="fadeUp">
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance"
+                className="text-3xl md:text-4xl lg:text-5xl text-balance"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -528,7 +528,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                     </span>
                     <div className="md:pl-8 flex-1">
                       <h3
-                        className="text-xl md:text-2xl font-semibold text-foreground mb-2"
+                        className="text-xl md:text-2xl text-foreground mb-2"
                         style={{ letterSpacing: "var(--tracking-tight)" }}
                       >
                         {ms.title}
@@ -554,7 +554,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
           </div>
           <AnimateIn preset="fadeUp">
             <h2
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-12"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance mb-12"
               style={{
                 letterSpacing: "var(--tracking-display)",
                 lineHeight: "var(--leading-display)",

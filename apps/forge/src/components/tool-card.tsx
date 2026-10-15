@@ -26,7 +26,7 @@ export function ToolCard({ tool }: { tool: ForgeToolSummary }) {
           </span>
           <ArrowRight className="h-3.5 w-3.5 text-muted-foreground opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" />
         </div>
-        <h2 className="text-[15px] font-semibold tracking-tight text-foreground">
+        <h2 className="text-[15px] tracking-tight text-foreground">
           {pickBilingual(locale, tool.title)}
         </h2>
         <p className="mt-1.5 line-clamp-2 flex-1 text-sm leading-relaxed text-muted-foreground">

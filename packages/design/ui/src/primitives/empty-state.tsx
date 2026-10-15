@@ -261,7 +261,7 @@ function EmptyStateSimple({
           {ghost}
         </div>
         <div className="[grid-area:1/1] flex flex-col items-center justify-center gap-1.5 px-6 py-8 text-center">
-          <h3 className="text-sm font-medium text-foreground">{title}</h3>
+          <h3 className="text-sm text-foreground">{title}</h3>
           {description ? (
             <p className="max-w-md text-balance text-sm text-muted-foreground">{description}</p>
           ) : null}

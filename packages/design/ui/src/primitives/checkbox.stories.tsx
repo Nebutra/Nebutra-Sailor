@@ -87,7 +87,7 @@ export const InForm: Story = {
     const [newsletter, setNewsletter] = useState(true);
     return (
       <div className="flex flex-col gap-4 rounded-lg border p-4">
-        <h3 className="text-sm font-medium">Settings</h3>
+        <h3 className="text-sm">Settings</h3>
         <Checkbox checked={terms} onCheckedChange={setTerms}>
           Accept terms and conditions
         </Checkbox>

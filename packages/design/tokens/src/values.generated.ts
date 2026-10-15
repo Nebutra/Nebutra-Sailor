@@ -224,24 +224,30 @@ export const TOKEN_VALUES = {
   "--focus-ring": { light: "0 0 0 2px hsl(var(--ring) / 0.4)" },
   "--font-cn": {
     light:
-      'var(--font-geist-sans), "Geist", var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", sans-serif',
+      'var(--font-geist-sans, "Geist"), var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", sans-serif',
   },
   "--font-display": {
     light:
-      'var(--font-dm-sans), "DM Sans", var(--font-misans, "MiSans"), "PingFang SC", sans-serif',
+      'var(--font-dm-sans, "DM Sans"), var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", sans-serif',
   },
+  "--font-features-heading": { light: "normal" },
+  "--font-features-numeric": { light: "tabular-nums" },
+  "--font-features-sans": { light: '"ss01" 1' },
   "--font-heading": {
     light:
-      'var(--font-dm-sans), "DM Sans", var(--font-misans, "MiSans"), "PingFang SC", sans-serif',
+      'var(--font-dm-sans, "DM Sans"), var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", sans-serif',
   },
   "--font-mono": {
     light:
-      'var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
+      'var(--font-geist-mono, "Geist Mono"), ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace',
   },
   "--font-sans": {
     light:
-      'var(--font-geist-sans), "Geist", var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
+      'var(--font-geist-sans, "Geist"), var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif',
   },
+  "--font-weight-body": { light: "400" },
+  "--font-weight-heading": { light: "500" },
+  "--font-weight-medium": { light: "500" },
   "--foreground": { light: "225 7.7% 10.2%", dark: "228 23.8% 95.9%" },
   "--gradient-brand": { light: "var(--brand-gradient)" },
   "--gradient-brand-glow": { light: "var(--brand-gradient-radial)" },

@@ -129,7 +129,7 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
             <BookOpen className="size-3.5" aria-hidden />
             {isZh ? `${brand.name} Journal · 技术札记` : `${brand.name} Journal`}
           </div>
-          <h1 className="text-balance text-4xl font-semibold text-foreground tracking-heading sm:text-5xl">
+          <h1 className="text-balance text-4xl text-foreground tracking-heading sm:text-5xl">
             {isZh ? "工程、产品与治理笔记" : "Notes on engineering, product, and governance"}
           </h1>
           <p className="max-w-xl text-base leading-7 text-muted-foreground">
@@ -202,7 +202,7 @@ function BlogRailPostCard({
         className="group block h-full rounded-[var(--radius-md)] outline-none"
       >
         <p className="text-xs font-medium text-muted-foreground">{post.dateLabel ?? "Undated"}</p>
-        <h2 className="mt-3 line-clamp-3 text-lg font-semibold leading-snug text-foreground transition-colors group-hover:text-primary">
+        <h2 className="mt-3 line-clamp-3 text-lg leading-snug text-foreground transition-colors group-hover:text-primary">
           {post.title}
         </h2>
         <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground">

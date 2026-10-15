@@ -27,7 +27,7 @@ export async function SolutionsIndex({ locale }: SolutionsIndexProps) {
         <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-muted-foreground">
           {t("index.eyebrow")}
         </p>
-        <h1 className="max-w-3xl text-3xl font-bold leading-tight text-neutral-12 md:text-5xl">
+        <h1 className="max-w-3xl text-3xl leading-tight text-neutral-12 md:text-5xl">
           {t("index.title")}
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-neutral-11 md:text-lg">
@@ -39,7 +39,7 @@ export async function SolutionsIndex({ locale }: SolutionsIndexProps) {
         {SOLUTION_GROUPS.map((group) => (
           <section key={group.id}>
             <AnimateIn preset="fadeUp" inView>
-              <h2 className="mb-6 text-xl font-bold text-neutral-12 md:text-2xl">
+              <h2 className="mb-6 text-xl text-neutral-12 md:text-2xl">
                 {t(`groups.${group.id}.label`)}
               </h2>
             </AnimateIn>
@@ -59,7 +59,7 @@ export async function SolutionsIndex({ locale }: SolutionsIndexProps) {
                           </span>
                           <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-foreground" />
                         </div>
-                        <h3 className="mb-2 text-lg font-semibold text-neutral-12">
+                        <h3 className="mb-2 text-lg text-neutral-12">
                           {t(`solutions.${s.slug}.label`)}
                         </h3>
                         <p className="text-sm leading-relaxed text-neutral-11">

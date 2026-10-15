@@ -52,7 +52,7 @@ export default async function ForgeHomePage() {
               {t("eyebrow")}
             </p>
             <h1
-              className="w-full text-balance text-3xl font-semibold text-neutral-12 sm:text-4xl md:text-5xl lg:text-6xl"
+              className="w-full text-balance text-3xl text-neutral-12 sm:text-4xl md:text-5xl lg:text-6xl"
               style={{
                 letterSpacing: "var(--tracking-display, -0.02em)",
                 lineHeight: "var(--leading-display, 1.1)",
@@ -94,9 +94,7 @@ export default async function ForgeHomePage() {
               <Section key={cat.id} label={label} className="scroll-mt-28 space-y-5 !py-0">
                 <div id={cat.id} className="flex items-end justify-between gap-4">
                   <div>
-                    <h2 className="text-xl font-semibold tracking-tight text-neutral-12">
-                      {label}
-                    </h2>
+                    <h2 className="text-xl tracking-tight text-neutral-12">{label}</h2>
                     {hint ? <p className="mt-1 text-sm text-neutral-11">{hint}</p> : null}
                   </div>
                   <span className="text-xs tabular-nums text-neutral-10">{cat.tools.length}</span>

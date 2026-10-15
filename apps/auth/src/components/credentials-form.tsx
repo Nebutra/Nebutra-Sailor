@@ -287,7 +287,7 @@ export function CredentialsForm({
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+        <h1 className="text-3xl tracking-tight text-foreground">
           {mode === "sign-in" ? tSignIn("title") : tSignUp("title")}
         </h1>
         <p className="mt-4 text-sm leading-6 text-muted-foreground">

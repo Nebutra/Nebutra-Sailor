@@ -34,7 +34,7 @@ export function UseCasesSection() {
           </AnimateIn>
           <AnimateIn preset="fadeUp" delay={100}>
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 text-balance"
+              className="text-3xl md:text-4xl lg:text-5xl mb-6 text-balance"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",
@@ -88,7 +88,7 @@ export function UseCasesSection() {
 
                     <div className="relative z-10 flex-1 pt-1">
                       <h3
-                        className={`text-xl font-semibold transition-colors duration-flow motion-reduce:duration-0 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
+                        className={`text-xl transition-colors duration-flow motion-reduce:duration-0 ${isActive ? "text-foreground" : "text-muted-foreground group-hover:text-foreground"}`}
                         style={{ letterSpacing: "var(--tracking-tight)" }}
                       >
                         {t(`tabs.${uc.key}` as UseCasesTranslationKey)}

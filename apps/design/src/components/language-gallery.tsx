@@ -20,7 +20,7 @@ import { LANGUAGES, useDesignLanguage } from "@nebutra/theme/language-switcher";
 import { useTheme } from "@nebutra/tokens";
 import { tokenValue } from "@nebutra/tokens/values";
 import { cn } from "@nebutra/ui/utils";
-import type * as React from "react";
+import * as React from "react";
 import { useMounted } from "@/lib/use-mounted";
 
 export type Mode = "light" | "dark";
@@ -133,16 +133,26 @@ const ROWS = [
  * selected row, a footer with the primary and secondary action. Canvas, card,
  * ink, muted ink, border, both fills, both radii and the heading face all show.
  */
-function Miniature({ spec }: { spec: Spec }) {
+function Miniature({ spec, face }: { spec: Spec; face: boolean }) {
+  // `face` gates the language's own typeface. Every language names a different
+  // family, so painting all nine miniatures in their faces made every visitor
+  // download six registry fonts on arrival (design.nebutra.com, 2026-10-16
+  // audit: Inter, Inter Tight, Fraunces, Roboto Mono, Source Serif 4 on the home
+  // page alone). The face loads for the active language and for a tile the
+  // visitor points at or focuses; the rest show colour, radius and weight in
+  // the site's own face.
   const heading: React.CSSProperties = {
-    fontFamily: "var(--mini-font-heading)",
+    fontFamily: face ? "var(--mini-font-heading)" : undefined,
     fontWeight: "var(--mini-heading-weight)" as React.CSSProperties["fontWeight"],
   };
   return (
     <span
       aria-hidden
       className="flex aspect-[16/9] w-full flex-col bg-background px-4 pt-4 text-foreground"
-      style={{ ...(spec.vars as React.CSSProperties), fontFamily: "var(--mini-font-sans)" }}
+      style={{
+        ...(spec.vars as React.CSSProperties),
+        fontFamily: face ? "var(--mini-font-sans)" : undefined,
+      }}
     >
       <span className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-t-[var(--mini-radius-card)] border border-border border-b-0 bg-card text-card-foreground">
         <span className="flex items-center justify-between gap-2 border-border border-b px-3 py-2">
@@ -187,6 +197,11 @@ export function LanguageGallery({ className }: { className?: string }) {
   // The miniatures follow the site's mode, so each shows what pressing it
   // would do to this page as it is now. Light until the stored theme is known.
   const mode: Mode = mounted && resolvedTheme === "dark" ? "dark" : "light";
+  // Tiles the visitor has pointed at or focused keep their face once loaded,
+  // so moving the pointer away does not flick the type back.
+  const [previewed, setPreviewed] = React.useState<ReadonlySet<string>>(() => new Set());
+  const preview = (id: string) =>
+    setPreviewed((seen) => (seen.has(id) ? seen : new Set(seen).add(id)));
 
   return (
     <div className={cn("grid grid-cols-2 gap-x-4 gap-y-6 lg:grid-cols-3", className)}>
@@ -201,6 +216,8 @@ export function LanguageGallery({ className }: { className?: string }) {
             className="group/tile flex min-w-0 flex-col gap-3 text-left"
             key={language.id}
             onClick={() => select(language.id)}
+            onFocus={() => preview(language.id)}
+            onPointerEnter={() => preview(language.id)}
             type="button"
           >
             <span
@@ -211,7 +228,7 @@ export function LanguageGallery({ className }: { className?: string }) {
                   : "border-border group-hover/tile:border-input group-hover/tile:shadow-ambient-sm",
               )}
             >
-              <Miniature spec={spec} />
+              <Miniature face={checked || previewed.has(language.id)} spec={spec} />
             </span>
             <span className="flex items-start justify-between gap-3 px-0.5">
               <span className="flex min-w-0 flex-col gap-0.5">

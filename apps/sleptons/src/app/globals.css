@@ -3,11 +3,7 @@
  */
 @import "@nebutra/ui/styles/preset.css";
 
+/* Canvas, ink, face, smoothing: the shared base sheet in @nebutra/tokens. */
 body {
-  margin: 0;
   min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
 }

@@ -11,7 +11,7 @@ export default function LocalizedNotFound() {
     <SiteShell>
       <main className="flex flex-1 flex-col items-center justify-center px-4 pt-32 pb-24 text-center">
         <p className="font-mono text-sm text-muted-foreground">404</p>
-        <h1 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-foreground md:text-4xl">
+        <h1 className="mt-3 text-balance text-3xl tracking-tight text-foreground md:text-4xl">
           {t("title")}
         </h1>
         <p className="mt-3 max-w-md text-pretty text-muted-foreground">{t("desc")}</p>

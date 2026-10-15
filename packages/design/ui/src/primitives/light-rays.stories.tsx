@@ -30,7 +30,7 @@ export const Default: Story = {
     <div className="relative h-[400px] w-full overflow-hidden rounded-xl border bg-background">
       <LightRays />
       <div className="relative z-10 flex h-full items-center justify-center">
-        <h2 className="text-3xl font-bold text-white">Light Rays</h2>
+        <h2 className="text-3xl text-white">Light Rays</h2>
       </div>
     </div>
   ),
@@ -41,7 +41,7 @@ export const GoldenRays: Story = {
     <div className="relative h-[400px] w-full overflow-hidden rounded-xl bg-black">
       <LightRays count={10} color="rgba(255, 200, 100, 0.35)" blur={48} speed={18} length="80vh" />
       <div className="relative z-10 flex h-full items-center justify-center">
-        <h2 className="text-3xl font-bold text-amber-200">Golden Rays</h2>
+        <h2 className="text-3xl text-amber-200">Golden Rays</h2>
       </div>
     </div>
   ),
@@ -52,7 +52,7 @@ export const SubtleAmbient: Story = {
     <div className="relative h-[400px] w-full overflow-hidden rounded-xl bg-muted">
       <LightRays count={5} color="rgba(99, 102, 241, 0.15)" blur={60} speed={22} />
       <div className="relative z-10 flex h-full items-center justify-center">
-        <h2 className="text-3xl font-bold">Subtle Ambient</h2>
+        <h2 className="text-3xl">Subtle Ambient</h2>
       </div>
     </div>
   ),

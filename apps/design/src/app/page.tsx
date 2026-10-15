@@ -144,10 +144,7 @@ export default function HomePage() {
         className={`${BAND} flex flex-col gap-6 border-border border-t py-10`}
       >
         <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-          <h2
-            className="m-0 font-sans font-medium text-base text-foreground"
-            id="languages-heading"
-          >
+          <h2 className="m-0 font-sans text-base text-foreground" id="languages-heading">
             One switch, the whole language
           </h2>
           <p className="m-0 flex items-center gap-1.5 text-muted-foreground text-sm">

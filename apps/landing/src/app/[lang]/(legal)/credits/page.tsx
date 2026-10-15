@@ -53,7 +53,7 @@ export function generateStaticParams() {
  * another CJK face and credit the wrong one. Its served subset is CJK only
  * (packages/design/fonts), which is why its specimen is Chinese.
  */
-const MISANS: CSSProperties = { fontFamily: '"MiSans", sans-serif' };
+const MISANS: CSSProperties = { fontFamily: 'var(--font-misans, "MiSans"), sans-serif' };
 const DM_SANS: CSSProperties = { fontFamily: "var(--font-heading)" };
 const GEIST: CSSProperties = { fontFamily: "var(--font-sans)" };
 const GEIST_MONO: CSSProperties = { fontFamily: "var(--font-mono)" };

@@ -1,3 +1,4 @@
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
 import "./globals.css";
 import {
   buildAuthCenterSignInUrl,
@@ -7,13 +8,10 @@ import {
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin, publicAssetUrl } from "@nebutra/brand/metadata-helpers";
-import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { pickMessages } from "@nebutra/i18n/messages";
 import { loadUiLabels } from "@nebutra/i18n/ui-labels";
 import { UiLabelsProvider } from "@nebutra/ui/primitives";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
@@ -127,11 +125,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     typeof bingVerification === "string" ? bingVerification : undefined;
 
   return (
-    <html
-      lang={toHtmlLang(locale)}
-      dir={toTextDir(locale)}
-      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
-    >
+    <html lang={toHtmlLang(locale)} dir={toTextDir(locale)} className={`${fontClassName}`}>
       {googleVerification ? (
         <meta name="google-site-verification" content={googleVerification} />
       ) : null}
@@ -139,7 +133,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <meta name="msvalidate.01" content={bingVerificationContent} />
       ) : null}
       <body className="flex min-h-screen flex-col bg-neutral-1 font-sans text-neutral-12 antialiased">
-        <CjkFontFace />
+        <FontFaces />
 
         <NextIntlClientProvider locale={locale} messages={messages}>
           <UiLabelsProvider labels={await loadUiLabels(locale)}>

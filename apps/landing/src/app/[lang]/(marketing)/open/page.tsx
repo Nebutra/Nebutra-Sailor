@@ -57,9 +57,7 @@ function CatalogCard({ item, t }: { item: OpenPlatformItem; t: CatalogTranslator
       </div>
       <div className="mt-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-[15px] font-semibold text-neutral-12">
-            {t(`items.${item.id}.title`)}
-          </h3>
+          <h3 className="text-[15px] text-neutral-12">{t(`items.${item.id}.title`)}</h3>
           {item.badge ? (
             <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-primary/15 dark:text-primary">
               {t(`items.${item.id}.badge`)}
@@ -103,9 +101,7 @@ export default async function OpenPlatformPage({ params }: { params: Promise<{ l
       <AnimateIn preset="fadeUp">
         <div className="text-center">
           <p className="mb-3 text-sm font-medium text-neutral-11">{t("eyebrow")}</p>
-          <h1 className="text-4xl font-bold tracking-tight text-neutral-12 sm:text-5xl">
-            {t("title")}
-          </h1>
+          <h1 className="text-4xl tracking-tight text-neutral-12 sm:text-5xl">{t("title")}</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-11">{t("lead")}</p>
           <div className="mt-8 flex flex-col items-center gap-3">
             <Button asChild size="lg">
@@ -127,7 +123,7 @@ export default async function OpenPlatformPage({ params }: { params: Promise<{ l
             <section key={group.id} aria-labelledby={`open-${group.id}`}>
               <AnimateIn preset="fadeUp">
                 <div className="mb-6">
-                  <h2 id={`open-${group.id}`} className="text-xl font-semibold text-neutral-12">
+                  <h2 id={`open-${group.id}`} className="text-xl text-neutral-12">
                     {t(`groups.${group.id}.label`)}
                   </h2>
                   <p className="mt-1 text-sm text-neutral-11">

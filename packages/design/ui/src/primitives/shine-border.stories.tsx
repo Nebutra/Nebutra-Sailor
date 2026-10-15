@@ -39,7 +39,7 @@ export const ContainerMode: Story = {
   render: () => (
     <ShineBorder shineColor="#A07CFE" borderRadius={16} borderWidth={2}>
       <div className="text-center">
-        <h2 className="font-bold">Shine Card</h2>
+        <h2>Shine Card</h2>
         <p className="text-sm text-muted-foreground">Container mode</p>
       </div>
     </ShineBorder>

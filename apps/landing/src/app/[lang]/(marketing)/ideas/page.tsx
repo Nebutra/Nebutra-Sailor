@@ -42,7 +42,7 @@ export default async function IdeasPage(props: { params: Promise<{ lang: string 
       </AnimatedGradientText>
 
       <h1
-        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-6 bg-gradient-to-br from-foreground to-foreground/40 bg-clip-text text-transparent"
+        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 bg-gradient-to-br from-foreground to-foreground/40 bg-clip-text text-transparent"
         style={{ letterSpacing: "var(--tracking-display)", lineHeight: "var(--leading-display)" }}
       >
         {tNav("ideas")}

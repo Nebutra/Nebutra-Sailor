@@ -130,7 +130,7 @@ export function ReferWaitlistForm({
             <Check aria-hidden="true" className="h-4 w-4" />
           </span>
           <div>
-            <h2 id="refer-success-title" className="text-lg font-semibold text-foreground">
+            <h2 id="refer-success-title" className="text-lg text-foreground">
               {copy.successTitle}
             </h2>
             <p className="mt-1 text-sm leading-6 text-muted-foreground">

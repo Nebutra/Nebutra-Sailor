@@ -59,3 +59,31 @@ export const geistSansRest = localFont({
 
 /** Both class names, for <html>: `${geistSansClassName} ...`. */
 export const geistSansClassName = `${geistSans.variable} ${geistSansRest.variable}`;
+
+/**
+ * Geist Mono, from the `geist` package's own variable file (vendored next to
+ * the Sans split, SIL OFL 1.1) and NOT preloaded. `geist/font/mono` preloads its
+ * 72 KB file on every page, and few pages set mono text above the fold (code
+ * blocks, readouts), so the preload competed with the LCP text for the first
+ * bytes. The face still loads the moment text uses it. Same family name,
+ * variable and fallback list as the package's declaration.
+ */
+export const geistMono = localFont({
+  src: "../generated/geist-mono/geist-mono-variable.woff2",
+  variable: "--font-geist-mono",
+  weight: "100 900",
+  preload: false,
+  adjustFontFallback: false,
+  declarations: [{ prop: "font-family", value: "'GeistMono'" }],
+  fallback: [
+    "ui-monospace",
+    "SFMono-Regular",
+    "Roboto Mono",
+    "Menlo",
+    "Monaco",
+    "Liberation Mono",
+    "DejaVu Sans Mono",
+    "Courier New",
+    "monospace",
+  ],
+});

@@ -95,7 +95,7 @@ export const HeroSection: Story = {
       <div className="rounded-full bg-primary/10 px-4 py-1 text-xs font-medium text-primary">
         New — Version 2.0 released
       </div>
-      <h1 className="text-4xl font-bold tracking-tight">Build faster</h1>
+      <h1 className="text-4xl tracking-tight">Build faster</h1>
       <p className="text-muted-foreground">
         The platform for modern teams to move fast without breaking things.
       </p>

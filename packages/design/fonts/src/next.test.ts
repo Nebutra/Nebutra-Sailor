@@ -28,8 +28,10 @@ describe("registry faces (@nebutra/fonts/next)", () => {
   });
 
   it("preloads none of the registry faces (a page fetches one only when it renders in it)", () => {
-    expect(SOURCE.match(/localFont\(\{/g)?.length).toBe(19);
-    expect(SOURCE.match(/preload: false,/g)?.length).toBe(19);
+    // 18: DM Sans left the registry on 2026-10-16 — "dm sans" resolves to the
+    // brand heading face (./next-cjk) instead of a second copy of the file.
+    expect(SOURCE.match(/localFont\(\{/g)?.length).toBe(18);
+    expect(SOURCE.match(/preload: false,/g)?.length).toBe(18);
   });
 
   it("gives every face its Latin unicode-range (no download just to skip a CJK glyph)", () => {
@@ -42,7 +44,7 @@ describe("registry faces (@nebutra/fonts/next)", () => {
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
-    expect(names).toHaveLength(19);
+    expect(names).toHaveLength(18);
     expect(faces.map((f) => f.name).sort()).toEqual([...names].sort());
   });
 

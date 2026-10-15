@@ -138,7 +138,7 @@ export function KineticFeatureCard({
         </div>
 
         <h3
-          className="text-2xl font-semibold text-foreground text-balance"
+          className="text-2xl text-foreground text-balance"
           style={{ letterSpacing: "var(--tracking-heading)", lineHeight: "var(--leading-heading)" }}
         >
           {title}
@@ -417,7 +417,7 @@ export function KineticStep({
       <span className="mb-4 rounded-full border border-primary/20 bg-primary/7 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-primary">
         {phaseLabel ?? `Phase ${formatted}`}
       </span>
-      <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+      <h3 className="text-lg text-foreground">{title}</h3>
       <p className="mt-3 text-sm leading-6 text-muted-foreground text-balance">{description}</p>
     </article>
   );

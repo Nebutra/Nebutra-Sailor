@@ -54,9 +54,7 @@ export function NewsArchive({
   return (
     <section>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-          {copy.heading}
-        </h2>
+        <h2 className="text-3xl tracking-tight text-foreground sm:text-4xl">{copy.heading}</h2>
         <label htmlFor="news-search" className="relative block sm:w-80">
           <span className="sr-only">{copy.search}</span>
           <Search

@@ -119,7 +119,7 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
       >
         <div className={cn("flex items-center gap-2.5 px-5 py-3.5", VERDICT_HEAD[verdictState])}>
           <StateIcon state={verdictState} className="h-5 w-5 shrink-0" />
-          <h1 className="text-lg font-medium tracking-tight text-foreground">{verdict.title}</h1>
+          <h1 className="text-lg tracking-tight text-foreground">{verdict.title}</h1>
         </div>
         <p className="bg-background px-5 py-4 text-base leading-6 text-foreground">
           {verdict.body}
@@ -151,10 +151,7 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
         aria-labelledby="status-components-heading"
       >
         <div className="flex items-center gap-4 border-b border-border px-5 py-4">
-          <h2
-            id="status-components-heading"
-            className="text-lg font-medium tracking-tight text-foreground"
-          >
+          <h2 id="status-components-heading" className="text-lg tracking-tight text-foreground">
             System status
           </h2>
           <p className="text-sm tabular-nums text-muted-foreground">{windowRange(now)}</p>
@@ -179,10 +176,7 @@ export function StatusPageView({ snapshot }: { snapshot: StatusSnapshot }) {
 
       {recent.length > 0 ? (
         <section className="mt-8" aria-labelledby="status-history-heading">
-          <h2
-            id="status-history-heading"
-            className="mb-3 text-lg font-medium tracking-tight text-foreground"
-          >
+          <h2 id="status-history-heading" className="mb-3 text-lg tracking-tight text-foreground">
             Recent incidents
           </h2>
           <IncidentList incidents={recent} />
@@ -311,9 +305,7 @@ function IncidentSummaryCard({
         </p>
         <ChevronRight aria-hidden className="h-4 w-4 text-muted-foreground" />
       </div>
-      <h3 className="mt-1 text-base font-semibold tracking-tight text-foreground">
-        {incident.title}
-      </h3>
+      <h3 className="mt-1 text-base tracking-tight text-foreground">{incident.title}</h3>
       <p className="mt-1 line-clamp-2 text-sm leading-6 text-muted-foreground">
         {latest?.message ?? incident.message}
       </p>
@@ -345,7 +337,7 @@ function MaintenanceCard({
         <Wrench aria-hidden className="h-3.5 w-3.5" />
         {phase === "in_progress" ? "Maintenance in progress" : "Scheduled maintenance"}
       </p>
-      <h3 className="mt-1 text-base font-semibold tracking-tight text-foreground">{item.title}</h3>
+      <h3 className="mt-1 text-base tracking-tight text-foreground">{item.title}</h3>
       {item.scheduledStart ? (
         <p className="mt-1 text-xs tabular-nums text-muted-foreground">
           {formatUtcMedium(item.scheduledStart)}
@@ -411,7 +403,7 @@ function ComponentRow({
       <div className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
           <StateIcon state={service.state} className="size-4.5 shrink-0" />
-          <h3 className="truncate text-base font-medium text-foreground">{service.name}</h3>
+          <h3 className="truncate text-base text-foreground">{service.name}</h3>
           {/* A real tooltip on a focusable trigger: the old `title` reached
               neither keyboard nor touch, and the icon was hidden below sm. */}
           <TooltipProvider delayDuration={150}>

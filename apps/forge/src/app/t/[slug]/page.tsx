@@ -127,7 +127,7 @@ export default async function ToolPage({ params }: Props) {
 
         <Card className="border-neutral-6 bg-neutral-2/40 p-5">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-            <h2 className="text-sm font-semibold">{t("api")}</h2>
+            <h2 className="text-sm">{t("api")}</h2>
             <code className="rounded-[var(--radius-md)] bg-neutral-1 px-2.5 py-1 font-mono text-[11px] text-neutral-11">
               {page.meterId}
             </code>
@@ -140,7 +140,7 @@ export default async function ToolPage({ params }: Props) {
 
         {page.related.length > 0 ? (
           <section aria-labelledby="related-tools">
-            <h2 id="related-tools" className="mb-3 text-sm font-semibold text-neutral-12">
+            <h2 id="related-tools" className="mb-3 text-sm text-neutral-12">
               {page.compose?.next?.length ? `${t("related")} · next` : t("related")}
             </h2>
             <ul className="flex flex-wrap gap-2">

@@ -41,6 +41,8 @@ export function pathToCssVarName(token) {
   if (head === "duration") return `duration-${rest.join("-")}`;
   if (head === "easing") return `ease-${rest.join("-")}`;
   if (head === "fontFamily") return `font-${rest.join("-")}`;
+  if (head === "fontWeight") return `font-weight-${rest.join("-")}`;
+  if (head === "fontFeature") return `font-features-${rest.join("-")}`;
 
   if (head === "brand") {
     if (rest[0] === "gradient") {

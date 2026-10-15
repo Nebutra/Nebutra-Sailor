@@ -538,7 +538,7 @@ function QuestionPromptForm({
           >
             {clampedIndex}
           </span>
-          <h2 id={titleId} className="m-0 text-sm font-medium text-foreground">
+          <h2 id={titleId} className="m-0 text-sm text-foreground">
             {activeQuestion.title}
           </h2>
         </div>

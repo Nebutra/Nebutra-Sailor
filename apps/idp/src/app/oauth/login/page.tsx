@@ -12,7 +12,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
       <div className="max-w-md rounded-[var(--radius-xl)] border border-[var(--amber-7,hsl(var(--border)))] bg-background px-8 py-6 text-center shadow-[var(--elevation-md)]">
-        <h1 className="text-xl font-semibold text-foreground">Login interaction unavailable</h1>
+        <h1 className="text-xl text-foreground">Login interaction unavailable</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Nebutra-owned SSO still needs a canonical session handoff before it can complete OAuth
           login interactions.

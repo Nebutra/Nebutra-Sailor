@@ -885,7 +885,7 @@ function createPortableTextComponents(
       h2: ({ children, value }) => {
         const id = getHeadingId(value, headingIds);
         return (
-          <h2 id={id} className="group mt-16 scroll-mt-28 text-2xl font-semibold text-foreground">
+          <h2 id={id} className="group mt-16 scroll-mt-28 text-2xl text-foreground">
             {children}
             <HeadingAnchor id={id} />
           </h2>
@@ -894,7 +894,7 @@ function createPortableTextComponents(
       h3: ({ children, value }) => {
         const id = getHeadingId(value, headingIds);
         return (
-          <h3 id={id} className="group mt-11 scroll-mt-28 text-xl font-semibold text-foreground">
+          <h3 id={id} className="group mt-11 scroll-mt-28 text-xl text-foreground">
             {children}
             <HeadingAnchor id={id} />
           </h3>

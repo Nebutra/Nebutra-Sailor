@@ -31,7 +31,7 @@ export const Default: Story = {
     <div className="relative h-[400px] w-full overflow-hidden">
       <FlickeringGrid className="absolute inset-0" />
       <div className="relative z-10 flex h-full items-center justify-center">
-        <h2 className="text-3xl font-bold">Flickering Grid</h2>
+        <h2 className="text-3xl">Flickering Grid</h2>
       </div>
     </div>
   ),
@@ -47,7 +47,7 @@ export const BlueGrid: Story = {
         flickerChance={0.5}
       />
       <div className="relative z-10 flex h-full items-center justify-center">
-        <h2 className="text-3xl font-bold text-white">Blue Grid</h2>
+        <h2 className="text-3xl text-white">Blue Grid</h2>
       </div>
     </div>
   ),

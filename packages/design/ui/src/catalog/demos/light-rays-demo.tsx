@@ -20,7 +20,7 @@ export function LightRaysDemo() {
             <Sparkles className="w-8 h-8 text-blue-400" />
           </div>
 
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
+          <h2 className="text-3xl md:text-4xl tracking-tight text-white mb-4">
             Illuminate Your Data
           </h2>
 

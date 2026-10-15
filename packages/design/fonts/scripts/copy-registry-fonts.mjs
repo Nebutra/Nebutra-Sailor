@@ -49,7 +49,6 @@ const FACES = [
   "manrope",
   "sora",
   "work-sans",
-  "dm-sans",
   "plus-jakarta-sans",
   "outfit",
   "figtree",

@@ -63,7 +63,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
         <AnimateIn preset="emerge">
           <p className="mb-4 text-sm text-primary">Careers</p>
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground mb-6"
             style={{
               letterSpacing: "var(--tracking-display)",
               lineHeight: "var(--leading-display)",
@@ -83,9 +83,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
               <article className="rounded-[var(--radius-card)] border border-border bg-card/30 p-8 hover:border-primary/40 hover:bg-card/50 transition-colors">
                 <div className="flex items-start justify-between gap-4 mb-3 flex-wrap">
                   <div>
-                    <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                      {role.title}
-                    </h2>
+                    <h2 className="text-2xl tracking-tight text-foreground">{role.title}</h2>
                     <p className="text-sm text-muted-foreground mt-1">{role.type}</p>
                   </div>
                   <Button asChild size="sm" className="rounded-full shrink-0">
@@ -113,7 +111,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
         <AnimateIn preset="fadeUp" className="mt-12">
           <div className="rounded-[var(--radius-card)] border border-border bg-muted/30 p-10 text-center">
             <Sparkles className="h-8 w-8 mx-auto text-primary mb-4" />
-            <h3 className="text-2xl font-bold tracking-tight mb-3">Don&apos;t see your role?</h3>
+            <h3 className="text-2xl tracking-tight mb-3">Don&apos;t see your role?</h3>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
               We are growing across engineering, design, and developer relations. If your GitHub
               speaks for itself, we want to hear from you.

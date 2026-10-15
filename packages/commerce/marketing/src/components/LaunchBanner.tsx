@@ -272,7 +272,7 @@ export function LaunchBannerFloating({
             PH
           </span>
           <div>
-            <h3 className="font-bold">{title}</h3>
+            <h3>{title}</h3>
             {subtitle && <p className="mt-0.5 text-sm opacity-90">{subtitle}</p>}
           </div>
         </div>
@@ -334,7 +334,7 @@ export function LaunchBannerInline({
           PH
         </span>
         <div className="flex-1">
-          <h3 className="text-xl font-bold">{title}</h3>
+          <h3 className="text-xl">{title}</h3>
           {subtitle && <p className="mt-1 opacity-90">{subtitle}</p>}
         </div>
         <div className="flex flex-col items-center gap-3 sm:items-end">

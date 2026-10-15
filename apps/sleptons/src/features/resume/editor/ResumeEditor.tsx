@@ -105,9 +105,7 @@ export function ResumeEditor({ initial }: ResumeEditorProps) {
       <main className="p-6">
         <header className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-lg font-semibold text-foreground">
-              {section ? section.title : "Preferences"}
-            </h1>
+            <h1 className="text-lg text-foreground">{section ? section.title : "Preferences"}</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               {section ? section.description : "Paper, length and what the public page shows."}
             </p>

@@ -36,7 +36,7 @@ export async function HeroSection() {
             {/* H1 paints at full opacity from first frame so the LCP API can
                 attribute it. AnimateIn would inline `opacity:0` server-side
                 and disqualify the element. */}
-            <h1 className="mx-auto w-full max-w-[900px] text-balance font-semibold text-3xl text-foreground tracking-display leading-display sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+            <h1 className="mx-auto w-full max-w-[900px] text-balance text-3xl text-foreground tracking-display leading-display sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
               {t("headline1")} <span className="text-foreground">{t("headline2")}</span>
             </h1>
 

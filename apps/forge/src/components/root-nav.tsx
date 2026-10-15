@@ -21,7 +21,7 @@ export async function RootNav({ tools }: { tools: readonly ForgeToolSummary[] })
     <nav aria-label={t("hubLabel")} className="space-y-3">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-sm font-semibold tracking-tight text-neutral-12">{t("hubLabel")}</h2>
+          <h2 className="text-sm tracking-tight text-neutral-12">{t("hubLabel")}</h2>
           <p className="mt-0.5 text-xs text-neutral-10">{t("dualSurface")}</p>
         </div>
       </div>

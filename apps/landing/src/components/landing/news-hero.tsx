@@ -43,7 +43,7 @@ export function NewsroomHero({ contactHref, rssHref, isZh }: NewsroomHeroProps) 
 
   return (
     <header className="grid gap-10 pt-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] lg:items-start lg:gap-16">
-      <h1 className="text-5xl font-semibold tracking-tight text-foreground sm:text-6xl">
+      <h1 className="text-5xl tracking-tight text-foreground sm:text-6xl">
         {isZh ? "新闻中心" : "Newsroom"}
       </h1>
 

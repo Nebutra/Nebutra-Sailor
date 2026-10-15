@@ -41,7 +41,7 @@ export function EditorialKeyTakeaways({
       )}
     >
       <div className={EDITORIAL_EYEBROW}>{label}</div>
-      {title && <h2 className="mt-3 text-xl font-semibold leading-7 text-foreground">{title}</h2>}
+      {title && <h2 className="mt-3 text-xl leading-7 text-foreground">{title}</h2>}
       <ol className="mt-5 divide-y divide-border border-t border-border">
         {visible.map((item, index) => (
           <li

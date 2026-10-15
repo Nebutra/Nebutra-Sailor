@@ -116,7 +116,7 @@ export function DeviceApprovalForm({
   return (
     <div className="grid gap-6 rounded-lg border border-border bg-card p-8 shadow-ambient-sm">
       <div className="grid gap-1">
-        <h1 className="text-xl font-semibold text-foreground">{tc("authorizeADevice")}</h1>
+        <h1 className="text-xl text-foreground">{tc("authorizeADevice")}</h1>
         {signedInEmail && (
           <p className="text-sm text-muted-foreground">
             {tc("signedInAs", { signedInEmail: String(signedInEmail ?? "") })}

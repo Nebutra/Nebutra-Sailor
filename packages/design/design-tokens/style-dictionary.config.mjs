@@ -66,7 +66,7 @@ const FONT_REGISTRY = {
   manrope: "--font-reg-manrope",
   sora: "--font-reg-sora",
   "work sans": "--font-reg-work-sans",
-  "dm sans": "--font-reg-dm-sans",
+  "dm sans": "--font-dm-sans",
   "plus jakarta sans": "--font-reg-plus-jakarta-sans",
   outfit: "--font-reg-outfit",
   figtree: "--font-reg-figtree",
@@ -88,7 +88,10 @@ function primaryFontFamily(stack) {
 function withRegistryFont(stack) {
   if (typeof stack !== "string" || stack.includes("var(--font-")) return stack;
   const variable = FONT_REGISTRY[primaryFontFamily(stack)];
-  return variable ? `var(${variable}), ${stack}` : stack;
+  // Always with the family as the var() fallback — see registryVar() in
+  // @nebutra/fonts: an undefined var() without one voids the declaration.
+  const family = String(stack).split(",")[0].trim().replace(/'/g, '"');
+  return variable ? `var(${variable}, ${family}), ${stack}` : stack;
 }
 
 StyleDictionary.registerTransform({
@@ -540,6 +543,12 @@ async function buildOklchMap(themePath) {
  * --transition / --focus-ring, --nebutra-brand-blue / --nebutra-brand-cyan) into the
  * generated mode CSS for the given selector.
  */
+// The @theme font entries, generated from core.json:fontFamily (one source).
+const THEME_FONT_LINES = Object.entries((await readJson("tokens/core.json")).fontFamily)
+  .filter(([key]) => !key.startsWith("$"))
+  .map(([key, token]) => `  --font-${key}: ${token.$value};`)
+  .join("\n");
+
 function buildExtras({ selector, p3Map, oklchMap, includeBrandBridge }) {
   const lines = [];
 
@@ -964,13 +973,9 @@ function buildTailwindThemeInline() {
   /* Font family — Geist keeps Latin + numerals for body/UI, DM Sans sets Latin
      display and headings, self-hosted MiSans takes CJK, system CJK faces behind
      it. Order is the design decision; see the fontFamily $description in
-     tokens/core.json. Mirror of those tokens — keep the two in sync
-     (verify:parity compares them). */
-  --font-sans: var(--font-geist-sans), "Geist", var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-cn: var(--font-geist-sans), "Geist", var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-display: var(--font-dm-sans), "DM Sans", var(--font-misans, "MiSans"), "PingFang SC", sans-serif;
-  --font-heading: var(--font-dm-sans), "DM Sans", var(--font-misans, "MiSans"), "PingFang SC", sans-serif;
-  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+     tokens/core.json. Read from those tokens at build time — this block used
+     to be a hand-kept mirror, and the mirror was the copy that shipped. */
+${THEME_FONT_LINES}
 }
 `;
 }

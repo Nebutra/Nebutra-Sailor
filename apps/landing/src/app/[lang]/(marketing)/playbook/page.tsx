@@ -56,9 +56,7 @@ function PlaybookCard({ item, t }: { item: PlaybookItem; t: CatalogTranslator })
       </div>
       <div className="mt-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-[15px] font-semibold text-neutral-12">
-            {t(`items.${item.id}.title`)}
-          </h3>
+          <h3 className="text-[15px] text-neutral-12">{t(`items.${item.id}.title`)}</h3>
           {item.badge && (
             <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-primary/15 dark:text-primary">
               {t(`items.${item.id}.badge`)}
@@ -101,9 +99,7 @@ export default async function PlaybookPage({ params }: { params: Promise<{ lang:
       <AnimateIn preset="fadeUp">
         <div className="text-center">
           <p className="mb-3 text-sm font-medium text-neutral-11">{t("page.eyebrow")}</p>
-          <h1 className="text-4xl font-bold tracking-tight text-neutral-12 sm:text-5xl">
-            {t("page.title")}
-          </h1>
+          <h1 className="text-4xl tracking-tight text-neutral-12 sm:text-5xl">{t("page.title")}</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-11">{t("page.lead")}</p>
         </div>
       </AnimateIn>
@@ -116,7 +112,7 @@ export default async function PlaybookPage({ params }: { params: Promise<{ lang:
             <section key={category.id}>
               <AnimateIn preset="fadeUp">
                 <div className="mb-6">
-                  <h2 className="text-xl font-semibold text-neutral-12">
+                  <h2 className="text-xl text-neutral-12">
                     {t(`categories.${category.id}.label`)}
                   </h2>
                   <p className="mt-1 text-sm text-neutral-11">

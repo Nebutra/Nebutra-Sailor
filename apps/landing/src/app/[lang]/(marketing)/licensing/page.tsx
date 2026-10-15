@@ -130,7 +130,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
 
         <AnimateIn preset="emerge" inView>
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold mb-8"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8"
             style={{
               letterSpacing: "var(--tracking-display)",
               lineHeight: "var(--leading-display)",
@@ -178,10 +178,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Badge>
 
               <div className="mb-6">
-                <h2
-                  className="text-2xl font-semibold mb-2"
-                  style={{ letterSpacing: "var(--tracking-tight)" }}
-                >
+                <h2 className="text-2xl mb-2" style={{ letterSpacing: "var(--tracking-tight)" }}>
                   {t("plans.community.title")}
                 </h2>
                 <p className="text-sm font-medium text-muted-foreground">
@@ -261,10 +258,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Suspense>
 
               <div className="mb-6">
-                <h2
-                  className="text-2xl font-semibold mb-2"
-                  style={{ letterSpacing: "var(--tracking-tight)" }}
-                >
+                <h2 className="text-2xl mb-2" style={{ letterSpacing: "var(--tracking-tight)" }}>
                   {t("plans.team.title")}
                 </h2>
                 <p className="text-sm font-medium text-muted-foreground">
@@ -327,10 +321,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Badge>
 
               <div className="mb-6">
-                <h2
-                  className="text-2xl font-semibold mb-2"
-                  style={{ letterSpacing: "var(--tracking-tight)" }}
-                >
+                <h2 className="text-2xl mb-2" style={{ letterSpacing: "var(--tracking-tight)" }}>
                   {t("plans.enterprise.title")}
                 </h2>
                 <p className="text-sm font-medium text-muted-foreground">
@@ -386,7 +377,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
             <div className="mx-auto max-w-2xl text-center">
               <p className="mb-4 text-sm text-primary">FAQ</p>
               <h2
-                className="text-3xl font-semibold md:text-4xl"
+                className="text-3xl md:text-4xl"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -408,7 +399,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
                   {String(idx + 1).padStart(2, "0")}
                 </div>
                 <div>
-                  <h3 className="text-base font-semibold text-card-foreground">{item.q}</h3>
+                  <h3 className="text-base text-card-foreground">{item.q}</h3>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">{item.a}</p>
                 </div>
               </article>

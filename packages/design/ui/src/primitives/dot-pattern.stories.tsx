@@ -30,7 +30,7 @@ export const Static: Story = {
     <div className="relative h-[400px] w-full overflow-hidden">
       <DotPattern className="text-muted-foreground/30" />
       <div className="relative z-10 flex h-full items-center justify-center">
-        <h2 className="text-3xl font-bold">Static Dot Pattern</h2>
+        <h2 className="text-3xl">Static Dot Pattern</h2>
       </div>
     </div>
   ),
@@ -41,7 +41,7 @@ export const Glowing: Story = {
     <div className="relative h-[400px] w-full overflow-hidden bg-background">
       <DotPattern glow className="text-primary/50" />
       <div className="relative z-10 flex h-full items-center justify-center">
-        <h2 className="text-3xl font-bold">Glowing Dots</h2>
+        <h2 className="text-3xl">Glowing Dots</h2>
       </div>
     </div>
   ),
@@ -52,7 +52,7 @@ export const GradientMask: Story = {
     <div className="relative h-[400px] w-full overflow-hidden">
       <DotPattern className="[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)] text-foreground/30" />
       <div className="relative z-10 p-8">
-        <h2 className="text-2xl font-bold">Gradient Masked</h2>
+        <h2 className="text-2xl">Gradient Masked</h2>
       </div>
     </div>
   ),

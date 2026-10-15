@@ -1,9 +1,7 @@
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
 import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
-import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { THEME_STORAGE_KEY, ThemeProvider } from "@nebutra/tokens";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { cookies, headers } from "next/headers";
 import type { ReactNode } from "react";
@@ -59,7 +57,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     body = (
       <div className="flex min-h-screen items-center justify-center bg-background px-6 text-foreground">
         <div className="w-full max-w-sm rounded-lg border border-border bg-card p-6">
-          <h1 className="font-semibold text-sm leading-5">Not a platform staff member</h1>
+          <h1 className="text-sm leading-5">Not a platform staff member</h1>
           <p className="mt-2 text-muted-foreground text-sm leading-5">
             {identity
               ? `${identity.email} passed Cloudflare Access but holds no PlatformStaff grant.`
@@ -71,16 +69,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   }
 
   return (
-    <html
-      lang="en"
-      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`.trim()}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${themeClass} ${fontClassName}`.trim()} suppressHydrationWarning>
       <body
         className="min-h-screen bg-background font-sans text-foreground antialiased"
         suppressHydrationWarning
       >
-        <CjkFontFace />
+        <FontFaces />
 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {body}

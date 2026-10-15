@@ -6,7 +6,7 @@ export function HighlighterDemo() {
   return (
     <div className="max-w-3xl p-8 gap-12 text-lg leading-relaxed mx-auto flex w-full flex-col">
       <div>
-        <h3 className="text-2xl font-bold mb-4">Annotate your text with style</h3>
+        <h3 className="text-2xl mb-4">Annotate your text with style</h3>
         <p className="mb-4">
           Sometimes you need to draw attention to{" "}
           <Highlighter action="highlight" color="#fef08a" animationDuration={800} triggerOnView>

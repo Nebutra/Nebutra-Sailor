@@ -98,7 +98,7 @@ export function YourPresets({
   return (
     <section className="grid gap-2" aria-label="Your presets">
       <div className="flex items-center justify-between gap-3">
-        <h3 className="font-medium text-foreground text-xs">Your presets</h3>
+        <h3 className="text-foreground text-xs">Your presets</h3>
         <Button type="button" variant="ghost" size="tiny" onClick={save} disabled={saving}>
           {saving ? "Saving" : "Save this look"}
         </Button>

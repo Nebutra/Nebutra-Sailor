@@ -12,7 +12,7 @@ export function SectionContainerDemo() {
     >
       <div className="inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] absolute" />
       <SectionContainer.Header>
-        <h2 className="text-2xl font-bold tracking-tight">Features</h2>
+        <h2 className="text-2xl tracking-tight">Features</h2>
         <p className="mt-2 text-muted-foreground">Everything you need to ship faster.</p>
       </SectionContainer.Header>
 

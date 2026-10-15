@@ -30,7 +30,7 @@ export const Default: Story = {
   args: {
     children: (
       <div className="text-center">
-        <h2 className="text-2xl font-bold">Welcome to the Future</h2>
+        <h2 className="text-2xl">Welcome to the Future</h2>
         <p className="mt-2 text-muted-foreground">Experience the next generation.</p>
       </div>
     ),
@@ -45,7 +45,7 @@ export const BlueGrid: Story = {
     gridColor: "rgba(59, 130, 246, 0.3)",
     children: (
       <div className="text-center">
-        <h2 className="text-2xl font-bold">Blue Warp</h2>
+        <h2 className="text-2xl">Blue Warp</h2>
         <p className="text-sm text-muted-foreground">Custom grid color</p>
       </div>
     ),
@@ -59,7 +59,7 @@ export const Dramatic: Story = {
     beamsPerSide: 4,
     children: (
       <div className="text-center">
-        <h2 className="text-2xl font-bold">Dramatic</h2>
+        <h2 className="text-2xl">Dramatic</h2>
         <p className="text-sm text-muted-foreground">Close perspective</p>
       </div>
     ),

@@ -31,7 +31,7 @@ export default async function CommunityPage({ searchParams }: PageProps) {
 
       <main className="mx-auto max-w-wide px-4 py-12 md:px-6">
         <div className="mb-12 text-center">
-          <h1 className="mb-3 text-5xl font-bold tracking-tight text-foreground">SLEPTONS</h1>
+          <h1 className="mb-3 text-5xl tracking-tight text-foreground">SLEPTONS</h1>
           <p className="mb-6 text-lg text-muted-foreground">
             AI-native founders. One person. Infinite potential.
           </p>

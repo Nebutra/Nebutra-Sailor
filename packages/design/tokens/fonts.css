@@ -1,0 +1,35 @@
+/**
+ * @nebutra/tokens/fonts.css — the core faces for hosts WITHOUT next/font
+ * (Storybook, Vite apps). Next apps use `fontClassName` from
+ * @nebutra/tokens/fonts instead and must not import this file.
+ *
+ * The token stacks read `var(--font-geist-sans, "Geist")`, … — with no
+ * next/font variable defined, they fall back to exactly the family names
+ * declared here. Same files as the Next path (scripts/copy-fonts.mjs), so a
+ * story and the app render one face. MiSans (CJK) is CDN-hosted: render
+ * <FontFaces origin=… /> from @nebutra/tokens/fonts/faces once.
+ */
+
+@font-face {
+  font-family: "Geist";
+  src: url("./fonts/geist-sans-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("./fonts/geist-mono-variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("./fonts/dm-sans-variable.woff2") format("woff2");
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}

@@ -1,92 +1,19 @@
 {
-  "cosmos": [
-    "var(--font-reg-fraunces)",
-    "Fraunces",
-    "GT Super",
-    "var(--font-misans",
-    "MiSans\")",
-    "PingFang SC",
-    "var(--font-jetbrains-mono)",
-    "JetBrains Mono"
-  ],
-  "gsap": [
-    "var(--font-reg-inter-tight)",
-    "Mori",
-    "Inter Tight",
-    "DM Sans",
-    "var(--font-misans",
-    "MiSans\")",
-    "PingFang SC"
-  ],
-  "linear": [
-    "var(--font-inter)",
-    "Inter Variable",
-    "Inter",
-    "var(--font-misans",
-    "MiSans\")",
-    "PingFang SC",
-    "var(--font-jetbrains-mono)",
-    "Berkeley Mono",
-    "JetBrains Mono"
-  ],
-  "nebutra-site": [
-    "var(--font-geist-sans)",
-    "Geist",
-    "MiSans",
-    "var(--font-reg-dm-sans)",
-    "DM Sans",
-    "var(--font-geist-mono)",
-    "Geist Mono"
-  ],
-  "notion": [
-    "var(--font-inter)",
-    "NotionInter",
-    "Inter",
-    "var(--font-misans",
-    "MiSans\")",
-    "PingFang SC"
-  ],
-  "raycast": [
-    "var(--font-inter)",
-    "Inter",
-    "var(--font-misans",
-    "MiSans\")",
-    "PingFang SC",
-    "var(--font-geist-mono)",
-    "Geist Mono",
-    "GeistMono",
-    "Menlo"
-  ],
-  "stripe": [
-    "var(--font-reg-inter-tight)",
-    "sohne-var",
-    "Inter Tight",
-    "Inter",
-    "var(--font-misans",
-    "MiSans\")",
-    "PingFang SC"
-  ],
+  "cosmos": ["Fraunces", "GT Super", "MiSans", "PingFang SC", "JetBrains Mono"],
+  "gsap": ["Inter Tight", "Mori", "DM Sans", "MiSans", "PingFang SC"],
+  "linear": ["Inter", "Inter Variable", "MiSans", "PingFang SC", "JetBrains Mono", "Berkeley Mono"],
+  "nebutra-site": ["Geist", "MiSans", "DM Sans", "Geist Mono"],
+  "notion": ["Inter", "NotionInter", "MiSans", "PingFang SC"],
+  "raycast": ["Inter", "MiSans", "PingFang SC", "Geist Mono", "GeistMono", "Menlo"],
+  "stripe": ["Inter Tight", "sohne-var", "Inter", "MiSans", "PingFang SC"],
   "vanta": [
-    "var(--font-inter)",
-    "Inter Variable",
     "Inter",
-    "var(--font-misans",
-    "MiSans\")",
+    "Inter Variable",
+    "MiSans",
     "PingFang SC",
-    "var(--font-reg-source-serif-4)",
-    "Reckless",
     "Source Serif 4",
+    "Reckless",
     "Lora"
   ],
-  "vercel": [
-    "var(--font-geist-sans)",
-    "Geist Sans",
-    "Geist",
-    "var(--font-misans",
-    "MiSans\")",
-    "PingFang SC",
-    "var(--font-geist-mono)",
-    "Geist Mono",
-    "Menlo"
-  ]
+  "vercel": ["Geist Sans", "Geist", "MiSans", "PingFang SC", "Geist Mono", "Menlo"]
 }

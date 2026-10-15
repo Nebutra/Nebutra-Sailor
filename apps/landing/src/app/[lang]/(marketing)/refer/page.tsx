@@ -155,7 +155,7 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
                 <Sparkles aria-hidden="true" className="h-3.5 w-3.5 text-cyan-10" />
                 {t("eyebrow")}
               </p>
-              <h1 className="max-w-3xl text-balance text-3xl font-semibold leading-[1.05] text-foreground sm:text-5xl md:text-6xl">
+              <h1 className="max-w-3xl text-balance text-3xl leading-[1.05] text-foreground sm:text-5xl md:text-6xl">
                 {t("title")}
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-7 text-muted-foreground md:text-lg md:leading-8">
@@ -196,7 +196,7 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
               <AnimateIn key={item.title} preset="fadeUp">
                 <article className="min-h-44 p-6">
                   <Icon aria-hidden="true" className={proofIconClassName} />
-                  <h2 className="mt-4 text-base font-semibold text-foreground">{item.title}</h2>
+                  <h2 className="mt-4 text-base text-foreground">{item.title}</h2>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.description}</p>
                 </article>
               </AnimateIn>
@@ -213,7 +213,7 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
                 <p className="text-xs font-semibold uppercase text-[color:hsl(var(--muted-foreground))]">
                   {t("infrastructure.eyebrow")}
                 </p>
-                <h2 className="mt-3 text-3xl font-semibold leading-tight text-foreground md:text-4xl">
+                <h2 className="mt-3 text-3xl leading-tight text-foreground md:text-4xl">
                   {t("infrastructure.title")}
                 </h2>
                 <p className="mt-4 text-base leading-7 text-muted-foreground">
@@ -233,7 +233,7 @@ export default async function ReferPage({ params, searchParams }: ReferPageProps
                       {item.eyebrow}
                     </p>
                     <div>
-                      <h3 className="text-base font-semibold text-foreground">{item.title}</h3>
+                      <h3 className="text-base text-foreground">{item.title}</h3>
                       <p className="mt-2 text-sm leading-6 text-muted-foreground">
                         {item.description}
                       </p>

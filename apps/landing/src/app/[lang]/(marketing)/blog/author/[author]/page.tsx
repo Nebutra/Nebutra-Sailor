@@ -169,9 +169,7 @@ async function BlogAuthorPageLoader({ params }: { params: Promise<Params> }) {
                 <p className="text-xs font-semibold uppercase text-muted-foreground">
                   {t("label")}
                 </p>
-                <h1 className="mt-2 text-4xl font-semibold text-foreground sm:text-5xl">
-                  {authorName}
-                </h1>
+                <h1 className="mt-2 text-4xl text-foreground sm:text-5xl">{authorName}</h1>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
                   {bio || t("postCount", { count: posts.length })}
                 </p>

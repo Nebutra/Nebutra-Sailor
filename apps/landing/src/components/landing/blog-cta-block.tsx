@@ -36,9 +36,7 @@ export function BlogCtaBlock({
     >
       <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
         <div className="relative pl-5 before:absolute before:left-0 before:top-1 before:h-[calc(100%-0.25rem)] before:w-px before:bg-[linear-gradient(180deg,hsl(var(--primary)),hsl(var(--border)))]">
-          {title && (
-            <h2 className="text-xl font-semibold leading-tight text-foreground">{title}</h2>
-          )}
+          {title && <h2 className="text-xl leading-tight text-foreground">{title}</h2>}
           {body && (
             <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-muted-foreground">{body}</p>
           )}

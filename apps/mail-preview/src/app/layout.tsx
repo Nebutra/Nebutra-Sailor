@@ -1,6 +1,4 @@
-import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Providers } from "@/components/providers";
@@ -14,13 +12,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${fontClassName}`} suppressHydrationWarning>
       <body className="min-h-screen bg-background text-foreground antialiased">
-        <CjkFontFace />
+        <FontFaces />
 
         <Providers>{children}</Providers>
       </body>

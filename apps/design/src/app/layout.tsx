@@ -1,9 +1,7 @@
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
+import { fontRegistryClassName } from "@nebutra/tokens/fonts/registry";
 import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
-import { fontRegistryClassName } from "@nebutra/fonts/next";
-import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { CommandPalette } from "@/components/command-palette";
@@ -33,7 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       // fontRegistryClassName defines the --font-* variables skins.css names.
       // This app IS the language switcher; without it every non-default language
       // demonstrates itself in the system font.
-      className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName} ${fontRegistryClassName}`}
+      className={`${fontClassName} ${fontRegistryClassName}`}
       lang="en"
       suppressHydrationWarning
     >
@@ -41,7 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        <CjkFontFace />
+        <FontFaces />
         <Providers>
           <a
             className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-[var(--radius-md)] focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground focus:text-sm"

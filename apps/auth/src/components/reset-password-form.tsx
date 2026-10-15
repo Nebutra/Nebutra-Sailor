@@ -65,9 +65,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
     return (
       <div className="w-full">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-            {t("successTitle")}
-          </h1>
+          <h1 className="text-3xl tracking-tight text-foreground">{t("successTitle")}</h1>
           <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("successDescription")}</p>
         </div>
         <Button asChild variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
@@ -80,7 +78,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
+        <h1 className="text-3xl tracking-tight text-foreground">{t("title")}</h1>
         <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("description")}</p>
       </div>
 

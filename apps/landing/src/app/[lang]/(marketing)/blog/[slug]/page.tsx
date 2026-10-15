@@ -122,9 +122,7 @@ function BlogArticleFooter({
               <p className="text-xs font-semibold uppercase text-muted-foreground">
                 {t("footer.continueReading")}
               </p>
-              <h2 className="mt-2 text-2xl font-semibold text-foreground">
-                {t("footer.relatedNotes")}
-              </h2>
+              <h2 className="mt-2 text-2xl text-foreground">{t("footer.relatedNotes")}</h2>
             </div>
             <Link
               href={localizedPostHref(lang)}
@@ -163,7 +161,7 @@ function BlogArticleFooter({
                         {relatedPost.tags[0]}
                       </p>
                     )}
-                    <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-snug text-foreground">
+                    <h3 className="mt-2 line-clamp-2 text-base leading-snug text-foreground">
                       {relatedPost.title}
                     </h3>
                   </div>
@@ -292,7 +290,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
                     <BookOpen className="size-3.5" aria-hidden />
                     {t("journalBadge")}
                   </div>
-                  <h1 className="max-w-4xl text-4xl font-semibold text-foreground sm:text-5xl lg:text-6xl">
+                  <h1 className="max-w-4xl text-4xl text-foreground sm:text-5xl lg:text-6xl">
                     {post.title}
                   </h1>
                   {post.excerpt && (

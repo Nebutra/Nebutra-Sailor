@@ -4,10 +4,11 @@ import {
   buildSoftwareApplicationJsonLd,
   buildWebSiteJsonLd,
 } from "@nebutra/brand/metadata-helpers";
-import { CjkFontFace, misansFontFaceCss } from "@nebutra/fonts/next/cjk";
 import { isChineseLocale, toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { pickMessages } from "@nebutra/i18n/messages";
 import { loadUiLabels } from "@nebutra/i18n/ui-labels";
+import { FontFaces, fontClassName, misansFontFaceCss } from "@nebutra/tokens/fonts";
+import { fontRegistryClassName } from "@nebutra/tokens/fonts/registry";
 import { UiLabelsProvider } from "@nebutra/ui/primitives";
 import type { Metadata, Viewport } from "next";
 import { cacheLife, cacheTag } from "next/cache";
@@ -25,7 +26,6 @@ import { buildSiteNavigationSchema } from "@/lib/seo/structured-data";
 import { SITE_ID } from "@/site.config";
 import { SITE_SEO, siteMetadata } from "@/site-meta";
 import { SITE_BRAND } from "@/site-theme";
-import { fontVariables } from "../fonts";
 import { Providers } from "../providers";
 
 interface LangLayoutProps {
@@ -196,7 +196,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     <html
       lang={toHtmlLang(locale)}
       dir={toTextDir(locale)}
-      className={`${fontVariables} min-h-dvh antialiased`}
+      className={`${fontClassName} ${fontRegistryClassName} min-h-dvh antialiased`}
       // The site's Brand Package, set on the server so the first paint already
       // has it (site-theme.ts; the template has none).
       data-brand={SITE_BRAND}
@@ -210,7 +210,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
         {/* MiSans: in the first paint where the page's language is CJK; after
             load elsewhere, where it only sets the Chinese sub-lines. */}
         {CJK_PAGE_LOCALES.has(locale) || isChineseLocale(locale) ? (
-          <CjkFontFace />
+          <FontFaces />
         ) : (
           <DeferredCjkFontFace css={misansFontFaceCss()} />
         )}

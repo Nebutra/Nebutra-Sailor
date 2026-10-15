@@ -29,7 +29,7 @@ export function Panel({
     >
       <div className="flex items-center justify-between gap-3 border-border border-b px-4 py-3.5">
         <div className="min-w-0">
-          <h2 className="font-semibold text-sm leading-5">
+          <h2 className="text-sm leading-5">
             {title}
             {count !== undefined && count !== "" ? (
               <span className="ml-2 font-normal text-muted-foreground text-xs">{count}</span>
@@ -58,7 +58,7 @@ export function PageTitle({
   return (
     <div className="flex items-end justify-between gap-4">
       <div>
-        <h1 className="font-medium text-2xl leading-8 tracking-heading">{title}</h1>
+        <h1 className="text-2xl leading-8 tracking-heading">{title}</h1>
         {subtitle ? (
           <p className="mt-1 text-muted-foreground text-sm leading-5">{subtitle}</p>
         ) : null}

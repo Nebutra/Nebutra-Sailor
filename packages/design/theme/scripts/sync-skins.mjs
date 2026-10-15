@@ -122,7 +122,9 @@ for (const block of sheet.matchAll(/html[^{]*\[data-brand="([a-z0-9-]+)"\][^{]*\
   const [, brand, body] = block;
   const bucket = (fonts[brand] ??= new Set());
   for (const decl of body.matchAll(/--font-[a-z-]+:\s*([^;]+);/g)) {
-    for (const raw of decl[1].split(",")) {
+    // var(--font-x, "Family") → "Family"; a bare var() names no family.
+    const families = decl[1].replace(/var\(--[\w-]+(?:\s*,\s*([^()]*))?\)/g, (_, fb) => fb ?? "");
+    for (const raw of families.split(",")) {
       const family = raw.trim().replace(/^["']|["']$/g, "");
       if (!family || /^\d+$/.test(family) || GENERIC.has(family)) continue;
       bucket.add(family);

@@ -12,9 +12,7 @@ export function VrtCard() {
           <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-primary/10 text-primary shrink-0">
             <Eye className="h-4 w-4" />
           </div>
-          <h3 className="text-lg font-bold tracking-tight text-foreground line-clamp-1">
-            {t("card3Title")}
-          </h3>
+          <h3 className="text-lg tracking-tight text-foreground line-clamp-1">{t("card3Title")}</h3>
         </div>
         <div className="flex items-center gap-1.5 rounded-full bg-success/15 text-success-strong px-2 py-0.5 text-xs font-semibold border border-success/20 shadow-sm shrink-0">
           <CheckCircle2 className="w-3.5 h-3.5" />

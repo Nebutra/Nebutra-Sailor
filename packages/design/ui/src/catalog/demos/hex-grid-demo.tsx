@@ -9,7 +9,7 @@ export function HexGridDemo() {
         {/* Example 1: Basic with Glow */}
         <div className="space-y-4">
           <div className="mb-6 text-center">
-            <h3 className="text-lg font-bold">Animated Glowing Grid</h3>
+            <h3 className="text-lg">Animated Glowing Grid</h3>
             <p className="text-sm text-muted-foreground">
               Standard wireframe hexagon grid with animated glowing cells.
             </p>
@@ -25,7 +25,7 @@ export function HexGridDemo() {
         {/* Example 2: Filled with Radial Mask */}
         <div className="space-y-4">
           <div className="mb-6 text-center">
-            <h3 className="text-lg font-bold">Filled Grid with Mask</h3>
+            <h3 className="text-lg">Filled Grid with Mask</h3>
             <p className="text-sm text-muted-foreground">
               Solid filled hexagons masked by a radial gradient.
             </p>
@@ -40,7 +40,7 @@ export function HexGridDemo() {
               className="[mask-image:radial-gradient(ellipse_at_center,white,transparent_70%)]"
             />
             <div className="relative z-10">
-              <h2 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter mix-blend-overlay">
+              <h2 className="text-4xl md:text-5xl text-foreground tracking-tighter mix-blend-overlay">
                 NEBUTRA
               </h2>
             </div>

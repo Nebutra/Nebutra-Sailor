@@ -14,13 +14,13 @@ export default function AgentsDocsPage() {
       data-tl-section
       className="mx-auto w-full max-w-[800px] px-5 py-12 sm:px-6 md:px-8 md:py-16 will-change-transform"
     >
-      <h1 className="text-4xl font-bold tracking-tight">For Agents</h1>
+      <h1 className="text-4xl tracking-tight">For Agents</h1>
       <p className="mt-3 text-muted-foreground">
         Structured pairings with commercial-use licenses for design agents.
       </p>
-      <h2 className="mt-10 text-2xl font-bold">Package</h2>
+      <h2 className="mt-10 text-2xl">Package</h2>
       <pre className="mt-3 overflow-auto rounded bg-foreground p-4 text-sm text-background">{`import { searchSpecimens, extractSpecimen } from "@nebutra/typelens-catalog";`}</pre>
-      <h2 className="mt-10 text-2xl font-bold">Sample extract</h2>
+      <h2 className="mt-10 text-2xl">Sample extract</h2>
       <p className="mt-2 text-sm text-muted-foreground">
         <Link href="/works/calm-saas-landing" className="underline">
           {sampleId}

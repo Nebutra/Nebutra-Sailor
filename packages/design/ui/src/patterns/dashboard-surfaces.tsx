@@ -50,7 +50,7 @@ export function DashboardCommandSurface({
               </p>
             </div>
           ) : null}
-          <h1 className="mt-2 text-2xl font-semibold tracking-heading text-card-foreground sm:text-3xl">
+          <h1 className="mt-2 text-2xl tracking-heading text-card-foreground sm:text-3xl">
             {title}
           </h1>
           {description ? (
@@ -100,7 +100,7 @@ export function DashboardPanel({
         )}
       >
         <div className="min-w-0">
-          <h2 className="text-sm font-semibold text-card-foreground">{title}</h2>
+          <h2 className="text-sm text-card-foreground">{title}</h2>
           {description ? (
             <p className="mt-0.5 text-xs leading-5 text-muted-foreground">{description}</p>
           ) : null}

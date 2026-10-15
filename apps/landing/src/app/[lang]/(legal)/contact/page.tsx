@@ -76,9 +76,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     <div className="space-y-8 sm:space-y-12">
       {/* Header */}
       <section className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">
-          {t("contact.heading")}
-        </h1>
+        <h1 className="text-4xl tracking-tight text-foreground">{t("contact.heading")}</h1>
         <p className="mt-4 text-lg text-muted-foreground">{t("contact.subheading")}</p>
       </section>
 
@@ -86,7 +84,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {contacts.map((contact) => (
           <div key={contact.email} className="rounded-[var(--radius-lg)] border border-border p-6">
-            <h2 className="font-semibold text-foreground">{contact.title}</h2>
+            <h2 className="text-foreground">{contact.title}</h2>
             <p className="mt-1 text-sm text-muted-foreground">{contact.description}</p>
             <a
               href={`mailto:${contact.email}`}
@@ -100,7 +98,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
 
       {/* Contact Form */}
       <section className="rounded-[var(--radius-2xl)] border border-border p-5 sm:p-8">
-        <h2 className="text-2xl font-bold text-foreground mb-6">{t("contact.formTitle")}</h2>
+        <h2 className="text-2xl text-foreground mb-6">{t("contact.formTitle")}</h2>
         {/* The form is the only client reader of legalPages — it gets its own
             subtree rather than shipping all 34 KB of legal copy to every page. */}
         <NextIntlClientProvider
@@ -114,17 +112,15 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
       {/* The upstream company's office and accounts; a customer's site states its own when it has them. */}
       {SITE_ID === "nebutra" ? (
         <section className="rounded-[var(--radius-2xl)] bg-muted p-5 sm:p-8">
-          <h2 className="text-xl font-bold text-foreground mb-4">
-            {t("contact.companyInfoTitle")}
-          </h2>
+          <h2 className="text-xl text-foreground mb-4">{t("contact.companyInfoTitle")}</h2>
           <div className="space-y-4 text-muted-foreground">
             <div>
-              <h3 className="font-semibold text-foreground">{t("contact.companyNameChinese")}</h3>
+              <h3 className="text-foreground">{t("contact.companyNameChinese")}</h3>
               <p className="text-sm text-muted-foreground">{t("contact.companyNameEnglish")}</p>
               <p>{t("contact.companyAddress")}</p>
             </div>
             <div>
-              <h3 className="font-semibold text-foreground">{t("contact.socialMedia")}</h3>
+              <h3 className="text-foreground">{t("contact.socialMedia")}</h3>
               <div className="flex gap-4 mt-2">
                 <a
                   href="https://twitter.com/nebutra"

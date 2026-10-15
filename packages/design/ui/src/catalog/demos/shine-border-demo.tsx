@@ -12,7 +12,7 @@ export function ShineBorderDemo() {
         className="max-w-sm w-full bg-background"
       >
         <div className="p-8 text-center">
-          <h2 className="text-2xl font-bold tracking-tight mb-2">Shine Card</h2>
+          <h2 className="text-2xl tracking-tight mb-2">Shine Card</h2>
           <p className="text-sm text-muted-foreground">Animated gradient border effect</p>
         </div>
       </ShineBorder>

@@ -1003,7 +1003,7 @@ export function StudioWorkbench() {
         >
           <div className="border-border/70 border-b px-4 pt-3 pb-3">
             <div className="mb-3 flex items-center justify-between gap-3">
-              <h1 className="font-semibold text-foreground text-sm">Sailor Studio</h1>
+              <h1 className="text-foreground text-sm">Sailor Studio</h1>
               <Button
                 type="button"
                 variant="ghost"
@@ -1033,7 +1033,7 @@ export function StudioWorkbench() {
             className="studio-panel-body min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-4 pb-6"
           >
             <div className="mb-4">
-              <h2 className="font-semibold text-foreground text-base">{current.title}</h2>
+              <h2 className="text-foreground text-base">{current.title}</h2>
               <p className="mt-1 text-muted-foreground text-xs">{current.hint}</p>
             </div>
             {step === "look" ? (

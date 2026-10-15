@@ -17,7 +17,7 @@ export function FAQ({
   return (
     <div className="mx-auto max-w-4xl font-sans">
       <div className="text-center mb-12">
-        <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+        <h2 className="text-3xl tracking-tight text-slate-900 sm:text-4xl dark:text-white">
           {title}
         </h2>
         {description && (

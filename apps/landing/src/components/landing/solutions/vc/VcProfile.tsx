@@ -81,7 +81,7 @@ export async function VcProfile({
           <div className="flex items-start gap-4">
             <VcLogo src={org.logo ?? null} name={org.name} size="lg" />
             <div className="min-w-0 flex-1">
-              <h1 className="text-2xl font-bold text-neutral-12 md:text-3xl">{org.name}</h1>
+              <h1 className="text-2xl text-neutral-12 md:text-3xl">{org.name}</h1>
               {org.nameEn ? <p className="text-base text-muted-foreground">{org.nameEn}</p> : null}
               <div className="mt-2 flex flex-wrap gap-1.5">
                 {org.types.map((ty) => (
@@ -110,7 +110,7 @@ export async function VcProfile({
       {thesis ? (
         <AnimateIn preset="fadeUp" inView>
           <section className="mt-10">
-            <h2 className="mb-3 border-l-2 border-foreground/70 pl-3 font-semibold text-neutral-12">
+            <h2 className="mb-3 border-l-2 border-foreground/70 pl-3 text-neutral-12">
               {t("thesis")}
             </h2>
             <p className="text-base leading-relaxed text-neutral-11">{thesis}</p>
@@ -136,7 +136,7 @@ export async function VcProfile({
       {/* Sectors */}
       {org.sectors.length ? (
         <section className="mt-8">
-          <h2 className="mb-3 border-l-2 border-foreground/70 pl-3 font-semibold text-neutral-12">
+          <h2 className="mb-3 border-l-2 border-foreground/70 pl-3 text-neutral-12">
             {t("sectors")}
           </h2>
           <div className="flex flex-wrap gap-1.5">
@@ -152,7 +152,7 @@ export async function VcProfile({
       {/* Notable portfolio */}
       {org.notable?.length ? (
         <section className="mt-8">
-          <h2 className="mb-3 border-l-2 border-foreground/70 pl-3 font-semibold text-neutral-12">
+          <h2 className="mb-3 border-l-2 border-foreground/70 pl-3 text-neutral-12">
             {t("notable")}
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -171,7 +171,7 @@ export async function VcProfile({
       {/* Recent activity */}
       {org.recent?.length ? (
         <section className="mt-8">
-          <h2 className="mb-3 border-l-2 border-foreground/70 pl-3 font-semibold text-neutral-12">
+          <h2 className="mb-3 border-l-2 border-foreground/70 pl-3 text-neutral-12">
             {t("recent")}
           </h2>
           <ul className="flex flex-col gap-1.5">
@@ -188,7 +188,7 @@ export async function VcProfile({
       {/* Similar */}
       {similar.length ? (
         <section className="mt-12 border-t border-border/40 pt-8">
-          <h2 className="mb-4 font-semibold text-neutral-12">{t("similar")}</h2>
+          <h2 className="mb-4 text-neutral-12">{t("similar")}</h2>
           <div className="grid gap-3 sm:grid-cols-2">
             {similar.map((s) => (
               <Link

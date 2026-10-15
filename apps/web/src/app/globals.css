@@ -23,15 +23,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Custom overrides for web app (dashboard) */
-@layer base {
-  /* Custom font configuration */
-  body {
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-}
+/* Body face, smoothing and features: @nebutra/tokens (static/base.css), the
+   one base sheet every app shares — not restated here. */
 
 /* Dashboard specific utilities */
 @layer utilities {
@@ -129,12 +122,8 @@
     color: var(--user-foreground);
   }
 
-  /* User-supplied font family stacks are now owned by @nebutra/ui fonts.css,
-     which resolves var(--user-ui-font, var(--font-sans)), var(--font-cjk) (and
-     the code equivalent) in one unlayered rule — so the user override, the
-     theme/DESIGN font, and the CJK fallback all compose with correct
-     precedence. The previous @layer base rules here were shadowed by that
-     unlayered rule and dropped the CJK fallback, so they are removed. */
+  /* User-supplied font family stacks (--user-ui-font / --user-code-font) are
+     read by the shared base sheet (@nebutra/design-tokens static/base.css). */
 
   /* Pointer cursor on interactive elements when user opts in. */
   html.cursor-pointer-interactive button:not(:disabled),

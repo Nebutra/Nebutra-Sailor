@@ -45,7 +45,7 @@ export function ResumeDocument({ content, mode = "design", hideContact }: Resume
       }
     >
       <header className="mb-5 border-b border-current/20 pb-3">
-        <h1 className="text-2xl font-semibold tracking-tight">
+        <h1 className="text-2xl tracking-tight">
           {model.name}
           {model.nameEn && (
             <span className="ml-2 text-base font-normal opacity-70">{model.nameEn}</span>
@@ -92,7 +92,7 @@ function Section({ section }: { section: DocSection }) {
     <section aria-labelledby={`sec-${section.id}`} className="break-inside-avoid">
       <h2
         id={`sec-${section.id}`}
-        className="mb-2 text-[11px] font-semibold uppercase tracking-[0.12em] opacity-70"
+        className="mb-2 text-[11px] uppercase tracking-[0.12em] opacity-70"
       >
         {section.title}
       </h2>
@@ -151,7 +151,7 @@ function Entry({ entry }: { entry: DocEntry }) {
 function AtsDocument({ model }: { model: DocumentModel }) {
   return (
     <article data-resume-mode="ats" className="font-mono text-sm leading-relaxed text-foreground">
-      <h1 className="font-semibold">
+      <h1>
         {model.name}
         {model.nameEn ? ` (${model.nameEn})` : ""}
       </h1>
@@ -163,7 +163,7 @@ function AtsDocument({ model }: { model: DocumentModel }) {
       {model.advantageTags.length > 0 && <p>Tags: {model.advantageTags.join(", ")}</p>}
       {model.sections.map((s) => (
         <section key={s.id} className="mt-4">
-          <h2 className="font-semibold uppercase">{s.title}</h2>
+          <h2 className="uppercase">{s.title}</h2>
           {s.text && <p>{s.text}</p>}
           {s.groups?.map((g) => (
             <p key={g.label}>

@@ -92,7 +92,7 @@ function FindingsPanel({ mode }: { mode: Mode }) {
 
   return (
     <Panel tone="muted">
-      <h3 className="m-0 mb-4 font-sans font-medium text-base text-foreground">
+      <h3 className="m-0 mb-4 font-sans text-base text-foreground">
         {mode === "dark" ? "Dark" : "Light"}
       </h3>
 
@@ -211,9 +211,7 @@ export default function ColorTokensPage() {
         <div className="space-y-12">
           {lightScales.map((scale) => (
             <div key={scale.name}>
-              <h3 className="m-0 mb-4 font-sans font-medium text-base text-foreground">
-                {scale.name}
-              </h3>
+              <h3 className="m-0 mb-4 font-sans text-base text-foreground">{scale.name}</h3>
               <ScaleTable steps={scale.steps} />
             </div>
           ))}
@@ -308,9 +306,7 @@ export default function ColorTokensPage() {
           {lightPalettes.map((palette) => (
             <div key={palette.name}>
               <div className="mb-3 flex items-baseline gap-3">
-                <h3 className="m-0 font-sans font-medium text-base text-foreground">
-                  {palette.name}
-                </h3>
+                <h3 className="m-0 font-sans text-base text-foreground">{palette.name}</h3>
                 <span className="text-muted-foreground text-xs">{palette.steps.length} stops</span>
               </div>
               <div className="flex flex-wrap gap-3">

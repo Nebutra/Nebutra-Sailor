@@ -61,7 +61,7 @@ export function SettingsSection({
             {title !== undefined ? (
               <h2
                 className={cn(
-                  "text-base font-semibold text-foreground",
+                  "text-base text-foreground",
                   tone === "danger" && "text-destructive-strong",
                 )}
               >

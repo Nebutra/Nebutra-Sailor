@@ -30,7 +30,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <MagicCard className="rounded-xl p-8 cursor-pointer w-64 h-48">
-      <h3 className="text-lg font-semibold">Hover me</h3>
+      <h3 className="text-lg">Hover me</h3>
       <p className="mt-2 text-sm text-muted-foreground">
         Move your cursor over this card to see the gradient border and spotlight.
       </p>
@@ -77,7 +77,7 @@ export const BlueTheme: Story = {
       gradientColor="#0a1a3e"
       className="rounded-xl p-8 cursor-pointer w-64 h-48"
     >
-      <h3 className="text-lg font-semibold">Blue Theme</h3>
+      <h3 className="text-lg">Blue Theme</h3>
       <p className="mt-2 text-sm text-muted-foreground">Custom gradient colors via props.</p>
     </MagicCard>
   ),
@@ -91,7 +91,7 @@ export const GreenTheme: Story = {
       gradientColor="#0a2010"
       className="rounded-xl p-8 cursor-pointer w-64 h-48"
     >
-      <h3 className="text-lg font-semibold">Green Theme</h3>
+      <h3 className="text-lg">Green Theme</h3>
       <p className="mt-2 text-sm text-muted-foreground">Emerald gradient border on hover.</p>
     </MagicCard>
   ),

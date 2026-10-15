@@ -23,7 +23,7 @@ export default function IdPHomePage() {
             N
           </div>
 
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Nebutra Identity</h1>
+          <h1 className="text-3xl tracking-tight text-foreground">Nebutra Identity</h1>
           <p className="mt-3 text-muted-foreground">OAuth 2.0 / OpenID Connect Identity Provider</p>
 
           <div className="mt-8 rounded-[var(--radius-lg)] border border-border bg-muted p-4">

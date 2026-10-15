@@ -13,6 +13,7 @@
   "sideEffects": [
     "./styles.css",
     "./recipe.css",
+    "./fonts.css",
     "./skins/*.css"
   ],
   "main": "./dist/index.js",
@@ -25,6 +26,22 @@
     },
     "./styles.css": "./styles.css",
     "./recipe.css": "./recipe.css",
+    "./fonts.css": "./fonts.css",
+    "./fonts": {
+      "types": "./src/fonts/next.tsx",
+      "import": "./src/fonts/next.tsx",
+      "default": "./src/fonts/next.tsx"
+    },
+    "./fonts/registry": {
+      "types": "./src/fonts/registry.ts",
+      "import": "./src/fonts/registry.ts",
+      "default": "./src/fonts/registry.ts"
+    },
+    "./fonts/faces": {
+      "types": "./src/fonts/faces.tsx",
+      "import": "./src/fonts/faces.tsx",
+      "default": "./src/fonts/faces.tsx"
+    },
     "./skins/*": "./skins/*",
     "./brands/*": "./brands/*",
     "./brand-package": {
@@ -50,21 +67,24 @@
     "./project.css": "./project.css"
   },
   "scripts": {
-    "build": "node scripts/sync-styles.mjs && node scripts/emit-values.mjs && node scripts/emit-skins.mjs && node scripts/emit-project.mjs && tsup",
+    "build": "node scripts/sync-styles.mjs && node scripts/copy-fonts.mjs && node scripts/emit-values.mjs && node scripts/emit-skins.mjs && node scripts/emit-project.mjs && tsup",
     "sync": "node scripts/sync-styles.mjs",
     "emit-skins": "node scripts/emit-skins.mjs",
     "compile-brand": "node scripts/compile-brand.mjs",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test src/brand-package/__tests__/*.test.ts src/preset/__tests__/*.test.ts src/__tests__/*.test.ts",
-    "emit-values": "node scripts/emit-values.mjs"
+    "emit-values": "node scripts/emit-values.mjs",
+    "copy-fonts": "node scripts/copy-fonts.mjs"
   },
   "dependencies": {
     "@nebutra/brand": "workspace:*",
     "@nebutra/design-tokens": "workspace:*",
-    "@nebutra/fonts": "workspace:*"
+    "@nebutra/fonts": "workspace:*",
+    "geist": "catalog:"
   },
   "peerDependencies": {
-    "react": "^19"
+    "react": "^19",
+    "next": ">=15"
   },
   "devDependencies": {
     "@types/node": "catalog:",
@@ -89,6 +109,9 @@
     "dist",
     "styles.css",
     "recipe.css",
+    "src/fonts",
+    "fonts",
+    "fonts.css",
     "skins",
     "brands",
     "README.md",
@@ -96,5 +119,10 @@
     "CHANGELOG.md",
     "project.css",
     "project"
-  ]
+  ],
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  }
 }

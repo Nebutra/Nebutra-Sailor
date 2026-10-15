@@ -7,7 +7,7 @@ export function FeatureCheckItemDemo() {
   return (
     <div className="gap-8 max-w-md p-8 my-8 mx-auto flex w-full flex-col rounded-xl border bg-background shadow-sm">
       <div>
-        <h3 className="text-lg font-semibold mb-4">Pricing Plan Includes</h3>
+        <h3 className="text-lg mb-4">Pricing Plan Includes</h3>
         <div className="gap-4 flex flex-col">
           <FeatureCheckItem
             title="Unlimited Projects"
@@ -26,7 +26,7 @@ export function FeatureCheckItemDemo() {
       </div>
 
       <div className="pt-6 mt-2 border-t">
-        <h3 className="text-sm font-semibold mb-4 tracking-wider text-muted-foreground uppercase">
+        <h3 className="text-sm mb-4 tracking-wider text-muted-foreground uppercase">
           Custom Icons
         </h3>
         <div className="gap-4 flex flex-col">

@@ -117,7 +117,7 @@ function PlanCard({
       )}
     >
       <div className="flex items-center justify-between gap-3">
-        <h3 id={`plan-${plan.id}`} className="text-base font-medium text-foreground">
+        <h3 id={`plan-${plan.id}`} className="text-base text-foreground">
           {t(`plans.${plan.id}.name`)}
         </h3>
         {plan.highlight ? (

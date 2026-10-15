@@ -89,7 +89,7 @@ export const InCard: Story = {
   render: () => (
     <div className="w-80 rounded-xl border bg-card shadow-md overflow-hidden">
       <div className="flex items-center justify-between px-4 py-3 border-b">
-        <h3 className="font-semibold text-sm">Notifications</h3>
+        <h3 className="text-sm">Notifications</h3>
         <span className="rounded-full bg-primary px-2 py-0.5 text-xs text-primary-foreground">
           {messages.length}
         </span>

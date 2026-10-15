@@ -35,9 +35,7 @@ export function EditorialTimeline({ className, items, label, title }: EditorialT
       {(label || title) && (
         <div className="mb-5">
           {label && <div className={EDITORIAL_EYEBROW}>{label}</div>}
-          {title && (
-            <h3 className="mt-2 text-lg font-semibold leading-6 text-foreground">{title}</h3>
-          )}
+          {title && <h3 className="mt-2 text-lg leading-6 text-foreground">{title}</h3>}
         </div>
       )}
       <ol className="ml-[3.25rem] border-l border-border sm:ml-24">

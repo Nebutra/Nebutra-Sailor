@@ -60,7 +60,7 @@ export default async function BusinessPortfolioPage({
 
           <AnimateIn preset="fadeUp">
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-8 max-w-4xl"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance mb-8 max-w-4xl"
               style={{
                 letterSpacing: "var(--tracking-display)",
                 lineHeight: "var(--leading-display)",
@@ -126,7 +126,7 @@ export default async function BusinessPortfolioPage({
 
                   <AnimateIn preset="fadeUp">
                     <h2
-                      className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-4"
+                      className="text-3xl md:text-4xl lg:text-5xl text-balance mb-4"
                       style={{
                         letterSpacing: "var(--tracking-heading)",
                         lineHeight: "var(--leading-heading)",
@@ -168,7 +168,7 @@ export default async function BusinessPortfolioPage({
                         />
                       </div>
 
-                      <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground leading-snug">
+                      <h3 className="text-xl md:text-2xl tracking-tight text-foreground leading-snug">
                         {cap.category}
                       </h3>
 
@@ -191,7 +191,7 @@ export default async function BusinessPortfolioPage({
             <span className="text-sm text-muted-foreground mb-6 block">{t("matrix.kicker")}</span>
             <AnimateIn preset="fadeUp">
               <h2
-                className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-6"
+                className="text-3xl md:text-4xl lg:text-5xl text-balance mb-6"
                 style={{
                   letterSpacing: "var(--tracking-heading)",
                   lineHeight: "var(--leading-heading)",
@@ -219,7 +219,7 @@ export default async function BusinessPortfolioPage({
                       {String.fromCharCode(65 + groupIdx)} · {group.items.length}
                     </span>
                   </div>
-                  <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground leading-snug">
+                  <h3 className="text-lg md:text-xl tracking-tight text-foreground leading-snug">
                     {t(`groups.${group.key}.title`)}
                   </h3>
                   <ul className="flex flex-col gap-2.5 mt-1">
@@ -254,7 +254,7 @@ export default async function BusinessPortfolioPage({
 
           <AnimateIn preset="fadeUp">
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+              className="text-3xl md:text-4xl lg:text-5xl text-balance mb-8"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",

@@ -27,9 +27,7 @@ export default async function ResetPasswordPage({
         <ResetPasswordForm token={token} />
       ) : (
         <div className="w-full">
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-            {t("invalidTitle")}
-          </h1>
+          <h1 className="text-3xl tracking-tight text-foreground">{t("invalidTitle")}</h1>
           <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("invalidDescription")}</p>
         </div>
       )}

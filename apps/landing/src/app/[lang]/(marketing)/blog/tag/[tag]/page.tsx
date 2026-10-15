@@ -144,7 +144,7 @@ async function BlogTagPageLoader({ params }: { params: Promise<Params> }) {
               <BookOpen className="size-3.5" aria-hidden />
               {t("label")}
             </div>
-            <h1 className="text-4xl font-semibold text-foreground sm:text-5xl">{tagLabel}</h1>
+            <h1 className="text-4xl text-foreground sm:text-5xl">{tagLabel}</h1>
             <p className="mt-4 text-sm text-muted-foreground">
               {t("postCount", { count: posts.length })}
             </p>

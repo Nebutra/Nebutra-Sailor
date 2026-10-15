@@ -64,10 +64,10 @@
   --control-font-size-sm: 0.875rem; /* 14 */
   --control-font-size-md: 0.875rem; /* 14 */
   --control-font-size-lg: 1rem; /* 16 */
-  --font-weight-medium: 500;
-  /* 500, not 600: headings in DM Sans read confident at 500 and the measured
-     consensus caps heading weight at 400–510 (Linear 510, Vercel 400). */
-  --font-weight-heading: 500;
+  /* --font-weight-medium / --font-weight-heading are core tokens now
+     (core.json:fontWeight → styles.css). 500, not 600: headings in DM Sans read
+     confident at 500 and the measured consensus caps heading weight at 400–510
+     (Linear 510, Vercel 400). */
 
   /*
    * The boundary of an unchecked checkbox / radio. WCAG 1.4.11 wants 3:1 against
@@ -350,7 +350,7 @@
 @property --font-weight-heading {
   syntax: "<number> | normal | bold";
   inherits: true;
-  initial-value: 600;
+  initial-value: 500;
 }
 
 /* ── Genuinely untypeable: box-shadow lists ───────────────────────────────────

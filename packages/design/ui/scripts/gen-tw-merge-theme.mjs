@@ -40,6 +40,9 @@ export function collect() {
     for (const block of css.matchAll(/@theme[^{]*\{([\s\S]*?)\n\}/g)) {
       for (const [, ns, key] of block[1].matchAll(/^\s*--([a-z]+)-([a-z0-9-]+)\s*:/gm)) {
         if (key.includes("--")) continue; // --text-sm--line-height and friends
+        // --font-weight-* / --font-features-* are core tokens the base sheet
+        // reads (core.json:fontWeight, fontFeature), not font-family utilities.
+        if (ns === "font" && /^(weight|features)-/.test(key)) continue;
         if (!(ns in THEME_KEYS) && !(ns in CLASS_GROUPS)) continue;
         (found[ns] ??= new Set()).add(key);
       }

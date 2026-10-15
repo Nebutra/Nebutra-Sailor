@@ -135,27 +135,27 @@ export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-8 p-6">
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-neutral-12">Idle</h3>
+        <h3 className="mb-2 text-sm text-neutral-12">Idle</h3>
         <NewsletterFormIdle />
       </div>
 
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-neutral-12">Loading</h3>
+        <h3 className="mb-2 text-sm text-neutral-12">Loading</h3>
         <NewsletterFormLoading />
       </div>
 
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-neutral-12">Success</h3>
+        <h3 className="mb-2 text-sm text-neutral-12">Success</h3>
         <NewsletterFormSuccess />
       </div>
 
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-neutral-12">Error</h3>
+        <h3 className="mb-2 text-sm text-neutral-12">Error</h3>
         <NewsletterFormError />
       </div>
 
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-neutral-12">In Footer Context (dark)</h3>
+        <h3 className="mb-2 text-sm text-neutral-12">In Footer Context (dark)</h3>
         <div className="rounded-xl bg-[color:hsl(var(--foreground))] p-6">
           <form className="flex gap-2">
             <input

@@ -56,16 +56,14 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
       <StructuredData data={buildFaqPageSchema(faqEntries)} id="faq-jsonld" />
       {/* Header */}
       <section className="text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">{t("faq.heading")}</h1>
+        <h1 className="text-4xl tracking-tight text-foreground">{t("faq.heading")}</h1>
         <p className="mt-4 text-lg text-muted-foreground">{t("faq.subheading")}</p>
       </section>
 
       {/* FAQ Categories */}
       {faqStructure.map(({ cat, questions }) => (
         <section key={cat}>
-          <h2 className="text-2xl font-bold text-foreground mb-6">
-            {t(`faq.categories.${cat}.name`)}
-          </h2>
+          <h2 className="text-2xl text-foreground mb-6">{t(`faq.categories.${cat}.name`)}</h2>
           <div className="space-y-4">
             {questions.map((qIdx) => (
               <details key={qIdx} className="group rounded-[var(--radius-lg)] border border-border">
@@ -101,7 +99,7 @@ export default async function FAQPage({ params }: { params: Promise<{ lang: stri
 
       {/* Contact CTA */}
       <section className="rounded-[var(--radius-2xl)] bg-muted p-8 text-center">
-        <h2 className="text-xl font-bold text-foreground">{t("faq.ctaHeading")}</h2>
+        <h2 className="text-xl text-foreground">{t("faq.ctaHeading")}</h2>
         <p className="mt-2 text-muted-foreground">{t("faq.ctaDescription")}</p>
         <div className="mt-6 flex justify-center gap-4">
           <Button asChild size="lg">

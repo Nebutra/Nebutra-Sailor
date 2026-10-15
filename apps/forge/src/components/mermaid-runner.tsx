@@ -238,7 +238,7 @@ export function MermaidRenderRunner({ toolId }: { toolId: string }) {
           startOnLoad: false,
           securityLevel: "strict",
           theme: nextTheme,
-          fontFamily: "ui-sans-serif, system-ui, sans-serif",
+          fontFamily: "var(--font-sans)",
         });
         const parsed = await mermaid.parse(source);
         const type =

@@ -34,18 +34,18 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
   return (
     <div className="space-y-10">
       <header>
-        <h1 className="text-4xl font-bold tracking-tight text-foreground">{t("title")}</h1>
+        <h1 className="text-4xl tracking-tight text-foreground">{t("title")}</h1>
         <p className="mt-3 text-sm text-muted-foreground">{t("lastUpdated")}</p>
       </header>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-foreground">{t("availability.heading")}</h2>
+        <h2 className="text-xl text-foreground">{t("availability.heading")}</h2>
         <p className="leading-relaxed text-muted-foreground">{t("availability.p1")}</p>
         <p className="leading-relaxed text-muted-foreground">{t("availability.p2")}</p>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-foreground">{t("howToRequest.heading")}</h2>
+        <h2 className="text-xl text-foreground">{t("howToRequest.heading")}</h2>
         <p className="leading-relaxed text-muted-foreground">
           {t.rich("howToRequest.emailIntro", {
             email: () => (
@@ -67,7 +67,7 @@ export default async function DpaPage({ params }: { params: Promise<{ lang: stri
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-bold text-foreground">{t("related.heading")}</h2>
+        <h2 className="text-xl text-foreground">{t("related.heading")}</h2>
         <ul className="ml-6 list-disc space-y-2 text-muted-foreground">
           <li>
             <Link

@@ -118,7 +118,7 @@ export const NoIcons: Story = {
 export const InDashboard: Story = {
   render: () => (
     <div className="space-y-3 rounded-lg border bg-card p-4 max-w-sm">
-      <h3 className="font-semibold text-sm">System Status</h3>
+      <h3 className="text-sm">System Status</h3>
       <div className="flex flex-wrap gap-2">
         <StatusBadge
           leftIcon={CheckCircle2}

@@ -347,10 +347,7 @@ export function BlogComments({
             <Message className="size-4" aria-hidden />
             {comments.length}
           </p>
-          <h2
-            id="blog-comments-title"
-            className="text-2xl font-semibold tracking-tight text-foreground"
-          >
+          <h2 id="blog-comments-title" className="text-2xl tracking-tight text-foreground">
             {labels.title}
           </h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">{labels.subtitle}</p>

@@ -15,9 +15,7 @@ export function PipelineCard() {
         <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-primary/10 text-primary">
           <GitCommit className="h-4 w-4" />
         </div>
-        <h3 className="text-lg font-bold tracking-tight text-foreground line-clamp-1">
-          {t("card6Title")}
-        </h3>
+        <h3 className="text-lg tracking-tight text-foreground line-clamp-1">{t("card6Title")}</h3>
       </div>
 
       {/* Vertical Pipeline Flow */}

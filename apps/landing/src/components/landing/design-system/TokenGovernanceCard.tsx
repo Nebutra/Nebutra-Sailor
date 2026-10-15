@@ -11,9 +11,7 @@ export function TokenGovernanceCard() {
         <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-primary/10 text-primary">
           <ShieldCheck className="h-4 w-4" />
         </div>
-        <h3 className="text-lg font-bold tracking-tight text-foreground line-clamp-1">
-          {t("card4Title")}
-        </h3>
+        <h3 className="text-lg tracking-tight text-foreground line-clamp-1">{t("card4Title")}</h3>
       </div>
 
       {/* CI Mockup */}

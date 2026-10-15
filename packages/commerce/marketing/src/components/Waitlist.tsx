@@ -45,7 +45,7 @@ export function Waitlist({
 
   return (
     <div className="mx-auto max-w-lg text-center font-sans">
-      <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+      <h2 className="text-3xl tracking-tight text-slate-900 sm:text-4xl dark:text-white">
         {title}
       </h2>
       <p className="mt-4 text-lg text-slate-500 dark:text-slate-400">{description}</p>

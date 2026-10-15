@@ -177,7 +177,7 @@ export function ProductOfferList({
                         key={tier}
                         className="flex flex-col rounded-lg border border-border bg-background p-6"
                       >
-                        <h3 className="text-sm font-medium text-muted-foreground">
+                        <h3 className="text-sm text-muted-foreground">
                           {first.name.split(" · ")[0]}
                         </h3>
                         <PriceRow
@@ -230,7 +230,7 @@ export function ProductOfferList({
 
               {packs.length > 0 ? (
                 <div className="mt-8">
-                  <h3 className="text-sm font-medium text-muted-foreground">{t("creditPacks")}</h3>
+                  <h3 className="text-sm text-muted-foreground">{t("creditPacks")}</h3>
                   <div className="mt-3 overflow-x-auto rounded-lg border border-border">
                     <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
                       <thead className="bg-muted/40 text-xs text-muted-foreground">

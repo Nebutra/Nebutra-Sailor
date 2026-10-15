@@ -69,7 +69,7 @@ export async function AuthBanner({ className }: { className?: string }) {
             height={72}
             className="mb-10 h-12 w-auto drop-shadow-[0_18px_44px_color-mix(in_srgb,hsl(var(--primary))_22%,transparent)]"
           />
-          <h2 className="text-balance text-[clamp(28px,3.2vw,40px)] font-semibold leading-[1.15] tracking-[-0.02em] text-foreground">
+          <h2 className="text-balance text-[clamp(28px,3.2vw,40px)] leading-[1.15] tracking-[-0.02em] text-foreground">
             {t("slogan")}
           </h2>
           <p className="mt-4 max-w-[24rem] text-balance text-[15px] leading-[1.6] text-muted-foreground">

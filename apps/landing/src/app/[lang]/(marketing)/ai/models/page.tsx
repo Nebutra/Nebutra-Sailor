@@ -73,7 +73,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
         <AnimateIn preset="emerge" className="mb-16 max-w-4xl">
           <p className="mb-4 text-sm text-primary">{t("eyebrow")}</p>
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-balance"
+            className="text-4xl sm:text-5xl md:text-6xl mb-6 text-balance"
             style={{
               letterSpacing: "var(--tracking-display)",
               lineHeight: "var(--leading-display)",
@@ -88,7 +88,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
           {categories.map(([category, providers]) => (
             <section key={category}>
               <AnimateIn preset="fadeUp">
-                <h2 className="text-2xl font-bold tracking-tight mb-6 flex items-baseline gap-3">
+                <h2 className="text-2xl tracking-tight mb-6 flex items-baseline gap-3">
                   <span>{isZh ? category : t(`categories.${CATEGORY_KEY[category]}`)}</span>
                   <span className="text-sm font-medium text-muted-foreground">
                     {t("providerCount", { count: providers.length })}
@@ -104,7 +104,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
                       className="group rounded-[var(--radius-2xl)] border border-border bg-card/30 p-5 hover:border-primary/40 hover:bg-card/50 transition-colors"
                     >
                       <div className="flex items-start justify-between gap-3 mb-3">
-                        <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">
+                        <h3 className="text-foreground group-hover:text-primary transition-colors">
                           {p.name}
                         </h3>
                         <ExternalLink className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-1" />

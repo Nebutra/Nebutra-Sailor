@@ -1,7 +1,8 @@
 import { brand } from "@nebutra/brand/metadata";
+import { fontClassName } from "@nebutra/tokens/fonts";
+import { fontRegistryClassName } from "@nebutra/tokens/fonts/registry";
 import { FullPageStatus } from "@nebutra/ui/layout";
 import { SITE_BRAND } from "@/site-theme";
-import { fontVariables } from "./fonts";
 
 // Global fallback for non-localized paths that don't match a locale (e.g. /wrong).
 // The root layout (app/layout.tsx) is a passthrough that renders no <html>/<body>,
@@ -12,7 +13,7 @@ export default function GlobalNotFound() {
   return (
     <html
       lang="en"
-      className={`${fontVariables} min-h-dvh antialiased`}
+      className={`${fontClassName} ${fontRegistryClassName} min-h-dvh antialiased`}
       data-brand={SITE_BRAND}
       suppressHydrationWarning
     >

@@ -86,9 +86,7 @@ async function IncidentContent({ params }: { params: Params }) {
       </Link>
 
       <header className="mt-6">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-          {incident.title}
-        </h1>
+        <h1 className="text-2xl tracking-tight text-foreground sm:text-3xl">{incident.title}</h1>
         <dl className="mt-5 grid grid-cols-2 gap-4 rounded-xl border border-border px-5 py-4 text-sm sm:grid-cols-4">
           <Meta term={t("fields.status")} value={state} />
           <Meta
@@ -109,7 +107,7 @@ async function IncidentContent({ params }: { params: Params }) {
       </header>
 
       <section className="mt-10" aria-labelledby="incident-updates">
-        <h2 id="incident-updates" className="text-lg font-medium tracking-tight">
+        <h2 id="incident-updates" className="text-lg tracking-tight">
           {t("updates")}
         </h2>
         <ol className="relative mt-5 border-l border-border pl-6">

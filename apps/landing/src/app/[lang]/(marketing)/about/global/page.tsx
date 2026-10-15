@@ -76,7 +76,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
           <AnimateIn preset="emerge" className="max-w-4xl mx-auto text-center">
             <span className="text-sm text-muted-foreground mb-8 block">{t("hero.eyebrow")}</span>
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-balance mb-10"
               style={{
                 letterSpacing: "var(--tracking-display)",
                 lineHeight: "var(--leading-display)",
@@ -96,7 +96,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
         <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              className="text-3xl md:text-4xl lg:text-5xl mb-6"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",
@@ -128,7 +128,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                     <div className="text-6xl mb-8" aria-hidden="true">
                       {p.icon}
                     </div>
-                    <h3 className="text-xl font-bold tracking-tight mb-3 text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="text-xl tracking-tight mb-3 text-foreground group-hover:text-primary transition-colors">
                       {p.title}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
@@ -146,7 +146,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
             <span className="text-sm text-muted-foreground mb-6 block">i18n · l10n</span>
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              className="text-3xl md:text-4xl lg:text-5xl mb-6"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",
@@ -174,7 +174,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                       {lng.code}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold tracking-tight mb-1 text-foreground">
+                  <h3 className="text-lg tracking-tight mb-1 text-foreground">
                     {t(`languages.items.${lng.code}.name`)}
                   </h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
@@ -195,7 +195,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
               {t("compliance.eyebrow")}
             </span>
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              className="text-3xl md:text-4xl lg:text-5xl mb-6"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",
@@ -278,7 +278,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
               {t("payments.eyebrow")}
             </span>
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
+              className="text-3xl md:text-4xl lg:text-5xl mb-6"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",
@@ -319,7 +319,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
               <span className="text-sm text-primary">{t("cta.eyebrow")}</span>
             </div>
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
+              className="text-3xl md:text-4xl lg:text-5xl text-balance mb-8"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",

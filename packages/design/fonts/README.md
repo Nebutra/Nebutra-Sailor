@@ -63,13 +63,20 @@ body/UI face for its tabular figures.
 
 ### Wiring an app
 
-```tsx
-import { cjkFontClassName } from "@nebutra/fonts/next/cjk";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
+Apps do not import this package. They take the loader from `@nebutra/tokens/fonts`,
+which composes Geist, Geist Mono and these brand faces into one class:
 
-<html className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}>
+```tsx
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
+
+<html className={fontClassName}>
+  <body>
+    <FontFaces />
 ```
+
+`scripts/lint-font-pipeline.mjs` fails a `next/font`, `geist/font` or
+`@nebutra/fonts/next*` import anywhere else (2026-10-16: auth and idp had wired
+one of the three loaders and rendered in the OS font).
 
 `cjkFontClassName` defines `--font-dm-sans` (self-hosted variable subset, SIL
 OFL). MiSans arrives through `<CjkFontFace />` from the same entry — render it
@@ -183,7 +190,7 @@ Both licences are separate from this package's MIT licence. See
 
 The registry includes Geist, Inter, Inter Tight, Space Grotesk, Playfair
 Display, Source Serif 4, Fraunces, JetBrains Mono, Manrope, Sora, Work Sans, DM
-Sans, Plus Jakarta Sans, Outfit, Figtree, Montserrat, Lexend, Fira Code, Roboto
+Sans (resolved to the brand heading face, not a second file), Plus Jakarta Sans, Outfit, Figtree, Montserrat, Lexend, Fira Code, Roboto
 Mono, and Source Code Pro.
 
 ## Runtime Model

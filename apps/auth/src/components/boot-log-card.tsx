@@ -88,7 +88,7 @@ export function BootLogCard({
 
         {/* Reserved height: the crossfade must not move the rail under it. */}
         <div className="mt-3.5 min-h-[11rem] xl:min-h-[10rem]">
-          <h3 className="text-[15px] font-semibold leading-snug tracking-[-0.01em] text-foreground">
+          <h3 className="text-[15px] leading-snug tracking-[-0.01em] text-foreground">
             {entry.title}
           </h3>
           <p className="mt-2 text-[13px] leading-[1.85] text-muted-foreground">{entry.body}</p>

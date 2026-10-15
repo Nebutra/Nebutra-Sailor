@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <h1 className="text-4xl font-bold">
+    <h1 className="text-4xl">
       <AnimatedGradientText>Animated Gradient Text</AnimatedGradientText>
     </h1>
   ),
@@ -34,7 +34,7 @@ export const Default: Story = {
 
 export const CustomColors: Story = {
   render: () => (
-    <h2 className="text-3xl font-bold">
+    <h2 className="text-3xl">
       <AnimatedGradientText colorFrom="#ff0080" colorTo="#7928ca">
         Pink to Purple
       </AnimatedGradientText>
@@ -44,7 +44,7 @@ export const CustomColors: Story = {
 
 export const BlueToGreen: Story = {
   render: () => (
-    <h2 className="text-3xl font-bold">
+    <h2 className="text-3xl">
       <AnimatedGradientText colorFrom="#00C6FF" colorTo="#00FF87">
         Blue to Green
       </AnimatedGradientText>
@@ -54,7 +54,7 @@ export const BlueToGreen: Story = {
 
 export const FastAnimation: Story = {
   render: () => (
-    <h2 className="text-3xl font-bold">
+    <h2 className="text-3xl">
       <AnimatedGradientText speed={3}>Fast Scrolling</AnimatedGradientText>
     </h2>
   ),
@@ -62,7 +62,7 @@ export const FastAnimation: Story = {
 
 export const SlowAnimation: Story = {
   render: () => (
-    <h2 className="text-3xl font-bold">
+    <h2 className="text-3xl">
       <AnimatedGradientText speed={0.5}>Slow Shimmer</AnimatedGradientText>
     </h2>
   ),
@@ -74,7 +74,7 @@ export const HeroHeading: Story = {
       <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
         Introducing
       </p>
-      <h1 className="text-6xl font-extrabold">
+      <h1 className="text-6xl">
         <AnimatedGradientText colorFrom="#0033FE" colorTo="#00e5ff">
           Nebutra UI
         </AnimatedGradientText>

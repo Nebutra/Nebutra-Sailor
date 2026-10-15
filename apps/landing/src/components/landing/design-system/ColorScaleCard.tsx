@@ -16,7 +16,7 @@ export function ColorScaleCard() {
         <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-primary/10 text-primary">
           <Layers className="h-4 w-4" />
         </div>
-        <h3 className="text-lg font-bold tracking-tight text-foreground">{t("card1Title")}</h3>
+        <h3 className="text-lg tracking-tight text-foreground">{t("card1Title")}</h3>
       </div>
 
       {/* Visualizer Scale Stack */}

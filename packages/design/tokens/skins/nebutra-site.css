@@ -112,11 +112,13 @@ html[data-brand="nebutra-site"] {
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--secondary)) 90%, white);
 
   /* Typography */
-  --font-sans: var(--font-geist-sans), "Geist", "MiSans", ui-sans-serif, system-ui, sans-serif;
-  --font-cn: var(--font-geist-sans), "Geist", "MiSans", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-reg-dm-sans), "DM Sans", "MiSans", ui-sans-serif, sans-serif;
-  --font-display: var(--font-reg-dm-sans), "DM Sans", "MiSans", ui-sans-serif, sans-serif;
-  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+  --font-sans:
+    var(--font-geist-sans, "Geist"), "Geist", "MiSans", ui-sans-serif, system-ui, sans-serif;
+  --font-cn:
+    var(--font-geist-sans, "Geist"), "Geist", "MiSans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-dm-sans, "DM Sans"), "DM Sans", "MiSans", ui-sans-serif, sans-serif;
+  --font-display: var(--font-dm-sans, "DM Sans"), "DM Sans", "MiSans", ui-sans-serif, sans-serif;
+  --font-mono: var(--font-geist-mono, "Geist Mono"), "Geist Mono", ui-monospace, monospace;
   --font-weight-heading: 500;
 
   /* Motion */

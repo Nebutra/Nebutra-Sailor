@@ -33,7 +33,7 @@ export function FeatureIconItem({
     <div className={cn("space-y-2", className)}>
       <div className="flex items-center gap-2">
         <Icon className={cn("size-4", iconClassName)} />
-        <h3 className="text-sm font-medium">{title}</h3>
+        <h3 className="text-sm">{title}</h3>
       </div>
       {description && <p className="text-muted-foreground text-sm">{description}</p>}
     </div>

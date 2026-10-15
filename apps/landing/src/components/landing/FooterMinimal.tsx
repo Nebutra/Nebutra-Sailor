@@ -160,7 +160,7 @@ function DefaultFooter() {
           >
             {FOOTER_COLUMNS_HERE.map((column) => (
               <div key={column.titleKey} className="flex flex-col gap-3">
-                <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+                <h3 className="text-[11px] uppercase tracking-[0.08em] text-muted-foreground">
                   {t(`columns.${column.titleKey}` as FooterTranslationKey)}
                 </h3>
                 <ul className="flex flex-col gap-2.5">

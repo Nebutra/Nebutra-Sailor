@@ -10,7 +10,7 @@ function MembershipCard({ tier, offers }: { tier: string; offers: ParaOffer[] })
   const monthly = (month ?? year)?.grants.monthlyCredits ?? 0;
   return (
     <Card className="flex flex-col gap-2 p-5">
-      <h3 className="font-medium text-foreground text-body capitalize">{tier}</h3>
+      <h3 className="text-foreground text-body capitalize">{tier}</h3>
       <p className="text-muted-foreground text-label">
         每月 {monthly.toLocaleString("zh-CN")} 积分，全组织共用
       </p>
@@ -44,7 +44,7 @@ export default async function ProPage() {
 
   return (
     <div className="pt-8">
-      <h1 className="mb-2 font-medium text-display text-foreground tracking-tight">会员与积分</h1>
+      <h1 className="mb-2 text-display text-foreground tracking-tight">会员与积分</h1>
       <p className="mb-10 max-w-para-focus text-muted-foreground">
         会员每月发放的积分优先扣除，当月用不完即失效；积分包购买的积分两年内有效。
       </p>
@@ -55,7 +55,7 @@ export default async function ProPage() {
 
       {tiers.length > 0 ? (
         <section aria-labelledby="plans" className="mb-12">
-          <h2 id="plans" className="mb-4 font-medium text-foreground text-body">
+          <h2 id="plans" className="mb-4 text-foreground text-body">
             会员
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -72,13 +72,13 @@ export default async function ProPage() {
 
       {packs.length > 0 ? (
         <section id="packs" aria-labelledby="packs-heading" className="scroll-mt-6">
-          <h2 id="packs-heading" className="mb-4 font-medium text-foreground text-body">
+          <h2 id="packs-heading" className="mb-4 text-foreground text-body">
             积分充值
           </h2>
           <div className="grid gap-4 sm:grid-cols-3">
             {packs.map((pack) => (
               <Card key={pack.id} className="flex flex-col gap-2 p-5">
-                <h3 className="font-medium text-foreground text-body">
+                <h3 className="text-foreground text-body">
                   {(pack.grants.credits ?? 0).toLocaleString("zh-CN")} 积分
                 </h3>
                 <p className="text-muted-foreground text-label">两年内有效</p>

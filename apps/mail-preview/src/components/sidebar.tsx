@@ -22,7 +22,7 @@ export function Sidebar({ templates, selectedId, onSelect }: SidebarProps) {
           <Mail className="h-4 w-4" aria-hidden="true" />
         </span>
         <div>
-          <h1 className="text-sm font-semibold text-foreground">Mail Preview</h1>
+          <h1 className="text-sm text-foreground">Mail Preview</h1>
           <p className="text-xs text-muted-foreground">@nebutra/email</p>
         </div>
       </header>
@@ -30,7 +30,7 @@ export function Sidebar({ templates, selectedId, onSelect }: SidebarProps) {
       <nav className="flex-1 overflow-y-auto px-2 py-3" aria-label="Templates">
         {groups.map((group) => (
           <div key={group.category} className="mb-4">
-            <h2 className="px-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <h2 className="px-2 pb-1 text-[11px] uppercase tracking-wider text-muted-foreground">
               {group.category}
             </h2>
             <ul className="flex flex-col gap-0.5">

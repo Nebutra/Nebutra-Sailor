@@ -1,9 +1,7 @@
 /* tokens loaded once via globals.css → @nebutra/ui/styles/preset.css */
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { ReactNode } from "react";
 
 export const metadata = {
@@ -14,9 +12,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName}`}>
+      <html lang="en" className={`${fontClassName}`}>
         <body className="bg-background text-foreground">
-          <CjkFontFace />
+          <FontFaces />
           {children}
         </body>
       </html>

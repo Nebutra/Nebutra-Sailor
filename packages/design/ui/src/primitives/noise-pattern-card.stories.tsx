@@ -24,7 +24,7 @@ export const Default: Story = {
   render: () => (
     <NoisePatternCard className="max-w-sm">
       <NoisePatternCardBody>
-        <h3 className="text-lg font-semibold text-white">Noise Pattern Card</h3>
+        <h3 className="text-lg text-white">Noise Pattern Card</h3>
         <p className="mt-2 text-sm text-muted-foreground">
           A sophisticated dark card with an organic grain texture that adds depth and visual
           interest.
@@ -85,7 +85,7 @@ export const CustomOverlay: Story = {
   render: () => (
     <NoisePatternCard overlayClassName="bg-purple-950/20" className="max-w-sm">
       <NoisePatternCardBody>
-        <h3 className="text-lg font-semibold text-purple-200">Purple Tint</h3>
+        <h3 className="text-lg text-purple-200">Purple Tint</h3>
         <p className="mt-2 text-sm text-purple-300/70">
           Custom overlay color applied over the noise pattern.
         </p>

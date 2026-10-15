@@ -62,7 +62,7 @@ function ChatShell({
       <div className="flex items-center justify-between border-b border-neutral-7 px-4 py-3">
         <div className="flex items-center gap-2">
           <Bot className="size-5 text-blue-10" />
-          <h2 className="text-sm font-semibold text-neutral-12">Sailor AI Assistant</h2>
+          <h2 className="text-sm text-neutral-12">Sailor AI Assistant</h2>
         </div>
         {showClear && (
           <button
@@ -110,7 +110,7 @@ function ChatInterfaceVisual() {
     <ChatShell>
       <div className="flex h-full flex-col items-center justify-center text-center">
         <Bot className="size-12 text-neutral-7" />
-        <h3 className="mt-4 text-sm font-medium text-neutral-12">How can I help you?</h3>
+        <h3 className="mt-4 text-sm text-neutral-12">How can I help you?</h3>
         <p className="mt-1 max-w-sm text-sm text-neutral-11">
           Ask me anything about your SaaS platform, data, or features.
         </p>
@@ -170,7 +170,7 @@ export const EmptyState: Story = {
     <ChatShell>
       <div className="flex h-full flex-col items-center justify-center text-center">
         <Bot className="size-12 text-neutral-7" />
-        <h3 className="mt-4 text-sm font-medium text-neutral-12">How can I help you?</h3>
+        <h3 className="mt-4 text-sm text-neutral-12">How can I help you?</h3>
         <p className="mt-1 max-w-sm text-sm text-neutral-11">
           Ask me anything about your SaaS platform, data, or features.
         </p>
@@ -262,11 +262,11 @@ export const AllVariants: Story = {
   render: () => (
     <div className="flex flex-col gap-8">
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-neutral-12">Empty State</h3>
+        <h3 className="mb-2 text-sm text-neutral-12">Empty State</h3>
         <ChatShell>
           <div className="flex h-full flex-col items-center justify-center text-center">
             <Bot className="size-12 text-neutral-7" />
-            <h3 className="mt-4 text-sm font-medium text-neutral-12">How can I help you?</h3>
+            <h3 className="mt-4 text-sm text-neutral-12">How can I help you?</h3>
             <p className="mt-1 max-w-sm text-sm text-neutral-11">
               Ask me anything about your SaaS platform, data, or features.
             </p>
@@ -275,7 +275,7 @@ export const AllVariants: Story = {
       </div>
 
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-neutral-12">With Messages</h3>
+        <h3 className="mb-2 text-sm text-neutral-12">With Messages</h3>
         <ChatShell showClear>
           <div className="space-y-4">
             {sampleMessages.slice(0, 2).map((msg) => (
@@ -286,7 +286,7 @@ export const AllVariants: Story = {
       </div>
 
       <div>
-        <h3 className="mb-2 text-sm font-semibold text-neutral-12">Streaming</h3>
+        <h3 className="mb-2 text-sm text-neutral-12">Streaming</h3>
         <ChatShell showClear inputDisabled>
           <div className="space-y-4">
             <MessageBubble message={{ id: "s1", role: "user", text: "What is our churn rate?" }} />

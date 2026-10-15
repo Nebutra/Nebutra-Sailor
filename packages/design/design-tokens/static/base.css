@@ -140,28 +140,89 @@
     border-color: hsl(var(--border));
   }
 
-  /* Headings take the display face. Layered (base) so any utility — font-*,
-     font-semibold, a text-heading-* recipe — still wins; zero-specificity
-     :where() so a component's own heading styles are never fought. The face
-     and weight are variables, so a Brand Package retunes both. */
+  /* Headings take the display face. Layered (base) so a text-* size utility
+     still applies; zero-specificity :where() so a component's own heading
+     styles are never fought. Face, weight and features are variables, so a
+     Brand Package retunes all three on html[data-brand]. A heading's WEIGHT is
+     not an app decision: scripts/lint-font-pipeline.mjs fails a font-semibold /
+     font-bold on h1–h3 (shrink-only allowlist in governance.config.json). */
   :where(h1, h2, h3, h4, h5, h6) {
     font-family: var(--font-heading);
     font-weight: var(--font-weight-heading, 500);
+    font-feature-settings: var(--font-features-heading, normal);
     line-height: 1.25;
+    text-wrap: balance;
   }
   /* This is the ONLY heading rule. @nebutra/ui fonts.css and the web and
      landing globals each re-declared one (font-sans at 600), and whichever
      loaded last won: landing's h1 shipped in Geist 600 after the 2026-09-25
      decision set headings to DM Sans 500. */
+
+  :where(p, li, dd, figcaption, summary) {
+    text-wrap: pretty;
+  }
+
+  /* Code faces. The user's code-font choice (web Appearance) wins when set. */
+  :where(code, kbd, pre, samp) {
+    font-family: var(--user-code-font, var(--font-mono));
+    font-feature-settings: normal;
+  }
+
+  /* Numbers that are compared down a column line up. */
+  :where(table, [data-numeric], time) {
+    font-variant-numeric: var(--font-features-numeric, tabular-nums);
+  }
+
+  /* CJK: the Latin tracking curve (negative from 16px up) crowds Han glyphs,
+     which are already set solid on a square body; Chinese body copy wants more
+     leading than Latin (1.5 → 1.7) and the quarter-em gap before and after
+     Latin words and numbers where the copy did not type one. :lang() follows
+     <html lang>, so a zh page and a zh fragment inside an en page both get it. */
+  :where(:lang(zh), :lang(ja), :lang(ko)) {
+    text-autospace: normal;
+    line-break: strict;
+  }
+  :where(:lang(zh), :lang(ja), :lang(ko)) :where(p, li, dd, blockquote) {
+    line-height: 1.75;
+  }
+  :where(:lang(zh), :lang(ja), :lang(ko)) :where(h1, h2, h3, h4, h5, h6) {
+    letter-spacing: 0;
+    line-height: 1.35;
+  }
+}
+
+/* ─── Document typography — ONE place for every app ─────────────────────────
+   Every Nebutra app imports this sheet (through @nebutra/ui/styles/preset.css
+   or @nebutra/tokens/styles.css directly) and none restates it: the 2026-10-16
+   audit found smoothing, rendering, features and selection re-declared in six
+   globals, each slightly different. Font LOADING is equally single-sourced:
+   @nebutra/tokens/fonts (Next) or @nebutra/tokens/fonts.css (Vite/Storybook). */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Variable fonts ship every weight; synthesised bold/italic is fuzzy. */
+  font-synthesis: none;
+  font-optical-sizing: auto;
+  /* The scrollbar takes the hairline colour, not the OS grey. */
+  scrollbar-color: hsl(var(--muted-foreground) / 0.35) transparent;
 }
 
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: var(--font-sans);
-  font-feature-settings:
-    "rlig" 1,
-    "calt" 1;
+  /* Explicit user choice (web Appearance: --user-ui-font) → the active
+     language's --font-sans. The CJK tail repeats after it so a Latin-only user
+     font still hands Han glyphs to MiSans rather than the OS. */
+  font-family:
+    var(--user-ui-font, var(--font-sans)), var(--font-misans, "MiSans"), "PingFang SC",
+    "Microsoft YaHei", sans-serif;
+  font-size: var(--user-ui-font-size, 1rem);
+  line-height: 1.5;
+  font-weight: var(--font-weight-body, 400);
+  font-feature-settings: var(--font-features-sans, normal);
 }
 
 /* Smooth scrolling is an enhancement, never the default the whole document
@@ -200,8 +261,8 @@ body {
 }
 
 ::selection {
-  background-color: hsl(var(--primary) / 0.2);
-  color: hsl(var(--primary));
+  background-color: hsl(var(--ring) / 0.22);
+  color: inherit;
 }
 
 /* ============================================
@@ -310,7 +371,7 @@ body {
   font-size: 4.5rem;
   line-height: 1.1;
   letter-spacing: -0.03em;
-  font-weight: 700;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-heading-64 {
@@ -318,7 +379,7 @@ body {
   font-size: 4rem;
   line-height: 1.1;
   letter-spacing: -0.03em;
-  font-weight: 700;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-heading-56 {
@@ -326,7 +387,7 @@ body {
   font-size: 3.5rem;
   line-height: 1.1;
   letter-spacing: -0.025em;
-  font-weight: 700;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-heading-48 {
@@ -334,7 +395,7 @@ body {
   font-size: 3rem;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  font-weight: 700;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-heading-40 {
@@ -342,7 +403,7 @@ body {
   font-size: 2.5rem;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  font-weight: 700;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-heading-32 {
@@ -350,7 +411,7 @@ body {
   font-size: 2rem;
   line-height: 1.2;
   letter-spacing: -0.015em;
-  font-weight: 600;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-heading-24 {
@@ -358,7 +419,7 @@ body {
   font-size: 1.5rem;
   line-height: 1.3;
   letter-spacing: -0.01em;
-  font-weight: 600;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-heading-20 {
@@ -366,7 +427,7 @@ body {
   font-size: 1.25rem;
   line-height: 1.3;
   letter-spacing: -0.01em;
-  font-weight: 600;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-heading-16 {
@@ -374,7 +435,7 @@ body {
   font-size: 1rem;
   line-height: 1.4;
   letter-spacing: -0.005em;
-  font-weight: 600;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-heading-14 {
@@ -382,7 +443,7 @@ body {
   font-size: 0.875rem;
   line-height: 1.4;
   letter-spacing: 0;
-  font-weight: 600;
+  font-weight: var(--font-weight-heading, 500);
 }
 
 @utility text-button-16 {

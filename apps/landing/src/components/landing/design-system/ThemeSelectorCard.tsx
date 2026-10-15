@@ -32,9 +32,7 @@ export function ThemeSelectorCard() {
         <div className="flex h-8 w-8 items-center justify-center rounded-[var(--radius-lg)] bg-primary/10 text-primary">
           <Droplet className="h-4 w-4" />
         </div>
-        <h3 className="line-clamp-1 font-bold text-foreground text-lg tracking-tight">
-          {t("card2Title")}
-        </h3>
+        <h3 className="line-clamp-1 text-foreground text-lg tracking-tight">{t("card2Title")}</h3>
       </div>
 
       {/* No caption: the switcher's own is English prose, and this site is

@@ -52,7 +52,7 @@ function ColorRow({
 }) {
   return (
     <div className="mb-8">
-      <h3 className="mb-3 text-sm font-semibold text-muted-foreground">{label}</h3>
+      <h3 className="mb-3 text-sm text-muted-foreground">{label}</h3>
       <div className="grid grid-cols-6 gap-3 md:grid-cols-11">
         {swatches.map((s) => (
           <Swatch key={s.cssVar} {...s} />

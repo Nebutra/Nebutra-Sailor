@@ -178,7 +178,7 @@ export function PhoneLoginForm({ returnTo, turnstileSiteKey }: PhoneLoginFormPro
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold text-foreground">{t("title")}</h1>
+        <h1 className="text-3xl text-foreground">{t("title")}</h1>
         <p className="mt-4 text-sm leading-6 text-muted-foreground">
           {normalizedPhone ? t("codeSent", { phone: normalizedPhone }) : t("subtitle")}
         </p>

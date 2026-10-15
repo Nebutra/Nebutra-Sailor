@@ -437,7 +437,7 @@ export function LicenseWizard({
           <AnimateIn preset="fadeUp">
             <div className="space-y-8">
               <div>
-                <h1 className="mb-2 text-3xl font-bold text-foreground">Tell us about yourself</h1>
+                <h1 className="mb-2 text-3xl text-foreground">Tell us about yourself</h1>
                 <p className="text-muted-foreground">
                   Help us understand your role and team size to find the perfect license for you.
                 </p>
@@ -535,7 +535,7 @@ export function LicenseWizard({
           <AnimateIn preset="fadeUp">
             <div className="space-y-8">
               <div>
-                <h1 className="mb-2 text-3xl font-bold text-foreground">What are you building?</h1>
+                <h1 className="mb-2 text-3xl text-foreground">What are you building?</h1>
                 <p className="text-muted-foreground">Tell us about your project and industry.</p>
               </div>
 
@@ -662,7 +662,7 @@ export function LicenseWizard({
           <AnimateIn preset="fadeUp">
             <div className="space-y-8">
               <div>
-                <h1 className="mb-2 text-3xl font-bold text-foreground">Choose your license</h1>
+                <h1 className="mb-2 text-3xl text-foreground">Choose your license</h1>
                 <p className="text-muted-foreground">
                   Based on your team size, we recommend the license below.
                 </p>
@@ -887,7 +887,7 @@ export function LicenseWizard({
               </div>
 
               <div>
-                <h1 className="mb-3 text-3xl font-bold text-foreground">License activated</h1>
+                <h1 className="mb-3 text-3xl text-foreground">License activated</h1>
                 <p className="text-lg text-muted-foreground">
                   {step3.tier === "INDIVIDUAL" || step3.tier === "OPC"
                     ? "Your free license is active."

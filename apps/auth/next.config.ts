@@ -27,6 +27,7 @@ const nextConfig: NextConfig = {
     "@nebutra/brand",
     "@nebutra/china-compliance",
     "@nebutra/db",
+    "@nebutra/fonts",
     "@nebutra/i18n",
     "@nebutra/icons",
     "@nebutra/logger",

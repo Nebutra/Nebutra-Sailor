@@ -26,7 +26,7 @@ export function PricingTable({
   return (
     <div className="mx-auto max-w-7xl font-sans">
       <div className="text-center">
-        <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+        <h2 className="text-3xl tracking-tight text-slate-900 sm:text-4xl dark:text-white">
           {title}
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-xl text-slate-500 dark:text-slate-400">
@@ -50,7 +50,7 @@ export function PricingTable({
               </div>
             )}
             <div className="mb-6">
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white">{plan.name}</h3>
+              <h3 className="text-xl text-slate-900 dark:text-white">{plan.name}</h3>
               <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{plan.description}</p>
             </div>
 

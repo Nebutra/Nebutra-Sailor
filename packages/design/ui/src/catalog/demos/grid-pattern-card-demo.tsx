@@ -11,7 +11,7 @@ export function GridPatternCardDemo() {
             <span className="px-3 py-1 bg-blue-100 dark:text-blue-300 text-xs font-semibold mb-4 border-blue-200 dark:border-blue-800 inline-block rounded-full border text-blue-700 dark:bg-blue-900">
               New Output
             </span>
-            <h3 className="text-xl font-bold tracking-tight mb-2">Build faster with AI</h3>
+            <h3 className="text-xl tracking-tight mb-2">Build faster with AI</h3>
             <p className="text-sm max-w-xs text-muted-foreground">
               Generate entire applications, UI components, and API routes using natural language.
             </p>
@@ -43,7 +43,7 @@ export function GridPatternCardDemo() {
               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
             </svg>
           </div>
-          <h3 className="text-xl font-bold tracking-tight">Financial Dashboard</h3>
+          <h3 className="text-xl tracking-tight">Financial Dashboard</h3>
           <p className="text-sm max-w-[250px] text-muted-foreground">
             Connect your bank accounts and manage your expenses with intelligent insights.
           </p>

@@ -20,7 +20,7 @@ export function ProgressiveBlurDemo() {
     <div className="max-w-2xl p-4 md:p-8 md:flex-row gap-8 mx-auto flex w-full flex-col">
       {/* Example 1: Bottom Blur */}
       <div className="gap-2 flex flex-1 flex-col">
-        <h3 className="text-sm font-medium mb-2 text-muted-foreground">Bottom Blur</h3>
+        <h3 className="text-sm mb-2 text-muted-foreground">Bottom Blur</h3>
         <div className="relative h-[300px] w-full overflow-hidden rounded-xl border bg-background">
           <div className="inset-0 p-4 space-y-4 absolute overflow-y-auto">
             {items}
@@ -32,7 +32,7 @@ export function ProgressiveBlurDemo() {
 
       {/* Example 2: Top Blur */}
       <div className="gap-2 flex flex-1 flex-col">
-        <h3 className="text-sm font-medium mb-2 text-muted-foreground">Top & Bottom Blur</h3>
+        <h3 className="text-sm mb-2 text-muted-foreground">Top & Bottom Blur</h3>
         <div className="bg-dot-pattern relative h-[300px] w-full overflow-hidden rounded-xl border bg-background">
           <div className="inset-0 p-4 space-y-4 pt-16 pb-16 absolute overflow-y-auto">
             <h4 className="font-bold text-xl mb-4 text-center">Terms of Service</h4>

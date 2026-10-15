@@ -82,7 +82,7 @@ export function FullPageStatus({
           {code}
         </div>
 
-        <h1 className="mb-3 text-[clamp(28px,5vw,36px)] font-semibold leading-[1.15] tracking-[-0.02em]">
+        <h1 className="mb-3 text-[clamp(28px,5vw,36px)] leading-[1.15] tracking-[-0.02em]">
           {title}
         </h1>
 

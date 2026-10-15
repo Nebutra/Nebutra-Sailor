@@ -63,7 +63,7 @@ export function SectionHeading({
 }) {
   return (
     <div className="mb-4 flex items-center justify-between">
-      <h2 id={id} className="font-medium text-foreground text-xl">
+      <h2 id={id} className="text-foreground text-xl">
         {title}
       </h2>
       {href && linkLabel ? (

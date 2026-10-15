@@ -203,3 +203,11 @@
   --ds-gray-alpha-400: hsla(0, 0%, 100%, 0.14);
   --ds-background-200: hsla(0, 0%, 0%, 1);
 }
+
+/* Heading weight is the ramp's (core.json:fontWeight.heading), on docs as on
+   every app. fumadocs restates its own — DocsTitle is font-semibold and the
+   prose plugin sets h2/h3 at 600 — so the docs shipped 600 where the rest of
+   the product ships 500 (2026-10-16 audit). Unlayered so it beats both layers. */
+#nd-page :is(h1, h2, h3, h4) {
+  font-weight: var(--font-weight-heading, 500);
+}

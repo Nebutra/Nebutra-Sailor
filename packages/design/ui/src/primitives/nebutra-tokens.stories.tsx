@@ -19,7 +19,7 @@ function NebutraTokensContract() {
   return (
     <div className="grid w-[48rem] gap-5 rounded-[var(--radius-lg)] border bg-card p-5 text-card-foreground">
       <div className="grid gap-1">
-        <h2 className="font-medium text-base">Nebutra token bootstrap</h2>
+        <h2 className="text-base">Nebutra token bootstrap</h2>
         <p className="text-muted-foreground text-sm">
           Visual contract for the registry theme manifest and the `@nebutra/tokens` runtime
           stylesheet.
@@ -31,7 +31,7 @@ function NebutraTokensContract() {
             className="rounded-[var(--radius-md)] border bg-background p-3"
             key={group.label}
           >
-            <h3 className="mb-3 font-medium text-foreground text-sm">{group.label}</h3>
+            <h3 className="mb-3 text-foreground text-sm">{group.label}</h3>
             <div className="flex flex-wrap gap-2">
               {group.tokens.map((token) => (
                 <span className="grid gap-1" key={token}>

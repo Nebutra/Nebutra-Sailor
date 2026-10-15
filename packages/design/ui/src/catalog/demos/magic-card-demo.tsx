@@ -9,7 +9,7 @@ export function MagicCardDemo() {
       <MagicCard className="p-8 h-64 flex cursor-pointer flex-col justify-between border">
         <div>
           <Sparkles className="h-8 w-8 text-blue-500 mb-4" />
-          <h3 className="text-xl font-bold mb-2">Beautiful Design</h3>
+          <h3 className="text-xl mb-2">Beautiful Design</h3>
           <p className="text-muted-foreground">
             Every component is crafted with attention to detail and modern aesthetics.
           </p>
@@ -24,7 +24,7 @@ export function MagicCardDemo() {
       >
         <div>
           <Layers className="h-8 w-8 text-orange-500 mb-4" />
-          <h3 className="text-xl font-bold mb-2">Highly Customizable</h3>
+          <h3 className="text-xl mb-2">Highly Customizable</h3>
           <p className="text-muted-foreground">
             Modify colors, sizing, and animations to fit your exact brand needs.
           </p>
@@ -39,7 +39,7 @@ export function MagicCardDemo() {
       >
         <div>
           <Zap className="h-8 w-8 text-emerald-500 mb-4" />
-          <h3 className="text-xl font-bold mb-2">Unmatched Performance</h3>
+          <h3 className="text-xl mb-2">Unmatched Performance</h3>
           <p className="text-muted-foreground">
             Optimized for speed and minimal bundle sizes out of the box.
           </p>

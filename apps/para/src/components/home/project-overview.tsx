@@ -31,7 +31,7 @@ export function ProjectOverview({ projectId }: { projectId: string }) {
           <Link href="/projects" className="text-muted-foreground text-label hover:text-foreground">
             项目
           </Link>
-          <h1 className="mt-1 font-medium text-display text-foreground tracking-tight">
+          <h1 className="mt-1 text-display text-foreground tracking-tight">
             {project?.name ?? " "}
           </h1>
         </div>

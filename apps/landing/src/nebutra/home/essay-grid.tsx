@@ -84,9 +84,7 @@ export function EssayGrid({ posts, filter = false }: { posts: EssayCardData[]; f
               />
             </div>
             <p className="mt-4 text-sm tabular-nums text-muted-foreground">{p.date}</p>
-            <h3 className="mt-2 font-heading text-xl font-medium text-foreground text-balance">
-              {p.title}
-            </h3>
+            <h3 className="mt-2 font-heading text-xl text-foreground text-balance">{p.title}</h3>
             <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{p.excerpt}</p>
           </Link>
         ))}

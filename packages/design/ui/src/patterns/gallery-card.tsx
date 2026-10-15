@@ -257,7 +257,7 @@ function GalleryCardBody({
 
       {/* Title + optional inline badge */}
       <div className="mb-1.5 flex items-center gap-2">
-        <h3 className="line-clamp-1 text-[15px] font-semibold leading-tight">{title}</h3>
+        <h3 className="line-clamp-1 text-[15px] leading-tight">{title}</h3>
         {badge && (
           <Badge variant={badgeToneToVariant[badge.tone]} size="sm">
             {badge.label}

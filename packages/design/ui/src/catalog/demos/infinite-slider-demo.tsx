@@ -27,7 +27,7 @@ export function InfiniteSliderDemo() {
   return (
     <div className="max-w-4xl py-12 gap-16 mx-auto flex w-full flex-col overflow-hidden">
       <div className="space-y-4">
-        <h3 className="text-sm font-semibold tracking-wider mb-8 text-center text-muted-foreground uppercase">
+        <h3 className="text-sm tracking-wider mb-8 text-center text-muted-foreground uppercase">
           Trusted by top cloud infrastructure providers
         </h3>
 

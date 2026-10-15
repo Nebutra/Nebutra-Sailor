@@ -9,7 +9,7 @@ export function AssistedPasswordConfirmationDemo() {
   return (
     <div className="max-w-sm p-6 space-y-6 mx-auto w-full">
       <div className="space-y-2 text-center">
-        <h3 className="text-xl font-bold tracking-tight">Confirm Password</h3>
+        <h3 className="text-xl tracking-tight">Confirm Password</h3>
         <p className="text-sm font-medium text-muted-foreground">
           Verify your password to continue.
         </p>

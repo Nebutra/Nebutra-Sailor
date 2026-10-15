@@ -37,7 +37,7 @@ export function WelcomeOverlay({ memberNumber, onClose }: WelcomeOverlayProps) {
 
         <div className="mb-4 text-4xl">🎉</div>
 
-        <h2 className="mb-2 text-2xl font-bold text-foreground">Welcome to Sleptons!</h2>
+        <h2 className="mb-2 text-2xl text-foreground">Welcome to Sleptons!</h2>
 
         <p className="mb-1 text-muted-foreground">You are</p>
         <p

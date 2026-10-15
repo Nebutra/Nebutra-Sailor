@@ -28,7 +28,7 @@ export const Default: Story = {
   args: { children: <></> },
   render: () => (
     <CardSpotlight className="h-80 w-80">
-      <h2 className="relative z-20 mt-2 text-lg font-bold text-white">Hover over this card</h2>
+      <h2 className="relative z-20 mt-2 text-lg text-white">Hover over this card</h2>
       <p className="relative z-20 mt-4 text-sm text-muted-foreground">
         The spotlight follows your cursor. A canvas dot animation appears on hover.
       </p>
@@ -40,7 +40,7 @@ export const ChecklistContent: Story = {
   args: { children: <></> },
   render: () => (
     <CardSpotlight className="w-96 p-10">
-      <h2 className="relative z-20 text-lg font-bold text-white mb-6">Enterprise Plan</h2>
+      <h2 className="relative z-20 text-lg text-white mb-6">Enterprise Plan</h2>
       <div className="relative z-20 space-y-3">
         {[
           "Unlimited team members",
@@ -63,7 +63,7 @@ export const PurpleSpotlight: Story = {
   args: { children: <></>, color: "#1a0533", radius: 300 },
   render: () => (
     <CardSpotlight color="#1a0533" radius={300} className="h-80 w-80">
-      <h2 className="relative z-20 text-xl font-bold text-white">Purple Spotlight</h2>
+      <h2 className="relative z-20 text-xl text-white">Purple Spotlight</h2>
       <p className="relative z-20 mt-3 text-sm text-muted-foreground">
         Custom color via the `color` prop.
       </p>
@@ -75,7 +75,7 @@ export const SmallRadius: Story = {
   args: { children: <></>, radius: 150 },
   render: () => (
     <CardSpotlight radius={150} className="h-80 w-80">
-      <h2 className="relative z-20 text-lg font-bold text-white">Tight Spotlight</h2>
+      <h2 className="relative z-20 text-lg text-white">Tight Spotlight</h2>
       <p className="relative z-20 mt-3 text-sm text-muted-foreground">
         radius=150 — spotlight stays close to cursor.
       </p>

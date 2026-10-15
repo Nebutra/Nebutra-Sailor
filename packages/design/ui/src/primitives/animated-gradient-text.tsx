@@ -52,7 +52,7 @@ export interface AnimatedGradientTextProps extends ComponentPropsWithoutRef<"spa
  *
  * @example As heading
  * ```tsx
- * <h1 className="text-4xl font-bold">
+ * <h1 className="text-4xl">
  *   <AnimatedGradientText>Welcome</AnimatedGradientText>
  * </h1>
  * ```

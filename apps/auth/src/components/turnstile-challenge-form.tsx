@@ -112,9 +112,7 @@ export function TurnstileChallengeForm({
     return (
       <div className="w-full">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-            {tMagic("title")}
-          </h1>
+          <h1 className="text-3xl tracking-tight text-foreground">{tMagic("title")}</h1>
           <p className="mt-4 text-sm leading-6 text-muted-foreground">
             {tMagic("sentTo", { email: doneEmail })}
           </p>
@@ -130,9 +128,7 @@ export function TurnstileChallengeForm({
     return (
       <div className="w-full">
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-            {tForgot("successTitle")}
-          </h1>
+          <h1 className="text-3xl tracking-tight text-foreground">{tForgot("successTitle")}</h1>
           <p className="mt-4 text-sm leading-6 text-muted-foreground">{tForgot("success")}</p>
         </div>
         <Button asChild variant="ink" className={AUTH_PRIMARY_CTA_CLASS}>
@@ -153,9 +149,7 @@ export function TurnstileChallengeForm({
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-          {t("challengeTitle")}
-        </h1>
+        <h1 className="text-3xl tracking-tight text-foreground">{t("challengeTitle")}</h1>
         <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("challengeSubtitle")}</p>
       </div>
 

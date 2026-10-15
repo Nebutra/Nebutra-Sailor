@@ -19,7 +19,7 @@ export function DitheringBackgroundDemo() {
       />
 
       <div className="backdrop-blur-md p-6 max-w-sm gap-4 relative z-10 flex flex-col items-center rounded-2xl border bg-background/50 text-center shadow-lg">
-        <h3 className="text-2xl font-bold tracking-tight">Dithering Shader</h3>
+        <h3 className="text-2xl tracking-tight">Dithering Shader</h3>
         <p className="text-sm text-muted-foreground">
           A WebGL-powered shader background featuring retro dithering patterns and interactive
           parallax.

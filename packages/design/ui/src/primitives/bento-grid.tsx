@@ -138,7 +138,7 @@ export const BentoCard = ({
       <div className="p-4">
         <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal lg:group-hover:-translate-y-10">
           <IconComponent className="h-12 w-12 origin-left transform-gpu text-muted-foreground transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal ease-[var(--ease-brand)] group-hover:scale-75" />
-          <h3 className="text-xl font-semibold text-foreground">{name}</h3>
+          <h3 className="text-xl text-foreground">{name}</h3>
           <p className="max-w-lg text-muted-foreground">{description}</p>
         </div>
 

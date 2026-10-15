@@ -30,9 +30,7 @@ function MockArticle({ withOverrides = false }: { withOverrides?: boolean }) {
   return (
     <article className="prose mx-auto max-w-3xl px-6 py-24 dark:prose-invert">
       <header className="mb-10 text-center">
-        <h1 className="mb-4 text-4xl font-bold tracking-tight">
-          The Evolution of Web Architecture
-        </h1>
+        <h1 className="mb-4 text-4xl tracking-tight">The Evolution of Web Architecture</h1>
         <p className="text-lg text-muted-foreground">
           From static HTML to Edge Computing and Dynamic Islands.
         </p>
@@ -75,7 +73,7 @@ function MockArticle({ withOverrides = false }: { withOverrides?: boolean }) {
             data-toc-title="Modern Era: Edge Computing"
             className="my-8 rounded-2xl border border-border bg-foreground/5 p-8"
           >
-            <h3 className="mt-0 text-2xl font-bold">This is a DIV, not a Heading</h3>
+            <h3 className="mt-0 text-2xl">This is a DIV, not a Heading</h3>
             <p className="mb-0 mt-4 text-muted-foreground">
               The wrapper carries <code>data-toc data-toc-depth="2"</code> — it registers as a
               level-2 TOC entry without being a real heading.
@@ -189,7 +187,7 @@ export const EmptyState: Story = {
     <div className="relative min-h-dvh bg-background text-foreground">
       <DynamicIslandTOC />
       <div className="mx-auto max-w-3xl px-6 py-24 text-center">
-        <h1 className="text-3xl font-bold">No article markup here</h1>
+        <h1 className="text-3xl">No article markup here</h1>
         <p className="mt-4 text-muted-foreground">
           The selector finds nothing — pill remains in idle state.
         </p>

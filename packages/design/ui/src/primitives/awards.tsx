@@ -185,13 +185,13 @@ export function Awards({
           </div>
 
           {/* Main Title */}
-          <h1 className={cn("text-4xl font-black tracking-tight")}>{title}</h1>
+          <h1 className={cn("text-4xl tracking-tight")}>{title}</h1>
 
           {/* Decorative Line */}
           <div className="bg-primary mx-auto my-3 h-px w-40"></div>
 
           {/* Subtitle */}
-          <h2 className={cn("mb-4 w-60 text-xl font-light")}>{subtitle}</h2>
+          <h2 className={cn("mb-4 w-60 text-xl")}>{subtitle}</h2>
 
           {/* Recipient */}
           {recipient && <p className={cn("text-primary/60 italic")}>{recipient}</p>}
@@ -226,15 +226,13 @@ export function Awards({
       >
         <div className="bg-card z-10 rounded-[var(--radius-sm)] border p-6 px-8 text-center">
           <Badge />
-          <h1 className={cn("mt-4 grid text-3xl leading-7 font-bold tracking-tighter uppercase")}>
+          <h1 className={cn("mt-4 grid text-3xl leading-7 tracking-tighter uppercase")}>
             Certificate
             <span className="text-sm font-light tracking-tight"> of {title}</span>
           </h1>
 
           <p className="text-muted-foreground mt-4 mb-1 text-xs">This is to certify that</p>
-          <h1 className={cn("text-primary mb-2 border-b text-xl font-semibold tracking-tight")}>
-            {recipient}
-          </h1>
+          <h1 className={cn("text-primary mb-2 border-b text-xl tracking-tight")}>{recipient}</h1>
 
           <p className="text-muted-foreground mb-1 text-xs">{subtitle}</p>
           <div className="mt-6 flex justify-center">
@@ -265,8 +263,8 @@ export function Awards({
         <div className={cn("rounded-[var(--radius-md)] border-4 p-4", "flex justify-start gap-3")}>
           <Badge />
           <div className={cn("border-l px-3")}>
-            <h1 className={cn("text-primary text-4xl font-bold tracking-tight")}>{title}</h1>
-            <h2 className={cn("text-muted-foreground text-md font-light")}>{subtitle}</h2>
+            <h1 className={cn("text-primary text-4xl tracking-tight")}>{title}</h1>
+            <h2 className={cn("text-muted-foreground text-md")}>{subtitle}</h2>
 
             <div className="mt-1 flex items-center gap-4 text-xs">
               {recipient && <p className={cn("italic")}>by {recipient}</p>}•
@@ -501,7 +499,7 @@ export function Awards({
             >
               {date}
             </div>
-            <h1 className="text-5xl leading-tight font-bold">{title}</h1>
+            <h1 className="text-5xl leading-tight">{title}</h1>
             <p className="text-muted-foreground -mt-2 text-md font-light tracking-wider">
               {subtitle}
             </p>

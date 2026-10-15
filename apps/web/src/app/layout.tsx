@@ -2,16 +2,14 @@ import { getConfiguredAuthProvider } from "@nebutra/auth";
 import { AuthProvider } from "@nebutra/auth/react";
 import { brand } from "@nebutra/brand/metadata";
 import { getSiteMetadata } from "@nebutra/brand/metadata-helpers";
-import { fontRegistryClassName } from "@nebutra/fonts/next";
-import { CjkFontFace, cjkFontClassName } from "@nebutra/fonts/next/cjk";
 import { toHtmlLang, toTextDir } from "@nebutra/i18n/locales";
 import { THEME_STORAGE_KEY } from "@nebutra/tokens";
+import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
+import { fontRegistryClassName } from "@nebutra/tokens/fonts/registry";
 import { DesignSystemProvider } from "@nebutra/ui/layout";
 import { Toaster } from "@nebutra/ui/primitives";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
@@ -25,24 +23,10 @@ import "./globals.css";
 import { loadUiLabels } from "@nebutra/i18n/ui-labels";
 import { UiLabelsProvider } from "@nebutra/ui/primitives";
 
-// GeistSans → --font-geist-sans (variable font, 100–900)
-// GeistMono → --font-geist-mono (variable font, 100–900)
-// Referenced in packages/design/ui/src/typography/fonts.css via var(--font-geist-sans/mono)
-//
-// cjkFontClassName → --font-dm-sans, the heading face (next/font/local — the file
-// ships in @nebutra/fonts, so no build-time fetch). <CjkFontFace /> declares
-// MiSans from the asset CDN: Geist has zero CJK coverage, so without it every
-// Chinese character falls back to the OS face (PingFang / YaHei / whatever
-// Android ships). ORDER: --font-sans lists Geist first and MiSans after it, so
-// Geist keeps Latin and the numerals (tabular figures in dense tables) and only
-// CJK falls through — and MiSans' unicode-range carries no Latin at all, so that
-// holds even if a stack is mis-ordered.
-//
-// Theme / DESIGN.md webfonts — the self-hosted OSS font registry (@nebutra/fonts)
-// declares ~16 common faces via next/font (build-time self-host, ZERO runtime
-// external requests). `fontRegistryClassName` defines their --font-* variables on
-// <html>; the appearance layer prepends the matching var() when a theme or
-// imported DESIGN.md font matches (see @nebutra/fonts withRegistryFont).
+// Fonts: `fontClassName` + <FontFaces /> from @nebutra/tokens/fonts — the one
+// loader every app uses (Geist, Geist Mono, DM Sans headings, MiSans for CJK).
+// `fontRegistryClassName` adds the design-language faces; each downloads only
+// while a theme or imported DESIGN.md stack resolves to it.
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -105,11 +89,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html
       lang={toHtmlLang(locale)}
       dir={toTextDir(locale)}
-      className={`${themeClass} ${GeistSans.variable} ${GeistMono.variable} ${cjkFontClassName} ${fontRegistryClassName}`.trim()}
+      className={`${themeClass} ${fontClassName} ${fontRegistryClassName}`.trim()}
       suppressHydrationWarning
     >
       <body className="antialiased">
-        <CjkFontFace nonce={nonce} />
+        <FontFaces nonce={nonce} />
 
         <a
           href="#main-content"

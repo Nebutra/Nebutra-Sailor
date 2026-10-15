@@ -91,7 +91,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
         <AnimateIn preset="emerge" className="mb-20 max-w-3xl">
           <p className="mb-4 text-sm text-primary">{t("hero.eyebrow")}</p>
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-balance"
+            className="text-4xl sm:text-5xl md:text-6xl mb-6 text-balance"
             style={{
               letterSpacing: "var(--tracking-display)",
               lineHeight: "var(--leading-display)",
@@ -105,7 +105,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
         {/* Capabilities */}
         <div className="mb-24">
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-2"
+            className="text-3xl md:text-4xl lg:text-5xl mb-2"
             style={{
               letterSpacing: "var(--tracking-heading)",
               lineHeight: "var(--leading-heading)",
@@ -127,7 +127,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
                     </div>
                     <div className="flex-1">
                       <div className="flex items-baseline gap-2 flex-wrap">
-                        <h3 className="text-lg font-bold text-foreground">
+                        <h3 className="text-lg text-foreground">
                           {t(`capabilities.${cap.key}.title`)}
                         </h3>
                         {cap.wip && (
@@ -151,7 +151,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
         {/* Compliance */}
         <div className="mb-24">
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-2"
+            className="text-3xl md:text-4xl lg:text-5xl mb-2"
             style={{
               letterSpacing: "var(--tracking-heading)",
               lineHeight: "var(--leading-heading)",
@@ -191,7 +191,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
           >
             <FileLock className="h-10 w-10 mx-auto text-primary mb-4" />
             <h3
-              className="text-2xl md:text-3xl font-semibold mb-3"
+              className="text-2xl md:text-3xl mb-3"
               style={{
                 letterSpacing: "var(--tracking-heading)",
                 lineHeight: "var(--leading-heading)",

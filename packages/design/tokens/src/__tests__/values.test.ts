@@ -24,7 +24,7 @@ describe("@nebutra/tokens/values", () => {
   });
 
   it("returns the declared value, var() intact, dark falling back to light", () => {
-    assert.match(tokenValue("--font-heading"), /^var\(--font-dm-sans\)/);
+    assert.match(tokenValue("--font-heading"), /^var\(--font-dm-sans, "DM Sans"\)/);
     assert.equal(tokenValue("--font-mono", "dark"), tokenValue("--font-mono"));
   });
 

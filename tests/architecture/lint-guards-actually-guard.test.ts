@@ -338,6 +338,31 @@ const CASES: Case[] = [
     path: "apps/router/src/__lint_guard_probe.tsx",
   },
   {
+    // An app loading its own face — how auth and idp ended up on the OS font
+    // and nebutra.com downloaded DM Sans twice (2026-10-16 audit).
+    guard: "lint-font-pipeline",
+    violation:
+      'import { GeistSans } from "geist/font/sans";\nexport const c = GeistSans.variable;\n',
+  },
+  {
+    // A root layout that renders <html> without the shared font class: the
+    // exact shape of apps/auth/src/app/layout.tsx before 2026-10-16.
+    guard: "lint-font-pipeline",
+    violation:
+      'export default function L({ children }: { children: React.ReactNode }) {\n  return (\n    <html lang="en">\n      <body>{children}</body>\n    </html>\n  );\n}\n',
+    path: "apps/design/src/app/__lint_guard_probe.tsx",
+  },
+  {
+    // A heading weight chosen by the app instead of the ramp.
+    guard: "lint-font-pipeline",
+    violation: 'export const H = () => <h1 className="text-3xl font-semibold">Title</h1>;\n',
+  },
+  {
+    // A typed font-family instead of a token.
+    guard: "lint-font-pipeline",
+    violation: 'export const F = () => <p style={{ fontFamily: "Inter, sans-serif" }}>x</p>;\n',
+  },
+  {
     // Erasing a shared primitive's surface instead of using its variant.
     guard: "lint-primitive-override",
     violation:

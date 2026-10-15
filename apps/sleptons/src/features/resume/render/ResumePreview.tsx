@@ -23,7 +23,7 @@ export function ResumePreview({ content }: { content: EditorContent }) {
   return (
     <div className="grid gap-6 text-sm">
       <header>
-        <h2 className="text-xl font-semibold text-foreground">{c.basic.name}</h2>
+        <h2 className="text-xl text-foreground">{c.basic.name}</h2>
         {d.headline && <p className="mt-1 text-muted-foreground">{d.headline}</p>}
         <p className="mt-2 text-xs text-muted-foreground">
           Completeness {d.completeness}%
@@ -33,7 +33,7 @@ export function ResumePreview({ content }: { content: EditorContent }) {
 
       {d.highlights.length > 0 && (
         <section>
-          <h3 className="mb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          <h3 className="mb-1 text-xs uppercase tracking-wide text-muted-foreground">
             Card highlights
           </h3>
           <ul className="list-disc pl-5 text-foreground">
@@ -46,7 +46,7 @@ export function ResumePreview({ content }: { content: EditorContent }) {
 
       {d.skills_flat.length > 0 && (
         <section>
-          <h3 className="mb-1 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          <h3 className="mb-1 text-xs uppercase tracking-wide text-muted-foreground">
             Matching skills
           </h3>
           <div className="flex flex-wrap gap-1">
@@ -98,7 +98,7 @@ export function ResumePreview({ content }: { content: EditorContent }) {
 function Entry({ title, meta, lines }: { title: string; meta?: string; lines: string[] }) {
   return (
     <section>
-      <h3 className="font-medium text-foreground">{title}</h3>
+      <h3 className="text-foreground">{title}</h3>
       {meta && <p className="text-xs text-muted-foreground">{meta}</p>}
       {lines.length > 0 && (
         <ul className="mt-1 list-disc pl-5 text-foreground">

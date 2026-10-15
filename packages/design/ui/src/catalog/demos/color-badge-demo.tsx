@@ -14,7 +14,7 @@ export function ColorBadgeDemo() {
   return (
     <div className="gap-8 max-w-2xl p-6 mx-auto flex min-h-[400px] w-full flex-col items-center justify-center">
       <div className="gap-4 flex flex-col items-center">
-        <h3 className="text-sm font-medium mb-2 text-muted-foreground">Standard Variants</h3>
+        <h3 className="text-sm mb-2 text-muted-foreground">Standard Variants</h3>
         <div className="gap-3 flex flex-wrap items-center justify-center">
           <ColorBadge variant="gray">Draft</ColorBadge>
           <ColorBadge variant="blue">In Progress</ColorBadge>
@@ -28,7 +28,7 @@ export function ColorBadgeDemo() {
       </div>
 
       <div className="gap-4 flex flex-col items-center">
-        <h3 className="text-sm font-medium mb-2 text-muted-foreground">Subtle Variants</h3>
+        <h3 className="text-sm mb-2 text-muted-foreground">Subtle Variants</h3>
         <div className="gap-3 flex flex-wrap items-center justify-center">
           <ColorBadge variant="gray-subtle">Archived</ColorBadge>
           <ColorBadge variant="blue-subtle">Info</ColorBadge>
@@ -42,9 +42,7 @@ export function ColorBadgeDemo() {
       </div>
 
       <div className="gap-4 flex flex-col items-center">
-        <h3 className="text-sm font-medium mb-2 text-muted-foreground">
-          With Icons & Special Variants
-        </h3>
+        <h3 className="text-sm mb-2 text-muted-foreground">With Icons & Special Variants</h3>
         <div className="gap-3 flex flex-wrap items-center justify-center">
           <ColorBadge variant="green" icon={<CheckCircle2 />}>
             Healthy
@@ -69,7 +67,7 @@ export function ColorBadgeDemo() {
       </div>
 
       <div className="gap-4 flex flex-col items-center">
-        <h3 className="text-sm font-medium mb-2 text-muted-foreground">Sizes</h3>
+        <h3 className="text-sm mb-2 text-muted-foreground">Sizes</h3>
         <div className="gap-4 flex items-center justify-center">
           <ColorBadge variant="blue" size="sm">
             Small

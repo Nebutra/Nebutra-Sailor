@@ -352,7 +352,7 @@ function FeedbackDefault({
         style={feedbackCssVars as React.CSSProperties}
       >
         <div className="mb-[var(--feedback-gap)] flex items-center justify-between gap-[var(--feedback-row-gap)]">
-          <h2 className="font-medium text-foreground text-sm">{label}</h2>
+          <h2 className="text-foreground text-sm">{label}</h2>
           <button
             aria-label={closeLabel}
             className="inline-flex size-7 items-center justify-center rounded-[var(--feedback-radius)] text-muted-foreground transition-[background-color,color] duration-[var(--feedback-duration)] ease-[var(--feedback-easing)] hover:bg-accent hover:text-accent-foreground focus-visible:outline-none"

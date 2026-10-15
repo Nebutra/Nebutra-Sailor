@@ -18,7 +18,7 @@ export function ProjectsList() {
   return (
     <>
       <div className="mb-6 flex items-baseline gap-3">
-        <h1 className="font-medium text-2xl text-foreground">项目</h1>
+        <h1 className="text-2xl text-foreground">项目</h1>
         {data?.length ? (
           <span className="text-body text-muted-foreground tabular-nums">{data.length} 个</span>
         ) : null}

@@ -31,7 +31,7 @@ export interface CardSpotlightProps extends React.HTMLAttributes<HTMLDivElement>
  * @example
  * ```tsx
  * <CardSpotlight className="h-96 w-96">
- *   <h2 className="text-xl font-bold text-white">Title</h2>
+ *   <h2 className="text-xl text-white">Title</h2>
  *   <p className="text-muted-foreground">Description content</p>
  * </CardSpotlight>
  * ```

@@ -1,5 +1,5 @@
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
-import { CjkFontFace } from "@nebutra/fonts/font-face";
+import { FontFaces } from "@nebutra/tokens/fonts/faces";
 import type { Preview, StoryContext, StoryFn } from "@storybook/react";
 import { NextIntlClientProvider } from "next-intl";
 // Single stylesheet — Tailwind v4 + tokens + fonts + @source scan directives.
@@ -51,11 +51,11 @@ const preview: Preview = {
       return Story(context.args, context);
     },
 
-    // MiSans. Next apps render <CjkFontFace /> in the root layout; Vite has no
+    // MiSans. Next apps render <FontFaces /> from @nebutra/tokens/fonts in the root layout; Vite has no
     // process.env, so the origin is passed from the brand config explicitly.
     (Story: StoryFn, context: StoryContext) => (
       <>
-        <CjkFontFace origin={getBrandOrigin("cdn")} />
+        <FontFaces origin={getBrandOrigin("cdn")} />
         {Story(context.args, context)}
       </>
     ),

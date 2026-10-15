@@ -23,7 +23,7 @@ export function StarsCanvasDemo() {
       {/* Content on top */}
       <div className="gap-6 p-6 relative z-10 flex flex-col items-center text-center">
         <div className="space-y-2 max-w-md">
-          <h2 className="text-4xl font-bold tracking-tighter text-white">Atmospheric Effects</h2>
+          <h2 className="text-4xl tracking-tighter text-white">Atmospheric Effects</h2>
           <p className="text-zinc-400">
             Create immersive depth with performant HTML5 canvas particle systems. Perfect for hero
             sections and dark mode experiences.

@@ -27,7 +27,7 @@ export const Default: Story = {
   render: () => (
     <GridPatternCard className="max-w-sm">
       <GridPatternCardBody>
-        <h3 className="text-xl font-semibold">AI Integration</h3>
+        <h3 className="text-xl">AI Integration</h3>
         <p className="mt-2 text-muted-foreground text-sm">
           Seamlessly connect your workflow with the latest AI models.
         </p>
@@ -41,7 +41,7 @@ export const WithIcon: Story = {
     <GridPatternCard className="max-w-sm">
       <GridPatternCardBody>
         <Sparkles className="h-8 w-8 mb-4 text-primary" />
-        <h3 className="text-xl font-semibold">AI Native</h3>
+        <h3 className="text-xl">AI Native</h3>
         <p className="mt-2 text-muted-foreground text-sm">
           Built-in intelligence that learns from your team's patterns.
         </p>
@@ -54,7 +54,7 @@ export const NoAnimation: Story = {
   render: () => (
     <GridPatternCard disableAnimation className="max-w-sm">
       <GridPatternCardBody>
-        <h3 className="text-xl font-semibold">Static Render</h3>
+        <h3 className="text-xl">Static Render</h3>
         <p className="mt-2 text-muted-foreground text-sm">
           No fade-in animation — instant render for server-side contexts.
         </p>
@@ -74,7 +74,7 @@ export const CardGrid: Story = {
         <GridPatternCard key={title}>
           <GridPatternCardBody>
             <Icon className="h-6 w-6 mb-3 text-primary" />
-            <h3 className="font-semibold">{title}</h3>
+            <h3>{title}</h3>
             <p className="text-sm text-muted-foreground mt-1">{desc}</p>
           </GridPatternCardBody>
         </GridPatternCard>

@@ -25,7 +25,7 @@ export default async function TypefaceDetailPage({ params }: { params: Params })
         </Link>
       </p>
       <h1
-        className="text-5xl font-bold tracking-tight md:text-6xl"
+        className="text-5xl tracking-tight md:text-6xl"
         style={{ fontFamily: resolvedStack(tf.id, tf.cssStack) }}
       >
         {tf.family}
@@ -48,7 +48,7 @@ export default async function TypefaceDetailPage({ params }: { params: Params })
         <br />
         永和九年 字体搭配 范例库
       </div>
-      <h2 className="mt-12 text-2xl font-bold">Used in</h2>
+      <h2 className="mt-12 text-2xl">Used in</h2>
       <ul className="mt-4 space-y-3">
         {usedIn.map((s) => {
           const work = workById.get(s.workId);

@@ -14,7 +14,7 @@ export function NoisePatternCardDemo() {
 
           <div className="gap-4 md:text-left flex flex-col text-center">
             <div>
-              <h3 className="text-2xl font-bold tracking-tight mb-2 text-foreground">
+              <h3 className="text-2xl tracking-tight mb-2 text-foreground">
                 Organic Grain Texture
               </h3>
               <p className="leading-relaxed text-muted-foreground">

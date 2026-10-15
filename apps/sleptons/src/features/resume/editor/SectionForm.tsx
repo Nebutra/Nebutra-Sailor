@@ -57,7 +57,7 @@ export function SectionForm({ section, content, issues, dispatch }: SectionFormP
               aria-label={`${section.title} ${index + 1}`}
             >
               <header className="mb-3 flex items-center justify-between gap-2">
-                <h3 className="truncate text-sm font-medium text-foreground">
+                <h3 className="truncate text-sm text-foreground">
                   {itemTitle(item, section.itemTitleKey, `${section.title} ${index + 1}`)}
                 </h3>
                 <div className="flex shrink-0 gap-1">

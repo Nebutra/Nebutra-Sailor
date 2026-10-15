@@ -96,18 +96,8 @@
   }
 }
 
-/* Reading craft. Headings break into even lines and body copy avoids a lone
- * last word; Chinese and Japanese get the quarter-em gap before and after
- * Latin words and numbers where the copy did not type one. */
-:where(h1, h2, h3) {
-  text-wrap: balance;
-}
-:where(p, li, dd, figcaption, summary) {
-  text-wrap: pretty;
-}
-:where(:lang(zh), :lang(ja)) {
-  text-autospace: normal;
-}
+/* Reading craft (balanced headings, pretty paragraphs, CJK autospace) is the
+ * shared base sheet's: @nebutra/design-tokens static/base.css. */
 @media (prefers-reduced-motion: reduce) {
   .site-page-enter {
     animation: none;
@@ -139,13 +129,6 @@
   ::view-transition-new(root) {
     animation-duration: 180ms;
     animation-timing-function: ease-out;
-  }
-
-  /* Custom font configuration */
-  body {
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 }
 /*---break---

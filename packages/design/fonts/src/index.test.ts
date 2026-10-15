@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { primaryFamily, resolveRegistryVar, withRegistryFont } from "./index";
+import {
+  FONT_REGISTRY,
+  primaryFamily,
+  resolveRegistryVar,
+  withNearestRegistryFont,
+  withRegistryFont,
+} from "./index";
 
 describe("@nebutra/fonts registry", () => {
   it("normalizes the primary family (strips quotes, lowercases)", () => {
@@ -21,11 +27,22 @@ describe("@nebutra/fonts registry", () => {
 
   it("prepends the self-hosted var for a registered family, keeping the fallback", () => {
     expect(withRegistryFont("Space Grotesk, sans-serif")).toBe(
-      "var(--font-space-grotesk), Space Grotesk, sans-serif",
+      "var(--font-space-grotesk, Space Grotesk), Space Grotesk, sans-serif",
     );
     expect(withRegistryFont("'JetBrains Mono', ui-monospace, monospace")).toBe(
-      "var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, monospace",
+      `var(--font-jetbrains-mono, "JetBrains Mono"), 'JetBrains Mono', ui-monospace, monospace`,
     );
+  });
+
+  it("never emits a var() without a fallback (an undefined one voids the declaration)", () => {
+    for (const family of Object.keys(FONT_REGISTRY)) {
+      const out = withNearestRegistryFont(`'${family}', sans-serif`) ?? "";
+      expect(out).toMatch(/^var\(--font-[\w-]+, "[^"]+"\)/);
+    }
+  });
+
+  it("maps DM Sans to the brand heading face, not a second copy of the file", () => {
+    expect(resolveRegistryVar("DM Sans, sans-serif")).toBe("--font-dm-sans");
   });
 
   it("leaves an unregistered stack untouched (graceful fallback)", () => {

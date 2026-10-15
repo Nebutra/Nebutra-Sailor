@@ -104,7 +104,7 @@ export function FeatureHero({
 
           <AnimateIn preset="fadeUp" inView delay={0.1}>
             <h1
-              className="font-semibold text-4xl tracking-tight sm:text-5xl md:text-6xl lg:text-[5.5rem]"
+              className="text-4xl tracking-tight sm:text-5xl md:text-6xl lg:text-[5.5rem]"
               style={{ letterSpacing: "var(--tracking-display)", lineHeight: 1.05 }}
             >
               <span translate="no">{titlePrefix}</span>{" "}

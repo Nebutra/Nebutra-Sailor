@@ -67,7 +67,7 @@ async function SubscriptionResult({ lang, searchParams }: { lang: string; search
   return (
     <StatusShell>
       <div className="rounded-xl border border-border px-6 py-8 text-center">
-        <h1 className="text-lg font-medium tracking-tight text-foreground">{title}</h1>
+        <h1 className="text-lg tracking-tight text-foreground">{title}</h1>
         <p className="mt-2 text-sm leading-6 text-muted-foreground">{body}</p>
         <Link
           href="/status"
