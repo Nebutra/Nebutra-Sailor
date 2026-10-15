@@ -428,7 +428,7 @@ export function SidebarNav({
                   <section key={section.id} className="group/section">
                     {section.label && !collapsed ? (
                       <div className="mb-1.5 flex items-center justify-between px-2.5">
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/45">
+                        <span className="text-xs font-medium text-sidebar-foreground/70">
                           {section.label}
                         </span>
                         {visibleActions ? (

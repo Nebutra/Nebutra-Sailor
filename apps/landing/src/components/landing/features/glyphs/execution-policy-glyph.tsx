@@ -52,7 +52,7 @@ export function ExecutionPolicyGlyph({ copy }: SubpackageGlyphProps) {
       style={{ height: 160 }}
     >
       {/* Header: policy id + rule count */}
-      <div className="flex items-center gap-1.5 font-mono text-[9px] text-muted-foreground/80">
+      <div className="flex items-center gap-1.5 font-mono text-[9px] text-muted-foreground">
         <Shield className="h-2.5 w-2.5 text-primary" aria-hidden="true" />
         <span className="truncate">{t.header}</span>
       </div>
@@ -76,7 +76,7 @@ export function ExecutionPolicyGlyph({ copy }: SubpackageGlyphProps) {
       </div>
 
       {/* Footer: evaluation cadence */}
-      <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground/80">
+      <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
         <Lightning className="h-2.5 w-2.5" aria-hidden="true" />
         <Box className="h-2.5 w-2.5" aria-hidden="true" />
         <span className="truncate">{t.footer}</span>

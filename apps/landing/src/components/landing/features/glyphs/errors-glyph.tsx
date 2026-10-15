@@ -40,12 +40,12 @@ const SEVERITY_TONE: Record<Severity, { bg: string; border: string; text: string
   error: {
     bg: "color-mix(in oklab, var(--status-danger) 14%, transparent)",
     border: "color-mix(in oklab, var(--status-danger) 32%, transparent)",
-    text: "var(--status-danger)",
+    text: "hsl(var(--destructive-strong))",
   },
   warn: {
     bg: "color-mix(in oklab, var(--status-warning) 14%, transparent)",
     border: "color-mix(in oklab, var(--status-warning) 32%, transparent)",
-    text: "var(--status-warning)",
+    text: "hsl(var(--warning-strong))",
   },
   info: {
     bg: "color-mix(in oklab, hsl(var(--primary)) 14%, transparent)",

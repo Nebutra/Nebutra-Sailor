@@ -71,7 +71,7 @@ export function MultimodalMockup() {
                     </div>
                     {m.hasImage && (
                       <div className="h-24 w-40 rounded-[var(--radius-lg)] bg-muted/40 border border-border flex items-center justify-center">
-                        <ImageIcon className="h-6 w-6 text-muted-foreground/30" />
+                        <ImageIcon className="h-6 w-6 text-muted-foreground" />
                       </div>
                     )}
                   </div>

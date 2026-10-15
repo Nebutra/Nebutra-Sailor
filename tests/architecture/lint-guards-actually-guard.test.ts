@@ -267,6 +267,12 @@ const CASES: Case[] = [
     path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
   },
   {
+    // A border step of the neutral ramp used as ink — 2.4:1 on the canvas.
+    guard: "lint-neutral-ink",
+    violation: 'export const C = () => <span className="text-neutral-9">p50</span>;\n',
+    path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
+  },
+  {
     // A space inside a Tailwind arbitrary value: the class list splits there
     // and neither half generates CSS — how three Alert variants lost their fill.
     guard: "lint-tw-arbitrary-space",

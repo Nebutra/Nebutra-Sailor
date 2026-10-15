@@ -136,7 +136,9 @@ const EmptyStateRoot = ({
   ref,
   ...props
 }: EmptyStateRootProps & { ref?: React.Ref<HTMLElement> | undefined }) => {
-  const actions = children ?? [action, link].filter(Boolean);
+  // toArray keys the legacy action/link pair — rendering the bare array warned
+  // "each child in a list should have a unique key" on every EmptyState.
+  const actions = children ?? React.Children.toArray([action, link].filter(Boolean));
   const hasActions = React.Children.toArray(actions).length > 0;
 
   return (

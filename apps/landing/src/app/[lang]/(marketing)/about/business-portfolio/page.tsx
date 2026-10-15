@@ -163,7 +163,7 @@ export default async function BusinessPortfolioPage({
                           {letter}.{String(idx + 1).padStart(2, "0")}
                         </span>
                         <Icon
-                          className="h-4 w-4 text-muted-foreground/60 group-hover:text-foreground transition-colors"
+                          className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors"
                           aria-hidden="true"
                         />
                       </div>

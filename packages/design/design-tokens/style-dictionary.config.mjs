@@ -695,6 +695,7 @@ function buildTailwindThemeInline() {
   --color-destructive-strong: hsl(var(--destructive-strong));
   --color-warning-strong: hsl(var(--warning-strong));
   --color-success-strong: hsl(var(--success-strong));
+  --color-info-strong: hsl(var(--info-strong));
   --color-info: hsl(var(--info));
   --color-info-foreground: hsl(var(--info-foreground));
   --color-border: hsl(var(--border));

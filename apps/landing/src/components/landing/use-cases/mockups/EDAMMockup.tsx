@@ -67,9 +67,9 @@ export function EDAMMockup() {
                   className={`flex-1 min-h-0 rounded ${a.color} flex items-center justify-center`}
                 >
                   {a.name.endsWith(".pdf") ? (
-                    <File className="h-5 w-5 text-muted-foreground/40" />
+                    <File className="h-5 w-5 text-muted-foreground" />
                   ) : (
-                    <ImageIcon className="h-5 w-5 text-muted-foreground/40" />
+                    <ImageIcon className="h-5 w-5 text-muted-foreground" />
                   )}
                 </div>
                 <div>

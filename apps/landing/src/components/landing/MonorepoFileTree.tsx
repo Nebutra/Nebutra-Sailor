@@ -85,7 +85,7 @@ function TreeNodes({
         >
           <TreeExpander
             hasChildren={hasChildren}
-            className="w-5 shrink-0 text-muted-foreground/35 group-hover/trigger:text-muted-foreground/70"
+            className="w-5 shrink-0 text-muted-foreground group-hover/trigger:text-muted-foreground/70"
           />
           {node.icon && featureHref ? (
             <Link
@@ -108,12 +108,12 @@ function TreeNodes({
             {node.label}
           </TreeLabel>
           {node.tag && (
-            <span className="ml-2 rounded-full border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground/80">
+            <span className="ml-2 rounded-full border border-border bg-muted px-1.5 py-0.5 font-mono text-[10px] leading-none text-muted-foreground">
               {node.tag}
             </span>
           )}
           {node.description && (
-            <span className="ml-2 hidden max-w-[440px] truncate font-sans font-normal text-[12px] text-muted-foreground/55 transition-colors group-hover/trigger:text-muted-foreground sm:inline-block">
+            <span className="ml-2 hidden max-w-[440px] truncate font-sans font-normal text-[12px] text-muted-foreground transition-colors group-hover/trigger:text-muted-foreground sm:inline-block">
               {node.description}
             </span>
           )}
@@ -177,7 +177,7 @@ export function MinimalMonorepoTree() {
       <BaseTree variant="minimal" />
 
       <div className="mt-8 mb-4 flex w-full justify-center opacity-0 group-hover/tree:opacity-100 transition-opacity duration-300">
-        <p className="text-[11px] text-muted-foreground/60 font-sans px-4 py-1.5 rounded-full border border-border/50 bg-background/50 shadow-sm cursor-default">
+        <p className="text-[11px] text-muted-foreground font-sans px-4 py-1.5 rounded-full border border-border/50 bg-background/50 shadow-sm cursor-default">
           Hover or scroll to explore project structure
         </p>
       </div>

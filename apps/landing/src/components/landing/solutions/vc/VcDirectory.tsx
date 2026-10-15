@@ -115,7 +115,7 @@ function VcCard({
             </span>
           ))}
           {org.sectors.length > 4 ? (
-            <span className="px-1 py-0.5 text-[0.65rem] text-muted-foreground/70">
+            <span className="px-1 py-0.5 text-[0.65rem] text-muted-foreground">
               +{org.sectors.length - 4}
             </span>
           ) : null}
@@ -221,7 +221,7 @@ export function VcDirectory({ orgs, sectors, types, variant, hrefBase }: VcDirec
   return (
     <div className="mx-auto max-w-wide px-4 md:px-6">
       <div className="relative mb-5 max-w-xl">
-        <MagnifyingGlass className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 h-4 w-4 text-muted-foreground/60" />
+        <MagnifyingGlass className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 h-4 w-4 text-muted-foreground" />
         <Input
           type="search"
           value={query}
@@ -236,7 +236,7 @@ export function VcDirectory({ orgs, sectors, types, variant, hrefBase }: VcDirec
       </div>
 
       <div className="mb-3">
-        <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground/60">
+        <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           {c.sectors}
         </span>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -253,7 +253,7 @@ export function VcDirectory({ orgs, sectors, types, variant, hrefBase }: VcDirec
             <button
               type="button"
               onClick={() => setShowAllSectors((v) => !v)}
-              className="rounded-full px-3 py-1 text-xs font-medium text-muted-foreground/80 underline-offset-2 hover:underline"
+              className="rounded-full px-3 py-1 text-xs font-medium text-muted-foreground underline-offset-2 hover:underline"
             >
               {showAllSectors ? c.less : t("more", { count: sectors.length - SECTOR_PREVIEW })}
             </button>
@@ -262,7 +262,7 @@ export function VcDirectory({ orgs, sectors, types, variant, hrefBase }: VcDirec
       </div>
 
       <div className="mb-5">
-        <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground/60">
+        <span className="mr-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
           {c.types}
         </span>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -283,7 +283,7 @@ export function VcDirectory({ orgs, sectors, types, variant, hrefBase }: VcDirec
           {t("results", { count: filtered.length })}
         </span>
         <div className="ml-auto flex items-center gap-1.5">
-          <span className="text-xs text-muted-foreground/70">{c.sortLabel}</span>
+          <span className="text-xs text-muted-foreground">{c.sortLabel}</span>
           {sortOptions.map(([key, label]) => (
             <Chip key={key} active={sort === key} onClick={() => setSort(key)}>
               {label}
@@ -299,7 +299,7 @@ export function VcDirectory({ orgs, sectors, types, variant, hrefBase }: VcDirec
               setActiveTypes(new Set());
               setVisible(PAGE);
             }}
-            className="text-xs font-medium text-muted-foreground/80 underline-offset-2 hover:underline"
+            className="text-xs font-medium text-muted-foreground underline-offset-2 hover:underline"
           >
             {c.clear}
           </button>

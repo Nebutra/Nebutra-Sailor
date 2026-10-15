@@ -107,7 +107,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
                         <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">
                           {p.name}
                         </h3>
-                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/60 shrink-0 mt-1" />
+                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-1" />
                       </div>
                       <div className="flex flex-wrap items-center gap-2">
                         <span
@@ -115,7 +115,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
                         >
                           {t(`status.${p.status}`)}
                         </span>
-                        <code className="text-xs text-muted-foreground/80 font-mono">
+                        <code className="text-xs text-muted-foreground font-mono">
                           {p.envVarPrefix}_API_KEY
                         </code>
                       </div>

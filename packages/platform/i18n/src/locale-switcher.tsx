@@ -226,7 +226,7 @@ export function createLocaleSwitcher<TLocale extends string>(
           )}
         >
           <span className="min-w-0 flex-1 truncate text-start">{label}</span>
-          <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground/70">{code}</span>
+          <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">{code}</span>
           <Check
             className={cn("h-3.5 w-3.5 shrink-0", isActive ? "opacity-100" : "opacity-0")}
             aria-hidden
@@ -271,7 +271,7 @@ export function createLocaleSwitcher<TLocale extends string>(
             <>
               {pinned ? renderItem(pinned, close) : null}
               {pinned && rest.length > 0 ? (
-                <p className="px-2.5 pb-1 pt-3 text-[11px] font-medium uppercase tracking-wide text-muted-foreground/70">
+                <p className="px-2.5 pb-1 pt-3 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
                   {allLanguagesLabel}
                 </p>
               ) : null}

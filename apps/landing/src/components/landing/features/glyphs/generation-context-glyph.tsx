@@ -37,7 +37,7 @@ export function GenerationContextGlyph(_props: SubpackageGlyphProps) {
           <span className="font-mono text-[11px] text-neutral-12 tabular-nums">
             247,401 / 1,000,000 tokens
           </span>
-          <span className="font-mono text-[11px] text-neutral-10">· 24.7%</span>
+          <span className="font-mono text-[11px] text-neutral-11">· 24.7%</span>
         </div>
         <Badge variant="gray-subtle" className="font-mono text-[10px]">
           claude-sonnet-5
@@ -72,7 +72,7 @@ export function GenerationContextGlyph(_props: SubpackageGlyphProps) {
                 aria-hidden
               />
               <span className="font-mono text-[10px] text-neutral-11">{seg.label}</span>
-              <span className="font-mono text-[10px] text-neutral-9 tabular-nums">
+              <span className="font-mono text-[10px] text-neutral-11 tabular-nums">
                 {seg.cells}%
               </span>
             </div>
@@ -82,7 +82,7 @@ export function GenerationContextGlyph(_props: SubpackageGlyphProps) {
 
       {/* Footer: truncation strategy + latency */}
       <div className="flex items-center justify-between border-neutral-6 border-t pt-2">
-        <span className="font-mono text-[10px] text-neutral-10">
+        <span className="font-mono text-[10px] text-neutral-11">
           truncation via reciprocal rank
         </span>
         <div className="flex items-center gap-1">

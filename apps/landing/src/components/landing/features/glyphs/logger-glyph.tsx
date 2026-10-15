@@ -25,14 +25,14 @@ const LINES: ReadonlyArray<LogLine> = [
     event: "cache.miss",
     fields: "key=user:abc       3ms",
     dotColor: "var(--status-warning)",
-    levelColor: "var(--status-warning)",
+    levelColor: "hsl(var(--warning-strong))",
   },
   {
     level: "ERROR",
     event: "payment.failed",
     fields: "orderId=ord_5a18   code=card_declined",
     dotColor: "var(--status-danger)",
-    levelColor: "var(--status-danger)",
+    levelColor: "hsl(var(--destructive-strong))",
   },
   {
     level: "DEBUG",

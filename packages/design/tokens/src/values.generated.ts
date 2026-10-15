@@ -256,6 +256,7 @@ export const TOKEN_VALUES = {
   "--halo-faint": { light: "rgb(0 0 0 / 0.03)", dark: "rgb(255 255 255 / 0.03)" },
   "--info": { light: "228 85% 56%", dark: "228 95% 72%" },
   "--info-foreground": { light: "0 0% 100%", dark: "222 14% 9%" },
+  "--info-strong": { light: "228 80% 47%", dark: "228 95% 72%" },
   "--input": { light: "225 8% 90.2%", dark: "220 3.6% 16.3%" },
   "--layer-backdrop": { light: "1040" },
   "--layer-banner": { light: "90" },

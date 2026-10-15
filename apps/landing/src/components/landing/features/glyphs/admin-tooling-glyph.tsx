@@ -62,7 +62,7 @@ export function AdminToolingGlyph(_props: SubpackageGlyphProps) {
               <span className="flex size-4 shrink-0 items-center justify-center text-muted-foreground">
                 <Icon className="size-3.5" />
               </span>
-              <span className="text-muted-foreground/60">·</span>
+              <span className="text-muted-foreground">·</span>
               <span className="truncate text-[12px] leading-tight text-foreground">
                 <span className="font-medium">{action.verb}</span>{" "}
                 <span className="font-mono text-[11px] text-muted-foreground">{action.object}</span>

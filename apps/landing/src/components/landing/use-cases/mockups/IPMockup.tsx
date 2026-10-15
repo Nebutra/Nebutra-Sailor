@@ -72,7 +72,7 @@ export function IPMockup() {
           {/* Preview */}
           <div className="flex-1 p-4 flex flex-col min-w-0">
             <div className="h-28 rounded-[var(--radius-lg)] bg-muted/40 border border-border flex items-center justify-center mb-3 shrink-0">
-              <Eye className="h-6 w-6 text-muted-foreground/30" />
+              <Eye className="h-6 w-6 text-muted-foreground" />
             </div>
             <div className="text-sm font-bold text-foreground leading-snug">
               Building RAG Pipelines at Scale

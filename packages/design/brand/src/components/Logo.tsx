@@ -2,6 +2,23 @@
 
 import { brand } from "../metadata";
 import { publicAssetUrl } from "../metadata-helpers";
+import { LogomarkSVG, WordmarkEnSVG } from "./LogoSVG";
+
+/*
+ * Inline where the asset is a single flat path. The classic mono / inverse mark
+ * and the English wordmark are one fill each (#060307 or white), so they render
+ * from the paths in LogoSVG with no request at all. Loading them from
+ * cdn.nebutra.com put the site header behind a third-party round trip (~1.3s
+ * cold) and one capture showed the alt text in the wordmark's place. The
+ * multi-gradient colour mark and the lockups stay on the CDN.
+ */
+const INK = "#060307";
+const INLINE_MARK: ReadonlySet<string> = new Set(["mono", "inverse"]);
+const INLINE_WORDMARK: ReadonlySet<string> = new Set(["en"]);
+
+function inlineFill(variant: string, inverted: boolean): string {
+  return variant === "inverse" || inverted ? "#ffffff" : INK;
+}
 
 export type LogoVariant =
   | "color"
@@ -188,6 +205,21 @@ export function Logo({
   const aspectRatio = ASPECT_RATIOS[variant];
   const height = Math.round(size / aspectRatio);
   if (brand.logo === "wordmark") return <TextWordmark height={height} className={className} />;
+  if (edition === "classic" && INLINE_WORDMARK.has(variant)) {
+    return (
+      <span
+        className={className}
+        style={{ display: "inline-flex", color: inlineFill(variant, inverted) }}
+      >
+        <WordmarkEnSVG
+          aria-label={brand.name}
+          className="!text-current"
+          width={size}
+          height={height}
+        />
+      </span>
+    );
+  }
   const src = logoPublicSrc(variant, edition);
 
   // For dark backgrounds, invert black to white
@@ -229,6 +261,16 @@ export function Logomark({
   inverted?: boolean;
 }) {
   if (brand.logo === "wordmark") return <TextLogomark size={size} className={className} />;
+  if (edition === "classic" && INLINE_MARK.has(variant)) {
+    return (
+      <span
+        className={className}
+        style={{ display: "inline-flex", color: inlineFill(variant, inverted) }}
+      >
+        <LogomarkSVG aria-label={brand.name} className="!text-current" width={size} height={size} />
+      </span>
+    );
+  }
   const src = logoPublicSrc(variant, edition);
 
   // For dark backgrounds, invert black to white (unless using "inverse" variant which is already white)
@@ -269,6 +311,21 @@ export function Wordmark({
   const aspectRatio = ASPECT_RATIOS[variant];
   const height = Math.round(size / aspectRatio);
   if (brand.logo === "wordmark") return <TextWordmark height={height} className={className} />;
+  if (edition === "classic" && INLINE_WORDMARK.has(variant)) {
+    return (
+      <span
+        className={className}
+        style={{ display: "inline-flex", color: inlineFill(variant, inverted) }}
+      >
+        <WordmarkEnSVG
+          aria-label={brand.name}
+          className="!text-current"
+          width={size}
+          height={height}
+        />
+      </span>
+    );
+  }
   const src = logoPublicSrc(variant, edition);
 
   const filterStyle = inverted ? { filter: "brightness(0) invert(1)" } : {};

@@ -66,7 +66,7 @@ export async function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
             {stats.map((s) => (
               <div key={s.label}>
                 <div className="text-2xl font-bold text-neutral-12 md:text-3xl">{s.value}</div>
-                <div className="text-xs text-muted-foreground/70">{s.label}</div>
+                <div className="text-xs text-muted-foreground">{s.label}</div>
               </div>
             ))}
           </div>
@@ -89,7 +89,7 @@ export async function ChinaVcSolution({ locale }: ChinaVcSolutionProps) {
           </NextIntlClientProvider>
         </AnimateIn>
 
-        <p className="mx-auto mt-12 max-w-wide px-4 text-xs leading-relaxed text-muted-foreground/60 md:px-6">
+        <p className="mx-auto mt-12 max-w-wide px-4 text-xs leading-relaxed text-muted-foreground md:px-6">
           {t("chinaVc.source")}
         </p>
       </section>

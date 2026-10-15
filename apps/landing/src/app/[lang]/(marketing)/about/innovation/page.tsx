@@ -329,7 +329,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6">
                 {ossPillar.description}
               </p>
-              <p className="text-base text-muted-foreground/90 leading-relaxed border-l-2 border-border pl-4">
+              <p className="text-base text-muted-foreground leading-relaxed border-l-2 border-border pl-4">
                 {t("pillars.ossSupplement")}
               </p>
             </div>

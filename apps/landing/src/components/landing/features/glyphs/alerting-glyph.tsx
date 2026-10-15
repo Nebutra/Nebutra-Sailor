@@ -34,17 +34,17 @@ const STATUS_TONE: Record<RuleRow["status"], { bg: string; border: string; text:
   firing: {
     bg: "color-mix(in oklab, var(--status-danger) 14%, transparent)",
     border: "color-mix(in oklab, var(--status-danger) 32%, transparent)",
-    text: "var(--status-danger)",
+    text: "hsl(var(--destructive-strong))",
   },
   warning: {
     bg: "color-mix(in oklab, var(--status-warning) 14%, transparent)",
     border: "color-mix(in oklab, var(--status-warning) 32%, transparent)",
-    text: "var(--status-warning)",
+    text: "hsl(var(--warning-strong))",
   },
   ok: {
     bg: "color-mix(in oklab, var(--status-success) 14%, transparent)",
     border: "color-mix(in oklab, var(--status-success) 32%, transparent)",
-    text: "var(--status-success)",
+    text: "hsl(var(--success-strong))",
   },
 };
 

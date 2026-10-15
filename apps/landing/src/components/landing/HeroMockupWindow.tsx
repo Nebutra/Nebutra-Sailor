@@ -53,7 +53,7 @@ type CodeToken = {
 
 /** Ink that reads on the editor's own surface, which follows the theme. */
 function getCodeTokenClassName(token: string) {
-  if (token.startsWith("//")) return "text-muted-foreground/50 italic";
+  if (token.startsWith("//")) return "text-muted-foreground italic";
   if (token.startsWith('"')) return "text-success-strong";
   if (
     /^(import|export|const|async|await|return|from|new|default|function|if|else|try|catch)$/.test(
@@ -129,7 +129,7 @@ export function HeroMockupWindow() {
             <div className="size-3 rounded-full bg-[#ffbd2e] shadow-sm" />
             <div className="size-3 rounded-full bg-[#27c93f] shadow-sm" />
           </div>
-          <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 text-[12px] font-semibold tracking-wide text-muted-foreground/70 sm:block">
+          <div className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 text-[12px] font-semibold tracking-wide text-muted-foreground sm:block">
             {brand.name.toLowerCase()}: Code
           </div>
           <div className="w-12" /> {/* Spacer */}
@@ -161,7 +161,7 @@ export function HeroMockupWindow() {
                   </svg>
                   chat.ts
                 </div>
-                <div className="hidden h-full cursor-default items-center gap-1.5 px-4 font-medium text-[11px] text-muted-foreground/50 transition-colors hover:text-muted-foreground/80 sm:flex">
+                <div className="hidden h-full cursor-default items-center gap-1.5 px-4 font-medium text-[11px] text-muted-foreground transition-colors hover:text-muted-foreground/80 sm:flex">
                   schema.prisma
                 </div>
               </div>
@@ -175,7 +175,7 @@ export function HeroMockupWindow() {
                       key={id}
                       className="min-w-fit flex hover:bg-muted/30 transition-colors rounded-[var(--radius-sm)] -mx-1 px-1"
                     >
-                      <span className="inline-block text-right pr-4 select-none text-[11px] w-7 shrink-0 py-px text-muted-foreground/30">
+                      <span className="inline-block text-right pr-4 select-none text-[11px] w-7 shrink-0 py-px text-muted-foreground">
                         {lineNumber}
                       </span>
                       <span className="whitespace-pre py-px">

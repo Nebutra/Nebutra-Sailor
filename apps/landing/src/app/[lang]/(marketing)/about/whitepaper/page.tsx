@@ -166,7 +166,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           <div className="relative mb-14 md:mb-20">
             <span
               aria-hidden="true"
-              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground/10 select-none pointer-events-none"
+              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground select-none pointer-events-none"
               style={{ letterSpacing: "var(--tracking-display)" }}
             >
               Ⅰ
@@ -227,7 +227,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           <div className="relative mb-14 md:mb-20">
             <span
               aria-hidden="true"
-              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground/10 select-none pointer-events-none"
+              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground select-none pointer-events-none"
               style={{ letterSpacing: "var(--tracking-display)" }}
             >
               Ⅱ
@@ -293,7 +293,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           <div className="relative mb-14 md:mb-20">
             <span
               aria-hidden="true"
-              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground/10 select-none pointer-events-none"
+              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground select-none pointer-events-none"
               style={{ letterSpacing: "var(--tracking-display)" }}
             >
               Ⅲ
@@ -434,7 +434,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           <div className="relative mb-14 md:mb-20">
             <span
               aria-hidden="true"
-              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground/10 select-none pointer-events-none"
+              className="absolute -top-10 md:-top-14 right-0 text-[8rem] md:text-[12rem] font-semibold leading-none text-muted-foreground select-none pointer-events-none"
               style={{ letterSpacing: "var(--tracking-display)" }}
             >
               Ⅳ
@@ -477,7 +477,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                 >
                   <span
                     aria-hidden="true"
-                    className="absolute -top-4 right-4 text-[7rem] md:text-[8rem] font-semibold leading-none text-muted-foreground/15 select-none pointer-events-none"
+                    className="absolute -top-4 right-4 text-[7rem] md:text-[8rem] font-semibold leading-none text-muted-foreground select-none pointer-events-none"
                     style={{ letterSpacing: "var(--tracking-display)" }}
                   >
                     {content.number}

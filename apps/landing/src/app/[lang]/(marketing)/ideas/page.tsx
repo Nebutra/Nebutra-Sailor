@@ -48,7 +48,7 @@ export default async function IdeasPage(props: { params: Promise<{ lang: string 
         {tNav("ideas")}
       </h1>
 
-      <p className="text-muted-foreground/80 max-w-xl mx-auto text-lg md:text-xl mb-12 leading-relaxed font-medium">
+      <p className="text-muted-foreground max-w-xl mx-auto text-lg md:text-xl mb-12 leading-relaxed font-medium">
         {t("description.ideas")}
       </p>
 

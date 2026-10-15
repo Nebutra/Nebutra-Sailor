@@ -17,14 +17,16 @@ import type { SubpackageGlyphProps } from "./types";
 type Swatch = {
   name: string;
   background: string;
+  /** Ink chosen per swatch: white on the two deep steps, near-black on the light ones (all ≥ 4.5:1). */
+  ink: string;
 };
 
 const SWATCHES: ReadonlyArray<Swatch> = [
-  { name: "p1", background: "oklch(0.62 0.22 305)" },
-  { name: "p2", background: "oklch(0.62 0.22 265)" },
-  { name: "p3", background: "oklch(0.72 0.18 215)" },
-  { name: "p4", background: "oklch(0.78 0.15 185)" },
-  { name: "p5", background: "oklch(0.85 0.13 160)" },
+  { name: "p1", background: "oklch(0.52 0.22 305)", ink: "#ffffff" },
+  { name: "p2", background: "oklch(0.52 0.22 265)", ink: "#ffffff" },
+  { name: "p3", background: "oklch(0.72 0.18 215)", ink: "oklch(0.2 0.02 250)" },
+  { name: "p4", background: "oklch(0.78 0.15 185)", ink: "oklch(0.2 0.02 250)" },
+  { name: "p5", background: "oklch(0.85 0.13 160)", ink: "oklch(0.2 0.02 250)" },
 ];
 
 const TAGLINES: ReadonlyArray<string> = ["Make work flow", "Calm power"];
@@ -56,7 +58,7 @@ export function BrandGenesisGlyph(_props: SubpackageGlyphProps) {
           >
             <span
               className="font-mono text-[8px] uppercase tracking-wide"
-              style={{ color: "#ffffff" }}
+              style={{ color: swatch.ink }}
             >
               {swatch.name}
             </span>

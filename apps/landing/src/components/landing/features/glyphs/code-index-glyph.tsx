@@ -48,7 +48,7 @@ export function CodeIndexGlyph(_props: SubpackageGlyphProps) {
     >
       <div className="relative">
         <MagnifyingGlass
-          className="absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-neutral-10"
+          className="absolute left-2 top-1/2 h-3 w-3 -translate-y-1/2 text-neutral-11"
           aria-hidden
         />
         <Input
@@ -68,7 +68,7 @@ export function CodeIndexGlyph(_props: SubpackageGlyphProps) {
             <div className="flex items-center justify-between gap-2">
               <span className="truncate font-mono text-[9px] text-neutral-11">
                 <Code
-                  className="mr-1 inline h-2.5 w-2.5 align-[-1px] text-neutral-10"
+                  className="mr-1 inline h-2.5 w-2.5 align-[-1px] text-neutral-11"
                   aria-hidden
                 />
                 {row.path}
@@ -91,7 +91,7 @@ export function CodeIndexGlyph(_props: SubpackageGlyphProps) {
         ))}
       </ul>
 
-      <footer className="mt-auto flex items-center gap-1 font-mono text-[8.5px] text-neutral-10">
+      <footer className="mt-auto flex items-center gap-1 font-mono text-[8.5px] text-neutral-11">
         <Lightning className="h-2.5 w-2.5 text-[color:var(--brand-accent)]" aria-hidden />
         <span>12,401 symbols · tree-sitter · 84ms</span>
       </footer>

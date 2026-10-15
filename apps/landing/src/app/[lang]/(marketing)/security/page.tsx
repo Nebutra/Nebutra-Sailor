@@ -136,7 +136,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
                           </span>
                         )}
                       </div>
-                      <code className="text-xs text-muted-foreground/80 font-mono">{cap.pkg}</code>
+                      <code className="text-xs text-muted-foreground font-mono">{cap.pkg}</code>
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground leading-relaxed">

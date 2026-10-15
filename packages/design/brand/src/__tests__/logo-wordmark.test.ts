@@ -28,9 +28,16 @@ describe("Logo for a brand without logo files", () => {
 
   it("keeps the official SVGs for a brand that has them", async () => {
     vi.resetModules();
-    const { Logo } = await import("../components/Logo");
-    expect(renderToStaticMarkup(createElement(Logo, { variant: "en", size: 120 }))).toContain(
-      "<img",
-    );
+    const { Logo, Logomark } = await import("../components/Logo");
+    // Flat single-fill assets are inlined: no request, no alt-text flash.
+    const en = renderToStaticMarkup(createElement(Logo, { variant: "en", size: 120 }));
+    expect(en).toContain("<svg");
+    expect(en).not.toContain("<img");
+    expect(renderToStaticMarkup(createElement(Logomark, { variant: "mono" }))).toContain("<svg");
+    // The multi-gradient colour mark and lockups still come from the asset host.
+    expect(renderToStaticMarkup(createElement(Logomark, { variant: "color" }))).toContain("<img");
+    expect(
+      renderToStaticMarkup(createElement(Logo, { variant: "horizontal-zh", size: 120 })),
+    ).toContain("<img");
   });
 });

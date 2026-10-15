@@ -334,6 +334,11 @@
       "$value": "0 0% 100%",
       "$type": "string"
     },
+    "info-strong": {
+      "$value": "228 80% 47%",
+      "$type": "string",
+      "$description": "Blue as FOREGROUND. --info (228 85% 56%) is a fill: as ink on its own 10% tint it read 4.34:1 (badge teal-subtle, landing review 2026-10-15). Darkened to 5.9:1 on white, 5.2:1 on the tint, alongside the other *-strong inks."
+    },
     "success-strong": {
       "$value": "142 71% 27%",
       "$type": "string",
