@@ -21,3 +21,19 @@ describe("logoPublicSrc", () => {
     );
   });
 });
+
+describe("logo visibility classes", () => {
+  it("never sets an inline display on the outer element, so hidden/dark:hidden classes win", async () => {
+    const { createElement } = await import("react");
+    const { renderToStaticMarkup } = await import("react-dom/server");
+    const { Logo, Logomark } = await import("./Logo");
+    for (const node of [
+      createElement(Logo, { variant: "en", size: 120, className: "hidden md:block" }),
+      createElement(Logomark, { variant: "mono", size: 32, className: "dark:hidden" }),
+    ]) {
+      const html = renderToStaticMarkup(node);
+      const outer = html.slice(0, html.indexOf(">") + 1);
+      expect(outer).not.toMatch(/display\s*:/);
+    }
+  });
+});

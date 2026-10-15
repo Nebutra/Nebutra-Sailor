@@ -128,12 +128,14 @@ const ASPECT_RATIOS: Record<LogoVariant, number> = {
  * sets) shows its name in the heading face. currentColor, so it follows the
  * surface in both themes the way the SVGs do with `inverted`.
  */
+// The outer element never sets an inline `display`: callers show/hide logos with classes
+// (`hidden md:block`, `dark:hidden`), and an inline display would override them and render
+// both themed variants at once.
 function TextWordmark({ height, className }: { height: number; className?: string | undefined }) {
   return (
     <span
       className={className}
       style={{
-        display: "inline-block",
         fontFamily: "var(--font-heading, inherit)",
         fontWeight: 500,
         fontSize: Math.round(height * 0.9),
@@ -150,24 +152,23 @@ function TextWordmark({ height, className }: { height: number; className?: strin
 /** The mark counterpart: the initial in a rounded outline, same rules as TextWordmark. */
 function TextLogomark({ size, className }: { size: number; className?: string | undefined }) {
   return (
-    <span
-      aria-label={brand.name}
-      role="img"
-      className={className}
-      style={{
-        display: "inline-grid",
-        placeItems: "center",
-        width: size,
-        height: size,
-        borderRadius: Math.round(size * 0.24),
-        border: "1.5px solid currentColor",
-        fontFamily: "var(--font-heading, inherit)",
-        fontWeight: 500,
-        fontSize: Math.round(size * 0.55),
-        lineHeight: 1,
-      }}
-    >
-      {brand.name.charAt(0).toUpperCase()}
+    <span aria-label={brand.name} role="img" className={className}>
+      <span
+        style={{
+          display: "inline-grid",
+          placeItems: "center",
+          width: size,
+          height: size,
+          borderRadius: Math.round(size * 0.24),
+          border: "1.5px solid currentColor",
+          fontFamily: "var(--font-heading, inherit)",
+          fontWeight: 500,
+          fontSize: Math.round(size * 0.55),
+          lineHeight: 1,
+        }}
+      >
+        {brand.name.charAt(0).toUpperCase()}
+      </span>
     </span>
   );
 }
@@ -207,10 +208,7 @@ export function Logo({
   if (brand.logo === "wordmark") return <TextWordmark height={height} className={className} />;
   if (edition === "classic" && INLINE_WORDMARK.has(variant)) {
     return (
-      <span
-        className={className}
-        style={{ display: "inline-flex", color: inlineFill(variant, inverted) }}
-      >
+      <span className={className} style={{ color: inlineFill(variant, inverted), lineHeight: 0 }}>
         <WordmarkEnSVG
           aria-label={brand.name}
           className="!text-current"
@@ -263,10 +261,7 @@ export function Logomark({
   if (brand.logo === "wordmark") return <TextLogomark size={size} className={className} />;
   if (edition === "classic" && INLINE_MARK.has(variant)) {
     return (
-      <span
-        className={className}
-        style={{ display: "inline-flex", color: inlineFill(variant, inverted) }}
-      >
+      <span className={className} style={{ color: inlineFill(variant, inverted), lineHeight: 0 }}>
         <LogomarkSVG aria-label={brand.name} className="!text-current" width={size} height={size} />
       </span>
     );
@@ -313,10 +308,7 @@ export function Wordmark({
   if (brand.logo === "wordmark") return <TextWordmark height={height} className={className} />;
   if (edition === "classic" && INLINE_WORDMARK.has(variant)) {
     return (
-      <span
-        className={className}
-        style={{ display: "inline-flex", color: inlineFill(variant, inverted) }}
-      >
+      <span className={className} style={{ color: inlineFill(variant, inverted), lineHeight: 0 }}>
         <WordmarkEnSVG
           aria-label={brand.name}
           className="!text-current"
