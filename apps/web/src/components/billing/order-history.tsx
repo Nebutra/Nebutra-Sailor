@@ -1,3 +1,4 @@
+import { EmptyState, SettingsSection } from "@nebutra/ui/layout";
 import { Card, Table } from "@nebutra/ui/primitives";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { getAuthenticatedApi } from "@/lib/api";
@@ -43,21 +44,13 @@ export async function OrderHistory() {
   const orders = await loadOrders();
 
   return (
-    <section aria-labelledby="orders-heading">
-      <div className="mb-3">
-        <h2 id="orders-heading" className="font-semibold text-base text-neutral-12">
-          {t("title")}
-        </h2>
-        <p className="mt-1 text-sm text-neutral-11">{t("description")}</p>
-      </div>
-      <Card className="p-0">
-        {orders === null ? (
-          <p role="alert" className="p-4 text-sm text-neutral-11">
-            {t("unavailable")}
-          </p>
-        ) : orders.length === 0 ? (
-          <p className="p-4 text-sm text-neutral-11">{t("empty")}</p>
-        ) : (
+    <SettingsSection title={t("title")} description={t("description")}>
+      {orders === null ? (
+        <EmptyState preview="table" title={t("unavailable")} />
+      ) : orders.length === 0 ? (
+        <EmptyState preview="table" title={t("empty")} />
+      ) : (
+        <Card className="p-0">
           <Table bare>
             <Table.Header>
               <Table.Row>
@@ -99,8 +92,8 @@ export async function OrderHistory() {
               ))}
             </Table.Body>
           </Table>
-        )}
-      </Card>
-    </section>
+        </Card>
+      )}
+    </SettingsSection>
   );
 }

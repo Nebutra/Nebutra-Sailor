@@ -32,7 +32,11 @@ interface BuildSecurityCapabilitiesInput {
 
 interface CapabilityState {
   available: boolean;
+  /** Developer-facing explanation (logs, tests). */
   reason: string;
+  /** User-facing explanation: `copy.securityReasons.<reasonKey>` in the catalog. */
+  reasonKey: string;
+  reasonValues?: Record<string, string>;
 }
 
 export interface SecurityCapabilities {
@@ -71,25 +75,35 @@ export function buildSecurityCapabilities({
       activeSessions: {
         available: false,
         reason: `Session management is delegated to ${authProvider}.`,
+        reasonKey: "delegated",
+        reasonValues: { provider: authProvider },
       },
       connectedAccounts: {
         available: false,
         linkedProviders: [],
         reason: `Linked account management is delegated to ${authProvider}.`,
+        reasonKey: "delegated",
+        reasonValues: { provider: authProvider },
       },
       passkeys: {
         available: false,
         reason: `Passkey management is delegated to ${authProvider}.`,
+        reasonKey: "delegated",
+        reasonValues: { provider: authProvider },
       },
       password: {
         available: false,
         hasPasswordAccount: false,
         reason: `Password management is delegated to ${authProvider}.`,
+        reasonKey: "delegated",
+        reasonValues: { provider: authProvider },
       },
       twoFactor: {
         available: false,
         requiresPasswordAccount: false,
         reason: `Two-factor setup is delegated to ${authProvider}.`,
+        reasonKey: "delegated",
+        reasonValues: { provider: authProvider },
       },
     };
   }
@@ -98,15 +112,18 @@ export function buildSecurityCapabilities({
     activeSessions: {
       available: true,
       reason: "Active sessions are managed by Nebutra through Better Auth session records.",
+      reasonKey: "sessionsManaged",
     },
     connectedAccounts: {
       available: true,
       linkedProviders,
+      reasonKey: "connectedReadOnly",
       reason:
         "Linked sign-in methods can be discovered, but linking and unlinking providers is not exposed in Nebutra yet.",
     },
     passkeys: {
       available: passkeysFlagOn,
+      reasonKey: passkeysFlagOn ? "passkeysAvailable" : "passkeysOff",
       reason: passkeysFlagOn
         ? "Passkey registration is available. Register a device-bound credential for phishing-resistant sign-in."
         : "Passkey registration is gated behind the `auth.passkeys` feature flag. Set NEXT_PUBLIC_AUTH_PASSKEYS=1 to enable in development.",
@@ -114,6 +131,7 @@ export function buildSecurityCapabilities({
     password: {
       available: hasPasswordAccount,
       hasPasswordAccount,
+      reasonKey: hasPasswordAccount ? "passwordAttached" : "passwordNone",
       reason: hasPasswordAccount
         ? "Credential sign-in is attached, but in-app password rotation is not exposed by the shared Nebutra auth client yet."
         : "Password management is unavailable because this account does not use email/password sign-in.",
@@ -121,6 +139,11 @@ export function buildSecurityCapabilities({
     twoFactor: {
       available: twoFactorFlagOn && hasPasswordAccount,
       requiresPasswordAccount: !hasPasswordAccount,
+      reasonKey: !twoFactorFlagOn
+        ? "twoFactorOff"
+        : hasPasswordAccount
+          ? "twoFactorAvailable"
+          : "twoFactorNeedsPassword",
       reason: !twoFactorFlagOn
         ? "Two-factor authentication is gated behind the `auth.twoFactor` feature flag. Set NEXT_PUBLIC_AUTH_TWO_FACTOR=1 to enable in development."
         : hasPasswordAccount

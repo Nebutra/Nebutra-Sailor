@@ -107,6 +107,7 @@ interface ThreadSummary {
 /** English nav label → `Sidebar.nav.*` key (dashboard-nav groups, items, badges, settings sections). */
 const NAV_LABEL_KEYS: Record<string, string> = {
   Product: "product",
+  Workspace: "workspace",
   Admin: "admin",
   "Startup OS": "startupOs",
   Connectors: "connectors",
@@ -131,6 +132,13 @@ const NAV_LABEL_KEYS: Record<string, string> = {
   Usage: "usage",
   Integrations: "connectors",
   Cofounder: "cofounder",
+  Company: "company",
+  Discover: "discover",
+  Matches: "matches",
+  Room: "room",
+  Platform: "platform",
+  Fleet: "fleet",
+  Supply: "supply",
 };
 
 export function DesignSystemShell(props: Props) {
@@ -168,6 +176,7 @@ function renderNextLink({
 }
 
 function DesignSystemShellInner({ children, productCapabilities }: Props) {
+  const tCopy = useTranslations("copy.providersDesignSystemShell");
   const tc = useTranslations("copy.providersDesignSystemShell");
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
@@ -209,7 +218,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const organizations = organizationsQuery.data ?? [];
   const workspaceOptions: WorkspaceOption[] = organizations.map((organization) => ({
     id: organization.id,
-    label: organization.name || organization.slug || "Untitled workspace",
+    label: organization.name || organization.slug || tCopy("untitledWorkspace"),
   }));
   const activeWorkspaceId = workspaceOptions.some((option) => option.id === workspace)
     ? workspace
@@ -671,6 +680,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
 
   return (
     <AppShell
+      surface="card"
       sidebar={sidebar}
       collapsed={collapsed}
       // NOTE: startup-os sidebar chrome (hide/overlay on the WORKSPACE only, full
@@ -692,9 +702,9 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
             "relative p-0 sm:p-0 md:p-0 2xl:p-0"
           : isStartupOSRoute
             ? "mx-0 max-w-none p-0 sm:p-0 md:p-0 2xl:p-0"
-            : // Two-tier surface: tint the outer main bg so the `bg-card`
-              // panels inside each page read as inset floating cards.
-              "dashboard-app-content bg-muted/40"
+            : // One surface: pages sit on the card surface beside the canvas
+              // sidebar, divided by hairlines — not boxed cards on a tint.
+              "dashboard-app-content px-4 py-8 sm:px-6 md:px-10 md:py-10 2xl:px-12"
       }
     >
       {isWorkspaceHomeRoute ? (
@@ -717,7 +727,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
               ? // Home main has p-0; banner already runs edge-to-edge, no
                 // negative margin needed. relative+z keeps it above gradient.
                 "relative z-10"
-              : "-mx-3 sm:-mx-4 md:-mx-5 2xl:-mx-6",
+              : "-mx-4 -mt-8 sm:-mx-6 md:-mx-10 md:-mt-10 2xl:-mx-12",
           )}
         >
           <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />

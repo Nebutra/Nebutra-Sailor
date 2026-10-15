@@ -162,6 +162,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 function NorthStarRow({ layer }: { layer: ContextLayer }) {
+  const tCopy = useTranslations("copy.companyTowerControlDeck");
   const tc = useTranslations("copy.companyTowerControlDeck");
   const t = useTranslations("startupOs");
   const nsm = asText(fieldValueOf(layer, "nsm"));
@@ -173,7 +174,7 @@ function NorthStarRow({ layer }: { layer: ContextLayer }) {
         title={tc("northStarMetric")}
         value={nsm ?? "Not set"}
         icon={<Target aria-hidden="true" className="size-5 text-neutral-10" />}
-        description={nsm ? undefined : "Define the single metric the company optimizes."}
+        description={nsm ? undefined : tCopy("defineTheSingleMetric")}
       />
       <div className="rounded-[var(--radius-lg)] border border-neutral-6 bg-card p-4">
         <MetricCard

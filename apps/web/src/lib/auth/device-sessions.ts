@@ -279,7 +279,7 @@ function parseDeviceType(ua: string): DeviceType {
 
 function buildWebLabel(metadata: ReturnType<typeof parseUserAgent>): string {
   if (metadata.platform === "Unknown platform") return metadata.browser;
-  return `${metadata.browser} on ${metadata.platform}`;
+  return `${metadata.browser} · ${metadata.platform}`;
 }
 
 function titleCase(value: string): string {

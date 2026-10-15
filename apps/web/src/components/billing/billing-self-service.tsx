@@ -7,6 +7,8 @@ import {
   ShieldOff as ShieldAlert,
   Sparkles,
 } from "@nebutra/icons";
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
+import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 
 export type BillingPlanId = "free" | "pro_monthly" | "pro_yearly" | "enterprise";
@@ -327,60 +329,56 @@ export function BillingProviderNotice({ model }: { model: BillingSelfServiceMode
 
 export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
   const tc = useTranslations("copy.billingBillingSelfService");
+  const tp = useTranslations("copy.billingPlans");
+  const plan = model.activePlan;
+  const features = tp.raw(`${plan.id}.features`) as string[];
   return (
-    <div className="rounded-[var(--radius-3xl)] border border-border bg-background p-5 shadow-sm">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-10">
-            {tc("activePlan")}
-          </p>
-          <h2 className="mt-3 flex items-center gap-2 text-2xl font-semibold text-neutral-12">
+    <SettingsSection title={tc("activePlan")}>
+      <div className="flex flex-wrap items-start justify-between gap-6">
+        <div className="min-w-0">
+          <p className="flex items-center gap-2 text-2xl font-semibold tracking-tight text-neutral-12">
             <Sparkles className="size-5 text-primary" aria-hidden="true" />
-            {model.activePlan.name}
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm text-neutral-11">{model.activePlan.description}</p>
-        </div>
-        <div className="rounded-[var(--radius-2xl)] border border-primary/20 bg-primary/10 px-4 py-3 text-right">
-          <p className="text-2xl font-semibold text-neutral-12">{model.activePlan.priceLabel}</p>
-          <p className="text-xs uppercase tracking-[0.16em] text-neutral-10">
-            {model.activePlan.cadence}
+            {tp(`${plan.id}.name`)}
           </p>
+          <p className="mt-2 max-w-2xl text-sm text-neutral-11">{tp(`${plan.id}.description`)}</p>
+        </div>
+        <div className="text-right">
+          <p className="text-2xl font-semibold tracking-tight tabular-nums text-neutral-12">
+            {plan.id === "enterprise" ? tp("enterprise.price") : plan.priceLabel}
+          </p>
+          <p className="text-sm text-neutral-10">{tp(`${plan.id}.cadence`)}</p>
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
-        {model.activePlan.features.map((feature) => (
-          <div key={feature} className="flex items-center gap-2 text-sm text-neutral-11">
+      <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+        {features.map((feature) => (
+          <li key={feature} className="flex items-center gap-2 text-sm text-neutral-11">
             <CheckCircle2 className="size-4 text-success-strong" aria-hidden="true" />
             {feature}
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
 
-      <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-        {model.portal.enabled ? (
-          <form action="/api/billing/portal" method="post">
-            <button
+      {model.portal.enabled ? (
+        <form action="/api/billing/portal" method="post">
+          <SettingsSectionFooter hint={tp("portalHint")}>
+            <Button
               type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-xl)] bg-neutral-12 px-4 py-2.5 text-sm font-medium text-neutral-1 transition hover:bg-neutral-11 sm:w-auto"
+              size="sm"
+              prefix={<CreditCard className="size-4" aria-hidden="true" />}
             >
-              <CreditCard className="size-4" aria-hidden="true" />
-              {model.portal.label}
-            </button>
-          </form>
-        ) : (
-          <button
-            type="button"
-            disabled
-            className="inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-[var(--radius-xl)] border border-border px-4 py-2.5 text-sm font-medium text-neutral-10 opacity-70"
-            title={model.portal.reason}
-          >
-            <CreditCard className="size-4" aria-hidden="true" />
-            {model.portal.label}
-          </button>
-        )}
-      </div>
-    </div>
+              {tp("manageBilling")}
+            </Button>
+          </SettingsSectionFooter>
+        </form>
+      ) : (
+        <SettingsSectionFooter hint={tp("portalUnavailable")}>
+          <Button type="button" size="sm" variant="outline" disabled>
+            {tp("manageBilling")}
+          </Button>
+        </SettingsSectionFooter>
+      )}
+    </SettingsSection>
   );
 }
 
@@ -392,7 +390,7 @@ export function PlanChoiceGrid({ plans }: { plans: BillingPlanOption[] }) {
         .map((plan) => (
           <article
             key={plan.id}
-            className={`flex min-h-full flex-col rounded-[var(--radius-3xl)] border p-5 shadow-sm ${
+            className={`flex min-h-full flex-col rounded-xl border p-6 ${
               plan.active ? "border-primary/40 bg-primary/10" : "border-border bg-background"
             }`}
           >

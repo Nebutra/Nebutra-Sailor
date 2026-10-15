@@ -3,11 +3,13 @@
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 // Mock next-intl — ActiveSessionsBlock uses useFormatter() for relative time
 // and dateTime formatting. Return deterministic strings so render tests don't
 // depend on locale / wall-clock.
 vi.mock("next-intl", () => ({
+  useTranslations: (namespace?: string) => catalogT(namespace),
   useFormatter: () => ({
     relativeTime: (_d: Date) => "just now",
     dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",
@@ -45,6 +47,7 @@ import type { SecurityCapabilities } from "../security-capabilities";
 const capability: SecurityCapabilities["activeSessions"] = {
   available: true,
   reason: "Active sessions are managed by Nebutra through Better Auth session records.",
+  reasonKey: "sessionsManaged",
 };
 
 const baseSession: ActiveSession = {

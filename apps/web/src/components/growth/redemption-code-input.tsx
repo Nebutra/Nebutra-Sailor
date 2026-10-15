@@ -37,6 +37,7 @@ const DEFAULT_REDEEM: NonNullable<Props["onRedeem"]> = async () => {
 };
 
 export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comfortable" }: Props) {
+  const tCopy = useTranslations("copy.growthRedemptionCodeInput");
   const tc = useTranslations("copy.growthRedemptionCodeInput");
   const inputId = useId();
   const [code, setCode] = useState("");
@@ -61,7 +62,7 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
       }, 4000);
     } catch (err) {
       setState("error");
-      setMessage(err instanceof Error ? err.message : "Failed to redeem this code");
+      setMessage(err instanceof Error ? err.message : tCopy("failedToRedeemThis"));
     }
   }
 

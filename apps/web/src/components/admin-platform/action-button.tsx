@@ -83,6 +83,7 @@ export function ActionButton({
   variant = "outline",
   className,
 }: ActionButtonProps) {
+  const tCopy = useTranslations("copy.adminPlatformActionButton");
   const tc = useTranslations("copy.adminPlatformActionButton");
   const [open, setOpen] = useState(false);
   const [phase, setPhase] = useState<Phase>("idle");
@@ -168,7 +169,7 @@ export function ActionButton({
               <>
                 <p className="leading-5">{plan.summary}</p>
                 {plan.diff.length > 0 ? (
-                  <ul className="rounded-md border border-border bg-background font-mono text-xs">
+                  <ul className="rounded-md border border-border bg-card font-mono text-xs">
                     {plan.diff.map((entry, i) => (
                       <li
                         key={`${entry.op}:${entry.path}:${i}`}
@@ -215,7 +216,7 @@ export function ActionButton({
             ) : null}
 
             {result ? (
-              <div className="rounded-md border border-border bg-background px-3 py-2">
+              <div className="rounded-md border border-border bg-card px-3 py-2">
                 <p className="leading-5">{result.summary}</p>
                 <p className="mt-1 font-mono text-muted-foreground text-xs">
                   {tc("audit", { auditId: String(result.auditId) })}
@@ -243,7 +244,7 @@ export function ActionButton({
                 reset();
               }}
             >
-              {phase === "done" ? "Close" : "Cancel"}
+              {phase === "done" ? tCopy("close") : tCopy("cancel")}
             </Button>
             {phase === "planned" || phase === "applying" ? (
               <Button
@@ -253,7 +254,7 @@ export function ActionButton({
                 disabled={busy}
                 onClick={() => void apply()}
               >
-                {phase === "applying" ? "Applying…" : "Apply"}
+                {phase === "applying" ? tCopy("applying") : tCopy("apply")}
               </Button>
             ) : null}
           </DialogFooter>

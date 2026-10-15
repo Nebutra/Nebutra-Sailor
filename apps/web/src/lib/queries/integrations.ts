@@ -35,5 +35,8 @@ export function integrationsQueryOptions() {
   return queryOptions({
     queryKey: queryKeys.integrations.list(),
     queryFn: ({ signal }) => fetchIntegrations(signal),
+    // An auth or config failure will not fix itself in a retry; show the
+    // catalog straight away instead of a spinner for ~7s of backoff.
+    retry: 1,
   });
 }

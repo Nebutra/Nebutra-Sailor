@@ -71,6 +71,7 @@ interface Props {
  * a real value to render from the moment it mounts.
  */
 export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
+  const tCopy = useTranslations("copy.growthReferralPanel");
   const tc = useTranslations("copy.growthReferralPanel");
   const queryClient = useQueryClient();
   const referralsKey = queryKeys.referrals.list();
@@ -115,7 +116,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
     const message =
       referralsQuery.error instanceof Error
         ? referralsQuery.error.message
-        : "Failed to load referrals.";
+        : tCopy("failedToLoadReferrals");
     return (
       <section className="rounded-[var(--radius-2xl)] bg-neutral-2 p-6">
         <h2 className="text-sm font-semibold text-neutral-12">{tc("invitationsAndRewards")}</h2>
@@ -140,23 +141,18 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
   return (
     <section className="space-y-5">
       {/* Hero card */}
-      <div className="relative overflow-hidden rounded-[var(--radius-2xl)] bg-neutral-2 p-5">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 opacity-[0.16] blur-3xl"
-          style={{ background: "hsl(var(--primary))" }}
-        />
-        <div className="relative">
+      <div className="rounded-xl border border-border p-5">
+        <div>
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
-            <h2 className="text-sm font-semibold text-neutral-12">
+            <h2 className="text-base font-semibold text-neutral-12">
               {tc("shareSailorEarnRewards")}
             </h2>
           </div>
-          <p className="mt-1 max-w-xl text-xs text-neutral-10">{tc("friendsGetFullAccess")}</p>
+          <p className="mt-1 max-w-xl text-sm text-neutral-11">{tc("friendsGetFullAccess")}</p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3">
+            <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-xs font-medium text-neutral-10">{tc("referralCode")}</p>
               <div className="mt-1.5 flex items-center justify-between gap-2">
                 <code className="truncate font-mono text-sm font-semibold text-neutral-12">
@@ -174,7 +170,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
                 />
               </div>
             </div>
-            <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3">
+            <div className="rounded-lg bg-muted/60 p-3">
               <p className="text-xs font-medium text-neutral-10">{tc("shareLink")}</p>
               <div className="mt-1.5 flex items-center justify-between gap-2">
                 <span className="truncate text-xs text-neutral-11">{stats.shareUrl}</span>
@@ -199,17 +195,19 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
           redeemable code per person. Credits are deliberately not a tile: the
           number is recorded per referral but there is no balance to spend it
           from, so "Credits earned" would be a promise, not a figure. */}
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid overflow-hidden rounded-xl border border-border sm:grid-cols-2 sm:divide-x sm:divide-border max-sm:divide-y max-sm:divide-border">
         {[
-          { label: "Claimed invites", value: stats.totalInvites.toLocaleString() },
+          { label: tCopy("claimedInvites"), value: stats.totalInvites.toLocaleString() },
           {
-            label: "Level",
-            value: (levels[stats.currentLevel] ?? levels[0])?.title ?? "—",
+            label: tCopy("level2"),
+            value: tCopy(`levels.l${(levels[stats.currentLevel] ?? levels[0])?.id ?? 0}.title`),
           },
         ].map((cell) => (
-          <div key={cell.label} className="rounded-[var(--radius-xl)] bg-neutral-2 p-3 text-center">
-            <p className="text-xs font-medium text-neutral-10">{cell.label}</p>
-            <p className="mt-1 text-2xl font-semibold tabular-nums text-neutral-12">{cell.value}</p>
+          <div key={cell.label} className="p-5">
+            <p className="text-sm text-neutral-11">{cell.label}</p>
+            <p className="mt-2 text-3xl font-semibold tracking-tight tabular-nums text-neutral-12">
+              {cell.value}
+            </p>
           </div>
         ))}
       </div>
@@ -245,7 +243,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
             size="sm"
             disabled={redeemMutation.isPending || normalizeReferralCode(redeemCode).length < 4}
           >
-            {redeemMutation.isPending ? "Redeeming" : "Redeem"}
+            {redeemMutation.isPending ? tCopy("redeeming") : tCopy("redeem")}
           </Button>
         </div>
         {redeemError && <p className="mt-2 text-xs text-destructive-strong">{redeemError}</p>}
@@ -269,7 +267,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <h3 className="text-sm font-semibold text-neutral-12">
-                    {tc("level", { id: level.id, title: level.title })}
+                    {tc("level", { id: level.id, title: tCopy(`levels.l${level.id}.title`) })}
                   </h3>
                   {isActive && (
                     <span className="rounded-full bg-primary/15 px-2 py-0.5 text-xs font-medium text-primary">
@@ -277,10 +275,14 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
                     </span>
                   )}
                 </div>
-                <p className="mt-0.5 text-xs text-neutral-10">{level.description}</p>
+                <p className="mt-0.5 text-xs text-neutral-10">
+                  {tCopy(`levels.l${level.id}.description`)}
+                </p>
               </div>
               <div className="text-right">
-                <p className="text-sm font-semibold tabular-nums text-primary">{level.reward}</p>
+                <p className="text-sm font-semibold tabular-nums text-primary">
+                  {tCopy(`levels.l${level.id}.reward`)}
+                </p>
                 {!isActive && remaining > 0 && (
                   <p className="mt-0.5 text-xs text-neutral-10">
                     {tc("moreToUnlock", { remaining })}

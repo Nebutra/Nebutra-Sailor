@@ -1,5 +1,6 @@
 "use client";
 
+import { SettingsSection } from "@nebutra/ui/layout";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
@@ -69,20 +70,18 @@ export default function WebhooksSettingsPage() {
         <p className="mt-1 text-sm text-muted-foreground">{tc("subscribeToEventsEmitted")}</p>
       </header>
 
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <h2 className="mb-4 text-base font-semibold text-foreground">{tc("newEndpoint")}</h2>
+      <SettingsSection title={tc("newEndpoint")}>
         <CreateWebhookDialog onCreated={handleCreated} />
-      </section>
+      </SettingsSection>
 
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <h2 className="mb-4 text-base font-semibold text-foreground">{tc("activeEndpoints")}</h2>
+      <SettingsSection title={tc("activeEndpoints")}>
         <WebhooksList
           onToggleActive={(id, next) => patchEndpoint(id, { isActive: next })}
           onDelete={deleteEndpoint}
           onViewDeliveries={(id) => setActiveDeliveries(id)}
           onEdit={(endpoint: WebhookEndpointView) => setEditing(endpoint)}
         />
-      </section>
+      </SettingsSection>
 
       <EditWebhookDialog
         endpoint={editing}
@@ -92,7 +91,7 @@ export default function WebhooksSettingsPage() {
       />
 
       {activeDeliveries && (
-        <section className="rounded-[var(--radius-lg)] border border-border bg-background">
+        <section className="rounded-xl border border-border bg-card">
           <WebhookDeliveriesPanel
             endpointId={activeDeliveries}
             onClose={() => setActiveDeliveries(null)}

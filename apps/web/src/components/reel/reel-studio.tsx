@@ -23,6 +23,7 @@ interface ReelStudioProps {
 }
 
 export function ReelStudio({ graphId }: ReelStudioProps) {
+  const tCopy = useTranslations("copy.reelReelStudio");
   const tc = useTranslations("copy.reelReelStudio");
   const [graph, setGraph] = useState<ReelGraph | null>(null);
   const [script, setScript] = useState(
@@ -50,7 +51,7 @@ export function ReelStudio({ graphId }: ReelStudioProps) {
       }
       setGraph(json.data.graph);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Reel run failed");
+      toast.error(err instanceof Error ? err.message : tCopy("reelRunFailed"));
     } finally {
       setBusy(false);
     }
@@ -93,7 +94,7 @@ export function ReelStudio({ graphId }: ReelStudioProps) {
         )}
       </div>
 
-      <div className="flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-4">
+      <div className="flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-4">
         <h2 className="font-semibold text-neutral-12 text-sm">{tc("script")}</h2>
         <Textarea
           value={script}
@@ -104,7 +105,7 @@ export function ReelStudio({ graphId }: ReelStudioProps) {
         />
         <Button type="button" onClick={run} disabled={busy || !script.trim()}>
           <Sparkles className="mr-2 h-4 w-4" />
-          {busy ? "Building…" : "Split & generate"}
+          {busy ? tCopy("building") : tCopy("splitGenerate")}
         </Button>
         <p className="mt-auto text-neutral-11 text-xs">
           Mock provider — no AI key. Each shot becomes a typed node; output flows through

@@ -17,27 +17,35 @@ export default async function DeveloperConsolePage() {
       <header>
         <h1 className="text-xl font-semibold text-foreground">{tc("openPlatform")}</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          {tc("credentialsAndEventSubscriptions")} {brand.name}. The public catalog is on{" "}
-          <a
-            href={getBrandOrigin("open")}
-            className="text-foreground underline-offset-4 hover:underline"
-          >
-            {brand.domains.open}
-          </a>
-          .
+          {tc.rich("intro", {
+            name: brand.name,
+            domain: brand.domains.open,
+            link: (chunks) => (
+              <a
+                href={getBrandOrigin("open")}
+                className="text-foreground underline-offset-4 hover:underline"
+              >
+                {chunks}
+              </a>
+            ),
+          })}
         </p>
       </header>
 
-      <ul className="space-y-3">
+      <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border">
         {DEVELOPER_CONSOLE_LINKS.map((link) => (
           <li key={link.id}>
             <Link
               href={link.href}
-              className="group flex items-start justify-between gap-4 rounded-[var(--radius-lg)] border border-border bg-background p-5 transition-colors hover:bg-neutral-2"
+              className="group flex items-start justify-between gap-4 p-5 transition-colors hover:bg-accent"
             >
               <span>
-                <span className="block text-sm font-semibold text-foreground">{link.title}</span>
-                <span className="mt-1 block text-sm text-muted-foreground">{link.description}</span>
+                <span className="block text-sm font-semibold text-foreground">
+                  {tc(`links.${link.id}.title`)}
+                </span>
+                <span className="mt-1 block text-sm text-neutral-11">
+                  {tc(`links.${link.id}.description`)}
+                </span>
               </span>
               <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-neutral-11 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-foreground motion-reduce:group-hover:translate-x-0" />
             </Link>

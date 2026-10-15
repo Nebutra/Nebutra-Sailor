@@ -1,5 +1,6 @@
 "use client";
 
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
 import { Button, Input } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useFormatter, useTranslations } from "next-intl";
@@ -159,6 +160,7 @@ export function PasskeysBlock({
   onRename,
   onRemove,
 }: PasskeysBlockProps) {
+  const tReasons = useTranslations("copy.securityReasons");
   const tc = useTranslations("copy.securityPasskeysBlock");
   const t = useTranslations("auth.security.passkeys");
   const tErrors = useTranslations("auth.errors");
@@ -245,18 +247,19 @@ export function PasskeysBlock({
 
   if (!capability.available) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-          <div>
-            <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
-          </div>
+      <SettingsSection
+        title={t("title")}
+        description={t("description")}
+        badge={
           <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
             {t("unavailableBadge")}
           </span>
-        </div>
-        <p className="text-sm text-muted-foreground">{capability.reason}</p>
-      </section>
+        }
+      >
+        <p className="text-sm text-muted-foreground">
+          {tReasons(capability.reasonKey, capability.reasonValues)}
+        </p>
+      </SettingsSection>
     );
   }
 
@@ -301,17 +304,15 @@ export function PasskeysBlock({
   const errorMessage = errorKey ? tErrors(errorKey) : null;
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-        <div>
-          <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
-          <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
-        </div>
+    <SettingsSection
+      title={t("title")}
+      description={t("description")}
+      badge={
         <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
           {tc("available")}
         </span>
-      </div>
-
+      }
+    >
       {errorMessage && (
         <p className="mb-4 text-sm text-destructive-strong" id="passkeys-error" role="alert">
           {errorMessage}
@@ -433,21 +434,29 @@ export function PasskeysBlock({
               />
               <p className="text-xs text-muted-foreground">{t("nameHelp")}</p>
             </div>
-            <div className="flex gap-2">
-              <Button disabled={pending} type="submit">
-                {t("addPasskey")}
-              </Button>
-              <Button disabled={pending} type="button" onClick={cancelAdd} variant="outline">
+            <SettingsSectionFooter>
+              <Button
+                disabled={pending}
+                type="button"
+                size="sm"
+                onClick={cancelAdd}
+                variant="outline"
+              >
                 {t("cancelAdd")}
               </Button>
-            </div>
+              <Button disabled={pending} type="submit" size="sm">
+                {t("addPasskey")}
+              </Button>
+            </SettingsSectionFooter>
           </form>
         ) : (
-          <Button disabled={pending} type="button" onClick={startAdd}>
-            {t("addPasskey")}
-          </Button>
+          <SettingsSectionFooter>
+            <Button disabled={pending} type="button" size="sm" onClick={startAdd}>
+              {t("addPasskey")}
+            </Button>
+          </SettingsSectionFooter>
         )}
       </div>
-    </section>
+    </SettingsSection>
   );
 }

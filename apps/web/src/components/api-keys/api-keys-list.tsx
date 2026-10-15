@@ -108,6 +108,7 @@ export function ApiKeysList({
   onRetry,
   columnLabels = {},
 }: ApiKeysListProps) {
+  const tc = useTranslations("copy.apiKeysApiKeysList");
   const format = useFormatter();
   const tSos = useTranslations("startupOs");
   const resolvedEmptyTitle = emptyTitle ?? tSos("emptyState.apiKeys");
@@ -123,7 +124,7 @@ export function ApiKeysList({
   const labels = {
     name: columnLabels.name ?? "Name",
     prefix: columnLabels.prefix ?? "Prefix",
-    lastUsed: columnLabels.lastUsed ?? "Last Used",
+    lastUsed: columnLabels.lastUsed ?? tc("lastUsed"),
     scopes: columnLabels.scopes ?? "Scopes",
     created: columnLabels.created ?? "Created",
     actions: columnLabels.actions ?? "Actions",
@@ -131,8 +132,8 @@ export function ApiKeysList({
     revoking: columnLabels.revoking ?? "Revoking…",
     never: columnLabels.never ?? "Never",
     table: columnLabels.table ?? "API keys",
-    errorTitle: columnLabels.errorTitle ?? "We couldn't load your API keys",
-    retry: columnLabels.retry ?? "Try again",
+    errorTitle: columnLabels.errorTitle ?? tc("weCouldnTLoad"),
+    retry: columnLabels.retry ?? tc("tryAgain"),
     emptyDescription:
       columnLabels.emptyDescription ?? "A key lets your own code call the API on your behalf.",
   };

@@ -15,6 +15,7 @@ export default function RouteError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const tCopy = useTranslations("copy.webError");
   const tc = useTranslations("copy.webError");
   useEffect(() => {
     // The digest ties this browser log to the server's entry for the same error.
@@ -27,8 +28,8 @@ export default function RouteError({
       code="Error"
       title={tc("thisPageDidnT")}
       description={tc("somethingWentWrongOn")}
-      primaryAction={{ label: "Try again", onClick: reset }}
-      secondaryAction={{ label: "Go home", href: "/" }}
+      primaryAction={{ label: tCopy("tryAgain"), onClick: reset }}
+      secondaryAction={{ label: tCopy("goHome"), href: "/" }}
       {...(error.digest ? { meta: { errorId: error.digest } } : {})}
     />
   );

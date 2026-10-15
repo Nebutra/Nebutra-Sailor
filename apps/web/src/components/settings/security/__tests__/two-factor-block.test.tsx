@@ -90,6 +90,7 @@ function buildAvailableCapability(
     available: true,
     requiresPasswordAccount: false,
     reason: "Two-factor setup is available.",
+    reasonKey: "twoFactorAvailable",
     ...overrides,
   };
 }
@@ -101,6 +102,7 @@ function buildUnavailableCapability(
     available: false,
     requiresPasswordAccount: true,
     reason: "Two-factor setup requires a credential sign-in method first.",
+    reasonKey: "twoFactorNeedsPassword",
     ...overrides,
   };
 }
@@ -131,7 +133,9 @@ describe("TwoFactorBlock", () => {
 
     render(<TwoFactorBlock capability={capability} enabled={false} />);
 
-    expect(screen.getByText(capability.reason)).toBeInTheDocument();
+    expect(
+      screen.getByText("Two-factor needs an email-and-password sign-in method first."),
+    ).toBeInTheDocument();
     // Should not show enable/disable buttons when unavailable
     expect(screen.queryByRole("button", { name: "Enable two-factor" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Disable two-factor" })).not.toBeInTheDocument();

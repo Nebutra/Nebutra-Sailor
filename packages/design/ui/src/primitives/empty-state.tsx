@@ -3,7 +3,7 @@
 import * as React from "react";
 import { emptyStateTokens } from "../tokens/components/empty-state";
 import { cn } from "../utils/cn";
-import { BrandMark } from "./brand-mark";
+import { GhostPreview, type GhostPreviewKind } from "./ghost-preview";
 
 export type EmptyStateVariant =
   | "blank-slate"
@@ -110,7 +110,8 @@ const EmptyStateIcon = ({
     ref={ref}
     aria-hidden="true"
     className={cn(
-      "flex size-[var(--empty-state-icon-size)] shrink-0 items-center justify-center rounded-[var(--empty-state-icon-radius)] bg-muted",
+      // A quiet bordered glyph tile, not a filled block: the icon is a hint, not the subject.
+      "flex size-10 shrink-0 items-center justify-center rounded-[var(--empty-state-icon-radius)] border border-border bg-background text-muted-foreground shadow-xs [&_svg]:size-5",
       className,
     )}
     {...props}
@@ -160,9 +161,7 @@ const EmptyStateRoot = ({
           align === "center" ? "items-center" : "items-start",
         )}
       >
-        {icon ? (
-          <div className={cn("[&>div]:bg-muted", iconToneClassName[variant])}>{icon}</div>
-        ) : null}
+        {icon ? <div className={iconToneClassName[variant]}>{icon}</div> : null}
 
         <div className="space-y-[var(--empty-state-copy-gap)]">
           <h3 className="font-[var(--empty-state-title-weight)] text-[length:var(--empty-state-title-size)] leading-[var(--empty-state-title-line-height)] text-foreground">
@@ -198,7 +197,7 @@ export interface EmptyStateProps {
   title: string;
   /** Supporting description. */
   description?: string;
-  /** Visual anchor. When omitted and `tone="branded"`, a default `<BrandMark>` is rendered. */
+  /** Visual anchor shown above the title. */
   mascot?: React.ReactNode;
   /** Inline icon shown above the title. Ignored when `mascot` is provided. */
   icon?: React.ReactNode;
@@ -209,11 +208,17 @@ export interface EmptyStateProps {
   /**
    * Visual tone.
    * - `default`: neutral bordered state
-   * - `branded`: BrandMark anchor for first-touch panels
+   * - `branded`: first-touch panel (bordered card surface; pass `mascot` for a visual)
    * - `subtle`: quieter inline state
    */
   tone?: EmptyStateTone;
   size?: EmptyStateSize;
+  /**
+   * Show the shape of the content this surface will hold — a ghost chart,
+   * table, list or metric row in hairlines — behind the message, instead of an
+   * icon. Pass a kind, or your own decorative node.
+   */
+  preview?: GhostPreviewKind | React.ReactNode;
   className?: string;
 }
 
@@ -233,12 +238,44 @@ function EmptyStateSimple({
   secondaryAction,
   tone = "default",
   size = "md",
+  preview,
   className,
 }: EmptyStateProps) {
-  const visual =
-    mascot ??
-    icon ??
-    (tone === "branded" ? <BrandMark size={size === "lg" ? "lg" : "md"} /> : null);
+  if (preview) {
+    const ghost =
+      typeof preview === "string" ? (
+        <GhostPreview kind={preview as GhostPreviewKind} />
+      ) : (
+        <div aria-hidden="true">{preview}</div>
+      );
+    return (
+      <section
+        className={cn(
+          // One grid cell holds both layers, so the panel grows with whichever is
+          // taller — the message never clips on a narrow screen.
+          "grid w-full overflow-hidden rounded-xl border border-border bg-card",
+          className,
+        )}
+      >
+        <div className="[grid-area:1/1] [mask-image:radial-gradient(ellipse_55%_60%_at_50%_50%,transparent_25%,black_80%)]">
+          {ghost}
+        </div>
+        <div className="[grid-area:1/1] flex flex-col items-center justify-center gap-1.5 px-6 py-8 text-center">
+          <h3 className="text-sm font-medium text-foreground">{title}</h3>
+          {description ? (
+            <p className="max-w-md text-balance text-sm text-muted-foreground">{description}</p>
+          ) : null}
+          {action || secondaryAction ? (
+            <div className="mt-3 flex flex-wrap justify-center gap-2">
+              {action}
+              {secondaryAction}
+            </div>
+          ) : null}
+        </div>
+      </section>
+    );
+  }
+  const visual = mascot ?? icon ?? null;
   return (
     <EmptyStateRoot
       action={action}

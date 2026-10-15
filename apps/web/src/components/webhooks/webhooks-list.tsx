@@ -47,6 +47,7 @@ export function WebhooksList({
   onViewDeliveries,
   onEdit,
 }: WebhooksListProps) {
+  const tCopy = useTranslations("copy.webhooksWebhooksList");
   const tc = useTranslations("copy.webhooksWebhooksList");
   const t = useTranslations("startupOs");
   const queryClient = useQueryClient();
@@ -137,14 +138,14 @@ export function WebhooksList({
     },
     {
       id: "events",
-      header: "Events",
+      header: tCopy("events"),
       width: 96,
       loadingWidth: 24,
       cell: (endpoint) => <span className="text-muted-foreground">{endpoint.events.length}</span>,
     },
     {
       id: "status",
-      header: "Status",
+      header: tCopy("status"),
       width: 112,
       loadingWidth: 56,
       cell: (endpoint) =>
@@ -162,7 +163,7 @@ export function WebhooksList({
     },
     {
       id: "lastDelivered",
-      header: "Last delivered",
+      header: tCopy("lastDelivered"),
       width: 200,
       cell: (endpoint) => (
         <span className="text-xs text-muted-foreground">
@@ -172,7 +173,7 @@ export function WebhooksList({
     },
     {
       id: "actions",
-      header: "Actions",
+      header: tCopy("actions"),
       align: "end",
       loadingWidth: 120,
       cell: (endpoint) => (
@@ -192,7 +193,7 @@ export function WebhooksList({
               onClick={() => handleToggle(endpoint)}
               className="text-muted-foreground hover:text-foreground"
             >
-              {endpoint.isActive ? "Disable" : "Enable"}
+              {endpoint.isActive ? tCopy("disable") : tCopy("enable")}
             </button>
           )}
           {onViewDeliveries && (
@@ -246,14 +247,14 @@ export function WebhooksList({
         {...(endpointsQuery.error
           ? {
               errorTitle: <span role="alert">{t("errors.loadWebhookEndpoints")}</span>,
-              error: "Check the endpoint service, then try the request again.",
+              error: tCopy("checkTheEndpointService"),
               onRetry: () => {
                 void endpointsQuery.refetch();
               },
-              retryLabel: "Try again",
+              retryLabel: tCopy("tryAgain"),
             }
           : {})}
-        emptyTitle="Webhook endpoints"
+        emptyTitle={tCopy("webhookEndpoints")}
         emptyDescription={t("emptyState.webhookEndpoints")}
       />
     </>

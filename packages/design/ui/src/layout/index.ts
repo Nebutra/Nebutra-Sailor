@@ -33,3 +33,9 @@ export {
   SectionHeader,
   type SectionHeaderProps,
 } from "./SectionContainer";
+export {
+  SettingsSection,
+  SettingsSectionFooter,
+  type SettingsSectionFooterProps,
+  type SettingsSectionProps,
+} from "./SettingsSection";

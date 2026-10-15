@@ -2,28 +2,16 @@ import { brand } from "@nebutra/brand/metadata";
 import { Bell, Envelope as Mail, DevicePhone as Smartphone } from "@nebutra/icons";
 import { loadNotificationSettingsSnapshot } from "@nebutra/notifications";
 import { getTranslations } from "next-intl/server";
-import { NotificationInboxPreview } from "@/components/notifications/notification-inbox-preview";
-import { NotificationPreferenceMatrix } from "@/components/notifications/notification-preference-matrix";
-import { NotificationRuntimeBanner } from "@/components/notifications/notification-runtime-banner";
 import { NotificationPreferencesSection } from "@/components/settings/notifications/notification-preferences-section";
 import { requireOrg } from "@/lib/auth";
-
-interface Props {
-  params: Promise<{ locale: string }>;
-  searchParams: Promise<{ notice?: string; error?: string }>;
-}
 
 export const metadata = {
   title: "Notifications — Settings",
 };
 
-export default async function NotificationSettingsPage({ params, searchParams }: Props) {
+export default async function NotificationSettingsPage() {
   const tc = await getTranslations("copy.notificationsPage");
-  const [{ locale }, query, { userId, orgId }] = await Promise.all([
-    params,
-    searchParams,
-    requireOrg(),
-  ]);
+  const { userId, orgId } = await requireOrg();
 
   const snapshot = await loadNotificationSettingsSnapshot({
     userId,
@@ -35,88 +23,55 @@ export default async function NotificationSettingsPage({ params, searchParams }:
     <div className="space-y-8">
       <div>
         <h2 className="text-lg font-semibold text-foreground">{tc("notifications")}</h2>
-        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+        <p className="mt-1 max-w-2xl text-sm text-neutral-11">
           {tc("tuneHowReachesYou", { name: String(brand.name) })}
         </p>
       </div>
 
-      {query.notice ? (
-        <div className="rounded-[var(--radius-lg)] border border-success/30 bg-success/10 px-4 py-3 text-sm text-success-strong">
-          {query.notice}
-        </div>
-      ) : null}
+      {/* One honest line about where preferences live, instead of an operator
+          diagnostics panel (provider internals, missing integrations). */}
+      <p className="flex items-center gap-2 text-sm text-neutral-11">
+        <span
+          aria-hidden
+          className={`size-2 rounded-full ${snapshot.runtime.canManagePreferences ? "bg-success" : "bg-warning"}`}
+        />
+        {snapshot.runtime.canManagePreferences ? tc("preferencesLive") : tc("preferencesDefaults")}
+      </p>
 
-      {query.error ? (
-        <div className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive-strong">
-          {query.error}
-        </div>
-      ) : null}
-
-      <NotificationRuntimeBanner
-        runtime={snapshot.runtime}
-        preferenceSource={snapshot.preferenceSource}
-        inboxSource={snapshot.inboxSource}
-      />
-
-      <section className="grid gap-4 md:grid-cols-3">
+      <section className="grid overflow-hidden rounded-xl border border-border md:grid-cols-3 md:divide-x md:divide-border max-md:divide-y max-md:divide-border">
         {[
           {
             icon: Bell,
-            label: "Inbox signals",
-            value: `${snapshot.channels.find((channel) => channel.id === "in_app")?.label ?? "Inbox"}`,
-            description: `Highest-signal updates inside the ${brand.name} workspace.`,
+            label: tc("inboxSignals"),
+            value: tc("inbox"),
+            description: tc("inboxSignalsDescription", { name: brand.name }),
           },
           {
             icon: Mail,
-            label: "Email delivery",
-            value: `${snapshot.channels.find((channel) => channel.id === "email")?.label ?? "Email"}`,
-            description: "Good for billing, security, and cross-session follow-up.",
+            label: tc("emailDelivery"),
+            value: tc("email"),
+            description: tc("emailDeliveryDescription"),
           },
           {
             icon: Smartphone,
-            label: "Push delivery",
-            value: `${snapshot.channels.find((channel) => channel.id === "push")?.label ?? "Push"}`,
-            description: "Shown as preview until a push dispatcher is connected.",
+            label: tc("pushDelivery"),
+            value: tc("push"),
+            description: tc("pushDeliveryDescription"),
           },
         ].map(({ icon: Icon, label, value, description }) => (
-          <div
-            key={label}
-            className="rounded-[var(--radius-lg)] border border-border bg-background p-5"
-          >
-            <div className="flex items-start gap-3">
-              <div className="rounded-[var(--radius-md)] bg-muted p-2 text-muted-foreground">
-                <Icon className="h-4 w-4" aria-hidden />
-              </div>
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                  {label}
-                </p>
-                <p className="mt-1 text-sm font-semibold text-foreground">{value}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{description}</p>
-              </div>
+          <div key={label} className="p-5">
+            <div className="flex items-center gap-2 text-sm text-neutral-11">
+              <Icon className="size-4" aria-hidden />
+              {label}
             </div>
+            <p className="mt-3 text-base font-semibold text-neutral-12">{value}</p>
+            <p className="mt-1 text-sm text-neutral-11">{description}</p>
           </div>
         ))}
       </section>
 
       <NotificationPreferencesSection
         capabilities={{ hasPushSubscription: false, phoneVerified: false }}
-      />
-
-      <NotificationPreferenceMatrix
-        locale={locale}
-        runtime={snapshot.runtime}
-        preferenceSource={snapshot.preferenceSource}
-        sections={snapshot.sections}
-      />
-
-      <NotificationInboxPreview
-        locale={locale}
-        runtime={snapshot.runtime}
-        inboxItems={snapshot.inboxItems}
-        inboxSource={snapshot.inboxSource}
-        inboxReason={snapshot.inboxReason}
-        unreadCount={snapshot.unreadCount}
       />
     </div>
   );

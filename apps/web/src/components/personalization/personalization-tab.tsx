@@ -2,6 +2,7 @@
 
 import { LoaderCircle as Loader2 } from "@nebutra/icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import {
   PersonalizationPanel,
   type ProfileFormValue,
@@ -61,6 +62,7 @@ async function saveProfile(value: ProfileFormValue): Promise<void> {
  * shows a minimal spinner — no fake placeholder fields.
  */
 export function PersonalizationTab() {
+  const tc = useTranslations("copy.personalizationPersonalizationTab");
   const queryClient = useQueryClient();
   const profileKey = queryKeys.personalization.detail();
 
@@ -93,7 +95,7 @@ export function PersonalizationTab() {
   const error = profileQuery.error
     ? profileQuery.error instanceof Error
       ? profileQuery.error.message
-      : "Failed to load profile"
+      : tc("failedToLoadProfile")
     : null;
 
   // On load failure, fall back to an empty form (matches prior behaviour).
@@ -103,7 +105,7 @@ export function PersonalizationTab() {
     <div>
       {error && (
         <p className="mb-3 rounded-[var(--radius-lg)] border border-destructive/25 bg-destructive/10/60 px-3 py-2 text-xs text-destructive-strong">
-          {error} — showing empty form.
+          {tc("showingEmptyForm", { error: String(error) })}
         </p>
       )}
       <PersonalizationPanel initialValue={initial} onSave={handleSave} />

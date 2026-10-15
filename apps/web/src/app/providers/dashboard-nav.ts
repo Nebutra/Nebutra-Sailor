@@ -1,8 +1,11 @@
 import { routing } from "@nebutra/i18n/routing";
 import {
+  ChartActivity,
+  CreditCard,
   Lightning,
   type Icon as LucideIcon,
   Connection as Plug,
+  SettingsGear,
   Shield,
   Users,
 } from "@nebutra/icons";
@@ -16,7 +19,7 @@ export interface DashboardNavItem {
   href: string;
   label: string;
   icon: LucideIcon;
-  group: "Product" | "Admin";
+  group: "Product" | "Workspace" | "Admin";
   badge?: DashboardNavBadge;
   children?: DashboardNavItem[];
 }
@@ -37,6 +40,9 @@ export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
   STARTUP_OS_NAV_ITEM,
   { href: "/integrations", label: "Connectors", icon: Plug, group: "Product" },
   { href: "/cofounder", label: "Match your cofounder", icon: Users, group: "Product" },
+  { href: "/usage", label: "Usage", icon: ChartActivity, group: "Workspace" },
+  { href: "/billing", label: "Billing", icon: CreditCard, group: "Workspace" },
+  { href: "/settings", label: "Settings", icon: SettingsGear, group: "Workspace" },
   {
     href: "/admin",
     label: "Admin",
@@ -58,6 +64,10 @@ export function getDashboardNavGroups(capabilities?: DashboardNavCapabilities) {
     {
       title: "Product",
       items: items.filter((item) => item.group === "Product"),
+    },
+    {
+      title: "Workspace",
+      items: items.filter((item) => item.group === "Workspace"),
     },
     {
       title: "Admin",

@@ -15,31 +15,26 @@ import { usePermission } from "@/hooks/usePermission";
 // settings-page 16px/12px cell rhythm rather than the default table density.
 const SHORTCUT_DENSITY = { "--table-cell-padding-x": "1rem", "--table-cell-padding-y": "0.75rem" };
 
-const GLOBAL_SHORTCUTS: Array<{ keys: string[]; label: string; description: string }> = [
+const GLOBAL_SHORTCUTS: Array<{ keys: string[]; id: string }> = [
   {
     keys: ["⌘", "K"],
-    label: "Open command palette",
-    description: "Search and run any command from anywhere in the app.",
+    id: "commandPalette",
   },
   {
     keys: ["⌘", "B"],
-    label: "Toggle sidebar",
-    description: "Collapse or expand the navigation sidebar.",
+    id: "toggleSidebar",
   },
   {
     keys: ["Esc"],
-    label: "Close overlay",
-    description: "Close the command palette, dialog, or modal.",
+    id: "closeOverlay",
   },
   {
     keys: ["Enter"],
-    label: "Submit / send",
-    description: "Send a chat message or confirm the focused action.",
+    id: "submit",
   },
   {
     keys: ["⇧", "Enter"],
-    label: "Newline in chat",
-    description: "Insert a line break in the chat input without sending.",
+    id: "newline",
   },
 ];
 
@@ -94,19 +89,16 @@ export default function ShortcutsPage() {
         <h2 className="mb-3 text-xs font-semibold text-neutral-10">{tc("global")}</h2>
         <Table
           bare
-          wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7"
+          wrapperClassName="overflow-hidden rounded-xl border border-border"
           wrapperStyle={SHORTCUT_DENSITY}
         >
           <Table.Body bordered>
             {GLOBAL_SHORTCUTS.map((row) => (
-              <Table.Row key={row.label} className="bg-neutral-1">
+              <Table.Row key={row.id} className="bg-neutral-1">
                 <Table.Cell className="align-top">
                   <div className="flex items-center gap-1">
                     {row.keys.map((k, i) => (
-                      <span
-                        key={`${row.label}-${k}-${i}`}
-                        className="inline-flex items-center gap-1"
-                      >
+                      <span key={`${row.id}-${k}-${i}`} className="inline-flex items-center gap-1">
                         <KeyCap>{k}</KeyCap>
                         {i < row.keys.length - 1 && (
                           <span className="text-xs text-neutral-9">+</span>
@@ -116,8 +108,10 @@ export default function ShortcutsPage() {
                   </div>
                 </Table.Cell>
                 <Table.Cell alignment="start" className="align-top">
-                  <p className="font-medium text-neutral-12">{row.label}</p>
-                  <p className="mt-0.5 text-xs text-neutral-10">{row.description}</p>
+                  <p className="font-medium text-neutral-12">{tc(`global.${row.id}.label`)}</p>
+                  <p className="mt-0.5 text-xs text-neutral-10">
+                    {tc(`global.${row.id}.description`)}
+                  </p>
                 </Table.Cell>
               </Table.Row>
             ))}
@@ -137,7 +131,7 @@ export default function ShortcutsPage() {
               </h2>
               <Table
                 bare
-                wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7"
+                wrapperClassName="overflow-hidden rounded-xl border border-border"
                 wrapperStyle={SHORTCUT_DENSITY}
               >
                 <Table.Body bordered>
@@ -152,9 +146,6 @@ export default function ShortcutsPage() {
                           <p className="font-medium text-neutral-12">
                             {t(`commands.${cmd.titleKey}`)}
                           </p>
-                          {cmd.tags && cmd.tags.length > 0 && (
-                            <p className="mt-0.5 text-xs text-neutral-10">{cmd.tags.join(" · ")}</p>
-                          )}
                         </Table.Cell>
                         <Table.Cell>
                           {cmd.shortcut ? (

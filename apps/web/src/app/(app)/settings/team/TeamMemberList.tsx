@@ -107,6 +107,7 @@ async function deleteMember(
 }
 
 export function TeamMemberList({ orgId }: Props) {
+  const tCopy = useTranslations("copy.teamTeamMemberList");
   const tc = useTranslations("copy.teamTeamMemberList");
   const t = useTranslations("startupOs");
   const queryClient = useQueryClient();
@@ -166,7 +167,7 @@ export function TeamMemberList({ orgId }: Props) {
       if (context?.previous !== undefined) {
         queryClient.setQueryData<MembersPayload>(listKey, context.previous);
       }
-      setNotice(err instanceof Error ? err.message : "Failed to update member role");
+      setNotice(err instanceof Error ? err.message : tCopy("failedToUpdateMember"));
     },
     onSettled: () => {
       setBusyMemberId(null);
@@ -179,7 +180,7 @@ export function TeamMemberList({ orgId }: Props) {
       deleteMember(
         orgId,
         input.member.id,
-        input.isSelf ? "Failed to leave organization" : "Failed to remove member",
+        input.isSelf ? tCopy("failedToLeaveOrganization") : tCopy("failedToRemoveMember"),
       ),
     // Optimistically drop the row, mirroring the previous immediate removal.
     onMutate: async ({ member }) => {
@@ -199,7 +200,7 @@ export function TeamMemberList({ orgId }: Props) {
     },
     onSuccess: (_data, { member, isSelf }) => {
       setNotice(
-        isSelf ? "You left this organization." : `${memberDisplayName(member)} was removed.`,
+        isSelf ? tCopy("youLeftThisOrganization") : `${memberDisplayName(member)} was removed.`,
       );
     },
     onError: (err, input, context) => {
@@ -208,7 +209,9 @@ export function TeamMemberList({ orgId }: Props) {
       if (context?.previous !== undefined) {
         queryClient.setQueryData<MembersPayload>(listKey, context.previous);
       }
-      const fallback = input.isSelf ? "Failed to leave organization" : "Failed to remove member";
+      const fallback = input.isSelf
+        ? tCopy("failedToLeaveOrganization")
+        : tCopy("failedToRemoveMember");
       setNotice(err instanceof Error ? err.message : fallback);
     },
     onSettled: () => {
@@ -220,7 +223,9 @@ export function TeamMemberList({ orgId }: Props) {
   if (membersQuery.isPending) return <LoadingState />;
   if (membersQuery.error) {
     const message =
-      membersQuery.error instanceof Error ? membersQuery.error.message : "Failed to load members";
+      membersQuery.error instanceof Error
+        ? membersQuery.error.message
+        : tCopy("failedToLoadMembers");
     return <ErrorState message={message} />;
   }
 
@@ -237,15 +242,15 @@ export function TeamMemberList({ orgId }: Props) {
     const ok = await confirm(
       isSelf
         ? {
-            title: "Leave Organization",
-            description: "You may lose access immediately.",
-            confirmLabel: "Leave",
+            title: tCopy("leaveOrganization"),
+            description: tCopy("youMayLoseAccess"),
+            confirmLabel: tCopy("leave"),
             tone: "destructive",
           }
         : {
             title: `Remove ${label}`,
             description: `${label} loses access to this organization.`,
-            confirmLabel: "Remove",
+            confirmLabel: tCopy("remove"),
             tone: "destructive",
           },
     );
@@ -263,9 +268,7 @@ export function TeamMemberList({ orgId }: Props) {
         <div>
           <p className="text-sm font-medium text-foreground">{memberCountLabel}</p>
           <p className="text-xs text-muted-foreground">
-            {payload.canManageRoles
-              ? "Admins can change roles, remove members, or leave their own organization."
-              : "Role changes and member removal require an organization admin."}
+            {payload.canManageRoles ? tCopy("adminsCanChangeRoles") : tCopy("roleChangesAndMember")}
           </p>
         </div>
         {!payload.canManageRoles && (
@@ -366,11 +369,11 @@ export function TeamMemberList({ orgId }: Props) {
                     className="rounded px-2 py-1 text-xs font-medium text-destructive-strong hover:text-destructive-strong/80 disabled:cursor-not-allowed disabled:text-muted-foreground"
                     aria-label={
                       isSelf
-                        ? "Leave organization"
+                        ? tCopy("leaveOrganization2")
                         : `Remove ${memberDisplayName(member)} from organization`
                     }
                   >
-                    {isSelf ? "Leave" : "Remove"}
+                    {isSelf ? tCopy("leave") : tCopy("remove")}
                   </button>
                 </Table.Cell>
               </Table.Row>

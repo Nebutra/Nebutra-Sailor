@@ -67,7 +67,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
         <main role="alert" className="relative w-full max-w-md">
           <div
-            className="rounded-[var(--radius-panel)] border border-border bg-background/85 p-8 backdrop-blur-xl"
+            className="rounded-[var(--radius-panel)] border border-border bg-card/85 p-8 backdrop-blur-xl"
             style={{ boxShadow: "var(--ring-hairline)" }}
           >
             <div className="mb-4 font-mono text-xs font-medium uppercase tracking-[0.08em] text-muted-foreground">

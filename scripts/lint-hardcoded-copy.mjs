@@ -36,7 +36,7 @@ import {
 } from "./lib/jsx-count-ratchet.mjs";
 
 const COPY_ATTRIBUTES =
-  /(?:^|\s)(?:aria-label|placeholder|title|alt|label|description|helperText|emptyText|tooltip|confirmText|cancelText)\s*=\s*(["'])([^"']*)\1/g;
+  /(?:^|\s)(?:aria-label|placeholder|title|alt|label|description|helperText|emptyText|emptyTitle|emptyDescription|submitLabel|pendingLabel|loadingLabel|tooltip|confirmText|cancelText|hint)\s*=\s*(["'])([^"']*)\1/g;
 
 /** A run of two or more letters: a word, not a symbol, unit or number. */
 const WORD = /\p{L}{2,}/u;

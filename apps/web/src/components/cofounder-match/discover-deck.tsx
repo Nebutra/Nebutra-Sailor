@@ -5,7 +5,6 @@ import { EmptyState } from "@nebutra/ui/layout";
 import { Button, Textarea } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CofounderCard, type CofounderCardData } from "./cofounder-card";
@@ -23,9 +22,8 @@ const SWIPE_THRESHOLD = 110;
 const CARD_TRANSITION = "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease-out";
 
 export function DiscoverDeck() {
+  const tCopy = useTranslations("copy.cofounderMatchDiscoverDeck");
   const tc = useTranslations("copy.cofounderMatchDiscoverDeck");
-  const pathname = usePathname();
-  const locale = pathname.split("/").filter(Boolean)[0] || "en";
 
   const [state, setState] = useState<DeckState>("loading");
   const [cards, setCards] = useState<DiscoverCard[]>([]);
@@ -162,7 +160,7 @@ export function DiscoverDeck() {
             disabled={busy}
             suffix={<ArrowRight className="size-4" aria-hidden="true" />}
           >
-            {busy ? "Joining…" : "Join the pool"}
+            {busy ? tCopy("joining") : tCopy("joinThePool")}
           </Button>
         }
       />
@@ -176,7 +174,7 @@ export function DiscoverDeck() {
         description={tc("yourCofounderCardIs")}
         action={
           <Link
-            href={`/${locale}/startup-os`}
+            href={`/startup-os`}
             className="inline-flex items-center gap-2 rounded-full bg-neutral-12 px-4 py-2 text-sm font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 dark:text-neutral-12"
           >
             {tc("compileYourCompany")}
@@ -204,7 +202,7 @@ export function DiscoverDeck() {
   if (state === "empty") {
     return (
       <div className="flex flex-col items-center gap-5">
-        {matched ? <MatchBanner card={matched} locale={locale} /> : null}
+        {matched ? <MatchBanner card={matched} /> : null}
         <EmptyState title={tc("youReAllCaught")} description={tc("noMoreFoundersTo")} />
       </div>
     );
@@ -241,7 +239,7 @@ export function DiscoverDeck() {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      {matched ? <MatchBanner card={matched} locale={locale} /> : null}
+      {matched ? <MatchBanner card={matched} /> : null}
 
       {/* Card stack */}
       <div className="relative flex h-[420px] w-full max-w-sm items-start justify-center">
@@ -416,7 +414,7 @@ function DeckAction({
   );
 }
 
-function MatchBanner({ card, locale }: { card: DiscoverCard; locale: string }) {
+function MatchBanner({ card }: { card: DiscoverCard }) {
   const tc = useTranslations("copy.cofounderMatchDiscoverDeck");
   return (
     <div className="w-full max-w-sm rounded-2xl border border-primary/30 bg-primary/5 p-4 dark:bg-primary/15">
@@ -426,7 +424,7 @@ function MatchBanner({ card, locale }: { card: DiscoverCard; locale: string }) {
       </div>
       <p className="mt-1 text-xs text-neutral-11">{tc("youBothSignalledInterest")}</p>
       <Link
-        href={`/${locale}/cofounder/matches`}
+        href={`/cofounder/matches`}
         className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary"
       >
         {tc("viewMatches")}

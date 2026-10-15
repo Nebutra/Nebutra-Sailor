@@ -77,6 +77,7 @@ const DEFAULT_VALUES: FeedbackValues = {
 };
 
 export function FeedbackDialog() {
+  const tCopy = useTranslations("copy.feedbackFeedbackDialog");
   const tc = useTranslations("copy.feedbackFeedbackDialog");
   const { open, setOpen, closeDialog } = useFeedbackDialog();
   const areaId = useId();
@@ -120,15 +121,15 @@ export function FeedbackDialog() {
       });
       if (!res.ok) {
         const data = (await res.json().catch(() => ({}))) as { error?: string };
-        throw new Error(data.error || "Failed to submit feedback");
+        throw new Error(data.error || tCopy("failedToSubmitFeedback"));
       }
-      toast.success("Report submitted", {
-        description: "Thanks — we'll review it soon.",
+      toast.success(tCopy("reportSubmitted"), {
+        description: tCopy("thanksWeLlReview"),
       });
       closeDialog();
     } catch (err) {
-      toast.error("Failed to submit feedback", {
-        description: err instanceof Error ? err.message : "Please try again in a moment.",
+      toast.error(tCopy("failedToSubmitFeedback"), {
+        description: err instanceof Error ? err.message : tCopy("pleaseTryAgainIn"),
       });
     }
   }
@@ -290,7 +291,7 @@ export function FeedbackDialog() {
                 ) : (
                   <Send className="h-3 w-3" />
                 )}
-                {submitting ? "Submitting…" : "Submit report"}
+                {submitting ? "Submitting…" : tCopy("submitReport")}
               </button>
             </div>
           </form>

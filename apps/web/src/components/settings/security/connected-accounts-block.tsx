@@ -1,5 +1,6 @@
 "use client";
 
+import { SettingsSection } from "@nebutra/ui/layout";
 import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -61,6 +62,7 @@ export function ConnectedAccountsBlock({
   onUnlink,
   onChanged,
 }: ConnectedAccountsBlockProps) {
+  const tReasons = useTranslations("copy.securityReasons");
   const tc = useTranslations("copy.securityConnectedAccountsBlock");
   const t = useTranslations("auth.security.connectedAccounts");
   const tErrors = useTranslations("auth.errors");
@@ -69,18 +71,19 @@ export function ConnectedAccountsBlock({
 
   if (!capability.available) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-          <div>
-            <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
-          </div>
+      <SettingsSection
+        title={t("title")}
+        description={t("description")}
+        badge={
           <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
             {tc("providerManaged")}
           </span>
-        </div>
-        <p className="text-sm text-muted-foreground">{capability.reason}</p>
-      </section>
+        }
+      >
+        <p className="text-sm text-muted-foreground">
+          {tReasons(capability.reasonKey, capability.reasonValues)}
+        </p>
+      </SettingsSection>
     );
   }
 
@@ -116,15 +119,7 @@ export function ConnectedAccountsBlock({
   const linkedSet = new Set(capability.linkedProviders);
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-        <div>
-          <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
-          <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
-          <p className="mt-2 text-xs leading-5 text-muted-foreground">{t("help")}</p>
-        </div>
-      </div>
-
+    <SettingsSection title={t("title")} description={`${t("description")} ${t("help")}`}>
       {errorMessage && (
         <p
           className="mb-4 text-sm text-destructive-strong"
@@ -182,7 +177,9 @@ export function ConnectedAccountsBlock({
         </div>
       )}
 
-      <p className="mt-4 text-xs leading-5 text-muted-foreground">{capability.reason}</p>
-    </section>
+      <p className="mt-4 text-xs leading-5 text-muted-foreground">
+        {tReasons(capability.reasonKey, capability.reasonValues)}
+      </p>
+    </SettingsSection>
   );
 }

@@ -22,6 +22,7 @@ interface Props {
 const INITIAL_REVOKE: RevokeKeyState = { status: "idle" };
 
 function RevokeButton({ keyId, orgId }: { keyId: string; orgId: string }) {
+  const tCopy = useTranslations("copy.apiKeysApiKeyList");
   const [_state, action, isPending] = useActionState(revokeApiKey, INITIAL_REVOKE);
 
   return (
@@ -33,7 +34,7 @@ function RevokeButton({ keyId, orgId }: { keyId: string; orgId: string }) {
         disabled={isPending}
         className="text-xs text-destructive-strong hover:text-destructive-strong/80 disabled:opacity-50"
       >
-        {isPending ? "Revoking…" : "Revoke"}
+        {isPending ? tCopy("revoking") : tCopy("revoke")}
       </button>
     </form>
   );

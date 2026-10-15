@@ -1060,7 +1060,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     category: "feedback",
     status: "stable",
     import: "@nebutra/ui/primitives",
-    files: ["layout/EmptyState.tsx", "primitives/empty-state.tsx"],
+    files: ["layout/EmptyState.tsx", "primitives/empty-state.tsx", "primitives/ghost-preview.tsx"],
     demos: ["empty-state-demo"],
   },
   {
@@ -1230,6 +1230,15 @@ export const CATALOG: readonly CatalogEntry[] = [
     import: "@nebutra/ui/layout",
     files: ["layout/PageHeader.tsx"],
     demos: ["page-header-demo"],
+  },
+  {
+    id: "settings-section",
+    title: "Settings Section",
+    category: "layout",
+    status: "stable",
+    import: "@nebutra/ui/layout",
+    files: ["layout/SettingsSection.tsx"],
+    demos: ["settings-section-demo"],
   },
   {
     id: "resizable",

@@ -63,6 +63,7 @@ const issueSchema = z.object({
 type IssueValues = z.infer<typeof issueSchema>;
 
 export function AccessInviteIssuer() {
+  const tCopy = useTranslations("copy.adminAccessInviteIssuer");
   const tc = useTranslations("copy.adminAccessInviteIssuer");
   const t = useTranslations("startupOs");
   const [message, setMessage] = useState<string | null>(null);
@@ -120,13 +121,13 @@ export function AccessInviteIssuer() {
         invites?: IssuedInvite[];
       };
       if (!response.ok) {
-        throw new Error(payload.error ?? "Failed to issue invites.");
+        throw new Error(payload.error ?? tCopy("failedToIssueInvites"));
       }
       setIssued(payload.invites ?? []);
-      setMessage("Copy these codes now. Plaintext invite codes are never shown again.");
+      setMessage(tCopy("copyTheseCodesNow"));
       await loadManagedInvites().catch(() => undefined);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Failed to issue invites.");
+      setMessage(error instanceof Error ? error.message : tCopy("failedToIssueInvites"));
     }
   }
 
@@ -139,15 +140,15 @@ export function AccessInviteIssuer() {
     });
     const payload = (await response.json().catch(() => ({}))) as { error?: string };
     if (!response.ok) {
-      setMessage(payload.error ?? "Failed to revoke invite.");
+      setMessage(payload.error ?? tCopy("failedToRevokeInvite"));
       return;
     }
-    setMessage("Invite revoked.");
+    setMessage(tCopy("inviteRevoked"));
     await loadManagedInvites().catch(() => undefined);
   }
 
   return (
-    <section className="mt-6 rounded-[var(--radius-3xl)] border border-border bg-background p-4 shadow-sm sm:p-6">
+    <section className="mt-6 rounded-[var(--radius-3xl)] border border-border bg-card p-4 shadow-sm sm:p-6">
       <div>
         <p className="font-medium text-sm text-muted-foreground uppercase tracking-[0.18em]">
           {tc("accessGate")}
@@ -196,7 +197,7 @@ export function AccessInviteIssuer() {
                 </FormLabel>
                 <Select name="scope" value={field.value} onValueChange={field.onChange}>
                   <FormControl>
-                    <SelectTrigger className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground">
+                    <SelectTrigger className="mt-1 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground">
                       <SelectValue />
                     </SelectTrigger>
                   </FormControl>
@@ -222,7 +223,7 @@ export function AccessInviteIssuer() {
                     {...field}
                     disabled={scope !== "tenant"}
                     placeholder="org_..."
-                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground disabled:opacity-50"
+                    className="mt-1 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground disabled:opacity-50"
                   />
                 </FormControl>
                 <FormMessage />
@@ -242,7 +243,7 @@ export function AccessInviteIssuer() {
                     {...field}
                     type="email"
                     placeholder="optional"
-                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
+                    className="mt-1 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground"
                   />
                 </FormControl>
                 <FormMessage />
@@ -261,7 +262,7 @@ export function AccessInviteIssuer() {
                   <Input
                     {...field}
                     type="datetime-local"
-                    className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
+                    className="mt-1 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground"
                   />
                 </FormControl>
                 <FormMessage />
@@ -275,7 +276,7 @@ export function AccessInviteIssuer() {
               disabled={pending}
               className="rounded-[var(--radius-lg)] bg-[color:hsl(var(--primary))] px-3 py-2 font-medium text-background text-sm disabled:opacity-50"
             >
-              {pending ? "Issuing..." : "Issue invite codes"}
+              {pending ? "Issuing..." : tCopy("issueInviteCodes")}
             </button>
             {message ? (
               <p role="status" className="text-sm text-muted-foreground">

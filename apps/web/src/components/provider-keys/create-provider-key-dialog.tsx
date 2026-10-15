@@ -59,6 +59,7 @@ export function CreateProviderKeyDialog({
   onOpenChange,
   onCreate,
 }: CreateProviderKeyDialogProps) {
+  const tCopy = useTranslations("copy.providerKeysCreateProviderKeyDialog");
   const tc = useTranslations("copy.providerKeysCreateProviderKeyDialog");
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -87,7 +88,7 @@ export function CreateProviderKeyDialog({
       onOpenChange(false);
     } catch (err) {
       form.setError("root", {
-        message: err instanceof Error ? err.message : "Failed to save provider key.",
+        message: err instanceof Error ? err.message : tCopy("failedToSaveProvider"),
       });
     }
   }
@@ -237,7 +238,7 @@ export function CreateProviderKeyDialog({
                 {tc("cancel")}
               </Button>
               <Button type="submit" variant="ink" disabled={submitting}>
-                {submitting ? "Saving…" : "Save key"}
+                {submitting ? "Saving…" : tCopy("saveKey")}
               </Button>
             </DialogFooter>
           </form>

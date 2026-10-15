@@ -31,6 +31,8 @@ async function fetchOrganizations(signal?: AbortSignal): Promise<Organization[]>
 }
 
 export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) {
+  const tJourney = useTranslations("copy.selectOrgJourney");
+  const tc = useTranslations("copy.selectOrgSelectOrgClient");
   const router = useRouter();
   const { organization, setActive } = useOrganization();
   const tSelectOrg = useTranslations("selectOrg");
@@ -73,15 +75,17 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
   const error = orgsQuery.error
     ? orgsQuery.error instanceof Error
       ? orgsQuery.error.message
-      : "Failed to load workspaces."
+      : tc("failedToLoadWorkspaces")
     : null;
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="mb-6">
-          <h1 className="text-2xl font-semibold">{copy.title}</h1>
-          <p className="mt-1 text-sm text-muted-foreground">{copy.description}</p>
+          <h1 className="text-2xl font-semibold">{tJourney(`${copy.variant}.title`)}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {tJourney(`${copy.variant}.description`)}
+          </p>
         </div>
 
         {loading ? (
@@ -96,7 +100,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
               {error}
             </p>
             <Link href={copy.emptyActionHref}>
-              <Button className="w-full">{copy.emptyActionLabel}</Button>
+              <Button className="w-full">{tJourney(`${copy.variant}.emptyActionLabel`)}</Button>
             </Link>
           </div>
         ) : organizations.length === 0 ? (
@@ -104,7 +108,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
             <h2 className="text-base font-semibold text-neutral-12">{emptyTitle}</h2>
             <p className="mb-4 mt-2 text-sm text-muted-foreground">{emptyDescription}</p>
             <Link href={copy.emptyActionHref}>
-              <Button className="w-full">{copy.emptyActionLabel}</Button>
+              <Button className="w-full">{tJourney(`${copy.variant}.emptyActionLabel`)}</Button>
             </Link>
           </div>
         ) : (
@@ -132,7 +136,7 @@ export function SelectOrgClient({ initialJourneyParams }: SelectOrgClientProps) 
             ))}
             <Link href="/onboarding">
               <Button variant="outline" className="mt-4 w-full">
-                {copy.createActionLabel}
+                {tJourney(`${copy.variant}.createActionLabel`)}
               </Button>
             </Link>
           </div>

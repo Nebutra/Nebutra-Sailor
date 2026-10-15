@@ -34,6 +34,7 @@ const TRANSIENT_RESOURCES = new Set(["login"]);
  * Cloudflare Access policy it still needs on the gateway's own host/path.
  */
 export default async function PlatformSupplyPage() {
+  const tCopy = await getTranslations("copy.supplyPage");
   const tc = await getTranslations("copy.supplyPage");
   const staff = await requireStaff();
   const caller = { userId: staff.userId, role: staff.role };
@@ -61,7 +62,7 @@ export default async function PlatformSupplyPage() {
                 <span className="font-mono text-xs">{loadError.code}</span> · {loadError.message}
               </>
             ) : (
-              "The router manifest declares no supply domain."
+              tCopy("theRouterManifestDeclares")
             )}
           </p>
         </Panel>

@@ -95,10 +95,7 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
 
   if (success) {
     return (
-      <section
-        aria-live="polite"
-        className="rounded-[var(--radius-lg)] border border-border bg-background p-6"
-      >
+      <section aria-live="polite" className="rounded-xl border border-border bg-card p-6">
         <h3 className="text-sm font-medium text-foreground">{t("successTitle")}</h3>
         <p className="mt-2 text-sm text-muted-foreground">{t("successDescription")}</p>
         <div className="mt-5">
@@ -113,7 +110,7 @@ export function ResetPasswordForm({ token, onSubmit }: ResetPasswordFormProps) {
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+    <section className="rounded-xl border border-border bg-card p-6">
       <div className="mb-5">
         <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>

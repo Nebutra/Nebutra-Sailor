@@ -1,5 +1,7 @@
 "use client";
 
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
+import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -128,36 +130,23 @@ export function DataExportCard({
   }
 
   return (
-    <section
+    <SettingsSection
       aria-labelledby="data-export-heading"
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-6"
+      title={t("title")}
+      description={t("description")}
     >
-      <h2 id="data-export-heading" className="text-base font-semibold text-foreground">
-        {t("title")}
-      </h2>
-      <p className="mt-2 text-sm text-muted-foreground">{t("description")}</p>
-      <p className="mt-2 text-xs text-muted-foreground">{t("compliance")}</p>
-
-      <div className="mt-5 flex flex-wrap items-center gap-3">
-        <button
-          type="button"
-          onClick={handleClick}
-          disabled={phase === "pending"}
-          className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-foreground px-4 py-2 text-sm font-medium text-background hover:bg-muted-foreground disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {phase === "pending" ? t("pending") : t("export")}
-        </button>
-
+      <SettingsSectionFooter hint={t("compliance")}>
         {phase === "ready" && downloadHref ? (
-          <a
-            href={downloadHref}
-            download="nebutra-account-export.json"
-            className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-muted"
-          >
-            {t("download")}
-          </a>
+          <Button asChild size="sm" variant="outline">
+            <a href={downloadHref} download="nebutra-account-export.json">
+              {t("download")}
+            </a>
+          </Button>
         ) : null}
-      </div>
+        <Button type="button" size="sm" onClick={handleClick} disabled={phase === "pending"}>
+          {phase === "pending" ? t("pending") : t("export")}
+        </Button>
+      </SettingsSectionFooter>
 
       {phase === "ready" ? (
         <p className="mt-3 text-sm text-success-strong" role="status">
@@ -169,6 +158,6 @@ export function DataExportCard({
           {errorMessage}
         </p>
       ) : null}
-    </section>
+    </SettingsSection>
   );
 }

@@ -96,7 +96,7 @@ export function AdminDirectoryPanel({
   const hasNext = currentPage < totalPages;
 
   return (
-    <section className="mt-6 rounded-[var(--radius-3xl)] border border-border bg-background p-4 shadow-sm sm:p-6">
+    <section className="mt-6 rounded-[var(--radius-3xl)] border border-border bg-card p-4 shadow-sm sm:p-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="font-medium text-sm text-muted-foreground uppercase tracking-[0.18em]">
@@ -124,7 +124,7 @@ export function AdminDirectoryPanel({
           <input
             data-allow-native
             aria-label={tc("searchUsersAndOrganizations")}
-            className="min-w-0 flex-1 rounded-[var(--radius-xl)] border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-[color:hsl(var(--primary))] /20"
+            className="min-w-0 flex-1 rounded-[var(--radius-xl)] border border-border bg-card px-3 py-2 text-sm text-foreground outline-none transition focus:border-[color:hsl(var(--primary))] /20"
             name="q"
             type="search"
             defaultValue={query}
@@ -231,6 +231,7 @@ function DirectoryTable({
 }
 
 function DirectoryTableRow({ row }: { row: DirectoryRow }) {
+  const tCopy = useTranslations("copy.adminAdminDirectoryPanel");
   const tc = useTranslations("copy.adminAdminDirectoryPanel");
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
@@ -250,11 +251,11 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
       });
       if (!response.ok) {
         const payload = (await response.json().catch(() => ({}))) as { error?: string };
-        throw new Error(payload.error ?? "Failed to start impersonation.");
+        throw new Error(payload.error ?? tCopy("failedToStartImpersonation"));
       }
       globalThis.location.assign("/");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Failed to start impersonation.");
+      setMessage(error instanceof Error ? error.message : tCopy("failedToStartImpersonation"));
     } finally {
       setImpersonating(false);
     }
@@ -290,11 +291,11 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
       });
       if (!response.ok) {
         const payload = (await response.json().catch(() => ({}))) as { error?: string };
-        throw new Error(payload.error ?? "Failed to save.");
+        throw new Error(payload.error ?? tCopy("failedToSave"));
       }
       setMessage(`Saved ${row.label}.`);
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "Failed to save.");
+      setMessage(error instanceof Error ? error.message : tCopy("failedToSave"));
     } finally {
       setPending(false);
     }
@@ -340,12 +341,12 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
           <Table.Cell alignment="start" colSpan={3} className="py-4">
             <form onSubmit={handleSubmit} className="grid gap-3 md:grid-cols-3">
               <label className="text-xs font-medium text-muted-foreground">
-                {row.kind === "user" ? "User name" : "Organization name"}
+                {row.kind === "user" ? tCopy("userName") : tCopy("organizationName")}
                 <input
                   data-allow-native
                   name="name"
                   defaultValue={row.label}
-                  className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
+                  className="mt-1 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground"
                 />
               </label>
               {row.kind === "user" ? (
@@ -357,7 +358,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                       name="email"
                       type="email"
                       defaultValue={row.meta}
-                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
+                      className="mt-1 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground"
                     />
                   </label>
                   <label className="flex items-end gap-2 pb-2 text-xs font-medium text-muted-foreground">
@@ -378,7 +379,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                       data-allow-native
                       name="slug"
                       defaultValue={row.slug}
-                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
+                      className="mt-1 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground"
                     />
                   </label>
                   <label className="text-xs font-medium text-muted-foreground">
@@ -387,7 +388,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                       data-allow-native
                       name="plan"
                       defaultValue={row.planName}
-                      className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground"
+                      className="mt-1 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground"
                     />
                   </label>
                 </>
@@ -398,7 +399,11 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                   disabled={pending}
                   className="rounded-[var(--radius-lg)] bg-[color:hsl(var(--primary))] px-3 py-2 font-medium text-background text-sm disabled:opacity-50"
                 >
-                  {pending ? "Saving…" : row.kind === "user" ? "Save user" : "Save organization"}
+                  {pending
+                    ? "Saving…"
+                    : row.kind === "user"
+                      ? tCopy("saveUser")
+                      : tCopy("saveOrganization")}
                 </button>
                 {message ? (
                   <p role="status" className="text-sm text-muted-foreground">

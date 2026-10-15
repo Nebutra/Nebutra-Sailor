@@ -89,10 +89,11 @@ async function TenantsContent() {
 }
 
 export default async function TenantsPage() {
+  const tCopy = await getTranslations("copy.tenantsPage");
   const tc = await getTranslations("copy.tenantsPage");
   return (
     <section className="mx-auto w-full max-w-wide" aria-label={tc("tenants")}>
-      <Suspense fallback={<LoadingState message="Loading tenant health..." />}>
+      <Suspense fallback={<LoadingState message={tCopy("loadingTenantHealth")} />}>
         <TenantsContent />
       </Suspense>
     </section>

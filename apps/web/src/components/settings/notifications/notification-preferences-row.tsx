@@ -48,7 +48,7 @@ export function NotificationPreferencesRow({
   return (
     <div
       data-testid={`notification-row-${eventTypeId}`}
-      className="grid grid-cols-1 gap-3 rounded-[var(--radius-lg)] border border-border bg-background p-4 md:grid-cols-[2fr_repeat(var(--channel-count),minmax(0,1fr))] md:items-center"
+      className="grid grid-cols-1 gap-3 rounded-xl border border-border bg-card p-4 md:grid-cols-[2fr_repeat(var(--channel-count),minmax(0,1fr))] md:items-center"
       style={{ ["--channel-count" as string]: visibleChannelIds.length }}
     >
       <div className="md:pr-4">

@@ -1,7 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, Input } from "@nebutra/ui/primitives";
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
+import {
+  Button,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Input,
+} from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -78,15 +87,11 @@ export function EmailChangeForm({
   }
 
   return (
-    <section
+    <SettingsSection
       aria-labelledby="email-change-heading"
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-6"
+      title={t("title")}
+      description={t("description")}
     >
-      <h2 id="email-change-heading" className="text-base font-semibold text-foreground">
-        {t("title")}
-      </h2>
-      <p className="mt-2 text-sm text-muted-foreground">{t("description")}</p>
-
       <Form {...form}>
         <form
           className="mt-5 space-y-4"
@@ -113,13 +118,11 @@ export function EmailChangeForm({
             )}
           />
 
-          <button
-            type="submit"
-            disabled={submitting || newEmail.trim() === ""}
-            className="inline-flex items-center justify-center rounded-[var(--radius-md)] bg-foreground px-4 py-2 text-sm font-medium text-background hover:bg-muted-foreground disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {submitting ? t("submitting") : t("submit")}
-          </button>
+          <SettingsSectionFooter>
+            <Button type="submit" size="sm" disabled={submitting || newEmail.trim() === ""}>
+              {submitting ? t("submitting") : t("submit")}
+            </Button>
+          </SettingsSectionFooter>
         </form>
       </Form>
 
@@ -133,6 +136,6 @@ export function EmailChangeForm({
           {error}
         </p>
       ) : null}
-    </section>
+    </SettingsSection>
   );
 }

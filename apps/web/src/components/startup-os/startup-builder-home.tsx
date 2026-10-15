@@ -46,58 +46,38 @@ import { StartupConnectorsMenu } from "./startup-connectors-menu";
 const COMPILE_OUTPUTS = [
   {
     icon: BookClosed,
-    title: "CompanyContext",
-    desc: "Mission, ICP, and positioning — the company's source of truth.",
+    key: "companyContext",
     highlight: false,
   },
   {
     icon: Sparkles,
-    title: "Launch artifacts",
-    desc: "Brand, landing page, and pitch, generated together.",
+    key: "launchArtifacts",
     highlight: false,
   },
   {
     icon: FolderClosed,
-    title: "Live files",
-    desc: "A real, runnable app scaffold you can edit.",
+    key: "liveFiles",
     highlight: false,
   },
   {
     icon: Layers,
-    title: "Spatial canvas",
-    desc: "Every artifact mapped on one zoomable canvas.",
+    key: "spatialCanvas",
     highlight: false,
   },
   {
     icon: ShieldCheck,
-    title: "Governed runs",
-    desc: "Every agent run is approval-gated and audited.",
+    key: "governedRuns",
     highlight: true,
   },
 ] as const;
 
-/** Arena-specific example theses — clickable starters that defeat the blank page. */
-const EXAMPLE_THESES: Record<StartupArena, readonly string[]> = {
-  "Developer infrastructure": [
-    "A usage-metered API gateway for AI apps",
-    "A self-host vector database with one-click cloud",
-  ],
-  "AI SaaS": [
-    "An AI meeting-notes tool that drafts the follow-up email",
-    "A support-deflection copilot for B2B SaaS",
-  ],
-  "Consumer product": [
-    "A habit tracker that rewards streaks with friends",
-    "A local-first journal with weekly AI reflection",
-  ],
-  "B2B operations": [
-    "An approvals + audit workspace for finance teams",
-    "A vendor-onboarding portal with compliance checks",
-  ],
-  "Creative tooling": [
-    "A storyboard-to-video generator for marketers",
-    "A brand-kit generator from a single logo",
-  ],
+/** Arena → catalog key; labels and example theses live under `arenas.<key>` in the catalog. */
+const ARENA_KEYS: Record<StartupArena, string> = {
+  "Developer infrastructure": "devInfra",
+  "AI SaaS": "aiSaas",
+  "Consumer product": "consumer",
+  "B2B operations": "b2bOps",
+  "Creative tooling": "creative",
 };
 
 /** Elevation stands in for the stroke this card deliberately does not have. */
@@ -232,12 +212,12 @@ export function StartupBuilderHome({
                       aria-label={tc("startupArena")}
                       className="h-auto w-fit rounded-full bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 transition-colors hover:bg-neutral-3 disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      <SelectValue />
+                      <SelectValue>{tc(`arenas.${ARENA_KEYS[arena]}.label`)}</SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {STARTUP_ARENAS.map((option) => (
                         <SelectItem key={option} value={option}>
-                          {option}
+                          {tc(`arenas.${ARENA_KEYS[option]}.label`)}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -250,8 +230,8 @@ export function StartupBuilderHome({
                   shape="circle"
                   disabled={!canCompile}
                   onClick={onCompile}
-                  aria-label={isSaving ? "Building" : "Build"}
-                  title={isSaving ? "Building…" : "Build"}
+                  aria-label={isSaving ? tc("building") : tc("build")}
+                  title={isSaving ? tc("building") : tc("build")}
                 >
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Button>
@@ -261,7 +241,7 @@ export function StartupBuilderHome({
             {thesis.trim().length === 0 ? (
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
                 <span className="text-xs text-neutral-10">{tc("try")}</span>
-                {EXAMPLE_THESES[arena].map((example) => (
+                {(tc.raw(`arenas.${ARENA_KEYS[arena]}.theses`) as string[]).map((example) => (
                   <Button
                     key={example}
                     type="button"
@@ -278,22 +258,22 @@ export function StartupBuilderHome({
               </div>
             ) : null}
 
-            <div className="mt-10 grid grid-cols-2 gap-3 text-left sm:grid-cols-3 lg:grid-cols-5">
+            {/* What one sentence compiles into: one hairline strip, not five tinted tiles. */}
+            <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-xl border border-border text-left sm:grid-cols-2 lg:grid-cols-5 [&>*]:border-border max-lg:[&>*:not(:last-child)]:border-b lg:divide-x lg:divide-border">
               {COMPILE_OUTPUTS.map((output) => {
                 const OutputIcon = output.icon;
                 return (
-                  <div
-                    key={output.title}
-                    className={`flex h-full flex-col gap-2 rounded-2xl p-3.5 ${
-                      output.highlight ? "bg-primary/10 dark:bg-primary/15" : "bg-neutral-2"
-                    }`}
-                  >
+                  <div key={output.key} className="flex h-full flex-col gap-1.5 p-4">
                     <OutputIcon
                       className={`size-4 ${output.highlight ? "text-primary" : "text-neutral-10"}`}
                       aria-hidden="true"
                     />
-                    <span className="text-sm font-semibold text-neutral-12">{output.title}</span>
-                    <span className="text-xs leading-5 text-neutral-11">{output.desc}</span>
+                    <span className="mt-1 text-sm font-semibold text-neutral-12">
+                      {tc(`outputs.${output.key}.title`)}
+                    </span>
+                    <span className="text-xs leading-5 text-neutral-11">
+                      {tc(`outputs.${output.key}.description`)}
+                    </span>
                   </div>
                 );
               })}

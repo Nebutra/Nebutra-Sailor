@@ -1,5 +1,6 @@
 "use client";
 
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
 import { Button } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -59,14 +60,7 @@ export function SetPasswordForm({ email, onSubmit }: SetPasswordFormProps) {
   const errorMessage = errorKey ? tErrors(errorKey) : null;
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-        <div>
-          <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
-          <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
-        </div>
-      </div>
-
+    <SettingsSection title={t("title")} description={t("description")}>
       {errorMessage && (
         <p className="mb-4 text-sm text-destructive-strong" id="set-password-error" role="alert">
           {errorMessage}
@@ -82,15 +76,17 @@ export function SetPasswordForm({ email, onSubmit }: SetPasswordFormProps) {
           {t("sentMessage")}
         </p>
       ) : (
-        <Button disabled={pending} type="button" onClick={requestPasswordSetup}>
-          {pending ? t("pending") : t("submit")}
-        </Button>
+        <SettingsSectionFooter>
+          <Button disabled={pending} type="button" size="sm" onClick={requestPasswordSetup}>
+            {pending ? t("pending") : t("submit")}
+          </Button>
+        </SettingsSectionFooter>
       )}
       {pending && (
         <p className="mt-3 text-sm text-muted-foreground" role="status">
           {t("pending")}
         </p>
       )}
-    </section>
+    </SettingsSection>
   );
 }

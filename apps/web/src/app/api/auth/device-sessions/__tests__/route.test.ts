@@ -85,7 +85,7 @@ describe("GET /api/auth/device-sessions", () => {
       expect.objectContaining({
         id: "web_current",
         kind: "web",
-        label: "Chrome on macOS",
+        label: "Chrome · macOS",
         canRevoke: false,
         isCurrent: true,
       }),

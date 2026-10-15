@@ -20,7 +20,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
     return (
       <section
         aria-live="polite"
-        className="rounded-[var(--radius-lg)] border border-border bg-background p-6 text-center"
+        className="rounded-xl border border-border bg-card p-6 text-center"
       >
         <div
           aria-hidden
@@ -40,10 +40,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
   }
 
   return (
-    <section
-      aria-live="polite"
-      className="rounded-[var(--radius-lg)] border border-border bg-background p-6 text-center"
-    >
+    <section aria-live="polite" className="rounded-xl border border-border bg-card p-6 text-center">
       <div
         aria-hidden
         className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-warning/15 text-lg text-warning-strong"
@@ -58,7 +55,7 @@ export function VerifyEmailResult({ success, errorKey = "unknown" }: VerifyEmail
       <div className="mt-5">
         <Link
           href="/sign-in"
-          className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-border bg-background px-4 py-2 text-sm font-medium text-foreground hover:bg-muted"
+          className="inline-flex items-center justify-center rounded-[var(--radius-md)] border border-border bg-card px-4 py-2 text-sm font-medium text-foreground hover:bg-muted"
         >
           {t("signInCta")}
         </Link>

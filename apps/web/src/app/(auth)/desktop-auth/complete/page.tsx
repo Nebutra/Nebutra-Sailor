@@ -39,7 +39,7 @@ function DesktopAuthError() {
   const tc = useTranslations("copy.completePage");
   return (
     <AuthSplitLayout>
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-sm">
+      <section className="rounded-xl border border-border bg-card p-6 shadow-sm">
         <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
           {tc("desktopSignIn")}
         </p>

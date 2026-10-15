@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
 import {
   Button,
   Form,
@@ -89,30 +90,22 @@ export function DeleteOrganizationForm({
 
   if (success) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+      <SettingsSection tone="danger">
         <p role="status" className="text-sm text-foreground">
           {t("success")}
         </p>
-      </section>
+      </SettingsSection>
     );
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10/60 p-6">
-      <div className="mb-4">
-        {/* text-destructive-strong rather than text-destructive-strong: --destructive is 5.42:1 on
-            white but only 2.13:1 on the dark card, so it is a fill-only token.
-            The registered red ramp is 5.32 light / 5.27 dark. TODO: move to
-            text-destructive-strong once a --destructive-strong companion to
-            --warning-strong lands in @nebutra/tokens. */}
-        <h3 className="text-sm font-semibold text-destructive-strong">{t("title")}</h3>
-        <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
-      </div>
-
+    <SettingsSection tone="danger" title={t("title")} description={t("description")}>
       {stage === "idle" ? (
-        <Button type="button" onClick={() => setStage("confirm")}>
-          {t("trigger")}
-        </Button>
+        <SettingsSectionFooter>
+          <Button type="button" variant="destructive" onClick={() => setStage("confirm")}>
+            {t("trigger")}
+          </Button>
+        </SettingsSectionFooter>
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleValidSubmit)} className="space-y-4">
@@ -147,17 +140,17 @@ export function DeleteOrganizationForm({
               </p>
             )}
 
-            <div className="flex flex-wrap gap-3">
-              <Button type="submit" disabled={!canSubmit}>
-                {t("submit")}
-              </Button>
+            <SettingsSectionFooter>
               <Button type="button" variant="outline" onClick={handleCancel} disabled={pending}>
                 {t("cancel")}
               </Button>
-            </div>
+              <Button type="submit" variant="destructive" disabled={!canSubmit}>
+                {t("submit")}
+              </Button>
+            </SettingsSectionFooter>
           </form>
         </Form>
       )}
-    </section>
+    </SettingsSection>
   );
 }

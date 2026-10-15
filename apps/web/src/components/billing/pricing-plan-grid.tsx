@@ -157,6 +157,7 @@ export function PricingPlanGrid({
   onSelectError,
   className,
 }: PricingPlanGridProps) {
+  const tCopy = useTranslations("copy.billingPricingPlanGrid");
   const tc = useTranslations("copy.billingPricingPlanGrid");
   const visiblePlans = useMemo(
     () => dedupeDefaultFreePlans(plans).filter((plan) => plan.id !== activePlanId),
@@ -193,7 +194,7 @@ export function PricingPlanGrid({
     } catch (error) {
       onSelectError?.(error, planId);
       if (!onSelectPlan) {
-        setCheckoutError(error instanceof Error ? error.message : "Checkout could not start.");
+        setCheckoutError(error instanceof Error ? error.message : tCopy("checkoutCouldNotStart"));
       }
     } finally {
       startTransition(() => {

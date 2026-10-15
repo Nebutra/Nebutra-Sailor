@@ -83,6 +83,7 @@ export function CommunicationPreferences({
   value = DEFAULT_COMMUNICATION_PREFERENCES,
   onSave = DEFAULT_SAVE,
 }: Props) {
+  const tCopy = useTranslations("copy.personalizationCommunicationPreferences");
   const tc = useTranslations("copy.personalizationCommunicationPreferences");
   const [current, setCurrent] = useState<CommunicationPreferenceValue>(value);
   const [busyKey, setBusyKey] = useState<keyof CommunicationPreferenceValue | null>(null);
@@ -95,12 +96,12 @@ export function CommunicationPreferences({
       setBusyKey(key);
       try {
         await onSave(next);
-        toast.success("Preference updated");
+        toast.success(tCopy("preferenceUpdated"));
       } catch (err) {
         // Rollback on failure.
         setCurrent(current);
-        toast.error("Failed to save preference", {
-          description: err instanceof Error ? err.message : "Please try again.",
+        toast.error(tCopy("failedToSavePreference"), {
+          description: err instanceof Error ? err.message : tCopy("pleaseTryAgain"),
         });
       } finally {
         setBusyKey(null);

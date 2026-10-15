@@ -24,6 +24,7 @@ interface AtelierCanvasProps {
 }
 
 export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
+  const tCopy = useTranslations("copy.atelierAtelierCanvas");
   const tc = useTranslations("copy.atelierAtelierCanvas");
   const [elements, setElements] = useState<CanvasElement[]>([]);
   const [files, setFiles] = useState<CanvasFile[]>([]);
@@ -111,7 +112,7 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
 
       {/* Prompt panel */}
 
-      <div className="flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-4">
+      <div className="flex h-full flex-col gap-3 rounded-xl border border-border bg-card p-4">
         <h2 className="font-semibold text-neutral-12 text-sm">{tc("brief")}</h2>
         <Textarea
           value={prompt}
@@ -122,7 +123,7 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
         />
         <Button type="button" onClick={submit} disabled={busy || !prompt.trim()}>
           <Sparkles className="mr-2 h-4 w-4" />
-          {busy ? "Generating…" : "Generate"}
+          {busy ? tCopy("generating") : tCopy("generate")}
         </Button>
         <p className="mt-auto text-neutral-11 text-xs">{tc("mockProviderNoAI")}</p>
       </div>

@@ -43,6 +43,7 @@ async function defaultSubmit(input: {
 }
 
 export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialogProps) {
+  const tCopy = useTranslations("copy.webhooksCreateWebhookDialog");
   const tc = useTranslations("copy.webhooksCreateWebhookDialog");
   const [result, setResult] = useState<CreateWebhookResult | null>(null);
   const { copied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
@@ -81,7 +82,7 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
             size="sm"
             onClick={() => copySecret(signingSecret)}
           >
-            {copied ? "Copied" : "Copy"}
+            {copied ? tCopy("copied") : tCopy("copy")}
           </Button>
         </div>
         <p className="text-xs">{tc("endpointURL", { url: String(endpoint.url) })}</p>
@@ -90,6 +91,10 @@ export function CreateWebhookDialog({ onSubmit, onCreated }: CreateWebhookDialog
   }
 
   return (
-    <WebhookEndpointForm submitLabel="Create endpoint" pendingLabel="Creating…" onSubmit={submit} />
+    <WebhookEndpointForm
+      submitLabel={tCopy("createEndpoint")}
+      pendingLabel={tCopy("creating")}
+      onSubmit={submit}
+    />
   );
 }

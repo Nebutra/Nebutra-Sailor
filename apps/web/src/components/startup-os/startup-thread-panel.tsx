@@ -105,6 +105,7 @@ export function StartupThreadPanel({
   projects,
   selectedRun,
 }: StartupThreadPanelProps) {
+  const tCopy = useTranslations("copy.startupOsStartupThreadPanel");
   const tc = useTranslations("copy.startupOsStartupThreadPanel");
   const threadItems = buildThreadItems(project, selectedRun);
 
@@ -125,7 +126,7 @@ export function StartupThreadPanel({
                 variant={item.run.approval === "pending_review" ? "warning" : "secondary"}
                 size="sm"
               >
-                {item.run.approval === "pending_review" ? "Review" : "Build"}
+                {item.run.approval === "pending_review" ? tCopy("review") : tCopy("build")}
               </Badge>
               {item.run.approval === "pending_review" ? (
                 <Button
@@ -136,7 +137,7 @@ export function StartupThreadPanel({
                   disabled={isApproving}
                   onClick={onApprove}
                 >
-                  {isApproving ? "Approving" : "Approve"}
+                  {isApproving ? tCopy("approving") : tCopy("approve")}
                 </Button>
               ) : (
                 <Button

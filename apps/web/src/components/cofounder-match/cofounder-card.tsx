@@ -32,9 +32,10 @@ export function CofounderCard({
   data: CofounderCardData;
   preview?: boolean;
 }) {
+  const tCopy = useTranslations("copy.cofounderMatchCofounderCard");
   const tc = useTranslations("copy.cofounderMatchCofounderCard");
   return (
-    <div className="flex min-h-[380px] w-full max-w-sm flex-col overflow-hidden rounded-[28px] border border-neutral-7 bg-neutral-1 shadow-lg shadow-neutral-12/5">
+    <div className="flex min-h-[380px] w-full max-w-sm flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
       {/* Brand-tinted header band */}
       <div
         className="flex items-center justify-between px-5 py-3"
@@ -70,8 +71,7 @@ export function CofounderCard({
             {tc("complementarity")}
           </div>
           <p className="mt-1 text-xs text-neutral-10">
-            {data.complementarity ??
-              (preview ? "Computed against each viewer once you join the cofounder pool." : "—")}
+            {data.complementarity ?? (preview ? tCopy("computedAgainstEachViewer") : "—")}
           </p>
         </div>
 
