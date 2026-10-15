@@ -1,4 +1,4 @@
-import { CATALOG } from "@nebutra/ui/catalog";
+import { CATALOG, CATALOG_CATEGORIES } from "@nebutra/ui/catalog";
 import { coveredNames } from "@/lib/components/registry";
 
 /**
@@ -148,4 +148,54 @@ export function showcaseDemos(): ShowcaseDemo[] {
     .map((id) => ({ id, label: toLabel(id) }));
 
   return cached;
+}
+
+export interface ShowcaseItem {
+  /** Catalog entry id. */
+  id: string;
+  title: string;
+  /** The demo the card renders — the entry's first demo still shown here. */
+  demo: string;
+  /** How many demos the entry has on this page, the shown one included. */
+  variants: number;
+  status: "stable" | "experimental";
+}
+
+export interface ShowcaseGroup {
+  id: string;
+  title: string;
+  items: ShowcaseItem[];
+}
+
+/**
+ * The showcase as the catalog organises it: one card per component, grouped by
+ * catalog category in the catalog's own order.
+ *
+ * The flat list above showed every demo file, alphabetically — four accordions,
+ * five carousels and three breadcrumbs in a row, with nothing saying where one
+ * family ended or what kind of thing it was. A card is a component; its other
+ * demos are counted on it, not repeated.
+ */
+export function showcaseGroups(): ShowcaseGroup[] {
+  const shown = new Set(showcaseDemos().map((d) => d.id));
+  const groups: ShowcaseGroup[] = [];
+  for (const category of CATALOG_CATEGORIES) {
+    const items = CATALOG.filter((entry) => entry.category === category.id)
+      .map((entry) => {
+        const demos = entry.demos.filter((id) => shown.has(id));
+        const first = demos[0];
+        if (!first) return null;
+        return {
+          id: entry.id,
+          title: entry.title,
+          demo: first,
+          variants: demos.length,
+          status: entry.status,
+        } satisfies ShowcaseItem;
+      })
+      .filter((item): item is ShowcaseItem => item !== null)
+      .sort((a, b) => a.title.localeCompare(b.title));
+    if (items.length) groups.push({ id: category.id, title: category.title, items });
+  }
+  return groups;
 }
