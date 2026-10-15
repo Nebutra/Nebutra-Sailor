@@ -1,4 +1,5 @@
-import { AUTH_FORM_COLUMN_CLASS, cn } from "@nebutra/ui/utils";
+import { cn } from "@nebutra/ui/utils";
+import { AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils/auth-surfaces";
 import type { ReactNode } from "react";
 
 export interface AuthSplitShellProps {

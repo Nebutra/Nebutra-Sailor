@@ -10,6 +10,8 @@ import {
 
 const REPO_ROOT = join(process.cwd(), "../../..");
 
+/** The one split shell both sign-in surfaces render (@nebutra/auth/sign-in). */
+const SPLIT_SHELL = "packages/iam/auth/src/sign-in/auth-split-shell.tsx";
 const SPLIT_LAYOUTS = [
   "apps/auth/src/components/auth-split-layout.tsx",
   "apps/web/src/components/auth/auth-split-layout.tsx",
@@ -24,10 +26,7 @@ const AUTH_SURFACES = [
   "apps/web/src/components/auth/passkey-panel.tsx",
 ] as const;
 
-const OAUTH_BUTTONS = [
-  "apps/auth/src/components/oauth-buttons.tsx",
-  "apps/web/src/components/auth/oauth-buttons.tsx",
-] as const;
+const OAUTH_BUTTONS = ["packages/iam/auth/src/sign-in/oauth-buttons.tsx"] as const;
 
 const FOREGROUND_FILL_FIGHT =
   /bg-\[hsl\(var\(--foreground\)\)\][\s\S]{0,120}text-\[hsl\(var\(--background\)\)\]/;
@@ -44,15 +43,23 @@ describe("auth surface layout contracts", () => {
     expect(AUTH_PRIMARY_CTA_CLASS).toContain("w-full");
   });
 
-  it("both product AuthSplitLayouts apply width SSOT without card chrome", () => {
+  it("both product AuthSplitLayouts render the one shared shell", () => {
     for (const rel of SPLIT_LAYOUTS) {
+      const source = readFileSync(join(REPO_ROOT, rel), "utf8");
+      expect(source, rel).toContain('from "@nebutra/auth/sign-in"');
+      expect(source, rel).toContain("<AuthSplitShell");
+      expect(source, rel).toContain("getMarketingHomeUrl");
+    }
+  });
+
+  it("the shared split shell applies width SSOT without card chrome", () => {
+    for (const rel of [SPLIT_SHELL]) {
       const source = readFileSync(join(REPO_ROOT, rel), "utf8");
       expect(source, rel).toContain("AUTH_FORM_COLUMN_CLASS");
       expect(source, rel).not.toContain("AUTH_FORM_CARD_CLASS");
       // Server-safe path only — @nebutra/ui/utils was once client-stamped and
       // RSC treated AUTH_FORM_* as client proxies (login card className empty).
       expect(source, rel).toContain('from "@nebutra/ui/utils/auth-surfaces"');
-      expect(source, rel).toContain("getMarketingHomeUrl");
       // Forbid bare barrel import of AUTH_FORM_* (cn from @nebutra/ui/utils is fine).
       expect(source, rel).not.toMatch(
         /import\s*\{[^}]*AUTH_FORM_COLUMN_CLASS[^}]*\}\s*from\s*["']@nebutra\/ui\/utils["']/,
