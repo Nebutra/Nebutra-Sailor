@@ -327,12 +327,9 @@
       "apps/web/src/components/api-keys/create-api-key-dialog.tsx",
       "apps/web/src/components/auth/auth-banner.tsx",
       "apps/web/src/components/auth/desktop-auth-complete-handoff.tsx",
-      "apps/web/src/components/auth/sign-up-form.tsx",
-      "apps/web/src/components/notifications/notification-inbox-preview.tsx",
       "apps/web/src/components/notifications/notification-preference-matrix.tsx",
       "apps/web/src/components/notifications/notification-runtime-banner.tsx",
       "apps/web/src/components/settings/security/security-capabilities.ts",
-      "apps/web/src/components/settings/security/security-settings-client.tsx",
       "backends/gateway/src/agents/default-agents.ts",
       "backends/gateway/src/app.ts",
       "backends/gateway/src/routes/ai/gateway.ts",
@@ -2078,10 +2075,6 @@
       },
       {
         "file": "apps/web/src/components/auth/sign-up-form.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/auth/wechat-login-button.tsx",
         "count": 1
       },
       {
