@@ -252,7 +252,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
       ) : shouldRenderOAuth ? (
         <>
           <OAuthButtons
-            providers={enabledOAuthProviders}
+            providers={enabledOAuthProviders ?? []}
             returnTo={returnUrl ?? "/onboarding"}
             labels={oauthButtonsLabels(tSignIn)}
           />

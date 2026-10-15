@@ -39,15 +39,61 @@ Static counts come from a scratch audit script; the per-guard baselines in `gove
 10. **Vite preview app.** `/sign-in` stays reachable while signed in (header shows "Preview Admin · Sign out" above a sign-in form); the card is gray on a white page (inverted surface ladder).
 11. **Dockerfile drift.** `apps/web/Dockerfile` runs `pnpm --filter @nebutra/web build` (now Vite) but copies `.next/standalone`; deploys use `build:next` via the workflow, so the Dockerfile is stale.
 
-## Blockers found while rendering (local workarounds, not committed)
+## Blockers found while rendering
 
 - `@nebutra/gateway/app` resolves to `dist/`, which `pnpm dev`'s prebuild does not emit — every embedded-gateway route 500s in `next dev` until `backends/gateway` is built with `tsc`.
-- The stale generated Prisma client needed `db:generate`; then defect 3 required a local mapping patch to render settings at all.
+- A stale generated Prisma client needed `db:generate`.
 
-## Fixed in this change
+## Organization table: which one Better Auth owns (decided, implemented)
 
-- Defect 1 (settings responsive layout). Before/after: `review-web/compare-settings_security-390.png`, `compare-settings_team-390.png`, `compare-settings-390.png` (scratchpad).
+Production readers already use Better Auth's own tables: the auth edge
+(`apps/auth/src/worker-edge.ts` with `EDGE_ORGANIZATION_OPTIONS` →
+`better_auth.organization` / `member` / `invitation`, serving only the
+selection paths `/api/auth/organization/{list,set-active,get-full-organization,get-active-member}`)
+and the gateway (`bAMember` in `backends/gateway/src/routes/kcq/scope.ts`). The Node
+path (`apps/web`'s in-process `/api/auth/*` and `getUserOrganizations`, which also
+serves organization creation) mounted `organization()` with no schema: `member` and
+`invitation` had no Prisma delegate (every call threw), and `organization` resolved to
+the legacy `public.organizations`, which needs a `clerk_id` Better Auth never sends — so
+the Node path never wrote a row anywhere. Mapping the plugin to `bAOrganization` /
+`bAMember` / `bAInvitation` is therefore a pure name mapping with no data migration
+(`7073a009d`, pinned by `node-organization-config.test.ts`). Single owner:
+`better_auth.*`; `public.organizations` stays the product tenancy table it already is.
 
-## Left open / next
+## Fixed
 
-Defects 2 and 3 need routing (tokens, iam/auth). A shrink-only `lint-hardcoded-copy` guard over `apps/{web,auth,idp}` with the 369-string baseline is the next mechanical ratchet; then migrate settings/sidebar copy to `settings.*` / `Sidebar.*` keys. Then sign-in polish (6), the `dark:` overrides (8) and the label/type pass (7).
+| # | Defect | Fix | Commit |
+| --- | --- | --- | --- |
+| 1 | Settings collapses at 390 (14 routes) | rail → scroll strip below `md` | `aadc4ec15` |
+| 3 | Node organization endpoints 500 | plugin mapped to Better Auth tables | `7073a009d` |
+| 4 | Hardcoded English, 627 strings / 127 files (measured by the new guard; the first heuristic said 369) | all moved to `en.json` under `copy.*` plus `Sidebar.nav.*` for sidebar, breadcrumbs and settings rail; Simplified Chinese written for every new key (other locales fall back to English until `i18n-translate.yml` fills them); idp (no message runtime), the three `global-error.tsx` and `ErrorBoundary` are `@copy-exempt` with reasons | `ab471e0d6`…`de149c565` |
+| 5 | Two sign-in implementations | `apps/auth` owns sign-in (ADR 2026-07-22); OAuth buttons, provider detection and the split shell live once in `@nebutra/auth/sign-in` and both apps import them; dead `@nebutra/auth/components` forms deleted | `905950b3c`, `377ea30c3` |
+| 6 | Sign-in polish | Home and locale share one top row; component focus outline removed; footer sentence-case sans; subtitle no longer offers a choice of one | `905950b3c` |
+| 7 | 9–11px sizes, uppercase, wide tracking | 79 of 80 removed in startup-os, referrals, shortcuts, webhooks; arbitrary-typography allowlist 1450 → 1397 | `a06f6400a` |
+| 9 | `/admin` silent redirect | 403 explanation with a way back | `837ab7836` |
+| 9 | Console floods | `now` in the next-intl request config (≈100 ENVIRONMENT_FALLBACK errors per `/settings/security` render) | `874ad0a4a` |
+| 10 | Signed-in visitor sees `/sign-in` | redirected on (Next auth-center host, Vite preview) | `837ab7836` |
+| 11 | Stale Dockerfile | runs `build:next` | `837ab7836` |
+
+New guard: `scripts/lint-hardcoded-copy.mjs` (in `pnpm lint`, probed in
+`lint-guards-actually-guard.test.ts`), baseline 627 → **0**. The web test mock now
+reads the real English catalog, so component tests assert the copy users read.
+
+## Still open
+
+- **Token contrast (defect 2)** — routed to the primitives/tokens owner.
+- **Copy outside JSX**: strings held in data and constants (referral level names and
+  descriptions, plan names, notification preference rows) are not counted by the guard
+  and stay English in zh-Hans; some sentences that wrap inline elements were split into
+  fragments by the codemod (`agentRuntimePage.the`, `canvasPage.*`, the dashboard hint
+  card) and read awkwardly in Chinese — rewrite as `t.rich` messages.
+- **Shared primitives** (for routing): `SidebarNav` group labels are uppercase-tracked
+  (`PRODUCT`); `EmptyState` logs a missing `key` warning.
+- **`/api/v1/integrations` returns 401** on every page in the local preview (embedded
+  gateway service auth unconfigured locally); production not verified.
+- The sign-in email/reset/magic-link forms still differ between `apps/web` and
+  `apps/auth`; only the shared blocks are unified.
+
+Comparison captures (git-ignored, local): `scratch-verify/captures/compare-*.png` in the
+review worktree — settings security and team at 390, sign-in at 1440, admin at 1440,
+usage and referrals in zh-Hans at 1440.

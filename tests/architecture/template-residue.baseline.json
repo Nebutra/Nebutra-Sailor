@@ -46,7 +46,6 @@
     "apps/web/src/app/api/webhooks/queuebase/__tests__/route.test.ts",
     "apps/web/src/app/global-error.tsx",
     "apps/web/src/app/signup/remote/__tests__/route.test.ts",
-    "apps/web/src/components/auth/__tests__/wechat-login-button.test.tsx",
     "apps/web/src/lib/__tests__/auth-request-resolution.test.ts",
     "apps/web/src/lib/__tests__/env.test.ts",
     "apps/web/src/lib/__tests__/organizations-route.test.ts",

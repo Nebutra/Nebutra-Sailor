@@ -204,7 +204,7 @@ export function SignInForm({
       {shouldRenderOAuth && (
         <>
           <OAuthButtons
-            providers={enabledOAuthProviders}
+            providers={enabledOAuthProviders ?? []}
             returnTo={returnUrl ?? "/"}
             labels={oauthButtonsLabels(t)}
           />
