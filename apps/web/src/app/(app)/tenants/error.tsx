@@ -11,6 +11,7 @@ interface ErrorProps {
 }
 
 export default function TenantsError({ error, reset }: ErrorProps) {
+  const tCopy = useTranslations("copy.tenantsError");
   const tc = useTranslations("copy.tenantsError");
   useEffect(() => {
     Sentry.captureException(error);
@@ -21,12 +22,9 @@ export default function TenantsError({ error, reset }: ErrorProps) {
       variant="section"
       code="Error · Tenants"
       title={tc("failedToLoadTenants")}
-      description={
-        error.message ||
-        "An unexpected error occurred while loading tenants. Try again, or return to the dashboard."
-      }
-      primaryAction={{ label: "Try again", onClick: reset }}
-      secondaryAction={{ label: "Go to dashboard", href: "/workspace" }}
+      description={error.message || tCopy("anUnexpectedErrorOccurred")}
+      primaryAction={{ label: tCopy("tryAgain"), onClick: reset }}
+      secondaryAction={{ label: tCopy("goToDashboard"), href: "/workspace" }}
       meta={error.digest ? { errorId: error.digest } : undefined}
     />
   );

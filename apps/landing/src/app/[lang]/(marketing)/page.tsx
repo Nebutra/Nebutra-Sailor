@@ -3,6 +3,7 @@ import { NewsletterForm } from "@/components/landing/NewsletterForm";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 import { EssayFeature, essays, FEATURED, toCard } from "@/nebutra/home/essay-feature";
 import { EssayGrid } from "@/nebutra/home/essay-grid";
+import { Offerings } from "@/nebutra/home/offerings";
 import { siteLang } from "@/nebutra/i18n";
 import { ROUTES } from "@/nebutra/routes";
 import { sitePageMeta } from "@/nebutra/seo";
@@ -24,8 +25,10 @@ async function Latest() {
 }
 
 /**
- * nebutra.com — media first, as a16z's front page is. The thinking leads; the
- * platform you can use today and what we are building follow, stated plainly.
+ * nebutra.com — the company in one line, then what it offers today: the two
+ * businesses (Sailor, Consulting) with a real artifact each, and KCQ, incubated
+ * on Sailor. The nine layers are how we decide, named under every offering.
+ * The Journal follows; the vision (Nebutra OS, Sleptons) is one line at the end.
  */
 export default async function SiteHome({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -41,6 +44,7 @@ export default async function SiteHome({ params }: { params: Promise<{ lang: str
           <Intro
             level={1}
             lang={lang}
+            className="max-w-4xl"
             title={t.rich("hero.title", {
               signature: (chunks) => <span className="signature">{chunks}</span>,
             })}
@@ -49,6 +53,15 @@ export default async function SiteHome({ params }: { params: Promise<{ lang: str
           />
         </div>
       </section>
+
+      <Band id="offer">
+        <Offerings lang={lang} />
+      </Band>
+
+      <Band id="decide">
+        <Intro title={t("decide.title")} lead={t("decide.lead")} />
+        <More href="/about#layers">{t("decide.cta")}</More>
+      </Band>
 
       <Band>
         <EssayFeature />
@@ -69,17 +82,10 @@ export default async function SiteHome({ params }: { params: Promise<{ lang: str
         </div>
       </Band>
 
+      {/* The vision, weakened to one line: it lives in the Journal and on Building. */}
       <Band>
-        <div className="grid grid-cols-1 gap-14 md:grid-cols-2">
-          <div>
-            <Intro title="Sailor" lead={t("sailor.lead")} />
-            <More href={ROUTES.sailor}>{t("sailor.cta")}</More>
-          </div>
-          <div>
-            <Intro title={t("building.title")} lead={t("building.lead")} />
-            <More href={ROUTES.building}>{t("building.cta")}</More>
-          </div>
-        </div>
+        <p className="max-w-2xl text-base text-muted-foreground text-pretty">{t("later.line")}</p>
+        <More href={ROUTES.building}>{t("later.cta")}</More>
       </Band>
     </main>
   );

@@ -45,6 +45,7 @@ export function DeviceApprovalForm({
   defaultUserCode: string;
   signedInEmail: string | null;
 }) {
+  const tCopy = useTranslations("copy.authDeviceApprovalForm");
   const tc = useTranslations("copy.authDeviceApprovalForm");
   const [codeInput, setCodeInput] = useState(formatUserCode(defaultUserCode));
   const [step, setStep] = useState<Step>({ kind: "enter-code" });
@@ -76,7 +77,7 @@ export function DeviceApprovalForm({
     } catch {
       setStep({
         kind: "error",
-        message: "Could not reach the auth center. Check your connection.",
+        message: tCopy("couldNotReachThe"),
       });
     }
   }
@@ -107,7 +108,7 @@ export function DeviceApprovalForm({
     } catch {
       setStep({
         kind: "error",
-        message: "Could not reach the auth center. Check your connection.",
+        message: tCopy("couldNotReachThe"),
       });
     }
   }
@@ -144,7 +145,7 @@ export function DeviceApprovalForm({
             />
           </Field>
           <Button type="submit" disabled={step.kind === "checking" || !codeInput.trim()}>
-            {step.kind === "checking" ? "Checking…" : "Continue"}
+            {step.kind === "checking" ? tCopy("checking") : tCopy("continue")}
           </Button>
         </form>
       )}
@@ -175,8 +176,8 @@ export function DeviceApprovalForm({
       {step.kind === "done" && (
         <p className="text-sm text-foreground">
           {step.outcome === "approved"
-            ? "Device authorized. You can close this tab and return to your terminal."
-            : "Request denied. You can close this tab."}
+            ? tCopy("deviceAuthorizedYouCan")
+            : tCopy("requestDeniedYouCan")}
         </p>
       )}
 

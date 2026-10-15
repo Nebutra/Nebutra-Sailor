@@ -4,7 +4,6 @@ import { ArrowRight, Sparkles } from "@nebutra/icons";
 import { EmptyState } from "@nebutra/ui/layout";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { cofounderMatchesQueryOptions } from "@/lib/queries/cofounder";
 import { CofounderCard } from "./cofounder-card";
@@ -12,8 +11,6 @@ import { CofounderCard } from "./cofounder-card";
 export function MatchesList() {
   const tc = useTranslations("copy.cofounderMatchMatchesList");
   const t = useTranslations("startupOs");
-  const pathname = usePathname();
-  const locale = pathname.split("/").filter(Boolean)[0] || "en";
   const matchesQuery = useQuery(cofounderMatchesQueryOptions());
   const matches = matchesQuery.data ?? [];
   const state = matchesQuery.isPending
@@ -49,7 +46,7 @@ export function MatchesList() {
         description={t("emptyState.cofoundersDescription")}
         action={
           <Link
-            href={`/${locale}/cofounder/discover`}
+            href={`/cofounder/discover`}
             className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground"
           >
             {t("emptyState.cofoundersAction")}
@@ -66,7 +63,7 @@ export function MatchesList() {
         <div key={match.profileId} className="flex flex-col items-center gap-3">
           <CofounderCard data={match} />
           <Link
-            href={`/${locale}/cofounder/room/${match.profileId}`}
+            href={`/cofounder/room/${match.profileId}`}
             className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold bg-primary text-primary-foreground"
           >
             <Sparkles className="size-4" aria-hidden="true" />

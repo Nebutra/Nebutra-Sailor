@@ -267,6 +267,7 @@ export const DEMO_LOADERS: Readonly<Record<string, () => Promise<ComponentType>>
   "separator-vertical-demo": () => import("@nebutra/ui/catalog/demos/separator-vertical-demo").then(pick("SeparatorVerticalDemo")),
   "separator-with-text-demo": () => import("@nebutra/ui/catalog/demos/separator-with-text-demo").then(pick("SeparatorWithTextDemo")),
   "separator-with-text-i18n-demo": () => import("@nebutra/ui/catalog/demos/separator-with-text-i18n-demo").then(pick("SeparatorWithTextI18nDemo")),
+  "settings-section-demo": () => import("@nebutra/ui/catalog/demos/settings-section-demo").then(pick("SettingsSectionDemo")),
   "sheet-demo": () => import("@nebutra/ui/catalog/demos/sheet-demo").then(pick("SheetDemo")),
   "sheet-mobile-demo": () => import("@nebutra/ui/catalog/demos/sheet-mobile-demo").then(pick("SheetMobileDemo")),
   "sheet-side-demo": () => import("@nebutra/ui/catalog/demos/sheet-side-demo").then(pick("SheetSideDemo")),

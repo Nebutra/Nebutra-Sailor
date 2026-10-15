@@ -78,6 +78,7 @@ export function WebhookEndpointForm({
   secondaryAction,
   onSubmit,
 }: WebhookEndpointFormProps) {
+  const tCopy = useTranslations("copy.webhooksWebhookEndpointForm");
   const tc = useTranslations("copy.webhooksWebhookEndpointForm");
   const form = useForm<WebhookEndpointFormValues>({
     resolver: zodResolver(webhookEndpointFormSchema),
@@ -99,7 +100,7 @@ export function WebhookEndpointForm({
       await onSubmit({ url: values.url, events: [...values.events] });
     } catch (err) {
       form.setError("root", {
-        message: err instanceof Error ? err.message : "Unknown error",
+        message: err instanceof Error ? err.message : tCopy("unknownError"),
       });
     }
   }
@@ -158,7 +159,9 @@ export function WebhookEndpointForm({
                           <span className="font-mono text-xs text-muted-foreground">
                             {eventDef.id}
                           </span>
-                          <span className="ml-2 text-foreground">{eventDef.label}</span>
+                          <span className="ml-2 text-foreground">
+                            {tc(`eventLabels.${eventDef.id.replace(".", "_")}`)}
+                          </span>
                         </span>
                       </label>
                     );

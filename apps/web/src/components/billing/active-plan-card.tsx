@@ -67,12 +67,8 @@ export function ActivePlanCard({
 
   if (!snapshot || !snapshot.planId) {
     return (
-      <div
-        className={`rounded-[var(--radius-3xl)] border border-border bg-background p-5 shadow-sm ${className ?? ""}`}
-      >
-        <p className="font-medium text-sm uppercase tracking-[0.18em] text-muted-foreground">
-          {t("title")}
-        </p>
+      <div className={`rounded-xl border border-border bg-card p-6 ${className ?? ""}`}>
+        <p className="text-sm text-neutral-11">{t("title")}</p>
         <h2 className="mt-3 font-semibold text-2xl text-foreground">{t("noPlanTitle")}</h2>
         <p className="mt-2 max-w-2xl text-muted-foreground text-sm">{t("noPlanDescription")}</p>
         <div className="mt-5">
@@ -107,14 +103,10 @@ export function ActivePlanCard({
   const isFree = status === "free";
 
   return (
-    <div
-      className={`rounded-[var(--radius-3xl)] border border-border bg-background p-5 shadow-sm ${className ?? ""}`}
-    >
+    <div className={`rounded-xl border border-border bg-card p-6 ${className ?? ""}`}>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="font-medium text-sm uppercase tracking-[0.18em] text-muted-foreground">
-            {t("title")}
-          </p>
+          <p className="text-sm text-neutral-11">{t("title")}</p>
           <h2 className="mt-3 flex items-center gap-2 font-semibold text-2xl text-foreground">
             <Sparkles className="size-5 text-primary" aria-hidden="true" />
             {planName}

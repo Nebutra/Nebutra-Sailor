@@ -3,7 +3,6 @@
 import { EmptyState } from "@nebutra/ui/layout";
 import { Button, Field, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { CompanyTower } from "@/components/startup-os/company-tower";
@@ -57,8 +56,6 @@ function draftToValue(draft: string, kind: string): unknown {
 
 export default function CompanyContextPage() {
   const t = useTranslations("startupOs");
-  const pathname = usePathname();
-  const locale = pathname.split("/").filter(Boolean)[0] || "en";
 
   const [state, setState] = useState<LoadState>("loading");
   const [projectId, setProjectId] = useState<string | null>(null);
@@ -198,15 +195,13 @@ export default function CompanyContextPage() {
         </>
       ) : (
         <EmptyState
+          preview="list"
           title={t("company.emptyTitle")}
           description={t("company.emptyDescription")}
           action={
-            <Link
-              href={`/${locale}/startup-os`}
-              className="inline-flex items-center rounded-full bg-neutral-12 px-4 py-2 text-sm font-semibold text-neutral-1 dark:text-neutral-12"
-            >
-              {t("company.action.open")}
-            </Link>
+            <Button asChild size="sm">
+              <Link href="/startup-os">{t("company.action.open")}</Link>
+            </Button>
           }
         />
       )}

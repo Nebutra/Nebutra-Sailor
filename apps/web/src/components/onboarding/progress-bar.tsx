@@ -2,6 +2,7 @@
 
 import { Check } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 
 export interface ProgressBarStep {
   readonly id: number;
@@ -47,8 +48,10 @@ export function ProgressBar({
   currentStep,
   completedSteps,
   className,
-  ariaLabel = "Onboarding progress",
+  ariaLabel: ariaLabelProp,
 }: ProgressBarProps) {
+  const tc = useTranslations("copy.onboardingProgressBar");
+  const ariaLabel = ariaLabelProp ?? tc("onboardingProgress");
   return (
     <div
       role="progressbar"

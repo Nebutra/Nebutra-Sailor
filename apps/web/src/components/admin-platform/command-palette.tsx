@@ -39,7 +39,7 @@ export function CommandPalette({ tabs }: { tabs: ConsoleTab[] }) {
         type="button"
         variant="ghost"
         onClick={() => setOpen(true)}
-        className="h-8 w-[260px] justify-start gap-2 rounded-md border border-border bg-background px-2.5 font-normal text-muted-foreground text-sm hover:border-muted-foreground/40 hover:bg-background hover:text-muted-foreground"
+        className="h-8 w-[260px] justify-start gap-2 rounded-md border border-border bg-card px-2.5 font-normal text-muted-foreground text-sm hover:border-muted-foreground/40 hover:bg-background hover:text-muted-foreground"
       >
         <MagnifyingGlass className="size-3.5 shrink-0" aria-hidden />
         <span className="flex-1 text-left">{tc("jumpTo")}</span>

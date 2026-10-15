@@ -1,9 +1,9 @@
 "use client";
 
 import { ArrowRight, Lightning, Sparkles, Users } from "@nebutra/icons";
-import { EmptyState } from "@nebutra/ui/layout";
+import { EmptyState, PageHeader } from "@nebutra/ui/layout";
+import { Button } from "@nebutra/ui/primitives";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { CofounderCard, type CofounderCardData } from "@/components/cofounder-match/cofounder-card";
@@ -26,25 +26,20 @@ type LoadState = "loading" | "ready" | "empty";
 const STEPS = [
   {
     icon: Lightning,
-    title: "Compile your company",
-    body: "Your card is built from your Startup OS CompanyContext — thesis, arena, traction.",
+    key: "compile",
   },
   {
     icon: Sparkles,
-    title: "Get matched",
-    body: "Ranked by complementarity — what a cofounder brings vs the gap in your OPC.",
+    key: "match",
   },
   {
     icon: Users,
-    title: "Form the team",
-    body: "Mutual interest opens a Cofounder Room; form the team and the company carries over.",
+    key: "team",
   },
 ] as const;
 
 export default function CofounderPage() {
   const tc = useTranslations("copy.cofounderPage");
-  const pathname = usePathname();
-  const locale = pathname.split("/").filter(Boolean)[0] || "en";
   const [state, setState] = useState<LoadState>("loading");
   const [card, setCard] = useState<CofounderCardData | null>(null);
 
@@ -84,50 +79,24 @@ export default function CofounderPage() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden">
-      {/* Ambient brand glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[320px] w-full max-w-2xl opacity-[0.12] blur-3xl"
-        style={{ background: "hsl(var(--primary))" }}
-      />
-
-      <div className="relative mx-auto w-full max-w-3xl px-5 py-14 sm:px-8">
-        {/* Hero */}
-        <div className="text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1/80 px-3 py-1.5 text-xs font-semibold text-neutral-11 backdrop-blur">
-            <Users className="size-3.5 text-primary" aria-hidden="true" />
-            {tc("oPCTeam")}
-          </span>
-          <h1
-            className="mt-5 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl"
-            style={{
-              background: "hsl(var(--primary))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            {tc("matchYourCofounder")}
-          </h1>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-neutral-10">
-            {tc("turnYourOnePerson")}
-          </p>
-          <div className="mt-6 flex items-center justify-center">
-            <Link
-              href={`/${locale}/cofounder/discover`}
-              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground"
-            >
+    <section className="mx-auto w-full max-w-3xl">
+      <PageHeader
+        title={tc("matchYourCofounder")}
+        description={tc("turnYourOnePerson")}
+        actions={
+          <Button asChild size="sm">
+            <Link href="/cofounder/discover">
               {tc("enterDiscover")}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
-          </div>
-        </div>
-
+          </Button>
+        }
+      />
+      <div>
         {/* Showcase: your card */}
 
-        <div className="mt-10 flex flex-col items-center gap-3">
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-neutral-9">
+        <div className="flex flex-col items-center gap-3">
+          <p className="self-start text-sm font-semibold text-neutral-12">
             {tc("previewHowCofoundersSee")}
           </p>
           {state === "ready" && card ? (
@@ -136,46 +105,45 @@ export default function CofounderPage() {
             <div className="h-80 w-full max-w-sm animate-pulse rounded-[28px] border border-neutral-6 bg-neutral-2" />
           ) : (
             <EmptyState
+              preview="metrics"
               title={tc("compileYourCompanyFirst")}
               description={tc("yourCofounderCardIs")}
               action={
-                <Link
-                  href={`/${locale}/startup-os`}
-                  className="inline-flex items-center gap-2 rounded-full bg-neutral-12 px-4 py-2 text-sm font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 dark:text-neutral-12"
-                >
-                  {tc("compileYourCompany")}
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/startup-os">
+                    {tc("compileYourCompany")}
+                    <ArrowRight className="size-4" aria-hidden="true" />
+                  </Link>
+                </Button>
               }
             />
           )}
         </div>
 
         {/* How it works — 3 steps */}
-        <div className="mt-14 grid gap-3 sm:grid-cols-3">
+        <div className="mt-12 grid overflow-hidden rounded-xl border border-border sm:grid-cols-3 sm:divide-x sm:divide-border max-sm:divide-y max-sm:divide-border">
           {STEPS.map((step, index) => {
             const StepIcon = step.icon;
             return (
-              <div
-                key={step.title}
-                className="flex h-full flex-col gap-2 rounded-2xl border border-neutral-6 bg-neutral-1 p-4"
-              >
+              <div key={step.key} className="flex h-full flex-col gap-2 p-5">
                 <div className="flex items-center gap-2">
                   <span className="flex size-7 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/15">
                     <StepIcon className="size-3.5 text-primary" aria-hidden="true" />
                   </span>
-                  <span className="text-[11px] font-semibold text-neutral-9">
+                  <span className="text-xs text-neutral-10">
                     {tc("step", { value0: String(index + 1) })}
                   </span>
                 </div>
-                <p className="text-sm font-semibold text-neutral-12">{step.title}</p>
-                <p className="text-xs leading-5 text-neutral-10">{step.body}</p>
+                <p className="text-sm font-semibold text-neutral-12">
+                  {tc(`steps.${step.key}.title`)}
+                </p>
+                <p className="text-xs leading-5 text-neutral-10">{tc(`steps.${step.key}.body`)}</p>
               </div>
             );
           })}
         </div>
 
-        <p className="mt-8 text-center text-xs text-neutral-9">{tc("theCofounderPoolIs")}</p>
+        <p className="mt-6 text-sm text-neutral-11">{tc("theCofounderPoolIs")}</p>
       </div>
     </section>
   );

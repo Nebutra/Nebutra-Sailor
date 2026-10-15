@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
 import { useQuery } from "@tanstack/react-query";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { INTEGRATION_CATALOG } from "@/lib/integrations/catalog";
 import { integrationsQueryOptions } from "@/lib/queries/integrations";
@@ -26,10 +26,8 @@ import { integrationsQueryOptions } from "@/lib/queries/integrations";
  */
 export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
   const tc = useTranslations("copy.startupOsStartupConnectorsMenu");
-  const pathname = usePathname();
   const router = useRouter();
-  const locale = pathname.split("/").filter(Boolean)[0] || "en";
-  const integrationsHref = `/${locale}/integrations`;
+  const integrationsHref = `/integrations`;
   // Live state is best-effort: on error the catalog still renders honestly.
   const integrations = useQuery(integrationsQueryOptions());
   const connectedTypes: ReadonlySet<string> = new Set(

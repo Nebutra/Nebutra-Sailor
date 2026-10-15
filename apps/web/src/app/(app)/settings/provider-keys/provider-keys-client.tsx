@@ -50,6 +50,7 @@ async function deleteKey(provider: ProviderId): Promise<void> {
 }
 
 export function ProviderKeysClient() {
+  const tCopy = useTranslations("copy.providerKeysProviderKeysClient");
   const tc = useTranslations("copy.providerKeysProviderKeysClient");
   const [dialogOpen, setDialogOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -102,7 +103,7 @@ export function ProviderKeysClient() {
   const error = keysQuery.error
     ? keysQuery.error instanceof Error
       ? keysQuery.error.message
-      : "Failed to load keys."
+      : tCopy("failedToLoadKeys")
     : null;
 
   return (

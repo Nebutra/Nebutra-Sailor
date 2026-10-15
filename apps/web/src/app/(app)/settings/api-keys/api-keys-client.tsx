@@ -47,6 +47,7 @@ async function revokeKey(id: string): Promise<void> {
 }
 
 export function ApiKeysPageClient() {
+  const tCopy = useTranslations("copy.apiKeysApiKeysClient");
   const tc = useTranslations("copy.apiKeysApiKeysClient");
   // Pure UI state (dialog open/close) stays local — not server cache.
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -105,7 +106,7 @@ export function ApiKeysPageClient() {
   const error = keysQuery.error
     ? keysQuery.error instanceof Error
       ? keysQuery.error.message
-      : "Failed to load keys."
+      : tCopy("failedToLoadKeys")
     : null;
 
   return (

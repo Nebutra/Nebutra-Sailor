@@ -66,6 +66,7 @@ function NotificationCenterItem({
   locale: string;
   runtime: NotificationRuntimeStatus;
 }) {
+  const tCopy = useTranslations("copy.notificationsNotificationCenter");
   const tc = useTranslations("copy.notificationsNotificationCenter");
   const format = useFormatter();
   const createdAt = new Date(item.createdAt);
@@ -119,7 +120,7 @@ function NotificationCenterItem({
               type="submit"
               disabled={!runtime.canMarkInboxRead}
               className="rounded-[var(--radius-lg)] border border-neutral-7 px-2.5 py-1.5 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-50"
-              title={runtime.canMarkInboxRead ? "Mark this notification as read" : runtime.reason}
+              title={runtime.canMarkInboxRead ? tCopy("markThisNotificationAs") : runtime.reason}
             >
               {tc("markRead")}
             </button>
@@ -135,6 +136,7 @@ export function NotificationCenter({
   snapshot,
   defaultOpen = false,
 }: NotificationCenterProps) {
+  const tCopy = useTranslations("copy.notificationsNotificationCenter");
   const tc = useTranslations("copy.notificationsNotificationCenter");
   const t = useTranslations("notifications.page");
   const unreadBadge = getUnreadBadgeLabel(snapshot.unreadCount);
@@ -186,7 +188,7 @@ export function NotificationCenter({
               className="rounded-[var(--radius-lg)] px-2.5 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50"
               title={
                 snapshot.runtime.canMarkInboxRead
-                  ? "Mark every visible unread notification as read"
+                  ? tCopy("markEveryVisibleUnread")
                   : snapshot.runtime.reason
               }
             >

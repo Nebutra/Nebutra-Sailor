@@ -28,6 +28,7 @@ const profileSchema = z.object({
 type ProfileValues = z.infer<typeof profileSchema>;
 
 export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
+  const tCopy = useTranslations("copy.onboardingProfileSetupStep");
   const tc = useTranslations("copy.onboardingProfileSetupStep");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
@@ -133,7 +134,7 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
           />
 
           <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-            {form.formState.isSubmitting ? "Saving…" : "Continue →"}
+            {form.formState.isSubmitting ? tCopy("saving") : tCopy("continue")}
           </Button>
 
           <Button

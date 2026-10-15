@@ -235,6 +235,7 @@ export * from "./flickering-grid";
 export * from "./folder";
 export * from "./form";
 export * from "./gauge";
+export { GhostPreview, type GhostPreviewKind } from "./ghost-preview";
 export * from "./github-calendar";
 export * from "./github-calendar-data";
 export * from "./github-inline-diff";

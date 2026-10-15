@@ -11,6 +11,7 @@ interface ErrorProps {
 }
 
 export default function AuditError({ error, reset }: ErrorProps) {
+  const tCopy = useTranslations("copy.auditError");
   const tc = useTranslations("copy.auditError");
   useEffect(() => {
     Sentry.captureException(error);
@@ -21,12 +22,9 @@ export default function AuditError({ error, reset }: ErrorProps) {
       variant="section"
       code="Error · Audit log"
       title={tc("failedToLoadAudit")}
-      description={
-        error.message ||
-        "An unexpected error occurred while loading the audit log. Try again, or return to the dashboard."
-      }
-      primaryAction={{ label: "Try again", onClick: reset }}
-      secondaryAction={{ label: "Go to dashboard", href: "/workspace" }}
+      description={error.message || tCopy("anUnexpectedErrorOccurred")}
+      primaryAction={{ label: tCopy("tryAgain"), onClick: reset }}
+      secondaryAction={{ label: tCopy("goToDashboard"), href: "/workspace" }}
       meta={error.digest ? { errorId: error.digest } : undefined}
     />
   );

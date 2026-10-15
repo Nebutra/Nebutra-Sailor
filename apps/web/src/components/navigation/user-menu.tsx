@@ -66,6 +66,7 @@ const THEME_ICON: Record<ThemeChoice, typeof Monitor> = {
 const THEME_CHOICES: readonly ThemeChoice[] = ["light", "dark", "system"];
 
 export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: UserMenuProps = {}) {
+  const tc = useTranslations("copy.navigationUserMenu");
   const t = useTranslations("userMenu");
   const tTheme = useTranslations("theme");
   const tLocale = useTranslations("LocaleSwitcher");
@@ -128,7 +129,9 @@ export function UserMenu({ signOutRedirect = "/sign-in", variant = "icon" }: Use
   const searchLabel = hasLocaleKey("searchPlaceholder")
     ? tLocale("searchPlaceholder" as never)
     : "Search";
-  const noResultsLabel = hasLocaleKey("noResults") ? tLocale("noResults" as never) : "No matches";
+  const noResultsLabel = hasLocaleKey("noResults")
+    ? tLocale("noResults" as never)
+    : tc("noMatches");
 
   const activeTheme = (theme as ThemeChoice | undefined) ?? "system";
   const displayName = user.name ?? user.email ?? "User";

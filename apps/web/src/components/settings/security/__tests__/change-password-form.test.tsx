@@ -59,6 +59,7 @@ function buildPasswordCapability(
     available: true,
     hasPasswordAccount: true,
     reason: "Credential sign-in is attached.",
+    reasonKey: "passwordAttached",
     ...overrides,
   };
 }
@@ -80,12 +81,13 @@ describe("ChangePasswordForm", () => {
       available: false,
       hasPasswordAccount: false,
       reason: "Password management is unavailable because this account does not use password.",
+      reasonKey: "passwordNone",
     });
 
     render(<ChangePasswordForm capability={capability} />);
 
     expect(screen.getByText("OAuth only")).toBeInTheDocument();
-    expect(screen.getByText(capability.reason)).toBeInTheDocument();
+    expect(screen.getByText(/doesn’t use email and password/)).toBeInTheDocument();
     expect(screen.queryByLabelText("Current password")).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Update password" })).not.toBeInTheDocument();
   });

@@ -19,6 +19,7 @@ interface Props {
 const INITIAL: InviteState = { status: "idle" };
 
 export function InviteMemberForm({ orgId }: Props) {
+  const tCopy = useTranslations("copy.teamInviteMemberForm");
   const tc = useTranslations("copy.teamInviteMemberForm");
   const [state, action, isPending] = useActionState(inviteTeamMember, INITIAL);
 
@@ -50,7 +51,7 @@ export function InviteMemberForm({ orgId }: Props) {
         disabled={isPending}
         className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-opacity disabled:opacity-50"
       >
-        {isPending ? "Sending…" : "Invite"}
+        {isPending ? tCopy("sending") : tCopy("invite")}
       </button>
 
       {state.status === "success" && (

@@ -19,6 +19,7 @@ import {
   useConfirm,
   useCopyToClipboard,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -79,6 +80,7 @@ export function CreateApiKeyDialog({
   availableScopes = DEFAULT_SCOPES,
   labels = {},
 }: CreateApiKeyDialogProps) {
+  const tc = useTranslations("copy.apiKeysCreateApiKeyDialog");
   const form = useForm<ApiKeyFormValues>({
     resolver: zodResolver(apiKeyFormSchema),
     defaultValues: { name: "", scopes: [] },
@@ -94,23 +96,23 @@ export function CreateApiKeyDialog({
   }, [open, form]);
 
   const text = {
-    title: labels.title ?? "Create API key",
+    title: labels.title ?? tc("createAPIKey"),
     description:
       labels.description ??
       "API keys let external systems talk to Nebutra on your behalf. Treat them like passwords.",
     nameLabel: labels.nameLabel ?? "Name",
     namePlaceholder: labels.namePlaceholder ?? "e.g. Production backend",
     scopesLabel: labels.scopesLabel ?? "Scopes",
-    submit: labels.submit ?? "Create key",
+    submit: labels.submit ?? tc("createKey"),
     submitting: labels.submitting ?? "Creating…",
     close: labels.close ?? "Close",
-    successWarning: labels.successWarning ?? "This key appears once. Store it before closing.",
+    successWarning: labels.successWarning ?? tc("thisKeyAppearsOnce"),
     copy: labels.copy ?? "Copy",
     copied: labels.copied ?? "Copied",
-    confirmClose: labels.confirmClose ?? "Closing hides this key forever. Make sure it is stored.",
-    confirmCloseTitle: labels.confirmCloseTitle ?? "Close Without the Key",
+    confirmClose: labels.confirmClose ?? tc("closingHidesThisKey"),
+    confirmCloseTitle: labels.confirmCloseTitle ?? tc("closeWithoutTheKey"),
     confirmCloseAction: labels.confirmCloseAction ?? "Close",
-    confirmCloseCancel: labels.confirmCloseCancel ?? "Keep Open",
+    confirmCloseCancel: labels.confirmCloseCancel ?? tc("keepOpen"),
   };
   const [confirm, confirmDialog] = useConfirm();
 
@@ -122,7 +124,7 @@ export function CreateApiKeyDialog({
       setCreated(result);
     } catch (err) {
       form.setError("root", {
-        message: err instanceof Error ? err.message : "Failed to create key.",
+        message: err instanceof Error ? err.message : tc("failedToCreateKey"),
       });
     }
   }

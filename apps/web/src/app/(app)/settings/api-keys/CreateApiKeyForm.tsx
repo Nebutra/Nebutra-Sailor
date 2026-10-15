@@ -12,6 +12,7 @@ interface Props {
 const INITIAL: CreateKeyState = { status: "idle" };
 
 export function CreateApiKeyForm({ orgId }: Props) {
+  const tCopy = useTranslations("copy.apiKeysCreateApiKeyForm");
   const tc = useTranslations("copy.apiKeysCreateApiKeyForm");
   const [state, action, isPending] = useActionState(createApiKey, INITIAL);
   const { copied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
@@ -29,7 +30,7 @@ export function CreateApiKeyForm({ orgId }: Props) {
             onClick={() => copy(state.key)}
             className="rounded-[var(--radius-md)] border border-warning/40 px-3 py-2 text-xs font-medium text-warning-strong transition-colors hover:bg-warning/15"
           >
-            {copied ? "Copied" : "Copy"}
+            {copied ? tCopy("copied") : tCopy("copy")}
           </button>
         </div>
       </div>
@@ -51,7 +52,7 @@ export function CreateApiKeyForm({ orgId }: Props) {
         disabled={isPending}
         className="rounded-[var(--radius-md)] bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-opacity disabled:opacity-50"
       >
-        {isPending ? "Creating…" : "Create key"}
+        {isPending ? tCopy("creating") : tCopy("createKey")}
       </button>
 
       {state.status === "error" && (

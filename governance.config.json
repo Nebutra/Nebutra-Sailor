@@ -327,8 +327,6 @@
       "apps/web/src/components/api-keys/create-api-key-dialog.tsx",
       "apps/web/src/components/auth/auth-banner.tsx",
       "apps/web/src/components/auth/desktop-auth-complete-handoff.tsx",
-      "apps/web/src/components/notifications/notification-preference-matrix.tsx",
-      "apps/web/src/components/notifications/notification-runtime-banner.tsx",
       "apps/web/src/components/settings/security/security-capabilities.ts",
       "backends/gateway/src/agents/default-agents.ts",
       "backends/gateway/src/app.ts",
@@ -1107,10 +1105,6 @@
         "count": 3
       },
       {
-        "file": "apps/web/src/app/(app)/cofounder/page.tsx",
-        "count": 3
-      },
-      {
         "file": "apps/web/src/app/(app)/settings/team/TeamMemberList.tsx",
         "count": 3
       },
@@ -1137,10 +1131,6 @@
       {
         "file": "packages/design/ui/src/editorial/editorial-surface.ts",
         "count": 3
-      },
-      {
-        "file": "packages/design/ui/src/patterns/sidebar-nav/sidebar-nav.tsx",
-        "count": 1
       },
       {
         "file": "packages/design/ui/src/primitives/edit-tool.tsx",
@@ -1304,14 +1294,6 @@
       },
       {
         "file": "apps/web/src/app/(public)/page.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/web/src/components/billing/active-plan-card.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/web/src/components/billing/billing-self-service.tsx",
         "count": 2
       },
       {
@@ -1523,18 +1505,6 @@
         "count": 1
       },
       {
-        "file": "apps/web/src/app/(app)/cofounder/discover/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/cofounder/matches/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/cofounder/room/[profileId]/page.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/web/src/app/demo/embed/page.tsx",
         "count": 1
       },
@@ -1568,10 +1538,6 @@
       },
       {
         "file": "apps/web/src/components/notifications/inbox-bell.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/notifications/notification-inbox-preview.tsx",
         "count": 1
       },
       {
@@ -1624,6 +1590,10 @@
       },
       {
         "file": "packages/design/ui/src/patterns/gallery-card.tsx",
+        "count": 1
+      },
+      {
+        "file": "packages/design/ui/src/patterns/sidebar-nav/sidebar-nav.tsx",
         "count": 1
       },
       {
@@ -1685,10 +1655,6 @@
       },
       {
         "file": "apps/web/src/components/admin/admin-directory-panel.tsx",
-        "count": 4
-      },
-      {
-        "file": "apps/web/src/components/billing/billing-self-service.tsx",
         "count": 4
       },
       {
@@ -1804,7 +1770,7 @@
         "count": 2
       },
       {
-        "file": "apps/web/src/components/account/profile-form.tsx",
+        "file": "apps/web/src/components/billing/billing-self-service.tsx",
         "count": 2
       },
       {
@@ -1960,10 +1926,6 @@
         "count": 1
       },
       {
-        "file": "apps/web/src/app/(app)/settings/page.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/web/src/app/(app)/settings/provider-keys/provider-keys-client.tsx",
         "count": 1
       },
@@ -1996,11 +1958,7 @@
         "count": 1
       },
       {
-        "file": "apps/web/src/components/account/data-export-card.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/account/email-change-form.tsx",
+        "file": "apps/web/src/components/account/profile-form.tsx",
         "count": 1
       },
       {
@@ -2041,10 +1999,6 @@
       },
       {
         "file": "apps/web/src/components/notifications/inbox-bell.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/notifications/notification-inbox-preview.tsx",
         "count": 1
       },
       {
@@ -2801,10 +2755,6 @@
         "count": 2
       },
       {
-        "file": "apps/web/src/components/billing/billing-self-service.tsx",
-        "count": 2
-      },
-      {
         "file": "apps/web/src/components/notifications/notification-center.tsx",
         "count": 2
       },
@@ -2929,19 +2879,15 @@
         "count": 1
       },
       {
+        "file": "apps/web/src/components/billing/billing-self-service.tsx",
+        "count": 1
+      },
+      {
         "file": "apps/web/src/components/command-palette/mode-pills.tsx",
         "count": 1
       },
       {
         "file": "apps/web/src/components/ErrorBoundary.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/notifications/notification-inbox-preview.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/notifications/notification-preference-matrix.tsx",
         "count": 1
       },
       {
@@ -3455,17 +3401,14 @@
       "apps/para/src/components/shell/command-menu.tsx": 1,
       "apps/router/src/components/console-shell.tsx": 1,
       "apps/web/src/app/(app)/admin/page.tsx": 2,
-      "apps/web/src/app/(app)/cofounder/discover/page.tsx": 1,
-      "apps/web/src/app/(app)/cofounder/matches/page.tsx": 1,
-      "apps/web/src/app/(app)/cofounder/page.tsx": 5,
-      "apps/web/src/app/(app)/cofounder/room/[profileId]/page.tsx": 1,
-      "apps/web/src/app/(app)/integrations/page.tsx": 4,
-      "apps/web/src/app/(app)/settings/shortcuts/page.tsx": 6,
+      "apps/web/src/app/(app)/cofounder/page.tsx": 2,
+      "apps/web/src/app/(app)/integrations/page.tsx": 3,
+      "apps/web/src/app/(app)/settings/shortcuts/page.tsx": 5,
       "apps/web/src/app/(app)/tenants/page.tsx": 5,
-      "apps/web/src/app/(app)/usage/page.tsx": 10,
+      "apps/web/src/app/(app)/usage/page.tsx": 9,
       "apps/web/src/app/(public)/page.tsx": 4,
       "apps/web/src/app/select-org/select-org-client.tsx": 1,
-      "apps/web/src/components/billing/billing-self-service.tsx": 5,
+      "apps/web/src/components/billing/billing-self-service.tsx": 3,
       "apps/web/src/components/billing/order-history.tsx": 1,
       "apps/web/src/components/billing/plan-badge.tsx": 3,
       "apps/web/src/components/cofounder-match/cofounder-card.tsx": 5,
@@ -3474,7 +3417,7 @@
       "apps/web/src/components/command-palette/command-surface-button.tsx": 2,
       "apps/web/src/components/connectors/connectors-hub.tsx": 5,
       "apps/web/src/components/feedback/feedback-dialog.tsx": 2,
-      "apps/web/src/components/growth/referral-panel.tsx": 7,
+      "apps/web/src/components/growth/referral-panel.tsx": 5,
       "apps/web/src/components/notifications/notification-center.tsx": 2,
       "apps/web/src/components/onboarding/getting-started.tsx": 1,
       "apps/web/src/components/onboarding/recent-sessions.tsx": 4,

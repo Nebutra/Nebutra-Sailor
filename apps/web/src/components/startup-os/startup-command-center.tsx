@@ -14,6 +14,7 @@ import type { StartupCanvasLayout } from "@nebutra/startup-os/canvas";
 import type { StartupArena, StartupOSProject } from "@nebutra/startup-os/compiler";
 import { buildStartupPreviewHtml, type StartupOSFile } from "@nebutra/startup-os/files";
 import { Badge } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { StartupBuilderHome } from "./startup-builder-home";
 import { setStartupChromeMode } from "./startup-chrome-store";
@@ -39,6 +40,7 @@ import { StartupWorkspaceShell } from "./startup-workspace-shell";
 const ENTRY_FILE_PATH = "src/routes/index.tsx";
 
 export function StartupCommandCenter() {
+  const tc = useTranslations("copy.startupOsStartupCommandCenter");
   const [projects, setProjects] = useState<StartupOSProject[]>([]);
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [thesis, setThesis] = useState(DEFAULT_THESIS);
@@ -131,13 +133,13 @@ export function StartupCommandCenter() {
         }),
       );
       if (!isStartupProject(payload.project) || !Array.isArray(payload.files)) {
-        setLastError("Startup OS file API returned an invalid payload.");
+        setLastError(tc("startupOSFileAPI"));
         return;
       }
       setProjects((current) => mergeProjectList(current, payload.project));
       applyWorkspaceFiles(payload.project.id, payload.files, payload.previewHtml);
     } catch (error) {
-      setLastError(error instanceof Error ? error.message : "Failed to load Startup OS files.");
+      setLastError(error instanceof Error ? error.message : tc("failedToLoadStartup"));
     }
   }
 
@@ -153,7 +155,7 @@ export function StartupCommandCenter() {
       );
       if (requestSeq !== detailRequestSeq.current) return;
       if (!isStartupProject(payload.project)) {
-        setLastError("Startup OS API returned an invalid project payload.");
+        setLastError(tc("startupOSAPIReturned"));
         return;
       }
 
@@ -180,7 +182,7 @@ export function StartupCommandCenter() {
       setArena(payload.project.arena);
     } catch (error) {
       if (requestSeq === detailRequestSeq.current) {
-        setLastError(error instanceof Error ? error.message : "Failed to load Startup OS project.");
+        setLastError(error instanceof Error ? error.message : tc("failedToLoadStartup2"));
       }
     }
   }
@@ -220,7 +222,7 @@ export function StartupCommandCenter() {
         }
       } catch (error) {
         if (!cancelled) {
-          setLastError(error instanceof Error ? error.message : "Failed to load Startup OS.");
+          setLastError(error instanceof Error ? error.message : tc("failedToLoadStartup3"));
         }
       }
       if (!cancelled) setIsLoading(false);
@@ -254,7 +256,7 @@ export function StartupCommandCenter() {
         ),
       );
       if (!isStartupProject(payload.project)) {
-        setLastError("Startup OS API returned an invalid project payload.");
+        setLastError(tc("startupOSAPIReturned"));
         setIsExecutingRun(false);
         return;
       }
@@ -287,7 +289,7 @@ export function StartupCommandCenter() {
       );
       setActivityEvents(extractActivityEvents(payload));
     } catch (error) {
-      setLastError(error instanceof Error ? error.message : "Failed to start real execution.");
+      setLastError(error instanceof Error ? error.message : tc("failedToStartReal"));
     }
     setIsExecutingRun(false);
   }
@@ -310,7 +312,7 @@ export function StartupCommandCenter() {
         }),
       );
       if (!isStartupProject(payload.project)) {
-        setLastError("Startup OS API returned an invalid project payload.");
+        setLastError(tc("startupOSAPIReturned"));
         setIsSaving(false);
         return;
       }
@@ -335,7 +337,7 @@ export function StartupCommandCenter() {
       setThesis(payload.project.thesis);
       setArena(payload.project.arena);
     } catch (error) {
-      setLastError(error instanceof Error ? error.message : "Failed to compile Startup OS.");
+      setLastError(error instanceof Error ? error.message : tc("failedToCompileStartup"));
     }
     setIsSaving(false);
   }
@@ -369,7 +371,7 @@ export function StartupCommandCenter() {
         ),
       );
       if (!isStartupProject(payload.project)) {
-        setLastError("Startup OS API returned an invalid project payload.");
+        setLastError(tc("startupOSAPIReturned"));
         setIsApproving(false);
         return;
       }
@@ -391,7 +393,7 @@ export function StartupCommandCenter() {
       );
       setActivityEvents(extractActivityEvents(payload));
     } catch (error) {
-      setLastError(error instanceof Error ? error.message : "Failed to approve review gate.");
+      setLastError(error instanceof Error ? error.message : tc("failedToApproveReview"));
     }
     setIsApproving(false);
   }
@@ -410,11 +412,11 @@ export function StartupCommandCenter() {
         }),
       );
       if (!isStartupProject(payload.project)) {
-        setLastError("Startup OS API returned an invalid project payload.");
+        setLastError(tc("startupOSAPIReturned"));
         return;
       }
       if (!payload.canvasLayout) {
-        setLastError("Startup OS API did not return the saved canvas layout.");
+        setLastError(tc("startupOSAPIDid"));
         return;
       }
 
@@ -428,7 +430,7 @@ export function StartupCommandCenter() {
       }));
       setActivityEvents(extractActivityEvents(payload));
     } catch (error) {
-      setLastError(error instanceof Error ? error.message : "Failed to save canvas layout.");
+      setLastError(error instanceof Error ? error.message : tc("failedToSaveCanvas"));
     }
   }
 
@@ -452,7 +454,7 @@ export function StartupCommandCenter() {
         ),
       );
       if (!isStartupProject(payload.project) || !Array.isArray(payload.files)) {
-        setLastError("Startup OS file API returned an invalid payload.");
+        setLastError(tc("startupOSFileAPI"));
         setIsSavingFile(false);
         return;
       }
@@ -461,7 +463,7 @@ export function StartupCommandCenter() {
       applyWorkspaceFiles(payload.project.id, payload.files, payload.previewHtml);
       setActivityEvents(extractActivityEvents(payload));
     } catch (error) {
-      setLastError(error instanceof Error ? error.message : "Failed to save Startup OS file.");
+      setLastError(error instanceof Error ? error.message : tc("failedToSaveStartup"));
     }
     setIsSavingFile(false);
   }

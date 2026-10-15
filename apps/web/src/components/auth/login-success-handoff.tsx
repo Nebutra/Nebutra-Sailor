@@ -36,7 +36,7 @@ export function LoginSuccessHandoff({ redirectTo = "/" }: LoginSuccessHandoffPro
   return (
     <section
       aria-live="polite"
-      className="relative overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-sm"
+      className="relative overflow-hidden rounded-xl border border-border bg-card p-6 shadow-sm"
     >
       <div
         aria-hidden

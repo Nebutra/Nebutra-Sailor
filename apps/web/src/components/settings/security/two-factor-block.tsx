@@ -1,5 +1,6 @@
 "use client";
 
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
 import { Button, Input } from "@nebutra/ui/primitives";
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
@@ -187,6 +188,7 @@ export function TwoFactorBlock({
   onDisable,
   onChanged,
 }: TwoFactorBlockProps) {
+  const tReasons = useTranslations("copy.securityReasons");
   const tc = useTranslations("copy.securityTwoFactorBlock");
   const t = useTranslations("auth.security.twoFactor");
   const tErrors = useTranslations("auth.errors");
@@ -200,22 +202,24 @@ export function TwoFactorBlock({
 
   if (!capability.available) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-          <div>
-            <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
-          </div>
+      <SettingsSection
+        title={t("title")}
+        description={t("description")}
+        badge={
           <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
-            {capability.requiresPasswordAccount ? "Needs password account" : "Not wired"}
+            {capability.requiresPasswordAccount
+              ? tReasons("needsPassword")
+              : tReasons("notAvailable")}
           </span>
-        </div>
-
+        }
+      >
         <div className="rounded-[var(--radius-lg)] border border-dashed border-border bg-muted p-4">
           <p className="text-sm font-medium text-foreground">{tc("authenticatorAppSetup")}</p>
-          <p className="mt-1 text-sm text-muted-foreground">{capability.reason}</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {tReasons(capability.reasonKey, capability.reasonValues)}
+          </p>
         </div>
-      </section>
+      </SettingsSection>
     );
   }
 
@@ -292,7 +296,7 @@ export function TwoFactorBlock({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+    <SettingsSection>
       <TwoFactorHeader
         title={t("title")}
         description={t("description")}
@@ -385,7 +389,7 @@ export function TwoFactorBlock({
           onSubmit={handleDisableSubmit}
         />
       )}
-    </section>
+    </SettingsSection>
   );
 }
 
@@ -432,17 +436,17 @@ function IdleTwoFactorActions({
   onDisable,
 }: IdleTwoFactorActionsProps): React.ReactElement {
   return (
-    <div className="flex justify-start">
+    <SettingsSectionFooter>
       {enabled ? (
-        <Button type="button" onClick={onDisable} variant="outline">
+        <Button type="button" size="sm" onClick={onDisable} variant="outline">
           {disableLabel}
         </Button>
       ) : (
-        <Button type="button" onClick={onEnable}>
+        <Button type="button" size="sm" onClick={onEnable}>
           {enableLabel}
         </Button>
       )}
-    </div>
+    </SettingsSectionFooter>
   );
 }
 
@@ -490,14 +494,14 @@ function PasswordStepForm({
         />
       </div>
 
-      <div className="flex items-center gap-3">
-        <Button disabled={pending} type="submit">
-          {submitLabel}
-        </Button>
-        <Button disabled={pending} type="button" onClick={onCancel} variant="outline">
+      <SettingsSectionFooter>
+        <Button disabled={pending} type="button" size="sm" onClick={onCancel} variant="outline">
           {cancelLabel}
         </Button>
-      </div>
+        <Button disabled={pending} type="submit" size="sm">
+          {submitLabel}
+        </Button>
+      </SettingsSectionFooter>
     </form>
   );
 }
@@ -582,14 +586,14 @@ function VerifyTotpForm({
         />
       </div>
 
-      <div className="flex items-center gap-3">
-        <Button disabled={pending} type="submit">
-          {verifyLabel}
-        </Button>
-        <Button disabled={pending} type="button" onClick={onCancel} variant="outline">
+      <SettingsSectionFooter>
+        <Button disabled={pending} type="button" size="sm" onClick={onCancel} variant="outline">
           {cancelLabel}
         </Button>
-      </div>
+        <Button disabled={pending} type="submit" size="sm">
+          {verifyLabel}
+        </Button>
+      </SettingsSectionFooter>
     </form>
   );
 }
@@ -634,11 +638,11 @@ function BackupCodesPanel({
         ))}
       </ul>
 
-      <div className="flex items-center gap-3">
-        <Button type="button" onClick={onCopy} variant="outline">
+      <SettingsSectionFooter>
+        <Button type="button" size="sm" onClick={onCopy} variant="outline">
           {copyLabel}
         </Button>
-        <Button type="button" onClick={onFinish}>
+        <Button type="button" size="sm" onClick={onFinish}>
           {finishLabel}
         </Button>
         {copied && (
@@ -646,7 +650,7 @@ function BackupCodesPanel({
             {tc("copied")}
           </span>
         )}
-      </div>
+      </SettingsSectionFooter>
     </div>
   );
 }

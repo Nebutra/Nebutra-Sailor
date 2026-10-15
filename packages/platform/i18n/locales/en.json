@@ -365,7 +365,8 @@
         "submit": "Set password",
         "pending": "Sending password setup link…",
         "sentMessage": "We've sent a password setup link to your email."
-      }
+      },
+      "providerManaged": "Managed by your provider"
     },
     "banner": {
       "logoAlt": "Nebutra",
@@ -1295,7 +1296,15 @@
       "shortcuts": "Shortcuts",
       "auditLog": "Audit Log",
       "billing": "Billing",
-      "usage": "Usage"
+      "usage": "Usage",
+      "workspace": "Workspace",
+      "company": "Company",
+      "discover": "Discover",
+      "matches": "Matches",
+      "room": "Room",
+      "platform": "Platform",
+      "fleet": "Fleet",
+      "supply": "Supply"
     }
   },
   "startupOs": {
@@ -1420,13 +1429,25 @@
       "windowTo": "{period} window · {value1} to {value2}",
       "usageMetering": "Usage & Metering",
       "monitorCreditsAPICalls": "Monitor credits, API calls, AI token consumption, and quota status across your organization.",
-      "usageMetricsWillAppear": "Usage metrics will appear once your organization starts making API calls. Ensure the API gateway is connected.",
+      "usageMetricsWillAppear": "Create an API key and send a request — calls, tokens and quota show up here within a minute.",
       "aPICalls": "API Calls",
       "aITokensUsed": "AI Tokens Used",
       "billingPeriod": "Billing Period",
       "usageBreakdown": "Usage Breakdown",
       "thisPeriodSMetered": "This period’s metered usage, grouped by the dimensions recorded on each event.",
-      "managePlanAndLimits": "Manage plan and limits"
+      "managePlanAndLimits": "Manage plan and limits",
+      "credits": "Credits",
+      "thisPeriod": "This period",
+      "createAnAPIKey": "Create an API key",
+      "unlimited": "Unlimited",
+      "signedCredits": "{amount} credits",
+      "available": "{amount} available",
+      "refreshesAt": "Refreshes at {time}",
+      "monthlyIncluded": "{plan} · included each month",
+      "requests": "requests",
+      "totalTokensConsumed": "Tokens consumed this period",
+      "currentMeteringWindow": "Current metering window",
+      "loadingUsageMetrics": "Loading usage"
     },
     "startupOsStartupChatPanel": {
       "startupOSConversationalBuild": "Startup OS conversational build",
@@ -1448,7 +1469,12 @@
       "notHelpful": "Not helpful",
       "stopGenerating": "Stop generating",
       "stop": "Stop",
-      "promptPlaceholder": "Add a pricing page, make the hero a brand gradient, generate a README…"
+      "promptPlaceholder": "Add a pricing page, make the hero a brand gradient, generate a README…",
+      "writingFiles": "Writing files",
+      "filesWritten": "Files written",
+      "revertAndResend": "Revert and resend",
+      "reverting": "Reverting…",
+      "copied": "Copied"
     },
     "embedPage": {
       "interactiveDemo": "Interactive demo",
@@ -1491,7 +1517,9 @@
       "ofDragTapOr": "{value0} of {length} · drag, tap, or use ← → · matched on company, not a résumé",
       "itSAMatch": "It’s a match —",
       "youBothSignalledInterest": "You both signalled interest. Open the Cofounder Room to talk and decide whether to form a team.",
-      "viewMatches": "View matches"
+      "viewMatches": "View matches",
+      "joining": "Joining…",
+      "joinThePool": "Join the pool"
     },
     "navigationPublicPageChrome": {
       "systemStatus": "System status",
@@ -1530,7 +1558,13 @@
       "userEmail": "User email",
       "emailVerified": "Email verified",
       "organizationSlug": "Organization slug",
-      "plan": "Plan"
+      "plan": "Plan",
+      "failedToStartImpersonation": "Failed to start impersonation.",
+      "failedToSave": "Failed to save.",
+      "userName": "User name",
+      "organizationName": "Organization name",
+      "saveUser": "Save user",
+      "saveOrganization": "Save organization"
     },
     "growthReferralPanel": {
       "loadingReferrals": "Loading referrals",
@@ -1548,7 +1582,29 @@
       "codeRedeemedYourReferrer": "Code redeemed. Your referrer is credited.",
       "level": "Level {id} · {title}",
       "active": "Active",
-      "moreToUnlock": "{remaining} more to unlock"
+      "moreToUnlock": "{remaining} more to unlock",
+      "claimedInvites": "Claimed invites",
+      "level2": "Level",
+      "levels": {
+        "l0": {
+          "title": "Creator",
+          "reward": "Code is live",
+          "description": "Share your code — every friend who claims it is recorded here."
+        },
+        "l1": {
+          "title": "Pioneer",
+          "reward": "7 claimed invites",
+          "description": "Reached once seven friends have joined through your code."
+        },
+        "l2": {
+          "title": "Partner",
+          "reward": "50 claimed invites",
+          "description": "Reached once fifty friends have joined through your code."
+        }
+      },
+      "failedToLoadReferrals": "Failed to load referrals.",
+      "redeeming": "Redeeming",
+      "redeem": "Redeem"
     },
     "fleetPage": {
       "fleet": "Fleet",
@@ -1574,7 +1630,8 @@
       "activeUsers": "Active Users",
       "revenue": "Revenue",
       "tenant": "Tenant",
-      "status": "Status"
+      "status": "Status",
+      "loadingTenantHealth": "Loading tenant health..."
     },
     "adminPlatformAddAccountDialog": {
       "addAccount": "Add account",
@@ -1588,7 +1645,17 @@
       "callbackURL": "Callback URL",
       "result": "3 · Result",
       "accountAddedSyncThe": "Account added — sync the channel so its models go on the shelf.",
-      "audit": "audit {auditId}"
+      "audit": "audit {auditId}",
+      "theRouterReturnedNo": "The router returned no sign-in URL.",
+      "waitingForApproval": "Waiting for approval",
+      "copyURL": "Copy URL",
+      "startSignIn": "Start sign-in",
+      "completeSignIn": "Complete sign-in",
+      "copied": "Copied",
+      "close": "Close",
+      "cancel": "Cancel",
+      "starting": "Starting…",
+      "completing": "Completing…"
     },
     "adminAccessInviteIssuer": {
       "accessGate": "Access gate",
@@ -1604,7 +1671,12 @@
       "recentAccessInvites": "Recent access invites",
       "refresh": "Refresh",
       "redeemed": "{value0} · {scope} {value2} · redeemed {redemptionCount}/{maxRedemptions}",
-      "revoke": "Revoke"
+      "revoke": "Revoke",
+      "failedToIssueInvites": "Failed to issue invites.",
+      "copyTheseCodesNow": "Copy these codes now. Plaintext invite codes are never shown again.",
+      "failedToRevokeInvite": "Failed to revoke invite.",
+      "inviteRevoked": "Invite revoked.",
+      "issueInviteCodes": "Issue invite codes"
     },
     "authSignUpForm": {
       "checkYourEmail": "Check your email",
@@ -1622,7 +1694,16 @@
       "inviteCode": "Invite code",
       "nebutraIsInviteOnly": "Nebutra is invite-only while the cold-start gate is enabled.",
       "alreadyHaveAnAccount": "Already have an account?",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "anErrorOccurredPlease": "An error occurred. Please try again.",
+      "invalidCodePleaseTry": "Invalid code. Please try again.",
+      "failedToResendCode": "Failed to resend code. Please try again.",
+      "resendCode": "Resend code",
+      "creatingAccount": "Creating account…",
+      "createAccount": "Create account",
+      "verifying": "Verifying…",
+      "verify": "Verify",
+      "resending": "Resending…"
     },
     "integrationsPage": {
       "integrations": "Integrations",
@@ -1635,7 +1716,18 @@
       "loadingIntegrations": "Loading integrations...",
       "connect": "Connect",
       "docs": "Docs",
-      "integrationConnectorsWillBe": "Integration connectors will be added in future updates."
+      "integrationConnectorsWillBe": "Integration connectors will be added in future updates.",
+      "connectAnIntegration": "Connect an Integration",
+      "active": "Active",
+      "paused": "Paused",
+      "available": "Available",
+      "catalog": {
+        "SHOPIFY": "Sync products, orders, and customers from your Shopify store.",
+        "SHOPLINE": "Connect your Shopline storefront for unified commerce analytics.",
+        "STRIPE": "Synchronize payment data, invoices, and subscription events.",
+        "CUSTOM": "Send and receive events via custom HTTP webhooks."
+      },
+      "customWebhook": "Custom Webhook"
     },
     "agentRuntimePage": {
       "agentRuntimeDisabled": "Agent Runtime — disabled",
@@ -1667,7 +1759,8 @@
       "paidPlanRequired": "Paid plan required",
       "openTheCofounderRoom": "Open the Cofounder Room with a paid plan",
       "asTheFounderOpening": "As the founder opening the room, a paid plan unlocks the conversation with every match — no per-room fee.",
-      "upgradeToOpenThe": "Upgrade to open the room"
+      "upgradeToOpenThe": "Upgrade to open the room",
+      "formTheTeam": "Form the team"
     },
     "personalizationPersonalizationPanel": {
       "personalization": "Personalization",
@@ -1682,7 +1775,14 @@
       "customInstructions": "Custom instructions",
       "howShouldSailorRespond": "How should Sailor respond? Style, tone, format, focus areas. These take precedence over its defaults.",
       "reset": "Reset",
-      "saveChanges": "Save changes"
+      "saveChanges": "Save changes",
+      "sailorWillUseThese": "Sailor will use these in future conversations.",
+      "personalizationIsNotEnabled": "Personalization is not enabled yet.",
+      "profileSaved": "Profile saved",
+      "failedToSaveProfile": "Failed to save profile",
+      "pleaseTryAgain": "Please try again.",
+      "unsavedChanges": "Unsaved changes",
+      "upToDate": "Up to date"
     },
     "cinemaPage": {
       "cinemaDisabled": "Cinema — disabled",
@@ -1707,10 +1807,70 @@
       "attachATextFile": "Attach a text file to fold into the proposition",
       "startupArena": "Startup arena",
       "try": "Try",
-      "loadingRecentProjects": "Loading recent projects"
+      "loadingRecentProjects": "Loading recent projects",
+      "build": "Build",
+      "building": "Building…",
+      "outputs": {
+        "companyContext": {
+          "title": "CompanyContext",
+          "description": "Mission, ICP, and positioning — the company’s source of truth."
+        },
+        "launchArtifacts": {
+          "title": "Launch artifacts",
+          "description": "Brand, landing page, and pitch, generated together."
+        },
+        "liveFiles": {
+          "title": "Live files",
+          "description": "A real, runnable app scaffold you can edit."
+        },
+        "spatialCanvas": {
+          "title": "Spatial canvas",
+          "description": "Every artifact mapped on one zoomable canvas."
+        },
+        "governedRuns": {
+          "title": "Governed runs",
+          "description": "Every agent run is approval-gated and audited."
+        }
+      },
+      "arenas": {
+        "devInfra": {
+          "label": "Developer infrastructure",
+          "theses": [
+            "A usage-metered API gateway for AI apps",
+            "A self-host vector database with one-click cloud"
+          ]
+        },
+        "aiSaas": {
+          "label": "AI SaaS",
+          "theses": [
+            "An AI meeting-notes tool that drafts the follow-up email",
+            "A support-deflection copilot for B2B SaaS"
+          ]
+        },
+        "consumer": {
+          "label": "Consumer product",
+          "theses": [
+            "A habit tracker that rewards streaks with friends",
+            "A local-first journal with weekly AI reflection"
+          ]
+        },
+        "b2bOps": {
+          "label": "B2B operations",
+          "theses": [
+            "An approvals + audit workspace for finance teams",
+            "A vendor-onboarding portal with compliance checks"
+          ]
+        },
+        "creative": {
+          "label": "Creative tooling",
+          "theses": [
+            "A storyboard-to-video generator for marketers",
+            "A brand-kit generator from a single logo"
+          ]
+        }
+      }
     },
     "cofounderPage": {
-      "oPCTeam": "OPC → Team",
       "matchYourCofounder": "Match your cofounder",
       "turnYourOnePerson": "Turn your one-person company into a team — matched with a complementary cofounder by your compiled company, not a résumé.",
       "enterDiscover": "Enter Discover",
@@ -1719,7 +1879,21 @@
       "yourCofounderCardIs": "Your cofounder card is built from your Startup OS company. Compile one to preview it.",
       "compileYourCompany": "Compile your company",
       "step": "Step {value0}",
-      "theCofounderPoolIs": "The cofounder pool is opt-in and opens in the matching release. This page previews how your company will appear."
+      "theCofounderPoolIs": "The cofounder pool is opt-in and opens in the matching release. This page previews how your company will appear.",
+      "steps": {
+        "compile": {
+          "title": "Compile your company",
+          "body": "Your card is built from your Startup OS CompanyContext — thesis, arena, traction."
+        },
+        "match": {
+          "title": "Get matched",
+          "body": "Ranked by complementarity — what a cofounder brings vs the gap in your OPC."
+        },
+        "team": {
+          "title": "Form the team",
+          "body": "Mutual interest opens a Cofounder Room; form the team and the company carries over."
+        }
+      }
     },
     "canvasPage": {
       "canvasDisabled": "Canvas — disabled",
@@ -1744,17 +1918,6 @@
       "integrationCommand": "Integration command",
       "pnpmLayer0Demo": "pnpm layer0:demo"
     },
-    "notificationsNotificationPreferenceMatrix": {
-      "deliveryMatrix": "Delivery matrix",
-      "changesAreDisabledHere": "Changes are disabled here because the current notification runtime does not expose durable preference storage yet.",
-      "signal": "Signal",
-      "inbox": "Inbox",
-      "email": "Email",
-      "push": "Push",
-      "notes": "Notes",
-      "default": "Default:",
-      "routedOnlyWhereThis": "Routed only where this signal is meant to stay high-signal."
-    },
     "providerKeysCreateProviderKeyDialog": {
       "addProviderKey": "Add provider key",
       "bringYourOwnAI": "Bring your own AI provider key. It is encrypted at rest and used in preference to the platform key for matching models.",
@@ -1765,7 +1928,9 @@
       "eGProduction": "e.g. Production",
       "alwaysUseThisKey": "Always use this key",
       "neverFallBackTo": "Never fall back to the platform key for this provider. Requests fail if your key is exhausted.",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "failedToSaveProvider": "Failed to save provider key.",
+      "saveKey": "Save key"
     },
     "startupOsStartupCanvasPanel": {
       "companyCanvas": "Company canvas",
@@ -1782,7 +1947,9 @@
       "dependencies": "Dependencies: {value0}",
       "adapter": "Adapter: {adapter}",
       "approval": "Approval: {approval}",
-      "budget": "Budget: ${value0}"
+      "budget": "Budget: ${value0}",
+      "executeSelectedRun": "Execute selected run",
+      "notExecutable": "Not executable"
     },
     "authDeviceApprovalForm": {
       "authorizeADevice": "Authorize a device",
@@ -1796,7 +1963,12 @@
       "nebutraLogin": "nebutra login",
       "deny": "Deny",
       "approve": "Approve",
-      "tryAgain": "Try again"
+      "tryAgain": "Try again",
+      "couldNotReachThe": "Could not reach the auth center. Check your connection.",
+      "deviceAuthorizedYouCan": "Device authorized. You can close this tab and return to your terminal.",
+      "requestDeniedYouCan": "Request denied. You can close this tab.",
+      "checking": "Checking…",
+      "continue": "Continue"
     },
     "notificationsNotificationCenter": {
       "new": "New",
@@ -1806,7 +1978,9 @@
       "notifications": "Notifications",
       "unread": "{unreadCount} unread",
       "markAllRead": "Mark all read",
-      "notificationSettings": "Notification settings"
+      "notificationSettings": "Notification settings",
+      "markThisNotificationAs": "Mark this notification as read",
+      "markEveryVisibleUnread": "Mark every visible unread notification as read"
     },
     "notificationsNotificationsDialog": {
       "openNotifications": "Open notifications",
@@ -1846,7 +2020,19 @@
       "role": "Role",
       "action": "Action",
       "you": "You",
-      "owner": "Owner"
+      "owner": "Owner",
+      "leaveOrganization": "Leave Organization",
+      "youMayLoseAccess": "You may lose access immediately.",
+      "failedToUpdateMember": "Failed to update member role",
+      "failedToLeaveOrganization": "Failed to leave organization",
+      "failedToRemoveMember": "Failed to remove member",
+      "youLeftThisOrganization": "You left this organization.",
+      "failedToLoadMembers": "Failed to load members",
+      "adminsCanChangeRoles": "Admins can change roles, remove members, or leave their own organization.",
+      "roleChangesAndMember": "Role changes and member removal require an organization admin.",
+      "leaveOrganization2": "Leave organization",
+      "leave": "Leave",
+      "remove": "Remove"
     },
     "connectorsConnectorsHub": {
       "connectSailorWithYour": "Connect Sailor with your everyday apps, APIs, and MCPs",
@@ -1856,7 +2042,13 @@
       "addConnector": "Add connector",
       "removeThisConnector": "Remove this connector?",
       "remove": "Remove",
-      "learnAboutConnectorsSecurity": "Learn about Connectors security"
+      "learnAboutConnectorsSecurity": "Learn about Connectors security",
+      "connectorRemoved": "Connector removed",
+      "failedToRemoveConnector": "Failed to remove connector",
+      "pleaseTryAgain": "Please try again.",
+      "notUsedYet": "Not used yet",
+      "active": "Active",
+      "inactive": "Inactive"
     },
     "feedbackFeedbackDialog": {
       "reportAnIssue": "Report an issue",
@@ -1866,7 +2058,12 @@
       "whatDidYouExpect": "What did you expect? What actually happened? If you can, list the steps to reproduce.",
       "minimumCharactersMaximum": "Minimum {MIN_DESCRIPTION} characters · maximum {MAX_DESCRIPTION}",
       "allowUsToFollow": "Allow us to follow up via the email on your account.",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "thanksWeLlReview": "Thanks — we’ll review it soon.",
+      "failedToSubmitFeedback": "Failed to submit feedback",
+      "reportSubmitted": "Report submitted",
+      "pleaseTryAgainIn": "Please try again in a moment.",
+      "submitReport": "Submit report"
     },
     "onboardingProfileSetupStep": {
       "personalizeYourProfile": "Personalize your profile",
@@ -1875,7 +2072,9 @@
       "uploadOrganizationLogo": "Upload organization logo",
       "displayName": "Display name",
       "yourFullName": "Your full name",
-      "skipForNow": "Skip for now"
+      "skipForNow": "Skip for now",
+      "saving": "Saving…",
+      "continue": "Continue →"
     },
     "securityChangePasswordForm": {
       "password": "Password",
@@ -1905,7 +2104,10 @@
       "thisWorkspaceIsUsing": "This workspace is using {authProvider}. Advanced security controls are still being migrated into the shared Nebutra auth layer.",
       "forNowManagePassword": "For now, manage password resets, MFA, and session policies from your auth provider dashboard.",
       "signedInAs": "Signed in as",
-      "nebutraShowsEverySecurity": "Nebutra shows every security capability in one place, only enabling controls that the current auth layer can execute safely."
+      "nebutraShowsEverySecurity": "Nebutra shows every security capability in one place, only enabling controls that the current auth layer can execute safely.",
+      "failedToLoadLinked": "Failed to load linked sign-in methods.",
+      "failedToLoadActive": "Failed to load active sessions.",
+      "failedToLoadSecurity": "Failed to load security settings."
     },
     "companyTowerControlDeck": {
       "northStarMetric": "North-star metric",
@@ -1913,7 +2115,8 @@
       "oKR": "OKR",
       "roadmap": "Roadmap",
       "liveRuns": "Live runs",
-      "bets": "Bets"
+      "bets": "Bets",
+      "defineTheSingleMetric": "Define the single metric the company optimizes."
     },
     "startupOsStartupConnectorsMenu": {
       "connectors": "Connectors",
@@ -1937,11 +2140,17 @@
       "viewDeliveries": "View deliveries",
       "delete": "Delete",
       "loading": "Loading…",
-      "webhookEndpoints": "Webhook endpoints"
+      "webhookEndpoints": "Webhook endpoints",
+      "events": "Events",
+      "status": "Status",
+      "lastDelivered": "Last delivered",
+      "actions": "Actions",
+      "checkTheEndpointService": "Check the endpoint service, then try the request again.",
+      "tryAgain": "Try again",
+      "disable": "Disable",
+      "enable": "Enable"
     },
     "teamPage": {
-      "organizationProfile": "Organization profile",
-      "updateYourOrganizationS": "Update your organization’s branding and display name.",
       "inviteATeamMember": "Invite a team member",
       "sendAnInvitationTo": "Send an invitation to add someone to your organization.",
       "members": "Members"
@@ -1952,7 +2161,8 @@
       "yearly": "Yearly",
       "youCanRetryCheckout": "{checkoutError} You can retry checkout or contact support if the provider setup is still unavailable.",
       "recommended": "Recommended",
-      "seat": "/ seat"
+      "seat": "/ seat",
+      "checkoutCouldNotStart": "Checkout could not start."
     },
     "webhooksWebhookDeliveriesPanel": {
       "webhookDeliveryHistory": "Webhook delivery history",
@@ -1960,7 +2170,11 @@
       "closeDeliveriesPanel": "Close deliveries panel",
       "close": "Close",
       "loading": "Loading…",
-      "hTTP": "HTTP {statusCode}"
+      "hTTP": "HTTP {statusCode}",
+      "hidePayload": "Hide payload",
+      "viewPayload": "View payload",
+      "replaying": "Replaying…",
+      "replay": "Replay"
     },
     "adminPage": {
       "thisIsADeliberately": "This is a deliberately minimal admin. For user/org CRUD, customer support flows, and content ops, see",
@@ -1973,32 +2187,32 @@
     "supplyPage": {
       "supply": "Supply",
       "routerManifest": "Router manifest",
-      "advancedNativeConsole": "Advanced: the engine’s native console"
+      "advancedNativeConsole": "Advanced: the engine’s native console",
+      "theRouterManifestDeclares": "The router manifest declares no supply domain."
     },
     "teamInviteMemberForm": {
       "member": "Member",
       "admin": "Admin",
       "viewer": "Viewer",
-      "invitationIsOnIts": "Invitation is on its way."
+      "invitationIsOnIts": "Invitation is on its way.",
+      "sending": "Sending…",
+      "invite": "Invite"
     },
     "atelierAtelierCanvas": {
       "generatedAssetsLandHere": "Generated assets land here, placed by the server.",
       "brief": "Brief",
       "aSereneAlpineLake": "A serene alpine lake at dawn, editorial photography…",
-      "mockProviderNoAI": "Mock provider — no AI key needed. The server picks a non-overlapping position and persists before this panel is told."
+      "mockProviderNoAI": "Mock provider — no AI key needed. The server picks a non-overlapping position and persists before this panel is told.",
+      "generating": "Generating…",
+      "generate": "Generate"
     },
     "notificationsInboxBell": {
       "notifications": "Notifications",
       "markAllAsRead": "Mark all as read",
-      "viewAll": "View all"
-    },
-    "notificationsNotificationInboxPreview": {
-      "inboxPreview": "Inbox preview",
-      "thisIsTheSettings": "This is the settings-side preview of Nebutra’s in-app notification center. It is ready to be wired into the main shell once the main thread decides where the bell entry point should live.",
-      "unread": "{unreadCount} unread",
-      "new": "New",
-      "open": "Open",
-      "markRead": "Mark read"
+      "viewAll": "View all",
+      "failedToLoadNotifications": "Failed to load notifications.",
+      "failedToMarkRead": "Failed to mark read",
+      "failedToMarkAll": "Failed to mark all read"
     },
     "onboardingConnectIntegrationsStep": {
       "connectYourTools": "Connect your tools",
@@ -2021,16 +2235,33 @@
     },
     "billingPage": {
       "billing": "Billing",
-      "yourPlanAndEvery": "Your plan, and every order paid for any product in this organization."
-    },
-    "settingsPage": {
-      "dangerZone": "Danger Zone",
-      "theseActionsArePermanent": "These actions are permanent and cannot be undone.",
-      "deleteOrganization": "Delete Organization"
+      "yourPlanAndEvery": "Your plan, and every order paid for any product in this organization.",
+      "loadingBillingOverview": "Loading billing overview..."
     },
     "shortcutsPage": {
       "keyboardShortcuts": "Keyboard shortcuts",
-      "global": "Global",
+      "global": {
+        "commandPalette": {
+          "label": "Open command palette",
+          "description": "Search and run any command from anywhere in the app."
+        },
+        "toggleSidebar": {
+          "label": "Toggle sidebar",
+          "description": "Collapse or expand the navigation sidebar."
+        },
+        "closeOverlay": {
+          "label": "Close overlay",
+          "description": "Close the command palette, dialog, or modal."
+        },
+        "submit": {
+          "label": "Submit / send",
+          "description": "Send a chat message or confirm the focused action."
+        },
+        "newline": {
+          "label": "Newline in chat",
+          "description": "Insert a line break in the chat input without sending."
+        }
+      },
       "viaK": "via ⌘K",
       "intro": "Press <kbd>⌘K</kbd> anywhere to run any command. Use <kbd>↑</kbd>/<kbd>↓</kbd> to navigate the list."
     },
@@ -2045,29 +2276,36 @@
       "dEVAUTHACTIVESynthetic": "DEV AUTH ACTIVE: synthetic \"Dev User\", no DB writes. Set",
       "nEXTPUBLICAUTHPROVIDER": "NEXT_PUBLIC_AUTH_PROVIDER",
       "toARealProvider": "to a real provider to disable.",
-      "mainContent": "Main content"
+      "mainContent": "Main content",
+      "untitledWorkspace": "Untitled workspace"
     },
     "notificationsInboxList": {
       "loadingNotifications": "Loading notifications",
       "notifications": "Notifications",
-      "unread": "Unread"
-    },
-    "notificationsNotificationRuntimeBanner": {
-      "notificationRuntime": "{providerLabel} notification runtime",
-      "preferences": "Preferences",
-      "inbox": "Inbox",
-      "missingIntegration": "Missing integration"
+      "unread": "Unread",
+      "allCaughtUp": "You’re all caught up."
     },
     "providerKeysProviderKeysList": {
       "alwaysUseThisKey": "Always use this key",
       "preferFallBackTo": "Prefer, fall back to platform",
       "providerKeys": "Provider keys",
-      "addYourFirstProvider": "Add your first provider key"
+      "addYourFirstProvider": "Add your first provider key",
+      "provider": "Provider",
+      "key": "Key",
+      "routing": "Routing",
+      "actions": "Actions",
+      "noProviderKeysConfigured": "No provider keys configured",
+      "addAKeyAnd": "Add a key and this workspace routes that provider’s traffic through your own account.",
+      "removing": "Removing…",
+      "remove": "Remove"
     },
     "reelReelStudio": {
       "splitAScriptThe": "Split a script — the server builds a typed node graph here.",
       "script": "Script",
-      "oneShotPerLine": "One shot per line…"
+      "oneShotPerLine": "One shot per line…",
+      "reelRunFailed": "Reel run failed",
+      "building": "Building…",
+      "splitGenerate": "Split & generate"
     },
     "securityTwoFactorBlock": {
       "authenticatorAppSetup": "Authenticator app setup",
@@ -2077,7 +2315,11 @@
     "startupOsStartupThreadPanel": {
       "executeSelectedRun": "Execute selected run",
       "recordedAction": "{activityCount, plural, one {# recorded action} other {# recorded actions}}.",
-      "toggleNavigation": "Toggle navigation"
+      "toggleNavigation": "Toggle navigation",
+      "review": "Review",
+      "build": "Build",
+      "approving": "Approving",
+      "approve": "Approve"
     },
     "startupOsStartupWorkspaceShell": {
       "preview": "Preview",
@@ -2087,7 +2329,9 @@
     "webhooksEditWebhookDialog": {
       "editEndpoint": "Edit endpoint",
       "changingTheURLOr": "Changing the URL or the event list takes effect on the next delivery. The signing secret stays the same.",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "saveChanges": "Save changes",
+      "saving": "Saving…"
     },
     "atelierPage": {
       "atelier": "Atelier",
@@ -2123,11 +2367,16 @@
     },
     "apiKeysApiKeysClient": {
       "createAPIKey": "Create API key",
-      "loading": "Loading…"
+      "loading": "Loading…",
+      "failedToLoadKeys": "Failed to load keys."
     },
     "apiKeysCreateApiKeyForm": {
       "thisKeyAppearsOnce": "This key appears once. Store it before closing.",
-      "eGProductionBackend": "e.g. Production backend"
+      "eGProductionBackend": "e.g. Production backend",
+      "copied": "Copied",
+      "copy": "Copy",
+      "creating": "Creating…",
+      "createKey": "Create key"
     },
     "apiKeysPage": {
       "aPIKeys": "API Keys",
@@ -2145,7 +2394,8 @@
     },
     "providerKeysProviderKeysClient": {
       "addProviderKey": "Add provider key",
-      "loading": "Loading…"
+      "loading": "Loading…",
+      "failedToLoadKeys": "Failed to load keys."
     },
     "completePage": {
       "desktopSignIn": "Desktop sign-in",
@@ -2158,7 +2408,8 @@
     },
     "webNotFound": {
       "thisPageIsNot": "This page is not available.",
-      "checkTheURLOr": "Check the URL, or return to your dashboard."
+      "checkTheURLOr": "Check the URL, or return to your dashboard.",
+      "backToDashboard": "Back to dashboard"
     },
     "accountAvatarUploadForm": {
       "userAvatar": "User avatar",
@@ -2169,7 +2420,11 @@
       "noChangesInThis": "No changes in this plan.",
       "affects": "Affects {value0}",
       "planExpires": "Plan {planId} · expires {value1}",
-      "audit": "audit {auditId}"
+      "audit": "audit {auditId}",
+      "close": "Close",
+      "cancel": "Cancel",
+      "applying": "Applying…",
+      "apply": "Apply"
     },
     "adminPlatformCommandPalette": {
       "jumpTo": "Jump to…",
@@ -2184,12 +2439,15 @@
     },
     "cofounderMatchCofounderCard": {
       "compiledCompany": "Compiled company",
-      "complementarity": "Complementarity"
+      "complementarity": "Complementarity",
+      "computedAgainstEachViewer": "Computed against each viewer once you join the cofounder pool."
     },
     "growthRedemptionCodeInput": {
       "haveARedemptionCode": "Have a redemption code?",
       "eNTERCODE": "ENTER-CODE",
-      "redeem": "Redeem"
+      "redeem": "Redeem",
+      "redemptionIsNotEnabled": "Redemption is not enabled yet.",
+      "failedToRedeemThis": "Failed to redeem this code"
     },
     "navigationThemeToggle": {
       "toggleTheme": "Toggle theme",
@@ -2197,7 +2455,11 @@
     },
     "personalizationCommunicationPreferences": {
       "communicationPreferences": "Communication preferences",
-      "decideWhatReachesYour": "Decide what reaches your inbox. You can change these anytime."
+      "decideWhatReachesYour": "Decide what reaches your inbox. You can change these anytime.",
+      "communicationPreferencesAreNot": "Communication preferences are not enabled yet.",
+      "preferenceUpdated": "Preference updated",
+      "failedToSavePreference": "Failed to save preference",
+      "pleaseTryAgain": "Please try again."
     },
     "companyTowerBrandKitFloor": {
       "addABrandKit": "Add a brand-kit field",
@@ -2209,41 +2471,96 @@
     },
     "webhooksWebhookEndpointForm": {
       "endpointURL": "Endpoint URL",
-      "events": "Events"
+      "events": "Events",
+      "eventLabels": {
+        "user_created": "User created",
+        "user_updated": "User updated",
+        "user_deleted": "User deleted",
+        "invoice_paid": "Invoice paid",
+        "invoice_failed": "Invoice failed",
+        "invoice_updated": "Invoice updated",
+        "subscription_created": "Subscription created",
+        "subscription_updated": "Subscription updated",
+        "subscription_cancelled": "Subscription cancelled",
+        "org_created": "Organization created",
+        "org_updated": "Organization updated",
+        "org_deleted": "Organization deleted"
+      },
+      "unknownError": "Unknown error"
     },
     "authError": {
       "thisPageDidnT": "This page didn’t load.",
-      "somethingWentWrongOn": "Something went wrong on our side. Try again; it usually works the second time."
+      "somethingWentWrongOn": "Something went wrong on our side. Try again; it usually works the second time.",
+      "tryAgain": "Try again",
+      "goHome": "Go home"
     },
     "authNotFound": {
       "weCouldnTFind": "We couldn’t find that page.",
-      "theAddressMayBe": "The address may be mistyped, or the page has moved."
+      "theAddressMayBe": "The address may be mistyped, or the page has moved.",
+      "goHome": "Go home"
     },
     "authWechatLoginButton": {
       "weChat": "WeChat"
     },
     "auditError": {
-      "failedToLoadAudit": "Failed to load audit log."
+      "failedToLoadAudit": "Failed to load audit log.",
+      "tryAgain": "Try again",
+      "goToDashboard": "Go to dashboard",
+      "anUnexpectedErrorOccurred": "An unexpected error occurred while loading the audit log. Try again, or return to the dashboard."
     },
     "billingError": {
-      "failedToLoadBilling": "Failed to load billing."
+      "failedToLoadBilling": "Failed to load billing.",
+      "tryAgain": "Try again",
+      "goToDashboard": "Go to dashboard",
+      "anUnexpectedErrorOccurred": "An unexpected error occurred while loading your billing data. Try again, or return to the dashboard."
     },
     "webError": {
       "somethingWentWrong": "Something went wrong.",
       "thisPageDidnT": "This page didn’t load.",
-      "somethingWentWrongOn": "Something went wrong on our side. Try again; it usually works the second time."
+      "somethingWentWrongOn": "Something went wrong on our side. Try again; it usually works the second time.",
+      "tryAgain": "Try again",
+      "goHome": "Go home",
+      "goToDashboard": "Go to dashboard",
+      "anUnexpectedErrorOccurred": "An unexpected error occurred. Try again, or return to the dashboard."
     },
     "apiKeysApiKeyList": {
       "created": "Created {value0} {value1}",
-      "revoked": "Revoked"
+      "revoked": "Revoked",
+      "revoking": "Revoking…",
+      "revoke": "Revoke"
     },
     "developersPage": {
       "openPlatform": "Open Platform",
-      "credentialsAndEventSubscriptions": "Credentials and event subscriptions for"
+      "intro": "Credentials and event subscriptions for {name}. The public catalog is on <link>{domain}</link>.",
+      "links": {
+        "api-keys": {
+          "title": "API Keys",
+          "description": "Create and revoke programmatic keys for the gateway."
+        },
+        "webhooks": {
+          "title": "Webhooks",
+          "description": "Subscribe to workspace events. Payloads are signed."
+        },
+        "provider-keys": {
+          "title": "Provider Keys",
+          "description": "Bring your own AI provider credentials."
+        }
+      }
     },
     "notificationsPage": {
       "notifications": "Notifications",
-      "tuneHowReachesYou": "Tune how {name} reaches you for workspace activity, billing risk, security events, and product operations. Managed providers can save these preferences immediately; preview mode shows the product defaults without pretending they are persisted."
+      "tuneHowReachesYou": "Choose how {name} reaches you about workspace activity, billing, security and product updates.",
+      "inboxSignals": "Inbox signals",
+      "inbox": "Inbox",
+      "inboxSignalsDescription": "Highest-signal updates inside the {name} workspace.",
+      "emailDelivery": "Email delivery",
+      "email": "Email",
+      "emailDeliveryDescription": "Good for billing, security, and cross-session follow-up.",
+      "pushDelivery": "Push delivery",
+      "push": "Push",
+      "pushDeliveryDescription": "Shown as preview until a push dispatcher is connected.",
+      "preferencesLive": "Preferences save as you change them.",
+      "preferencesDefaults": "Showing the default policy. Changes save once notification delivery is connected for this workspace."
     },
     "referralsPage": {
       "referrals": "Referrals",
@@ -2253,7 +2570,10 @@
       "settingsNavigation": "Settings navigation"
     },
     "tenantsError": {
-      "failedToLoadTenants": "Failed to load tenants."
+      "failedToLoadTenants": "Failed to load tenants.",
+      "tryAgain": "Try again",
+      "goToDashboard": "Go to dashboard",
+      "anUnexpectedErrorOccurred": "An unexpected error occurred while loading tenants. Try again, or return to the dashboard."
     },
     "webLayout": {
       "skipToContent": "Skip to content"
@@ -2286,12 +2606,160 @@
       "available": "Available"
     },
     "valuesValuesStatement": {
-      "ourValuesCommitment": "Our values commitment"
+      "ourValuesCommitment": "Our values commitment",
+      "whatWeCommitTo": "What we commit to",
+      "choosingSailorMeansThese": "Choosing Sailor means these are non-negotiable."
     },
     "webhooksCreateWebhookDialog": {
       "endpointCreatedTheSigning": "Endpoint created. The signing secret appears once.",
       "storeItInYour": "Store it in your application’s secret manager before closing.",
-      "endpointURL": "Endpoint URL: {url}"
+      "endpointURL": "Endpoint URL: {url}",
+      "createEndpoint": "Create endpoint",
+      "creating": "Creating…",
+      "copied": "Copied",
+      "copy": "Copy"
+    },
+    "billingPlans": {
+      "free": {
+        "name": "Free",
+        "description": "For evaluation workspaces and early product discovery.",
+        "cadence": "forever",
+        "features": ["1 project", "1 team member", "Basic AI and content tools"]
+      },
+      "pro_monthly": {
+        "name": "Pro",
+        "description": "For teams that run their work here every day.",
+        "cadence": "per month",
+        "features": ["10 projects", "10 team members", "Advanced analytics", "Priority support"]
+      },
+      "pro_yearly": {
+        "name": "Pro Annual",
+        "description": "The same Pro workspace with annual planning and lower effective cost.",
+        "cadence": "per year",
+        "features": ["Everything in Pro", "Annual invoice cadence", "Reduced monthly equivalent"]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "For regulated teams that need SSO, audit posture, and contractual support.",
+        "cadence": "contract",
+        "price": "Custom",
+        "features": ["Unlimited usage policy", "SSO/SAML", "Audit logs", "Dedicated support"]
+      },
+      "manageBilling": "Manage billing",
+      "portalHint": "Invoices, payment method and cancellation open in the billing portal.",
+      "portalUnavailable": "Billing management opens here once payments are switched on."
+    },
+    "securitySessions": {
+      "title": "Active sessions",
+      "description": "Review where your account is signed in and revoke sessions you no longer trust.",
+      "currentSession": "(current)",
+      "lastActiveLabel": "Last active",
+      "revoke": "Sign out",
+      "revokeAll": "Sign out of all other devices",
+      "empty": "No other active sessions.",
+      "successRevoked": "Session signed out.",
+      "successRevokedAll": "All other sessions signed out.",
+      "revokeEnabled": "Revoke enabled",
+      "providerManaged": "Provider managed",
+      "expiresLabel": "Expires",
+      "unknownIp": "Unknown IP",
+      "noSessionsReported": "No active sessions were reported.",
+      "confirmPrompt": "Are you sure?",
+      "confirmHelp": "This keeps your current session signed in and signs out every other device.",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "revoking": "Signing out…",
+      "webKind": "Web",
+      "desktopKind": "Desktop",
+      "webBrowser": "Web browser",
+      "unknownPlatform": "Unknown platform"
+    },
+    "securityReasons": {
+      "delegated": "Managed in {provider}.",
+      "sessionsManaged": "Signing out here ends that device’s session immediately.",
+      "connectedReadOnly": "Linking and unlinking sign-in methods isn’t available here yet.",
+      "passkeysAvailable": "Register a device-bound passkey for phishing-resistant sign-in.",
+      "passkeysOff": "Passkeys aren’t enabled for this workspace yet.",
+      "passwordAttached": "Your account signs in with email and password.",
+      "passwordNone": "This account doesn’t use email and password, so there is no password to change.",
+      "twoFactorOff": "Two-factor authentication isn’t enabled for this workspace yet.",
+      "twoFactorAvailable": "Use an authenticator app and a one-time code at sign-in.",
+      "twoFactorNeedsPassword": "Two-factor needs an email-and-password sign-in method first.",
+      "notAvailable": "Not available",
+      "needsPassword": "Needs a password"
+    },
+    "adminImpersonateButton": {
+      "youWillSeeThe": "You will see the app as this user until you stop.",
+      "startImpersonating": "Start Impersonating",
+      "failedToStartImpersonation": "Failed to start impersonation.",
+      "starting": "Starting…",
+      "impersonate": "Impersonate"
+    },
+    "authCredentialsForm": {
+      "usePhoneNumber": "Use phone number"
+    },
+    "onboardingProgressBar": {
+      "onboardingProgress": "Onboarding progress"
+    },
+    "selectOrgSelectOrgClient": {
+      "failedToLoadWorkspaces": "Failed to load workspaces."
+    },
+    "navigationUserMenu": {
+      "noMatches": "No matches"
+    },
+    "personalizationPersonalizationTab": {
+      "failedToLoadProfile": "Failed to load profile",
+      "showingEmptyForm": "{error} — showing empty form."
+    },
+    "startupOsStartupCommandCenter": {
+      "startupOSFileAPI": "Startup OS file API returned an invalid payload.",
+      "failedToLoadStartup": "Failed to load Startup OS files.",
+      "startupOSAPIReturned": "Startup OS API returned an invalid project payload.",
+      "failedToLoadStartup2": "Failed to load Startup OS project.",
+      "failedToLoadStartup3": "Failed to load Startup OS.",
+      "failedToStartReal": "Failed to start real execution.",
+      "failedToCompileStartup": "Failed to compile Startup OS.",
+      "failedToApproveReview": "Failed to approve review gate.",
+      "startupOSAPIDid": "Startup OS API did not return the saved canvas layout.",
+      "failedToSaveCanvas": "Failed to save canvas layout.",
+      "failedToSaveStartup": "Failed to save Startup OS file."
+    },
+    "apiKeysCreateApiKeyDialog": {
+      "createAPIKey": "Create API key",
+      "createKey": "Create key",
+      "thisKeyAppearsOnce": "This key appears once. Store it before closing.",
+      "closingHidesThisKey": "Closing hides this key forever. Make sure it is stored.",
+      "closeWithoutTheKey": "Close Without the Key",
+      "keepOpen": "Keep Open",
+      "failedToCreateKey": "Failed to create key."
+    },
+    "apiKeysApiKeysList": {
+      "lastUsed": "Last Used",
+      "weCouldnTLoad": "We couldn’t load your API keys",
+      "tryAgain": "Try again"
+    },
+    "selectOrgJourney": {
+      "invitation": {
+        "title": "Invitation accepted",
+        "description": "Select the workspace you were invited to, or create a new one if it is not listed yet.",
+        "emptyActionLabel": "Create a workspace instead",
+        "createActionLabel": "Create another workspace"
+      },
+      "billing": {
+        "title": "Choose a workspace for billing",
+        "description": "Billing changes are scoped to a workspace. Select one to continue managing the subscription.",
+        "emptyActionLabel": "Create workspace",
+        "createActionLabel": "Create new workspace"
+      },
+      "default": {
+        "title": "Select a workspace",
+        "description": "Choose a workspace to continue, or create a new one.",
+        "emptyActionLabel": "Create workspace",
+        "createActionLabel": "Create new workspace"
+      }
+    },
+    "securityActiveSessionsBlock": {
+      "unknownTime": "Unknown time"
     }
   }
 }

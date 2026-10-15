@@ -82,12 +82,15 @@ interface Props {
 
 export function ValuesStatement({
   pillars = DEFAULT_VALUE_PILLARS,
-  heading = "What we commit to",
-  description = "Choosing Sailor means these are non-negotiable.",
+  heading: headingProp,
+  description: descriptionProp,
   density = "comfortable",
   className = "",
 }: Props) {
+  const tCopy = useTranslations("copy.valuesValuesStatement");
   const tc = useTranslations("copy.valuesValuesStatement");
+  const heading = headingProp ?? tCopy("whatWeCommitTo");
+  const description = descriptionProp ?? tCopy("choosingSailorMeansThese");
   const padding = density === "compact" ? "p-4" : "p-6";
   const grid =
     density === "compact"

@@ -59,6 +59,7 @@ interface Props {
 }
 
 export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
+  const tCopy = useTranslations("copy.connectorsConnectorsHub");
   const tc = useTranslations("copy.connectorsConnectorsHub");
   const [busyId, setBusyId] = useState<string | null>(null);
   const [pendingRemove, setPendingRemove] = useState<ConnectorRow | null>(null);
@@ -68,13 +69,13 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
     setBusyId(connector.id);
     try {
       await onRemove(connector);
-      toast.success("Connector removed", {
+      toast.success(tCopy("connectorRemoved"), {
         description: `"${connector.name}" was disconnected.`,
       });
       setPendingRemove(null);
     } catch (err) {
-      toast.error("Failed to remove connector", {
-        description: err instanceof Error ? err.message : "Please try again.",
+      toast.error(tCopy("failedToRemoveConnector"), {
+        description: err instanceof Error ? err.message : tCopy("pleaseTryAgain"),
       });
     } finally {
       setBusyId(null);
@@ -164,7 +165,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
                 </div>
                 <span
                   role="img"
-                  aria-label={connector.isActive ? "Active" : "Inactive"}
+                  aria-label={connector.isActive ? tCopy("active") : tCopy("inactive")}
                   className={`h-1.5 w-1.5 shrink-0 rounded-full ${
                     connector.isActive ? "bg-success" : "bg-neutral-9"
                   }`}
@@ -174,7 +175,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
               <p className="text-[11px] text-neutral-10">
                 {connector.lastUsedAt
                   ? `Last used ${new Date(connector.lastUsedAt).toLocaleDateString()}`
-                  : "Not used yet"}
+                  : tCopy("notUsedYet")}
               </p>
 
               {onRemove && (

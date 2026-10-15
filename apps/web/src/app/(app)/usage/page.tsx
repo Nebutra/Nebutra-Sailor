@@ -1,8 +1,8 @@
 import { EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
-import { Card } from "@nebutra/ui/primitives";
+import { Button, Card } from "@nebutra/ui/primitives";
 import { headers } from "next/headers";
-import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { useLocale, useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import { type ReactNode, Suspense } from "react";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 import { getTypedApi } from "@/lib/api/client";
@@ -123,22 +123,22 @@ function UsageGauge({
       : "text-success-strong";
 
   return (
-    <Card className="p-4 sm:p-6">
+    <MetricCell>
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-medium text-neutral-11">{label}</h3>
-        <span className={`text-xs font-semibold ${statusColor}`}>{percent.toFixed(1)}%</span>
+        <h3 className="text-sm text-neutral-11">{label}</h3>
+        <span className={`font-mono text-xs tabular-nums ${statusColor}`}>
+          {percent.toFixed(1)}%
+        </span>
       </div>
 
-      {/* Large number */}
-      <p className="mt-2 text-3xl font-bold tracking-tight text-neutral-12">
+      <p className="mt-3 text-3xl font-semibold tracking-tight tabular-nums text-neutral-12">
         {used.toLocaleString()}
-        <span className="ml-1 text-sm font-normal text-neutral-10">
+        <span className="ml-1.5 text-sm font-normal text-neutral-10">
           / {limit.toLocaleString()} {unit}
         </span>
       </p>
 
-      {/* Progress bar */}
-      <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-neutral-3">
+      <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-neutral-3">
         <div
           className={`h-full rounded-full transition-[width] duration-500 motion-reduce:transition-none ${barColor}`}
           style={{ width: `${percent}%` }}
@@ -161,27 +161,78 @@ function UsageGauge({
           {tc("approachingQuotaLimitConsider")}
         </div>
       )}
-    </Card>
+    </MetricCell>
   );
+}
+
+/**
+ * Metrics share one hairline panel, divided into cells — the way current
+ * dashboards present a row of numbers — instead of a card per number.
+ */
+function MetricStrip({ children }: { children: ReactNode }) {
+  return (
+    <div className="grid overflow-hidden rounded-xl border border-border sm:grid-cols-3 sm:divide-x sm:divide-border max-sm:divide-y max-sm:divide-border">
+      {children}
+    </div>
+  );
+}
+
+function MetricCell({ children }: { children: ReactNode }) {
+  return <div className="p-5 sm:p-6">{children}</div>;
 }
 
 function StatCard({ label, value, subLabel }: { label: string; value: string; subLabel?: string }) {
   return (
-    <Card className="p-4 sm:p-6">
-      <h3 className="text-sm font-medium text-neutral-11">{label}</h3>
-      <p className="mt-2 text-3xl font-bold tracking-tight text-neutral-12">{value}</p>
-      {subLabel && <p className="mt-1 text-xs text-neutral-10">{subLabel}</p>}
-    </Card>
+    <MetricCell>
+      <h3 className="text-sm text-neutral-11">{label}</h3>
+      <p className="mt-3 text-3xl font-semibold tracking-tight tabular-nums text-neutral-12">
+        {value}
+      </p>
+      {subLabel && <p className="mt-1.5 text-xs text-neutral-10">{subLabel}</p>}
+    </MetricCell>
   );
 }
 
-function formatCreditAllowance(value: number): string {
-  return value < 0 ? "Unlimited" : value.toLocaleString();
+function SectionHeading({
+  title,
+  description,
+  action,
+}: {
+  title: string;
+  description?: string;
+  action?: ReactNode;
+}) {
+  return (
+    <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <h2 className="text-base font-semibold text-neutral-12">{title}</h2>
+        {description ? <p className="mt-1 text-sm text-neutral-11">{description}</p> : null}
+      </div>
+      {action}
+    </div>
+  );
 }
 
-function formatSignedCredits(value: number): string {
+type UsageT = (key: string, values?: Record<string, string | number>) => string;
+
+function formatCreditAllowance(value: number, tc: UsageT): string {
+  return value < 0 ? tc("unlimited") : value.toLocaleString();
+}
+
+function formatSignedCredits(value: number, tc: UsageT): string {
   const sign = value > 0 ? "+" : "";
-  return `${sign}${value.toLocaleString()} credits`;
+  return tc("signedCredits", { amount: `${sign}${value.toLocaleString()}` });
+}
+
+/** Plan code from the ledger (FREE / PRO / ENTERPRISE) → its catalog name. */
+function planName(plan: string, tp: UsageT): string {
+  const id =
+    plan.toUpperCase() === "PRO"
+      ? "pro_monthly"
+      : plan.toUpperCase() === "ENTERPRISE"
+        ? "enterprise"
+        : "free";
+  return tp(`${id}.name`);
 }
 
 function formatTransactionType(type: string): string {
@@ -193,14 +244,14 @@ function formatTransactionType(type: string): string {
     .join(" ");
 }
 
-function formatCreditDate(value: string): string {
+function formatCreditDate(value: string, locale: string): string {
   const date = new Date(value);
 
   if (Number.isNaN(date.getTime())) {
     return value;
   }
 
-  return new Intl.DateTimeFormat("en", {
+  return new Intl.DateTimeFormat(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -215,54 +266,51 @@ function CreditSummarySection({
   emptyActivityLabel: string;
 }) {
   const tc = useTranslations("copy.usagePage");
+  const tp = useTranslations("copy.billingPlans");
+  const locale = useLocale();
   if (!creditSummary) {
     return (
-      <Card className="p-4 sm:p-6">
-        <h2 className="text-lg font-semibold text-neutral-12">{tc("creditBalance")}</h2>
-        <p className="mt-2 text-sm text-neutral-11">{tc("creditBalanceIsUnavailable")}</p>
-      </Card>
+      <section>
+        <SectionHeading title={tc("credits")} description={tc("creditBalanceIsUnavailable")} />
+        <MetricStrip>
+          <StatCard label={tc("creditBalance")} value="—" />
+          <StatCard label={tc("dailyRefresh")} value="—" />
+          <StatCard label={tc("planAllowance")} value="—" />
+        </MetricStrip>
+      </section>
     );
   }
 
   return (
-    <>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <section>
+      <SectionHeading title={tc("credits")} />
+      <MetricStrip>
         <StatCard
           label={tc("creditBalance")}
           value={creditSummary.balance.amount.toLocaleString()}
-          subLabel={`${creditSummary.balance.formatted} available`}
+          subLabel={tc("available", { amount: creditSummary.balance.formatted })}
         />
 
         <StatCard
           label={tc("dailyRefresh")}
-          value={formatCreditAllowance(creditSummary.allowance.dailyRefresh)}
-          subLabel={`Refreshes at ${creditSummary.allowance.refreshTime}`}
+          value={formatCreditAllowance(creditSummary.allowance.dailyRefresh, tc)}
+          subLabel={tc("refreshesAt", { time: creditSummary.allowance.refreshTime })}
         />
 
         <StatCard
           label={tc("planAllowance")}
-          value={formatCreditAllowance(creditSummary.allowance.includedMonthly)}
-          subLabel={`${creditSummary.allowance.plan} monthly included credits`}
+          value={formatCreditAllowance(creditSummary.allowance.includedMonthly, tc)}
+          subLabel={tc("monthlyIncluded", { plan: planName(creditSummary.allowance.plan, tp) })}
         />
-      </div>
+      </MetricStrip>
 
-      <Card className="mt-6 p-4 sm:p-6">
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 className="text-lg font-semibold text-neutral-12">{tc("creditActivity")}</h2>
-            <p className="text-sm text-neutral-11">{tc("recentCreditGrantsAnd")}</p>
-          </div>
-          <span className="text-xs font-medium uppercase tracking-normal text-neutral-10">
-            {creditSummary.allowance.plan}
-          </span>
-        </div>
+      <div className="mt-12">
+        <SectionHeading title={tc("creditActivity")} description={tc("recentCreditGrantsAnd")} />
 
         {creditSummary.transactions.length === 0 ? (
-          <p className="mt-6 rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 px-4 py-3 text-sm text-neutral-11">
-            {emptyActivityLabel}
-          </p>
+          <EmptyState preview="list" title={emptyActivityLabel} />
         ) : (
-          <div className="mt-4 divide-y divide-neutral-6">
+          <div className="divide-y divide-border border-y border-border">
             {creditSummary.transactions.map((transaction) => (
               <div
                 key={transaction.id}
@@ -273,7 +321,7 @@ function CreditSummarySection({
                     {transaction.description ?? formatTransactionType(transaction.type)}
                   </p>
                   <p className="mt-1 text-xs text-neutral-10">
-                    {formatCreditDate(transaction.createdAt)}
+                    {formatCreditDate(transaction.createdAt, locale)}
                     {transaction.relatedId ? ` · ${transaction.relatedId}` : ""}
                   </p>
                 </div>
@@ -283,7 +331,7 @@ function CreditSummarySection({
                     transaction.amount >= 0 ? "text-success-strong" : "text-neutral-12"
                   }`}
                 >
-                  {formatSignedCredits(transaction.amount)}
+                  {formatSignedCredits(transaction.amount, tc)}
                 </span>
 
                 <span className="text-xs text-neutral-10">
@@ -293,8 +341,8 @@ function CreditSummarySection({
             ))}
           </div>
         )}
-      </Card>
-    </>
+      </div>
+    </section>
   );
 }
 
@@ -305,7 +353,7 @@ function CreditSummarySection({
  * states so the page below it does not move as the section resolves.
  */
 function BreakdownFrame({ children }: { children: ReactNode }) {
-  return <div className="mt-4 min-h-[19rem]">{children}</div>;
+  return <div className="min-h-[19rem]">{children}</div>;
 }
 
 function BreakdownSkeleton() {
@@ -404,14 +452,14 @@ async function UsageBreakdownSection({
   result: Promise<BreakdownSectionResult>;
 }) {
   const tc = await getTranslations("copy.usagePage");
+  const locale = await getLocale();
   const result = await pending;
 
   if (result.status === "no-tenant") {
     return (
       <BreakdownFrame>
         <EmptyState
-          tone="subtle"
-          size="md"
+          preview="table"
           title={tc("selectAnOrganizationTo")}
           description={tc("meteredUsageIsRecorded")}
         />
@@ -431,8 +479,7 @@ async function UsageBreakdownSection({
     return (
       <BreakdownFrame>
         <EmptyState
-          tone="subtle"
-          size="md"
+          preview="table"
           title={tc("thisPeriodHasNo")}
           description={tc("modelCallsAndAPI")}
         />
@@ -452,8 +499,8 @@ async function UsageBreakdownSection({
         <p className="mt-4 text-xs text-neutral-10 first-letter:uppercase">
           {tc("windowTo", {
             period: result.breakdown.period,
-            value1: formatCreditDate(result.breakdown.periodStart),
-            value2: formatCreditDate(result.breakdown.periodEnd),
+            value1: formatCreditDate(result.breakdown.periodStart, locale),
+            value2: formatCreditDate(result.breakdown.periodEnd, locale),
           })}
         </p>
       )}
@@ -478,56 +525,64 @@ async function UsageContent() {
         emptyActivityLabel={t("emptyState.creditActivity")}
       />
 
-      {!usage ? (
-        <EmptyState
-          tone="branded"
-          size="lg"
-          title={t("emptyState.usageData")}
-          description={tc("usageMetricsWillAppear")}
-        />
-      ) : (
-        /* Quota Gauges */
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <UsageGauge
-            label={tc("aPICalls")}
-            used={usage.apiCalls.used}
-            limit={usage.apiCalls.limit}
-            unit="requests"
+      <section className="mt-12">
+        <SectionHeading title={tc("thisPeriod")} />
+        {!usage ? (
+          <EmptyState
+            preview="chart"
+            title={t("emptyState.usageData")}
+            description={tc("usageMetricsWillAppear")}
+            action={
+              <Button asChild size="sm" variant="outline">
+                <ViewTransitionLink href="/settings/api-keys">
+                  {tc("createAnAPIKey")}
+                </ViewTransitionLink>
+              </Button>
+            }
           />
+        ) : (
+          <MetricStrip>
+            <UsageGauge
+              label={tc("aPICalls")}
+              used={usage.apiCalls.used}
+              limit={usage.apiCalls.limit}
+              unit={tc("requests")}
+            />
 
-          <StatCard
-            label={tc("aITokensUsed")}
-            value={usage.aiTokens.used.toLocaleString()}
-            subLabel="Total tokens consumed this period"
-          />
+            <StatCard
+              label={tc("aITokensUsed")}
+              value={usage.aiTokens.used.toLocaleString()}
+              subLabel={tc("totalTokensConsumed")}
+            />
 
-          <StatCard
-            label={tc("billingPeriod")}
-            value={usage.period}
-            subLabel="Current metering window"
-          />
-        </div>
-      )}
+            <StatCard
+              label={tc("billingPeriod")}
+              value={usage.period}
+              subLabel={tc("currentMeteringWindow")}
+            />
+          </MetricStrip>
+        )}
+      </section>
 
       {/* Usage Breakdown — read straight from @nebutra/metering, so it renders
           independently of the gateway usage endpoint above. */}
-
-      <div className="mt-8 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h2 className="text-lg font-semibold text-neutral-12">{tc("usageBreakdown")}</h2>
-          <p className="mt-1 text-sm text-neutral-11">{tc("thisPeriodSMetered")}</p>
-        </div>
-        <ViewTransitionLink
-          href="/billing"
-          className="shrink-0 text-sm font-medium text-neutral-11 underline-offset-4 transition-colors hover:text-neutral-12 hover:underline"
-        >
-          {tc("managePlanAndLimits")}
-        </ViewTransitionLink>
-      </div>
-
-      <Suspense fallback={<BreakdownSkeleton />}>
-        <UsageBreakdownSection result={breakdown} />
-      </Suspense>
+      <section className="mt-12">
+        <SectionHeading
+          title={tc("usageBreakdown")}
+          description={tc("thisPeriodSMetered")}
+          action={
+            <ViewTransitionLink
+              href="/billing"
+              className="shrink-0 text-sm font-medium text-neutral-11 underline-offset-4 transition-colors hover:text-neutral-12 hover:underline"
+            >
+              {tc("managePlanAndLimits")}
+            </ViewTransitionLink>
+          }
+        />
+        <Suspense fallback={<BreakdownSkeleton />}>
+          <UsageBreakdownSection result={breakdown} />
+        </Suspense>
+      </section>
     </>
   );
 }
@@ -536,7 +591,7 @@ export default async function UsagePage() {
   const tc = await getTranslations("copy.usagePage");
   return (
     <section className="mx-auto w-full max-w-wide" aria-label={tc("usageMetering")}>
-      <Suspense fallback={<LoadingState message="Loading usage metrics..." />}>
+      <Suspense fallback={<LoadingState message={tc("loadingUsageMetrics")} />}>
         <UsageContent />
       </Suspense>
     </section>

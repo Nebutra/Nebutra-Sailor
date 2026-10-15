@@ -75,6 +75,7 @@ const DEFAULT_SAVE: NonNullable<Props["onSave"]> = async () => {
 };
 
 export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Props) {
+  const tCopy = useTranslations("copy.personalizationPersonalizationPanel");
   const tc = useTranslations("copy.personalizationPersonalizationPanel");
   const nicknameId = useId();
   const occupationId = useId();
@@ -117,12 +118,12 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
         setSavedValue(values);
         setSavedAt(Date.now());
       });
-      toast.success("Profile saved", {
-        description: "Sailor will use these in future conversations.",
+      toast.success(tCopy("profileSaved"), {
+        description: tCopy("sailorWillUseThese"),
       });
     } catch (err) {
-      toast.error("Failed to save profile", {
-        description: err instanceof Error ? err.message : "Please try again.",
+      toast.error(tCopy("failedToSaveProfile"), {
+        description: err instanceof Error ? err.message : tCopy("pleaseTryAgain"),
       });
     }
   }
@@ -254,8 +255,8 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
             {savedAt && !dirty
               ? `Saved ${new Date(savedAt).toLocaleTimeString()}`
               : dirty
-                ? "Unsaved changes"
-                : "Up to date"}
+                ? tCopy("unsavedChanges")
+                : tCopy("upToDate")}
           </p>
           <div className="flex items-center gap-2">
             <button

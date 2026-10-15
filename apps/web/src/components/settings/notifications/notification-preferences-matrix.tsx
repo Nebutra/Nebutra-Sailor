@@ -172,7 +172,7 @@ export function NotificationPreferencesMatrix({
     return (
       <div
         data-testid="notification-preferences-loading"
-        className="space-y-3 rounded-[var(--radius-lg)] border border-border bg-background p-6"
+        className="space-y-3 rounded-xl border border-border bg-card p-6"
         aria-busy="true"
         aria-live="polite"
       >
@@ -185,7 +185,7 @@ export function NotificationPreferencesMatrix({
   }
 
   return (
-    <section className="space-y-4 rounded-[var(--radius-lg)] border border-border bg-background p-6">
+    <section className="space-y-4 rounded-xl border border-border bg-card p-6">
       <header className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <h3 className="text-base font-semibold text-foreground">
@@ -204,7 +204,7 @@ export function NotificationPreferencesMatrix({
           <button
             type="button"
             onClick={handleResetAll}
-            className="rounded-[var(--radius-md)] border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-muted"
+            className="rounded-[var(--radius-md)] border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-muted"
           >
             {t("settings.notifications.actions.resetAll")}
           </button>

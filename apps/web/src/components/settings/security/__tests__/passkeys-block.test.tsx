@@ -5,6 +5,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import userEvent from "@testing-library/user-event";
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactElement, ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const messages: Record<string, string> = {
   "auth.security.passkeys.title": "Passkeys",
@@ -28,15 +29,17 @@ const messages: Record<string, string> = {
 };
 
 vi.mock("next-intl", () => ({
-  useTranslations:
-    (namespace: string) => (key: string, values?: Record<string, string | number>) => {
-      const fullKey = `${namespace}.${key}`;
-      const template = messages[fullKey] ?? fullKey;
-      return Object.entries(values ?? {}).reduce(
-        (message, [name, value]) => message.replace(`{${name}}`, String(value)),
-        template,
-      );
-    },
+  useTranslations: (namespace: string) =>
+    namespace.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string, values?: Record<string, string | number>) => {
+          const fullKey = `${namespace}.${key}`;
+          const template = messages[fullKey] ?? fullKey;
+          return Object.entries(values ?? {}).reduce(
+            (message, [name, value]) => message.replace(`{${name}}`, String(value)),
+            template,
+          );
+        },
   useFormatter: () => ({
     relativeTime: (_d: Date) => "just now",
     dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",
@@ -91,6 +94,7 @@ function buildCapability(
   return {
     available: true,
     reason: "Passkey registration is available.",
+    reasonKey: "passkeysAvailable",
     ...overrides,
   };
 }
@@ -121,12 +125,16 @@ describe("PasskeysBlock (react-query integration)", () => {
     const onList = vi.fn();
     renderWithClient(
       <PasskeysBlock
-        capability={buildCapability({ available: false, reason: "Not wired." })}
+        capability={buildCapability({
+          available: false,
+          reason: "Not wired.",
+          reasonKey: "passkeysOff",
+        })}
         onList={onList}
       />,
     );
 
-    expect(screen.getByText("Not wired.")).toBeInTheDocument();
+    expect(screen.getByText("Passkeys aren’t enabled for this workspace yet.")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Add passkey/ })).not.toBeInTheDocument();
     // `enabled: capability.available` gates the fetch — it must never fire.
     expect(onList).not.toHaveBeenCalled();

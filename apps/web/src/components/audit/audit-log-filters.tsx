@@ -85,7 +85,7 @@ export function AuditLogFilters({ onChange }: AuditLogFiltersProps) {
   }
 
   return (
-    <div className="flex flex-wrap items-end gap-3 rounded-[var(--radius-lg)] border border-border bg-background p-4">
+    <div className="flex flex-wrap items-end gap-3 rounded-xl border border-border bg-card p-4">
       <div className="flex flex-col">
         <label
           htmlFor="audit-filter-action"

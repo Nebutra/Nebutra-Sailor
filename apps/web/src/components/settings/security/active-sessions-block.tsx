@@ -1,10 +1,10 @@
 "use client";
 
+import { SettingsSection } from "@nebutra/ui/layout";
 import { Button } from "@nebutra/ui/primitives";
-import { useFormatter } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { useEffect, useReducer } from "react";
 import { resolveAuthErrorKey } from "@/lib/auth/error-catalog";
-import type { AuthErrorKey } from "@/lib/auth/error-keys";
 import type { SecurityCapabilities } from "./security-capabilities";
 
 export interface ActiveSession {
@@ -40,58 +40,9 @@ interface ActiveSessionsBlockProps {
 // Inline i18n strings — the web app does not bundle next-intl into this component
 // today, so we keep English-only literals here and align keys with
 // packages/platform/i18n/locales/en.json → auth.security.sessions.* and auth.errors.*.
-const SESSION_STRINGS = {
-  title: "Active sessions",
-  description: "Review where your account is signed in and revoke sessions you no longer trust.",
-  currentSession: "(current)",
-  lastActiveLabel: "Last active",
-  revoke: "Sign out",
-  revokeAll: "Sign out of all other devices",
-  empty: "No other active sessions.",
-  successRevoked: "Session signed out.",
-  successRevokedAll: "All other sessions signed out.",
-  revokeEnabled: "Revoke enabled",
-  providerManaged: "Provider managed",
-  expiresLabel: "Expires",
-  unknownIp: "Unknown IP",
-  noSessionsReported: "No active sessions were reported.",
-  confirmPrompt: "Are you sure?",
-  confirmHelp: "This keeps your current session signed in and signs out every other device.",
-  confirm: "Confirm",
-  cancel: "Cancel",
-  revoking: "Signing out…",
-  webKind: "Web",
-  desktopKind: "Desktop",
-} as const;
 
-// Error catalog mirrors packages/platform/i18n/locales/en.json → auth.errors.*.
-// Inline-bundled because @nebutra/i18n is not a runtime dependency of @nebutra/web.
-const ERROR_MESSAGES: Record<AuthErrorKey, string> = {
-  invalidCredentials: "Email or password is incorrect.",
-  userNotFound: "No account found with that email.",
-  userAlreadyExists: "An account with that email already exists.",
-  weakPassword: "Password is too weak. Use at least 8 characters with mixed case and numbers.",
-  passwordsDontMatch: "Passwords don't match.",
-  passwordTooShort: "Password must be at least 8 characters.",
-  currentPasswordIncorrect: "Current password is incorrect.",
-  samePassword: "New password must be different from your current password.",
-  invalidEmail: "Email address is not valid.",
-  emailNotVerified: "Please verify your email address first.",
-  sessionExpired: "Your session has expired. Please sign in again.",
-  twoFactorRequired: "Two-factor verification required.",
-  invalidVerificationCode: "Verification code is incorrect or expired.",
-  twoFactorAlreadyEnabled: "Two-factor authentication is already enabled.",
-  twoFactorNotEnabled: "Two-factor authentication is not enabled.",
-  tooManyAttempts: "Too many attempts. Please try again later.",
-  rateLimited: "You're doing that too often. Slow down.",
-  providerNotSupported: "This action is managed by your authentication provider.",
-  networkError: "Network error. Check your connection and try again.",
-  unknown: "Something went wrong. Please try again.",
-};
-
-function resolveErrorMessage(error: unknown): string {
-  const key = resolveAuthErrorKey(error);
-  return ERROR_MESSAGES[key] ?? ERROR_MESSAGES.unknown;
+function resolveErrorMessage(error: unknown, tErrors: (key: string) => string): string {
+  return tErrors(resolveAuthErrorKey(error));
 }
 
 /**
@@ -173,6 +124,10 @@ export function ActiveSessionsBlock({
   onRevoke,
   onRevokeAllOthers,
 }: ActiveSessionsBlockProps) {
+  const tc = useTranslations("copy.securityActiveSessionsBlock");
+  const tReasons = useTranslations("copy.securityReasons");
+  const ts = useTranslations("copy.securitySessions");
+  const tErrors = useTranslations("auth.errors");
   const format = useFormatter();
   const [state, dispatch] = useReducer(activeSessionsReducer, INITIAL_ACTIVE_SESSIONS_STATE);
 
@@ -222,9 +177,9 @@ export function ActiveSessionsBlock({
     try {
       await (onRevoke ?? defaultRevoke)(session.id, session.kind);
       await onRefresh();
-      dispatch({ type: "revokeOne.success", message: SESSION_STRINGS.successRevoked });
+      dispatch({ type: "revokeOne.success", message: ts("successRevoked") });
     } catch (err) {
-      dispatch({ type: "revokeOne.failure", error: resolveErrorMessage(err) });
+      dispatch({ type: "revokeOne.failure", error: resolveErrorMessage(err, tErrors) });
     }
   }
 
@@ -234,9 +189,9 @@ export function ActiveSessionsBlock({
     try {
       await (onRevokeAllOthers ?? defaultRevokeAllOthers)();
       await onRefresh();
-      dispatch({ type: "revokeAll.success", message: SESSION_STRINGS.successRevokedAll });
+      dispatch({ type: "revokeAll.success", message: ts("successRevokedAll") });
     } catch (err) {
-      dispatch({ type: "revokeAll.failure", error: resolveErrorMessage(err) });
+      dispatch({ type: "revokeAll.failure", error: resolveErrorMessage(err, tErrors) });
     }
   }
 
@@ -250,17 +205,15 @@ export function ActiveSessionsBlock({
   const showEmpty = sessions.length === 0 || otherSessionsCount === 0;
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-6">
-      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-        <div>
-          <h3 className="text-sm font-medium text-neutral-12">{SESSION_STRINGS.title}</h3>
-          <p className="mt-1 text-sm text-neutral-11">{SESSION_STRINGS.description}</p>
-        </div>
+    <SettingsSection
+      title={ts("title")}
+      description={ts("description")}
+      badge={
         <span className="w-fit rounded-full border border-neutral-7 px-2.5 py-1 text-xs font-medium text-neutral-11">
-          {capability.available ? SESSION_STRINGS.revokeEnabled : SESSION_STRINGS.providerManaged}
+          {capability.available ? ts("revokeEnabled") : ts("providerManaged")}
         </span>
-      </div>
-
+      }
+    >
       {state.error && <p className="mb-4 text-sm text-destructive-strong">{state.error}</p>}
       {state.successMessage && (
         <p className="mb-4 text-sm text-success-strong" role="status">
@@ -276,12 +229,8 @@ export function ActiveSessionsBlock({
               role="alertdialog"
             >
               <div>
-                <p className="text-sm font-medium text-neutral-12">
-                  {SESSION_STRINGS.confirmPrompt}
-                </p>
-                <p className="mt-1 text-xs leading-5 text-neutral-10">
-                  {SESSION_STRINGS.confirmHelp}
-                </p>
+                <p className="text-sm font-medium text-neutral-12">{ts("confirmPrompt")}</p>
+                <p className="mt-1 text-xs leading-5 text-neutral-10">{ts("confirmHelp")}</p>
               </div>
               <div className="flex gap-2">
                 <Button
@@ -290,7 +239,7 @@ export function ActiveSessionsBlock({
                   onClick={() => dispatch({ type: "confirmAll.close" })}
                   variant="outline"
                 >
-                  {SESSION_STRINGS.cancel}
+                  {ts("cancel")}
                 </Button>
                 <Button
                   disabled={state.revokingAll}
@@ -298,7 +247,7 @@ export function ActiveSessionsBlock({
                   onClick={handleRevokeAllOthers}
                   variant="default"
                 >
-                  {SESSION_STRINGS.confirm}
+                  {ts("confirm")}
                 </Button>
               </div>
             </div>
@@ -309,7 +258,7 @@ export function ActiveSessionsBlock({
               onClick={() => dispatch({ type: "confirmAll.open" })}
               variant="outline"
             >
-              {SESSION_STRINGS.revokeAll}
+              {ts("revokeAll")}
             </Button>
           )}
         </div>
@@ -325,7 +274,7 @@ export function ActiveSessionsBlock({
           ))}
         </div>
       ) : showEmpty ? (
-        <p className="text-sm text-neutral-11">{SESSION_STRINGS.empty}</p>
+        <p className="text-sm text-neutral-11">{ts("empty")}</p>
       ) : (
         <div className="space-y-3">
           {sessions.map((session) => {
@@ -338,39 +287,45 @@ export function ActiveSessionsBlock({
               >
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-neutral-12">
-                    {session.label || session.ipAddress || SESSION_STRINGS.unknownIp}
+                    {(session.label || session.ipAddress || ts("unknownIp"))
+                      .replace("Web browser", ts("webBrowser"))
+                      .replace("Unknown platform", ts("unknownPlatform"))}
                     {isCurrent && (
                       <span className="ml-2 text-xs font-normal text-neutral-10">
-                        {SESSION_STRINGS.currentSession}
+                        {ts("currentSession")}
                       </span>
                     )}
                   </p>
                   <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-neutral-10">
                     <span className="rounded-full border border-neutral-7 px-2 py-0.5">
-                      {session.kind === "desktop"
-                        ? SESSION_STRINGS.desktopKind
-                        : SESSION_STRINGS.webKind}
+                      {session.kind === "desktop" ? ts("desktopKind") : ts("webKind")}
                     </span>
                     {session.ipAddress && <span>{session.ipAddress}</span>}
-                    {session.platform && <span>{session.platform}</span>}
+                    {session.platform && (
+                      <span>
+                        {session.platform === "Unknown platform"
+                          ? ts("unknownPlatform")
+                          : session.platform}
+                      </span>
+                    )}
                   </div>
                   <p className="mt-1 text-xs text-neutral-10">
-                    {SESSION_STRINGS.lastActiveLabel}:{" "}
+                    {ts("lastActiveLabel")}:{" "}
                     {parseSessionDate(lastActiveAt)
                       ? format.relativeTime(parseSessionDate(lastActiveAt) as Date)
-                      : "Unknown time"}
+                      : tc("unknownTime")}
                   </p>
                   {session.userAgent && (
                     <p className="mt-2 break-words text-xs text-neutral-11">{session.userAgent}</p>
                   )}
                   <p className="mt-2 text-xs text-neutral-10">
-                    {SESSION_STRINGS.expiresLabel}:{" "}
+                    {ts("expiresLabel")}:{" "}
                     {parseSessionDate(session.expiresAt)
                       ? format.dateTime(parseSessionDate(session.expiresAt) as Date, {
                           dateStyle: "medium",
                           timeStyle: "short",
                         })
-                      : "Unknown time"}
+                      : tc("unknownTime")}
                   </p>
                 </div>
 
@@ -384,9 +339,7 @@ export function ActiveSessionsBlock({
                   onClick={() => handleRevoke(session)}
                   variant="outline"
                 >
-                  {state.pendingSessionId === session.id
-                    ? SESSION_STRINGS.revoking
-                    : SESSION_STRINGS.revoke}
+                  {state.pendingSessionId === session.id ? ts("revoking") : ts("revoke")}
                 </Button>
               </div>
             );
@@ -394,7 +347,9 @@ export function ActiveSessionsBlock({
         </div>
       )}
 
-      <p className="mt-4 text-xs leading-5 text-neutral-10">{capability.reason}</p>
-    </section>
+      <p className="mt-4 text-xs leading-5 text-neutral-10">
+        {tReasons(capability.reasonKey, capability.reasonValues)}
+      </p>
+    </SettingsSection>
   );
 }

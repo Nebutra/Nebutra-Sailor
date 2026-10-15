@@ -90,6 +90,7 @@ const STATUS_TONE: Record<LoginStatus, "ok" | "warn" | "bad" | "unknown"> = {
 };
 
 export function AddAccountDialog({ serviceId, syncAction, className }: AddAccountDialogProps) {
+  const tCopy = useTranslations("copy.adminPlatformAddAccountDialog");
   const tc = useTranslations("copy.adminPlatformAddAccountDialog");
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<Step>("provider");
@@ -158,7 +159,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
       });
       const started = res.result as LoginStart | undefined;
       if (!started?.state || !started.url) {
-        throw { code: "internal", message: "The router returned no sign-in URL." };
+        throw { code: "internal", message: tCopy("theRouterReturnedNo") };
       }
       setStart(started);
       setRow({
@@ -167,7 +168,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
         providerLabel: LOGIN_PROVIDER_OPTIONS.find((p) => p.id === provider)?.label ?? provider,
         url: started.url,
         status: "wait",
-        detail: "Waiting for approval",
+        detail: tCopy("waitingForApproval"),
         startedAt: new Date().toISOString(),
         startedBy: "",
       });
@@ -321,7 +322,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
                       onClick={() => void copyUrl()}
                     >
                       {copied ? <Check /> : <Copy />}
-                      {copied ? "Copied" : "Copy URL"}
+                      {copied ? tCopy("copied") : tCopy("copyURL")}
                     </Button>
                     {row ? (
                       <span className="ml-auto inline-flex items-center gap-1.5 text-muted-foreground text-xs">
@@ -353,7 +354,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
               {step === "done" ? (
                 <>
                   <p className="font-medium text-muted-foreground text-xs">{tc("result")}</p>
-                  <div className="rounded-md border border-border bg-background px-3 py-2">
+                  <div className="rounded-md border border-border bg-card px-3 py-2">
                     <p className="inline-flex items-center gap-2 leading-5">
                       <StatusDot tone="ok" />
                       {tc("accountAddedSyncThe")}
@@ -397,7 +398,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
                 reset();
               }}
             >
-              {step === "done" ? "Close" : "Cancel"}
+              {step === "done" ? tCopy("close") : tCopy("cancel")}
             </Button>
             {step === "provider" ? (
               <Button
@@ -407,7 +408,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
                 disabled={busy}
                 onClick={() => void begin()}
               >
-                {busy ? "Starting…" : "Start sign-in"}
+                {busy ? tCopy("starting") : tCopy("startSignIn")}
               </Button>
             ) : null}
             {step === "signin" ? (
@@ -418,7 +419,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
                 disabled={busy || !callbackValid}
                 onClick={() => void complete()}
               >
-                {busy ? "Completing…" : "Complete sign-in"}
+                {busy ? tCopy("completing") : tCopy("completeSignIn")}
               </Button>
             ) : null}
           </DialogFooter>

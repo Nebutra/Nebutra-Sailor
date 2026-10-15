@@ -283,6 +283,7 @@ function FileEventList({
   events: UseStartupConversationResult["fileEvents"];
   isStreaming: boolean;
 }) {
+  const tCopy = useTranslations("copy.startupOsStartupChatPanel");
   const tc = useTranslations("copy.startupOsStartupChatPanel");
   // While the turn is live, the most recent file event is the one being written
   // *right now* — surface it as an active "Writing" affordance with a pulsing
@@ -294,7 +295,7 @@ function FileEventList({
     <div className="space-y-2">
       <div className="flex items-center gap-2">
         <h3 className="text-xs font-semibold text-neutral-9">
-          {isStreaming ? "Writing files" : "Files written"}
+          {isStreaming ? tCopy("writingFiles") : tCopy("filesWritten")}
         </h3>
         <Badge variant="secondary" size="sm" className="tabular-nums">
           {events.length}
@@ -394,6 +395,7 @@ function UserMessage({
   onResend: (next: string) => void;
   onReverted: () => void;
 }) {
+  const tCopy = useTranslations("copy.startupOsStartupChatPanel");
   const tc = useTranslations("copy.startupOsStartupChatPanel");
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(prompt);
@@ -475,7 +477,7 @@ function UserMessage({
             disabled={busy || draft.trim().length === 0}
             onClick={() => void revertAndResend()}
           >
-            {busy ? "Reverting…" : "Revert and resend"}
+            {busy ? tCopy("reverting") : tCopy("revertAndResend")}
           </Button>
         </div>
       </div>
@@ -507,7 +509,7 @@ function UserMessage({
           variant="ghost"
           shape="square"
           iconSize="sm"
-          aria-label={copied ? "Copied" : "Copy"}
+          aria-label={copied ? tCopy("copied") : tCopy("copy")}
           title={tc("copy")}
           onClick={() => void copy()}
           className="text-neutral-9 hover:bg-neutral-3"
@@ -586,6 +588,7 @@ function SummaryCard({
   summary: StartupConversationSummary;
   durationMs: number | null;
 }) {
+  const tCopy = useTranslations("copy.startupOsStartupChatPanel");
   const tc = useTranslations("copy.startupOsStartupChatPanel");
   const [copied, setCopied] = useState(false);
   const [vote, setVote] = useState<"up" | "down" | null>(null);
@@ -633,7 +636,7 @@ function SummaryCard({
       </div>
 
       <div className="mt-2 flex flex-wrap items-center gap-1 pl-6">
-        <ToolbarButton label={copied ? "Copied" : "Copy"} onClick={() => void copy()}>
+        <ToolbarButton label={copied ? tCopy("copied") : tCopy("copy")} onClick={() => void copy()}>
           {copied ? (
             <Check className="size-3.5 text-success-strong" aria-hidden="true" />
           ) : (

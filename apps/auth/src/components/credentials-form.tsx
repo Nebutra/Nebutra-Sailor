@@ -111,6 +111,7 @@ export function CredentialsForm({
   tenantId,
   wechatAppId,
 }: CredentialsFormProps) {
+  const tc = useTranslations("copy.authCredentialsForm");
   const tSignIn = useTranslations("auth.signIn");
   const tSignUp = useTranslations("auth.signUp");
   const locale = useLocale();
@@ -516,7 +517,7 @@ export function CredentialsForm({
               className="inline-flex items-center justify-center gap-2 text-sm font-medium text-primary hover:text-primary"
             >
               <Phone aria-hidden className="h-4 w-4" />
-              {locale.toLowerCase().startsWith("zh") ? "使用手机号" : "Use phone number"}
+              {locale.toLowerCase().startsWith("zh") ? "使用手机号" : tc("usePhoneNumber")}
             </Link>
           ) : null}
         </div>

@@ -339,6 +339,7 @@ function StartupCanvasInspector({
   selectedArtifact: StartupArtifact | null;
   selectedRun: StartupOperatingRun | null;
 }) {
+  const tCopy = useTranslations("copy.startupOsStartupCanvasPanel");
   const tc = useTranslations("copy.startupOsStartupCanvasPanel");
   const selectedRunExecutable = selectedRun ? isExecutableRun(selectedRun) : false;
   const hasSelection = Boolean(selectedArtifact || selectedRun);
@@ -404,8 +405,8 @@ function StartupCanvasInspector({
             {isExecuting
               ? "Executing..."
               : selectedRunExecutable
-                ? "Execute selected run"
-                : "Not executable"}
+                ? tCopy("executeSelectedRun")
+                : tCopy("notExecutable")}
           </Button>
         </div>
       ) : null}

@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
 import {
   Button,
   Form,
@@ -101,31 +102,28 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-destructive bg-background p-6">
-      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-        <div>
-          <h3 className="text-sm font-medium text-destructive-strong">
-            {t("auth.security.deleteAccount.title")}
-          </h3>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {t("auth.security.deleteAccount.description")}
-          </p>
-        </div>
-        <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
-          {available ? t("auth.security.deleteAccount.title") : "Provider managed"}
-        </span>
-      </div>
-
+    <SettingsSection
+      tone="danger"
+      title={t("auth.security.deleteAccount.title")}
+      description={t("auth.security.deleteAccount.description")}
+      badge={
+        available ? undefined : (
+          <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
+            {t("auth.security.providerManaged")}
+          </span>
+        )
+      }
+    >
       {!available ? (
         <p className="text-sm text-muted-foreground">{t("auth.security.managedByProvider")}</p>
       ) : success ? (
         <p className="text-sm text-muted-foreground">{t("auth.security.deleteAccount.success")}</p>
       ) : stage === 1 ? (
-        <div className="flex justify-end">
-          <Button type="button" onClick={() => setStage(2)} variant="outline">
+        <SettingsSectionFooter>
+          <Button type="button" size="sm" onClick={() => setStage(2)} variant="destructive">
             {t("auth.security.deleteAccount.submit")}
           </Button>
-        </div>
+        </SettingsSectionFooter>
       ) : (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onValidSubmit)} className="space-y-4" noValidate>
@@ -166,17 +164,23 @@ export function DeleteAccountForm({ available, onSubmit, onDeleted }: DeleteAcco
 
             {errorMessage && <p className="text-sm text-destructive-strong">{errorMessage}</p>}
 
-            <div className="flex flex-col gap-2 md:flex-row md:justify-end">
-              <Button type="button" onClick={resetForm} disabled={pending} variant="outline">
+            <SettingsSectionFooter>
+              <Button
+                type="button"
+                size="sm"
+                onClick={resetForm}
+                disabled={pending}
+                variant="outline"
+              >
                 {t("auth.security.deleteAccount.cancel")}
               </Button>
-              <Button type="submit" disabled={!canSubmit} variant="default">
+              <Button type="submit" size="sm" disabled={!canSubmit} variant="destructive">
                 {t("auth.security.deleteAccount.submit")}
               </Button>
-            </div>
+            </SettingsSectionFooter>
           </form>
         </Form>
       )}
-    </section>
+    </SettingsSection>
   );
 }

@@ -159,7 +159,7 @@ export function MagicLinkForm({ onSendLink, onVerify, onSuccess }: MagicLinkForm
   const errorId = "magic-link-error";
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
+    <section className="rounded-xl border border-border bg-card p-6">
       <div className="mb-5">
         <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
         <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>

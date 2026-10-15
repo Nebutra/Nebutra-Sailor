@@ -1,5 +1,6 @@
 "use client";
 
+import { SettingsSection } from "@nebutra/ui/layout";
 import { useMutation } from "@tanstack/react-query";
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
@@ -236,14 +237,10 @@ export function OrganizationLogoForm({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-      <h3 className="text-sm font-medium text-foreground">
-        {t("organizations.settings.logo.title")}
-      </h3>
-      <p className="mt-1 mb-4 text-sm text-muted-foreground">
-        {t("organizations.settings.logo.description")}
-      </p>
-
+    <SettingsSection
+      title={t("organizations.settings.logo.title")}
+      description={t("organizations.settings.logo.description")}
+    >
       <div className="flex items-center gap-4">
         {logoUrl ? (
           <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-border bg-muted">
@@ -312,6 +309,6 @@ export function OrganizationLogoForm({
             : t("organizations.settings.logo.removed")}
         </p>
       )}
-    </section>
+    </SettingsSection>
   );
 }

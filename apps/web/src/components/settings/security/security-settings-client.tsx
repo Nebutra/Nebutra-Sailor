@@ -1,6 +1,7 @@
 "use client";
 
 import { getConfiguredAuthProvider, isAuthFeatureEnabledSync, useUser } from "@nebutra/auth/client";
+import { SettingsSection } from "@nebutra/ui/layout";
 import { useRouter } from "next/navigation";
 // Use the /client subpath for both — the root entrypoint transitively
 // imports server-only middleware (Better Auth's server SDK), which webpack
@@ -26,6 +27,7 @@ function readErrorMessage(payload: unknown, fallback: string) {
 }
 
 export function SecuritySettingsClient() {
+  const tCopy = useTranslations("copy.securitySecuritySettingsClient");
   const tc = useTranslations("copy.securitySecuritySettingsClient");
   const { user, isLoaded } = useUser();
   const router = useRouter();
@@ -59,13 +61,11 @@ export function SecuritySettingsClient() {
       const twoFactorPayload = await twoFactorResponse.json().catch(() => null);
 
       if (!accountsResponse.ok) {
-        throw new Error(
-          readErrorMessage(accountsPayload, "Failed to load linked sign-in methods."),
-        );
+        throw new Error(readErrorMessage(accountsPayload, tCopy("failedToLoadLinked")));
       }
 
       if (!sessionsResponse.ok) {
-        throw new Error(readErrorMessage(sessionsPayload, "Failed to load active sessions."));
+        throw new Error(readErrorMessage(sessionsPayload, tCopy("failedToLoadActive")));
       }
 
       setAccounts(
@@ -82,7 +82,7 @@ export function SecuritySettingsClient() {
         setTwoFactorEnabled(false);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load security settings.");
+      setError(err instanceof Error ? err.message : tCopy("failedToLoadSecurity"));
     } finally {
       setLoading(false);
     }
@@ -115,33 +115,30 @@ export function SecuritySettingsClient() {
 
   if (!isBetterAuth) {
     return (
-      <div className="space-y-6">
-        <section className="rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-6">
-          <h2 className="text-lg font-semibold text-neutral-12">{tc("security")}</h2>
-          <p className="mt-2 text-sm text-neutral-11">
-            {tc("thisWorkspaceIsUsing", { authProvider: String(authProvider) })}
-          </p>
-          <p className="mt-3 text-sm text-neutral-11">{tc("forNowManagePassword")}</p>
-        </section>
-      </div>
+      <SettingsSection
+        title={tc("security")}
+        description={tc("thisWorkspaceIsUsing", { authProvider: String(authProvider) })}
+      >
+        <p className="text-sm text-neutral-11">{tc("forNowManagePassword")}</p>
+      </SettingsSection>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <section className="rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-6">
-        <h2 className="text-lg font-semibold text-neutral-12">{tc("security")}</h2>
-        <p className="mt-1 text-sm text-neutral-11">
-          {tc("signedInAs")}{" "}
-          <span className="font-medium text-neutral-12">{user?.email || "—"}</span>
-        </p>
-        <p className="mt-2 text-sm text-neutral-11">{tc("nebutraShowsEverySecurity")}</p>
-      </section>
+    <div>
+      <p className="mb-8 text-sm text-neutral-11">
+        {tc("signedInAs")} <span className="font-medium text-neutral-12">{user?.email || "—"}</span>
+        {" · "}
+        {tc("nebutraShowsEverySecurity")}
+      </p>
 
       {error && (
-        <section className="rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive-strong">
+        <p
+          role="alert"
+          className="mb-6 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive-strong"
+        >
           {error}
-        </section>
+        </p>
       )}
 
       <ChangePasswordForm capability={capabilities.password} loading={loading} />

@@ -68,6 +68,7 @@ export function WebhookDeliveriesPanel({
   onReplay,
   onClose,
 }: WebhookDeliveriesPanelProps) {
+  const tCopy = useTranslations("copy.webhooksWebhookDeliveriesPanel");
   const tc = useTranslations("copy.webhooksWebhookDeliveriesPanel");
   const t = useTranslations("startupOs");
   // Pure UI state (which payload is expanded) stays local — not server cache.
@@ -151,7 +152,7 @@ export function WebhookDeliveriesPanel({
           return (
             <li
               key={delivery.id}
-              className="rounded-[var(--radius-md)] border border-border bg-background p-3"
+              className="rounded-[var(--radius-md)] border border-border bg-card p-3"
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
@@ -179,7 +180,7 @@ export function WebhookDeliveriesPanel({
                   onClick={() => setExpandedId(isOpen ? null : delivery.id)}
                   className="text-primary hover:underline"
                 >
-                  {isOpen ? "Hide payload" : "View payload"}
+                  {isOpen ? tCopy("hidePayload") : tCopy("viewPayload")}
                 </button>
                 <button
                   type="button"
@@ -187,7 +188,7 @@ export function WebhookDeliveriesPanel({
                   onClick={() => handleReplay(delivery.id)}
                   className="text-muted-foreground hover:text-foreground disabled:opacity-50"
                 >
-                  {replayingId === delivery.id ? "Replaying…" : "Replay"}
+                  {replayingId === delivery.id ? tCopy("replaying") : tCopy("replay")}
                 </button>
               </div>
 

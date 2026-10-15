@@ -28,7 +28,30 @@ export default function EmptyStateDemo() {
       </State>
 
       <State
-        breaks="A tone that changes the anchor but not the spacing, so the three read as three different components. branded substitutes a BrandMark when no mascot is given."
+        breaks="An icon and two lines read as a placeholder. A ghost of the real content — the chart's axes, the table's rows — tells the reader what will appear here and where."
+        id="preview"
+        note="preview draws the shape of the content behind the message: chart, table, list or metrics. Pair it with the one action that fills it."
+        title="Preview"
+      >
+        <Stack>
+          {(["chart", "table", "list", "metrics"] as const).map((kind) => (
+            <EmptyState
+              key={kind}
+              preview={kind}
+              title="Usage appears once the first request lands"
+              description="Create an API key and send one request."
+              action={
+                <Button size="sm" variant="outline">
+                  Create an API key
+                </Button>
+              }
+            />
+          ))}
+        </Stack>
+      </State>
+
+      <State
+        breaks="A tone that changes the anchor but not the spacing, so the three read as three different components. branded is the bordered card surface; a visual appears only when a mascot is passed."
         id="tones"
         note="All three tones, same content."
         title="Tones"

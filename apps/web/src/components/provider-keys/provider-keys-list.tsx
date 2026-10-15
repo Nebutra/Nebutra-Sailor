@@ -32,6 +32,7 @@ function DeleteButton({
   provider: ProviderId;
   onDelete: (provider: ProviderId) => void | Promise<void>;
 }) {
+  const tCopy = useTranslations("copy.providerKeysProviderKeysList");
   const [pending, setPending] = useState(false);
 
   async function handleClick() {
@@ -51,7 +52,7 @@ function DeleteButton({
       data-testid={`provider-key-remove-${provider}`}
       className="text-xs font-medium text-destructive-strong transition-colors hover:text-destructive-strong/80 disabled:opacity-50"
     >
-      {pending ? "Removing…" : "Remove"}
+      {pending ? tCopy("removing") : tCopy("remove")}
     </button>
   );
 }
@@ -91,11 +92,12 @@ export function ProviderKeysList({
   error,
   onRetry,
 }: ProviderKeysListProps) {
+  const tCopy = useTranslations("copy.providerKeysProviderKeysList");
   const tc = useTranslations("copy.providerKeysProviderKeysList");
   const columns: readonly DataListColumn<ProviderKey>[] = [
     {
       id: "provider",
-      header: "Provider",
+      header: tCopy("provider"),
       loadingWidth: "45%",
       cell: (k) => (
         <span className="min-w-0 truncate font-medium text-foreground">
@@ -108,7 +110,7 @@ export function ProviderKeysList({
     },
     {
       id: "key",
-      header: "Key",
+      header: tCopy("key"),
       loadingWidth: "70%",
       cell: (k) => (
         <span className="truncate font-mono text-xs text-muted-foreground">
@@ -118,7 +120,7 @@ export function ProviderKeysList({
     },
     {
       id: "routing",
-      header: "Routing",
+      header: tCopy("routing"),
       loadingWidth: "55%",
       cell: (k) =>
         k.alwaysUse ? (
@@ -133,7 +135,7 @@ export function ProviderKeysList({
     },
     {
       id: "actions",
-      header: "Actions",
+      header: tCopy("actions"),
       align: "end",
       width: 96,
       loadingWidth: 56,
@@ -160,8 +162,8 @@ export function ProviderKeysList({
         errorTitle="Provider keys did not load"
         retryLabel="Try again"
         {...(onRetry === undefined ? {} : { onRetry })}
-        emptyTitle="No provider keys configured"
-        emptyDescription="Add a key and this workspace routes that provider's traffic through your own account."
+        emptyTitle={tCopy("noProviderKeysConfigured")}
+        emptyDescription={tCopy("addAKeyAnd")}
         {...(canCreate
           ? {
               emptyAction: (

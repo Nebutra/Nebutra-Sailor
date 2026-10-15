@@ -73,6 +73,7 @@ function DocumentPipelineSection() {
 // ── Component ────────────────────────────────────────────────────────────────
 
 export default function IntegrationsPage() {
+  const tCopy = useTranslations("copy.integrationsPage");
   const tc = useTranslations("copy.integrationsPage");
   const tSos = useTranslations("startupOs");
   const queryClient = useQueryClient();
@@ -160,7 +161,7 @@ export default function IntegrationsPage() {
                     <div className="min-w-0 flex-1">
                       <h3 className="text-sm font-semibold text-neutral-12">{integration.name}</h3>
                       <p className="mt-0.5 text-xs text-neutral-10">
-                        {integration.isActive ? "Active" : "Paused"}
+                        {integration.isActive ? tCopy("active") : tCopy("paused")}
                         {integration.lastSyncAt &&
                           ` · Last sync ${new Date(integration.lastSyncAt).toLocaleDateString()}`}
                       </p>
@@ -206,16 +207,24 @@ export default function IntegrationsPage() {
       {/* Available Integrations */}
 
       <h2 className="mt-10 text-lg font-semibold text-neutral-12">
-        {integrations.length > 0 ? "Available" : "Connect an Integration"}
+        {integrations.length > 0 ? tCopy("available") : tCopy("connectAnIntegration")}
       </h2>
       {integrations.length === 0 && !loading && (
         <p className="mt-1 text-sm text-neutral-11">{tc("getStartedByConnecting")}</p>
       )}
 
       {loading ? (
-        <div className="mt-8 flex items-center justify-center gap-2 py-12 text-neutral-10">
-          <Loader2 className="h-5 w-5 animate-spin" />
-          <span className="text-sm">{tc("loadingIntegrations")}</span>
+        <div
+          role="status"
+          aria-label={tc("loadingIntegrations")}
+          className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {CATALOG.map((item) => (
+            <div
+              key={item.type}
+              className="h-40 animate-pulse rounded-xl border border-border bg-muted/40"
+            />
+          ))}
         </div>
       ) : (
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -239,12 +248,14 @@ export default function IntegrationsPage() {
                     <Icon className={`h-5 w-5 ${item.color}`} />
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-neutral-12">{item.name}</h3>
+                    <h3 className="text-sm font-semibold text-neutral-12">
+                      {item.type === "CUSTOM" ? tCopy("customWebhook") : item.name}
+                    </h3>
                   </div>
                 </div>
 
                 <p className="mt-3 flex-1 text-xs leading-relaxed text-neutral-10">
-                  {item.description}
+                  {tCopy(`catalog.${item.type}`)}
                 </p>
 
                 <div className="mt-4 flex items-center gap-2">

@@ -1,17 +1,21 @@
-import { getTranslations } from "next-intl/server";
 import { AvatarUploadForm } from "@/components/account/avatar-upload-form";
 import { ProfileForm } from "@/components/account/profile-form";
+import { DeleteOrganizationForm } from "@/components/organizations/delete-organization-form";
+import { PermissionGate } from "@/components/PermissionGate";
 import { getUser, requireOrg } from "@/lib/auth";
+import { db } from "@/lib/db";
 
 export const metadata = { title: "Settings" };
 
 export default async function SettingsPage() {
-  const tc = await getTranslations("copy.settingsPage");
-  await requireOrg();
-  const user = await getUser();
+  const { orgId } = await requireOrg();
+  const [user, organization] = await Promise.all([
+    getUser(),
+    db.organization.findUnique({ where: { id: orgId }, select: { name: true } }),
+  ]);
 
   return (
-    <div className="space-y-8">
+    <div>
       <ProfileForm />
 
       <AvatarUploadForm
@@ -20,16 +24,11 @@ export default async function SettingsPage() {
         fallbackName={user?.name ?? user?.email ?? ""}
       />
 
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <h2 className="mb-4 text-base font-semibold text-foreground">{tc("dangerZone")}</h2>
-        <p className="mb-4 text-sm text-muted-foreground">{tc("theseActionsArePermanent")}</p>
-        <button
-          type="button"
-          className="rounded-[var(--radius-md)] border border-destructive/40 px-4 py-2 text-sm font-medium text-destructive-strong transition-colors hover:bg-destructive/10"
-        >
-          {tc("deleteOrganization")}
-        </button>
-      </section>
+      {/* The danger zone used to be a "Delete Organization" button with no
+          handler. It is the real, owner-gated flow now (moved from Team). */}
+      <PermissionGate require="org:delete">
+        <DeleteOrganizationForm orgId={orgId} organizationName={organization?.name ?? ""} />
+      </PermissionGate>
     </div>
   );
 }

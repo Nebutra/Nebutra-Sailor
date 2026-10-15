@@ -82,6 +82,7 @@ export function InboxBell({
   apiBase = "/api/notifications",
   fetcher,
 }: InboxBellProps): React.ReactElement {
+  const tCopy = useTranslations("copy.notificationsInboxBell");
   const tc = useTranslations("copy.notificationsInboxBell");
   const fetchImpl = fetcher ?? (typeof fetch !== "undefined" ? fetch : undefined);
 
@@ -109,7 +110,7 @@ export function InboxBell({
       }
       const json = (await response.json()) as InboxApiResponse;
       if (!json.success) {
-        throw new Error("Failed to load notifications.");
+        throw new Error(tCopy("failedToLoadNotifications"));
       }
       return json.data;
     },
@@ -144,7 +145,7 @@ export function InboxBell({
         body: JSON.stringify({ read: true }),
       });
       if (!response.ok) {
-        throw new Error("Failed to mark read");
+        throw new Error(tCopy("failedToMarkRead"));
       }
     },
     onMutate: async (id: string) => {
@@ -191,7 +192,7 @@ export function InboxBell({
               body: JSON.stringify({ read: true }),
             });
             if (!response.ok) {
-              throw new Error("Failed to mark all read");
+              throw new Error(tCopy("failedToMarkAll"));
             }
           }),
         ),
@@ -267,7 +268,7 @@ export function InboxBell({
         <section
           aria-label={tc("notifications")}
           data-testid="inbox-bell-panel"
-          className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background shadow-lg sm:w-96"
+          className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-xl border border-border bg-card shadow-lg sm:w-96"
         >
           <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
             <h2 className="text-sm font-semibold text-foreground">{tc("notifications")}</h2>

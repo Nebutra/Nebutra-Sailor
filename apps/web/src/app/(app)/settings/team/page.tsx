@@ -1,6 +1,6 @@
+import { SettingsSection } from "@nebutra/ui/layout";
 import { getTranslations } from "next-intl/server";
 import { ChangeOrganizationNameForm } from "@/components/organizations/change-organization-name-form";
-import { DeleteOrganizationForm } from "@/components/organizations/delete-organization-form";
 import { PermissionGate } from "@/components/PermissionGate";
 import { requireOrg } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -23,46 +23,28 @@ export default async function TeamPage() {
   const orgLogo = organization?.logo ?? null;
 
   return (
-    <div className="space-y-8">
+    <div>
       {/* Organization profile — admins only */}
       <PermissionGate require="team:manage">
-        <section className="p-6 rounded-[var(--radius-lg)] border border-border bg-background">
-          <h2 className="mb-1 text-base font-semibold text-foreground">
-            {tc("organizationProfile")}
-          </h2>
-          <p className="mb-4 text-sm text-muted-foreground">{tc("updateYourOrganizationS")}</p>
-          <div className="space-y-6">
-            <OrganizationLogoFormWithInvalidation
-              orgId={orgId}
-              orgName={orgName}
-              initialLogoUrl={orgLogo}
-            />
-            <ChangeOrganizationNameForm orgId={orgId} initialName={orgName} />
-          </div>
-        </section>
+        <OrganizationLogoFormWithInvalidation
+          orgId={orgId}
+          orgName={orgName}
+          initialLogoUrl={orgLogo}
+        />
+        <ChangeOrganizationNameForm orgId={orgId} initialName={orgName} />
       </PermissionGate>
 
       {/* Invite section — admins only */}
       <PermissionGate require="team:invite">
-        <section className="p-6 rounded-[var(--radius-lg)] border border-border bg-background">
-          <h2 className="mb-1 text-base font-semibold text-foreground">
-            {tc("inviteATeamMember")}
-          </h2>
-          <p className="mb-4 text-sm text-muted-foreground">{tc("sendAnInvitationTo")}</p>
+        <SettingsSection title={tc("inviteATeamMember")} description={tc("sendAnInvitationTo")}>
           <InviteMemberForm orgId={orgId} />
-        </section>
+        </SettingsSection>
       </PermissionGate>
 
       {/* Members list */}
-      <section className="p-6 rounded-[var(--radius-lg)] border border-border bg-background">
-        <h2 className="mb-4 text-base font-semibold text-foreground">{tc("members")}</h2>
+      <SettingsSection title={tc("members")}>
         <TeamMemberList orgId={orgId} />
-      </section>
-
-      {/* Danger zone — owners only */}
-      <PermissionGate require="org:delete">
-        <DeleteOrganizationForm orgId={orgId} organizationName={orgName} />
-      </PermissionGate>
+      </SettingsSection>
     </div>
   );
 }

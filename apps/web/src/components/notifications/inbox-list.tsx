@@ -8,6 +8,7 @@ import {
   Star,
   Trash as Trash2,
 } from "@nebutra/icons";
+import { GhostPreview } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useFormatter, useTranslations } from "next-intl";
 
@@ -65,20 +66,31 @@ export function InboxListSkeleton({ count = 3 }: { count?: number }): React.Reac
 }
 
 export function InboxEmptyState({
-  message = "You're all caught up.",
+  message,
+  variant = "compact",
 }: {
   message?: string;
+  variant?: "compact" | "full";
 }): React.ReactElement {
-  return (
-    <div
-      className="flex flex-col items-center justify-center gap-2 px-4 py-10 text-center"
-      data-testid="inbox-empty"
-    >
-      <div className="flex size-12 items-center justify-center rounded-full bg-muted">
-        <Bell className="size-5 text-muted-foreground" aria-hidden="true" />
+  const tc = useTranslations("copy.notificationsInboxList");
+  const text = message ?? tc("allCaughtUp");
+  if (variant === "full") {
+    // The page inbox shows the shape of the list it will hold, not an icon.
+    return (
+      <div className="grid" data-testid="inbox-empty">
+        <div className="[grid-area:1/1] [mask-image:radial-gradient(ellipse_55%_60%_at_50%_50%,transparent_25%,black_80%)]">
+          <GhostPreview kind="list" />
+        </div>
+        <p className="[grid-area:1/1] flex items-center justify-center px-6 py-8 text-center text-sm font-medium text-foreground">
+          {text}
+        </p>
       </div>
-      <p className="text-sm text-muted-foreground">{message}</p>
-    </div>
+    );
+  }
+  return (
+    <p className="px-4 py-8 text-center text-sm text-neutral-11" data-testid="inbox-empty">
+      {text}
+    </p>
   );
 }
 
@@ -101,7 +113,7 @@ export function InboxList({
   }
 
   if (notifications.length === 0) {
-    return <InboxEmptyState message={emptyMessage} />;
+    return <InboxEmptyState message={emptyMessage} variant={variant} />;
   }
 
   return (

@@ -67,6 +67,7 @@ function extractSignUpError(payload: unknown): string {
 }
 
 export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps) {
+  const tCopy = useTranslations("copy.authSignUpForm");
   const tc = useTranslations("copy.authSignUpForm");
   const tSignIn = useTranslations("auth.signIn");
   const router = useRouter();
@@ -130,7 +131,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
       // and go directly to onboarding
       router.push(fallbackTarget);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "An error occurred. Please try again.");
+      setError(err instanceof Error ? err.message : tCopy("anErrorOccurredPlease"));
     }
   }
 
@@ -151,13 +152,13 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
 
       if (!response.ok) {
         const data = await response.json();
-        setError(data.error ?? "Invalid code. Please try again.");
+        setError(data.error ?? tCopy("invalidCodePleaseTry"));
         return;
       }
 
       router.push(fallbackTarget);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Invalid code. Please try again.");
+      setError(err instanceof Error ? err.message : tCopy("invalidCodePleaseTry"));
     }
   }
 
@@ -174,10 +175,10 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
       });
 
       if (!response.ok) {
-        setError("Failed to resend code. Please try again.");
+        setError(tCopy("failedToResendCode"));
       }
     } catch {
-      setError("Failed to resend code. Please try again.");
+      setError(tCopy("failedToResendCode"));
     } finally {
       setResending(false);
     }
@@ -217,7 +218,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
           {error && <p className="text-sm text-destructive-strong">{error}</p>}
 
           <Button type="submit" className="w-full" disabled={loading || code.length !== 6}>
-            {loading ? "Verifying…" : "Verify"}
+            {loading ? tCopy("verifying") : tCopy("verify")}
           </Button>
         </form>
 
@@ -229,7 +230,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
             disabled={resending}
             className="font-medium text-primary hover:text-primary disabled:opacity-50"
           >
-            {resending ? "Resending…" : "Resend code"}
+            {resending ? tCopy("resending") : tCopy("resendCode")}
           </button>
         </p>
       </div>
@@ -350,7 +351,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
             className="w-full"
             disabled={loading || (accessGateEnabled && !accessInviteCode.trim())}
           >
-            {loading ? "Creating account…" : "Create account"}
+            {loading ? tCopy("creatingAccount") : tCopy("createAccount")}
           </Button>
         </form>
       </Form>

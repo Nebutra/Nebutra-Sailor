@@ -64,8 +64,12 @@ async function BillingContent({ journeyNotice }: { journeyNotice: BillingJourney
     <>
       <PageHeader title={tc("billing")} description={tc("yourPlanAndEvery")} />
 
-      <div className="space-y-4">
-        {journeyNotice && <BillingReturnNotice notice={journeyNotice} />}
+      <div>
+        {journeyNotice && (
+          <div className="mb-8">
+            <BillingReturnNotice notice={journeyNotice} />
+          </div>
+        )}
 
         <ActivePlanCard model={billingModel} />
 
@@ -83,13 +87,14 @@ interface BillingPageProps {
 }
 
 export default async function BillingPage({ searchParams }: BillingPageProps) {
+  const tCopy = await getTranslations("copy.billingPage");
   const tc = await getTranslations("copy.billingPage");
   const resolvedSearchParams = searchParams ? await searchParams : {};
   const journeyNotice = resolveBillingJourneyNotice(resolvedSearchParams);
 
   return (
     <section className="mx-auto w-full max-w-wide" aria-label={tc("billing")}>
-      <Suspense fallback={<LoadingState message="Loading billing overview..." />}>
+      <Suspense fallback={<LoadingState message={tCopy("loadingBillingOverview")} />}>
         <BillingContent journeyNotice={journeyNotice} />
       </Suspense>
     </section>

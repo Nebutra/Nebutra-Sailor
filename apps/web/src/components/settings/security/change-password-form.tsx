@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
 import {
   Button,
   Form,
@@ -97,6 +98,7 @@ export function ChangePasswordForm({
   onSubmit,
   loading = false,
 }: ChangePasswordFormProps) {
+  const tReasons = useTranslations("copy.securityReasons");
   const tc = useTranslations("copy.securityChangePasswordForm");
   const t = useTranslations("auth.security.changePassword");
   const tErrors = useTranslations("auth.errors");
@@ -113,33 +115,27 @@ export function ChangePasswordForm({
 
   if (loading) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-          <div>
-            <h3 className="text-sm font-medium text-foreground">{tc("password")}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">{tc("checkWhetherThisAccount")}</p>
-          </div>
-        </div>
+      <SettingsSection title={tc("password")} description={tc("checkWhetherThisAccount")}>
         <p className="text-sm text-muted-foreground">{tc("loadingPasswordCapabilities")}</p>
-      </section>
+      </SettingsSection>
     );
   }
 
   if (!capability.hasPasswordAccount) {
     return (
-      <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-          <div>
-            <h3 className="text-sm font-medium text-foreground">{tc("password")}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">{tc("checkWhetherThisAccount")}</p>
-          </div>
+      <SettingsSection
+        title={tc("password")}
+        description={tc("checkWhetherThisAccount")}
+        badge={
           <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
             {tc("oAuthOnly")}
           </span>
-        </div>
-
-        <p className="text-sm text-muted-foreground">{capability.reason}</p>
-      </section>
+        }
+      >
+        <p className="text-sm text-muted-foreground">
+          {tReasons(capability.reasonKey, capability.reasonValues)}
+        </p>
+      </SettingsSection>
     );
   }
 
@@ -172,17 +168,15 @@ export function ChangePasswordForm({
   const errorMessage = errorKey ? tErrors(errorKey) : null;
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-      <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-        <div>
-          <h3 className="text-sm font-medium text-foreground">{t("title")}</h3>
-          <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
-        </div>
+    <SettingsSection
+      title={t("title")}
+      description={t("description")}
+      badge={
         <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
           {tc("credentialAttached")}
         </span>
-      </div>
-
+      }
+    >
       <Form {...form}>
         <form
           className="space-y-4"
@@ -296,13 +290,13 @@ export function ChangePasswordForm({
             </p>
           )}
 
-          <div>
-            <Button disabled={pending} type="submit">
+          <SettingsSectionFooter>
+            <Button disabled={pending} type="submit" size="sm">
               {pending ? t("pending") : t("submit")}
             </Button>
-          </div>
+          </SettingsSectionFooter>
         </form>
       </Form>
-    </section>
+    </SettingsSection>
   );
 }

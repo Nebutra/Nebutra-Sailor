@@ -62,6 +62,7 @@ function buildCapability(
     available: true,
     linkedProviders: [],
     reason: "Linked sign-in methods can be discovered.",
+    reasonKey: "connectedReadOnly",
     ...overrides,
   };
 }
@@ -77,7 +78,7 @@ describe("ConnectedAccountsBlock", () => {
 
     expect(
       screen.getByText(
-        "Keep at least one trusted sign-in method available before unlinking a provider.",
+        /Keep at least one trusted sign-in method available before unlinking a provider\./,
       ),
     ).toBeInTheDocument();
     expect(screen.getByText("Google")).toBeInTheDocument();
@@ -150,13 +151,13 @@ describe("ConnectedAccountsBlock", () => {
         capability={buildCapability({
           available: false,
           reason: "Linked account management is delegated to clerk.",
+          reasonKey: "delegated",
+          reasonValues: { provider: "clerk" },
         })}
       />,
     );
 
-    expect(
-      screen.getByText("Linked account management is delegated to clerk."),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Managed in clerk.")).toBeInTheDocument();
   });
 
   it("displays a localized error when onLink rejects with a known code", async () => {

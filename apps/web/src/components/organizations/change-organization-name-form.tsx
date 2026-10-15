@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SettingsSection, SettingsSectionFooter } from "@nebutra/ui/layout";
 import {
   Button,
   Form,
@@ -93,14 +94,10 @@ export function ChangeOrganizationNameForm({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-      <h3 className="text-sm font-medium text-foreground">
-        {t("organizations.settings.name.title")}
-      </h3>
-      <p className="mt-1 mb-4 text-sm text-muted-foreground">
-        {t("organizations.settings.name.description")}
-      </p>
-
+    <SettingsSection
+      title={t("organizations.settings.name.title")}
+      description={t("organizations.settings.name.description")}
+    >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(submit)} className="space-y-4" noValidate>
           <FormField
@@ -141,19 +138,15 @@ export function ChangeOrganizationNameForm({
             </p>
           )}
 
-          <div className="flex justify-end">
-            <Button
-              type="submit"
-              disabled={!canSubmit}
-              className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-opacity disabled:opacity-50"
-            >
+          <SettingsSectionFooter>
+            <Button type="submit" size="sm" disabled={!canSubmit}>
               {pending
                 ? t("organizations.settings.name.saving")
                 : t("organizations.settings.name.submit")}
             </Button>
-          </div>
+          </SettingsSectionFooter>
         </form>
       </Form>
-    </section>
+    </SettingsSection>
   );
 }

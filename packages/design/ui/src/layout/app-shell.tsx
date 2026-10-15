@@ -31,6 +31,13 @@ export interface AppShellProps {
   headerHeight?: number;
   /** Override the default container styles applied to `<main>`. */
   contentClassName?: string;
+  /**
+   * The working area's surface. `canvas` (default) keeps the app canvas behind
+   * header and content; `card` puts them on the card surface beside a canvas
+   * sidebar — the flat, edge-ruled layout of current product dashboards, where
+   * sections sit on one surface instead of boxed cards on a tinted canvas.
+   */
+  surface?: "canvas" | "card";
   /** Extra classes for the outer wrapper. */
   className?: string;
   /** Accessible name for the primary sidebar landmark. Pass a translated string. */
@@ -84,6 +91,7 @@ export function AppShell({
   primaryNavLabel = "Primary",
   collapseNavigationLabel = "Collapse navigation",
   openNavigationMenuLabel = "Open navigation menu",
+  surface = "canvas",
 }: AppShellProps) {
   const isControlled = collapsed !== undefined;
   const [internalCollapsed] = React.useState(defaultCollapsed);
@@ -142,12 +150,14 @@ export function AppShell({
       </Sheet>
 
       {/* Right column — header + main */}
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+      <div className={cn("flex min-h-0 min-w-0 flex-1 flex-col", surface === "card" && "bg-card")}>
         {header !== undefined && (
           <header
             className={cn(
               "sticky top-0 z-30 flex shrink-0 items-center gap-2 border-b border-border",
-              "bg-background/90 px-3 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80 sm:px-4",
+              surface === "card"
+                ? "bg-card/90 px-3 backdrop-blur-xl supports-[backdrop-filter]:bg-card/80 sm:px-4"
+                : "bg-background/90 px-3 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80 sm:px-4",
             )}
             style={{ height: headerHeight }}
           >

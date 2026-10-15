@@ -1,5 +1,6 @@
 "use client";
 
+import { SettingsSection } from "@nebutra/ui/layout";
 import { useMutation } from "@tanstack/react-query";
 import NextImage from "next/image";
 import { useTranslations } from "next-intl";
@@ -286,10 +287,7 @@ export function AvatarUploadForm({
   }
 
   return (
-    <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-      <h2 className="text-base font-semibold text-foreground">{t("title")}</h2>
-      <p className="mt-1 mb-4 text-sm text-muted-foreground">{t("description")}</p>
-
+    <SettingsSection title={t("title")} description={t("description")}>
       <div className="flex items-center gap-4">
         {state.avatarUrl ? (
           <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-border bg-muted">
@@ -366,6 +364,6 @@ export function AvatarUploadForm({
           {state.statusMessage}
         </p>
       )}
-    </section>
+    </SettingsSection>
   );
 }

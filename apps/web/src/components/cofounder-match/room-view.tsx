@@ -5,15 +5,13 @@ import { EmptyState } from "@nebutra/ui/layout";
 import { Button } from "@nebutra/ui/primitives";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { cofounderRoomQueryOptions } from "@/lib/queries/cofounder";
 import { CofounderCard } from "./cofounder-card";
 
 export function RoomView({ profileId }: { profileId: string }) {
+  const tCopy = useTranslations("copy.cofounderMatchRoomView");
   const tc = useTranslations("copy.cofounderMatchRoomView");
-  const pathname = usePathname();
-  const locale = pathname.split("/").filter(Boolean)[0] || "en";
   const roomQuery = useQuery(cofounderRoomQueryOptions(profileId));
   const match = roomQuery.data?.match ?? null;
   const access = roomQuery.data?.access ?? null;
@@ -56,7 +54,7 @@ export function RoomView({ profileId }: { profileId: string }) {
         description={tc("theCofounderRoomOpens")}
         action={
           <Link
-            href={`/${locale}/cofounder/discover`}
+            href={`/cofounder/discover`}
             className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground"
           >
             {tc("discoverCofounders")}
@@ -97,7 +95,7 @@ export function RoomView({ profileId }: { profileId: string }) {
               disabled={formState === "forming"}
               prefix={<Users className="size-4" aria-hidden="true" />}
             >
-              {formState === "forming" ? "Forming…" : "Form the team"}
+              {formState === "forming" ? "Forming…" : tCopy("formTheTeam")}
             </Button>
           )}
           {formState === "error" ? (
@@ -113,7 +111,7 @@ export function RoomView({ profileId }: { profileId: string }) {
           <p className="mt-3 text-sm font-semibold text-neutral-12">{tc("openTheCofounderRoom")}</p>
           <p className="mt-1 text-xs leading-5 text-neutral-10">{tc("asTheFounderOpening")}</p>
           <Link
-            href={`/${locale}/choose-plan`}
+            href={`/choose-plan`}
             className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground"
           >
             {tc("upgradeToOpenThe")}

@@ -45,6 +45,7 @@ export function EditWebhookDialog({
   onSubmit,
   onUpdated,
 }: EditWebhookDialogProps) {
+  const tCopy = useTranslations("copy.webhooksEditWebhookDialog");
   const tc = useTranslations("copy.webhooksEditWebhookDialog");
   async function submit(values: WebhookEndpointFormValues) {
     if (!endpoint) return;
@@ -69,8 +70,8 @@ export function EditWebhookDialog({
             // Remount when the row changes so the prefill follows the selection.
             key={endpoint.id}
             defaultValues={{ url: endpoint.url, events: [...endpoint.events] }}
-            submitLabel="Save changes"
-            pendingLabel="Saving…"
+            submitLabel={tCopy("saveChanges")}
+            pendingLabel={tCopy("saving")}
             secondaryAction={
               <DialogClose asChild>
                 <Button type="button" variant="outline">

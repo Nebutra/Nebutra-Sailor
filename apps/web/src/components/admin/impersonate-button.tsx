@@ -1,6 +1,7 @@
 "use client";
 
 import { useConfirm } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { useRevalidate } from "@/lib/navigation/use-revalidate";
 
@@ -19,6 +20,8 @@ interface ImpersonateButtonProps {
  * rather than faking a session swap.
  */
 export function ImpersonateButton({ userId, userLabel, className }: ImpersonateButtonProps) {
+  const tCopy = useTranslations("copy.adminImpersonateButton");
+  const tc = useTranslations("copy.adminImpersonateButton");
   const revalidate = useRevalidate();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -28,8 +31,8 @@ export function ImpersonateButton({ userId, userLabel, className }: ImpersonateB
     setError(null);
     const ok = await confirm({
       title: `Impersonate ${userLabel ?? userId}`,
-      description: "You will see the app as this user until you stop.",
-      confirmLabel: "Start Impersonating",
+      description: tc("youWillSeeThe"),
+      confirmLabel: tCopy("startImpersonating"),
     });
     if (!ok) return;
 
@@ -43,14 +46,14 @@ export function ImpersonateButton({ userId, userLabel, className }: ImpersonateB
 
       if (!response.ok) {
         const body = (await response.json().catch(() => ({}))) as { error?: string };
-        setError(body.error ?? "Failed to start impersonation.");
+        setError(body.error ?? tCopy("failedToStartImpersonation"));
         return;
       }
 
       // Signed in as someone else now: drop the previous identity's cached reads.
       await revalidate("identity");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to start impersonation.");
+      setError(err instanceof Error ? err.message : tCopy("failedToStartImpersonation"));
     } finally {
       setPending(false);
     }
@@ -65,7 +68,7 @@ export function ImpersonateButton({ userId, userLabel, className }: ImpersonateB
         aria-label={`Impersonate ${userLabel ?? userId}`}
         className="rounded-[var(--radius-md)] border border-neutral-7 bg-neutral-2 px-2.5 py-1 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-3 disabled:opacity-50"
       >
-        {pending ? "Starting…" : "Impersonate"}
+        {pending ? tCopy("starting") : tCopy("impersonate")}
       </button>
       {error ? (
         <p role="alert" className="mt-1 text-xs text-destructive-strong">
