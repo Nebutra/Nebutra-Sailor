@@ -250,11 +250,9 @@ function PlanArea({
     <div className="rounded-2xl border border-neutral-6 bg-neutral-1 p-4">
       <div className="flex items-center gap-2">
         <Lightning className="size-4 text-neutral-10" aria-hidden="true" />
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">
-          {tc("plan")}
-        </h3>
+        <h3 className="text-xs font-semibold text-neutral-9">{tc("plan")}</h3>
         {isStreaming ? (
-          <span className="ml-auto inline-flex items-center gap-1.5 text-[11px] font-medium text-neutral-9">
+          <span className="ml-auto inline-flex items-center gap-1.5 text-xs font-medium text-neutral-9">
             <span
               className="size-1.5 animate-pulse rounded-full"
               style={{ background: "var(--brand-accent)" }}
@@ -295,7 +293,7 @@ function FileEventList({
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">
+        <h3 className="text-xs font-semibold text-neutral-9">
           {isStreaming ? "Writing files" : "Files written"}
         </h3>
         <Badge variant="secondary" size="sm" className="tabular-nums">
@@ -330,14 +328,14 @@ function FileEventList({
               </span>
               {isActive ? (
                 <span
-                  className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.08em]"
+                  className="shrink-0 text-xs font-semibold"
                   style={{ color: "var(--brand-accent)" }}
                 >
                   {tc("writing")}
                 </span>
               ) : (
                 <span
-                  className="shrink-0 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em]"
+                  className="shrink-0 rounded-full border px-1.5 py-0.5 text-xs font-semibold"
                   style={{
                     borderColor: "color-mix(in srgb, var(--status-success) 25%, transparent)",
                     color: "hsl(var(--success-strong))",
@@ -358,15 +356,13 @@ function ArtifactEventList({ events }: { events: UseStartupConversationResult["a
   const tc = useTranslations("copy.startupOsStartupChatPanel");
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">
-        {tc("artifactsTouched")}
-      </h3>
+      <h3 className="text-xs font-semibold text-neutral-9">{tc("artifactsTouched")}</h3>
       <div className="flex flex-wrap gap-2">
         {events.map((event, index) => (
           <span
             key={`${event.kind}-${index}`}
             data-testid="startup-chat-artifact"
-            className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/5 px-2.5 py-1 text-[11px] font-medium text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary"
+            className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary"
           >
             <Sparkles className="size-3" aria-hidden="true" />
             {event.kind}
@@ -457,7 +453,7 @@ function UserMessage({
           aria-label={tc("editMessage")}
           className="mt-2"
         />
-        <p className="mt-2 text-[11px] leading-4 text-neutral-9">{tc("yourMessageWillBe")}</p>
+        <p className="mt-2 text-xs leading-4 text-neutral-9">{tc("yourMessageWillBe")}</p>
         <div className="mt-2 flex items-center justify-end gap-2">
           <Button
             type="button"
@@ -666,7 +662,7 @@ function SummaryCard({
             aria-hidden="true"
           />
         </ToolbarButton>
-        {meta ? <span className="ml-1.5 text-[11px] text-neutral-9">{meta}</span> : null}
+        {meta ? <span className="ml-1.5 text-xs text-neutral-9">{meta}</span> : null}
       </div>
     </div>
   );

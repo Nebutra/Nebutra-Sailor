@@ -56,9 +56,7 @@ function StatusPill({ status }: { status: WebhookDeliveryView["status"] }) {
     retrying: "bg-warning/10 text-warning-strong",
   };
   return (
-    <span
-      className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase ${styles[status]}`}
-    >
+    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[status]}`}>
       {status}
     </span>
   );
@@ -158,7 +156,7 @@ export function WebhookDeliveriesPanel({
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <p className="font-mono text-xs text-foreground">{delivery.eventType}</p>
-                  <p className="mt-0.5 text-[10px] text-muted-foreground">
+                  <p className="mt-0.5 text-xs text-muted-foreground">
                     {new Date(delivery.createdAt).toLocaleString()}
                     {delivery.responseTimeMs !== null && ` · ${delivery.responseTimeMs}ms`}
                     {delivery.retryCount > 0 && ` · retries ${delivery.retryCount}`}
@@ -167,7 +165,7 @@ export function WebhookDeliveriesPanel({
                 <div className="flex items-center gap-2">
                   <StatusPill status={delivery.status} />
                   {delivery.statusCode !== null && (
-                    <span className="font-mono text-[10px] text-muted-foreground">
+                    <span className="font-mono text-xs text-muted-foreground">
                       {tc("hTTP", { statusCode: String(delivery.statusCode) })}
                     </span>
                   )}
@@ -194,7 +192,7 @@ export function WebhookDeliveriesPanel({
               </div>
 
               {isOpen && (
-                <pre className="mt-2 max-h-48 overflow-auto rounded bg-muted p-2 text-[10px] text-foreground">
+                <pre className="mt-2 max-h-48 overflow-auto rounded bg-muted p-2 text-xs text-foreground">
                   {JSON.stringify(delivery.payload, null, 2)}
                   {delivery.errorMessage && `\n\nError: ${delivery.errorMessage}`}
                 </pre>

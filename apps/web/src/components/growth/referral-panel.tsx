@@ -157,9 +157,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3">
-              <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
-                {tc("referralCode")}
-              </p>
+              <p className="text-xs font-medium text-neutral-10">{tc("referralCode")}</p>
               <div className="mt-1.5 flex items-center justify-between gap-2">
                 <code className="truncate font-mono text-sm font-semibold text-neutral-12">
                   {stats.referralCode}
@@ -177,9 +175,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
               </div>
             </div>
             <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3">
-              <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
-                {tc("shareLink")}
-              </p>
+              <p className="text-xs font-medium text-neutral-10">{tc("shareLink")}</p>
               <div className="mt-1.5 flex items-center justify-between gap-2">
                 <span className="truncate text-xs text-neutral-11">{stats.shareUrl}</span>
                 <CopyButton
@@ -212,9 +208,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
           },
         ].map((cell) => (
           <div key={cell.label} className="rounded-[var(--radius-xl)] bg-neutral-2 p-3 text-center">
-            <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
-              {cell.label}
-            </p>
+            <p className="text-xs font-medium text-neutral-10">{cell.label}</p>
             <p className="mt-1 text-2xl font-semibold tabular-nums text-neutral-12">{cell.value}</p>
           </div>
         ))}
@@ -278,7 +272,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
                     {tc("level", { id: level.id, title: level.title })}
                   </h3>
                   {isActive && (
-                    <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary">
+                    <span className="rounded-full bg-primary/15 px-2 py-0.5 text-xs font-medium text-primary">
                       {tc("active")}
                     </span>
                   )}
@@ -288,7 +282,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
               <div className="text-right">
                 <p className="text-sm font-semibold tabular-nums text-primary">{level.reward}</p>
                 {!isActive && remaining > 0 && (
-                  <p className="mt-0.5 text-[11px] text-neutral-10">
+                  <p className="mt-0.5 text-xs text-neutral-10">
                     {tc("moreToUnlock", { remaining })}
                   </p>
                 )}

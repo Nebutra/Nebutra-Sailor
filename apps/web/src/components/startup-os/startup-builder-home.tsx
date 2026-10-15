@@ -362,7 +362,7 @@ function StartupRecentProjects({
           <span className="block w-full truncate text-sm font-semibold">
             {companyName(project.companyContext)}
           </span>
-          <span className="block w-full truncate text-[11px] font-normal opacity-80">
+          <span className="block w-full truncate text-xs font-normal opacity-80">
             {project.arena} / {project.status}
           </span>
         </Button>

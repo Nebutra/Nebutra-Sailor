@@ -156,7 +156,7 @@ export function StartupThreadPanel({
         </div>
       ))}
       {activityCount > 0 ? (
-        <p className="px-1 text-[11px] text-neutral-10">
+        <p className="px-1 text-xs text-neutral-10">
           {tc("recordedAction", {
             activityCount: String(activityCount),
             value1: String(activityCount !== 1 ? "s" : ""),
@@ -227,7 +227,7 @@ function StartupThreadHeader({
             <p className="truncate text-sm font-semibold text-neutral-12">
               {companyName(project.companyContext)}
             </p>
-            <p className="mt-0.5 truncate text-[11px] text-neutral-10">
+            <p className="mt-0.5 truncate text-xs text-neutral-10">
               {project.slug} · {project.arena} · {project.status}
             </p>
           </div>

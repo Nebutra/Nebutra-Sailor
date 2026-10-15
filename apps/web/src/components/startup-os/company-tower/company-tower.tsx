@@ -104,7 +104,7 @@ export function CompanyTower({
             <OverallRing percent={overallPercent} />
             <div className="flex min-w-0 flex-col">
               <h2 className="truncate text-base font-semibold text-neutral-12">{name}</h2>
-              <span className="font-mono text-[10px] tabular-nums text-neutral-9">
+              <span className="font-mono text-xs tabular-nums text-neutral-9">
                 {tc("completeLayers", { overallPercent: String(overallPercent) })}
               </span>
             </div>
@@ -199,7 +199,7 @@ function OverallRing({ percent }: { percent: number }) {
       }}
     >
       <div className="grid size-9 place-items-center rounded-full bg-neutral-1">
-        <span className={cn("font-mono text-[11px] font-medium tabular-nums text-neutral-12")}>
+        <span className={cn("font-mono text-xs font-medium tabular-nums text-neutral-12")}>
           {clamped}%
         </span>
       </div>

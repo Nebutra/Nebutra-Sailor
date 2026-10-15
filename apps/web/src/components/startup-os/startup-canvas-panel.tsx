@@ -216,7 +216,7 @@ export function StartupCanvasPanel({
             >
               <Minus className="size-3.5" aria-hidden="true" />
             </Button>
-            <span className="min-w-12 shrink-0 whitespace-nowrap text-center text-[11px] font-medium tabular-nums text-neutral-11">
+            <span className="min-w-12 shrink-0 whitespace-nowrap text-center text-xs font-medium tabular-nums text-neutral-11">
               {Math.round(zoom * 100)}%
             </span>
             <Button
@@ -345,9 +345,7 @@ function StartupCanvasInspector({
 
   return (
     <aside className="min-h-0 min-w-0 overflow-y-auto bg-neutral-1 p-4">
-      <h3 className="text-[11px] font-semibold uppercase tracking-widest text-neutral-10">
-        {tc("canvasInspector")}
-      </h3>
+      <h3 className="text-xs font-semibold text-neutral-10">{tc("canvasInspector")}</h3>
 
       {hasSelection ? null : (
         <EmptyState.Root
@@ -364,7 +362,7 @@ function StartupCanvasInspector({
         <div className="mt-3 rounded-2xl bg-neutral-2 p-3">
           <p className="text-sm font-semibold text-neutral-12">{selectedArtifact.title}</p>
           <p className="mt-1 text-xs leading-5 text-neutral-11">{selectedArtifact.summary}</p>
-          <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-11">
+          <div className="mt-3 grid gap-1.5 text-xs text-neutral-11">
             <span>{tc("status", { status: String(selectedArtifact.status ?? "") })}</span>
             <span>{tc("owner", { owner: String(selectedArtifact.owner ?? "") })}</span>
             <span className="break-words">
@@ -389,7 +387,7 @@ function StartupCanvasInspector({
             </div>
             <StartupRunStatusBadge status={selectedRun.status} />
           </div>
-          <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-11">
+          <div className="mt-3 grid gap-1.5 text-xs text-neutral-11">
             <span>{tc("adapter", { adapter: String(selectedRun.adapter ?? "") })}</span>
             <span>{tc("approval", { approval: String(selectedRun.approval ?? "") })}</span>
             <span>{tc("budget", { value0: String(selectedRun.costEstimateUsd.toFixed(2)) })}</span>
@@ -464,15 +462,13 @@ function StartupCanvasNodeButton({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold">{node.title}</p>
-          <p className="mt-1 line-clamp-2 text-[11px] leading-4 opacity-80">{node.subtitle}</p>
+          <p className="mt-1 line-clamp-2 text-xs leading-4 opacity-80">{node.subtitle}</p>
         </div>
-        <span className="shrink-0 rounded-full bg-neutral-1 px-2 py-0.5 text-[10px] font-medium text-neutral-12">
+        <span className="shrink-0 rounded-full bg-neutral-1 px-2 py-0.5 text-xs font-medium text-neutral-12">
           {node.kind}
         </span>
       </div>
-      <p className="mt-3 truncate text-[11px] font-medium uppercase tracking-widest opacity-80">
-        {node.status}
-      </p>
+      <p className="mt-3 truncate text-xs font-medium opacity-80">{node.status}</p>
     </button>
   );
 }

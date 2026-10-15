@@ -129,7 +129,7 @@ export function WebhooksList({
       cell: (endpoint) => (
         <div className="min-w-0">
           <span className="block truncate font-mono text-xs text-foreground">{endpoint.url}</span>
-          <p className="mt-0.5 font-mono text-[10px] text-muted-foreground">
+          <p className="mt-0.5 font-mono text-xs text-muted-foreground">
             {endpoint.signingSecretMasked}
           </p>
         </div>

@@ -73,7 +73,7 @@ export function StartupWorkspaceFilesPanel({
           <aside
             className={`min-h-0 min-w-0 flex-col bg-neutral-2 ${view === "code" ? "flex" : "hidden"}`}
           >
-            <p className="shrink-0 px-4 pb-1 pt-3 text-[11px] font-semibold uppercase tracking-widest text-neutral-10">
+            <p className="shrink-0 px-4 pb-1 pt-3 text-xs font-semibold text-neutral-10">
               {tc("files")}
             </p>
             <div className="min-h-0 flex-1 overflow-auto px-2 pb-3">

@@ -49,7 +49,7 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
         <Connection className="size-4" aria-hidden="true" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" sideOffset={8} className="w-80 p-1.5">
-        <DropdownMenuLabel className="px-2 pb-1.5 pt-1 text-[11px] font-medium uppercase tracking-wide text-neutral-9">
+        <DropdownMenuLabel className="px-2 pb-1.5 pt-1 text-xs font-medium tracking-wide text-neutral-9">
           {tc("connectADataSource")}
         </DropdownMenuLabel>
         {INTEGRATION_CATALOG.map((entry) => {

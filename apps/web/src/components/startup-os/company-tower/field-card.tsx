@@ -79,9 +79,7 @@ function StructuredValue({ value }: { value: unknown }) {
     <div className="flex flex-wrap gap-x-3 gap-y-0.5">
       {entries.map(([key, raw]) => (
         <span key={key} className="text-[13px] text-neutral-11">
-          <span className="font-mono text-[10px] uppercase tracking-wide text-neutral-9">
-            {key}
-          </span>
+          <span className="font-mono text-xs tracking-wide text-neutral-9">{key}</span>
           <span className="ml-1 text-neutral-12">{asText(raw) ?? "—"}</span>
         </span>
       ))}
@@ -192,7 +190,7 @@ export function FieldCard({
           {fieldKey}
         </span>
         {definition.required ? (
-          <span className="font-mono text-[10px] text-neutral-8" title="required">
+          <span className="font-mono text-xs text-neutral-8" title="required">
             *
           </span>
         ) : null}

@@ -158,9 +158,7 @@ const ROADMAP_LABEL = { now: "Now", next: "Next", later: "Later" } as const;
 // ---------------------------------------------------------------------------
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <h4 className="font-mono text-[10px] uppercase tracking-wide text-neutral-9">{children}</h4>
-  );
+  return <h4 className="font-mono text-xs tracking-wide text-neutral-9">{children}</h4>;
 }
 
 function NorthStarRow({ layer }: { layer: ContextLayer }) {
@@ -246,9 +244,7 @@ function RoadmapSection({ layer }: { layer: ContextLayer }) {
             size="sm"
             capitalize={false}
           >
-            <span className="font-mono text-[10px] uppercase tracking-wide">
-              {ROADMAP_LABEL[item.phase]}
-            </span>
+            <span className="font-mono text-xs tracking-wide">{ROADMAP_LABEL[item.phase]}</span>
             <span className="ml-1.5">{item.label}</span>
           </ColorBadge>
         ))}
@@ -276,7 +272,7 @@ function LiveRunsSection({ layer }: { layer: ContextLayer }) {
                 leftLabel={run.stage}
                 rightLabel={run.status}
                 status={run.status}
-                className={cn("font-mono text-[11px]")}
+                className={cn("font-mono text-xs")}
               />
             </li>
           ))}

@@ -60,7 +60,7 @@ function groupVisible(
 
 function KeyCap({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded border border-neutral-7 bg-neutral-1 px-1.5 font-mono text-[11px] font-medium text-neutral-12 shadow-[0_1px_0_hsl(var(--border))]">
+    <kbd className="inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded border border-neutral-7 bg-neutral-1 px-1.5 font-mono text-xs font-medium text-neutral-12 shadow-[0_1px_0_hsl(var(--border))]">
       {children}
     </kbd>
   );
@@ -79,15 +79,15 @@ export default function ShortcutsPage() {
         <h1 className="text-base font-semibold text-neutral-12">{tc("keyboardShortcuts")}</h1>
         <p className="mt-1 text-sm text-neutral-11">
           {tc("press")}{" "}
-          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px]">
+          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs">
             ⌘K
           </kbd>{" "}
           {tc("anywhereToRunAny")}{" "}
-          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px]">
+          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs">
             ↑
           </kbd>
           /
-          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px]">
+          <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs">
             ↓
           </kbd>{" "}
           {tc("toNavigateTheList")}
@@ -97,9 +97,7 @@ export default function ShortcutsPage() {
       {/* Global shortcuts */}
 
       <div>
-        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
-          {tc("global")}
-        </h2>
+        <h2 className="mb-3 text-xs font-semibold text-neutral-10">{tc("global")}</h2>
         <Table
           bare
           wrapperClassName="overflow-hidden rounded-[var(--radius-xl)] border border-neutral-7"
@@ -117,7 +115,7 @@ export default function ShortcutsPage() {
                       >
                         <KeyCap>{k}</KeyCap>
                         {i < row.keys.length - 1 && (
-                          <span className="text-[10px] text-neutral-9">+</span>
+                          <span className="text-xs text-neutral-9">+</span>
                         )}
                       </span>
                     ))}
@@ -140,7 +138,7 @@ export default function ShortcutsPage() {
           if (items.length === 0) return null;
           return (
             <div key={section}>
-              <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
+              <h2 className="mb-3 text-xs font-semibold text-neutral-10">
                 {t(`sections.${section}`)}
               </h2>
               <Table
@@ -172,7 +170,7 @@ export default function ShortcutsPage() {
                               ))}
                             </div>
                           ) : (
-                            <span className="text-[11px] text-neutral-10">{tc("viaK")}</span>
+                            <span className="text-xs text-neutral-10">{tc("viaK")}</span>
                           )}
                         </Table.Cell>
                       </Table.Row>
