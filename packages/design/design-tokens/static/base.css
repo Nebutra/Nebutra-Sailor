@@ -145,8 +145,20 @@
      styles are never fought. Face, weight and features are variables, so a
      Brand Package retunes all three on html[data-brand]. A heading's WEIGHT is
      not an app decision: scripts/lint-font-pipeline.mjs fails a font-semibold /
-     font-bold on h1–h3 (shrink-only allowlist in governance.config.json). */
-  :where(h1, h2, h3, h4, h5, h6) {
+     font-bold on h1–h3 (shrink-only allowlist in governance.config.json).
+
+     Plain type selectors, NOT :where(). Tailwind's preflight, earlier in this
+     same layer, sets `h1…h6 { font-weight: inherit }` at specificity 0,0,1; a
+     zero-specificity :where() lost to it, so the heading weight never applied
+     anywhere — every h1 without a weight class rendered at the body's 400
+     (the design site, measured 2026-10-16). Same layer, later in source,
+     equal specificity: this rule wins, and any utility still beats it. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-heading);
     font-weight: var(--font-weight-heading, 500);
     font-feature-settings: var(--font-features-heading, normal);

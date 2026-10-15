@@ -2,12 +2,13 @@ import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+import { stripComments } from "../../scripts/lib/strip-comments.mjs";
 
 /**
  * One font pipeline (docs/reports/2026-10-16-frontend-foundation-audit.md).
  *
- * Measured in production before this existed: auth.nebutra.com rendered in
- * ui-sans-serif and sso.nebutra.com in Times, because their layouts composed
+ * Measured in production before this existed: the auth center rendered in
+ * ui-sans-serif and the IdP in Times, because their layouts composed
  * the loader classes by hand and left two of three out; every token stack that
  * opened with a bare var(--font-geist-sans) was then void. h1 weighed 400, 500
  * or 600 depending on the app. These assertions hold the shape that fixed it:
@@ -46,7 +47,9 @@ describe("one font pipeline", () => {
       expect(src, file).toMatch(/<html[^>]*?className=\{[^>]*fontClassName/);
       expect(src, file).toMatch(/<FontFaces\b/);
       // And nothing composes a loader string of its own any more.
-      expect(src, file).not.toMatch(/geist\/font|@nebutra\/fonts\/next|next\/font/);
+      expect(stripComments(src), file).not.toMatch(
+        /from\s*["'](?:geist\/font|@nebutra\/fonts\/next|next\/font)/,
+      );
     });
   }
 

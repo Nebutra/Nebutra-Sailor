@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 /**
- * Every app that sends a CSP and renders <CjkFontFace /> must let the browser
+ * Every app that sends a CSP and renders <FontFaces /> must let the browser
  * fetch the MiSans subsets from the public asset origin. On 2026-09-26 both
  * CSPs said `font-src 'self' data:` and every MiSans face in production was
  * refused with no error on the page — Chinese quietly fell back to PingFang.
@@ -21,8 +21,8 @@ describe("CSP lets the CJK webfont load", () => {
     });
   }
 
-  it("apps/web passes its CSP nonce to <CjkFontFace />", () => {
+  it("apps/web passes its CSP nonce to <FontFaces />", () => {
     const layout = readFileSync("apps/web/src/app/layout.tsx", "utf8");
-    expect(layout).toMatch(/<CjkFontFace nonce=\{nonce\} \/>/);
+    expect(layout).toMatch(/<FontFaces nonce=\{nonce\} \/>/);
   });
 });

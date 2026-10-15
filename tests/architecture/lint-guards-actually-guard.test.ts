@@ -339,7 +339,7 @@ const CASES: Case[] = [
   },
   {
     // An app loading its own face — how auth and idp ended up on the OS font
-    // and nebutra.com downloaded DM Sans twice (2026-10-16 audit).
+    // and the marketing site downloaded DM Sans twice (2026-10-16 audit).
     guard: "lint-font-pipeline",
     violation:
       'import { GeistSans } from "geist/font/sans";\nexport const c = GeistSans.variable;\n',

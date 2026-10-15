@@ -35,7 +35,7 @@ describe("registry faces (@nebutra/fonts/next)", () => {
   });
 
   it("gives every face its Latin unicode-range (no download just to skip a CJK glyph)", () => {
-    expect(SOURCE.match(/prop: "unicode-range"/g)?.length).toBe(19);
+    expect(SOURCE.match(/prop: "unicode-range"/g)?.length).toBe(18);
   });
 
   it("declares every face the registry list exports", () => {

@@ -5,9 +5,9 @@
  * its own.
  *
  * The 2026-10-16 audit (docs/reports/2026-10-16-frontend-foundation-audit.md)
- * measured what happened while every app wired fonts by itself: auth.nebutra.com
- * rendered in ui-sans-serif and sso.nebutra.com in Times (their layouts never
- * applied the loader classes), nebutra.com downloaded DM Sans twice, the design
+ * measured what happened while every app wired fonts by itself: the auth center
+ * rendered in ui-sans-serif and the IdP in Times (their layouts never
+ * applied the loader classes), the marketing site downloaded DM Sans twice, the design
  * site sent six design-language families to every visitor, and h1 shipped at
  * 400, 500 and 600 depending on the app. Four rules, each a different way that
  * returns:

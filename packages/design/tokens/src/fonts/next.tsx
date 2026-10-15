@@ -13,7 +13,7 @@
  * from three packages (`geist/font/sans`, `geist/font/mono`,
  * `@nebutra/fonts/next/cjk`). auth and idp forgot two of the three, so the
  * token stacks that open with `var(--font-geist-sans)` were void there and
- * auth.nebutra.com rendered in ui-sans-serif, sso.nebutra.com in Times. The
+ * the auth center rendered in ui-sans-serif, the IdP in Times. The
  * token stacks now carry family fallbacks too, but the loader is the part that
  * makes the face actually download — so it lives here, once, and
  * scripts/lint-font-pipeline.mjs fails any `next/font`, `geist/font` or

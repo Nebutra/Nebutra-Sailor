@@ -228,14 +228,14 @@ export const TOKEN_VALUES = {
   },
   "--font-display": {
     light:
-      'var(--font-dm-sans, "DM Sans"), var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", sans-serif',
+      'var(--font-dm-sans, "DM Sans"), var(--font-misans, "MiSans"), "PingFang SC", sans-serif',
   },
   "--font-features-heading": { light: "normal" },
   "--font-features-numeric": { light: "tabular-nums" },
   "--font-features-sans": { light: '"ss01" 1' },
   "--font-heading": {
     light:
-      'var(--font-dm-sans, "DM Sans"), var(--font-misans, "MiSans"), "PingFang SC", "Microsoft YaHei", sans-serif',
+      'var(--font-dm-sans, "DM Sans"), var(--font-misans, "MiSans"), "PingFang SC", sans-serif',
   },
   "--font-mono": {
     light:

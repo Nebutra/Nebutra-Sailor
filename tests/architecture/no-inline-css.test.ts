@@ -505,7 +505,6 @@ const STATIC_INLINE_STYLE_ALLOWLIST: readonly string[] = [
   "packages/design/ui/src/primitives/shine-border.tsx :: backgroundSize",
   "packages/design/ui/src/primitives/shine-border.tsx :: mask",
   "packages/design/ui/src/primitives/shine-border.tsx :: maskComposite",
-  "packages/design/ui/src/primitives/stars-canvas.tsx :: display",
   "packages/design/ui/src/primitives/stepper.tsx :: width",
   "packages/design/ui/src/primitives/theme-toggle.tsx :: transformOrigin",
   "packages/design/ui/src/primitives/tree.tsx :: height",

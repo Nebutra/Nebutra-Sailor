@@ -136,7 +136,7 @@ const ROWS = [
 function Miniature({ spec, face }: { spec: Spec; face: boolean }) {
   // `face` gates the language's own typeface. Every language names a different
   // family, so painting all nine miniatures in their faces made every visitor
-  // download six registry fonts on arrival (design.nebutra.com, 2026-10-16
+  // download six registry fonts on arrival (the design site, 2026-10-16
   // audit: Inter, Inter Tight, Fraunces, Roboto Mono, Source Serif 4 on the home
   // page alone). The face loads for the active language and for a tile the
   // visitor points at or focuses; the rest show colour, radius and weight in
