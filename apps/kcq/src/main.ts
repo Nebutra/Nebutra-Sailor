@@ -30,7 +30,7 @@ async function boot() {
   let app: VueApp;
   if (getKcqRoute(window.location.pathname) === "profile") {
     const { initializeProfileTheme } = await import("./profile-theme");
-    initializeProfileTheme();
+    await initializeProfileTheme();
     const { default: Profile } = await import("./profile.vue");
     document.title = "个人资料 · KCQ";
     app = createApp(Profile, { context, auth });

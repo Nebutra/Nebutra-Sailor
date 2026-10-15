@@ -73,7 +73,12 @@ class SupervisorTest(unittest.TestCase):
         self.assertIn(f"port = {sup.PORTS['python']}", toml)
         for name, spec in sup.SERVICES.items():
             if name != "nginx":
-                self.assertEqual(spec["env"]["PORT"], sup.PORTS[name])
+                if name == "binance":
+                    self.assertEqual(spec["env"]["BINANCE_LISTEN"], f"127.0.0.1:{sup.PORTS[name]}")
+                    self.assertEqual(spec["env"]["BINANCE_PROXY"], "direct")
+                    self.assertEqual(spec["env"]["BINANCE_CACHE_DIR"], "/var/lib/kcq/binance")
+                else:
+                    self.assertEqual(spec["env"]["PORT"], sup.PORTS[name])
 
 
 if __name__ == "__main__":

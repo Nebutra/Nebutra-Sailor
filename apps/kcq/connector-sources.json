@@ -3,6 +3,10 @@
     "repository": "TsekaLuk/GoTDX-Connector",
     "commit": "a7990d8ee5dff0bd72e2d933c46c31deb07c0b58"
   },
+  "binance": {
+    "repository": "363045841/Binance-Connector",
+    "commit": "60381967785a65a2777b3da1f57b823df49fc318"
+  },
   "python": {
     "repository": "TsekaLuk/Baostock-Tradingview-Connector",
     "commit": "25dd57d03196f1de25a9edffd64efc6b33632704"

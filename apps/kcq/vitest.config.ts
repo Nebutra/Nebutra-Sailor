@@ -23,6 +23,11 @@ export default defineConfig({
       "@nebutra/auth/browser": fileURLToPath(
         new URL("../../packages/iam/auth/src/browser.ts", import.meta.url),
       ),
+      "@363045841yyt/klinechart-core/config": resolve(
+        source,
+        "packages/core/dist/foundation/config/chartSettings.js",
+      ),
+      "@363045841yyt/klinechart-core": resolve(source, "packages/core/dist/index.js"),
     },
   },
   test: { include: ["apps/kcq/src/**/*.test.{ts,tsx}"] },

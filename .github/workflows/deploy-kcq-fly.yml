@@ -1,7 +1,7 @@
 name: Deploy KCQ to Fly
 
 # The chart library lives in its own repository. Build Nebutra's product shell,
-# ship it with the three pinned market connectors (GOTDX, Binance depth,
+# ship it with the three pinned market connectors (GOTDX, Binance V1,
 # TradingView) as one Fly Machine, and optionally cut over kcq.nebutra.com after
 # the Fly URL is healthy. Connector revisions stay pinned independently in
 # apps/kcq/connector-sources.json. ADR: docs/ops/nebutra/2026-10-09-kcq-consolidation.md
@@ -58,7 +58,7 @@ jobs:
     steps:
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
-      - name: Verify real search and fresh bars or depth
+      - name: Verify real search, fresh bars and Binance trades
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
@@ -105,7 +105,7 @@ jobs:
       - name: Resolve immutable connector sources
         id: connectors
         run: |
-          node -e 'const s=require("./apps/kcq/connector-sources.json"); const o=[]; for (const k of ["gotdx","python"]) { if(!/^[a-f0-9]{40}$/.test(s[k].commit)) throw Error("Expected immutable SHA for "+k); o.push(k+"_repository="+s[k].repository, k+"_commit="+s[k].commit); } require("fs").appendFileSync(process.env.GITHUB_OUTPUT, o.join("\n")+"\n");'
+          node -e 'const s=require("./apps/kcq/connector-sources.json"); const o=[]; for (const k of ["gotdx","python","binance"]) { if(!/^[a-f0-9]{40}$/.test(s[k].commit)) throw Error("Expected immutable SHA for "+k); o.push(k+"_repository="+s[k].repository, k+"_commit="+s[k].commit); } require("fs").appendFileSync(process.env.GITHUB_OUTPUT, o.join("\n")+"\n");'
 
       - name: Checkout GOTDX connector
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -120,6 +120,13 @@ jobs:
           repository: ${{ steps.connectors.outputs.python_repository }}
           ref: ${{ steps.connectors.outputs.python_commit }}
           path: connector-python
+
+      - name: Checkout Binance V1 connector
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: ${{ steps.connectors.outputs.binance_repository }}
+          ref: ${{ steps.connectors.outputs.binance_commit }}
+          path: connector-binance
 
       # The shared action owns the Nebutra toolchain and root lockfile cache.
       # KCQ installs its separate frozen lockfile in the following step.
@@ -158,7 +165,8 @@ jobs:
           cp -R apps/kcq-docs/dist/. "$stage/html/"
           cp -R connector-gotdx "$stage/gotdx"
           cp -R connector-python "$stage/python"
-          rm -rf "$stage/gotdx/.git" "$stage/python/.git"
+          cp -R connector-binance "$stage/binance"
+          rm -rf "$stage/gotdx/.git" "$stage/python/.git" "$stage/binance/.git"
           cp infra/fly/Dockerfile.kcq "$stage/Dockerfile"
           cp infra/fly/kcq.nginx.conf "$stage/nginx.conf"
           cp infra/fly/kcq.security-headers.conf "$stage/security-headers.conf"

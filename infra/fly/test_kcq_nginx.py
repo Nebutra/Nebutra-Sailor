@@ -69,6 +69,33 @@ class NginxRoutesTest(unittest.TestCase):
         # OG images are matched before the immutable asset rule.
         self.assertLess(matchers.index("~ ^/docs/og/.+\\.png$"), matchers.index("~* \\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|webp)$"))
 
+    def test_binance_v1_routes_preserve_real_trade_and_stream_contracts(self):
+        blocks = locations(self.conf)
+        for path in (
+            "/market/binance/api/v1/market-data/instruments/search",
+            "/market/binance/api/v1/market-data/bars",
+            "/market/binance/api/v1/market-data/trades",
+            "/market/binance/api/v1/market-data/trades/range",
+            "/market/binance/api/v1/market-data/sources/binance/probe",
+            "/market/binance/api/v1/market-data/sources/binance/depth",
+            "/market/binance/api/v1/market-data/sources/binance/stream",
+            "/market/binance/api/v1/market-data/sources/binance/trades/stream",
+            "/market/binance/api/v1/market-data/sources/binance/depth/stream",
+            "/market/binance/api/v1/market-data/sources/binance/trades/archive",
+        ):
+            matching = [(matcher, body) for matcher, body in blocks
+                        if matcher.startswith("~ ") and re.search(matcher[2:], path)]
+            matcher, body = matching[0]
+            self.assertIn("proxy_pass", body, path)
+            self.assertIn('Cache-Control "no-store"', body, path)
+            self.assertIn('proxy_set_header Origin "";', body, path)
+            self.assertIn('proxy_set_header Cookie "";', body, path)
+            self.assertIn('proxy_set_header Authorization "";', body, path)
+            if path.endswith(("/stream", "/archive")):
+                self.assertIn("proxy_buffering off;", body, path)
+                self.assertIn("gzip off;", body, path)
+        self.assertNotIn("/api/binance/", self.conf)
+
 
     def test_only_prerendered_public_files_are_edge_cacheable(self):
         snippet = (HERE / "kcq.security-headers.conf").read_text()
