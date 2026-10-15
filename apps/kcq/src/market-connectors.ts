@@ -3,6 +3,7 @@ import {
   BarsLiveSource,
   createHttpMarketDataTransport,
   createMarketDataProvider,
+  createTradeDataSource,
   dataSourceRegistry,
   type MarketDataProviderRegistry,
   marketDataProviderRegistry,
@@ -13,6 +14,7 @@ import { scopedPersistenceName } from "@363045841yyt/klinechart-core/persistence
 const managedSources = [
   { id: "gotdx", path: "/market/tdx" },
   { id: "tradingview", path: "/market/python" },
+  { id: "binance", path: "/market/binance" },
 ] as const;
 type PreferencesStorage = Pick<Storage, "getItem" | "setItem">;
 
@@ -50,12 +52,16 @@ export function initializeMarketConnectors(
   for (const { id, path } of managedSources) {
     const baseUrl = origin + path;
     const currentBaseUrl = () => registry.getConfig(id).baseUrl ?? baseUrl;
+    const transport = createHttpMarketDataTransport({ baseUrl: currentBaseUrl, sourceLabel: id });
     registry.register(
       createMarketDataProvider({
         source: { ...dataSourceRegistry[id], defaultBaseUrl: baseUrl },
-        transport: createHttpMarketDataTransport({ baseUrl: currentBaseUrl, sourceLabel: id }),
+        transport,
+        ...(id === "binance"
+          ? { trades: createTradeDataSource(id, transport, currentBaseUrl) }
+          : {}),
         // Streams open only when the connector's probe declares liveBars, and only for
-        // instruments that do not opt out (core BarsLiveSubscription).
+        // instruments that do not opt out (core MarketRuntime).
         liveBars: {
           createStream: ({ symbol, period, barAggregation, instrumentId }) =>
             new BarsLiveSource(

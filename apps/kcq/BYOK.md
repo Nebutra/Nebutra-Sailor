@@ -10,7 +10,7 @@ The authenticated `/market/byok` proxy forwards to the gateway over verified TLS
 
 Daily labels are interpreted in the exchange timezone; intraday timestamps requested in UTC. Native aggregation and no/split adjustment only; unsupported transformations fail before a provider request. Probe performs one minimal AAPL history request on the customer's quota.
 
-KCQ library changes are tracked in upstream PR #298. The immutable deployment integration revision retains the workspace/navigation changes pending in PR #297. Both are canonical KCQ source changes; there is no duplicated chart registry in this host.
+KCQ library contracts from upstream PRs #297 (workspace/navigation) and #298 (BYOK) are merged and included in the immutable integration revision. The host continues to use the canonical public registry and slots.
 
 Supplier shortlist and future adapter requirements live in KCQ `docs/design/market-data-byok.md`: Twelve Data, Alpaca, Massive, Finnhub, Tushare and self-hosted KCQ V1 endpoints. Arbitrary endpoints are not accepted until URL allowlisting and SSRF controls are implemented.
 

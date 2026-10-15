@@ -41,12 +41,11 @@ SERVICES = {
     },
     "binance": {
         "argv": ["kcq-binance"],
-        # Upstream defaults HTTP_PROXY to a nonexistent localhost proxy: use direct egress.
+        # The canonical V1 connector defaults to a developer proxy; Fly uses direct egress.
         "env": {
-            "PORT": PORTS["binance"],
-            "GIN_MODE": "release",
-            "SYMBOLS": "btcusdt,ethusdt",
-            "NO_PROXY": "api.binance.com,stream.binance.com",
+            "BINANCE_LISTEN": "127.0.0.1:" + PORTS["binance"],
+            "BINANCE_PROXY": "direct",
+            "BINANCE_CACHE_DIR": "/var/lib/kcq/binance",
         },
         "user": CONNECTOR_USER,
         "cwd": "/var/lib/kcq",
