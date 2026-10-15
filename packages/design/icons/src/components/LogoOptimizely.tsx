@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoOptimizely = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoOptimizely = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -38,9 +38,9 @@ const LogoOptimizely = forwardRef<SVGSVGElement, IconProps>(
         d="M10.46 4.455v1.573c1.212 0 2.351-.47 3.201-1.284C14.512 3.912 15 2.79 15 1.633h-1.628a2.78 2.78 0 0 1-.85 1.99 3 3 0 0 1-2.062.832"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoOptimizely" },
 );
-LogoOptimizely.displayName = "LogoOptimizely";
 
 export { LogoOptimizely };
 export default LogoOptimizely;

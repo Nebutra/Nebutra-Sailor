@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const DataPointMedium = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const DataPointMedium = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -25,9 +25,9 @@ const DataPointMedium = forwardRef<SVGSVGElement, IconProps>(
       />
       <circle cx={6.75} cy={5.25} r={1.75} fill="currentColor" opacity={0.25} />
     </svg>
-  ),
+  )),
+  { displayName: "DataPointMedium" },
 );
-DataPointMedium.displayName = "DataPointMedium";
 
 export { DataPointMedium };
 export default DataPointMedium;

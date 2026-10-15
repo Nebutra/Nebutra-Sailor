@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoCloudflare = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoCloudflare = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -27,9 +27,9 @@ const LogoCloudflare = forwardRef<SVGSVGElement, IconProps>(
         d="M12.704 7.424h-.16c-.032 0-.064.032-.096.064l-.224.768a.91.91 0 0 0 .096.832 1 1 0 0 0 .672.352l1.184.064c.032 0 .064.032.096.032a.06.06 0 0 1 .024.048.06.06 0 0 1-.024.048c-.032.064-.064.096-.128.096l-1.216.064a2.01 2.01 0 0 0-1.632 1.216l-.064.288c-.032.032 0 .096.064.096h4.224a.08.08 0 0 0 .072-.024.09.09 0 0 0 .024-.072q.114-.408.128-.832a3.06 3.06 0 0 0-3.04-3.04"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoCloudflare" },
 );
-LogoCloudflare.displayName = "LogoCloudflare";
 
 export { LogoCloudflare };
 export default LogoCloudflare;

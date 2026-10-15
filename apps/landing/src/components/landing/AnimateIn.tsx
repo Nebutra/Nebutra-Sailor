@@ -41,16 +41,6 @@ type Preset = keyof typeof PRESETS;
 
 const STAGGER = { fast: 0.05, normal: 0.1, slow: 0.2 } as const;
 
-/**
- * Kept as an export because the marketing layout mounts it. It no longer needs
- * to provide anything — GSAP registers itself on first use — so it is a
- * passthrough rather than a provider, and deleting it would be a second change
- * in a different app for no gain.
- */
-export function MarketingMotionProvider({ children }: { children: React.ReactNode }) {
-  return children;
-}
-
 export interface AnimateInProps {
   children: React.ReactNode;
   preset?: Preset;

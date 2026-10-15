@@ -1,25 +1,17 @@
 "use client";
 
 import { MagnifyingGlass } from "@nebutra/icons";
-import {
-  Button,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@nebutra/ui/primitives";
+import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import type * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
-import type { SiteMapTranslator } from "@/nebutra/i18n";
+import { Link, usePathname } from "@/i18n/navigation";
 import { ROUTES } from "@/nebutra/routes";
 import { SiteMenu } from "@/nebutra/shell/site-menu";
 import { ThemedLogo, ThemedLogomark } from "@/nebutra/shell/themed-logo";
-import { pageAt, SECTIONS, SITE_MAP } from "@/site-map";
+import { pageAt } from "@/site-map";
 
 /**
  * a16z-style chrome: a thin top bar — the mono mark top-left opens the
@@ -35,6 +27,15 @@ import { pageAt, SECTIONS, SITE_MAP } from "@/site-map";
  * it is transform/opacity on the brand duration and easing tokens, and reduced
  * motion drops the glide (`motion-safe`).
  */
+/**
+ * The search palette (cmdk + a dialog) loads after hydration, not with the
+ * page: nobody searches before the first paint, and it was ~15 KB gzip of every
+ * page's first load. It is still mounted up front, so ⌘K opens it at once.
+ */
+const SiteSearch = dynamic(() => import("./site-search").then((m) => m.SiteSearch), {
+  ssr: false,
+});
+
 const FADE =
   "motion-safe:transition-[transform,opacity] motion-safe:[transition-duration:var(--duration-reveal)] motion-safe:ease-brand";
 /** Hover intent: a pointer crossing the mark on its way elsewhere opens nothing. */
@@ -212,51 +213,5 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
 
       <SiteSearch open={searching} onOpenChange={setSearching} />
     </>
-  );
-}
-
-/** Every live, static page in the site map, grouped by section. */
-function SiteSearch({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) {
-  const t = useTranslations("siteShell");
-  const tMap = useTranslations("siteMap") as unknown as SiteMapTranslator;
-  const router = useRouter();
-  const pages = SITE_MAP.filter((p) => p.status === "live" && !p.path.includes("["));
-  return (
-    <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput placeholder={t("nav.searchPages")} />
-      <CommandList>
-        <CommandEmpty>{t("nav.noMatch")}</CommandEmpty>
-        {SECTIONS.map((section) => {
-          const inSection = pages.filter((p) => p.section === section.id);
-          if (inSection.length === 0) return null;
-          return (
-            <CommandGroup key={section.id} heading={tMap(`sections.${section.id}.title`)}>
-              {inSection.map((page) => {
-                const title = tMap(`pages.${page.key}.title`);
-                return (
-                  <CommandItem
-                    key={page.path}
-                    value={`${title} ${page.path}`}
-                    onSelect={() => {
-                      onOpenChange(false);
-                      router.push(page.path);
-                    }}
-                  >
-                    {title}
-                    <span className="ml-auto text-xs text-muted-foreground">{page.path}</span>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-          );
-        })}
-      </CommandList>
-    </CommandDialog>
   );
 }

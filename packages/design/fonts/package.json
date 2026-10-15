@@ -28,9 +28,11 @@
     "generated/subset-manifest.json",
     "generated/index.ts",
     "generated/dm-sans.woff2",
+    "generated/geist-sans",
     "generated/registry",
     "vendor/misans/LICENSE.txt",
     "vendor/dm-sans/OFL.txt",
+    "vendor/geist/OFL.txt",
     "NOTICE-FONTS.md",
     "README.md",
     "LICENSE",
@@ -59,6 +61,11 @@
       "import": "./src/next-cjk.ts",
       "default": "./src/next-cjk.ts"
     },
+    "./next/geist": {
+      "types": "./src/next-geist.ts",
+      "import": "./src/next-geist.ts",
+      "default": "./src/next-geist.ts"
+    },
     "./font-face": {
       "types": "./src/cjk-font-face.tsx",
       "import": "./src/cjk-font-face.tsx",
@@ -76,7 +83,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "build": "pnpm run fonts:registry && tsup",
-    "prepack": "node scripts/copy-registry-fonts.mjs"
+    "prepack": "node scripts/copy-registry-fonts.mjs",
+    "subset:geist": "node scripts/subset-geist.mjs"
   },
   "dependencies": {
     "@nebutra/brand": "workspace:*"

@@ -1,8 +1,6 @@
 "use client";
 
 import { ThemeProvider } from "@nebutra/tokens";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
 import { SITE_ID } from "@/site.config";
 
 interface ProvidersProps {
@@ -12,20 +10,11 @@ interface ProvidersProps {
 /**
  * Client-side providers wrapper
  * Single theme mechanism: class-based dark mode (.dark).
+ *
+ * React Query is not here: only blog comments fetch on the client, and they
+ * bring their own provider (components/landing/query-provider.tsx).
  */
 export function Providers({ children }: ProvidersProps) {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            refetchOnWindowFocus: false,
-            staleTime: 30_000,
-          },
-        },
-      }),
-  );
-
   return (
     <ThemeProvider
       attribute="class"
@@ -34,7 +23,7 @@ export function Providers({ children }: ProvidersProps) {
       enableSystem
       disableTransitionOnChange
     >
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      {children}
     </ThemeProvider>
   );
 }

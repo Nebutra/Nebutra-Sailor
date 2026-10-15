@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const Fingerprint = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const Fingerprint = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -38,9 +38,9 @@ const Fingerprint = forwardRef<SVGSVGElement, IconProps>(
         </clipPath>
       </defs>
     </svg>
-  ),
+  )),
+  { displayName: "Fingerprint" },
 );
-Fingerprint.displayName = "Fingerprint";
 
 export { Fingerprint };
 export default Fingerprint;

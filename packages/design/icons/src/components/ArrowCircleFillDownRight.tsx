@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const ArrowCircleFillDownRight = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const ArrowCircleFillDownRight = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -22,9 +22,9 @@ const ArrowCircleFillDownRight = forwardRef<SVGSVGElement, IconProps>(
         d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.818 5.629 8.311 9.12H5.482v1.5h4.64a.75.75 0 0 0 .746-.673l.003-.077V5.232H9.372v2.829L5.88 4.568z"
       />
     </svg>
-  ),
+  )),
+  { displayName: "ArrowCircleFillDownRight" },
 );
-ArrowCircleFillDownRight.displayName = "ArrowCircleFillDownRight";
 
 export { ArrowCircleFillDownRight };
 export default ArrowCircleFillDownRight;

@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoPosthogMonochrome = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoPosthogMonochrome = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -30,9 +30,9 @@ const LogoPosthogMonochrome = forwardRef<SVGSVGElement, IconProps>(
         d="M0 11.638c0 .155.143.28.32.28h1.467c.285 0 .428-.302.226-.478L.546 10.157C.345 9.98 0 10.105 0 10.353zm3.199-4.759L.546 4.56C.345 4.381 0 4.506 0 4.755v1.448c0 .074.034.145.094.198l3.105 2.717zm-2.653.478C.345 7.181 0 7.306 0 7.555v1.448c0 .074.034.145.094.198l3.105 2.717v-2.24zM6.398 6.995a.26.26 0 0 0-.093-.198l-2.56-2.239c-.201-.176-.546-.051-.546.198v1.448c0 .074.034.145.094.198l3.105 2.717zM3.2 11.918h1.787c.285 0 .428-.302.226-.478L3.2 9.678zm0-5.039v2.124c0 .074.034.145.094.198l3.105 2.717V9.794a.26.26 0 0 0-.093-.198z"
       />
     </svg>
-  ),
+  )),
+  { displayName: "LogoPosthogMonochrome" },
 );
-LogoPosthogMonochrome.displayName = "LogoPosthogMonochrome";
 
 export { LogoPosthogMonochrome };
 export default LogoPosthogMonochrome;

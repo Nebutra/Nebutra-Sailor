@@ -52,6 +52,14 @@
  * `scripts/lint-no-google-fonts.mjs` keeps `next/font/google` out of
  * template-shipped code.
  *
+ * Each face also declares the Latin subset's `unicode-range` (Google's
+ * `latin` range, as Fontsource ships it). Without it a browser has to download
+ * a face before it can learn the face has no glyph for a character: a CJK
+ * line set in a stack that lists one of these families (a heading stack that
+ * falls back through "DM Sans" to MiSans) fetched the 38 KB Latin file on
+ * every page just to skip it. next/font needs literals, so the range is
+ * spelled out in each call.
+ *
  * The brand faces live in `./next-cjk` — DM Sans (next/font/local) and
  * <CjkFontFace /> for the CDN-hosted MiSans — and are re-exported here for
  * discoverability. They are NOT folded into `fontRegistryClassName`: they are
@@ -75,7 +83,14 @@ const inter = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Inter'" }],
+  declarations: [
+    { prop: "font-family", value: "'Inter'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-inter",
 });
 const interTight = localFont({
@@ -88,7 +103,14 @@ const interTight = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Inter Tight'" }],
+  declarations: [
+    { prop: "font-family", value: "'Inter Tight'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-inter-tight",
 });
 const spaceGrotesk = localFont({
@@ -101,7 +123,14 @@ const spaceGrotesk = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Space Grotesk'" }],
+  declarations: [
+    { prop: "font-family", value: "'Space Grotesk'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-space-grotesk",
 });
 const playfairDisplay = localFont({
@@ -114,7 +143,14 @@ const playfairDisplay = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Playfair Display'" }],
+  declarations: [
+    { prop: "font-family", value: "'Playfair Display'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   adjustFontFallback: "Times New Roman",
   variable: "--font-playfair-display",
 });
@@ -128,7 +164,14 @@ const fraunces = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Fraunces'" }],
+  declarations: [
+    { prop: "font-family", value: "'Fraunces'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   adjustFontFallback: "Times New Roman",
   variable: "--font-reg-fraunces",
 });
@@ -142,7 +185,14 @@ const jetbrainsMono = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'JetBrains Mono'" }],
+  declarations: [
+    { prop: "font-family", value: "'JetBrains Mono'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-jetbrains-mono",
 });
 const manrope = localFont({
@@ -155,7 +205,14 @@ const manrope = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Manrope'" }],
+  declarations: [
+    { prop: "font-family", value: "'Manrope'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-manrope",
 });
 const sora = localFont({
@@ -168,7 +225,14 @@ const sora = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Sora'" }],
+  declarations: [
+    { prop: "font-family", value: "'Sora'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-sora",
 });
 const workSans = localFont({
@@ -181,7 +245,14 @@ const workSans = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Work Sans'" }],
+  declarations: [
+    { prop: "font-family", value: "'Work Sans'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-work-sans",
 });
 const dmSans = localFont({
@@ -194,7 +265,14 @@ const dmSans = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'DM Sans'" }],
+  declarations: [
+    { prop: "font-family", value: "'DM Sans'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-dm-sans",
 });
 const plusJakartaSans = localFont({
@@ -207,7 +285,14 @@ const plusJakartaSans = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Plus Jakarta Sans'" }],
+  declarations: [
+    { prop: "font-family", value: "'Plus Jakarta Sans'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-plus-jakarta-sans",
 });
 const outfit = localFont({
@@ -220,7 +305,14 @@ const outfit = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Outfit'" }],
+  declarations: [
+    { prop: "font-family", value: "'Outfit'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-outfit",
 });
 const figtree = localFont({
@@ -233,7 +325,14 @@ const figtree = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Figtree'" }],
+  declarations: [
+    { prop: "font-family", value: "'Figtree'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-figtree",
 });
 const montserrat = localFont({
@@ -246,7 +345,14 @@ const montserrat = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Montserrat'" }],
+  declarations: [
+    { prop: "font-family", value: "'Montserrat'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-montserrat",
 });
 const lexend = localFont({
@@ -259,7 +365,14 @@ const lexend = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Lexend'" }],
+  declarations: [
+    { prop: "font-family", value: "'Lexend'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-lexend",
 });
 const firaCode = localFont({
@@ -272,7 +385,14 @@ const firaCode = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Fira Code'" }],
+  declarations: [
+    { prop: "font-family", value: "'Fira Code'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-fira-code",
 });
 const robotoMono = localFont({
@@ -285,7 +405,14 @@ const robotoMono = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Roboto Mono'" }],
+  declarations: [
+    { prop: "font-family", value: "'Roboto Mono'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-roboto-mono",
 });
 const sourceSerif4 = localFont({
@@ -298,7 +425,14 @@ const sourceSerif4 = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Source Serif 4'" }],
+  declarations: [
+    { prop: "font-family", value: "'Source Serif 4'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   adjustFontFallback: "Times New Roman",
   variable: "--font-reg-source-serif-4",
 });
@@ -312,7 +446,14 @@ const sourceCodePro = localFont({
   ],
   display: "swap",
   preload: false,
-  declarations: [{ prop: "font-family", value: "'Source Code Pro'" }],
+  declarations: [
+    { prop: "font-family", value: "'Source Code Pro'" },
+    {
+      prop: "unicode-range",
+      value:
+        "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD",
+    },
+  ],
   variable: "--font-reg-source-code-pro",
 });
 

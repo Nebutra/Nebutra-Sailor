@@ -4,8 +4,8 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   /** Icon size in px (default: 16). Overrides width/height props. */
   size?: number | string;
 }
-const LogoBitbucketMonochrome = forwardRef<SVGSVGElement, IconProps>(
-  ({ size = 16, width, height, ...props }, ref) => (
+const LogoBitbucketMonochrome = /* @__PURE__ */ Object.assign(
+  forwardRef<SVGSVGElement, IconProps>(({ size = 16, width, height, ...props }, ref) => (
     <svg
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
@@ -80,9 +80,9 @@ const LogoBitbucketMonochrome = forwardRef<SVGSVGElement, IconProps>(
         </linearGradient>
       </defs>
     </svg>
-  ),
+  )),
+  { displayName: "LogoBitbucketMonochrome" },
 );
-LogoBitbucketMonochrome.displayName = "LogoBitbucketMonochrome";
 
 export { LogoBitbucketMonochrome };
 export default LogoBitbucketMonochrome;
