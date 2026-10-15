@@ -14,6 +14,7 @@ import {
   Textarea,
   toast,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useEffect, useId, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -74,6 +75,7 @@ const DEFAULT_SAVE: NonNullable<Props["onSave"]> = async () => {
 };
 
 export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Props) {
+  const tc = useTranslations("copy.personalizationPersonalizationPanel");
   const nicknameId = useId();
   const occupationId = useId();
   const bioId = useId();
@@ -135,12 +137,9 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
         <div>
           <div className="mb-2 flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
-            <h2 className="text-base font-semibold text-neutral-12">Personalization</h2>
+            <h2 className="text-base font-semibold text-neutral-12">{tc("personalization")}</h2>
           </div>
-          <p className="text-sm text-neutral-11">
-            Tell Sailor what you do and how you want it to respond. These details are injected into
-            every conversation as context.
-          </p>
+          <p className="text-sm text-neutral-11">{tc("tellSailorWhatYou")}</p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -151,7 +150,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
               <FormItem>
                 <FieldHeader
                   id={nicknameId}
-                  label="Nickname"
+                  label={tc("nickname")}
                   hint={`${value.nickname.length}/${NICKNAME_MAX}`}
                 />
                 <FormControl>
@@ -160,7 +159,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
                     id={nicknameId}
                     type="text"
                     onChange={(e) => field.onChange(e.target.value.slice(0, NICKNAME_MAX))}
-                    placeholder="What should Sailor call you?"
+                    placeholder={tc("whatShouldSailorCall")}
                     disabled={submitting}
                   />
                 </FormControl>
@@ -175,7 +174,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
               <FormItem>
                 <FieldHeader
                   id={occupationId}
-                  label="Occupation"
+                  label={tc("occupation")}
                   hint={`${value.occupation.length}/${OCCUPATION_MAX}`}
                 />
                 <FormControl>
@@ -184,7 +183,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
                     id={occupationId}
                     type="text"
                     onChange={(e) => field.onChange(e.target.value.slice(0, OCCUPATION_MAX))}
-                    placeholder="e.g. Product Designer, Software Engineer"
+                    placeholder={tc("eGProductDesigner")}
                     disabled={submitting}
                   />
                 </FormControl>
@@ -201,7 +200,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
             <FormItem>
               <FieldHeader
                 id={bioId}
-                label="More about you"
+                label={tc("moreAboutYou")}
                 hint={`${value.bio.length}/${BIO_MAX}`}
                 overLimit={value.bio.length > BIO_MAX}
               />
@@ -210,13 +209,12 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
                   {...field}
                   id={bioId}
                   rows={5}
-                  placeholder="I work in fintech, building infra for embedded payments. I prefer direct, technical answers without too many caveats…"
+                  placeholder={tc("iWorkInFintech")}
                   disabled={submitting}
                 />
               </FormControl>
               <FormDescription className="mt-1 text-[11px] text-neutral-10">
-                Background, preferences, location — anything that helps Sailor understand you
-                better.
+                {tc("backgroundPreferencesLocationAnything")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -230,7 +228,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
             <FormItem>
               <FieldHeader
                 id={instructionsId}
-                label="Custom instructions"
+                label={tc("customInstructions")}
                 hint={`${value.customInstructions.length}/${CUSTOM_INSTRUCTIONS_MAX}`}
                 overLimit={value.customInstructions.length > CUSTOM_INSTRUCTIONS_MAX}
               />
@@ -244,8 +242,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
                 />
               </FormControl>
               <FormDescription className="mt-1 text-[11px] text-neutral-10">
-                How should Sailor respond? Style, tone, format, focus areas. These take precedence
-                over its defaults.
+                {tc("howShouldSailorRespond")}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -267,7 +264,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
               disabled={!dirty || submitting}
               className="rounded-[var(--radius-lg)] px-3 py-1.5 text-sm font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              Reset
+              {tc("reset")}
             </button>
             <button
               type="submit"
@@ -285,7 +282,7 @@ export function PersonalizationPanel({ initialValue, onSave = DEFAULT_SAVE }: Pr
               ) : (
                 <Save className="h-3.5 w-3.5" />
               )}
-              Save changes
+              {tc("saveChanges")}
             </button>
           </div>
         </div>

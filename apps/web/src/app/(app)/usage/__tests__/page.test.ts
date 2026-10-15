@@ -7,9 +7,9 @@ const usagePageSource = readFileSync(join(process.cwd(), "src/app/(app)/usage/pa
 describe("/usage page credits integration", () => {
   it("consumes the real credit summary endpoint and renders credit ledger fields", () => {
     expect(usagePageSource).toContain("/api/billing/credits/summary");
-    expect(usagePageSource).toContain("Credit Balance");
-    expect(usagePageSource).toContain("Daily refresh");
-    expect(usagePageSource).toContain("Credit Activity");
+    expect(usagePageSource).toContain('tc("creditBalance")');
+    expect(usagePageSource).toContain('tc("dailyRefresh")');
+    expect(usagePageSource).toContain('tc("creditActivity")');
     expect(usagePageSource).toContain("transactions.map");
   });
 });

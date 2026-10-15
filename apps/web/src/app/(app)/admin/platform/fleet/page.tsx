@@ -1,6 +1,7 @@
 import "server-only";
 import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { getTranslations } from "next-intl/server";
 import { FLEET_TONE } from "@/components/admin-platform/fleet-strip";
 import { PageTitle, Panel } from "@/components/admin-platform/panel";
 import { StatusDot } from "@/components/admin-platform/status-dot";
@@ -35,6 +36,7 @@ const CELL = "h-11 overflow-hidden text-ellipsis whitespace-nowrap px-3 align-mi
  * repo.
  */
 export default async function PlatformFleetPage() {
+  const tc = await getTranslations("copy.fleetPage");
   await requireStaff();
   const rows = await cachedFleet();
   const now = Date.now();
@@ -50,19 +52,19 @@ export default async function PlatformFleetPage() {
   return (
     <>
       <PageTitle
-        title="Fleet"
+        title={tc("fleet")}
         subtitle={`${rows.length} services · ${healthy} healthy · ${drift} target drift`}
         actions={
           <form action={probeFleetNow}>
             <Button type="submit" variant="outline" size="sm">
-              Probe now
+              {tc("probeNow")}
             </Button>
           </form>
         }
       />
 
       <Panel
-        title="Services"
+        title={tc("services")}
         aside={<span className="text-muted-foreground text-xs">{probedLabel}</span>}
       >
         <div className="overflow-x-auto">
@@ -79,14 +81,14 @@ export default async function PlatformFleetPage() {
             </colgroup>
             <thead>
               <tr>
-                <th className={HEAD}>Status</th>
-                <th className={HEAD}>Service</th>
-                <th className={HEAD}>Host</th>
-                <th className={HEAD}>Runtime</th>
-                <th className={HEAD}>Target</th>
-                <th className={HEAD}>Version</th>
-                <th className={cn(HEAD, "text-right")}>Latency</th>
-                <th className={HEAD}>Probed</th>
+                <th className={HEAD}>{tc("status")}</th>
+                <th className={HEAD}>{tc("service")}</th>
+                <th className={HEAD}>{tc("host")}</th>
+                <th className={HEAD}>{tc("runtime")}</th>
+                <th className={HEAD}>{tc("target")}</th>
+                <th className={HEAD}>{tc("version")}</th>
+                <th className={cn(HEAD, "text-right")}>{tc("latency")}</th>
+                <th className={HEAD}>{tc("probed")}</th>
               </tr>
             </thead>
             <tbody>
@@ -128,12 +130,12 @@ export default async function PlatformFleetPage() {
                           <span className="font-mono text-xs">{row.deployTarget}</span>
                           {row.targetMatchesRuntime === false ? (
                             <span className="rounded-full bg-warning/12 px-1.5 text-2xs text-warning-strong leading-4">
-                              drift
+                              {tc("drift")}
                             </span>
                           ) : null}
                         </span>
                       ) : (
-                        <span className="text-muted-foreground text-xs">not switchable</span>
+                        <span className="text-muted-foreground text-xs">{tc("notSwitchable")}</span>
                       )}
                     </td>
                     <td className={cn(CELL, "font-mono text-xs")}>

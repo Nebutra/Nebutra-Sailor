@@ -1,6 +1,7 @@
 import { EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
 import { Card } from "@nebutra/ui/primitives";
 import { headers } from "next/headers";
+import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { type ReactNode, Suspense } from "react";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
@@ -105,6 +106,7 @@ function UsageGauge({
   limit: number;
   unit: string;
 }) {
+  const tc = useTranslations("copy.usagePage");
   const percent = limit > 0 ? Math.min((used / limit) * 100, 100) : 0;
   const isWarning = percent >= 80;
   const isCritical = percent >= 95;
@@ -145,18 +147,18 @@ function UsageGauge({
 
       {/* Remaining */}
       <p className="mt-2 text-xs text-neutral-10">
-        {Math.max(limit - used, 0).toLocaleString()} {unit} remaining this period
+        {tc("remainingThisPeriod", { value0: Math.max(limit - used, 0).toLocaleString(), unit })}
       </p>
 
       {/* Warning */}
       {isCritical && (
         <div className="mt-3 rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive-strong">
-          Quota nearly exhausted. Upgrade your plan to avoid service interruption.
+          {tc("quotaNearlyExhaustedUpgrade")}
         </div>
       )}
       {isWarning && !isCritical && (
         <div className="mt-3 rounded-[var(--radius-lg)] border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-warning-strong">
-          Approaching quota limit. Consider upgrading to avoid disruptions.
+          {tc("approachingQuotaLimitConsider")}
         </div>
       )}
     </Card>
@@ -212,14 +214,12 @@ function CreditSummarySection({
   creditSummary: CreditSummaryData | null;
   emptyActivityLabel: string;
 }) {
+  const tc = useTranslations("copy.usagePage");
   if (!creditSummary) {
     return (
       <Card className="p-4 sm:p-6">
-        <h2 className="text-lg font-semibold text-neutral-12">Credit Balance</h2>
-        <p className="mt-2 text-sm text-neutral-11">
-          Credit balance is unavailable right now. Usage metering below is still loaded from the
-          gateway.
-        </p>
+        <h2 className="text-lg font-semibold text-neutral-12">{tc("creditBalance")}</h2>
+        <p className="mt-2 text-sm text-neutral-11">{tc("creditBalanceIsUnavailable")}</p>
       </Card>
     );
   }
@@ -228,19 +228,19 @@ function CreditSummarySection({
     <>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
-          label="Credit Balance"
+          label={tc("creditBalance")}
           value={creditSummary.balance.amount.toLocaleString()}
           subLabel={`${creditSummary.balance.formatted} available`}
         />
 
         <StatCard
-          label="Daily refresh"
+          label={tc("dailyRefresh")}
           value={formatCreditAllowance(creditSummary.allowance.dailyRefresh)}
           subLabel={`Refreshes at ${creditSummary.allowance.refreshTime}`}
         />
 
         <StatCard
-          label="Plan allowance"
+          label={tc("planAllowance")}
           value={formatCreditAllowance(creditSummary.allowance.includedMonthly)}
           subLabel={`${creditSummary.allowance.plan} monthly included credits`}
         />
@@ -249,8 +249,8 @@ function CreditSummarySection({
       <Card className="mt-6 p-4 sm:p-6">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-lg font-semibold text-neutral-12">Credit Activity</h2>
-            <p className="text-sm text-neutral-11">Recent credit grants and consumption events.</p>
+            <h2 className="text-lg font-semibold text-neutral-12">{tc("creditActivity")}</h2>
+            <p className="text-sm text-neutral-11">{tc("recentCreditGrantsAnd")}</p>
           </div>
           <span className="text-xs font-medium uppercase tracking-normal text-neutral-10">
             {creditSummary.allowance.plan}
@@ -287,7 +287,7 @@ function CreditSummarySection({
                 </span>
 
                 <span className="text-xs text-neutral-10">
-                  Balance {transaction.balanceAfter.toLocaleString()}
+                  {tc("balance", { value0: transaction.balanceAfter.toLocaleString() })}
                 </span>
               </div>
             ))}
@@ -309,6 +309,7 @@ function BreakdownFrame({ children }: { children: ReactNode }) {
 }
 
 function BreakdownSkeleton() {
+  const tc = useTranslations("copy.usagePage");
   const placeholders = ["model", "provider", "endpoint"];
 
   return (
@@ -316,7 +317,7 @@ function BreakdownSkeleton() {
       <div
         className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
         role="status"
-        aria-label="Loading usage breakdown"
+        aria-label={tc("loadingUsageBreakdown")}
       >
         {placeholders.map((id) => (
           <Card key={id} className="p-4 sm:p-6">
@@ -402,6 +403,7 @@ async function UsageBreakdownSection({
 }: {
   result: Promise<BreakdownSectionResult>;
 }) {
+  const tc = await getTranslations("copy.usagePage");
   const result = await pending;
 
   if (result.status === "no-tenant") {
@@ -410,8 +412,8 @@ async function UsageBreakdownSection({
         <EmptyState
           tone="subtle"
           size="md"
-          title="Select an organization to see the breakdown"
-          description="Metered usage is recorded per organization. Switch to one to see how this period splits across models, providers and endpoints."
+          title={tc("selectAnOrganizationTo")}
+          description={tc("meteredUsageIsRecorded")}
         />
       </BreakdownFrame>
     );
@@ -420,7 +422,7 @@ async function UsageBreakdownSection({
   if (result.status === "error") {
     return (
       <BreakdownFrame>
-        <ErrorState title="Usage breakdown unavailable" message={result.message} />
+        <ErrorState title={tc("usageBreakdownUnavailable")} message={result.message} />
       </BreakdownFrame>
     );
   }
@@ -431,8 +433,8 @@ async function UsageBreakdownSection({
         <EmptyState
           tone="subtle"
           size="md"
-          title="This period has no metered usage"
-          description="Model calls and API requests are grouped here as soon as the first usage event lands in this billing period."
+          title={tc("thisPeriodHasNo")}
+          description={tc("modelCallsAndAPI")}
         />
       </BreakdownFrame>
     );
@@ -448,8 +450,11 @@ async function UsageBreakdownSection({
 
       {result.breakdown.periodStart && result.breakdown.periodEnd && (
         <p className="mt-4 text-xs text-neutral-10 first-letter:uppercase">
-          {result.breakdown.period} window · {formatCreditDate(result.breakdown.periodStart)} to{" "}
-          {formatCreditDate(result.breakdown.periodEnd)}
+          {tc("windowTo", {
+            period: result.breakdown.period,
+            value1: formatCreditDate(result.breakdown.periodStart),
+            value2: formatCreditDate(result.breakdown.periodEnd),
+          })}
         </p>
       )}
     </BreakdownFrame>
@@ -459,16 +464,14 @@ async function UsageBreakdownSection({
 // ── Main Content ─────────────────────────────────────────────────────────────
 
 async function UsageContent() {
+  const tc = await getTranslations("copy.usagePage");
   const breakdown = resolveUsageBreakdown();
   const t = await getTranslations("startupOs");
   const [usage, creditSummary] = await Promise.all([fetchUsage(), fetchCreditSummary()]);
 
   return (
     <>
-      <PageHeader
-        title="Usage & Metering"
-        description="Monitor credits, API calls, AI token consumption, and quota status across your organization."
-      />
+      <PageHeader title={tc("usageMetering")} description={tc("monitorCreditsAPICalls")} />
 
       <CreditSummarySection
         creditSummary={creditSummary}
@@ -480,26 +483,26 @@ async function UsageContent() {
           tone="branded"
           size="lg"
           title={t("emptyState.usageData")}
-          description="Usage metrics will appear once your organization starts making API calls. Ensure the API gateway is connected."
+          description={tc("usageMetricsWillAppear")}
         />
       ) : (
         /* Quota Gauges */
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <UsageGauge
-            label="API Calls"
+            label={tc("aPICalls")}
             used={usage.apiCalls.used}
             limit={usage.apiCalls.limit}
             unit="requests"
           />
 
           <StatCard
-            label="AI Tokens Used"
+            label={tc("aITokensUsed")}
             value={usage.aiTokens.used.toLocaleString()}
             subLabel="Total tokens consumed this period"
           />
 
           <StatCard
-            label="Billing Period"
+            label={tc("billingPeriod")}
             value={usage.period}
             subLabel="Current metering window"
           />
@@ -511,16 +514,14 @@ async function UsageContent() {
 
       <div className="mt-8 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-neutral-12">Usage Breakdown</h2>
-          <p className="mt-1 text-sm text-neutral-11">
-            This period&rsquo;s metered usage, grouped by the dimensions recorded on each event.
-          </p>
+          <h2 className="text-lg font-semibold text-neutral-12">{tc("usageBreakdown")}</h2>
+          <p className="mt-1 text-sm text-neutral-11">{tc("thisPeriodSMetered")}</p>
         </div>
         <ViewTransitionLink
           href="/billing"
           className="shrink-0 text-sm font-medium text-neutral-11 underline-offset-4 transition-colors hover:text-neutral-12 hover:underline"
         >
-          Manage plan and limits
+          {tc("managePlanAndLimits")}
         </ViewTransitionLink>
       </div>
 
@@ -532,8 +533,9 @@ async function UsageContent() {
 }
 
 export default async function UsagePage() {
+  const tc = await getTranslations("copy.usagePage");
   return (
-    <section className="mx-auto w-full max-w-wide" aria-label="Usage & Metering">
+    <section className="mx-auto w-full max-w-wide" aria-label={tc("usageMetering")}>
       <Suspense fallback={<LoadingState message="Loading usage metrics..." />}>
         <UsageContent />
       </Suspense>

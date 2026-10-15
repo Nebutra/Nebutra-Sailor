@@ -3,6 +3,7 @@ import { Card } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
+import { getTranslations } from "next-intl/server";
 import { BrandLogo } from "@/components/brand/brand-assets";
 import { getGrowthSummary } from "@/lib/warehouse/gold";
 
@@ -37,6 +38,7 @@ export default async function DemoEmbedPage({
 }: {
   searchParams: Promise<{ view?: string }>;
 }) {
+  const tc = await getTranslations("copy.embedPage");
   await connection();
   const params = await searchParams;
   const activeTab = resolveTab(params.view);
@@ -48,11 +50,11 @@ export default async function DemoEmbedPage({
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-[0.12em] text-primary uppercase">
-              Interactive demo
+              {tc("interactiveDemo")}
             </p>
             <div className="mt-1 flex items-center gap-2">
               <BrandLogo className="h-6 w-[7.9rem]" />
-              <span className="text-lg font-semibold">Dashboard</span>
+              <span className="text-lg font-semibold">{tc("dashboard")}</span>
             </div>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -77,28 +79,28 @@ export default async function DemoEmbedPage({
             <Card className="p-4">
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Database className="size-3.5" />
-                Total Events
+                {tc("totalEvents")}
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.totalEvents.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Users className="size-3.5" />
-                Active Users
+                {tc("activeUsers")}
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.activeUsers.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
                 <BarChart3 className="size-3.5" />
-                Signups
+                {tc("signups")}
               </p>
               <p className="mt-2 text-2xl font-semibold">{summary.signups.toLocaleString()}</p>
             </Card>
             <Card className="p-4">
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Coins className="size-3.5" />
-                Revenue
+                {tc("revenue")}
               </p>
               <p className="mt-2 text-2xl font-semibold">{toCurrency(summary.revenue)}</p>
             </Card>
@@ -108,26 +110,26 @@ export default async function DemoEmbedPage({
         {activeTab === "billing" && (
           <div className="grid gap-3 md:grid-cols-2">
             <Card className="p-4">
-              <h2 className="text-sm font-semibold">Plan overview</h2>
+              <h2 className="text-sm font-semibold">{tc("planOverview")}</h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Starter · Usage overage enabled · Monthly billing
+                {tc("starterUsageOverageEnabled")}
               </p>
               <p className="mt-3 text-xl font-semibold">{toCurrency(summary.revenue * 30)}</p>
-              <p className="text-xs text-muted-foreground">30-day projected revenue</p>
+              <p className="text-xs text-muted-foreground">{tc("dayProjectedRevenue")}</p>
             </Card>
             <Card className="p-4">
-              <h2 className="text-sm font-semibold">Today snapshot</h2>
+              <h2 className="text-sm font-semibold">{tc("todaySnapshot")}</h2>
               <dl className="mt-3 space-y-2 text-sm">
                 <div className="flex items-center justify-between gap-4">
-                  <dt className="text-muted-foreground">Revenue</dt>
+                  <dt className="text-muted-foreground">{tc("revenue")}</dt>
                   <dd className="font-medium">{toCurrency(summary.revenue)}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-4">
-                  <dt className="text-muted-foreground">Conversions</dt>
+                  <dt className="text-muted-foreground">{tc("conversions")}</dt>
                   <dd className="font-medium">{summary.conversions.toLocaleString()}</dd>
                 </div>
                 <div className="flex items-center justify-between gap-4">
-                  <dt className="text-muted-foreground">Day</dt>
+                  <dt className="text-muted-foreground">{tc("day")}</dt>
                   <dd className="font-medium">{summary.day ?? "N/A"}</dd>
                 </div>
               </dl>
@@ -142,27 +144,27 @@ export default async function DemoEmbedPage({
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-sm font-semibold">{summary.tenantId}</p>
                   <span className="inline-flex rounded-full bg-cyan-3 px-2.5 py-1 text-xs font-medium text-cyan-11 dark:bg-cyan-9/20 dark:text-cyan-9">
-                    Healthy
+                    {tc("healthy")}
                   </span>
                 </div>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Snapshot: {summary.day ?? "N/A"}
+                  {tc("snapshot", { value0: summary.day ?? "N/A" })}
                 </p>
               </div>
             </div>
             <div className="hidden md:block">
               <div className="grid grid-cols-12 border-b border-border bg-muted px-4 py-3 text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                <div className="col-span-4">Tenant</div>
-                <div className="col-span-2">Status</div>
-                <div className="col-span-2">Events</div>
-                <div className="col-span-2">Users</div>
-                <div className="col-span-2">Revenue</div>
+                <div className="col-span-4">{tc("tenant")}</div>
+                <div className="col-span-2">{tc("status")}</div>
+                <div className="col-span-2">{tc("events")}</div>
+                <div className="col-span-2">{tc("users")}</div>
+                <div className="col-span-2">{tc("revenue")}</div>
               </div>
               <div className="grid grid-cols-12 items-center p-4 text-sm">
                 <div className="col-span-4 font-medium">{summary.tenantId}</div>
                 <div className="col-span-2">
                   <span className="inline-flex rounded-full bg-cyan-3 px-2.5 py-1 text-xs font-medium text-cyan-11 dark:bg-cyan-9/20 dark:text-cyan-9">
-                    Healthy
+                    {tc("healthy")}
                   </span>
                 </div>
                 <div className="col-span-2">{summary.totalEvents.toLocaleString()}</div>

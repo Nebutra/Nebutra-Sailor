@@ -6,10 +6,12 @@ import { Button } from "@nebutra/ui/primitives";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { cofounderRoomQueryOptions } from "@/lib/queries/cofounder";
 import { CofounderCard } from "./cofounder-card";
 
 export function RoomView({ profileId }: { profileId: string }) {
+  const tc = useTranslations("copy.cofounderMatchRoomView");
   const pathname = usePathname();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
   const roomQuery = useQuery(cofounderRoomQueryOptions(profileId));
@@ -50,14 +52,14 @@ export function RoomView({ profileId }: { profileId: string }) {
   if (state === "not-match") {
     return (
       <EmptyState
-        title="This isn't a match yet"
-        description="The Cofounder Room opens only for mutual matches. Keep discovering — when you both signal interest, the room unlocks here."
+        title={tc("thisIsnTA")}
+        description={tc("theCofounderRoomOpens")}
         action={
           <Link
             href={`/${locale}/cofounder/discover`}
             className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground"
           >
-            Discover cofounders
+            {tc("discoverCofounders")}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         }
@@ -66,12 +68,7 @@ export function RoomView({ profileId }: { profileId: string }) {
   }
 
   if (state === "error" || !match || !access) {
-    return (
-      <EmptyState
-        title="Couldn't open the room"
-        description="Something went wrong. Please refresh to try again."
-      />
-    );
+    return <EmptyState title={tc("couldnTOpenThe")} description={tc("somethingWentWrongPlease")} />;
   }
 
   return (
@@ -82,19 +79,14 @@ export function RoomView({ profileId }: { profileId: string }) {
         <div className="w-full max-w-md rounded-2xl border border-neutral-6 bg-neutral-1 p-5 text-center">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[11px] font-semibold text-primary dark:bg-primary/15">
             <Sparkles className="size-3.5" aria-hidden="true" />
-            Room open
+            {tc("roomOpen")}
           </span>
-          <p className="mt-3 text-sm font-semibold text-neutral-12">
-            You both want to build together.
-          </p>
-          <p className="mt-1 text-xs leading-5 text-neutral-10">
-            Forming the team turns your one-person company into a shared Organization — your whole
-            compiled company carries over and your cofounder is invited as an equal founder.
-          </p>
+          <p className="mt-3 text-sm font-semibold text-neutral-12">{tc("youBothWantTo")}</p>
+          <p className="mt-1 text-xs leading-5 text-neutral-10">{tc("formingTheTeamTurns")}</p>
           {formState === "formed" ? (
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-success/30 bg-success/10 px-4 py-2 text-sm font-semibold text-success-strong">
               <Sparkles className="size-4" aria-hidden="true" />
-              Team forming — invitation sent
+              {tc("teamFormingInvitationSent")}
             </div>
           ) : (
             <Button
@@ -109,29 +101,22 @@ export function RoomView({ profileId }: { profileId: string }) {
             </Button>
           )}
           {formState === "error" ? (
-            <p className="mt-2 text-xs text-destructive-strong">
-              Couldn't form the team. Please try again.
-            </p>
+            <p className="mt-2 text-xs text-destructive-strong">{tc("couldnTFormThe")}</p>
           ) : null}
         </div>
       ) : (
         <div className="w-full max-w-md rounded-2xl border border-primary/30 bg-primary/5 p-5 text-center dark:bg-primary/15">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-1/85 px-2.5 py-1 text-[11px] font-semibold text-primary backdrop-blur">
             <LockClosed className="size-3.5" aria-hidden="true" />
-            Paid plan required
+            {tc("paidPlanRequired")}
           </span>
-          <p className="mt-3 text-sm font-semibold text-neutral-12">
-            Open the Cofounder Room with a paid plan
-          </p>
-          <p className="mt-1 text-xs leading-5 text-neutral-10">
-            As the founder opening the room, a paid plan unlocks the conversation with every match —
-            no per-room fee.
-          </p>
+          <p className="mt-3 text-sm font-semibold text-neutral-12">{tc("openTheCofounderRoom")}</p>
+          <p className="mt-1 text-xs leading-5 text-neutral-10">{tc("asTheFounderOpening")}</p>
           <Link
             href={`/${locale}/choose-plan`}
             className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold bg-primary text-primary-foreground"
           >
-            Upgrade to open the room
+            {tc("upgradeToOpenThe")}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         </div>

@@ -63,6 +63,7 @@ const issueSchema = z.object({
 type IssueValues = z.infer<typeof issueSchema>;
 
 export function AccessInviteIssuer() {
+  const tc = useTranslations("copy.adminAccessInviteIssuer");
   const t = useTranslations("startupOs");
   const [message, setMessage] = useState<string | null>(null);
   const [issued, setIssued] = useState<IssuedInvite[]>([]);
@@ -149,14 +150,13 @@ export function AccessInviteIssuer() {
     <section className="mt-6 rounded-[var(--radius-3xl)] border border-border bg-background p-4 shadow-sm sm:p-6">
       <div>
         <p className="font-medium text-sm text-muted-foreground uppercase tracking-[0.18em]">
-          Access gate
+          {tc("accessGate")}
         </p>
         <h2 className="mt-2 font-semibold text-2xl text-foreground">
-          Issue cold-start invite codes
+          {tc("issueColdStartInvite")}
         </h2>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Generate bounded invite codes for invite-only signup. Codes are returned once, then only
-          their hashes are stored.
+          {tc("generateBoundedInviteCodes")}
         </p>
       </div>
 
@@ -167,7 +167,9 @@ export function AccessInviteIssuer() {
             name="count"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel className="text-xs font-medium text-muted-foreground">Count</FormLabel>
+                <FormLabel className="text-xs font-medium text-muted-foreground">
+                  {tc("count")}
+                </FormLabel>
                 <FormControl>
                   <NumberField
                     name={field.name}
@@ -189,7 +191,9 @@ export function AccessInviteIssuer() {
             name="scope"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel className="text-xs font-medium text-muted-foreground">Scope</FormLabel>
+                <FormLabel className="text-xs font-medium text-muted-foreground">
+                  {tc("scope")}
+                </FormLabel>
                 <Select name="scope" value={field.value} onValueChange={field.onChange}>
                   <FormControl>
                     <SelectTrigger className="mt-1 w-full rounded-[var(--radius-lg)] border border-border bg-background px-3 py-2 text-sm text-foreground">
@@ -197,8 +201,8 @@ export function AccessInviteIssuer() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="platform">Platform</SelectItem>
-                    <SelectItem value="tenant">Tenant</SelectItem>
+                    <SelectItem value="platform">{tc("platform")}</SelectItem>
+                    <SelectItem value="tenant">{tc("tenant")}</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -211,7 +215,7 @@ export function AccessInviteIssuer() {
             render={({ field }) => (
               <FormItem className="space-y-1">
                 <FormLabel className="text-xs font-medium text-muted-foreground">
-                  Tenant ID
+                  {tc("tenantID")}
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -231,7 +235,7 @@ export function AccessInviteIssuer() {
             render={({ field }) => (
               <FormItem className="space-y-1">
                 <FormLabel className="text-xs font-medium text-muted-foreground">
-                  Email lock
+                  {tc("emailLock")}
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -251,7 +255,7 @@ export function AccessInviteIssuer() {
             render={({ field }) => (
               <FormItem className="space-y-1">
                 <FormLabel className="text-xs font-medium text-muted-foreground">
-                  Expires at
+                  {tc("expiresAt")}
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -312,13 +316,13 @@ export function AccessInviteIssuer() {
 
       <div className="mt-4 rounded-[var(--radius-2xl)] border border-border bg-muted p-3">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <h3 className="font-medium text-foreground text-sm">Recent access invites</h3>
+          <h3 className="font-medium text-foreground text-sm">{tc("recentAccessInvites")}</h3>
           <button
             type="button"
             onClick={() => void loadManagedInvites()}
             className="rounded-[var(--radius-md)] border border-border px-2 py-1 text-muted-foreground text-xs"
           >
-            Refresh
+            {tc("refresh")}
           </button>
         </div>
         {managedInvites.length === 0 ? (
@@ -333,9 +337,13 @@ export function AccessInviteIssuer() {
                 <div className="min-w-0">
                   <code className="font-mono text-foreground text-sm">{invite.prefix}</code>
                   <p className="mt-1 truncate text-muted-foreground text-xs">
-                    {invite.issuedToEmail ?? "unbound"} · {invite.scope}
-                    {invite.tenantId ? ` · ${invite.tenantId}` : ""} · redeemed{" "}
-                    {invite.redemptionCount}/{invite.maxRedemptions}
+                    {tc("redeemed", {
+                      value0: invite.issuedToEmail ?? "unbound",
+                      scope: invite.scope,
+                      value2: invite.tenantId ? ` · ${invite.tenantId}` : "",
+                      redemptionCount: invite.redemptionCount,
+                      maxRedemptions: invite.maxRedemptions,
+                    })}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -346,7 +354,7 @@ export function AccessInviteIssuer() {
                       onClick={() => void revokeInvite(invite.id)}
                       className="rounded-[var(--radius-md)] border border-border px-2 py-1 text-muted-foreground text-xs"
                     >
-                      Revoke
+                      {tc("revoke")}
                     </button>
                   ) : null}
                 </div>

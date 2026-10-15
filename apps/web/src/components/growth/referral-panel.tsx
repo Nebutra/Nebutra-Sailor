@@ -3,6 +3,7 @@
 import { Sparkles } from "@nebutra/icons";
 import { Button, CopyButton, Field, Input, Skeleton } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 import { normalizeReferralCode, REFERRAL_LEVELS, type ReferralLevel } from "@/lib/growth/referrals";
 import { queryKeys } from "@/lib/query-keys";
@@ -70,6 +71,7 @@ interface Props {
  * a real value to render from the moment it mounts.
  */
 export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
+  const tc = useTranslations("copy.growthReferralPanel");
   const queryClient = useQueryClient();
   const referralsKey = queryKeys.referrals.list();
   const redeemFieldId = useId();
@@ -93,7 +95,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
     // so nothing shifts when the data lands.
     return (
       <section className="space-y-5" aria-busy="true" aria-live="polite">
-        <span className="sr-only">Loading referrals</span>
+        <span className="sr-only">{tc("loadingReferrals")}</span>
         <Skeleton height={168} className="w-full" />
         <div className="grid gap-3 sm:grid-cols-2">
           <Skeleton height={82} className="w-full" />
@@ -116,7 +118,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
         : "Failed to load referrals.";
     return (
       <section className="rounded-[var(--radius-2xl)] bg-neutral-2 p-6">
-        <h2 className="text-sm font-semibold text-neutral-12">Invitations and rewards</h2>
+        <h2 className="text-sm font-semibold text-neutral-12">{tc("invitationsAndRewards")}</h2>
         <p className="mt-1 text-xs text-destructive-strong">{message}</p>
         <Button
           type="button"
@@ -125,7 +127,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
           className="mt-3"
           onClick={() => void referralsQuery.refetch()}
         >
-          Try again
+          {tc("tryAgain")}
         </Button>
       </section>
     );
@@ -147,17 +149,16 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
         <div className="relative">
           <div className="flex items-center gap-2">
             <Sparkles className="h-4 w-4 text-primary" />
-            <h2 className="text-sm font-semibold text-neutral-12">Share Sailor, earn rewards</h2>
+            <h2 className="text-sm font-semibold text-neutral-12">
+              {tc("shareSailorEarnRewards")}
+            </h2>
           </div>
-          <p className="mt-1 max-w-xl text-xs text-neutral-10">
-            Friends get full access · You earn credits as each invite is claimed · Your level rises
-            with the network you build.
-          </p>
+          <p className="mt-1 max-w-xl text-xs text-neutral-10">{tc("friendsGetFullAccess")}</p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3">
               <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
-                Referral code
+                {tc("referralCode")}
               </p>
               <div className="mt-1.5 flex items-center justify-between gap-2">
                 <code className="truncate font-mono text-sm font-semibold text-neutral-12">
@@ -165,8 +166,8 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
                 </code>
                 <CopyButton
                   value={stats.referralCode}
-                  aria-label="Copy referral code"
-                  label="Copy"
+                  aria-label={tc("copyReferralCode")}
+                  label={tc("copy")}
                   variant="outline"
                   size="tiny"
                   showToast={false}
@@ -177,14 +178,14 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
             </div>
             <div className="rounded-[var(--radius-xl)] bg-neutral-1 p-3">
               <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-10">
-                Share link
+                {tc("shareLink")}
               </p>
               <div className="mt-1.5 flex items-center justify-between gap-2">
                 <span className="truncate text-xs text-neutral-11">{stats.shareUrl}</span>
                 <CopyButton
                   value={stats.shareUrl}
-                  aria-label="Copy share link"
-                  label="Copy"
+                  aria-label={tc("copyShareLink")}
+                  label={tc("copy")}
                   variant="outline"
                   size="tiny"
                   showToast={false}
@@ -231,7 +232,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
       >
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
           <div className="flex-1">
-            <Field label="Have a friend's code" htmlFor={redeemFieldId}>
+            <Field label={tc("haveAFriendS")} htmlFor={redeemFieldId}>
               <Input
                 id={redeemFieldId}
                 name="referralCode"
@@ -239,7 +240,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
                 autoComplete="off"
                 spellCheck={false}
                 maxLength={20}
-                placeholder="ABCD2345"
+                placeholder={tc("aBCD2345")}
                 className="font-mono uppercase"
                 onChange={(event) => setRedeemCode(event.target.value)}
               />
@@ -255,7 +256,7 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
         </div>
         {redeemError && <p className="mt-2 text-xs text-destructive-strong">{redeemError}</p>}
         {redeemMutation.isSuccess && !redeemError && (
-          <p className="mt-2 text-xs text-neutral-11">Code redeemed. Your referrer is credited.</p>
+          <p className="mt-2 text-xs text-neutral-11">{tc("codeRedeemedYourReferrer")}</p>
         )}
       </form>
 
@@ -274,11 +275,11 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <h3 className="text-sm font-semibold text-neutral-12">
-                    Level {level.id} · {level.title}
+                    {tc("level", { id: level.id, title: level.title })}
                   </h3>
                   {isActive && (
                     <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-primary">
-                      Active
+                      {tc("active")}
                     </span>
                   )}
                 </div>
@@ -287,7 +288,9 @@ export function ReferralPanel({ levels = REFERRAL_LEVELS }: Props) {
               <div className="text-right">
                 <p className="text-sm font-semibold tabular-nums text-primary">{level.reward}</p>
                 {!isActive && remaining > 0 && (
-                  <p className="mt-0.5 text-[11px] text-neutral-10">{remaining} more to unlock</p>
+                  <p className="mt-0.5 text-[11px] text-neutral-10">
+                    {tc("moreToUnlock", { remaining })}
+                  </p>
                 )}
               </div>
             </div>
