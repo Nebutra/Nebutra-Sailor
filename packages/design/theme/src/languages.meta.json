@@ -18,7 +18,7 @@
       "tagline": "tight radii, low-contrast chrome"
     },
     "gsap": {
-      "description": "Dark cream-on-void; shockingly-green is accent — CTA is gradient-stroke/outline, not solid green fill.",
+      "description": "Dual-mode: dark cream-on-void default + light cream paper with void ink; shockingly-green is accent — CTA is gradient-stroke/outline, not solid green fill.",
       "proves": [
         "outline / gradient-stroke recipe",
         "category extensions",
@@ -27,7 +27,7 @@
       "tagline": "saturated, fast easing"
     },
     "raycast": {
-      "description": "Neutral Mist/Iron filled CTA; Coral is brand-mark only. Key elevation stack.",
+      "description": "Dual-mode: dark glass default + light window appearance; neutral Mist/Iron filled CTA (Iron ink in light); Coral is brand-mark only. Key elevation stack.",
       "proves": ["action ≠ brand-mark", "elevation=key free CSS"],
       "tagline": "dark glass and a coloured halo"
     },
@@ -37,7 +37,7 @@
       "tagline": "monochrome, hard edges, lit top edge"
     },
     "vanta": {
-      "description": "Editorial violet on parchment; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
+      "description": "Dual-mode: editorial violet on parchment + deep-indigo night; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
       "proves": [
         "action ≠ brand-mark (chromatic)",
         "elevation=none border-only",
@@ -47,7 +47,7 @@
       "tagline": "high-trust enterprise blues"
     },
     "stripe": {
-      "description": "Indigo-ink ledger on frost glass; Indigo action ≠ Midnight brand-mark; 4px controls; elevation=none (tint + frost rules).",
+      "description": "Dual-mode: indigo-ink ledger on frost glass + navy dashboard dark; Indigo action ≠ Midnight brand-mark; 4px controls; elevation=none (tint + frost rules).",
       "proves": [
         "action ≠ brand-mark (chromatic indigo vs midnight)",
         "elevation=none tint-ladder depth",
@@ -57,7 +57,7 @@
       "tagline": "soft elevation, generous type"
     },
     "notion": {
-      "description": "Warm paper notebook; Notion Blue sole filled CTA ≠ Ink brand-mark; 8px buttons / 12px cards; elev=none + hairline; accent hues decorative only.",
+      "description": "Dual-mode: warm paper notebook + Notion dark (#191919); Notion Blue sole filled CTA ≠ Ink brand-mark; 8px buttons / 12px cards; elev=none + hairline; accent hues decorative only.",
       "proves": [
         "action ≠ brand-mark (blue vs ink)",
         "canvas≠card (paper-warmth vs pure-white)",

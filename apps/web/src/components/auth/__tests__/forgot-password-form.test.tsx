@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const messages: Record<string, string> = {
   "auth.forgotPassword.title": "Forgot password?",
@@ -20,14 +21,17 @@ const messages: Record<string, string> = {
 };
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string, values?: Record<string, unknown>) => {
-    const fullKey = `${namespace}.${key}`;
-    const template = messages[fullKey] ?? fullKey;
-    if (!values) return template;
-    return template.replace(/\{(\w+)\}/g, (_, name: string) =>
-      values[name] !== undefined ? String(values[name]) : `{${name}}`,
-    );
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string, values?: Record<string, unknown>) => {
+          const fullKey = `${namespace}.${key}`;
+          const template = messages[fullKey] ?? fullKey;
+          if (!values) return template;
+          return template.replace(/\{(\w+)\}/g, (_, name: string) =>
+            values[name] !== undefined ? String(values[name]) : `{${name}}`,
+          );
+        },
 }));
 
 import { ForgotPasswordForm } from "../forgot-password-form";

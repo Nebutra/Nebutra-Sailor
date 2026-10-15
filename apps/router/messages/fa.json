@@ -95,32 +95,6 @@
       "hint": "عامل · ابزارها"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "ربات‌ها",
-      "chips": "ربات‌های گفتگو · ربات‌های نقاشی · دانش"
-    },
-    "productivity": {
-      "label": "بهره‌وری",
-      "chips": "آرنا مدل‌ها · نوشتن هوشمند"
-    },
-    "academic": {
-      "label": "آکادمیک",
-      "chips": "PDF toolkit · جستجوی AI برای اختراع"
-    },
-    "image": {
-      "label": "ابزارهای تصویر",
-      "chips": "استودیوی سه‌بعدی · بوم"
-    },
-    "audio": {
-      "label": "صدا",
-      "chips": "گفتار · موسیقی AI"
-    },
-    "code": {
-      "label": "کد",
-      "chips": "تولیدکننده وب · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "نمای کلی",
     "keys": "کلیدها",

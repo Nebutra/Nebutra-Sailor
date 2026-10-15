@@ -2,6 +2,7 @@ import { resolveBlogCover } from "@nebutra/blog";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { cacheLife } from "next/cache";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type BlogPostWithSource, getAllPosts } from "@/lib/blog";
 
@@ -56,6 +57,7 @@ export async function EssayFeature() {
   const post = posts.find((p) => p.slug === FEATURED) ?? posts[0];
   if (!post) return null;
   const cover = coverOf(post, 1600, 900);
+  const t = await getTranslations("siteShell");
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -68,14 +70,16 @@ export async function EssayFeature() {
           fill
           priority
           sizes="(min-width: 1280px) 55vw, 100vw"
-          className="object-cover transition-transform duration-cinematic ease-brand group-hover:scale-[1.02]"
+          className="object-cover motion-safe:transition-transform motion-safe:duration-reveal motion-safe:ease-brand group-hover:scale-[1.02]"
         />
       </div>
       <div>
-        <p className="text-sm text-muted-foreground">Essay · {post.date?.slice(0, 10)}</p>
-        <p className="mt-3 font-heading text-4xl font-medium text-foreground text-balance">
-          {post.title}
+        <p className="text-sm tabular-nums text-muted-foreground">
+          {t("essayLabel", { date: post.date?.slice(0, 10) ?? "" })}
         </p>
+        <h2 className="mt-3 font-heading text-4xl font-medium tracking-heading text-foreground text-balance md:text-5xl">
+          {post.title}
+        </h2>
         <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>
       </div>
     </Link>

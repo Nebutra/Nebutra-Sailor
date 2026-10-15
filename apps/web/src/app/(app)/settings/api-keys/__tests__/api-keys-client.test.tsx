@@ -5,6 +5,7 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 // ApiKeysList (rendered inside ApiKeysPageClient) uses next-intl for dates and
 // empty-state copy. Provide minimal stubs.
@@ -14,11 +15,14 @@ vi.mock("next-intl", () => ({
       d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
     relativeTime: (_d: Date) => "just now",
   }),
-  useTranslations: () => (key: string) =>
-    ({
-      "emptyState.apiKeys": "No keys yet.",
-      "emptyState.apiKeysCta": "Create your first key",
-    })[key] ?? key,
+  useTranslations: (copyNs?: string) =>
+    copyNs?.startsWith("copy.")
+      ? catalogT(copyNs)
+      : (key: string) =>
+          ({
+            "emptyState.apiKeys": "No keys yet.",
+            "emptyState.apiKeysCta": "Create your first key",
+          })[key] ?? key,
 }));
 
 import { ApiKeysPageClient } from "@/app/(app)/settings/api-keys/api-keys-client";

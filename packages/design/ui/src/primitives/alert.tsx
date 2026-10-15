@@ -9,186 +9,226 @@ import { cn } from "../utils";
 // Variants
 // =============================================================================
 
-const alertVariants = cva("flex items-stretch w-full gap-2 group-[.toaster]:w-(--width)", {
-  variants: {
-    variant: {
-      secondary: "",
-      primary: "",
-      destructive: "",
-      success: "",
-      info: "",
-      mono: "",
-      warning: "",
+// Layout: a wrapping row. Icon and message share the first line (the message
+// has a 12rem basis and grows); the toolbar keeps its natural width and, when
+// the row cannot hold message + actions, wraps to its own line, indented to the
+// message. The close button is pinned to the top-end corner so it never wraps
+// with the toolbar. At 390px the two-action composition used to push its
+// actions 23–33px out of the Alert's own box.
+const alertVariants = cva(
+  "relative flex flex-wrap items-start w-full gap-2 group-[.toaster]:w-(--width) has-[>[data-slot=alert-close]]:pe-10",
+  {
+    variants: {
+      variant: {
+        secondary: "",
+        primary: "",
+        destructive: "",
+        success: "",
+        info: "",
+        mono: "",
+        warning: "",
+      },
+      icon: {
+        primary: "",
+        destructive: "",
+        success: "",
+        info: "",
+        warning: "",
+      },
+      appearance: {
+        solid: "",
+        outline: "",
+        light: "",
+        stroke: "text-foreground",
+      },
+      size: {
+        lg: "rounded-[var(--radius-lg)] p-4 gap-3 text-base [--alert-indent:2.25rem] [&>[data-slot=alert-icon]>svg]:size-6 [&>[data-slot=alert-close]]:top-3.5 [&>[data-slot=alert-close]]:end-3",
+        md: "rounded-[var(--radius-lg)] p-3.5 gap-2.5 text-sm [--alert-indent:1.875rem] [&>[data-slot=alert-icon]>svg]:size-5 [&>[data-slot=alert-close]]:top-2.5 [&>[data-slot=alert-close]]:end-2.5",
+        sm: "rounded-[var(--radius-md)] px-3 py-2.5 gap-2 text-xs [--alert-indent:1.5rem] [&>[data-slot=alert-icon]>svg]:size-4 [&>[data-slot=alert-close]]:top-1.5 [&>[data-slot=alert-close]]:end-1.5",
+      },
     },
-    icon: {
-      primary: "",
-      destructive: "",
-      success: "",
-      info: "",
-      warning: "",
-    },
-    appearance: {
-      solid: "",
-      outline: "",
-      light: "",
-      stroke: "text-foreground",
-    },
-    size: {
-      lg: "rounded-[var(--radius-lg)] p-4 gap-3 text-base [&>[data-slot=alert-icon]>svg]:size-6 *:data-slot=alert-icon:mt-0.5 [&_[data-slot=alert-close]]:mt-1",
-      md: "rounded-[var(--radius-lg)] p-3.5 gap-2.5 text-sm [&>[data-slot=alert-icon]>svg]:size-5 *:data-slot=alert-icon:mt-0 [&_[data-slot=alert-close]]:mt-0.5",
-      sm: "rounded-[var(--radius-md)] px-3 py-2.5 gap-2 text-xs [&>[data-slot=alert-icon]>svg]:size-4 *:data-alert-icon:mt-0.5 [&_[data-slot=alert-close]]:mt-0.25 [&_[data-slot=alert-close]_svg]:size-3.5",
+    compoundVariants: [
+      /* Solid */
+      {
+        variant: "secondary",
+        appearance: "solid",
+        className: "bg-muted text-foreground",
+      },
+      {
+        variant: "primary",
+        appearance: "solid",
+        className: "bg-primary text-primary-foreground",
+      },
+      {
+        variant: "destructive",
+        appearance: "solid",
+        className: "bg-destructive text-destructive-foreground",
+      },
+      {
+        variant: "success",
+        appearance: "solid",
+        className: "bg-success text-success-foreground",
+      },
+      {
+        variant: "info",
+        appearance: "solid",
+        className: "bg-info text-info-foreground",
+      },
+      {
+        variant: "warning",
+        appearance: "solid",
+        className: "bg-warning text-warning-foreground",
+      },
+      {
+        variant: "mono",
+        appearance: "solid",
+        className:
+          "bg-muted text-muted-foreground dark:bg-muted dark:text-foreground [&_[data-slot=alert-close]]:text-muted-foreground",
+      } /* Outline */,
+      {
+        variant: "secondary",
+        appearance: "outline",
+        className:
+          "border border-border bg-background text-foreground [&_[data-slot=alert-close]]:text-foreground",
+      },
+      {
+        variant: "primary",
+        appearance: "outline",
+        className:
+          "border border-border bg-background text-primary [&_[data-slot=alert-close]]:text-foreground",
+      },
+      {
+        variant: "destructive",
+        appearance: "outline",
+        className:
+          "border border-border bg-background text-destructive-strong [&_[data-slot=alert-close]]:text-foreground",
+      },
+      {
+        variant: "success",
+        appearance: "outline",
+        className:
+          "border border-border bg-background text-success-strong [&_[data-slot=alert-close]]:text-foreground",
+      },
+      {
+        variant: "info",
+        appearance: "outline",
+        className:
+          "border border-border bg-background text-[hsl(var(--info))] [&_[data-slot=alert-close]]:text-foreground",
+      },
+      {
+        variant: "warning",
+        appearance: "outline",
+        className:
+          "border border-border bg-background text-warning-strong [&_[data-slot=alert-close]]:text-foreground",
+      },
+      {
+        variant: "mono",
+        appearance: "outline",
+        className:
+          "border border-border bg-background text-foreground [&_[data-slot=alert-close]]:text-foreground",
+      } /* Light */,
+      {
+        variant: "secondary",
+        appearance: "light",
+        className: "bg-muted border border-border text-foreground",
+      },
+      {
+        variant: "primary",
+        appearance: "light",
+        className:
+          "bg-[hsl(var(--primary)/0.1)] border border-[hsl(var(--primary)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--primary))]",
+      },
+      {
+        variant: "destructive",
+        appearance: "light",
+        className:
+          "bg-[hsl(var(--destructive)/0.1)] border border-[hsl(var(--destructive)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--destructive))]",
+      },
+      {
+        variant: "success",
+        appearance: "light",
+        className:
+          "bg-[hsl(var(--success)/0.1)] border border-[hsl(var(--success)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--success))]",
+      },
+      {
+        variant: "info",
+        appearance: "light",
+        className:
+          "bg-[hsl(var(--info)/0.1)] border border-[hsl(var(--info)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--info))]",
+      },
+      {
+        variant: "warning",
+        appearance: "light",
+        className:
+          "bg-[hsl(var(--warning)/0.1)] border border-[hsl(var(--warning)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--warning))]",
+      } /* Stroke — a coloured edge on the canvas, ink stays foreground. It used to
+       declare only text-foreground, so all seven variants rendered identically
+       with no edge at all. */,
+      { variant: "secondary", appearance: "stroke", className: "border border-border" },
+      { variant: "mono", appearance: "stroke", className: "border border-border" },
+      {
+        variant: "primary",
+        appearance: "stroke",
+        className:
+          "border border-[hsl(var(--primary)/0.5)] [&_[data-slot=alert-icon]]:text-[hsl(var(--primary))]",
+      },
+      {
+        variant: "destructive",
+        appearance: "stroke",
+        className:
+          "border border-[hsl(var(--destructive)/0.5)] [&_[data-slot=alert-icon]]:text-destructive-strong",
+      },
+      {
+        variant: "success",
+        appearance: "stroke",
+        className:
+          "border border-[hsl(var(--success)/0.5)] [&_[data-slot=alert-icon]]:text-success-strong",
+      },
+      {
+        variant: "info",
+        appearance: "stroke",
+        className:
+          "border border-[hsl(var(--info)/0.5)] [&_[data-slot=alert-icon]]:text-[hsl(var(--info))]",
+      },
+      {
+        variant: "warning",
+        appearance: "stroke",
+        className:
+          "border border-[hsl(var(--warning)/0.6)] [&_[data-slot=alert-icon]]:text-warning-strong",
+      } /* Mono icon colors */,
+      {
+        variant: "mono",
+        icon: "primary",
+        className: "[&_[data-slot=alert-icon]]:text-primary",
+      },
+      {
+        variant: "mono",
+        icon: "warning",
+        className: "[&_[data-slot=alert-icon]]:text-warning-strong",
+      },
+      {
+        variant: "mono",
+        icon: "success",
+        className: "[&_[data-slot=alert-icon]]:text-success-strong",
+      },
+      {
+        variant: "mono",
+        icon: "destructive",
+        className: "[&_[data-slot=alert-icon]]:text-destructive-strong",
+      },
+      {
+        variant: "mono",
+        icon: "info",
+        className: "[&_[data-slot=alert-icon]]:text-[hsl(var(--info))]",
+      },
+    ],
+    defaultVariants: {
+      variant: "secondary",
+      appearance: "solid",
+      size: "md",
     },
   },
-  compoundVariants: [
-    /* Solid */
-    {
-      variant: "secondary",
-      appearance: "solid",
-      className: "bg-muted text-foreground",
-    },
-    {
-      variant: "primary",
-      appearance: "solid",
-      className: "bg-primary text-primary-foreground",
-    },
-    {
-      variant: "destructive",
-      appearance: "solid",
-      className: "bg-destructive text-destructive-foreground",
-    },
-    {
-      variant: "success",
-      appearance: "solid",
-      className:
-        "bg-[var(--color-success, var(--color-green-500))] text-[var(--color-success-foreground, var(--color-white))]",
-    },
-    {
-      variant: "info",
-      appearance: "solid",
-      className:
-        "bg-[var(--color-info, var(--color-violet-600))] text-[var(--color-info-foreground, var(--color-white))]",
-    },
-    {
-      variant: "warning",
-      appearance: "solid",
-      className:
-        "bg-[var(--color-warning, var(--color-yellow-500))] text-[var(--color-warning-foreground, var(--color-white))]",
-    },
-    {
-      variant: "mono",
-      appearance: "solid",
-      className:
-        "bg-muted text-muted-foreground dark:bg-muted dark:text-foreground *:data-slot-[alert=close]:text-muted-foreground",
-    } /* Outline */,
-    {
-      variant: "secondary",
-      appearance: "outline",
-      className:
-        "border border-border bg-background text-foreground [&_[data-slot=alert-close]]:text-foreground",
-    },
-    {
-      variant: "primary",
-      appearance: "outline",
-      className:
-        "border border-border bg-background text-primary [&_[data-slot=alert-close]]:text-foreground",
-    },
-    {
-      variant: "destructive",
-      appearance: "outline",
-      className:
-        "border border-border bg-background text-destructive-strong [&_[data-slot=alert-close]]:text-foreground",
-    },
-    {
-      variant: "success",
-      appearance: "outline",
-      className:
-        "border border-border bg-background text-[var(--color-success, var(--color-green-500))] [&_[data-slot=alert-close]]:text-foreground",
-    },
-    {
-      variant: "info",
-      appearance: "outline",
-      className:
-        "border border-border bg-background text-[var(--color-info, var(--color-violet-600))] [&_[data-slot=alert-close]]:text-foreground",
-    },
-    {
-      variant: "warning",
-      appearance: "outline",
-      className:
-        "border border-border bg-background text-[var(--color-warning, var(--color-yellow-500))] [&_[data-slot=alert-close]]:text-foreground",
-    },
-    {
-      variant: "mono",
-      appearance: "outline",
-      className:
-        "border border-border bg-background text-foreground [&_[data-slot=alert-close]]:text-foreground",
-    } /* Light */,
-    {
-      variant: "secondary",
-      appearance: "light",
-      className: "bg-muted border border-border text-foreground",
-    },
-    {
-      variant: "primary",
-      appearance: "light",
-      className:
-        "bg-[hsl(var(--primary)/0.1)] border border-[hsl(var(--primary)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--primary))]",
-    },
-    {
-      variant: "destructive",
-      appearance: "light",
-      className:
-        "bg-[hsl(var(--destructive)/0.1)] border border-[hsl(var(--destructive)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--destructive))]",
-    },
-    {
-      variant: "success",
-      appearance: "light",
-      className:
-        "bg-[hsl(var(--success)/0.1)] border border-[hsl(var(--success)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--success))]",
-    },
-    {
-      variant: "info",
-      appearance: "light",
-      className:
-        "bg-[hsl(var(--info)/0.1)] border border-[hsl(var(--info)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--info))]",
-    },
-    {
-      variant: "warning",
-      appearance: "light",
-      className:
-        "bg-[hsl(var(--warning)/0.1)] border border-[hsl(var(--warning)/0.25)] text-foreground [&_[data-slot=alert-icon]]:text-[hsl(var(--warning))]",
-    } /* Mono icon colors */,
-    {
-      variant: "mono",
-      icon: "primary",
-      className: "[&_[data-slot=alert-icon]]:text-primary",
-    },
-    {
-      variant: "mono",
-      icon: "warning",
-      className: "[&_[data-slot=alert-icon]]:text-[var(--color-warning, var(--color-yellow-600))]",
-    },
-    {
-      variant: "mono",
-      icon: "success",
-      className: "[&_[data-slot=alert-icon]]:text-[var(--color-success, var(--color-green-600))]",
-    },
-    {
-      variant: "mono",
-      icon: "destructive",
-      className: "[&_[data-slot=alert-icon]]:text-destructive-strong",
-    },
-    {
-      variant: "mono",
-      icon: "info",
-      className: "[&_[data-slot=alert-icon]]:text-[var(--color-info, var(--color-violet-600))]",
-    },
-  ],
-  defaultVariants: {
-    variant: "secondary",
-    appearance: "solid",
-    size: "md",
-  },
-});
+);
 
 // =============================================================================
 // Types
@@ -331,10 +371,11 @@ function Alert({
           onClick={onClose}
           aria-label={closeLabel}
           data-slot="alert-close"
+          // A ghost icon button: 24px box (WCAG 2.5.8), tint on hover per the
+          // hover contract instead of an opacity dim, and the global focus ring.
           className={cn(
-            "group shrink-0 size-4 inline-flex items-center justify-center rounded-[var(--radius-sm)]",
-            "opacity-70 hover:opacity-100 transition-opacity",
-            "focus-visible:outline-none",
+            "absolute top-2.5 end-2.5 inline-flex size-6 shrink-0 items-center justify-center rounded-[var(--radius-sm)]",
+            "text-current transition-colors duration-micro hover:bg-accent hover:text-accent-foreground",
           )}
         >
           <X className="size-4" />
@@ -349,7 +390,11 @@ function Alert({
  */
 function AlertTitle({ className, ...props }: AlertTitleProps) {
   return (
-    <div data-slot="alert-title" className={cn("grow tracking-tight", className)} {...props} />
+    <div
+      data-slot="alert-title"
+      className={cn("min-w-0 flex-[1_1_12rem] tracking-tight", className)}
+      {...props}
+    />
   );
 }
 
@@ -358,7 +403,11 @@ function AlertTitle({ className, ...props }: AlertTitleProps) {
  */
 function AlertIcon({ children, className, ...props }: AlertIconProps) {
   return (
-    <div data-slot="alert-icon" className={cn("shrink-0", className)} {...props}>
+    <div
+      data-slot="alert-icon"
+      className={cn("flex shrink-0 [&>svg]:shrink-0", className)}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -369,7 +418,16 @@ function AlertIcon({ children, className, ...props }: AlertIconProps) {
  */
 function AlertToolbar({ children, className, ...props }: AlertToolbarProps) {
   return (
-    <div data-slot="alert-toolbar" className={cn(className)} {...props}>
+    <div
+      data-slot="alert-toolbar"
+      className={cn(
+        "flex shrink-0 flex-wrap items-center gap-2 self-center",
+        // When it wraps under the message, line up with the message, not the icon.
+        "[[data-slot=alert-icon]~&]:ms-[var(--alert-indent,0px)]",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </div>
   );
@@ -395,7 +453,10 @@ function AlertContent({ className, ...props }: AlertContentProps) {
   return (
     <div
       data-slot="alert-content"
-      className={cn("space-y-2 [&_[data-slot=alert-title]]:font-semibold", className)}
+      className={cn(
+        "min-w-0 flex-[1_1_12rem] space-y-2 [&_[data-slot=alert-title]]:font-semibold",
+        className,
+      )}
       {...props}
     />
   );

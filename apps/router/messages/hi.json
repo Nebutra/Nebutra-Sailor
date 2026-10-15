@@ -95,32 +95,6 @@
       "hint": "एजेंट · टूल्स"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "बॉट्स",
-      "chips": "चैट बॉट्स · ड्रॉइंग बॉट्स · ज्ञान"
-    },
-    "productivity": {
-      "label": "उत्पादकता",
-      "chips": "मॉडल एरिना · AI लेखन"
-    },
-    "academic": {
-      "label": "शैक्षणिक",
-      "chips": "PDF टूलकिट · AI पेटेंट खोज"
-    },
-    "image": {
-      "label": "छवि उपकरण",
-      "chips": "3D स्टूडियो · कैनवास"
-    },
-    "audio": {
-      "label": "ऑडियो",
-      "chips": "बोलचाल · AI संगीत"
-    },
-    "code": {
-      "label": "कोड",
-      "chips": "वेब जनरेटर · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "अवलोकन",
     "keys": "कुंजी",

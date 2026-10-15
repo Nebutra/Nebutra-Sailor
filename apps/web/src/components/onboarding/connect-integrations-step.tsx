@@ -2,6 +2,7 @@
 
 import { Button } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 interface Integration {
@@ -81,6 +82,7 @@ interface ConnectIntegrationsStepProps {
 }
 
 export function ConnectIntegrationsStep({ onComplete }: ConnectIntegrationsStepProps) {
+  const tc = useTranslations("copy.onboardingConnectIntegrationsStep");
   const [connected, setConnected] = useState<Set<string>>(new Set());
 
   function handleConnect(id: string) {
@@ -90,10 +92,8 @@ export function ConnectIntegrationsStep({ onComplete }: ConnectIntegrationsStepP
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Connect your tools</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Set up integrations to supercharge your workflow.
-        </p>
+        <h2 className="text-2xl font-semibold tracking-tight">{tc("connectYourTools")}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">{tc("setUpIntegrationsTo")}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -135,7 +135,7 @@ export function ConnectIntegrationsStep({ onComplete }: ConnectIntegrationsStepP
                         strokeLinejoin="round"
                       />
                     </svg>
-                    Connected
+                    {tc("connected")}
                   </span>
                 ) : (
                   "Connect"
@@ -152,7 +152,7 @@ export function ConnectIntegrationsStep({ onComplete }: ConnectIntegrationsStepP
         className="w-full text-muted-foreground"
         onClick={onComplete}
       >
-        Skip for now → Go to Dashboard
+        {tc("skipForNowGo")}
       </Button>
     </div>
   );

@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const messages: Record<string, string> = {
   "auth.verifyEmail.successTitle": "Email verified",
@@ -16,14 +17,17 @@ const messages: Record<string, string> = {
 };
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string, values?: Record<string, unknown>) => {
-    const fullKey = `${namespace}.${key}`;
-    const template = messages[fullKey] ?? fullKey;
-    if (!values) return template;
-    return template.replace(/\{(\w+)\}/g, (_, name: string) =>
-      values[name] !== undefined ? String(values[name]) : `{${name}}`,
-    );
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string, values?: Record<string, unknown>) => {
+          const fullKey = `${namespace}.${key}`;
+          const template = messages[fullKey] ?? fullKey;
+          if (!values) return template;
+          return template.replace(/\{(\w+)\}/g, (_, name: string) =>
+            values[name] !== undefined ? String(values[name]) : `{${name}}`,
+          );
+        },
 }));
 
 vi.mock("next/link", () => ({

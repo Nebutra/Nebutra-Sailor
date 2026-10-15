@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import type { StaffContext } from "@/lib/admin-platform/staff";
 import { CommandPalette } from "./command-palette";
@@ -19,6 +20,7 @@ export function ConsoleShell({
   tabs: ConsoleTab[];
   children: ReactNode;
 }) {
+  const tc = useTranslations("copy.adminPlatformConsoleShell");
   const initial = (staff.email[0] ?? "?").toUpperCase();
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -28,7 +30,7 @@ export function ConsoleShell({
         </span>
         <span className="font-medium text-sm">{brand.name}</span>
         <span className="text-border text-sm">/</span>
-        <span className="text-sm">Admin</span>
+        <span className="text-sm">{tc("admin")}</span>
         <span className="rounded-full border border-border px-1.5 text-2xs text-muted-foreground leading-4">
           {environment}
         </span>

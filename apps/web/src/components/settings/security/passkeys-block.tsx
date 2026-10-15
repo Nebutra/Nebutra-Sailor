@@ -159,6 +159,7 @@ export function PasskeysBlock({
   onRename,
   onRemove,
 }: PasskeysBlockProps) {
+  const tc = useTranslations("copy.securityPasskeysBlock");
   const t = useTranslations("auth.security.passkeys");
   const tErrors = useTranslations("auth.errors");
   const format = useFormatter();
@@ -307,7 +308,7 @@ export function PasskeysBlock({
           <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
         </div>
         <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
-          Available
+          {tc("available")}
         </span>
       </div>
 

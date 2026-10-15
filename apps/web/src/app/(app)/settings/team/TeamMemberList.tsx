@@ -107,6 +107,7 @@ async function deleteMember(
 }
 
 export function TeamMemberList({ orgId }: Props) {
+  const tc = useTranslations("copy.teamTeamMemberList");
   const t = useTranslations("startupOs");
   const queryClient = useQueryClient();
   const listKey = queryKeys.teamMembers.list(orgId);
@@ -269,7 +270,7 @@ export function TeamMemberList({ orgId }: Props) {
         </div>
         {!payload.canManageRoles && (
           <span className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
-            Admin actions disabled
+            {tc("adminActionsDisabled")}
           </span>
         )}
       </div>
@@ -287,10 +288,10 @@ export function TeamMemberList({ orgId }: Props) {
       >
         <Table.Header className="bg-muted text-xs uppercase tracking-[0.16em]">
           <Table.Row>
-            <Table.Head>Member</Table.Head>
-            <Table.Head className="hidden md:table-cell">Joined</Table.Head>
-            <Table.Head>Role</Table.Head>
-            <Table.Head>Action</Table.Head>
+            <Table.Head>{tc("member")}</Table.Head>
+            <Table.Head className="hidden md:table-cell">{tc("joined")}</Table.Head>
+            <Table.Head>{tc("role")}</Table.Head>
+            <Table.Head>{tc("action")}</Table.Head>
           </Table.Row>
         </Table.Header>
         <Table.Body bordered>
@@ -327,7 +328,7 @@ export function TeamMemberList({ orgId }: Props) {
                         {memberDisplayName(member)}
                         {isSelf && (
                           <span className="ml-2 rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-                            You
+                            {tc("you")}
                           </span>
                         )}
                       </p>
@@ -348,7 +349,7 @@ export function TeamMemberList({ orgId }: Props) {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {isOwner && <SelectItem value="owner">Owner</SelectItem>}
+                      {isOwner && <SelectItem value="owner">{tc("owner")}</SelectItem>}
                       {editableRoles.map((role) => (
                         <SelectItem key={role} value={role}>
                           {roleLabels[role]}

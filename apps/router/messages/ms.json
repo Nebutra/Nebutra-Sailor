@@ -95,32 +95,6 @@
       "hint": "Ejen · alat"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Bot",
-      "chips": "Bot sembang · bot lukisan · pengetahuan"
-    },
-    "productivity": {
-      "label": "Produktiviti",
-      "chips": "Arena model · penulisan AI"
-    },
-    "academic": {
-      "label": "Akademik",
-      "chips": "Alat PDF · Carian paten AI"
-    },
-    "image": {
-      "label": "Alat imej",
-      "chips": "Studio 3D · Kanvas"
-    },
-    "audio": {
-      "label": "Audio",
-      "chips": "Suara · Muzik AI"
-    },
-    "code": {
-      "label": "Kod",
-      "chips": "Penjana web · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Gambaran keseluruhan",
     "keys": "Kunci",

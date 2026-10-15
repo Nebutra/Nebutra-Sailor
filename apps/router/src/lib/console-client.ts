@@ -28,14 +28,39 @@
 export class ConsoleError extends Error {
   readonly status: number;
   readonly code: string | null;
+  /**
+   * Set when the message was written here rather than by the server: a key
+   * under `console.errors`, so the browser can render it in the viewer's
+   * language. `message` keeps the English sentence for logs and callers
+   * without a translator.
+   */
+  readonly messageKey: string | null;
+  readonly values: Record<string, string> | undefined;
 
-  constructor(message: string, status: number, code: string | null = null) {
+  constructor(
+    message: string,
+    status: number,
+    code: string | null = null,
+    messageKey: string | null = null,
+    values?: Record<string, string>,
+  ) {
     super(message);
     this.name = "ConsoleError";
     this.status = status;
     this.code = code;
+    this.messageKey = messageKey;
+    this.values = values;
   }
 }
+
+/** A `t` bound to the `console.errors` namespace. */
+export type ErrorTranslator = (key: string, values?: Record<string, string>) => string;
+
+/**
+ * Server codes whose sentence the console owns. The route answers in English;
+ * the code lets the browser say it in the viewer's language instead.
+ */
+const TRANSLATED_CODES = new Set(["no_active_key", "empty_message", "router_unconfigured"]);
 
 /** True when a rejection is the caller's own abort, not a failure to report. */
 export function isAbortError(error: unknown): boolean {
@@ -44,10 +69,13 @@ export function isAbortError(error: unknown): boolean {
 }
 
 /** A thrown value rendered as one sentence the customer can act on. */
-export function describeError(error: unknown): string {
-  if (error instanceof ConsoleError) return error.message;
+export function describeError(error: unknown, t?: ErrorTranslator): string {
+  if (error instanceof ConsoleError && t) {
+    if (error.code && TRANSLATED_CODES.has(error.code)) return t(`code.${error.code}`);
+    if (error.messageKey) return t(error.messageKey, error.values);
+  }
   if (error instanceof Error) return error.message;
-  return "请求失败，请重试。";
+  return t ? t("generic") : "The request failed. Try again.";
 }
 
 // ---------------------------------------------------------------------------
@@ -63,10 +91,15 @@ export function describeError(error: unknown): string {
  * When a body carries neither, the status is translated. A blank error is worse
  * than a generic one: it renders as an empty panel that looks like success.
  */
-export function parseErrorEnvelope(
-  status: number,
-  payload: unknown,
-): { message: string; code: string | null } {
+export interface ErrorEnvelope {
+  message: string;
+  code: string | null;
+  /** Present only when the message is the console's own fallback. */
+  messageKey?: string;
+  values?: Record<string, string>;
+}
+
+export function parseErrorEnvelope(status: number, payload: unknown): ErrorEnvelope {
   const body = isRecord(payload) ? payload : {};
   const raw = body.error;
 
@@ -77,21 +110,58 @@ export function parseErrorEnvelope(
     const message = readOptionalString(raw.message);
     const code = readOptionalString(raw.code);
     if (message) return { message, code };
-    if (code) return { message: statusMessage(status), code };
+    if (code) return { ...statusMessage(status), code };
   }
-  return { message: statusMessage(status), code: readOptionalString(body.code) };
+  return { ...statusMessage(status), code: readOptionalString(body.code) };
 }
 
-function statusMessage(status: number): string {
-  if (status === 401) return "登录状态已失效，请重新登录后再试。";
-  if (status === 403) return "当前账号没有这个操作的权限。";
-  if (status === 404) return "这条记录不存在，可能已被删除。";
-  if (status === 409) return "当前状态无法执行这个操作。";
-  if (status === 429) return "请求过于频繁，稍等几秒再试。";
-  if (status === 501) return "这个功能尚未开通。";
-  if (status >= 500) return `服务端出错了（HTTP ${status}），请重试或联系我们。`;
-  if (status >= 400) return `请求被拒绝（HTTP ${status}）。`;
-  return `意外的响应状态 HTTP ${status}。`;
+function statusMessage(status: number): {
+  message: string;
+  messageKey: string;
+  values?: Record<string, string>;
+} {
+  const values = { status: String(status) };
+  if (status === 401)
+    return {
+      message: "Your session expired. Sign in again and retry.",
+      messageKey: "status.unauthorized",
+    };
+  if (status === 403)
+    return { message: "This account isn't allowed to do that.", messageKey: "status.forbidden" };
+  if (status === 404)
+    return {
+      message: "This record doesn't exist. It may have been deleted.",
+      messageKey: "status.notFound",
+    };
+  if (status === 409)
+    return {
+      message: "This action can't run in the current state.",
+      messageKey: "status.conflict",
+    };
+  if (status === 429)
+    return {
+      message: "Too many requests. Wait a few seconds and try again.",
+      messageKey: "status.rateLimited",
+    };
+  if (status === 501)
+    return { message: "This feature isn't switched on yet.", messageKey: "status.notEnabled" };
+  if (status >= 500)
+    return {
+      message: `The server hit an error (HTTP ${status}). Try again or contact us.`,
+      messageKey: "status.server",
+      values,
+    };
+  if (status >= 400)
+    return {
+      message: `The request was refused (HTTP ${status}).`,
+      messageKey: "status.rejected",
+      values,
+    };
+  return {
+    message: `Unexpected response status HTTP ${status}.`,
+    messageKey: "status.unexpected",
+    values,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -175,17 +245,25 @@ export async function consoleFetch<T>(request: ConsoleRequest<T>): Promise<T> {
     // failure — it would paint an error panel over a screen the user just
     // navigated away from.
     if (isAbortError(error)) throw error;
-    throw new ConsoleError("网络请求没有发出去，检查网络后重试。", 0, "network_error");
+    throw new ConsoleError(NETWORK_MESSAGE, 0, "network_error", "network");
   }
 
   const payload = await readJsonBody(response);
 
   if (!response.ok) {
     const envelope = parseErrorEnvelope(response.status, payload);
-    throw new ConsoleError(envelope.message, response.status, envelope.code);
+    throw new ConsoleError(
+      envelope.message,
+      response.status,
+      envelope.code,
+      envelope.messageKey ?? null,
+      envelope.values,
+    );
   }
   return decode(payload);
 }
+
+const NETWORK_MESSAGE = "The request didn't go out. Check your connection and try again.";
 
 const JSON_HEADERS = { "content-type": "application/json", accept: "application/json" } as const;
 
@@ -213,13 +291,19 @@ export async function consoleStream(
     });
   } catch (error) {
     if (isAbortError(error)) throw error;
-    throw new ConsoleError("网络请求没有发出去，检查网络后重试。", 0, "network_error");
+    throw new ConsoleError(NETWORK_MESSAGE, 0, "network_error", "network");
   }
 
   if (!response.ok) {
     const payload = await readJsonBody(response);
     const envelope = parseErrorEnvelope(response.status, payload);
-    throw new ConsoleError(envelope.message, response.status, envelope.code);
+    throw new ConsoleError(
+      envelope.message,
+      response.status,
+      envelope.code,
+      envelope.messageKey ?? null,
+      envelope.values,
+    );
   }
   return response;
 }

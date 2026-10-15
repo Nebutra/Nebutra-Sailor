@@ -95,32 +95,6 @@
       "hint": "Agent · nástroje"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Boti",
-      "chips": "Chat boti · kreslení · znalosti"
-    },
-    "productivity": {
-      "label": "Produktivita",
-      "chips": "Arena modelů · psaní s AI"
-    },
-    "academic": {
-      "label": "Akademie",
-      "chips": "PDF nástroje · AI patentové vyhledávání"
-    },
-    "image": {
-      "label": "Nástroje pro obrázky",
-      "chips": "3D studio · Plátno"
-    },
-    "audio": {
-      "label": "Zvuk",
-      "chips": "Řeč · AI hudba"
-    },
-    "code": {
-      "label": "Kód",
-      "chips": "Web generátor · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Přehled",
     "keys": "Klíče",

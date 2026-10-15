@@ -103,10 +103,100 @@
     "sourceUrl": "https://stripe.com",
     "notes": [
       "roles.action = Indigo Ink filled CTA; roles.brand = Midnight Ink wordmark.",
-      "Elevation none \u2014 tint ladder + 1px frost rules; never box-shadow.",
+      "Elevation none — tint ladder + 1px frost rules; never box-shadow.",
       "Control radius 4px (not pill); tags may stay full-pill.",
       "Typography weight 300 is the product signature (Inter Tight substitute).",
       "Pair solid CTA with ghost outline (lavender border) as secondary."
     ]
+  },
+  "modes": {
+    "light": {
+      "semantic": {
+        "background": "0 0% 100%",
+        "foreground": "211 78% 11%",
+        "card": "0 0% 100%",
+        "cardForeground": "211 78% 11%",
+        "popover": "0 0% 100%",
+        "popoverForeground": "211 78% 11%",
+        "primary": "248 98% 61%",
+        "primaryForeground": "0 0% 100%",
+        "secondary": "237 100% 95%",
+        "secondaryForeground": "248 98% 61%",
+        "muted": "216 56% 98%",
+        "mutedForeground": "217 17% 47%",
+        "accent": "211 78% 11%",
+        "accentForeground": "0 0% 100%",
+        "destructive": "0 72% 51%",
+        "destructiveForeground": "0 0% 100%",
+        "border": "210 44% 93%",
+        "ring": "248 98% 61%",
+        "info": "231 100% 73%",
+        "infoForeground": "211 78% 11%"
+      },
+      "roles": {
+        "canvas": "0 0% 100%",
+        "canvasForeground": "211 78% 11%",
+        "surface": "0 0% 100%",
+        "surfaceForeground": "211 78% 11%",
+        "action": "248 98% 61%",
+        "actionForeground": "0 0% 100%",
+        "quiet": "237 100% 95%",
+        "quietForeground": "248 98% 61%",
+        "muted": "216 56% 98%",
+        "mutedForeground": "217 17% 47%",
+        "border": "210 44% 93%",
+        "ring": "248 98% 61%",
+        "destructive": "0 72% 51%",
+        "destructiveForeground": "0 0% 100%",
+        "brand": "211 78% 11%",
+        "brandForeground": "0 0% 100%",
+        "info": "231 100% 73%",
+        "infoForeground": "211 78% 11%"
+      }
+    },
+    "dark": {
+      "semantic": {
+        "background": "222 44% 10%",
+        "foreground": "210 44% 93%",
+        "card": "220 38% 14%",
+        "cardForeground": "210 44% 93%",
+        "popover": "220 38% 14%",
+        "popoverForeground": "210 44% 93%",
+        "primary": "244 100% 71%",
+        "primaryForeground": "222 44% 10%",
+        "secondary": "244 40% 24%",
+        "secondaryForeground": "238 100% 86%",
+        "muted": "220 36% 16%",
+        "mutedForeground": "215 15% 63%",
+        "accent": "220 30% 19%",
+        "accentForeground": "210 44% 93%",
+        "destructive": "0 84% 66%",
+        "destructiveForeground": "222 44% 10%",
+        "border": "219 26% 22%",
+        "ring": "244 100% 71%",
+        "info": "231 100% 73%",
+        "infoForeground": "222 44% 10%"
+      },
+      "roles": {
+        "canvas": "222 44% 10%",
+        "canvasForeground": "210 44% 93%",
+        "surface": "220 38% 14%",
+        "surfaceForeground": "210 44% 93%",
+        "action": "244 100% 71%",
+        "actionForeground": "222 44% 10%",
+        "brand": "210 44% 93%",
+        "brandForeground": "222 44% 10%",
+        "quiet": "244 40% 24%",
+        "quietForeground": "238 100% 86%",
+        "muted": "220 36% 16%",
+        "mutedForeground": "215 15% 63%",
+        "border": "219 26% 22%",
+        "ring": "244 100% 71%",
+        "destructive": "0 84% 66%",
+        "destructiveForeground": "222 44% 10%",
+        "info": "231 100% 73%",
+        "infoForeground": "222 44% 10%"
+      }
+    }
   }
 }

@@ -126,7 +126,7 @@ export async function VcProfile({
               key={f.label}
               className="flex flex-col gap-0.5 rounded-[var(--radius-xl)] border border-border/60 p-4"
             >
-              <span className="text-xs text-muted-foreground/70">{f.label}</span>
+              <span className="text-xs text-muted-foreground">{f.label}</span>
               <span className="font-semibold text-neutral-12 text-sm">{f.value}</span>
             </div>
           ))}
@@ -201,11 +201,11 @@ export async function VcProfile({
                   <span className="block truncate font-medium text-neutral-12 text-sm">
                     {s.name}
                   </span>
-                  <span className="block truncate text-muted-foreground/80 text-xs">
+                  <span className="block truncate text-muted-foreground text-xs">
                     {s.sectors.slice(0, 3).join(" · ")}
                   </span>
                 </span>
-                <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground/40 transition-colors group-hover:text-foreground" />
+                <ArrowRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground" />
               </Link>
             ))}
           </div>

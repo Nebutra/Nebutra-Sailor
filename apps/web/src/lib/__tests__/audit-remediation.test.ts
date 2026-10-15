@@ -295,7 +295,7 @@ describe("UI/UX audit remediation invariants", () => {
     expect(navModel).toContain('import { routing } from "@nebutra/i18n/routing"');
     expect(navModel).toContain("export function stripLocalePrefix");
     expect(navModel).toContain("const normalizedPathname = stripLocalePrefix(pathname)");
-    expect(shell).toMatch(/aria-label="Breadcrumb"/);
+    expect(shell).toMatch(/aria-label=\{tc\("breadcrumb"\)\}/);
     expect(shell).toMatch(/aria-current=/);
     expect(shell).toContain("breadcrumbs.length > 1");
     expect(shell).not.toContain("DASHBOARD_NAV_ITEMS.slice");

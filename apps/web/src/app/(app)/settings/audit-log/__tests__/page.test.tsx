@@ -5,11 +5,13 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 // next-intl: echo `${namespace}.${key}` so assertions can target the i18n keys
 // rather than localized strings (mirrors the audit-log-table unit test).
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string) => `${namespace}.${key}`,
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.") ? catalogT(namespace) : (key: string) => `${namespace}.${key}`,
   useFormatter: () => ({
     relativeTime: (_d: Date) => "just now",
     dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",

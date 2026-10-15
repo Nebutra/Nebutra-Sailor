@@ -24,6 +24,7 @@ import {
   Button,
   Textarea,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Streamdown } from "streamdown";
 import { resolveApiUrl } from "@/lib/api/browser-client";
@@ -87,6 +88,7 @@ export function StartupChatPanel({
   showHeader = true,
   history,
 }: StartupChatPanelProps) {
+  const tc = useTranslations("copy.startupOsStartupChatPanel");
   // Hooks must run unconditionally; the injected result simply shadows the live
   // one for tests. Both calls are cheap and side-effect-free until `send`.
   const live = useStartupConversation({ projectId });
@@ -137,7 +139,7 @@ export function StartupChatPanel({
   return (
     <div className="h-full min-h-0">
       <section
-        aria-label="Startup OS conversational build"
+        aria-label={tc("startupOSConversationalBuild")}
         className="flex h-full min-h-0 flex-col bg-neutral-1 text-neutral-12"
       >
         {/* Header — suppressed when the workspace thread column already shows the
@@ -152,11 +154,9 @@ export function StartupChatPanel({
             </span>
             <div className="min-w-0">
               <h2 className="truncate text-sm font-semibold tracking-tight text-neutral-12">
-                Build with conversation
+                {tc("buildWithConversation")}
               </h2>
-              <p className="mt-0.5 truncate text-xs text-neutral-10">
-                Describe a change and the agent edits your workspace live.
-              </p>
+              <p className="mt-0.5 truncate text-xs text-neutral-10">{tc("describeAChangeAnd")}</p>
             </div>
           </header>
         ) : null}
@@ -190,7 +190,7 @@ export function StartupChatPanel({
                 <Warning aria-hidden="true" />
               </AlertIcon>
               <AlertContent>
-                <AlertTitle>Conversation failed</AlertTitle>
+                <AlertTitle>{tc("conversationFailed")}</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
               </AlertContent>
             </Alert>
@@ -227,7 +227,7 @@ export function StartupChatPanel({
             <PromptInputBox
               isLoading={isStreaming}
               onSend={handleSend}
-              placeholder="再加一个定价页、把 hero 改成品牌渐变、生成 README…"
+              placeholder={tc("promptPlaceholder")}
             />
           </div>
         </footer>
@@ -245,19 +245,20 @@ function PlanArea({
   isStreaming: boolean;
   plan: string;
 }) {
+  const tc = useTranslations("copy.startupOsStartupChatPanel");
   return (
     <div className="rounded-2xl border border-neutral-6 bg-neutral-1 p-4">
       <div className="flex items-center gap-2">
         <Lightning className="size-4 text-neutral-10" aria-hidden="true" />
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">Plan</h3>
+        <h3 className="text-xs font-semibold text-neutral-9">{tc("plan")}</h3>
         {isStreaming ? (
-          <span className="ml-auto inline-flex items-center gap-1.5 text-[11px] font-medium text-neutral-9">
+          <span className="ml-auto inline-flex items-center gap-1.5 text-xs font-medium text-neutral-9">
             <span
               className="size-1.5 animate-pulse rounded-full"
               style={{ background: "var(--brand-accent)" }}
               aria-hidden="true"
             />
-            streaming
+            {tc("streaming")}
           </span>
         ) : null}
       </div>
@@ -269,9 +270,7 @@ function PlanArea({
           <Streamdown>{plan}</Streamdown>
         </div>
       ) : (
-        <p className="mt-3 text-sm leading-6 text-neutral-9">
-          Describe a change to start building your workspace.
-        </p>
+        <p className="mt-3 text-sm leading-6 text-neutral-9">{tc("describeAChangeTo")}</p>
       )}
     </div>
   );
@@ -284,6 +283,7 @@ function FileEventList({
   events: UseStartupConversationResult["fileEvents"];
   isStreaming: boolean;
 }) {
+  const tc = useTranslations("copy.startupOsStartupChatPanel");
   // While the turn is live, the most recent file event is the one being written
   // *right now* — surface it as an active "Writing" affordance with a pulsing
   // dot, and settle every earlier row to its committed action. Once the turn
@@ -293,7 +293,7 @@ function FileEventList({
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
-        <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">
+        <h3 className="text-xs font-semibold text-neutral-9">
           {isStreaming ? "Writing files" : "Files written"}
         </h3>
         <Badge variant="secondary" size="sm" className="tabular-nums">
@@ -328,14 +328,14 @@ function FileEventList({
               </span>
               {isActive ? (
                 <span
-                  className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.08em]"
+                  className="shrink-0 text-xs font-semibold"
                   style={{ color: "var(--brand-accent)" }}
                 >
-                  Writing
+                  {tc("writing")}
                 </span>
               ) : (
                 <span
-                  className="shrink-0 rounded-full border px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.08em]"
+                  className="shrink-0 rounded-full border px-1.5 py-0.5 text-xs font-semibold"
                   style={{
                     borderColor: "color-mix(in srgb, var(--status-success) 25%, transparent)",
                     color: "hsl(var(--success-strong))",
@@ -353,17 +353,16 @@ function FileEventList({
 }
 
 function ArtifactEventList({ events }: { events: UseStartupConversationResult["artifactEvents"] }) {
+  const tc = useTranslations("copy.startupOsStartupChatPanel");
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-semibold uppercase tracking-widest text-neutral-9">
-        Artifacts touched
-      </h3>
+      <h3 className="text-xs font-semibold text-neutral-9">{tc("artifactsTouched")}</h3>
       <div className="flex flex-wrap gap-2">
         {events.map((event, index) => (
           <span
             key={`${event.kind}-${index}`}
             data-testid="startup-chat-artifact"
-            className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/5 px-2.5 py-1 text-[11px] font-medium text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary"
+            className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary dark:border-primary/30 dark:bg-primary/15 dark:text-primary"
           >
             <Sparkles className="size-3" aria-hidden="true" />
             {event.kind}
@@ -395,6 +394,7 @@ function UserMessage({
   onResend: (next: string) => void;
   onReverted: () => void;
 }) {
+  const tc = useTranslations("copy.startupOsStartupChatPanel");
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(prompt);
   const [copied, setCopied] = useState(false);
@@ -445,18 +445,15 @@ function UserMessage({
   if (editing) {
     return (
       <div className="rounded-2xl border border-neutral-6 bg-neutral-2 p-3">
-        <p className="text-xs font-semibold text-neutral-12">Revert and resend message?</p>
+        <p className="text-xs font-semibold text-neutral-12">{tc("revertAndResendMessage")}</p>
         <Textarea
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
           rows={3}
-          aria-label="Edit message"
+          aria-label={tc("editMessage")}
           className="mt-2"
         />
-        <p className="mt-2 text-[11px] leading-4 text-neutral-9">
-          Your message will be updated and the conversation continues from here — the workspace
-          reverts to before this turn, then re-runs.
-        </p>
+        <p className="mt-2 text-xs leading-4 text-neutral-9">{tc("yourMessageWillBe")}</p>
         <div className="mt-2 flex items-center justify-end gap-2">
           <Button
             type="button"
@@ -468,7 +465,7 @@ function UserMessage({
               setDraft(prompt);
             }}
           >
-            Cancel
+            {tc("cancel")}
           </Button>
           <Button
             type="button"
@@ -497,8 +494,8 @@ function UserMessage({
             variant="ghost"
             shape="square"
             iconSize="sm"
-            aria-label="Edit and resend"
-            title="Edit and resend"
+            aria-label={tc("editAndResend")}
+            title={tc("editAndResend")}
             onClick={() => setEditing(true)}
             className="text-neutral-9 hover:bg-neutral-3"
           >
@@ -511,7 +508,7 @@ function UserMessage({
           shape="square"
           iconSize="sm"
           aria-label={copied ? "Copied" : "Copy"}
-          title="Copy"
+          title={tc("copy")}
           onClick={() => void copy()}
           className="text-neutral-9 hover:bg-neutral-3"
         >
@@ -589,6 +586,7 @@ function SummaryCard({
   summary: StartupConversationSummary;
   durationMs: number | null;
 }) {
+  const tc = useTranslations("copy.startupOsStartupChatPanel");
   const [copied, setCopied] = useState(false);
   const [vote, setVote] = useState<"up" | "down" | null>(null);
   const [voting, setVoting] = useState(false);
@@ -643,7 +641,7 @@ function SummaryCard({
           )}
         </ToolbarButton>
         <ToolbarButton
-          label="Helpful"
+          label={tc("helpful")}
           active={vote === "up"}
           disabled={Boolean(vote) || voting}
           onClick={() => void sendVote("up")}
@@ -654,7 +652,7 @@ function SummaryCard({
           />
         </ToolbarButton>
         <ToolbarButton
-          label="Not helpful"
+          label={tc("notHelpful")}
           active={vote === "down"}
           disabled={Boolean(vote) || voting}
           onClick={() => void sendVote("down")}
@@ -664,7 +662,7 @@ function SummaryCard({
             aria-hidden="true"
           />
         </ToolbarButton>
-        {meta ? <span className="ml-1.5 text-[11px] text-neutral-9">{meta}</span> : null}
+        {meta ? <span className="ml-1.5 text-xs text-neutral-9">{meta}</span> : null}
       </div>
     </div>
   );
@@ -681,6 +679,7 @@ function StatusRow({
   onCancel: () => void;
   status: UseStartupConversationResult["status"];
 }) {
+  const tc = useTranslations("copy.startupOsStartupChatPanel");
   return (
     <div className="flex items-center justify-between gap-3">
       <span className="inline-flex items-center gap-2 text-xs font-medium text-neutral-10">
@@ -707,10 +706,10 @@ function StatusRow({
           size="sm"
           shape="pill"
           onClick={onCancel}
-          aria-label="Stop generating"
+          aria-label={tc("stopGenerating")}
         >
           <StopFill className="size-3.5" aria-hidden="true" />
-          Stop
+          {tc("stop")}
         </Button>
       ) : null}
     </div>

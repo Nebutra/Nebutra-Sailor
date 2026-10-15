@@ -95,32 +95,6 @@
       "hint": "סוכן · כלים"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "בוטים",
-      "chips": "בוטי צ'אט · בוטי ציור · ידע"
-    },
-    "productivity": {
-      "label": "פרודוקטיביות",
-      "chips": "זירת מודלים · כתיבה ממוחשבת"
-    },
-    "academic": {
-      "label": "אקדמי",
-      "chips": "ערכת PDF · חיפוש פטנטים עם AI"
-    },
-    "image": {
-      "label": "כלי תמונה",
-      "chips": "סטודיו 3D · Canvas"
-    },
-    "audio": {
-      "label": "אודיו",
-      "chips": "דיבור · מוזיקה AI"
-    },
-    "code": {
-      "label": "קוד",
-      "chips": "מחולל אינטרנט · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "סקירה כללית",
     "keys": "מפתחות",

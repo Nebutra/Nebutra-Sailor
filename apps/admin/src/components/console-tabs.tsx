@@ -8,8 +8,6 @@ export interface ConsoleTab {
   href: string;
   label: string;
   count?: number | undefined;
-  /** Batch 2 surfaces: rendered as inert text so the IA is visible, not clickable. */
-  disabled?: boolean;
 }
 
 function isActive(pathname: string, href: string): boolean {
@@ -20,33 +18,25 @@ export function ConsoleTabs({ tabs }: { tabs: ConsoleTab[] }) {
   const pathname = usePathname();
   return (
     <nav aria-label="Console" className="border-border border-b bg-card">
-      <div className="mx-auto flex max-w-wide items-center px-3">
+      <div className="mx-auto flex max-w-wide items-center overflow-x-auto px-1 [scrollbar-width:none] sm:px-3">
         {tabs.map((tab) => {
-          const active = !tab.disabled && isActive(pathname, tab.href);
+          const active = isActive(pathname, tab.href);
           const body = (
             <>
               {tab.label}
               {tab.count !== undefined ? (
-                <span className="ml-1.5 rounded-full bg-muted px-1.5 text-[11px] text-muted-foreground leading-4">
+                <span className="ml-1.5 rounded-full bg-muted px-1.5 text-xs text-muted-foreground leading-4 tabular-nums">
                   {tab.count}
                 </span>
               ) : null}
             </>
           );
           const className = cn(
-            "-mb-px flex h-10 items-center border-b-2 px-3 text-sm leading-5",
+            "-mb-px flex h-10 shrink-0 items-center whitespace-nowrap border-b-2 px-3 text-sm leading-5 transition-colors hover:text-foreground",
             active
               ? "border-foreground font-medium text-foreground"
               : "font-medium border-transparent text-muted-foreground",
-            tab.disabled ? "cursor-default opacity-60" : "hover:text-foreground",
           );
-          if (tab.disabled) {
-            return (
-              <span key={tab.label} aria-disabled className={className} title="Ships in batch 2">
-                {body}
-              </span>
-            );
-          }
           return (
             <Link
               key={tab.label}

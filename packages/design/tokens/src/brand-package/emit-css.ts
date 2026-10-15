@@ -270,6 +270,10 @@ function recipeVars(recipe: BrandRecipe): string[] {
     lines.push("  --control-height-icon-sm: 1.5rem;");
     lines.push("  --control-height-icon-md: 1.75rem;");
     lines.push("  --control-height-icon-lg: 2rem;");
+    // The whole type ladder, not just md: the shared sheet's sm is 14px, which
+    // would sit ABOVE a compact md of 13px.
+    lines.push("  --control-font-size-tiny: 0.6875rem;");
+    lines.push("  --control-font-size-sm: 0.75rem;");
     lines.push("  --control-font-size-md: 0.8125rem;");
   } else if (recipe.density === "spacious") {
     lines.push("  --btn-default-padding-y: 0.875rem;");

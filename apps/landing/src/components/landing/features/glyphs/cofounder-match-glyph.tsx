@@ -35,7 +35,7 @@ export function CofounderMatchGlyph(_props: SubpackageGlyphProps) {
           <Check className="h-3 w-3 text-primary" />
         </div>
         <div
-          className="flex h-7 w-7 items-center justify-center rounded-full border border-success/40 bg-success/15 font-mono text-[11px] font-semibold text-success-strong"
+          className="flex h-7 w-7 items-center justify-center rounded-full border border-success/40 bg-success/10 font-mono text-[11px] font-semibold text-success-strong"
           role="img"
           aria-label="Candidate K"
         >

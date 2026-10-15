@@ -66,6 +66,7 @@ function NotificationCenterItem({
   locale: string;
   runtime: NotificationRuntimeStatus;
 }) {
+  const tc = useTranslations("copy.notificationsNotificationCenter");
   const format = useFormatter();
   const createdAt = new Date(item.createdAt);
   const createdAtLabel = Number.isNaN(createdAt.getTime()) ? "" : format.relativeTime(createdAt);
@@ -88,7 +89,7 @@ function NotificationCenterItem({
             <p className="truncate text-sm font-semibold text-neutral-12">{item.title}</p>
             {!item.read ? (
               <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-semibold text-primary dark:bg-primary/20 dark:text-primary">
-                New
+                {tc("new")}
               </span>
             ) : null}
           </div>
@@ -105,7 +106,7 @@ function NotificationCenterItem({
             href={item.href}
             className="inline-flex items-center gap-1 rounded-[var(--radius-lg)] border border-neutral-7 px-2.5 py-1.5 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-2"
           >
-            Open
+            {tc("open")}
             <ExternalLink className="size-3.5" aria-hidden />
           </Link>
         ) : null}
@@ -120,7 +121,7 @@ function NotificationCenterItem({
               className="rounded-[var(--radius-lg)] border border-neutral-7 px-2.5 py-1.5 text-xs font-medium text-neutral-12 transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-50"
               title={runtime.canMarkInboxRead ? "Mark this notification as read" : runtime.reason}
             >
-              Mark read
+              {tc("markRead")}
             </button>
           </form>
         ) : null}
@@ -134,6 +135,7 @@ export function NotificationCenter({
   snapshot,
   defaultOpen = false,
 }: NotificationCenterProps) {
+  const tc = useTranslations("copy.notificationsNotificationCenter");
   const t = useTranslations("notifications.page");
   const unreadBadge = getUnreadBadgeLabel(snapshot.unreadCount);
   const unreadItems = snapshot.inboxItems.filter((item) => !item.read);
@@ -146,7 +148,7 @@ export function NotificationCenter({
           variant="ghost"
           shape="square"
           iconSize="md"
-          aria-label="Open notifications"
+          aria-label={tc("openNotifications")}
           className="relative text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
         >
           <Bell className="size-4" aria-hidden />
@@ -163,15 +165,17 @@ export function NotificationCenter({
           is the right surface and still supplies Escape, outside-press, focus
           trap and focus return. */}
       <PopoverContent
-        aria-label="Notifications"
+        aria-label={tc("notifications")}
         side="top"
         align="start"
         className="w-[min(22rem,calc(100vw-1.5rem))] overflow-hidden rounded-[var(--radius-2xl)] p-0"
       >
         <div className="flex items-start justify-between gap-3 border-b border-neutral-7 px-4 py-3">
           <div>
-            <p className="text-sm font-semibold text-neutral-12">Notifications</p>
-            <p className="mt-0.5 text-xs text-neutral-10">{snapshot.unreadCount} unread</p>
+            <p className="text-sm font-semibold text-neutral-12">{tc("notifications")}</p>
+            <p className="mt-0.5 text-xs text-neutral-10">
+              {tc("unread", { unreadCount: String(snapshot.unreadCount ?? "") })}
+            </p>
           </div>
 
           <form action={markAllNotificationsRead}>
@@ -186,7 +190,7 @@ export function NotificationCenter({
                   : snapshot.runtime.reason
               }
             >
-              Mark all read
+              {tc("markAllRead")}
             </button>
           </form>
         </div>
@@ -221,7 +225,7 @@ export function NotificationCenter({
             href={`/${locale}/settings/notifications`}
             className="text-xs font-medium text-primary underline-offset-4 hover:underline"
           >
-            Notification settings
+            {tc("notificationSettings")}
           </Link>
         </div>
       </PopoverContent>

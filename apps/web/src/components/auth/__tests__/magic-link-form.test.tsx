@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const messages: Record<string, string> = {
   "auth.magicLink.title": "Sign in with a magic link",
@@ -21,14 +22,17 @@ const messages: Record<string, string> = {
 };
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string, values?: Record<string, unknown>) => {
-    const fullKey = `${namespace}.${key}`;
-    const template = messages[fullKey] ?? fullKey;
-    if (!values) return template;
-    return template.replace(/\{(\w+)\}/g, (_, name: string) =>
-      values[name] !== undefined ? String(values[name]) : `{${name}}`,
-    );
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string, values?: Record<string, unknown>) => {
+          const fullKey = `${namespace}.${key}`;
+          const template = messages[fullKey] ?? fullKey;
+          if (!values) return template;
+          return template.replace(/\{(\w+)\}/g, (_, name: string) =>
+            values[name] !== undefined ? String(values[name]) : `{${name}}`,
+          );
+        },
 }));
 
 import { MagicLinkForm } from "../magic-link-form";

@@ -21,27 +21,28 @@ provisioned in or exposed to the browser.
 
 Market data connectors run inside the same Singapore Fly Machine as the static host (one Machine, supervised processes; see `docs/ops/nebutra/2026-10-09-kcq-consolidation.md`) and are proxied by nginx over loopback:
 GOTDX at `/market/tdx` (A shares, indices and extended markets), TradingView
-at `/market/python` (global historical bars), and Binance read-only orderbook
-and depth SSE at `/market/binance/api/binance`. Binance is not a V1 K-line
-provider or a trading endpoint; its depth service is available for a separate
-depth visualization integration. Only GOTDX and TradingView enter the chart
-source catalog. Old scoped loopback defaults migrate to hosted endpoints;
+at `/market/python` (global historical bars), and the canonical Binance V1
+connector at `/market/binance` (spot bars, real trades, trade archives and
+depth). All three enter the chart source catalog. Binance real trades power
+the library's footprint indicators; the connector has no trading credentials.
+Old scoped loopback defaults migrate to hosted endpoints;
 custom addresses and user source choices are retained.
 
 Connector revisions are pinned in `connector-sources.json`. `deploy-kcq-fly.yml`
 builds one image containing the product, nginx and the three connectors and
-deploys it; it then verifies real search and recent bars (or Binance depth) on
+deploys it; it then verifies real search, recent bars and Binance depth/trades on
 the Machine, not just process liveness. `verify_only` re-runs that check without
 deploying. `infra/fly/kcq-supervisor.py` restarts each process independently
 and prefixes its logs (`[tdx]`, `[binance]`, `[python]`, `[nginx]`). Upstream directory SQLite
-files are disposable caches, regenerated after Machine replacement. GOTDX
+files and Binance trade archives are disposable caches, regenerated after Machine replacement. GOTDX
 runs in Shanghai timezone to preserve upstream timestamp interpretation.
 Nginx restricts exposed paths, request sizes, rates and concurrent connections;
 connectors are not published as Fly services and receive no account/trading secrets.
 
 BaoStock is withheld until upstream login succeeds; FinShare is withheld while
 its tested continuous-contract history is stale. MT5 requires a Windows host
-with a logged-in terminal and cannot run on these Linux Machines. These data
+with a logged-in terminal and cannot run on these Linux Machines. THS daily
+bars require a separately provisioned API key and are not hosted. These data
 sources are not advertised as provisioned.
 
 Frontend layout and interaction requirements live in [DESIGN.md](./DESIGN.md).
@@ -76,9 +77,14 @@ regressions run from the repository root with
 ## Upstream maintenance
 
 `chart-source.json` records the deployed immutable commit separately from the
-canonical `upstreamRepository`. The integration pin includes the public
-workspace/navigation and BYOK contracts pending in upstream PRs #297 and #298.
-Never replace it with upstream main until the product compatibility gate passes.
+canonical `upstreamRepository`. Upstream PRs #297 and #298 (workspace/navigation
+and BYOK) are merged. The 2026-10-12 integration starts from upstream
+`196d0fcc00f2910f5be37510c91cc39d9c418f9a` and cherry-picks the fork's managed
+Agent, canonical branding, history prefetch and live instrument identity.
+The fork also exports the canonical trade-source factory and read-only active
+layout settings for the account page. See
+`docs/ops/nebutra/2026-10-12-kcq-upstream-convergence.md` for the source ledger.
+Never replace the pin with upstream main until the product compatibility gate passes.
 
 From the repository root, run `node apps/kcq/scripts/verify.mjs` for the same
 library tests, product tests, typecheck and production build used by CI and Fly

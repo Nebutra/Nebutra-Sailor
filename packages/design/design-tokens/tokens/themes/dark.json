@@ -362,6 +362,11 @@
       "$value": "222 14% 9%",
       "$type": "string"
     },
+    "info-strong": {
+      "$value": "228 95% 72%",
+      "$type": "string",
+      "$description": "Blue as foreground on a dark surface. --info already reads well over 4.5:1 here, so it deliberately equals it, as --success-strong and --warning-strong do in this theme."
+    },
     "success-strong": {
       "$value": "142 60% 42%",
       "$type": "string",

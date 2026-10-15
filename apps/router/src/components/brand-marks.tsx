@@ -46,126 +46,122 @@ export type LobeBrandIcon = ComponentType<IconProps> & {
   colorPrimary?: string;
 };
 
-export type CoverTheme = { wash: string; dark: boolean };
+export type CoverTheme = { wash: string };
 
 type BrandEntry = {
   Icon: LobeBrandIcon;
   colorMark: boolean;
-  cover: CoverTheme;
   label?: string;
 };
+
+/**
+ * A provider's cover is its own brand hue (the registry's `colorPrimary`) mixed
+ * into the card surface — never a fixed pastel. The card token has a light and
+ * a dark value, so the same recipe gives a soft tint in light mode and a deep
+ * one in dark, and the cover cannot glare out of a dark page.
+ */
+function coverFor(Icon: LobeBrandIcon): CoverTheme {
+  const hue = Icon.colorPrimary ?? "var(--neutral-8)";
+  return {
+    wash: `linear-gradient(145deg, color-mix(in oklab, ${hue} 26%, hsl(var(--card))) 0%, color-mix(in oklab, ${hue} 12%, hsl(var(--card))) 55%, color-mix(in oklab, ${hue} 5%, hsl(var(--card))) 100%)`,
+  };
+}
 
 export const PROVIDER_BRAND: Record<ListingProvider, BrandEntry> = {
   openai: {
     Icon: OpenAI as LobeBrandIcon,
     colorMark: false,
-    cover: { wash: "linear-gradient(145deg, #dbeafe 0%, #e0e7ff 42%, #f5f3ff 100%)", dark: false },
   },
   anthropic: {
     Icon: Claude as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #f5e6d3 0%, #f0d9c2 45%, #faf5f0 100%)", dark: false },
     label: "Anthropic",
   },
   google: {
     Icon: Gemini as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #c7d2fe 0%, #bfdbfe 40%, #e0f2fe 100%)", dark: false },
     label: "Google",
   },
   xai: {
     Icon: Grok as LobeBrandIcon,
     colorMark: false,
-    cover: { wash: "linear-gradient(160deg, #0a0a0a 0%, #171717 55%, #262626 100%)", dark: true },
     label: "xAI",
   },
   deepseek: {
     Icon: DeepSeek as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #bfdbfe 0%, #93c5fd 40%, #dbeafe 100%)", dark: false },
   },
   moonshot: {
     Icon: Moonshot as LobeBrandIcon,
     colorMark: false,
-    cover: { wash: "linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #334155 100%)", dark: true },
   },
   mistral: {
     Icon: Mistral as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #ffedd5 0%, #fed7aa 45%, #fff7ed 100%)", dark: false },
   },
   meta: {
     Icon: Meta as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #dbeafe 0%, #bfdbfe 40%, #e0e7ff 100%)", dark: false },
   },
   qwen: {
     Icon: Qwen as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #dbeafe 0%, #bfdbfe 35%, #eff6ff 100%)", dark: false },
     label: "通义千问",
   },
   zhipu: {
     Icon: Zhipu as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #e0e7ff 0%, #c7d2fe 40%, #eef2ff 100%)", dark: false },
     label: "智谱",
   },
   minimax: {
     Icon: Minimax as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #fce7f3 0%, #fbcfe8 40%, #fdf2f8 100%)", dark: false },
   },
   cohere: {
     Icon: Cohere as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #d1fae5 0%, #a7f3d0 40%, #ecfdf5 100%)", dark: false },
   },
   perplexity: {
     Icon: Perplexity as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #cffafe 0%, #a5f3fc 40%, #ecfeff 100%)", dark: false },
   },
   baichuan: {
     Icon: Baichuan as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #ffedd5 0%, #fed7aa 40%, #fff7ed 100%)", dark: false },
     label: "百川",
   },
   yi: {
     Icon: Yi as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #e0e7ff 0%, #c7d2fe 40%, #f5f3ff 100%)", dark: false },
     label: "零一万物",
   },
   doubao: {
     Icon: Doubao as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #fef3c7 0%, #fde68a 40%, #fffbeb 100%)", dark: false },
     label: "豆包",
   },
   hunyuan: {
     Icon: Hunyuan as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #dbeafe 0%, #93c5fd 40%, #eff6ff 100%)", dark: false },
     label: "腾讯混元",
   },
   nvidia: {
     Icon: Nvidia as LobeBrandIcon,
     colorMark: true,
-    cover: { wash: "linear-gradient(145deg, #d1fae5 0%, #a7f3d0 40%, #ecfdf5 100%)", dark: false },
     label: "NVIDIA",
   },
   other: {
     Icon: Meta as LobeBrandIcon,
     colorMark: false,
-    cover: { wash: "linear-gradient(145deg, #e2e8f0 0%, #f1f5f9 50%, #f8fafc 100%)", dark: false },
     label: "Other",
   },
 };
 
 export const PROVIDER_COVER: Record<ListingProvider, CoverTheme> = Object.fromEntries(
-  (Object.keys(PROVIDER_BRAND) as ListingProvider[]).map((k) => [k, PROVIDER_BRAND[k].cover]),
+  (Object.keys(PROVIDER_BRAND) as ListingProvider[]).map((k) => [
+    k,
+    coverFor(PROVIDER_BRAND[k].Icon),
+  ]),
 ) as Record<ListingProvider, CoverTheme>;
 
 function brandTitle(provider: ListingProvider): string {
@@ -178,13 +174,11 @@ export function BrandMark({
   size = 20,
   className,
   forceMono = false,
-  surface = "auto",
 }: {
   provider: ListingProvider;
   size?: number;
   className?: string;
   forceMono?: boolean;
-  surface?: "auto" | "light" | "dark";
 }) {
   if (provider === "other") {
     return (
@@ -208,62 +202,51 @@ export function BrandMark({
       </span>
     );
   }
-  const { Icon, colorMark, cover } = PROVIDER_BRAND[provider];
-  const onDark = surface === "dark" || (surface === "auto" && cover.dark);
-  const useColor = !forceMono && colorMark && !onDark && Icon.Color;
+  const { Icon, colorMark } = PROVIDER_BRAND[provider];
+  const useColor = !forceMono && colorMark && Icon.Color;
   const Mark = useColor && Icon.Color ? Icon.Color : Icon;
   const props: IconProps = { size };
-  if (className) props.className = className;
-  if (!useColor) props.style = { color: onDark ? "#fafafa" : "#0f172a" };
+  // Mono marks draw in currentColor: foreground ink, so black-on-black vendor
+  // marks (OpenAI, xAI) turn light in dark mode instead of disappearing.
+  const markClass = useColor ? className : [className, "text-foreground"].filter(Boolean).join(" ");
+  if (markClass) props.className = markClass;
   return <Mark {...props} />;
 }
 
-export function BrandPill({
-  provider,
-  size = 22,
-  tone = "auto",
-}: {
-  provider: ListingProvider;
-  size?: number;
-  tone?: "auto" | "light" | "dark";
-}) {
+export function BrandPill({ provider, size = 22 }: { provider: ListingProvider; size?: number }) {
   const entry = PROVIDER_BRAND[provider];
   const title = brandTitle(provider);
-  const onDark = tone === "dark" || (tone === "auto" && entry.cover.dark);
-  const ink = onDark ? "#fafafa" : "#0f172a";
   const markSize = typeof size === "number" ? size : 22;
 
   if (provider === "other") {
     return (
       <span
-        className="inline-flex max-w-full flex-row flex-nowrap items-center gap-2"
-        style={{ color: ink }}
+        className="inline-flex max-w-full flex-row flex-nowrap items-center gap-2 text-foreground"
         title={title}
       >
         <BrandMark provider="other" size={markSize} />
-        <span className="text-[13px] leading-none font-semibold tracking-tight">Other</span>
+        <span className="text-sm leading-none font-semibold tracking-tight">Other</span>
       </span>
     );
   }
 
   const { Icon, colorMark } = entry;
-  const useColor = colorMark && !onDark && Icon.Color;
+  const useColor = colorMark && Icon.Color;
   const Mark = useColor && Icon.Color ? Icon.Color : Icon;
   const Wordmark = Icon.Text;
-  const markProps: IconProps = { size: markSize };
-  if (onDark && !useColor) markProps.style = { color: ink };
 
+  // Ink is the foreground token via currentColor, so the wordmark and any mono
+  // mark follow the theme; colour marks keep their registered colours.
   return (
     <span
-      className="inline-flex max-w-full flex-row flex-nowrap items-center gap-2"
-      style={{ color: ink }}
+      className="inline-flex max-w-full flex-row flex-nowrap items-center gap-2 text-foreground"
       title={title}
     >
-      <Mark {...markProps} />
+      <Mark size={markSize} />
       {Wordmark ? (
-        <Wordmark size={Math.round(markSize * 0.82)} style={{ color: ink }} />
+        <Wordmark size={Math.round(markSize * 0.82)} />
       ) : (
-        <span className="text-[13px] leading-none font-semibold tracking-tight">{title}</span>
+        <span className="text-sm leading-none font-semibold tracking-tight">{title}</span>
       )}
     </span>
   );

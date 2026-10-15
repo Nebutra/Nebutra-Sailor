@@ -2,15 +2,22 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string, vars?: Record<string, unknown>) => {
-    const full = `${namespace}.${key}`;
-    if (vars) {
-      return Object.entries(vars).reduce((acc, [k, v]) => acc.replace(`{${k}}`, String(v)), full);
-    }
-    return full;
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string, vars?: Record<string, unknown>) => {
+          const full = `${namespace}.${key}`;
+          if (vars) {
+            return Object.entries(vars).reduce(
+              (acc, [k, v]) => acc.replace(`{${k}}`, String(v)),
+              full,
+            );
+          }
+          return full;
+        },
   useFormatter: () => ({
     relativeTime: (_d: Date) => "just now",
     dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",

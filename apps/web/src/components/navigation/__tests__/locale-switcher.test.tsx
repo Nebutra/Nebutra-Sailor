@@ -2,6 +2,7 @@
 
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const refreshMock = vi.fn();
 const useLocaleMock = vi.fn(() => "en-US");
@@ -49,7 +50,8 @@ vi.mock("@nebutra/i18n/locale-switcher", async (importOriginal) => {
 
 vi.mock("next-intl", () => ({
   useLocale: () => useLocaleMock(),
-  useTranslations: (ns?: string) => (key: string) => (ns ? `${ns}.${key}` : key),
+  useTranslations: (ns?: string) =>
+    ns?.startsWith("copy.") ? catalogT(ns) : (key: string) => (ns ? `${ns}.${key}` : key),
 }));
 
 vi.mock("use-intl", () => ({

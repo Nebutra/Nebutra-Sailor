@@ -9,6 +9,13 @@ import {
   Wrench,
 } from "@nebutra/icons";
 import { type IncidentImpact, maintenancePhase, type StatusIncident } from "@nebutra/status";
+import {
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import type { ReactNode } from "react";
 import { Link } from "@/i18n/navigation";
@@ -80,7 +87,7 @@ export function StatusShell({ checkedAt, children }: { checkedAt?: string; child
         id="main-content"
         className="px-4 pb-16 pt-[calc(var(--frame-overlay-top,0px)+2rem)] sm:px-6"
       >
-        <div className="mx-auto w-full max-w-[760px]">
+        <div className="mx-auto w-full max-w-3xl">
           <StatusActions checkedAt={checkedAt} />
           {children}
         </div>
@@ -377,7 +384,7 @@ function StatusActions({ checkedAt }: { checkedAt?: string }) {
 function StatusFooter() {
   return (
     <footer className="px-4 pb-10 sm:px-6">
-      <p className="mx-auto max-w-[760px] text-center text-sm text-muted-foreground">
+      <p className="mx-auto max-w-3xl text-center text-sm text-muted-foreground">
         Powered by <span className="font-semibold text-foreground">{brand.name} Status</span>
       </p>
     </footer>
@@ -403,15 +410,26 @@ function ComponentRow({
     <li className="px-5 py-4">
       <div className="flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-2">
-          <StateIcon state={service.state} className="h-[18px] w-[18px] shrink-0" />
+          <StateIcon state={service.state} className="size-4.5 shrink-0" />
           <h3 className="truncate text-base font-medium text-foreground">{service.name}</h3>
-          <span
-            className="hidden text-muted-foreground sm:inline-flex"
-            title={service.description}
-            aria-label={service.description}
-          >
-            <Information aria-hidden className="h-3.5 w-3.5" />
-          </span>
+          {/* A real tooltip on a focusable trigger: the old `title` reached
+              neither keyboard nor touch, and the icon was hidden below sm. */}
+          <TooltipProvider delayDuration={150}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  iconSize="sm"
+                  className="-my-1 shrink-0 text-muted-foreground"
+                  aria-label={service.description}
+                >
+                  <Information aria-hidden className="h-3.5 w-3.5" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-64">{service.description}</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           {service.state !== "operational" ? (
             <span className="text-sm text-muted-foreground">
               {componentStatusLabel[service.state]}
@@ -433,12 +451,12 @@ export function StatusPageSkeleton() {
   return (
     <div className="min-h-dvh bg-background">
       <div className="border-b border-border/80">
-        <div className="mx-auto flex h-14 max-w-[760px] items-center px-4 sm:px-6">
+        <div className="mx-auto flex h-14 max-w-3xl items-center px-4 sm:px-6">
           <div className="h-5 w-5 animate-pulse rounded bg-muted" />
           <div className="ml-2 h-3.5 w-28 animate-pulse rounded bg-muted" />
         </div>
       </div>
-      <div className="mx-auto max-w-[760px] px-4 pt-14 sm:px-6">
+      <div className="mx-auto max-w-3xl px-4 pt-14 sm:px-6">
         <div className="h-9 w-80 max-w-full animate-pulse rounded bg-muted" />
         <div className="mt-12 h-80 animate-pulse rounded-[var(--radius-2xl)] bg-muted" />
         <div className="mt-12 h-32 animate-pulse rounded-[var(--radius-2xl)] bg-muted" />

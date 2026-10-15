@@ -72,7 +72,7 @@ export function UseCasesSection() {
                     key={uc.key}
                     aria-pressed={isActive}
                     onClick={() => setActiveTab(i)}
-                    className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[var(--radius-card)] transition-transform duration-micro overflow-hidden hover:-translate-y-px motion-reduce:transform-none motion-reduce:transition-none ${
+                    className={`group relative flex items-start text-left gap-5 p-5 md:p-6 rounded-[var(--radius-card)] transition-[background-color] duration-micro overflow-hidden ${
                       isActive
                         ? "bg-background border border-border"
                         : "hover:bg-muted border border-transparent"

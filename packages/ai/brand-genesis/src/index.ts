@@ -1,7 +1,6 @@
 import { mkdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { type MeshAsset, MeshPipeline } from "@nebutra/3d-pipeline";
-import { type AudioAsset, AudioPipeline } from "@nebutra/audio-pipeline";
 import { requireCapabilityTenant } from "@nebutra/capability-kit";
 import { appendCapabilityDebug, readCapabilityDebug } from "@nebutra/capability-kit/debug";
 import { ContentStore, serializeContentFrontmatter } from "@nebutra/content-store";
@@ -14,8 +13,6 @@ import {
   type VisualStyle,
 } from "@nebutra/generation-context";
 import { type ImageAsset, ImagePipeline } from "@nebutra/image-pipeline";
-import { type Storyboard, type VideoAsset, VideoPipeline } from "@nebutra/video-pipeline";
-import { type VoiceAsset, VoiceRealtime } from "@nebutra/voice-realtime";
 
 export type VisualDirectionHint =
   | "cyberpunk"
@@ -26,10 +23,9 @@ export type VisualDirectionHint =
   | "retro"
   | "futurist";
 
-export interface BrandFilmInput {
+export interface BrandGenesisInput {
   readonly tenantId?: string;
   readonly idea: string;
-  readonly founderVoiceId?: string;
   readonly visualDirectionHint?: VisualDirectionHint;
 }
 
@@ -45,7 +41,7 @@ export interface BrandIdentityDraft {
 
 export interface BrandPackage {
   readonly tenantId: string;
-  readonly play: "brand_film_60s";
+  readonly play: "brand_kit";
   readonly brand: BrandContext;
   readonly draft: BrandIdentityDraft;
   readonly brandMdPath: string;
@@ -55,10 +51,6 @@ export interface BrandPackage {
   readonly hero: ImageAsset;
   readonly icon: ImageAsset;
   readonly mesh: MeshAsset;
-  readonly storyboard: Storyboard;
-  readonly film: VideoAsset;
-  readonly bgm: AudioAsset;
-  readonly narration: VoiceAsset;
   readonly eventId: string;
   readonly checkpoints: readonly string[];
 }
@@ -69,14 +61,11 @@ export interface BrandGenesisDoctorReport {
   readonly checkedAt: string;
   readonly play: {
     readonly ok: boolean;
-    readonly name: "brand_film_60s";
+    readonly name: "brand_kit";
     readonly requiredSkills: readonly string[];
   };
   readonly media: {
     readonly image: readonly unknown[];
-    readonly video: readonly unknown[];
-    readonly audio: readonly unknown[];
-    readonly voice: readonly unknown[];
     readonly mesh: readonly unknown[];
   };
   readonly suggestion?: string;
@@ -89,19 +78,15 @@ export interface BrandGenesisOptions {
   readonly contentStore?: ContentStore;
   readonly eventLog?: EventLog;
   readonly imagePipeline?: ImagePipeline;
-  readonly videoPipeline?: VideoPipeline;
-  readonly audioPipeline?: AudioPipeline;
-  readonly voiceRealtime?: VoiceRealtime;
   readonly meshPipeline?: MeshPipeline;
 }
 
-const PLAY_NAME = "brand_film_60s" as const;
+const PLAY_NAME = "brand_kit" as const;
 const CHECKPOINTS = [
   "brand_distillation",
   "visual_direction",
   "assets_generated",
-  "video_rendered",
-  "final_compose",
+  "landing_handoff",
 ] as const;
 
 function normalizeBrandId(name: string): string {
@@ -182,7 +167,7 @@ function styleFor(hint: VisualDirectionHint | undefined): VisualStyle {
   };
 }
 
-export function distillBrandIdea(input: BrandFilmInput): BrandIdentityDraft {
+export function distillBrandIdea(input: BrandGenesisInput): BrandIdentityDraft {
   const idea = input.idea.trim();
   if (idea.length === 0) {
     throw new CapabilityError("brand-genesis", "Brand idea is empty", {
@@ -298,9 +283,6 @@ export class BrandGenesis {
   readonly #contentStore: ContentStore;
   readonly #eventLog: EventLog;
   readonly #image: ImagePipeline;
-  readonly #video: VideoPipeline;
-  readonly #audio: AudioPipeline;
-  readonly #voice: VoiceRealtime;
   readonly #mesh: MeshPipeline;
 
   private constructor(
@@ -312,9 +294,6 @@ export class BrandGenesis {
     this.#contentStore = options.contentStore;
     this.#eventLog = options.eventLog;
     this.#image = options.imagePipeline ?? new ImagePipeline({ root: this.#root });
-    this.#video = options.videoPipeline ?? new VideoPipeline({ root: this.#root });
-    this.#audio = options.audioPipeline ?? new AudioPipeline({ root: this.#root });
-    this.#voice = options.voiceRealtime ?? new VoiceRealtime({ root: this.#root });
     this.#mesh = options.meshPipeline ?? new MeshPipeline({ root: this.#root });
   }
 
@@ -329,7 +308,7 @@ export class BrandGenesis {
     return new BrandGenesis({ ...options, tenantId, root, contentStore, eventLog });
   }
 
-  async run(input: BrandFilmInput): Promise<BrandPackage> {
+  async run(input: BrandGenesisInput): Promise<BrandPackage> {
     const tenantId = requireCapabilityTenant({
       explicit: input.tenantId,
       fallback: this.#tenantId,
@@ -374,11 +353,8 @@ export class BrandGenesis {
       brandId: brand.brandId,
     });
 
-    const storyboard = await this.#video.plan(
-      { type: "brand-film", durationS: 60, theme: draft.tagline },
-      brand,
-    );
-    const rendered = await this.#video.render(storyboard, brand);
+    const landingPath = "company/landing/index.html";
+    await this.#contentStore.write(landingPath, renderLandingManifest(draft, brand));
     await this.#debug({
       type: "checkpoint",
       step: CHECKPOINTS[3],
@@ -386,46 +362,10 @@ export class BrandGenesis {
       brandId: brand.brandId,
     });
 
-    const bgm = await this.#audio.generate(
-      { type: "bgm", durationS: rendered.durationS, mood: brand.toneKeywords.join(" ") },
-      brand,
-      true,
-    );
-    const narration = await this.#voice.synthesizeNarration(
-      {
-        script: `${draft.tagline}. ${draft.oneLiner}. ${draft.differentiation}.`,
-        targetDurationS: Math.max(8, Math.min(20, rendered.durationS - 3)),
-        ...(input.founderVoiceId !== undefined ? { voiceProfileId: input.founderVoiceId } : {}),
-      },
-      brand,
-    );
-    const film = await this.#video.compose({
-      videoTrack: [rendered],
-      audioTrack: [bgm],
-      voiceTrack: [narration],
-      captionTrack: [{ startS: 0, endS: narration.durationS, text: narration.transcript }],
-    });
-    const landingPath = "company/landing/index.html";
-    await this.#contentStore.write(landingPath, renderLandingManifest(draft, brand));
-    await this.#debug({
-      type: "checkpoint",
-      step: CHECKPOINTS[4],
-      tenantId,
-      brandId: brand.brandId,
-    });
-
     const eventId = await this.#eventLog.commit({
       traceId: assetId("brand_genesis", brand.brandId),
       kind: "content_write",
-      affected: [
-        brand.sourcePath,
-        palettePath,
-        landingPath,
-        logo.path,
-        hero.path,
-        icon.path,
-        film.path,
-      ],
+      affected: [brand.sourcePath, palettePath, landingPath, logo.path, hero.path, icon.path],
       parent: null,
       snapshot: {
         [brand.sourcePath]: brandMarkdown,
@@ -446,10 +386,6 @@ export class BrandGenesis {
       hero,
       icon,
       mesh,
-      storyboard,
-      film,
-      bgm,
-      narration,
       eventId,
       checkpoints: CHECKPOINTS,
     };
@@ -458,15 +394,8 @@ export class BrandGenesis {
   }
 
   async doctor(): Promise<BrandGenesisDoctorReport> {
-    const [image, video, audio, rawVoice, mesh] = await Promise.all([
-      this.#image.doctor(),
-      this.#video.doctor(),
-      this.#audio.doctor(),
-      this.#voice.doctor(),
-      this.#mesh.doctor(),
-    ]);
-    const voice = [{ provider: "narration-local", ok: true }, ...rawVoice];
-    const localOk = [image, video, audio, voice, mesh].every((checks) =>
+    const [image, mesh] = await Promise.all([this.#image.doctor(), this.#mesh.doctor()]);
+    const localOk = [image, mesh].every((checks) =>
       checks.some((check) => Boolean((check as { ok?: boolean }).ok)),
     );
     return {
@@ -478,16 +407,11 @@ export class BrandGenesis {
         name: PLAY_NAME,
         requiredSkills: [
           "image_pipeline.generate",
-          "video_pipeline.plan",
-          "video_pipeline.render",
-          "video_pipeline.compose",
-          "audio_pipeline.generate",
-          "voice_realtime.synthesize_narration",
           "mesh_pipeline.from_image",
           "content_store.write",
         ],
       },
-      media: { image, video, audio, voice, mesh },
+      media: { image, mesh },
       ...(!localOk
         ? {
             suggestion:

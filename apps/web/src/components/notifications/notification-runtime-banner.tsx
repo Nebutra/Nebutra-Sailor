@@ -8,6 +8,7 @@ import type {
   NotificationPreferenceSource,
   NotificationRuntimeStatus,
 } from "@nebutra/notifications";
+import { useTranslations } from "next-intl";
 
 interface Props {
   runtime: NotificationRuntimeStatus;
@@ -34,6 +35,7 @@ function getModeClasses(runtime: NotificationRuntimeStatus): string {
 }
 
 export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSource }: Props) {
+  const tc = useTranslations("copy.notificationsNotificationRuntimeBanner");
   return (
     <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -44,7 +46,7 @@ export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSour
             </div>
             <div>
               <h3 className="text-base font-semibold text-foreground">
-                {runtime.providerLabel} notification runtime
+                {tc("notificationRuntime", { providerLabel: String(runtime.providerLabel) })}
               </h3>
               <p className="mt-1 text-sm text-muted-foreground">{runtime.summary}</p>
             </div>
@@ -62,7 +64,7 @@ export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSour
         <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-4">
           <div className="flex items-center gap-2 text-sm font-medium text-foreground">
             <DatabaseZap className="h-4 w-4 text-muted-foreground" aria-hidden />
-            Preferences
+            {tc("preferences")}
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
             {preferenceSource === "provider"
@@ -74,7 +76,7 @@ export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSour
         <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-4">
           <div className="flex items-center gap-2 text-sm font-medium text-foreground">
             <RadioTower className="h-4 w-4 text-muted-foreground" aria-hidden />
-            Inbox
+            {tc("inbox")}
           </div>
           <p className="mt-2 text-sm text-muted-foreground">
             {inboxSource === "provider"
@@ -84,7 +86,7 @@ export function NotificationRuntimeBanner({ runtime, preferenceSource, inboxSour
         </div>
 
         <div className="rounded-[var(--radius-lg)] border border-border bg-muted p-4">
-          <div className="text-sm font-medium text-foreground">Missing integration</div>
+          <div className="text-sm font-medium text-foreground">{tc("missingIntegration")}</div>
           <p className="mt-2 text-sm text-muted-foreground">
             {runtime.missing.length > 0
               ? runtime.missing.join(" · ")

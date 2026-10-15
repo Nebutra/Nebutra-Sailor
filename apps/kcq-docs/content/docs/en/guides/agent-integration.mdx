@@ -1,0 +1,152 @@
+---
+title: Agent integration
+description: Add the chart agent to your app, connect an OpenAI-compatible provider or your own managed one, and turn on search, sessions and code execution.
+---
+
+Picture a user who asks "mark last month's high and add RSI". The indicator and the line appear on the chart in front of them, and the conversation is still there after a reload. This page wires that up with the browser bridge, then covers providers, web search, the optional code interpreter and durable sessions.
+
+## Minimal setup
+
+`BrowserAgentBridge` runs the agent in the page. `AgentWorkbenchShell` puts the agent panel next to the chart.
+
+```vue title="App.vue"
+<script setup lang="ts">
+import { onBeforeUnmount, shallowRef } from 'vue'
+import {
+  AgentWorkbenchShell,
+  BrowserAgentBridge,
+  KlineChart,
+  type ChartController,
+} from '@363045841yyt/klinechart'
+import '@363045841yyt/klinechart/style.css'
+
+const controller = shallowRef<ChartController | null>(null)
+const bridge = new BrowserAgentBridge({
+  getChartAgent: () => controller.value?.agent, // tools reach the chart through this
+})
+
+function onControllerReady(value: ChartController) {
+  controller.value = value
+  bridge.bindChartAgent(value.agent) // context items for the panel
+}
+
+onBeforeUnmount(() => void bridge.close())
+</script>
+
+<template>
+  <AgentWorkbenchShell :bridge="bridge">
+    <template #chart>
+      <KlineChart @controller-ready="onControllerReady" />
+    </template>
+  </AgentWorkbenchShell>
+</template>
+```
+
+Pass `getChartAgent`. Tools are resolved through it on every run, and without it chart tools are left out. `bindChartAgent` only updates the context the panel shows, which lets the panel mount before the chart.
+
+## Bring-your-own provider
+
+By default, users add their own OpenAI-compatible provider in the agent settings. The adapter speaks both `openai-completions` and `openai-responses`. The chosen protocol is saved together with the tested Base URL and model.
+
+A provider becomes runnable only after one connection test passes all three stages against the selected model:
+
+<Steps>
+<Step>
+
+`GET /models` checks catalog access and authentication.
+
+</Step>
+<Step>
+
+A minimal text request checks the protocol endpoint (`POST /chat/completions` or `POST /responses`).
+
+</Step>
+<Step>
+
+An exact, side-effect-free function call checks tool compatibility.
+
+</Step>
+</Steps>
+
+Use the API root as the Base URL (for example `https://provider.example/v1`). A model catalog that loads is not proof that the provider works with the agent.
+
+In the browser, the user's key is kept in the page's agent settings in `localStorage`. An Electron host injects its own `credentials` store, for example one backed by `safeStorage`. Once it does, the key is no longer written to `localStorage`.
+
+## Managed provider for hosts that own credentials
+
+If your server already authenticates the user and routes models, inject a `managedProvider`. It is listed first and is used whenever the user has no profile of their own active. The settings panel hides its Base URL, key and model picker, and users can still add their own provider.
+
+```ts
+import { BrowserAgentBridge } from '@363045841yyt/klinechart'
+import { ReadOnlyProviderCredentialStore } from '@363045841yyt/klinechart-agent-runtime'
+
+const hostFetch: typeof fetch = (input, init = {}) => {
+  const headers = new Headers(init.headers)
+  headers.delete('Authorization') // the placeholder key is still sent as a Bearer token
+  return fetch(input, { ...init, headers, credentials: 'same-origin' })
+}
+
+const bridge = new BrowserAgentBridge({
+  getChartAgent: () => controller.value?.agent,
+  managedProvider: {
+    name: 'Managed',
+    baseUrl: `${location.origin}/ai/v1`,
+    model: { id: 'auto' }, // your server decides the real model
+    credentials: new ReadOnlyProviderCredentialStore('placeholder'),
+    fetch: hostFetch,
+  },
+})
+```
+
+The managed profile exists only in memory and is never written to `localStorage`. It is read-only: editing its model pool, testing it, deleting its credential, renaming it, or saving a profile under its name throws `PROVIDER_ERROR`. The library contains no product strings. Authentication, routing and billing stay with the host.
+
+The hosted workstation works this way. It points `baseUrl` at `/market/ai/v1` on its own origin and sends the placeholder model `auto`, which the gateway ignores. Its `fetch` removes `Authorization`, sends the session cookie with `credentials: 'same-origin'` and adds an `X-KCQ-Workspace` header so the right wallet pays. When the gateway answers `402`, the host shows a top-up notice. No model key is ever stored in the browser.
+
+## Web search
+
+The `web_search` tool uses Exa. The key is global to the agent settings and does not change when the user switches provider profiles. Users enter it in settings, or you call `bridge.saveWebSearchApiKey(key)`. Without a key the tool is still offered, but it tells the model to ask the user for a key instead of making up results. Searches return 5 results by default and at most 10, with URLs the model is asked to cite.
+
+## Code interpreter (opt-in)
+
+`code_interpreter` runs Python written by the agent in a sandbox. Importing the entry point registers it as a `destructive` tool. If you don't import it, the tool doesn't exist.
+
+```ts
+import {
+  CodeInterpreterService,
+  CodeInterpreterTool,
+} from '@363045841yyt/klinechart-agent-runtime/code-interpreter'
+import { LocalProvider } from '@363045841yyt/klinechart-agent-runtime/code-interpreter/local'
+
+const tool = new CodeInterpreterTool(new CodeInterpreterService({ provider: new LocalProvider() }))
+```
+
+The runtime is `python-data-analysis-v1`, with numpy and pandas preinstalled. `pip install` is unavailable and `policy.network` only accepts `'disabled'`. Inputs are read from `$INPUT_DIR`, and top-level files written to `$OUTPUT_DIR` are returned. The timeout defaults to 60000 ms and cannot be set higher. Artifacts are returned inline and never stored, so keep what you need.
+
+Isolation strength differs per provider. Read `ProviderCapabilities.enforcesNetworkPolicy` before choosing one.
+
+| Provider | `enforcesNetworkPolicy` | Trusted base | Live-verified |
+| --- | --- | --- | --- |
+| `cloud-run-sandbox` | `true` | Google Cloud | **No. Never run against a real GCP environment.** |
+| `fly-machines` | `false` | This project's runner image | Yes, end to end on fly.io |
+| `local` | `false` | The developer's machine | Yes, by unit tests |
+
+<Callout type="warn" title="Two statements that must not be softened">
+
+- **fly.io does not provide outbound blocking.** Egress is blocked by the network namespace inside our own sandbox image, so the trusted base is this project's runner, not the fly.io platform.
+- **`LocalProvider` isolates nothing on macOS or Windows, nor on a Linux host where `unshare -rn` is not usable** (the kernel or AppArmor may reject unprivileged user namespaces). Outbound traffic is unrestricted there. It exists for unit tests and development. Never use it to execute untrusted code.
+
+</Callout>
+
+At this commit, `BrowserAgentBridge` resolves tool targets only from the chart's own tool hosts and does not host a code interpreter. Wire it in a Node or Electron-main host that resolves tool targets itself. See [the code interpreter tool](/docs/agent/tools/code-interpreter) and [the design note](/docs/architecture/notes/agent-code-interpreter).
+
+## Durable sessions
+
+The browser bridge stores conversations in IndexedDB through `createBrowserRuntimeSessions`. The default database is `kq-agent-durable-v1`. An exclusive Web Lock allows one page at a time, and a second page gets "Agent sessions are open in another page." In a multi-tenant app, pass `createSessions` with a scoped `databaseName`; see [Layouts and persistence](/docs/guides/layouts#isolate-storage-per-account-and-workspace).
+
+In a Node or Electron main process, use `createNodeRuntimeSessions` from `@363045841yyt/klinechart-agent-runtime/node`. Never import that entry into browser code, because it loads `node:sqlite`.
+
+<Cards>
+  <Card title="How the agent operates the chart" href="/docs/agent" description="Tools, context and the runtime." />
+  <Card title="Safety and permissions" href="/docs/agent/safety" description="Read-only runs, validation and redaction." />
+  <Card title="Tool reference" href="/docs/agent/tools" description="Every tool the model can call." />
+</Cards>

@@ -1,6 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { ProductDetail } from "@/components/product-detail";
 import { PROVIDER_LABEL, resolveListingProvider } from "@/lib/listing-catalog";
 import { getPricedModelBySlug, getPricedRelatedListings } from "@/lib/shelf-prices";
@@ -13,14 +14,18 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const model = await getPricedModelBySlug(slug);
+  const [model, t] = await Promise.all([getPricedModelBySlug(slug), getTranslations("detail")]);
   if (!model) {
-    return { title: "模型详情" };
+    return { title: t("metaFallback") };
   }
   const provider = PROVIDER_LABEL[resolveListingProvider(model)];
   return {
-    title: `${model.publicModel} · API 价格与文档`,
-    description: `${provider} ${model.publicModel} — ${brand.name} Router 可售货架详情、价格与接入说明。`,
+    title: t("metaTitle", { model: model.publicModel }),
+    description: t("metaDescription", {
+      provider,
+      model: model.publicModel,
+      brandName: brand.name,
+    }),
   };
 }
 

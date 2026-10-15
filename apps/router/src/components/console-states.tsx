@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import type { ConsoleResource } from "@/lib/use-console-resource";
 
@@ -60,19 +61,20 @@ export function StatePanel({
         isError ? "text-destructive-strong" : "text-neutral-11",
       ].join(" ")}
     >
-      <p className="text-[13px] font-medium">{title}</p>
+      <p className="text-sm font-medium">{title}</p>
       {description ? (
-        <p className="max-w-md text-[12px] leading-snug text-neutral-10">{description}</p>
+        <p className="max-w-md text-xs leading-snug text-muted-foreground">{description}</p>
       ) : null}
       {action ? <div className="mt-1">{action}</div> : null}
     </div>
   );
 }
 
-export function RetryButton({ onRetry, label = "重试" }: { onRetry: () => void; label?: string }) {
+export function RetryButton({ onRetry, label }: { onRetry: () => void; label?: string }) {
+  const t = useTranslations("console.states");
   return (
     <Button type="button" variant="outline" size="sm" className="h-7" onClick={onRetry}>
-      {label}
+      {label ?? t("retry")}
     </Button>
   );
 }
@@ -102,11 +104,12 @@ export function AsyncSection<T>({
   skeleton?: ReactNode;
   children: (data: T) => ReactNode;
 }) {
+  const t = useTranslations("console.states");
   if (resource.status === "error") {
     return (
       <StatePanel
         tone="error"
-        title="这块内容没能加载出来"
+        title={t("loadFailed")}
         description={resource.error}
         action={<RetryButton onRetry={onRetry} />}
       />
@@ -120,7 +123,7 @@ export function AsyncSection<T>({
   if (isEmpty?.(data)) {
     return (
       <StatePanel
-        title={emptyTitle ?? "这段时间没有记录"}
+        title={emptyTitle ?? t("emptyDefault")}
         {...(emptyDescription ? { description: emptyDescription } : {})}
         {...(emptyAction ? { action: emptyAction } : {})}
       />

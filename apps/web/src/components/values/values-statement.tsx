@@ -5,6 +5,7 @@ import {
   RefreshClockwise as Recycle,
   Shield,
 } from "@nebutra/icons";
+import { useTranslations } from "next-intl";
 import { ViewTransitionLink } from "@/components/navigation/view-transition-link";
 
 /**
@@ -86,6 +87,7 @@ export function ValuesStatement({
   density = "comfortable",
   className = "",
 }: Props) {
+  const tc = useTranslations("copy.valuesValuesStatement");
   const padding = density === "compact" ? "p-4" : "p-6";
   const grid =
     density === "compact"
@@ -95,7 +97,7 @@ export function ValuesStatement({
   return (
     <section
       className={`rounded-[var(--radius-2xl)] border border-neutral-7 bg-neutral-1 ${padding} ${className}`}
-      aria-label="Our values commitment"
+      aria-label={tc("ourValuesCommitment")}
     >
       {heading && (
         <div className="mb-4">

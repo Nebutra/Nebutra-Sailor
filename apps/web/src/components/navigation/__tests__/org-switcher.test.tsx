@@ -4,6 +4,7 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 import { createQueryWrapper } from "@/test/query-wrapper";
 
 const messages: Record<string, string> = {
@@ -17,10 +18,13 @@ const messages: Record<string, string> = {
 };
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string) => {
-    const fullKey = `${namespace}.${key}`;
-    return messages[fullKey] ?? fullKey;
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string) => {
+          const fullKey = `${namespace}.${key}`;
+          return messages[fullKey] ?? fullKey;
+        },
 }));
 
 const refreshMock = vi.fn();

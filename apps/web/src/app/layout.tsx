@@ -15,7 +15,7 @@ import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import { getNonce } from "@/lib/nonce";
@@ -78,6 +78,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const tc = await getTranslations("copy.webLayout");
   // Cookie mode: locale is resolved from the NEXT_LOCALE cookie by getRequestConfig.
   // getLocale() reads the value set by that config — no params.locale needed.
   const locale = await getLocale();
@@ -114,7 +115,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           href="#main-content"
           className="fixed left-3 top-3 z-[var(--layer-skip-link)] -translate-y-20 rounded-[var(--radius-md)] bg-primary px-3 py-2 text-sm font-medium text-primary-foreground opacity-0 transition focus:translate-y-0 focus:opacity-100"
         >
-          Skip to content
+          {tc("skipToContent")}
         </a>
 
         <AuthProvider provider={authProvider} config={authProviderConfig}>

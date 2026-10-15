@@ -41,6 +41,14 @@ type Case = {
 
 const CASES: Case[] = [
   {
+    // English typed into JSX renders in English for every locale (2026-10-10
+    // web review: 690 such strings). JSX text and a copy attribute, each once.
+    guard: "lint-hardcoded-copy",
+    violation:
+      'export function Probe() {\n  return <input aria-label="Search projects" />;\n}\nexport function Probe2() {\n  return <p>Save your changes</p>;\n}\n',
+    path: "apps/web/src/components/__lint_guard_probe.tsx",
+  },
+  {
     // A business endpoint in apps/web instead of the gateway (ADR 2026-09-24
     // Sailor convergence §6). The probe path is under api/ but not auth/, so
     // no intrinsic pattern excuses it.
@@ -259,6 +267,20 @@ const CASES: Case[] = [
     path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
   },
   {
+    // A border step of the neutral ramp used as ink — 2.4:1 on the canvas.
+    guard: "lint-neutral-ink",
+    violation: 'export const C = () => <span className="text-neutral-9">p50</span>;\n',
+    path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
+  },
+  {
+    // A space inside a Tailwind arbitrary value: the class list splits there
+    // and neither half generates CSS — how three Alert variants lost their fill.
+    guard: "lint-tw-arbitrary-space",
+    violation:
+      'export const A = () => <div className="bg-[var(--color-success, var(--color-green-500))]" />;\n',
+    path: "packages/design/ui/src/primitives/__lint_guard_probe.tsx",
+  },
+  {
     // The site calling itself a unicorn — a claim nothing on the page can show.
     guard: "lint-site-claims",
     violation: "export const C = () => <p>The unicorn template for founders.</p>;\n",
@@ -288,10 +310,32 @@ const CASES: Case[] = [
       'export const C = () => <button type="button" disabled title="Upgrade to export">Export</button>;\n',
   },
   {
+    // A dev-port link shipped to production (2026-10-10).
+    guard: "lint-no-localhost-links",
+    violation:
+      'export const C = () => <a href={process.env.NEXT_PUBLIC_FORGE_URL ?? "http://localhost:3105"}>Forge</a>;\n',
+  },
+  {
     // A copy action with no feedback and no failure path.
     guard: "lint-no-raw-clipboard",
     violation:
       'export const C = ({ v }: { v: string }) => (\n  <button type="button" onClick={() => void navigator.clipboard.writeText(v)}>Copy</button>\n);\n',
+  },
+  {
+    // A mono, letter-spaced uppercase micro-label on the marketing site ("AI look").
+    guard: "lint-eyebrow-labels",
+    violation:
+      'export const C = () => <span className="font-mono text-xs tracking-widest uppercase">Chapter I</span>;\n',
+    path: "apps/landing/src/__lint_guard_probe.tsx",
+  },
+  {
+    // A light-only literal in Router — how it shipped with no dark mode: one
+    // value where a token has one per theme. Each of the four literal families
+    // is present, so the probe fails even if one pattern regresses.
+    guard: "lint-router-raw-colors",
+    violation:
+      'export const C = () => (\n  <div className="bg-white ring-black/5" style={{ color: "#0f172a", boxShadow: "0 1px 2px rgb(15 23 42 / 0.04)" }} />\n);\n',
+    path: "apps/router/src/__lint_guard_probe.tsx",
   },
   {
     // Erasing a shared primitive's surface instead of using its variant.

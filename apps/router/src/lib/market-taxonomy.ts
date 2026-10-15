@@ -1,3 +1,4 @@
+import { forgeHref } from "@/lib/forge-url";
 /**
  * Market taxonomy + shortcuts — 302-aligned shelf IA.
  * Icons: market-icons.tsx → @nebutra/icons
@@ -23,7 +24,7 @@ export const MARKET_CHANNELS: readonly ChannelItem[] = [
   {
     id: "client",
     label: "Client",
-    href: "http://localhost:3105",
+    href: forgeHref(),
     icon: "client",
     match: "client",
     external: true,
@@ -164,46 +165,46 @@ export type ToolTaxonomyRow = {
 
 export const TOOL_TAXONOMY: readonly ToolTaxonomyRow[] = [
   {
-    id: "bots",
-    label: "Bots",
-    icon: "bots",
-    chips: ["Chat bots", "Drawing bots", "Knowledge"],
-    href: "http://localhost:3105",
-  },
-  {
-    id: "productivity",
-    label: "Productivity",
+    id: "generator",
+    label: "Generators",
     icon: "productivity",
-    chips: ["Model arena", "AI writing"],
-    href: "http://localhost:3105",
+    chips: ["UUID", "Lorem ipsum", "Random strings"],
+    href: forgeHref("/r/generator"),
   },
   {
-    id: "academic",
-    label: "Academic",
-    icon: "academic",
-    chips: ["PDF toolkit", "AI patent search"],
-    href: "http://localhost:3105",
-  },
-  {
-    id: "image",
-    label: "Image tools",
+    id: "converter",
+    label: "Converters",
     icon: "image-edit",
-    chips: ["3D studio", "Canvas"],
-    href: "http://localhost:3105",
+    chips: ["Base64", "Markdown to PDF"],
+    href: forgeHref("/r/converter"),
   },
   {
-    id: "audio",
-    label: "Audio",
-    icon: "audio",
-    chips: ["Speech", "AI music"],
-    href: "http://localhost:3105",
-  },
-  {
-    id: "code",
-    label: "Code",
+    id: "formatter",
+    label: "Formatters",
     icon: "code",
-    chips: ["Web generator", "Forge"],
-    href: "http://localhost:3105",
+    chips: ["JSON", "Text case"],
+    href: forgeHref("/r/formatter"),
+  },
+  {
+    id: "checker",
+    label: "Checkers",
+    icon: "academic",
+    chips: ["DNS leak", "ID numbers"],
+    href: forgeHref("/r/checker"),
+  },
+  {
+    id: "comparator",
+    label: "Comparators",
+    icon: "bots",
+    chips: ["JSON diff"],
+    href: forgeHref("/r/comparator"),
+  },
+  {
+    id: "analyzer",
+    label: "Analyzers",
+    icon: "audio",
+    chips: ["Word count", "JWT"],
+    href: forgeHref("/r/analyzer"),
   },
 ] as const;
 
@@ -222,26 +223,3 @@ export const MARKET_SHORTCUTS: readonly ShortcutItem[] = [
   { href: "/docs", label: "Docs", icon: "docs" },
   { href: "/models", label: "More", icon: "more" },
 ] as const;
-
-/** Static blurbs for brand flyout when inventory has no sample text */
-export const BRAND_BLURB: Partial<Record<ListingProvider, string>> = {
-  openai: "OpenAI 出品，通用对话与多模态旗舰",
-  anthropic: "Anthropic Claude，工程与智能体向强推理",
-  google: "Google Gemini，原生搜索与多模态",
-  xai: "xAI Grok，工具调用与实时能力",
-  deepseek: "DeepSeek，高性价比对话与推理",
-  moonshot: "月之暗面 Kimi，长上下文中文能力",
-  mistral: "Mistral，高效开源与商用模型",
-  meta: "Meta Llama，开源生态主力",
-  qwen: "通义千问，阿里云中文基座",
-  zhipu: "智谱 GLM，中文基座与 Agent",
-  minimax: "Minimax，MoE 通用与语音",
-  cohere: "Cohere，企业检索与 Command 系列",
-  perplexity: "Perplexity，搜索增强对话",
-  baichuan: "百川智能，中文开源与商用",
-  yi: "零一万物，中文与多语言模型",
-  doubao: "豆包，字节跳动通用大模型",
-  hunyuan: "腾讯混元，中文与多模态",
-  nvidia: "NVIDIA Nemotron，开源推理与加速",
-  other: "其他可售模型与接口",
-};

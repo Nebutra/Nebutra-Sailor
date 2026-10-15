@@ -3,6 +3,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { connection } from "next/server";
+import { useTranslations } from "next-intl";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { DesktopAuthCompleteHandoff } from "@/components/auth/desktop-auth-complete-handoff";
 import { createServerRequestFromHeaders, getAuth } from "@/lib/auth";
@@ -35,17 +36,18 @@ function buildDesktopRedirectUrl(scheme: string, token: string, state: string): 
 }
 
 function DesktopAuthError() {
+  const tc = useTranslations("copy.completePage");
   return (
     <AuthSplitLayout>
       <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6 shadow-sm">
         <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
-          Desktop sign-in
+          {tc("desktopSignIn")}
         </p>
         <h1 className="mt-2 text-2xl font-semibold tracking-normal text-foreground">
-          This desktop sign-in link is invalid
+          {tc("thisDesktopSignIn")}
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted-foreground">
-          Restart sign-in from {DESKTOP_APP_NAME} to create a fresh, short-lived handoff.
+          {tc("restartSignInFrom", { DESKTOP_APP_NAME: String(DESKTOP_APP_NAME) })}
         </p>
       </section>
     </AuthSplitLayout>

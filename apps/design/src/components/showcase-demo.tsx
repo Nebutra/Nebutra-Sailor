@@ -23,7 +23,7 @@ import dynamic from "next/dynamic";
 import * as React from "react";
 
 const Fallback = () => (
-  <div className="h-full min-h-[160px] w-full animate-pulse rounded-[var(--radius-md)] bg-muted/60" />
+  <div className="h-[160px] w-[320px] animate-pulse rounded-[var(--radius-md)] bg-muted/60" />
 );
 
 function loader(id: string) {
@@ -97,7 +97,7 @@ export function ShowcaseDemo({ id }: { id: string }) {
   const Demo = React.useMemo(() => (near ? loader(id) : null), [near, id]);
 
   return (
-    <div className="flex min-h-[180px] w-full items-center justify-center" ref={ref}>
+    <div className="w-full" ref={ref}>
       {Demo ? (
         <DemoBoundary id={id}>
           <Demo />

@@ -84,7 +84,7 @@ export async function AuthBanner({ className }: { className?: string }) {
           label={bootLogCatalog.panelLabel}
         />
 
-        <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+        <div className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} {brand.name}
         </div>
       </div>

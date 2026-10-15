@@ -5,18 +5,22 @@ import { cleanup, render, screen, waitFor, within } from "@testing-library/react
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 // next-intl mock — return the namespaced key (with optional ICU substitution).
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string, vars?: Record<string, unknown>) => {
-    if (vars && Object.keys(vars).length > 0) {
-      const params = Object.entries(vars)
-        .map(([k, v]) => `${k}=${String(v)}`)
-        .join(",");
-      return `${namespace}.${key}(${params})`;
-    }
-    return `${namespace}.${key}`;
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string, vars?: Record<string, unknown>) => {
+          if (vars && Object.keys(vars).length > 0) {
+            const params = Object.entries(vars)
+              .map(([k, v]) => `${k}=${String(v)}`)
+              .join(",");
+            return `${namespace}.${key}(${params})`;
+          }
+          return `${namespace}.${key}`;
+        },
   // InboxList consumes useFormatter (relative time / date) — stub minimally.
   useFormatter: () => ({
     relativeTime: () => "just now",

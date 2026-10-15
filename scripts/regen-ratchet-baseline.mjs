@@ -18,7 +18,9 @@ const GUARDS = {
   rawNumberFileInputs: "scripts/lint-no-raw-number-file-inputs.mjs",
   titleTooltips: "scripts/lint-no-title-tooltips.mjs",
   rawClipboardWrites: "scripts/lint-no-raw-clipboard.mjs",
+  routerRawColors: "scripts/lint-router-raw-colors.mjs",
   uiHardcodedLabels: "scripts/lint-ui-hardcoded-labels.mjs",
+  hardcodedCopy: "scripts/lint-hardcoded-copy.mjs",
 };
 
 const key = process.argv[2];

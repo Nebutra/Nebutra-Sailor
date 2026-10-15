@@ -1,7 +1,7 @@
+import { detectEnabledOAuthProviders } from "@nebutra/auth/sign-in/providers";
 import { AuthSplitLayout } from "@/components/auth-split-layout";
 import { CredentialsForm } from "@/components/credentials-form";
 import { isAccessGateEnabled } from "@/lib/access-gate-mode";
-import { detectEnabledOAuthProviders } from "@/lib/oauth-providers";
 import { resolvePostLoginReturnTo } from "@/lib/return-to";
 
 export const dynamic = "force-dynamic";

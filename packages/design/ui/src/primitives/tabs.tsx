@@ -3,7 +3,11 @@
 import { Tabs as BaseTabs } from "@base-ui/react/tabs";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
-
+import {
+  type ControlStep,
+  controlFontSize,
+  controlHeight,
+} from "../tokens/components/control-ladder";
 import { type TabsSize, tabsSizes, tabsTokens } from "../tokens/components/tabs";
 import { cn } from "../utils";
 import { asPlainStyle, withHtmlProps } from "../utils/primitive-props";
@@ -78,7 +82,7 @@ const tabsListVariants = cva(
     variants: {
       variant: {
         default:
-          "gap-[var(--tabs-gap)] rounded-[var(--tabs-radius)] border border-border bg-muted p-[var(--tabs-padding)] text-muted-foreground",
+          "gap-[var(--tabs-gap)] rounded-[var(--tabs-radius)] border border-border bg-muted p-[calc(var(--tabs-padding)-1px)] text-muted-foreground",
         button: "gap-[var(--tabs-gap)] text-muted-foreground",
         line: "gap-[calc(var(--tabs-gap)*3)] border-b border-border text-muted-foreground",
         secondary:
@@ -235,20 +239,27 @@ export interface TabsContentProps
   value: string;
 }
 
+const TABS_STEP: Record<TabsSize, ControlStep> = { xs: "tiny", sm: "sm", md: "md", lg: "lg" };
+
 function getTabsStyle(size: TabsSize, style: unknown): TabsCssVars {
   const token = tabsSizes[size];
+  const step = TABS_STEP[size];
 
   return {
-    "--tabs-height": `${token.height}px`,
+    // The bar is a control row: same height, type size and corner family as
+    // the Button and Input beside it, under every language's density.
+    "--tabs-height": controlHeight(step, token.height),
     "--tabs-padding": `${token.padding}px`,
     "--tabs-gap": `${token.gap}px`,
     "--tabs-trigger-gap": `${token.triggerGap}px`,
     "--tabs-trigger-padding-x": `${token.paddingX}px`,
     "--tabs-trigger-min-width": `${token.minWidth}px`,
     "--tabs-icon-size": `${token.iconSize}px`,
-    "--tabs-font-size": `${token.fontSize}px`,
-    "--tabs-radius": `${tabsTokens.radius}px`,
-    "--tabs-trigger-radius": `${tabsTokens.triggerRadius}px`,
+    "--tabs-font-size": controlFontSize(step, token.fontSize),
+    // Concentric corners: the bar's radius is the tab's plus the inset between
+    // them, so the two curves stay parallel at any language's control radius.
+    "--tabs-radius": `calc(var(--radius-md, ${tabsTokens.triggerRadius}px) + ${token.padding}px)`,
+    "--tabs-trigger-radius": `var(--radius-md, ${tabsTokens.triggerRadius}px)`,
     "--tabs-pill-radius": `${tabsTokens.pillRadius}px`,
     "--tabs-line-thickness": `${tabsTokens.lineThickness}px`,
     "--tabs-focus-ring-width": `${tabsTokens.focusRingWidth}px`,

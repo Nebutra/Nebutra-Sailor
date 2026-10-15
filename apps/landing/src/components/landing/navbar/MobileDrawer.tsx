@@ -57,13 +57,13 @@ export function MobileDrawer() {
 
                   return (
                     <div key={link.labelKey} className="flex flex-col gap-3 py-1">
-                      <span className="text-xs font-bold text-muted-foreground/60 uppercase tracking-widest">
+                      <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
                         {t(link.labelKey as NavTranslationKey)}
                       </span>
                       <div className="flex flex-col gap-4 pl-4 border-l-2 border-border/40">
                         {groups.map((group) => (
                           <div key={group.id} className="flex flex-col gap-2.5">
-                            <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground/50">
+                            <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-muted-foreground">
                               {tMenu(`groups.${group.id}`)}
                             </span>
                             {group.items.map((item) => {

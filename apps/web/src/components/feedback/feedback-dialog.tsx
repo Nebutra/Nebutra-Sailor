@@ -22,6 +22,7 @@ import {
   Textarea,
   toast,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useEffect, useId } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -76,6 +77,7 @@ const DEFAULT_VALUES: FeedbackValues = {
 };
 
 export function FeedbackDialog() {
+  const tc = useTranslations("copy.feedbackFeedbackDialog");
   const { open, setOpen, closeDialog } = useFeedbackDialog();
   const areaId = useId();
   const modeId = useId();
@@ -135,10 +137,8 @@ export function FeedbackDialog() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-[560px] gap-0 p-0">
         <DialogHeader className="space-y-1 border-b border-neutral-7 px-5 py-4 text-left">
-          <DialogTitle className="text-sm">Report an issue</DialogTitle>
-          <DialogDescription className="text-xs">
-            Help us understand and fix what you ran into.
-          </DialogDescription>
+          <DialogTitle className="text-sm">{tc("reportAnIssue")}</DialogTitle>
+          <DialogDescription className="text-xs">{tc("helpUsUnderstandAnd")}</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -154,7 +154,7 @@ export function FeedbackDialog() {
                       htmlFor={areaId}
                       className="mb-1 block text-xs font-medium text-neutral-11"
                     >
-                      Where did this happen?
+                      {tc("whereDidThisHappen")}
                     </label>
                     <Select
                       value={field.value}
@@ -222,7 +222,7 @@ export function FeedbackDialog() {
                     htmlFor={descId}
                     className="mb-1 flex items-center justify-between text-xs font-medium text-neutral-11"
                   >
-                    <span>What happened?</span>
+                    <span>{tc("whatHappened")}</span>
                     <span
                       className={`tabular-nums ${
                         descLength < MIN_DESCRIPTION || descLength > MAX_DESCRIPTION
@@ -239,11 +239,14 @@ export function FeedbackDialog() {
                       id={descId}
                       rows={5}
                       disabled={submitting}
-                      placeholder="What did you expect? What actually happened? If you can, list the steps to reproduce."
+                      placeholder={tc("whatDidYouExpect")}
                     />
                   </FormControl>
                   <p className="mt-1 text-[11px] text-neutral-10">
-                    Minimum {MIN_DESCRIPTION} characters · maximum {MAX_DESCRIPTION}
+                    {tc("minimumCharactersMaximum", {
+                      MIN_DESCRIPTION: String(MIN_DESCRIPTION ?? ""),
+                      MAX_DESCRIPTION: String(MAX_DESCRIPTION ?? ""),
+                    })}
                   </p>
                   <FormMessage />
                 </FormItem>
@@ -262,7 +265,7 @@ export function FeedbackDialog() {
                   disabled={submitting}
                   className="text-xs text-neutral-11"
                 >
-                  Allow us to follow up via the email on your account.
+                  {tc("allowUsToFollow")}
                 </Checkbox>
               )}
             />
@@ -275,7 +278,7 @@ export function FeedbackDialog() {
                 disabled={submitting}
                 className="rounded-[var(--radius-lg)] px-3 py-1.5 text-xs font-medium text-neutral-11 transition-colors hover:bg-neutral-2 hover:text-neutral-12 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Cancel
+                {tc("cancel")}
               </button>
               <button
                 type="submit"

@@ -27,7 +27,7 @@ export function CreateSailorGlyph(_props: SubpackageGlyphProps) {
     >
       {/* Title bar — the `dark` class above scopes dark token values to the terminal */}
       <div className="flex items-center justify-between border-b border-foreground/5 px-3 py-1.5">
-        <div className="flex items-center gap-1.5 text-foreground/40">
+        <div className="flex items-center gap-1.5 text-muted-foreground">
           <Box className="h-3.5 w-3.5" />
           <span className="font-mono text-[10px] uppercase tracking-wider">scaffold</span>
         </div>
@@ -44,7 +44,7 @@ export function CreateSailorGlyph(_props: SubpackageGlyphProps) {
         {LINES.map((line, i) => {
           if (line.kind === "cmd") {
             return (
-              <div key={i} className="truncate text-muted-foreground/90">
+              <div key={i} className="truncate text-muted-foreground">
                 {line.text}
               </div>
             );

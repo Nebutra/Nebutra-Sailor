@@ -1,14 +1,20 @@
 import { brand } from "@nebutra/brand/metadata";
 import { ArrowRight } from "@nebutra/icons";
-import { AnimateIn } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
 import { getTranslations } from "next-intl/server";
 import { SITE } from "@/content/site";
+import { MaskedHeadline } from "@/shared/animation/masked-headline";
 import { StarterLink } from "./starter-link";
 
 /**
  * The first screen: your brand's name, the one-line pitch from
- * messages/en.json → site.hero, two calls to action and a quiet product frame.
+ * messages/en.json → site.hero, two calls to action and one product frame.
+ * Nothing sits above the name.
+ *
+ * Motion (Landing Motion System): the name rises out of its mask on first
+ * paint and the product frame settles in after it — one timeline, CSS only,
+ * so the pitch and buttons are readable and clickable from the first frame and
+ * the page is complete with JavaScript off. Reduced motion: all at rest.
  */
 export async function StarterHero({ locale }: { locale: string }) {
   const { hero } = SITE;
@@ -16,64 +22,50 @@ export async function StarterHero({ locale }: { locale: string }) {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative isolate overflow-hidden px-4 pt-32 pb-16 md:px-6 md:pt-40 md:pb-24"
+      className="relative isolate overflow-hidden px-4 pt-32 pb-16 md:px-6 md:pt-40 md:pb-28"
     >
-      <div
-        aria-hidden="true"
-        className="-z-10 absolute inset-0 bg-[linear-gradient(to_right,var(--neutral-4)_1px,transparent_1px),linear-gradient(to_bottom,var(--neutral-4)_1px,transparent_1px)] bg-[size:56px_56px] opacity-60 [mask-image:radial-gradient(ellipse_70%_55%_at_50%_0%,black_30%,transparent_75%)]"
-      />
       <div className="mx-auto flex max-w-text flex-col items-center text-center">
-        <AnimateIn preset="emerge">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground shadow-ambient-sm">
-            <span aria-hidden="true" className="size-1.5 rounded-full bg-success" />
-            {t("eyebrow")}
-          </span>
-        </AnimateIn>
-        <AnimateIn preset="emerge">
-          <h1
-            id="hero-title"
-            className="mt-6 text-balance text-5xl font-semibold tracking-tight text-foreground md:text-7xl"
-          >
-            {brand.name}
-          </h1>
-        </AnimateIn>
-        <AnimateIn preset="emerge">
-          <p className="mt-5 max-w-2xl text-balance text-xl text-foreground/80 md:text-2xl">
-            {t("pitch")}
-          </p>
-          <p className="mx-auto mt-4 max-w-xl text-pretty text-base text-muted-foreground">
-            {t("body")}
-          </p>
-        </AnimateIn>
-        <AnimateIn preset="fadeUp">
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button asChild size="lg" variant="ink">
-              <StarterLink href={hero.primary.href}>
-                {t("primaryLabel")}
-                <ArrowRight aria-hidden="true" />
-              </StarterLink>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <StarterLink href={hero.secondary.href}>{t("secondaryLabel")}</StarterLink>
-            </Button>
-          </div>
-        </AnimateIn>
+        <h1
+          id="hero-title"
+          className="font-heading text-balance text-5xl tracking-tight text-foreground [font-weight:var(--font-weight-heading,500)] md:text-7xl"
+        >
+          <MaskedHeadline locale={locale}>{brand.name}</MaskedHeadline>
+        </h1>
+        <p className="mt-5 max-w-2xl text-balance text-xl text-foreground/80 md:text-2xl">
+          {t("pitch")}
+        </p>
+        <p className="mx-auto mt-4 max-w-xl text-pretty text-base text-muted-foreground">
+          {t("body")}
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Button asChild size="lg" variant="ink">
+            <StarterLink href={hero.primary.href}>
+              {t("primaryLabel")}
+              <ArrowRight aria-hidden="true" />
+            </StarterLink>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <StarterLink href={hero.secondary.href}>{t("secondaryLabel")}</StarterLink>
+          </Button>
+        </div>
       </div>
 
-      <AnimateIn preset="fadeUp">
-        <ProductFrame />
-      </AnimateIn>
+      <ProductFrame />
     </section>
   );
 }
 
-/** A drawn, not photographed, product window — replace it with a screenshot of yours. */
+/**
+ * A drawn, not photographed, product window — replace it with a screenshot of
+ * yours. One hairline frame; everything inside it is tonal fill, so there is
+ * no box inside the box.
+ */
 function ProductFrame() {
   const rows = [72, 56, 64, 48, 60];
   return (
     <div
       aria-hidden="true"
-      className="mx-auto mt-16 max-w-content overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card shadow-ambient-lg md:mt-20"
+      className="hero-visual mx-auto mt-16 max-w-content overflow-hidden rounded-[var(--radius-xl)] border border-border bg-card md:mt-20"
     >
       <div className="flex h-10 items-center gap-1.5 border-b border-border px-4">
         <span className="size-2.5 rounded-full bg-neutral-5" />
@@ -99,13 +91,13 @@ function ProductFrame() {
         <div className="p-5 md:p-8">
           <div className="grid grid-cols-3 gap-3">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="rounded-[var(--radius-md)] border border-border p-4">
+              <div key={i} className="rounded-[var(--radius-md)] bg-neutral-2 p-4">
                 <span className="block h-2 w-16 rounded-full bg-neutral-5" />
                 <span className="mt-4 block h-5 w-20 rounded-[var(--radius-sm)] bg-neutral-4" />
               </div>
             ))}
           </div>
-          <div className="mt-5 divide-y divide-border rounded-[var(--radius-md)] border border-border">
+          <div className="mt-5 divide-y divide-border rounded-[var(--radius-md)] bg-neutral-2">
             {rows.map((w) => (
               <div key={w} className="flex items-center gap-3 px-4 py-3">
                 <span className="size-6 shrink-0 rounded-full bg-neutral-4" />

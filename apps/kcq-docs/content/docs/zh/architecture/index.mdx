@@ -1,0 +1,85 @@
+---
+title: 架构
+description: KLineChartQuant 如何拆分成包、数据如何变成一帧画面，以及深入阅读的入口。
+---
+
+KLineChartQuant 是一个围绕无头引擎构建的 pnpm monorepo。框架包负责挂载，Agent 与 UI 调用同一组方法，所有像素都出自同一条帧管线。本页是一张地图，细节在它链接的专题页里。
+
+## 包与边界
+
+| 包 | 发布名 | 职责 |
+|---|---|---|
+| `packages/core` | `@363045841yyt/klinechart-core` | 无头引擎与 `ChartController`，不依赖任何 UI 框架 |
+| `packages/vue` | `@363045841yyt/klinechart` | Vue 3 组件与 `useChart`，同时构建 `<kline-chart>` Web Component（`./web-component`） |
+| `packages/react` | `@363045841yyt/klinechart-react` | `KLineChartWC`，对 Vue 打包的 Web Component 的 React 封装 |
+| `packages/angular` | `@363045841yyt/klinechart-angular` | Angular 绑定 |
+| `packages/agent-runtime` | `@363045841yyt/klinechart-agent-runtime` | 框架无关的 Agent 运行时：编排与宿主契约 |
+| `packages/desktop-electron` | 不发布 | 本地桌面应用 |
+
+三条边界撑起整个结构：
+
+- **Core 不依赖框架。** 各绑定包通过 `workspace:*` 依赖 Core，Core 从不导入 Vue、React 或 Angular。绑定层只做容器挂载、输入转发，以及把信号桥接到各自的响应式系统。
+- **只有一个控制器门面。** `ChartController` 对外提供只读信号（视口、数据、指标、主题、pane 布局、交互状态等）和命令方法，如 `setData`、`setSymbols`、`addIndicator`。所有绑定都只和这一层打交道。
+- **Agent 没有桥接层。** Core 中用 `@Tool` 装饰的方法就是 Agent 的工具。Agent 运行时直接调用它们，作用在用户看到的同一份状态上。
+
+React 是有意绕一段路：React → Web Component → 控制器。这样 UI 只有一份实现，而不是两份。
+
+## 从数据到一帧
+
+```text
+Provider ── SourceRouter ── MarketDataCache
+                                 │
+                          图表数据 Buffer
+                                 │
+                   StateKernel（data 信号更新）
+                                 │
+                       scheduleDraw(level)
+                                 │
+     FrameTransaction：capture → derive → seal → render → publish
+                                 │
+                 Scene / Layer（按 pane、role 与 z 顺序）
+                                 │
+              Renderer ── WebGPU · WebGL2 · Canvas2D
+```
+
+1. 绑定层调用 `setSymbols` 或传入自定义数据，`ChartDataManager` 定位或创建对应序列的 Buffer。
+2. `MarketDataCache` 经 `SourceRouter` 取数，负责分页、重试和去重，再写入 Buffer。详见[行情数据](/zh/docs/market-data)。
+3. Buffer 变化更新 [StateKernel](/zh/docs/architecture/state-kernel) 的 data 信号，并调用 `scheduleDraw()`。
+4. `FrameTransaction` 把下一个动画帧之前到达的请求合并为一次。它先封存输入，一次性推导可见范围与 K 线几何，再封存几何，让命中检测与屏幕上的图形属于同一代，然后绘制。
+5. 每个 pane 通过统一的 `Renderer` 契约（`drawInstances`、`drawLines`）绘制各层。帧进行中到达的输入进入下一代，当前帧不会被中途改写。
+
+交互走更短的路径。指针、滚轮和双指缩放只更新交互状态并重绘 Overlay 层，移动十字线不会重画静态主层。
+
+## 渲染后端
+
+业务层从不直接调用 GPU API，只向 `Renderer` 提交绘制原语，由 `RendererHost` 决定实际后端。
+
+| `settings.rendererBackend` | 尝试顺序 |
+|---|---|
+| `webgpu` | WebGPU → WebGL → Canvas |
+| `webgl` | WebGL → Canvas |
+| `canvas` | Canvas |
+
+实际后端低于偏好时，运行时状态为 `degraded`。切换后端是热替换：Scene 与 Layer 保持不变，新 Renderer 接管后再销毁旧的。WebGPU 设备丢失时依次降级到 WebGL、Canvas。GPU 批次无法完成时，业务层完整执行 Canvas2D 路径。绘制以物理像素执行、逻辑像素输入，设备像素比只有一个来源。
+
+## 深入阅读
+
+| 页面 | 内容 |
+|---|---|
+| [渲染管线](/zh/docs/architecture/rendering-pipeline) | 帧事务、几何封存、Scene/Layer、Renderer、各后端实现与 RendererHost |
+| [系统架构](/zh/docs/architecture/system) | 本页所概括的完整架构文档，含关键文件索引 |
+| [适配层架构](/zh/docs/architecture/adapters) | 各框架绑定背后的 Signal + Controller 设计（英文） |
+| [跨框架兼容](/zh/docs/architecture/cross-framework) | Vue SFC、Web Component、React 与原生用法（英文） |
+| [包边界](/zh/docs/architecture/package-boundaries) | Vue 构建如何不再编译 Core 源码（英文） |
+| [Core 导出](/zh/docs/architecture/core-exports) | 从 Core 导出表生成源码别名 |
+| [架构决策（ADR）](/zh/docs/architecture/adr/0005-renderer-freeze) | 已采纳与提议中的决策，一页一条（英文） |
+| [设计笔记](/zh/docs/architecture/notes/layout-document) | 布局文档、持久化范围、pane、主题、BYOK、Agent 上下文等 |
+| [工程笔记](/zh/docs/architecture/engineering/frame-transaction-timing-effect) | 真实问题的复盘，以及由此塑造引擎的修复 |
+
+## 下一步
+
+<Cards>
+  <Card title="StateKernel" href="/zh/docs/architecture/state-kernel" description="所有绑定和 Agent 读取的单一事实源。" />
+  <Card title="渲染管线" href="/zh/docs/architecture/rendering-pipeline" description="完整的绘制路径。" />
+  <Card title="行情数据" href="/zh/docs/market-data" description="Provider、路由与图表实例级缓存。" />
+</Cards>

@@ -1,9 +1,8 @@
+import { AuthSplitShell } from "@nebutra/auth/sign-in";
 import { getMarketingHomeUrl } from "@nebutra/brand/metadata-helpers";
 import { DEFAULT_ROUTE_LOCALE, toRouteLocale } from "@nebutra/i18n/locales";
 import { ArrowLeft } from "@nebutra/icons";
-import { AUTH_FORM_COLUMN_CLASS } from "@nebutra/ui/utils/auth-surfaces";
 import { getLocale, getTranslations } from "next-intl/server";
-import { cn } from "@/lib/cn";
 import { AuthBanner } from "./auth-banner";
 import { LocaleSwitcher } from "./locale-switcher";
 
@@ -31,34 +30,15 @@ export async function AuthSplitLayout({
   });
 
   return (
-    <div
-      className={cn(
-        "grid min-h-screen bg-background lg:grid-cols-[minmax(360px,36vw)_1fr]",
-        className,
-      )}
+    <AuthSplitShell
+      banner={<AuthBanner />}
+      homeHref={homeHref}
+      homeLabel={t("homeLink")}
+      homeIcon={<ArrowLeft className="size-4" aria-hidden />}
+      localeSwitcher={<LocaleSwitcher />}
+      className={className}
     >
-      <AuthBanner />
-      <main
-        id="main-content"
-        className="relative flex min-h-[100svh] flex-col items-center justify-center px-5 py-20 sm:px-8 lg:px-16"
-      >
-        <a
-          href={homeHref}
-          className="absolute left-5 top-6 z-20 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:left-8 lg:left-12 lg:top-10"
-        >
-          <ArrowLeft className="h-4 w-4" aria-hidden />
-          {t("homeLink")}
-        </a>
-        {/* z-20: locale panel must paint above password visibility toggle + fields */}
-        <div className="absolute right-5 top-6 z-20 sm:right-8 lg:right-12 lg:top-10">
-          <LocaleSwitcher />
-        </div>
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,color-mix(in_srgb,hsl(var(--muted))_80%,transparent),transparent)] lg:hidden"
-        />
-        <div className={AUTH_FORM_COLUMN_CLASS}>{children}</div>
-      </main>
-    </div>
+      {children}
+    </AuthSplitShell>
   );
 }

@@ -7,25 +7,33 @@ import {
   TableHeader,
   TableRow,
 } from "@nebutra/ui/primitives";
+import { getTranslations } from "next-intl/server";
+import type { ReactNode } from "react";
 import { CopyField } from "@/components/copy-field";
 import { PageFrame } from "@/components/page-frame";
 import { getListedModelIds } from "@/lib/listing-catalog";
 import { getBaseUrlHint } from "@/lib/model-routes";
 
-export const metadata = { title: "接入" };
+export async function generateMetadata() {
+  const t = await getTranslations("console.docs");
+  return { title: t("title") };
+}
+
+const mono = (chunks: ReactNode) => <span className="font-mono">{chunks}</span>;
 
 function Snippet({ title, code }: { title: string; code: string }) {
   return (
     <section className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-6">
-      <div className="border-b border-neutral-6 bg-neutral-2/50 px-3 py-1.5 text-[11px] font-semibold">
+      <div className="border-b border-neutral-6 bg-neutral-2/50 px-3 py-1.5 text-xs font-semibold">
         {title}
       </div>
-      <pre className="overflow-x-auto p-3 font-mono text-[11px] leading-relaxed">{code}</pre>
+      <pre className="overflow-x-auto p-3 font-mono text-xs leading-relaxed">{code}</pre>
     </section>
   );
 }
 
 export default async function DocsPage() {
+  const t = await getTranslations("console.docs");
   const base = getBaseUrlHint();
   // The shelf, not the alias table — a snippet must name a model we actually sell.
   const models = await getListedModelIds();
@@ -84,25 +92,21 @@ const r = await client.responses.create({
   -d '{"model":"${sampleModel}","messages":[{"role":"user","content":"ping"}]}'`;
 
   const rows: Array<[string, string, string]> = [
-    ["GET", `${base}/models`, "公开模型列表"],
-    ["POST", `${base}/chat/completions`, "对话补全（流式 / 非流）"],
-    ["POST", `${base}/responses`, "Responses API（Codex、Agents SDK）"],
-    ["POST", `${base}/messages`, "Anthropic Messages（Claude Code、Anthropic SDK，x-api-key）"],
-    ["POST", `${base}/embeddings`, "向量"],
-    ["POST", `${base}/images/generations`, "文生图（302.ai / OpenAI 同契约）"],
-    ["POST", `${base}/images/edits`, "图生图（multipart：image + prompt + model + size）"],
-    ["GET", `${base}/limits`, "这把 Key 的速率上限与额度余量"],
+    ["GET", `${base}/models`, t("endpoints.models")],
+    ["POST", `${base}/chat/completions`, t("endpoints.chat")],
+    ["POST", `${base}/responses`, t("endpoints.responses")],
+    ["POST", `${base}/messages`, t("endpoints.messages")],
+    ["POST", `${base}/embeddings`, t("endpoints.embeddings")],
+    ["POST", `${base}/images/generations`, t("endpoints.imagesGenerations")],
+    ["POST", `${base}/images/edits`, t("endpoints.imagesEdits")],
+    ["GET", `${base}/limits`, t("endpoints.limits")],
   ];
 
   return (
-    <PageFrame
-      title="接入"
-      description="一把 Key，一个 baseURL。OpenAI、Anthropic、Responses 三种协议走同一入口。"
-      width="content"
-    >
+    <PageFrame title={t("title")} description={t("description")} width="content">
       <div className="grid gap-3 sm:grid-cols-2">
         <CopyField label="baseURL" value={base} />
-        <CopyField label="示例 model" value={sampleModel} />
+        <CopyField label={t("sampleModel")} value={sampleModel} />
       </div>
 
       <div className="mt-3 grid gap-3 lg:grid-cols-2">
@@ -111,43 +115,31 @@ const r = await client.responses.create({
         <Snippet title="TypeScript · @anthropic-ai/sdk" code={anthropicSdk} />
         <Snippet title="Claude Code" code={claudeCode} />
         <Snippet title="Codex CLI · Responses API" code={codex} />
-        <Snippet title="图片生成" code={images} />
+        <Snippet title={t("images")} code={images} />
       </div>
 
-      <section className="mt-3 rounded-[var(--radius-md)] border border-neutral-6 p-3 text-[12px] leading-relaxed text-neutral-11">
-        <h2 className="mb-1 text-[13px] font-semibold text-neutral-12">限额</h2>
-        <p>
-          每把 Key 默认 <span className="font-mono">10</span> 次/秒。超出时返回{" "}
-          <span className="font-mono">429</span>，并带上{" "}
-          <span className="font-mono">x-ratelimit-limit</span> /{" "}
-          <span className="font-mono">x-ratelimit-remaining</span> /{" "}
-          <span className="font-mono">x-ratelimit-reset</span> 与{" "}
-          <span className="font-mono">retry-after</span>。
-        </p>
-        <p className="mt-1">
-          Key 上还可以设总额度与单日额度，单日额度按 UTC 零点重置；触顶返回{" "}
-          <span className="font-mono">402 key_quota_exceeded</span>，余额不足返回{" "}
-          <span className="font-mono">402 insufficient_balance</span>。当前生效的数值由{" "}
-          <span className="font-mono">GET {base}/limits</span> 返回，用同一把 Key 调用即可。
-        </p>
+      <section className="mt-3 rounded-[var(--radius-md)] border border-neutral-6 p-3 text-xs leading-relaxed text-neutral-11">
+        <h2 className="mb-1 text-sm font-semibold text-neutral-12">{t("limits.title")}</h2>
+        <p>{t.rich("limits.rate", { mono })}</p>
+        <p className="mt-1">{t.rich("limits.quota", { mono, base })}</p>
       </section>
 
       <div className="mt-3 overflow-hidden rounded-[var(--radius-md)] border border-neutral-6">
-        <Table bare className="w-full text-[12px]">
+        <Table bare className="w-full text-xs">
           <TableHeader>
-            <TableRow className="bg-neutral-2/50 text-[11px] text-neutral-10">
+            <TableRow className="bg-neutral-2/50 text-xs text-muted-foreground">
               <TableHead alignment="start" className="font-medium">
-                Method
+                {t("col.method")}
               </TableHead>
               <TableHead alignment="start" className="font-medium">
-                Path
+                {t("col.path")}
               </TableHead>
               <TableHead alignment="start" className="font-medium">
-                说明
+                {t("col.note")}
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody bordered className="font-mono text-[11px]">
+          <TableBody bordered className="font-mono text-xs">
             {rows.map(([method, path, note]) => (
               <TableRow key={path}>
                 <TableCell alignment="start">{method}</TableCell>

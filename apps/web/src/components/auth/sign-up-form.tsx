@@ -1,6 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { OAuthButtons, oauthButtonsLabels } from "@nebutra/auth/sign-in";
+import type { OAuthProvider } from "@nebutra/auth/sign-in/providers";
 import {
   Button,
   Form,
@@ -14,11 +16,10 @@ import {
 } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import type { OAuthProvider } from "@/lib/auth/oauth-providers";
-import { OAuthButtons } from "./oauth-buttons";
 
 type Phase = "details" | "verify";
 
@@ -66,6 +67,8 @@ function extractSignUpError(payload: unknown): string {
 }
 
 export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps) {
+  const tc = useTranslations("copy.authSignUpForm");
+  const tSignIn = useTranslations("auth.signIn");
   const router = useRouter();
   const searchParams = useSearchParams();
   const accessGateEnabled = process.env.NEXT_PUBLIC_ACCESS_GATE_MODE === "invite";
@@ -185,17 +188,16 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
       <div className="flex flex-col gap-6">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            Check your email
+            {tc("checkYourEmail")}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            We sent a 6-digit code to{" "}
-            <span className="font-medium text-muted-foreground">{email}</span>
+            {tc("weSentADigit")} <span className="font-medium text-muted-foreground">{email}</span>
           </p>
         </div>
 
         <form onSubmit={handleVerify} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="otp-code">Verification code</Label>
+            <Label htmlFor="otp-code">{tc("verificationCode")}</Label>
             <Input
               ref={codeInputRef}
               id="otp-code"
@@ -220,7 +222,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
         </form>
 
         <p className="text-center text-sm text-muted-foreground">
-          Didn&apos;t receive it?{" "}
+          {tc("didnTReceiveIt")}{" "}
           <button
             type="button"
             onClick={handleResendCode}
@@ -238,24 +240,27 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-          Create your account
+          {tc("createYourAccount")}
         </h1>
-        <p className="mt-1 text-sm text-muted-foreground">Start building today</p>
+        <p className="mt-1 text-sm text-muted-foreground">{tc("startBuildingToday")}</p>
       </div>
 
       {accessGateEnabled ? (
         <p className="rounded-[var(--radius-lg)] border border-border bg-muted px-3 py-2 text-sm text-muted-foreground">
-          Social sign-up is disabled while invite-only access is enabled. Use email sign-up with
-          your invite code.
+          {tc("socialSignUpIs")}
         </p>
       ) : shouldRenderOAuth ? (
         <>
-          <OAuthButtons mode="signUp" providers={enabledOAuthProviders} returnUrl={returnUrl} />
+          <OAuthButtons
+            providers={enabledOAuthProviders ?? []}
+            returnTo={returnUrl ?? "/onboarding"}
+            labels={oauthButtonsLabels(tSignIn)}
+          />
 
           <div className="relative">
             <Separator />
             <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs text-muted-foreground">
-              Or continue with
+              {tc("orContinueWith")}
             </span>
           </div>
         </>
@@ -269,7 +274,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
               name="firstName"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-1.5 space-y-0">
-                  <FormLabel>First name</FormLabel>
+                  <FormLabel>{tc("firstName")}</FormLabel>
                   <FormControl>
                     <Input {...field} required autoComplete="given-name" />
                   </FormControl>
@@ -281,7 +286,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
               name="lastName"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-1.5 space-y-0">
-                  <FormLabel>Last name</FormLabel>
+                  <FormLabel>{tc("lastName")}</FormLabel>
                   <FormControl>
                     <Input {...field} required autoComplete="family-name" />
                   </FormControl>
@@ -295,7 +300,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
             name="email"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-1.5 space-y-0">
-                <FormLabel>Email</FormLabel>
+                <FormLabel>{tc("email")}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -314,7 +319,7 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
             name="password"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-1.5 space-y-0">
-                <FormLabel>Password</FormLabel>
+                <FormLabel>{tc("password")}</FormLabel>
                 <FormControl>
                   <Input {...field} type="password" required autoComplete="new-password" />
                 </FormControl>
@@ -328,13 +333,11 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
               name="accessInviteCode"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-1.5 space-y-0">
-                  <FormLabel>Invite code</FormLabel>
+                  <FormLabel>{tc("inviteCode")}</FormLabel>
                   <FormControl>
                     <Input {...field} required autoComplete="off" placeholder="neb_..." />
                   </FormControl>
-                  <p className="text-xs text-muted-foreground">
-                    Nebutra is invite-only while the cold-start gate is enabled.
-                  </p>
+                  <p className="text-xs text-muted-foreground">{tc("nebutraIsInviteOnly")}</p>
                 </FormItem>
               )}
             />
@@ -353,14 +356,14 @@ export function SignUpForm({ returnUrl, enabledOAuthProviders }: SignUpFormProps
       </Form>
 
       <p className="text-center text-sm text-muted-foreground">
-        Already have an account?{" "}
+        {tc("alreadyHaveAnAccount")}{" "}
         <Link
           href={
             returnUrl ? `/sign-in?${new URLSearchParams({ returnUrl }).toString()}` : "/sign-in"
           }
           className="font-medium text-primary hover:text-primary"
         >
-          Sign in
+          {tc("signIn")}
         </Link>
       </p>
     </div>

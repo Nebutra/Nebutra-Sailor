@@ -2,6 +2,7 @@
 
 import { Check, Sparkles as Gift, LoaderCircle as Loader2 } from "@nebutra/icons";
 import { Input } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useId, useState } from "react";
 
 /**
@@ -36,6 +37,7 @@ const DEFAULT_REDEEM: NonNullable<Props["onRedeem"]> = async () => {
 };
 
 export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comfortable" }: Props) {
+  const tc = useTranslations("copy.growthRedemptionCodeInput");
   const inputId = useId();
   const [code, setCode] = useState("");
   const [state, setState] = useState<State>("idle");
@@ -80,7 +82,7 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
           htmlFor={inputId}
           className="text-xs font-medium text-neutral-11"
         >
-          Have a redemption code?
+          {tc("haveARedemptionCode")}
         </label>
       </div>
 
@@ -94,7 +96,7 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase().slice(0, 40))}
           disabled={state === "submitting"}
-          placeholder="ENTER-CODE"
+          placeholder={tc("eNTERCODE")}
           aria-describedby={message ? `${inputId}-message` : undefined}
         />
         <button
@@ -107,7 +109,7 @@ export function RedemptionCodeInput({ onRedeem = DEFAULT_REDEEM, density = "comf
           ) : state === "success" ? (
             <Check className="h-3 w-3" />
           ) : null}
-          Redeem
+          {tc("redeem")}
         </button>
       </div>
 

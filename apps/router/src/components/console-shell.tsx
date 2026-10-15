@@ -28,6 +28,7 @@ import { BrandLogo } from "@/components/brand-logo";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { MarketFooter } from "@/components/market-footer";
 import { RouterMark } from "@/components/router-mark";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { MarketIcon } from "@/lib/market-icons";
 import { MARKET_CHANNELS } from "@/lib/market-taxonomy";
 
@@ -108,7 +109,7 @@ function HeaderMenu({
   items: readonly { id: string; label: string; href?: string; onSelect?: () => void }[];
   align?: "left" | "right";
 }) {
-  const itemClass = "px-3 py-1.5 text-[12px]";
+  const itemClass = "px-3 py-1.5 text-xs";
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild openOnHover>
@@ -174,21 +175,22 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
     <div className="router-market text-neutral-12">
       {/* utility bar — hairline, quieter */}
       <div className="border-b border-[var(--rm-line)]/80 bg-background/40 backdrop-blur-sm">
-        <div className="router-market-shell flex h-9 items-center justify-between gap-3 text-[12px] text-neutral-11">
+        <div className="router-market-shell flex h-9 items-center justify-between gap-3 text-xs whitespace-nowrap text-neutral-11">
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Settlement currency. A picker used to sit here that changed a
                 piece of local state and converted nothing — every price on the
                 site stayed in USD. Display currencies need the FX table
                 (Batch D); until it exists this says what is true. */}
-            <span title="计价与结算均为美元">USD $</span>
-            <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
+            <span aria-label={t("currencyNote")}>USD $</span>
+            <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-xs" />
+            <ThemeToggle className="size-7" />
             <span className="text-neutral-7" aria-hidden>
               |
             </span>
             <AuthActions variant="header" />
           </div>
 
-          <div className="flex items-center gap-3.5">
+          <div className="hidden items-center gap-3.5 sm:flex">
             {!isHome ? (
               <Link href="/" className="hover:text-neutral-12">
                 {t("home")}
@@ -226,7 +228,7 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
         <form onSubmit={onSearch} className="flex min-w-0 flex-1 gap-2.5">
           <div className="relative min-w-0 flex-1">
             <MagnifyingGlass
-              className="pointer-events-none absolute top-1/2 left-4 h-[18px] w-[18px] -translate-y-1/2 text-neutral-9"
+              className="pointer-events-none absolute top-1/2 left-4 h-[18px] w-[18px] -translate-y-1/2 text-muted-foreground"
               aria-hidden
             />
             <input
@@ -235,18 +237,18 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
               name="q"
               defaultValue={seededQuery}
               placeholder={t("searchPlaceholder")}
-              className="h-12 w-full rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 pr-[6rem] pl-11 text-[15px] shadow-[0_1px_2px_rgb(15_23_42/0.03)] outline-none transition placeholder:text-neutral-9 focus:border-neutral-8 focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--neutral-6)_65%,transparent)]"
+              className="h-12 w-full rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 pr-[6rem] pl-11 text-base shadow-ambient-sm outline-none transition placeholder:text-muted-foreground focus:border-neutral-8 focus:shadow-[0_0_0_4px_color-mix(in_srgb,var(--neutral-6)_65%,transparent)]"
             />
             <button
               type="submit"
-              className="absolute top-1/2 right-1.5 h-9 -translate-y-1/2 rounded-full bg-neutral-12 px-4 text-[13px] font-medium text-neutral-1 transition hover:bg-neutral-11"
+              className="absolute top-1/2 right-1.5 h-9 -translate-y-1/2 rounded-full bg-neutral-12 px-4 text-sm font-medium text-neutral-1 transition hover:bg-neutral-12/90"
             >
               {t("search")}
             </button>
           </div>
           <Link
             href="/models"
-            className="hidden h-12 shrink-0 items-center rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 px-5 text-[14px] font-medium text-neutral-11 shadow-[0_1px_2px_rgb(15_23_42/0.03)] transition hover:border-neutral-7 hover:bg-neutral-2 hover:text-neutral-12 sm:inline-flex"
+            className="hidden h-12 shrink-0 items-center rounded-full border border-[var(--rm-panel-border)] bg-neutral-1 px-5 text-sm font-medium text-neutral-11 shadow-ambient-sm transition hover:border-neutral-7 hover:bg-neutral-2 hover:text-neutral-12 sm:inline-flex"
           >
             {t("aiRecommend")}
           </Link>
@@ -254,17 +256,17 @@ function MarketShell({ pathname, children }: { pathname: string; children: React
       </div>
 
       <div className="router-market-shell pb-5">
-        <nav className="router-market-dock mx-auto flex max-w-4xl items-center justify-center gap-1 p-1.5">
+        <nav className="router-market-dock mx-auto flex max-w-4xl items-center justify-start gap-1 overflow-x-auto p-1.5 [scrollbar-width:none] sm:justify-center">
           {MARKET_CHANNELS.map((ch) => {
             const active =
               (ch.match === "tool" && isToolChannel) ||
               (ch.match === "api" && isApiChannel && isHome) ||
               (ch.match === "models" && isModels);
             const className = cn(
-              "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[14px] font-medium transition",
+              "inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-medium transition-colors sm:px-5 sm:py-2.5",
               active
                 ? "bg-neutral-12 text-neutral-1 shadow-sm"
-                : "text-neutral-11 hover:bg-neutral-12/[0.03] hover:text-neutral-12",
+                : "text-neutral-11 hover:bg-accent hover:text-accent-foreground",
             );
             const label = tCh.has(ch.id as never) ? tCh(ch.id as never) : ch.label;
             const body = (
@@ -319,10 +321,11 @@ function AdminShell({
         <div className="mx-auto flex h-11 max-w-[1280px] items-center gap-3 px-4 md:px-6">
           <Link href="/dashboard" className="flex items-center gap-2">
             <BrandLogo variant="mark" className="h-6 w-6" />
-            <span className="text-[13px] font-semibold">{t("title")}</span>
+            <span className="text-sm font-semibold">{t("title")}</span>
           </Link>
-          <div className="ml-auto flex items-center gap-2 text-[12px] text-neutral-11 sm:gap-3">
-            <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
+          <div className="ml-auto flex items-center gap-2 text-xs text-neutral-11 sm:gap-3">
+            <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-xs" />
+            <ThemeToggle />
             <Link href="/" className="hover:text-neutral-12">
               {t("backToMarket")}
             </Link>
@@ -349,7 +352,7 @@ function AdminShell({
                   href={href}
                   title={label}
                   className={cn(
-                    "flex h-8 items-center rounded-lg text-[13px] font-medium",
+                    "flex h-8 items-center rounded-lg text-sm font-medium",
                     isCollapsed ? "justify-center" : "gap-2 px-2",
                     active ? "bg-neutral-3 text-neutral-12" : "text-neutral-11 hover:bg-neutral-2",
                   )}
@@ -396,10 +399,10 @@ function UsageShell({ children }: { children: ReactNode }) {
         <div className="mx-auto flex h-11 max-w-[1280px] items-center gap-3 px-4 md:px-6">
           <Link href="/use" className="flex items-center gap-2">
             <BrandLogo variant="mark" className="h-6 w-6" />
-            <span className="text-[13px] font-semibold">{t("usageTitle")}</span>
+            <span className="text-sm font-semibold">{t("usageTitle")}</span>
           </Link>
-          <div className="ml-auto flex items-center gap-2 text-[12px] text-neutral-11 sm:gap-3">
-            <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-[12px]" />
+          <div className="ml-auto flex items-center gap-2 text-xs text-neutral-11 sm:gap-3">
+            <LocaleSwitcher className="[&_button]:min-h-8 [&_button]:px-1.5 [&_button]:py-0.5 [&_button]:text-xs" />
             <Link href="/" className="hover:text-neutral-12">
               {t("market")}
             </Link>

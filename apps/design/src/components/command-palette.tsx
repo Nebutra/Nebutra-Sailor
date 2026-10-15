@@ -19,6 +19,7 @@ import { Kbd } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { createPortal } from "react-dom";
 
 export interface CommandEntry {
   href: string;
@@ -121,78 +122,86 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
         </Kbd>
       </button>
 
-      {open ? (
-        // biome-ignore lint/a11y/useKeyWithClickEvents: the backdrop is a dismiss affordance; Escape is handled globally above.
-        <div
-          /* A fixed wash, not a themed one. `bg-foreground/20` is correct in
+      {/* Portalled to <body>: the header carries backdrop-filter, which makes it
+          the containing block for fixed descendants, so an inline scrim only
+          covered the header's own 64px. */}
+      {open && typeof document !== "undefined"
+        ? createPortal(
+            // biome-ignore lint/a11y/useKeyWithClickEvents: the backdrop is a dismiss affordance; Escape is handled globally above.
+            <div
+              /* A fixed wash, not a themed one. `bg-foreground/20` is correct in
              light mode — near-black over a light page — and inverts in a dark
              skin, where --foreground is near-white and the scrim became a 20%
              white veil laid over dark content. That is the haze: measured at
              oklab(0.999994 … / 0.2) under Raycast. A scrim is shadow rather
              than surface; it darkens in both modes or it is not a scrim. */
-          className="fixed inset-0 z-50 flex items-start justify-center bg-[oklch(0_0_0/0.45)] p-4 pt-[12vh] backdrop-blur-sm"
-          onClick={(event) => {
-            if (event.target === event.currentTarget) setOpen(false);
-          }}
-        >
-          <div
-            aria-label="Search the design system"
-            aria-modal="true"
-            className="w-full max-w-xl overflow-hidden rounded-[var(--radius-lg)] bg-popover shadow-ambient-lg ring-1 ring-border"
-            role="dialog"
-          >
-            <input
-              className="w-full border-border border-b bg-transparent px-4 py-3.5 text-base text-foreground outline-none placeholder:text-muted-foreground"
-              data-allow-native
-              onChange={(event) => {
-                setQuery(event.target.value);
-                setActive(0);
+              className="fixed inset-0 z-50 flex items-start justify-center bg-[oklch(0_0_0/0.45)] p-4 pt-[12vh] backdrop-blur-sm"
+              onClick={(event) => {
+                if (event.target === event.currentTarget) setOpen(false);
               }}
-              onKeyDown={(event) => {
-                if (event.key === "ArrowDown") {
-                  event.preventDefault();
-                  setActive((value) => Math.min(value + 1, results.length - 1));
-                }
-                if (event.key === "ArrowUp") {
-                  event.preventDefault();
-                  setActive((value) => Math.max(value - 1, 0));
-                }
-                if (event.key === "Enter") {
-                  event.preventDefault();
-                  go(results[active]);
-                }
-              }}
-              placeholder="Search tokens, components, patterns…"
-              ref={inputRef}
-              value={query}
-            />
+            >
+              <div
+                aria-label="Search the design system"
+                aria-modal="true"
+                className="w-full max-w-xl overflow-hidden rounded-[var(--radius-lg)] bg-popover shadow-ambient-lg ring-1 ring-border"
+                role="dialog"
+              >
+                <input
+                  className="w-full border-border border-b bg-transparent px-4 py-3.5 text-base text-foreground outline-none placeholder:text-muted-foreground"
+                  data-allow-native
+                  onChange={(event) => {
+                    setQuery(event.target.value);
+                    setActive(0);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "ArrowDown") {
+                      event.preventDefault();
+                      setActive((value) => Math.min(value + 1, results.length - 1));
+                    }
+                    if (event.key === "ArrowUp") {
+                      event.preventDefault();
+                      setActive((value) => Math.max(value - 1, 0));
+                    }
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      go(results[active]);
+                    }
+                  }}
+                  placeholder="Search tokens, components, patterns…"
+                  ref={inputRef}
+                  value={query}
+                />
 
-            <div className="max-h-[52vh] overflow-y-auto p-1.5">
-              {results.length === 0 ? (
-                <p className="px-3 py-6 text-center text-ui text-muted-foreground">
-                  Nothing matches “{query}”.
-                </p>
-              ) : (
-                results.map((entry, index) => (
-                  <button
-                    className={cn(
-                      "flex w-full items-baseline justify-between gap-4 rounded-[var(--radius-md)] px-3 py-2 text-left transition-colors",
-                      index === active ? "bg-accent text-foreground" : "text-muted-foreground",
-                    )}
-                    key={entry.href}
-                    onClick={() => go(entry)}
-                    onMouseEnter={() => setActive(index)}
-                    type="button"
-                  >
-                    <span className="text-sm">{entry.label}</span>
-                    <span className="shrink-0 text-muted-foreground text-xs">{entry.group}</span>
-                  </button>
-                ))
-              )}
-            </div>
-          </div>
-        </div>
-      ) : null}
+                <div className="max-h-[52vh] overflow-y-auto p-1.5">
+                  {results.length === 0 ? (
+                    <p className="px-3 py-6 text-center text-ui text-muted-foreground">
+                      Nothing matches “{query}”.
+                    </p>
+                  ) : (
+                    results.map((entry, index) => (
+                      <button
+                        className={cn(
+                          "flex w-full items-baseline justify-between gap-4 rounded-[var(--radius-md)] px-3 py-2 text-left transition-colors",
+                          index === active ? "bg-accent text-foreground" : "text-muted-foreground",
+                        )}
+                        key={entry.href}
+                        onClick={() => go(entry)}
+                        onMouseEnter={() => setActive(index)}
+                        type="button"
+                      >
+                        <span className="text-sm">{entry.label}</span>
+                        <span className="shrink-0 text-muted-foreground text-xs">
+                          {entry.group}
+                        </span>
+                      </button>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }

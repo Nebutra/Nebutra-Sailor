@@ -4,19 +4,23 @@ import type { NotificationSettingsSnapshot } from "@nebutra/notifications";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { NotificationCenter } from "@/components/notifications/notification-center";
+import { catalogT } from "@/test/catalog";
 
 vi.mock("next-intl", () => ({
   useFormatter: () => ({
     relativeTime: () => "localized relative time",
   }),
-  useTranslations: () => (key: string) => {
-    const messages: Record<string, string> = {
-      "inbox.emptyCaughtUp": "Inbox is clear.",
-      "inbox.noBackend":
-        "Inbox requires a persistent notification backend. Check your provider configuration.",
-    };
-    return messages[key] ?? key;
-  },
+  useTranslations: (ns?: string) =>
+    ns?.startsWith("copy.")
+      ? catalogT(ns)
+      : (key: string) => {
+          const messages: Record<string, string> = {
+            "inbox.emptyCaughtUp": "Inbox is clear.",
+            "inbox.noBackend":
+              "Inbox requires a persistent notification backend. Check your provider configuration.",
+          };
+          return messages[key] ?? key;
+        },
 }));
 
 vi.mock("@/app/(app)/settings/notifications/actions", () => ({

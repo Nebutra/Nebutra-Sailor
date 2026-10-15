@@ -44,7 +44,7 @@ export function IntegrationVaultGlyph({ copy }: SubpackageGlyphProps) {
             {TENANT_PREFIX} · {t.countSuffix}
           </span>
         </div>
-        <Eye className="h-3 w-3 text-muted-foreground/60" aria-hidden="true" />
+        <Eye className="h-3 w-3 text-muted-foreground" aria-hidden="true" />
       </div>
 
       {/* Secret rows */}
@@ -71,7 +71,7 @@ export function IntegrationVaultGlyph({ copy }: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground/80">
+      <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
         <LockClosed className="h-2.5 w-2.5" aria-hidden="true" />
         <span>{t.footer}</span>
       </div>

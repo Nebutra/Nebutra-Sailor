@@ -2,6 +2,8 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { OAuthButtons, oauthButtonsLabels } from "@nebutra/auth/sign-in";
+import type { OAuthProvider } from "@nebutra/auth/sign-in/providers";
 import { Warning as AlertTriangle, Eye, EyeOff, Key, Envelope as Mail } from "@nebutra/icons";
 import {
   Button,
@@ -20,13 +22,11 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import type { OAuthProvider } from "@/lib/auth/oauth-providers";
 import {
   enablePasskeyConditionalUI,
   isPasskeySupported,
   signInWithPasskey,
 } from "@/lib/auth/passkey-client";
-import { OAuthButtons } from "./oauth-buttons";
 import { useCapsLock } from "./use-caps-lock";
 
 interface SsoDiscoveryProvider {
@@ -198,12 +198,16 @@ export function SignInForm({
     <div className="w-full">
       <div className="mb-8">
         <h1 className="text-3xl font-semibold tracking-tight text-foreground">{t("title")}</h1>
-        <p className="mt-4 text-sm leading-6 text-muted-foreground">{t("subtitle")}</p>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">{t("subtitle")}</p>
       </div>
 
       {shouldRenderOAuth && (
         <>
-          <OAuthButtons mode="signIn" providers={enabledOAuthProviders} returnUrl={returnUrl} />
+          <OAuthButtons
+            providers={enabledOAuthProviders ?? []}
+            returnTo={returnUrl ?? "/"}
+            labels={oauthButtonsLabels(t)}
+          />
           <div className="relative my-6">
             <Separator />
             <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-3 text-xs font-medium text-muted-foreground">

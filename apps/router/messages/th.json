@@ -95,32 +95,6 @@
       "hint": "Agent · เครื่องมือ"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "บอท",
-      "chips": "บอทแชท · บอทวาด · ความรู้"
-    },
-    "productivity": {
-      "label": "ประสิทธิภาพ",
-      "chips": "สนามทดสอบโมเดล · เขียนด้วย AI"
-    },
-    "academic": {
-      "label": "วิชาการ",
-      "chips": "ชุดเครื่องมือ PDF · ค้นหาสิทธิบัตรด้วย AI"
-    },
-    "image": {
-      "label": "เครื่องมือภาพ",
-      "chips": "สตูดิโอ 3D · แคนวาส"
-    },
-    "audio": {
-      "label": "เสียง",
-      "chips": "การพูด · เพลง AI"
-    },
-    "code": {
-      "label": "โค้ด",
-      "chips": "ตัวสร้างเว็บ · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "ภาพรวม",
     "keys": "คีย์",

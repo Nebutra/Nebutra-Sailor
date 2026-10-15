@@ -1,0 +1,83 @@
+---
+title: 安全与权限
+description: 工具如何声明副作用、只读运行能做什么、输入如何校验与脱敏，以及凭据保存在哪里。
+---
+
+有时用户只想让 Agent 看看图表、讲讲行情，什么都别动；有时又希望它把整个工作区重新排一遍。权限模型同时照顾这两种情况：每个工具都声明自己的副作用，只读运行只会拿到不能改动任何东西的工具，所有输入在执行任何代码之前都要先通过校验。
+
+## 每个工具都声明副作用
+
+每个 `@Tool` 都把 `safety` 设为以下两种之一。
+
+| 等级 | 含义 | 示例 |
+| --- | --- | --- |
+| `read-only` | 只读取状态或外部数据，不做任何修改。 | `panes_list`、`indicators_query`、`instruments_query_name`、`market_bars_query`、`market_timeshare_query`、`market_timeshare_range_query`、`drawings_list`、`comparisons_list`、`settings_get`、`web_search`、`ask_user` |
+| `destructive` | 会改变图表、设置或外部世界。 | `pane_create`、`pane_replace_content`、`panes_clear`、`drawing_create`、`drawing_update`、`drawing_delete`、`drawings_copy`、`drawings_clear`、`comparison_create`、`comparisons_clear`、`settings_update`、`settings_reset`、`code_interpreter` |
+
+安全等级是工具冻结元数据的一部分，[工具参考](/zh/docs/agent/tools) 中逐个列出。
+
+## 只读运行
+
+只读是针对单次运行的策略，不属于图表上下文。Agent 工作区单独保存这个开关，在启动运行时通过 `StartRunInput` 的 `readOnly` 传入。它由两道相互独立的检查保证：
+
+1. **解析工具时。** 浏览器 bridge 为本次运行构建工具列表时，`BrowserToolRegistry` 会去掉所有 `safety` 不是 `read-only` 的图表工具，模型根本看不到写入工具。
+2. **执行时。** 运行驱动器在执行前会再检查一次。即使写入工具因为某种原因（例如 Provider 行为异常）出现在只读运行里，调用也会以 `TOOL_NOT_ALLOWED` 失败。
+
+用户还可以在 Agent 设置里单独关闭某些工具。选择会被保存；首次使用时，所有已注册工具默认启用。
+
+当前提交下，浏览器 bridge 不会在每次 destructive 调用前请求确认：`confirmTool` 会报告没有待确认的调用。只想让 Agent 看、不想让它动时，请使用只读运行。Agent 做出的修改与界面操作走同一套命令，所以它画的线可以像其他画线一样撤销。
+
+## 方法执行前先校验输入
+
+每次工具调用都经过注册表统一的 `execute` 入口，用 `Value.Check` 按工具的 TypeBox schema 校验输入。无效输入永远到不了领域方法。schema 是深度冻结的副本，注册表之外的代码无法放宽它。
+
+校验失败时，模型会收到一段简短且有上限的说明：最多收集 `TOOL_INPUT_ERROR_LIMIT`（5）条字段错误，每条写成 `<path>: <message>`，并以数据形式返回：
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "…",
+    "message": "The tool input is invalid: /anchors/0/price: …",
+    "retryable": true,
+    "recommendedAction": "Correct the invalid field and retry the request."
+  },
+  "stateChanged": false
+}
+```
+
+图表的领域错误也以同样方式返回，并附带该错误码对应的恢复提示。`drawing_create` 还会补充具体指引，例如有效的 pane ID 或已加载的日期范围。由于 `stateChanged` 为 `false`，模型知道可以放心重试。
+
+## 脱敏
+
+用户的提示词在写入会话或发送给模型之前，会先经过 `redactString`（位于 `packages/agent-runtime/src/security`）处理：
+
+- `Bearer …`、`Basic …` 鉴权值以及 `sk-` 形式的 Key 替换为 `[REDACTED]`；
+- `/Users/<name>`、`/home/<name>`、`C:\Users\<name>` 这类用户目录路径替换为 `[LOCAL_PATH]`；
+- 当前 Provider Key 与 Exa 搜索 Key 的原值替换为 `[REDACTED]`。
+
+脱敏只作用于用户提示词。模型输出、工具结果、错误、运行事件和用量元信息都原样传递，所以工具绝不能把密钥放进返回结果。
+
+## 凭据保存在哪里
+
+渲染层代码通过 `AgentBridgeClient` 和 `AgentUiEvent` 与 Agent 交互；Provider 负载、凭据、Electron 对象和原始工具结果都留在运行时与宿主适配层之后。发给界面的配置视图从不包含 API Key。Key 本身存在哪里取决于宿主：
+
+| 宿主 | Key 的存放位置 |
+| --- | --- |
+| 浏览器（默认） | 页面 `localStorage` 中的 Agent 设置；配置了 [持久化范围](/zh/docs/guides/layouts) 时按账户和工作区隔离。 |
+| Electron | 注入的 `credentials` 存储（例如 `safeStorage`），不写入 `localStorage`。 |
+| 托管 Provider | 浏览器里没有真实 Key：只发送只读占位值，由宿主的 `fetch` 完成鉴权，托管工作台就是用会话 Cookie 这样做的。 |
+
+## 代码解释器的隔离
+
+`code_interpreter` 是 `destructive` 且 `sequential` 的工具，只有导入其入口时才会注册。它的策略始终要求禁用网络，但实际执行力度取决于 Provider：只有 `cloud-run-sandbox` 报告 `enforcesNetworkPolicy: true`，而它从未在真实的 Cloud Run 沙箱上运行过；`fly-machines` 的出站拦截由本项目自己的 runner 镜像完成，而不是 fly.io；`LocalProvider` 在 macOS、Windows，以及无法使用 `unshare -rn` 的 Linux 主机上不做任何隔离，切勿用它执行不可信代码。完整对比表见 [集成 Agent](/zh/docs/guides/agent-integration)。
+
+## 并行与顺序执行
+
+`executionMode` 告诉运行时，模型在一条消息里发出多个工具调用时该如何调度。运行时默认并行；只要这条消息里有一个调用指向 `sequential` 工具，整条消息的调用就按顺序逐个执行。读取类工具一般是 `parallel`；所有图表写入、`ask_user` 和 `code_interpreter` 都是 `sequential`，因此两次写入永远不会交错。无论哪种方式，工具结果都按模型发出调用的顺序返回给它。
+
+<Cards>
+  <Card title="Agent 如何操作图表" href="/zh/docs/agent" description="工具、上下文与运行时。" />
+  <Card title="工具参考" href="/zh/docs/agent/tools" description="每个工具的安全等级与执行模式。" />
+  <Card title="集成 Agent" href="/zh/docs/guides/agent-integration" description="在应用中配置 Provider、凭据与会话。" />
+</Cards>

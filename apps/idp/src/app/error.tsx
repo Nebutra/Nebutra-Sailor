@@ -1,4 +1,5 @@
 "use client";
+// @copy-exempt: apps/idp has no message runtime (no next-intl); its consent and error copy moves when it gets one.
 
 import { FullPageStatus } from "@nebutra/ui/layout";
 import { useEffect } from "react";

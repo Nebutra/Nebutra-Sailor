@@ -1,0 +1,54 @@
+---
+title: 简介
+description: KLineChartQuant 是一个开源 K 线图表，人和 AI Agent 通过同一套图表 API 操作它。
+---
+
+KLineChartQuant 是一个面向 Web 的金融 K 线图表。你可以把它嵌入自己的应用，也可以直接打开托管工作台开始看盘。
+
+它围绕一个想法构建：AI Agent 操作图表的方式，应该和人一样。Agent 添加指标、移动视口、画一条趋势线时，调用的就是工具栏调用的那些图表方法。中间没有桥接层，也没有第二份图表状态。
+
+## 为 Agent 而设计
+
+图表内核把自身能力以 `@Tool` 注解的方法暴露出来。每个工具都带有参数 schema 和安全级别，UI 与 Agent 经由 `ChartController` 共用同一条执行路径。
+
+```ts
+import { getRegisteredChartTools } from '@363045841yyt/klinechart-core/controllers'
+
+const tools = getRegisteredChartTools()
+```
+
+把这些工具交给 `@363045841yyt/klinechart-agent-runtime`，Agent 就能直接操作用户眼前的这张图。它的产出是图表上真实发生的变化：指标、画线、视口移动。对话只是手段，不是结果。
+
+所有图表状态都存放在一个响应式内核（`StateKernel`）中。只有 action 能写入，其他使用方一律通过只读信号读取。Agent 看到的，就是用户看到的。
+
+## 你能得到什么
+
+- **在任何屏幕上都清晰。** 尺寸由 `ResizeObserver` 驱动并对齐物理像素，K 线、影线和线条在各种设备像素比下都保持锐利。
+- **三种渲染后端。** 绘制图元只提交一次，由 WebGPU、WebGL2 或 Canvas2D 渲染；某个后端不可用时，按这个顺序自动降级。
+- **适配你的框架。** Vue 3 组件、React 封装、`<kline-chart>` Web Component，以及 headless 的 Angular 绑定，都建立在同一个与框架无关的内核之上。
+- **统一的行情模型。** 内置数据源和你自己的 Provider 都遵循同一个 `MarketDataProvider` 契约，也可以直接传入内联数据。
+- **指标、画线与标记。** 内置指标按需加载，自带画线工具，还可以在图上放置你自己的语义化标记。
+- **自定义提示框与图例。** 通过具名插槽，用你自己的模板替换默认的提示框和图例。
+
+KLineChartQuant 以 Apache-2.0 协议开源。
+
+## 托管工作台
+
+[kcq.nebutra.com/app](https://kcq.nebutra.com/app) 是基于这个库构建的产品。用 Nebutra 账号登录，即可使用工作区、托管行情连接、自带的数据源 Key 和托管 AI Agent，无需自己部署任何服务。详见[打开工作台](/zh/docs/workstation)。
+
+## 文档结构
+
+- **快速开始：**[安装](/zh/docs/installation)、[第一张图表](/zh/docs/quickstart)和[托管工作台](/zh/docs/workstation)。
+- **指南：**按任务组织的页面，例如[嵌入应用](/zh/docs/guides/embedding)、[行情数据与 BYOK](/zh/docs/guides/data-feeds) 和[主题](/zh/docs/guides/themes)。
+- **Agent：**Agent 如何驱动图表，以及[工具参考](/zh/docs/agent/tools)。
+- **行情数据：**[实时 K 线协议](/zh/docs/market-data/live-bars)、[HTTP API](/zh/docs/market-data/http-api) 和各内置数据源。
+- **架构：**[系统设计](/zh/docs/architecture/system)、[渲染管线](/zh/docs/architecture/rendering-pipeline)，以及背后的架构决策记录。
+- **参考：**[Vue](/zh/docs/reference/vue)、[React](/zh/docs/reference/react)、[Web Component](/zh/docs/reference/web-component) 的属性、事件，以及[各个包](/zh/docs/reference/packages)的导出。
+
+## 下一步
+
+<Cards>
+  <Card title="安装" href="/zh/docs/installation" description="选择合适的包并加入项目。" />
+  <Card title="第一张图表" href="/zh/docs/quickstart" description="在 Vue、React 或纯 HTML 中用内联数据渲染图表。" />
+  <Card title="Agent" href="/zh/docs/agent" description="了解 Agent 如何通过与 UI 相同的工具操作图表。" />
+</Cards>

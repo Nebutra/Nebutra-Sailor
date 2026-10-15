@@ -47,8 +47,8 @@ RUN pnpm --filter @nebutra/db db:generate
 # Build @nebutra/brand (used by @nebutra/ui at runtime)
 RUN pnpm --filter @nebutra/brand build
 
-# Build @nebutra/web; next.config.ts must have output: 'standalone'
-RUN pnpm --filter @nebutra/web build
+# Build the Next app (build:next — `build` is the Vite preview app); next.config.ts must have output: 'standalone'
+RUN pnpm --filter @nebutra/web build:next
 
 # ── Stage 3: Runtime ──────────────────────────────────────────────────────────
 FROM node:22-alpine@sha256:16e22a550f3863206a3f701448c45f7912c6896a62de43add43bb9c86130c3e2 AS runner

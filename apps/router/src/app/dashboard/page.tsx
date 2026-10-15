@@ -3,6 +3,7 @@ import { monthToDateWindow } from "@nebutra/repositories";
 import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
 import { Button } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { CopyField } from "@/components/copy-field";
 import { PageFrame } from "@/components/page-frame";
@@ -15,15 +16,18 @@ import { getPricedListingCatalog } from "@/lib/shelf-prices";
 import { getBalanceForDisplay } from "@/lib/wallet";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "数据汇总" };
+export async function generateMetadata() {
+  const t = await getTranslations("console.dashboard");
+  return { title: t("title") };
+}
 
 function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: string }) {
   return (
     <div className="rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 px-3 py-2.5">
-      <p className="text-[11px] text-neutral-10">{label}</p>
+      <p className="text-xs text-muted-foreground">{label}</p>
       <p className="mt-0.5 text-lg font-semibold tabular-nums tracking-tight">{value}</p>
       {hint ? (
-        <p className="mt-0.5 truncate font-mono text-[10px] text-neutral-10">{hint}</p>
+        <p className="mt-0.5 truncate font-mono text-xs text-muted-foreground">{hint}</p>
       ) : null}
     </div>
   );
@@ -32,6 +36,7 @@ function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: 
 /** 管理后台 · 数据汇总（原首页控制台） */
 export default async function DashboardPage() {
   const session = await requireAuth("/dashboard");
+  const t = await getTranslations("console.dashboard");
   const tenantId = await resolveSessionTenantId(session);
   const period = monthToDateWindow();
   // Month-to-date in UTC — the same window `/usage` opens on and the same
@@ -64,31 +69,35 @@ export default async function DashboardPage() {
   // told the same story to an account that had never made a call and to one
   // that had made a thousand.
   const checklist = [
-    { label: "钱包余额 > 0", ok: balance.balance > 0, href: "/wallet" },
-    { label: "至少一个可用 Key", ok: keys.some((key) => key.status === "active"), href: "/keys" },
+    { label: t("checklist.balance"), ok: balance.balance > 0, href: "/wallet" },
     {
-      label: "Key 被调用过（baseURL 已接通）",
+      label: t("checklist.activeKey"),
+      ok: keys.some((key) => key.status === "active"),
+      href: "/keys",
+    },
+    {
+      label: t("checklist.keyUsed"),
       ok: keys.some((key) => key.lastUsedAt !== null),
       href: "/docs",
     },
-    { label: "本月已有计费请求", ok: usage.requestCount > 0, href: "/usage" },
+    { label: t("checklist.billed"), ok: usage.requestCount > 0, href: "/usage" },
   ];
 
   return (
     <PageFrame
-      title="数据汇总"
-      description="管理后台：充值 · Key · 接入。逛货架请回 API 集市首页。"
+      title={t("title")}
+      description={t("description")}
       actions={
         <>
           <Button asChild variant="outline" size="sm" className="h-8">
-            <Link href="/usage">用量</Link>
+            <Link href="/usage">{t("actions.usage")}</Link>
           </Button>
           <Button asChild variant="outline" size="sm" className="h-8">
-            <Link href="/">API 集市</Link>
+            <Link href="/">{t("actions.market")}</Link>
           </Button>
           <Button asChild variant="ink" size="sm" className="h-8">
             <Link href="/use" className="inline-flex items-center gap-1">
-              快捷使用
+              {t("actions.quickUse")}
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </Button>
@@ -97,54 +106,60 @@ export default async function DashboardPage() {
     >
       <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
         <Stat
-          label="余额"
+          label={t("stat.balance")}
           value={
             <>
               {balance.balance.toFixed(2)}
-              <span className="ml-1 text-xs font-medium text-neutral-10">{balance.currency}</span>
+              <span className="ml-1 text-xs font-medium text-muted-foreground">
+                {balance.currency}
+              </span>
             </>
           }
-          hint="prepaid wallet"
+          hint={t("stat.balanceHint")}
         />
         <Stat
-          label="API Keys"
+          label={t("stat.keys")}
           value={keys.length}
-          hint={`${keys.filter((key) => key.status === "active").length} 把在用`}
+          hint={t("stat.keysHint", {
+            count: keys.filter((key) => key.status === "active").length,
+          })}
         />
         <Stat
-          label="本月花费"
+          label={t("stat.monthSpend")}
           value={
             <>
               {usage.totalCost.toFixed(usage.totalCost > 0 && usage.totalCost < 0.01 ? 6 : 2)}
-              <span className="ml-1 text-xs font-medium text-neutral-10">{usage.currency}</span>
+              <span className="ml-1 text-xs font-medium text-muted-foreground">
+                {usage.currency}
+              </span>
             </>
           }
-          hint={`${usage.requestCount} 次请求`}
+          hint={t("stat.requestsHint", { count: usage.requestCount })}
         />
-        <Stat label="目录模型" value={models.length} hint={fetchedNote} />
+        <Stat label={t("stat.catalog")} value={models.length} hint={fetchedNote} />
       </div>
 
       <div className="mb-4 grid gap-3 lg:grid-cols-[1.4fr_1fr]">
         <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
-          <p className="mb-2 text-[12px] font-semibold">接入参数</p>
+          <p className="mb-2 text-xs font-semibold">{t("connect.title")}</p>
           <div className="space-y-2">
             <CopyField label="baseURL" value={baseUrl} />
-            <CopyField label="示例 model" value={sample} />
+            <CopyField label={t("connect.sampleModel")} value={sample} />
           </div>
-          <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] bg-neutral-2 p-2 font-mono text-[10px] leading-relaxed text-neutral-11">
+          <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] bg-neutral-2 p-2 font-mono text-xs leading-relaxed text-neutral-11">
             {`curl ${baseUrl}/chat/completions \\
   -H "Authorization: Bearer sk-sailor-…" \\
   -d '{"model":"${sample}","messages":[{"role":"user","content":"ping"}]}'`}
           </pre>
         </div>
         <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
-          <p className="mb-2 text-[12px] font-semibold">上线检查</p>
+          <p className="mb-2 text-xs font-semibold">{t("checklist.title")}</p>
           <ul className="space-y-1">
             {checklist.map((c) => (
               <li key={c.label}>
                 <Link
                   href={c.href}
-                  className="flex h-8 items-center justify-between gap-2 rounded-[var(--radius-md)] px-2 text-[12px] hover:bg-neutral-3"
+                  className="flex h-8 items-center justify-between gap-2 rounded-[var(--radius-md)] px-2 text-xs hover:bg-neutral-3"
                 >
                   <span className="inline-flex items-center gap-2">
                     <span
@@ -159,9 +174,11 @@ export default async function DashboardPage() {
                     {c.label}
                     {/* The tick is colour and shape only; without this the row
                         reads the same done and not-done to a screen reader. */}
-                    <span className="sr-only">{c.ok ? "已完成" : "未完成"}</span>
+                    <span className="sr-only">
+                      {c.ok ? t("checklist.done") : t("checklist.todo")}
+                    </span>
                   </span>
-                  <ArrowRight className="h-3 w-3 text-neutral-9" />
+                  <ArrowRight className="h-3 w-3 text-muted-foreground" />
                 </Link>
               </li>
             ))}
@@ -170,9 +187,9 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mb-2 flex items-center justify-between">
-        <p className="text-[12px] font-semibold">目录精选</p>
-        <Link href="/" className="text-[11px] text-neutral-11 hover:text-neutral-12">
-          打开 API 集市 →
+        <p className="text-xs font-semibold">{t("featured.title")}</p>
+        <Link href="/" className="text-xs text-neutral-11 hover:text-neutral-12">
+          {t("featured.openMarket")}
         </Link>
       </div>
       <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
@@ -183,12 +200,15 @@ export default async function DashboardPage() {
             className="rounded-[var(--radius-lg)] border border-neutral-6 p-3 hover:border-neutral-8 hover:bg-neutral-2/40"
           >
             <div className="flex items-start justify-between gap-2">
-              <p className="font-mono text-[12px] font-semibold">{m.publicModel}</p>
-              <span className="text-[10px] text-neutral-10">{PROVIDER_LABEL[m.provider]}</span>
+              <p className="font-mono text-xs font-semibold">{m.publicModel}</p>
+              <span className="text-xs text-muted-foreground">{PROVIDER_LABEL[m.provider]}</span>
             </div>
-            <p className="mt-1 line-clamp-2 text-[11px] text-neutral-10">{m.name}</p>
-            <p className="mt-2 font-mono text-[10px] tabular-nums text-neutral-11">
-              入 {formatPrice(m.inputPerMTok)} · 出 {formatPrice(m.outputPerMTok)} /1M
+            <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{m.name}</p>
+            <p className="mt-2 font-mono text-xs tabular-nums text-neutral-11">
+              {t("featured.price", {
+                input: formatPrice(m.inputPerMTok),
+                output: formatPrice(m.outputPerMTok),
+              })}
             </p>
           </Link>
         ))}

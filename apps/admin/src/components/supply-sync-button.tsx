@@ -12,23 +12,28 @@ interface SyncResponse {
 /** One click: push CLIProxyAPI's live model list into its New-API channel. */
 export function SupplySyncButton() {
   const [busy, setBusy] = useState(false);
-  const [result, setResult] = useState<string>("");
+  const [result, setResult] = useState<{ ok: boolean; text: string } | null>(null);
 
   const sync = async () => {
     setBusy(true);
-    setResult("");
+    setResult(null);
     try {
       const res = await fetch("/api/supply/sync-channel", { method: "POST" });
       const data = (await res.json()) as SyncResponse;
       if (data.error) {
-        setResult(`失败：${data.error}`);
+        setResult({ ok: false, text: `Sync failed: ${data.error}` });
       } else {
-        setResult(
-          `渠道已${data.action === "created" ? "创建" : "更新"}，${data.models?.length ?? 0} 个模型：${(data.models ?? []).join(", ")}`,
-        );
+        const models = data.models ?? [];
+        setResult({
+          ok: true,
+          text: `Channel ${data.action === "created" ? "created" : "updated"} with ${models.length} ${models.length === 1 ? "model" : "models"}: ${models.join(", ")}`,
+        });
       }
     } catch (error) {
-      setResult(`失败：${error instanceof Error ? error.message : "network"}`);
+      setResult({
+        ok: false,
+        text: `Sync failed: ${error instanceof Error ? error.message : "network error"}`,
+      });
     } finally {
       setBusy(false);
     }
@@ -36,10 +41,17 @@ export function SupplySyncButton() {
 
   return (
     <div className="space-y-2">
-      <Button type="button" variant="ink" size="sm" disabled={busy} onClick={() => void sync()}>
-        {busy ? "同步中…" : "同步模型到 New-API 渠道"}
+      <Button type="button" variant="ink" size="sm" loading={busy} onClick={() => void sync()}>
+        {busy ? "Syncing…" : "Sync models to the New-API channel"}
       </Button>
-      {result ? <p className="text-neutral-11 text-xs">{result}</p> : null}
+      <p
+        role={result && !result.ok ? "alert" : "status"}
+        className={
+          result?.ok === false ? "text-destructive-strong text-xs" : "text-neutral-11 text-xs"
+        }
+      >
+        {result?.text}
+      </p>
     </div>
   );
 }

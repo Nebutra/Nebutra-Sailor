@@ -2,6 +2,7 @@
 
 import { FullPageStatus } from "@nebutra/ui/layout";
 import * as Sentry from "@sentry/nextjs";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 interface ErrorProps {
@@ -10,6 +11,7 @@ interface ErrorProps {
 }
 
 export default function BillingError({ error, reset }: ErrorProps) {
+  const tc = useTranslations("copy.billingError");
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
@@ -18,7 +20,7 @@ export default function BillingError({ error, reset }: ErrorProps) {
     <FullPageStatus
       variant="section"
       code="Error · Billing"
-      title="Failed to load billing."
+      title={tc("failedToLoadBilling")}
       description={
         error.message ||
         "An unexpected error occurred while loading your billing data. Try again, or return to the dashboard."

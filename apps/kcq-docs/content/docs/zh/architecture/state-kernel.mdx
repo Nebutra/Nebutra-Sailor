@@ -1,0 +1,121 @@
+---
+title: StateKernel
+description: 图表的单一事实源、它所依赖的信号原语，以及 Agent 工具为什么是 action 的子集。
+---
+
+图表的每一段状态都只存在一处：标的、周期、视口、缩放、数据、指标、画线、交互、设置和主题。UI、框架绑定和 Agent 读取同一组信号，经由同一组 action 写入，没有任何地方保留第二份副本。
+
+## 四条规则
+
+契约写在 `engine/state/stateKernel.ts` 中，由 TypeScript 类型系统强制保证。
+
+1. **每段状态只有一个可写信号。** 没有影子字段，也没有需要手动同步的缓存。
+2. **派生值放进 `computed()`。** 源信号变化后自动重算，不存在 `syncXxx()` 这类方法。
+3. **外部消费者拿到的是 `ReadonlySignal`。** 它没有 `.set()`，渲染器或组件即使想写也写不了。
+4. **只有 action 能写。** 所有变更都经过语义化的 action（如 `scrollTo`、`zoomTo`），校验、批处理和副作用都集中在这一处。
+
+`ChartStateKernel` 组合各个子状态（options、zoom、data、dataManager、viewport、pane、settings、theme、drawing、interaction、indicator、marker、renderer），并对外暴露它们的只读视图和 action。Kernel 本身不含业务逻辑，只负责把模块连接起来。
+
+## 响应式原语
+
+Kernel 建立在一套零依赖、push 模型的轻量信号库之上，公开入口是 `@363045841yyt/klinechart-core/reactivity`。
+
+| 导出 | 作用 |
+|---|---|
+| `createSignal(initial)` | 创建 `WritableSignal`：直接调用读取，`.peek()` 读取但不追踪，`.set()` 写入，`.subscribe()` 订阅。`writableRef` 是它的别名 |
+| `computed(fn)` | 由 `fn` 中读取的信号派生出 `ReadonlySignal` |
+| `effect(fn)` | 读取过的任一信号变化时重跑 `fn`，返回清理函数 |
+| `batch(fn)` | 把通知推迟到最外层 batch 结束，再让每个订阅者只触发一次 |
+| `selectSignal(source, selector, equal?)` | 只读投影，仅在选取结果变化时通知；用完调用 `dispose()` |
+| `createSubState(initial, computedFns?)` | 构建子状态：私有的 `signals`、公开的 `readonly` 与 `snapshot()` |
+| `createFrameTransaction(options)` | 把高频输入合并为每帧最多发布一次的快照 |
+
+语义刻意保持简单：不在 batch 中时，`set` 同步通知，不经过微任务；相等性判断用 `Object.is`；没有 Proxy、没有深度追踪，只追踪顶层读写；`subscribe` 返回取消订阅函数。正因如此，React 的 `useSyncExternalStore`、Vue 的 effect 和 Angular 的 `toSignal` 都能直接消费同一组信号。
+
+## 编写子状态
+
+子状态把可写句柄留在内部，只返回只读信号和 action。
+
+```ts title="viewportState.ts"
+import { batch, createSubState } from '@363045841yyt/klinechart-core/reactivity'
+
+export function createViewportState() {
+  const { signals, readonly } = createSubState(
+    { scrollLeft: 0, viewWidth: 0 },
+    { scrollRight: (s) => s.scrollLeft() + s.viewWidth() },
+  )
+
+  return {
+    readonly,
+    actions: {
+      scrollTo: (value: number) => signals.scrollLeft.set(Math.max(0, value)),
+      resize: (width: number, scrollLeft: number) =>
+        batch(() => { // [!code highlight]
+          signals.viewWidth.set(width)
+          signals.scrollLeft.set(scrollLeft)
+        }),
+    },
+  }
+}
+```
+
+`readonly` 不只是类型层面的承诺。`createSubState` 会重新构造不含 `.set` 的包装函数，运行时同样拿不到写入句柄。
+
+## 从外部读取
+
+绑定层和宿主代码通过 `ChartController` 访问 Kernel，其中每个状态字段都是 `ReadonlySignal`。
+
+```ts
+const theme = controller.settings().theme      // 读取
+const stop = controller.viewport.subscribe(() => {
+  const viewport = controller.viewport.peek()  // 读取但不追踪
+  // 更新你自己的 UI
+})
+
+stop()
+```
+
+## 原子快照
+
+两套机制保证没有人会读到“改了一半”的状态。
+
+- **`batch()`** 把多次写入合并为一次通知周期。`resize` 之后触发的订阅者，看到的一定是新宽度和新滚动位置同时生效。flush 会一直清空队列直到没有待通知的 listener，因为 `computed` 在执行中还可能产生新的下游通知。
+- **冻结状态。** 已提交的值是冻结的。`deepFreezeSnapshot` 复制并冻结 JSON 形态的参数，避免嵌套对象绕过 action 被修改；`deepFreezeOwned` 原地冻结已转移所有权的大型结果，不做复制；`immutableMap` 在 `set`、`delete`、`clear` 时直接抛错。`FrameTransaction` 会冻结每一帧发布快照的根对象，帧绘制期间写入的输入进入下一代。
+
+Kernel 同时掌握渲染时机。状态变化只是请求绘制，由帧事务决定何时真正绘制，所以一连串指针事件只会产生一帧，而不是每个事件一帧。这套设计的来龙去脉见[《帧事务、时序与 effect》](/zh/docs/architecture/engineering/frame-transaction-timing-effect)。
+
+## 为什么工具是 action 的子集
+
+Agent 工具不是另一套平行 API，而是挂上了 schema 的 action。`@Tool` 装饰器把 UI 调用的那个类上的公开方法登记下来，`getRegisteredChartTools()` 再把这些方法交给 Agent 运行时。
+
+```ts title="features/settings/settingsCommands.ts"
+export class SettingsCommands {
+  @Tool({
+    name: 'settings_update',
+    label: 'Update chart settings',
+    parameters: SettingsUpdateToolParameters,
+    safety: 'destructive',
+    executionMode: 'sequential',
+    // 省略 description
+  })
+  async updateSettings(input: SettingsUpdateInput): Promise<SettingsChangeResult> {
+    return this.applyValues(input.values) // 与设置对话框调用的是同一个 action
+  }
+}
+```
+
+设置对话框、命令面板和 Agent 最终都落到 `applyValues`。由此自然得到三点：
+
+- **一份状态。** Agent 读到的就是用户看到的，几乎没有额外成本，因为根本不需要复制或同步。
+- **一条执行路径。** 校验、批处理和撤销数据只写一次，修一个问题，用户和 Agent 同时受益。
+- **不是每个 action 都是工具。** 只有适合 Agent 调用的 action 才会被装饰，并带上输入 schema 和安全等级（`read-only` 或 `destructive`）。工具集合永远只能是 Kernel 所允许操作的子集。
+
+设置这一侧的决策记录在 [ADR 0006](/zh/docs/architecture/adr/0006-settings-instant-apply)：设置即时生效，不保留草稿副本。
+
+## 下一步
+
+<Cards>
+  <Card title="架构" href="/zh/docs/architecture" description="包边界、从数据到一帧的流程，以及渲染后端。" />
+  <Card title="渲染管线" href="/zh/docs/architecture/rendering-pipeline" description="一次帧事务内部发生了什么。" />
+  <Card title="Agent 工具" href="/zh/docs/agent/tools" description="从 Core 生成的全部已注册工具。" />
+</Cards>

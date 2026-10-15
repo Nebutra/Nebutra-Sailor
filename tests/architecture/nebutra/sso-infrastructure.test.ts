@@ -14,7 +14,7 @@ describe("Enterprise SSO infrastructure contract", () => {
   it("keeps SSO discovery and provider parsing wired together", () => {
     const discoveryRoute = readText("apps/web/src/app/api/auth/sso/discovery/route.ts");
     const parser = readText("apps/web/src/lib/auth/sso-discovery.ts");
-    const oauthProviders = readText("apps/web/src/lib/auth/oauth-providers.ts");
+    const oauthProviders = readText("packages/iam/auth/src/sign-in/oauth-providers.ts");
     const betterAuth = readText("packages/iam/auth/src/providers/better-auth.ts");
     const feishuOAuth = readText("packages/iam/auth/src/providers/better-auth/feishu-oauth.ts");
 

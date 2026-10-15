@@ -23,6 +23,7 @@ import type {
   StartupOSProject,
 } from "@nebutra/startup-os/compiler";
 import { Badge, Button, EmptyState } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { type PointerEvent as ReactPointerEvent, useEffect, useRef, useState } from "react";
 import {
   buildInitialCanvasPositions,
@@ -58,6 +59,7 @@ export function StartupCanvasPanel({
   selectedArtifactId,
   selectedRun,
 }: StartupCanvasPanelProps) {
+  const tc = useTranslations("copy.startupOsStartupCanvasPanel");
   const model = buildStartupCanvasModel(project);
   const initialPositions = buildInitialCanvasPositions(model, canvasLayout);
   const [nodePositions, setNodePositions] =
@@ -193,15 +195,14 @@ export function StartupCanvasPanel({
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <h2 className="text-sm font-semibold tracking-tight text-neutral-12">
-                Company canvas
+                {tc("companyCanvas")}
               </h2>
               <Badge variant="blue-subtle" size="sm">
-                Spatial graph
+                {tc("spatialGraph")}
               </Badge>
             </div>
             <p className="mt-1 max-w-3xl text-xs leading-5 text-neutral-11">
-              Drag nodes, inspect dependencies, and start eligible runs from the same company-state
-              surface.
+              {tc("dragNodesInspectDependencies")}
             </p>
           </div>
           <div className="flex w-fit shrink-0 items-center gap-1 rounded-full bg-neutral-2 p-1">
@@ -210,12 +211,12 @@ export function StartupCanvasPanel({
               variant="ghost"
               shape="circle"
               size="tiny"
-              aria-label="Zoom out"
+              aria-label={tc("zoomOut")}
               onClick={() => changeZoom(Math.max(MIN_ZOOM, Number((zoom - ZOOM_STEP).toFixed(2))))}
             >
               <Minus className="size-3.5" aria-hidden="true" />
             </Button>
-            <span className="min-w-12 shrink-0 whitespace-nowrap text-center text-[11px] font-medium tabular-nums text-neutral-11">
+            <span className="min-w-12 shrink-0 whitespace-nowrap text-center text-xs font-medium tabular-nums text-neutral-11">
               {Math.round(zoom * 100)}%
             </span>
             <Button
@@ -223,7 +224,7 @@ export function StartupCanvasPanel({
               variant="ghost"
               shape="circle"
               size="tiny"
-              aria-label="Zoom in"
+              aria-label={tc("zoomIn")}
               onClick={() => changeZoom(Math.min(MAX_ZOOM, Number((zoom + ZOOM_STEP).toFixed(2))))}
             >
               <Plus className="size-3.5" aria-hidden="true" />
@@ -236,7 +237,7 @@ export function StartupCanvasPanel({
               onClick={resetLayout}
               prefix={<RefreshCounterClockwise className="size-3.5" aria-hidden="true" />}
             >
-              Reset
+              {tc("reset")}
             </Button>
           </div>
         </div>
@@ -338,14 +339,13 @@ function StartupCanvasInspector({
   selectedArtifact: StartupArtifact | null;
   selectedRun: StartupOperatingRun | null;
 }) {
+  const tc = useTranslations("copy.startupOsStartupCanvasPanel");
   const selectedRunExecutable = selectedRun ? isExecutableRun(selectedRun) : false;
   const hasSelection = Boolean(selectedArtifact || selectedRun);
 
   return (
     <aside className="min-h-0 min-w-0 overflow-y-auto bg-neutral-1 p-4">
-      <h3 className="text-[11px] font-semibold uppercase tracking-widest text-neutral-10">
-        Canvas inspector
-      </h3>
+      <h3 className="text-xs font-semibold text-neutral-10">{tc("canvasInspector")}</h3>
 
       {hasSelection ? null : (
         <EmptyState.Root
@@ -353,8 +353,8 @@ function StartupCanvasInspector({
           align="start"
           size="sm"
           icon={<EmptyState.Icon icon={<Layers className="size-5" />} />}
-          title="Nothing selected"
-          description="Pick a node on the canvas to read its dependencies and run controls."
+          title={tc("nothingSelected")}
+          description={tc("pickANodeOn")}
         />
       )}
 
@@ -362,14 +362,17 @@ function StartupCanvasInspector({
         <div className="mt-3 rounded-2xl bg-neutral-2 p-3">
           <p className="text-sm font-semibold text-neutral-12">{selectedArtifact.title}</p>
           <p className="mt-1 text-xs leading-5 text-neutral-11">{selectedArtifact.summary}</p>
-          <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-11">
-            <span>Status: {selectedArtifact.status}</span>
-            <span>Owner: {selectedArtifact.owner}</span>
+          <div className="mt-3 grid gap-1.5 text-xs text-neutral-11">
+            <span>{tc("status", { status: String(selectedArtifact.status ?? "") })}</span>
+            <span>{tc("owner", { owner: String(selectedArtifact.owner ?? "") })}</span>
             <span className="break-words">
-              Dependencies:{" "}
-              {selectedArtifact.dependencies.length > 0
-                ? selectedArtifact.dependencies.join(", ")
-                : "CompanyContext"}
+              {tc("dependencies", {
+                value0: String(
+                  selectedArtifact.dependencies.length > 0
+                    ? selectedArtifact.dependencies.join(", ")
+                    : "CompanyContext",
+                ),
+              })}
             </span>
           </div>
         </div>
@@ -384,10 +387,10 @@ function StartupCanvasInspector({
             </div>
             <StartupRunStatusBadge status={selectedRun.status} />
           </div>
-          <div className="mt-3 grid gap-1.5 text-[11px] text-neutral-11">
-            <span>Adapter: {selectedRun.adapter}</span>
-            <span>Approval: {selectedRun.approval}</span>
-            <span>Budget: ${selectedRun.costEstimateUsd.toFixed(2)}</span>
+          <div className="mt-3 grid gap-1.5 text-xs text-neutral-11">
+            <span>{tc("adapter", { adapter: String(selectedRun.adapter ?? "") })}</span>
+            <span>{tc("approval", { approval: String(selectedRun.approval ?? "") })}</span>
+            <span>{tc("budget", { value0: String(selectedRun.costEstimateUsd.toFixed(2)) })}</span>
           </div>
           <Button
             type="button"
@@ -459,15 +462,13 @@ function StartupCanvasNodeButton({
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold">{node.title}</p>
-          <p className="mt-1 line-clamp-2 text-[11px] leading-4 opacity-80">{node.subtitle}</p>
+          <p className="mt-1 line-clamp-2 text-xs leading-4 opacity-80">{node.subtitle}</p>
         </div>
-        <span className="shrink-0 rounded-full bg-neutral-1 px-2 py-0.5 text-[10px] font-medium text-neutral-12">
+        <span className="shrink-0 rounded-full bg-neutral-1 px-2 py-0.5 text-xs font-medium text-neutral-12">
           {node.kind}
         </span>
       </div>
-      <p className="mt-3 truncate text-[11px] font-medium uppercase tracking-widest opacity-80">
-        {node.status}
-      </p>
+      <p className="mt-3 truncate text-xs font-medium opacity-80">{node.status}</p>
     </button>
   );
 }

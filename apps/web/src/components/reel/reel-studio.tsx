@@ -13,6 +13,7 @@
 import { Sparkles } from "@nebutra/icons";
 import type { ReelGraph } from "@nebutra/reel";
 import { Button, Textarea, toast } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 
 const SCALE = 0.5;
@@ -22,6 +23,7 @@ interface ReelStudioProps {
 }
 
 export function ReelStudio({ graphId }: ReelStudioProps) {
+  const tc = useTranslations("copy.reelReelStudio");
   const [graph, setGraph] = useState<ReelGraph | null>(null);
   const [script, setScript] = useState(
     "Wide shot of a neon city at dusk\nClose on a detective's tired eyes\nRain hammering an empty alley",
@@ -59,7 +61,7 @@ export function ReelStudio({ graphId }: ReelStudioProps) {
       <div className="relative h-[560px] overflow-auto rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-2">
         {!graph ? (
           <div className="absolute inset-0 flex items-center justify-center text-neutral-11">
-            <p className="text-sm">Split a script — the server builds a typed node graph here.</p>
+            <p className="text-sm">{tc("splitAScriptThe")}</p>
           </div>
         ) : (
           graph.nodes.map((node) => {
@@ -92,11 +94,11 @@ export function ReelStudio({ graphId }: ReelStudioProps) {
       </div>
 
       <div className="flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-4">
-        <h2 className="font-semibold text-neutral-12 text-sm">Script</h2>
+        <h2 className="font-semibold text-neutral-12 text-sm">{tc("script")}</h2>
         <Textarea
           value={script}
           onChange={(e) => setScript(e.target.value)}
-          placeholder="One shot per line…"
+          placeholder={tc("oneShotPerLine")}
           rows={6}
           disabled={busy}
         />

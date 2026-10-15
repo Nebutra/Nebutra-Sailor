@@ -1,6 +1,7 @@
 "use client";
 
 import { FullPageStatus } from "@nebutra/ui/layout";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 /**
@@ -14,6 +15,7 @@ export default function RouteError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const tc = useTranslations("copy.webError");
   useEffect(() => {
     // The digest ties this browser log to the server's entry for the same error.
     console.error(error.digest ?? error);
@@ -23,8 +25,8 @@ export default function RouteError({
     <FullPageStatus
       variant="section"
       code="Error"
-      title="This page didn't load."
-      description="Something went wrong on our side. Try again; it usually works the second time."
+      title={tc("thisPageDidnT")}
+      description={tc("somethingWentWrongOn")}
       primaryAction={{ label: "Try again", onClick: reset }}
       secondaryAction={{ label: "Go home", href: "/" }}
       {...(error.digest ? { meta: { errorId: error.digest } } : {})}

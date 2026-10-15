@@ -2,6 +2,7 @@
 
 import { brand } from "@nebutra/brand/metadata";
 import { Button, Field, Input } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 type VerifyStatus = "pending" | "approved" | "denied";
@@ -44,6 +45,7 @@ export function DeviceApprovalForm({
   defaultUserCode: string;
   signedInEmail: string | null;
 }) {
+  const tc = useTranslations("copy.authDeviceApprovalForm");
   const [codeInput, setCodeInput] = useState(formatUserCode(defaultUserCode));
   const [step, setStep] = useState<Step>({ kind: "enter-code" });
 
@@ -113,9 +115,11 @@ export function DeviceApprovalForm({
   return (
     <div className="grid gap-6 rounded-lg border border-border bg-card p-8 shadow-ambient-sm">
       <div className="grid gap-1">
-        <h1 className="text-xl font-semibold text-foreground">Authorize a device</h1>
+        <h1 className="text-xl font-semibold text-foreground">{tc("authorizeADevice")}</h1>
         {signedInEmail && (
-          <p className="text-sm text-muted-foreground">Signed in as {signedInEmail}</p>
+          <p className="text-sm text-muted-foreground">
+            {tc("signedInAs", { signedInEmail: String(signedInEmail ?? "") })}
+          </p>
         )}
       </div>
 
@@ -127,17 +131,13 @@ export function DeviceApprovalForm({
             void checkCode(codeInput);
           }}
         >
-          <Field
-            label="Device code"
-            htmlFor="user-code"
-            description="Shown on the device you're signing in."
-          >
+          <Field label={tc("deviceCode")} htmlFor="user-code" description={tc("shownOnTheDevice")}>
             <Input
               id="user-code"
               name="user_code"
               autoComplete="off"
               autoCapitalize="characters"
-              placeholder="XXXX-XXXX"
+              placeholder={tc("xXXXXXXX")}
               value={codeInput}
               disabled={step.kind === "checking"}
               onChange={(event) => setCodeInput(formatUserCode(event.target.value))}
@@ -152,9 +152,10 @@ export function DeviceApprovalForm({
       {step.kind === "confirm" && (
         <div className="grid gap-4">
           <p className="text-sm text-foreground">
-            Code <span className="font-mono font-semibold">{formatUserCode(step.userCode)}</span>{" "}
-            wants to sign in as you on the {brand.name} CLI. If you didn't run{" "}
-            <span className="font-mono">nebutra login</span>, deny this request.
+            {tc("code")}{" "}
+            <span className="font-mono font-semibold">{formatUserCode(step.userCode)}</span>{" "}
+            {tc("wantsToSignIn")} {brand.name} {tc("cLIIfYouDidn")}{" "}
+            <span className="font-mono">{tc("nebutraLogin")}</span>, deny this request.
           </p>
           <div className="grid grid-cols-2 gap-3">
             <Button
@@ -162,10 +163,10 @@ export function DeviceApprovalForm({
               variant="outline"
               onClick={() => void respond(step.userCode, "deny")}
             >
-              Deny
+              {tc("deny")}
             </Button>
             <Button type="button" onClick={() => void respond(step.userCode, "approve")}>
-              Approve
+              {tc("approve")}
             </Button>
           </div>
         </div>
@@ -183,7 +184,7 @@ export function DeviceApprovalForm({
         <div className="grid gap-3">
           <p className="text-sm text-destructive-strong">{step.message}</p>
           <Button type="button" variant="outline" onClick={() => setStep({ kind: "enter-code" })}>
-            Try again
+            {tc("tryAgain")}
           </Button>
         </div>
       )}

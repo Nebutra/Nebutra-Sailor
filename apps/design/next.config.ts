@@ -24,6 +24,9 @@ const nextConfig: NextConfig = {
     "@nebutra/design-tokens",
   ],
   turbopack: { root: monorepoRoot },
+  // Catalog demos (/showcase) use next/image with Unsplash photography; without
+  // this the dev overlay reports an "Invalid src prop" issue per card.
+  images: { remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }] },
   experimental: {
     optimizePackageImports: ["@nebutra/icons"],
   },

@@ -2,6 +2,7 @@
 
 import type { ReelGraph } from "@nebutra/reel";
 import { ReelCanvas } from "@nebutra/reel/canvas";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 /**
@@ -29,6 +30,7 @@ const SEED: ReelGraph = {
 };
 
 export function CanvasDemoClient() {
+  const tc = useTranslations("copy.canvasCanvasDemoClient");
   const [graph, setGraph] = useState<ReelGraph>(SEED);
 
   return (
@@ -36,7 +38,8 @@ export function CanvasDemoClient() {
       <ReelCanvas graph={graph} onChange={setGraph} />
       <p className="text-muted-foreground text-sm">
         Drag nodes, connect handles (cycles are rejected), delete to mutate. Live graph:{" "}
-        <code>{graph.nodes.length}</code> nodes, <code>{graph.edges.length}</code> edges.
+        <code>{graph.nodes.length}</code> {tc("nodes")} <code>{graph.edges.length}</code>{" "}
+        {tc("edges")}
       </p>
     </div>
   );

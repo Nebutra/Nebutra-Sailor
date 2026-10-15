@@ -95,32 +95,6 @@
       "hint": "ایجنٹ · ٹولز"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "بٹس",
-      "chips": "چیٹ بٹس · ڈرائنگ بٹس · کھوج"
-    },
-    "productivity": {
-      "label": "پروڈکٹیویٹی",
-      "chips": "ماڈل ارینا · AI لکھائی"
-    },
-    "academic": {
-      "label": "تعلیمی",
-      "chips": "PDF ٹول کٹ · AI پیٹنٹ سرچ"
-    },
-    "image": {
-      "label": "امیج ٹولز",
-      "chips": "3D اسٹوڈیو · کینوس"
-    },
-    "audio": {
-      "label": "آڈیو",
-      "chips": "اسپیچ · AI میوزک"
-    },
-    "code": {
-      "label": "کوڈ",
-      "chips": "ویب جنریٹر · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "اوور ویو",
     "keys": "کیز",

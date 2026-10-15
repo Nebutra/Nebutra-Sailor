@@ -18,6 +18,7 @@ import {
   Input,
   Select,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -58,6 +59,7 @@ export function CreateProviderKeyDialog({
   onOpenChange,
   onCreate,
 }: CreateProviderKeyDialogProps) {
+  const tc = useTranslations("copy.providerKeysCreateProviderKeyDialog");
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: { provider: "OPENAI", apiKey: "", baseUrl: "", label: "", alwaysUse: false },
@@ -94,11 +96,8 @@ export function CreateProviderKeyDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Add provider key</DialogTitle>
-          <DialogDescription>
-            Bring your own AI provider key. It is encrypted at rest and used in preference to the
-            platform key for matching models.
-          </DialogDescription>
+          <DialogTitle>{tc("addProviderKey")}</DialogTitle>
+          <DialogDescription>{tc("bringYourOwnAI")}</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -109,7 +108,7 @@ export function CreateProviderKeyDialog({
               render={({ field }) => (
                 <FormItem className="space-y-0">
                   <FormLabel className="mb-1 block text-sm font-medium text-foreground">
-                    Provider
+                    {tc("provider")}
                   </FormLabel>
                   <FormControl>
                     <Select
@@ -136,7 +135,7 @@ export function CreateProviderKeyDialog({
               render={({ field }) => (
                 <FormItem className="space-y-0">
                   <FormLabel className="mb-1 block text-sm font-medium text-foreground">
-                    API key
+                    {tc("aPIKey")}
                   </FormLabel>
                   <FormControl>
                     <Input
@@ -159,7 +158,7 @@ export function CreateProviderKeyDialog({
               render={({ field }) => (
                 <FormItem className="space-y-0">
                   <FormLabel className="mb-1 block text-sm font-medium text-foreground">
-                    Base URL{" "}
+                    {tc("baseURL")}{" "}
                     <span className="font-normal text-muted-foreground">
                       {provider === "CUSTOM" ? "(required)" : "(optional)"}
                     </span>
@@ -183,13 +182,14 @@ export function CreateProviderKeyDialog({
               render={({ field }) => (
                 <FormItem className="space-y-0">
                   <FormLabel className="mb-1 block text-sm font-medium text-foreground">
-                    Label <span className="font-normal text-muted-foreground">(optional)</span>
+                    {tc("label")}{" "}
+                    <span className="font-normal text-muted-foreground">(optional)</span>
                   </FormLabel>
                   <FormControl>
                     <Input
                       type="text"
                       maxLength={80}
-                      placeholder="e.g. Production"
+                      placeholder={tc("eGProduction")}
                       disabled={submitting}
                       {...field}
                     />
@@ -214,10 +214,9 @@ export function CreateProviderKeyDialog({
                       className="mt-0.5 h-4 w-4 rounded border-border text-primary"
                     />
                     <span>
-                      Always use this key
+                      {tc("alwaysUseThisKey")}
                       <span className="mt-0.5 block text-xs text-muted-foreground">
-                        Never fall back to the platform key for this provider. Requests fail if your
-                        key is exhausted.
+                        {tc("neverFallBackTo")}
                       </span>
                     </span>
                   </label>
@@ -235,7 +234,7 @@ export function CreateProviderKeyDialog({
                 onClick={() => onOpenChange(false)}
                 disabled={submitting}
               >
-                Cancel
+                {tc("cancel")}
               </Button>
               <Button type="submit" variant="ink" disabled={submitting}>
                 {submitting ? "Saving…" : "Save key"}

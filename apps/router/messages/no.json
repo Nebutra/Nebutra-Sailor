@@ -95,32 +95,6 @@
       "hint": "Agent · verktøy"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Bots",
-      "chips": "Chatbots · tegnebots · kunnskap"
-    },
-    "productivity": {
-      "label": "Produktivitet",
-      "chips": "Modellarena · AI-skriving"
-    },
-    "academic": {
-      "label": "Akademisk",
-      "chips": "PDF-verktøysett · AI-patentsøk"
-    },
-    "image": {
-      "label": "Bildeverktøy",
-      "chips": "3D-studio · Canvas"
-    },
-    "audio": {
-      "label": "Lyd",
-      "chips": "Tale · AI-musik"
-    },
-    "code": {
-      "label": "Kode",
-      "chips": "Web-generator · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Oversikt",
     "keys": "Nøkler",

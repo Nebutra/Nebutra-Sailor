@@ -99,7 +99,7 @@ function PermissionCell({ state, highlighted }: { state: CellState; highlighted:
 
   return (
     <span
-      className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground/60 ${ring}`}
+      className={`inline-flex h-7 w-7 items-center justify-center rounded-full text-muted-foreground ${ring}`}
       aria-label="not applicable"
     >
       <span aria-hidden>—</span>
@@ -152,7 +152,7 @@ export function PermissionsShowcase(_props: PackageShowcaseProps) {
             <TableRow key={resource}>
               <TableCell className="text-foreground">
                 <span className="inline-flex items-center gap-2">
-                  <LockClosed className="h-3.5 w-3.5 text-muted-foreground/60" aria-hidden />
+                  <LockClosed className="h-3.5 w-3.5 text-muted-foreground" aria-hidden />
                   {copy.resources[resource]}
                 </span>
               </TableCell>
@@ -171,7 +171,7 @@ export function PermissionsShowcase(_props: PackageShowcaseProps) {
         </TableBody>
       </Table>
 
-      <p className="mt-4 text-center text-[10px] uppercase tracking-wider text-muted-foreground/70">
+      <p className="mt-4 text-center text-[10px] uppercase tracking-wider text-muted-foreground">
         {copy.footer}
       </p>
     </ShowcaseFrame>

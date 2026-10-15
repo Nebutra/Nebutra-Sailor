@@ -1,14 +1,14 @@
 "use client";
 
 import { Bell, Check, Clock, Lightning, User } from "@nebutra/icons";
-import { StatusBadge, StatusDot } from "@nebutra/ui/primitives";
+import { Badge, StatusDot } from "@nebutra/ui/primitives";
 import type { SubpackageGlyphProps } from "./types";
 
 /* -------------------------------------------------------------------------- *\
  *  NotificationsGlyph — mini inbox feed for @nebutra/notifications.
  *
  *  Composition: header (Bell + mono caption + live StatusDot) + 3 stacked
- *  notification rows using StatusBadge in distinct status variants. Each row
+ *  notification rows with a compact event badge. Each row
  *  pairs an event-type chip with a short title and a relative time stamp so
  *  the multi-channel inbox affordance reads at a glance.
 \* -------------------------------------------------------------------------- */
@@ -35,9 +35,9 @@ export function NotificationsGlyph({ copy }: SubpackageGlyphProps) {
   return (
     <div
       className="flex w-full flex-col gap-2 rounded-[var(--radius-md)] bg-muted p-3"
-      style={{ height: 160 }}
+      style={{ minHeight: 160 }}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <span className="inline-flex items-center gap-2 text-foreground">
           <Bell aria-hidden="true" className="size-3.5 text-muted-foreground" />
           <span className="font-mono text-[10px] tracking-wide text-muted-foreground uppercase">
@@ -49,14 +49,26 @@ export function NotificationsGlyph({ copy }: SubpackageGlyphProps) {
 
       <ul className="flex flex-1 flex-col gap-1.5">
         {FEED_ROWS.map((row) => (
-          <li key={row.eventType} className="flex h-7 items-center justify-between gap-2">
-            <StatusBadge
-              className="h-7 py-0 text-[10px]"
-              leftIcon={row.icon}
-              leftLabel={row.eventType}
-              rightLabel={row.title}
-              status={row.badgeStatus}
-            />
+          <li
+            key={row.eventType}
+            className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1"
+          >
+            <div className="min-w-0">
+              <Badge variant="outline" className="gap-1 whitespace-nowrap font-mono text-[10px]">
+                <row.icon
+                  aria-hidden="true"
+                  className={`size-3 shrink-0 ${
+                    row.badgeStatus === "success"
+                      ? "text-success-strong"
+                      : row.badgeStatus === "warning"
+                        ? "text-warning-strong"
+                        : "text-info"
+                  }`}
+                />
+                {row.eventType}
+              </Badge>
+              <p className="mt-0.5 text-xs text-muted-foreground">{row.title}</p>
+            </div>
             <span className="inline-flex shrink-0 items-center gap-1 font-mono text-[10px] text-muted-foreground">
               <Clock aria-hidden="true" className="size-3" />
               {row.time}

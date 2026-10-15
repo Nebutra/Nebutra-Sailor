@@ -3,6 +3,7 @@
 import { Plus } from "@nebutra/icons";
 import type { ContextLayer } from "@nebutra/startup-os/company-context/model";
 import { Button } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { FieldCard } from "./field-card";
 import type { FieldActionHandlers } from "./types";
 
@@ -30,6 +31,7 @@ export function BrandKitFloor({
   onUploadField,
   onEditField,
 }: BrandKitFloorProps) {
+  const tc = useTranslations("copy.companyTowerBrandKitFloor");
   const fieldKeys = Object.keys(layer.fields);
 
   return (
@@ -55,11 +57,11 @@ export function BrandKitFloor({
         size="sm"
         prefix={<Plus aria-hidden="true" />}
         disabled={onEditField === undefined}
-        aria-label="Add a brand-kit field"
+        aria-label={tc("addABrandKit")}
         onClick={() => onEditField?.(layer.id, "")}
         className="self-start text-neutral-10"
       >
-        field
+        {tc("field")}
       </Button>
     </div>
   );

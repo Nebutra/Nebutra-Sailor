@@ -41,3 +41,14 @@ export const formControlInvalidClassNames = {
  */
 export const controlFocusProxyClassName =
   "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[hsl(var(--ring))]";
+
+/**
+ * Keyboard focus for a native range input. The global :focus-visible rule
+ * excludes `input`, and the thumb is a pseudo-element, so a focused slider
+ * showed nothing at all (7 of 7 on the design site). Same outline as the
+ * global rule, drawn on the thumb.
+ */
+export const rangeThumbFocusClassName = [
+  "focus-visible:[&::-webkit-slider-thumb]:outline-2 focus-visible:[&::-webkit-slider-thumb]:outline-offset-2 focus-visible:[&::-webkit-slider-thumb]:outline-[hsl(var(--ring))]",
+  "focus-visible:[&::-moz-range-thumb]:outline-2 focus-visible:[&::-moz-range-thumb]:outline-offset-2 focus-visible:[&::-moz-range-thumb]:outline-[hsl(var(--ring))]",
+].join(" ");

@@ -3,6 +3,8 @@
  * Token HSL components must be consumed via hsl(var(--*)), never bare var(--background).
  */
 @import "@nebutra/ui/styles/preset.css";
+/* Shared sign-in components (AuthSplitShell, OAuthButtons) — owned by @nebutra/auth */
+@import "@nebutra/auth/sign-in/sources.css";
 
 @layer base {
   html,

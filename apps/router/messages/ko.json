@@ -95,32 +95,6 @@
       "hint": "에이전트 · 도구"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "봇",
-      "chips": "채팅 봇 · 그리기 봇 · 지식"
-    },
-    "productivity": {
-      "label": "생산성",
-      "chips": "모델 아레나 · AI 글쓰기"
-    },
-    "academic": {
-      "label": "학술",
-      "chips": "PDF 도구 · AI 특허 검색"
-    },
-    "image": {
-      "label": "이미지 도구",
-      "chips": "3D 스튜디오 · 캔버스"
-    },
-    "audio": {
-      "label": "오디오",
-      "chips": "음성 · AI 음악"
-    },
-    "code": {
-      "label": "코드",
-      "chips": "웹 생성기 · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "개요",
     "keys": "키",

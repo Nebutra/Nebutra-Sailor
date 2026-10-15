@@ -1,0 +1,33 @@
+# Build output
+/.next/
+/out/
+/dist/
+/.source/
+/.generated/
+next-env.d.ts
+*.tsbuildinfo
+
+# Generated from the pinned chart source by scripts/generate.mjs (.generated/manifest.json).
+/src/generated/
+/public/docs/fonts/
+/content/docs/*/agent/tools/
+/content/docs/*/reference/
+/content/docs/*/changelog/
+/content/docs/*/architecture/adr/
+/content/docs/*/architecture/notes/
+/content/docs/*/architecture/engineering/
+/content/docs/*/architecture/system.md
+/content/docs/*/architecture/rendering-pipeline.md
+/content/docs/*/architecture/adapters.md
+/content/docs/*/architecture/cross-framework.md
+/content/docs/*/architecture/package-boundaries.md
+/content/docs/*/architecture/core-exports.md
+/content/docs/*/market-data/sources/
+/content/docs/*/market-data/live-bars.mdx
+/content/docs/*/market-data/http-api.mdx
+/content/docs/*/market-data/provider-api.md
+/content/docs/*/contributing/indicators.md
+/content/docs/*/contributing/ci-gates.md
+/content/docs/*/contributing/releases.md
+/public/docs/agent-tools.json
+/public/docs/brand/

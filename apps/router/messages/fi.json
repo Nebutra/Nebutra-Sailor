@@ -95,32 +95,6 @@
       "hint": "Agentti · työkalut"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Botit",
-      "chips": "Keskustelubotit · piirtämisbotit · tietopohjat"
-    },
-    "productivity": {
-      "label": "Tuottavuus",
-      "chips": "Malliarena · tekoälykirjoitus"
-    },
-    "academic": {
-      "label": "Akateeminen",
-      "chips": "PDF-työkalut · AI-patenttihakku"
-    },
-    "image": {
-      "label": "Kuvatyökalut",
-      "chips": "3D-studio · Canvas"
-    },
-    "audio": {
-      "label": "Ääni",
-      "chips": "Puhe · AI-musiikki"
-    },
-    "code": {
-      "label": "Koodi",
-      "chips": "Verkkogeneraattori · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Yleiskatsaus",
     "keys": "Avaimet",

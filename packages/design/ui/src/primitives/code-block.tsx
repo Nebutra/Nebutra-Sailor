@@ -3,7 +3,6 @@
 import { Check, ChevronDown, Copy, File, FileText as FileCode, FileText } from "@nebutra/icons";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils";
 import {
@@ -155,60 +154,101 @@ export type CodeBlockProps = CodeBlockFilesProps | CodeBlockSingleProps;
 
 const CODE_FONT_FAMILY = "var(--font-mono)";
 
-const lightTheme = {
-  ...nightOwl,
-  'pre[class*="language-"]': {
-    ...nightOwl['pre[class*="language-"]'],
-    background: "transparent",
-    fontFamily: CODE_FONT_FAMILY,
-  },
-  'code[class*="language-"]': {
-    ...nightOwl['code[class*="language-"]'],
-    color: "hsl(var(--foreground))",
-    fontFamily: CODE_FONT_FAMILY,
-  },
-  comment: {
-    color: "hsl(var(--muted-foreground))",
-    fontStyle: "italic",
-  },
-  punctuation: {
-    color: "hsl(var(--foreground))",
-  },
-  property: {
-    color: "#0550FF",
-  },
-  string: {
-    color: "#14532D",
-  },
-  keyword: {
-    color: "#9333EA",
-  },
-  function: {
-    color: "#E45C3A",
-  },
-  boolean: {
-    color: "#9333EA",
-  },
-  number: {
-    color: "#9333EA",
-  },
-  operator: {
-    color: "hsl(var(--foreground))",
-  },
+/**
+ * Syntax palettes, one per mode, written out in full.
+ *
+ * The light theme used to spread `nightOwl` — a palette tuned for a near-black
+ * background — and override seven tokens. Everything it did not override kept
+ * night-owl's dark-ground colour on a white card: CSS at-rules 1.42:1, line
+ * numbers 3.41:1, comments 4.02:1 (landing review, 2026-10-15). Each hue below
+ * is ≥ 4.5:1 on --card and --background in its own mode; comments and line
+ * numbers use --muted-foreground, which the token layer already holds to AA.
+ */
+type Palette = {
+  keyword: string;
+  string: string;
+  fn: string;
+  property: string;
+  number: string;
+  tag: string;
+  className: string;
+  operator: string;
 };
 
-const darkTheme = {
-  ...nightOwl,
-  'pre[class*="language-"]': {
-    ...nightOwl['pre[class*="language-"]'],
+const LIGHT: Palette = {
+  keyword: "#7c3aed", // 5.7:1 on white
+  string: "#166534", // 7.1:1
+  fn: "#b42318", // 6.4:1
+  property: "#0646d6", // 7.2:1
+  number: "#9a3412", // 7.3:1
+  tag: "#b42318",
+  className: "#92400e", // 7.1:1
+  operator: "hsl(var(--foreground))",
+};
+
+const DARK: Palette = {
+  keyword: "#c792ea", // night owl, 8.0:1 on #0a0a0a
+  string: "#ecc48d", // 11.8:1
+  fn: "#82aaff", // 8.2:1
+  property: "#80cbc4", // 10.4:1
+  number: "#f78c6c", // 7.8:1
+  tag: "#ff7a8a", // 7.0:1
+  className: "#ffcb8b", // 12.5:1
+  operator: "#7fdbca",
+};
+
+function syntaxTheme(c: Palette): Record<string, React.CSSProperties> {
+  const base: React.CSSProperties = {
+    color: "hsl(var(--foreground))",
     background: "transparent",
     fontFamily: CODE_FONT_FAMILY,
-  },
-  'code[class*="language-"]': {
-    ...nightOwl['code[class*="language-"]'],
-    fontFamily: CODE_FONT_FAMILY,
-  },
-};
+    textShadow: "none",
+    whiteSpace: "pre",
+    tabSize: 2,
+  };
+  return {
+    'code[class*="language-"]': base,
+    'pre[class*="language-"]': { ...base, overflow: "auto" },
+    comment: { color: "hsl(var(--muted-foreground))", fontStyle: "italic" },
+    prolog: { color: "hsl(var(--muted-foreground))" },
+    doctype: { color: "hsl(var(--muted-foreground))" },
+    cdata: { color: "hsl(var(--muted-foreground))" },
+    punctuation: { color: "hsl(var(--foreground))" },
+    operator: { color: c.operator },
+    keyword: { color: c.keyword },
+    atrule: { color: c.keyword },
+    rule: { color: c.keyword },
+    important: { color: c.tag, fontWeight: 600 },
+    string: { color: c.string },
+    char: { color: c.string },
+    "attr-value": { color: c.string },
+    url: { color: c.string },
+    regex: { color: c.tag },
+    function: { color: c.fn },
+    "function-variable": { color: c.fn },
+    method: { color: c.fn },
+    property: { color: c.property },
+    "attr-name": { color: c.property },
+    builtin: { color: c.property },
+    constant: { color: c.number },
+    symbol: { color: c.number },
+    number: { color: c.number },
+    boolean: { color: c.number },
+    tag: { color: c.tag },
+    selector: { color: c.tag },
+    deleted: { color: "hsl(var(--destructive-strong))" },
+    inserted: { color: "hsl(var(--success-strong))" },
+    "class-name": { color: c.className },
+    namespace: { color: c.className },
+    variable: { color: "hsl(var(--foreground))" },
+    entity: { color: c.property, cursor: "help" },
+    bold: { fontWeight: 600 },
+    italic: { fontStyle: "italic" },
+  };
+}
+
+const lightTheme = syntaxTheme(LIGHT);
+const darkTheme = syntaxTheme(DARK);
 
 // =============================================================================
 // Utilities
@@ -518,12 +558,14 @@ export function CodeBlock(props: CodeBlockProps) {
   // Line number styling for diff colors + clickable references
   const getLineNumberStyle = useCallback(
     (lineNumber: number): React.CSSProperties => {
-      const style: React.CSSProperties = {};
+      // Line numbers are secondary text and must still pass AA: night-owl's
+      // default grey was 3.41:1 here. Diff colours use the *-strong inks.
+      const style: React.CSSProperties = { color: "hsl(var(--muted-foreground))" };
 
       if (addedSet.has(lineNumber)) {
-        style.color = "rgb(16, 185, 129)";
+        style.color = "hsl(var(--success-strong))";
       } else if (removedSet.has(lineNumber)) {
-        style.color = "rgb(239, 68, 68)";
+        style.color = "hsl(var(--destructive-strong))";
       }
 
       if (enableLineReferences && showLineNumbers) {
@@ -780,7 +822,7 @@ export function CodeBlock(props: CodeBlockProps) {
           showLineNumbers={showLineNumbers}
           wrapLines={hasLineFeatures}
           lineProps={hasLineFeatures ? getLineProps : undefined}
-          lineNumberStyle={showLineNumbers ? getLineNumberStyle : undefined}
+          lineNumberStyle={getLineNumberStyle}
           customStyle={{
             margin: 0,
             padding: "1rem",

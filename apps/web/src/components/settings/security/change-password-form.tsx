@@ -97,6 +97,7 @@ export function ChangePasswordForm({
   onSubmit,
   loading = false,
 }: ChangePasswordFormProps) {
+  const tc = useTranslations("copy.securityChangePasswordForm");
   const t = useTranslations("auth.security.changePassword");
   const tErrors = useTranslations("auth.errors");
 
@@ -115,14 +116,11 @@ export function ChangePasswordForm({
       <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
-            <h3 className="text-sm font-medium text-foreground">Password</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Check whether this account has a credential sign-in method and explain the safest
-              supported password path.
-            </p>
+            <h3 className="text-sm font-medium text-foreground">{tc("password")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{tc("checkWhetherThisAccount")}</p>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground">Loading password capabilities…</p>
+        <p className="text-sm text-muted-foreground">{tc("loadingPasswordCapabilities")}</p>
       </section>
     );
   }
@@ -132,14 +130,11 @@ export function ChangePasswordForm({
       <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
         <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div>
-            <h3 className="text-sm font-medium text-foreground">Password</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Check whether this account has a credential sign-in method and explain the safest
-              supported password path.
-            </p>
+            <h3 className="text-sm font-medium text-foreground">{tc("password")}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{tc("checkWhetherThisAccount")}</p>
           </div>
           <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
-            OAuth only
+            {tc("oAuthOnly")}
           </span>
         </div>
 
@@ -184,7 +179,7 @@ export function ChangePasswordForm({
           <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
         </div>
         <span className="w-fit rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground">
-          Credential attached
+          {tc("credentialAttached")}
         </span>
       </div>
 

@@ -107,6 +107,11 @@ export interface ListingModel {
   source: "models.dev" | "alias-fallback";
 }
 
+/**
+ * Chinese category names, kept for parsing legacy `?tag=` URLs (302 links carry
+ * the label, not the id). Display goes through `useCategoryLabel()`, which
+ * reads `category.<id>` from the locale catalog.
+ */
 export const CATEGORY_LABEL: Record<ListingCategory, string> = {
   chat: "语言大模型",
   reasoning: "推理模型",
@@ -130,15 +135,15 @@ export const PROVIDER_LABEL: Record<ListingProvider, string> = {
   moonshot: "Moonshot",
   mistral: "Mistral",
   meta: "Meta",
-  qwen: "通义千问",
-  zhipu: "智谱",
+  qwen: "Qwen",
+  zhipu: "Zhipu GLM",
   minimax: "Minimax",
   cohere: "Cohere",
   perplexity: "Perplexity",
-  baichuan: "百川",
-  yi: "零一万物",
-  doubao: "豆包",
-  hunyuan: "腾讯混元",
+  baichuan: "Baichuan",
+  yi: "01.AI",
+  doubao: "Doubao",
+  hunyuan: "Hunyuan",
   nvidia: "NVIDIA",
   other: "Other",
 };

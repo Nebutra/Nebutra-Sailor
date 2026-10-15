@@ -688,21 +688,17 @@ describe("AI package architecture governance", () => {
     expect(brandGenesis.manifest.dependencies?.["@nebutra/play-loader"]).toBe("workspace:*");
     expect(brandGenesis.manifest.dependencies?.["@nebutra/generation-context"]).toBe("workspace:*");
     expect(brandGenesis.manifest.dependencies?.["@nebutra/image-pipeline"]).toBe("workspace:*");
-    expect(brandGenesis.manifest.dependencies?.["@nebutra/video-pipeline"]).toBe("workspace:*");
-    expect(brandGenesis.manifest.dependencies?.["@nebutra/audio-pipeline"]).toBe("workspace:*");
-    expect(brandGenesis.manifest.dependencies?.["@nebutra/voice-realtime"]).toBe("workspace:*");
     expect(brandGenesis.manifest.dependencies?.["@nebutra/3d-pipeline"]).toBe("workspace:*");
 
     expect(importViolations(brandGenesis.dir, PLAY_PRODUCT_FORBIDDEN_IMPORTS)).toEqual([]);
-    expect(existsSync(join(brandGenesis.dir, "plays", "brand_film_60s", "SKILL.md"))).toBe(true);
+    expect(existsSync(join(brandGenesis.dir, "plays", "brand_kit", "SKILL.md"))).toBe(true);
 
     const source = readFileSync(join(brandGenesis.dir, "src", "index.ts"), "utf8");
     expect(source).toContain("@nebutra/generation-context");
     expect(source).toContain("@nebutra/image-pipeline");
-    expect(source).toContain("@nebutra/video-pipeline");
     expect(source).not.toMatch(/export\s+interface\s+BrandContext\b/);
     expect(source).not.toMatch(/class\s+ImagePipeline\b/);
-    expect(source).not.toMatch(/class\s+VideoPipeline\b/);
+    expect(source).not.toMatch(/class\s+MeshPipeline\b/);
   });
 
   it("keeps Layer 6 play products as SKILL.md orchestration packages", () => {

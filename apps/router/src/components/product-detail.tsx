@@ -11,12 +11,13 @@ import {
   TableRow,
 } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 import { AuthActions } from "@/components/auth-actions";
 import { BrandMark, BrandPill, PROVIDER_COVER } from "@/components/brand-marks";
 import { ProductCard } from "@/components/product-card";
+import { useCategoryLabel } from "@/hooks/use-category-label";
 import {
-  CATEGORY_LABEL,
   formatPrice,
   type ListingModel,
   PROVIDER_LABEL,
@@ -24,11 +25,11 @@ import {
 } from "@/lib/listing-catalog";
 
 const TOC = [
-  { id: "intro", label: "API介绍" },
-  { id: "playground", label: "Playground" },
-  { id: "apis", label: "API列表" },
-  { id: "pricing", label: "API价格表" },
-  { id: "related", label: "猜你喜欢" },
+  { id: "intro" },
+  { id: "playground" },
+  { id: "apis" },
+  { id: "pricing" },
+  { id: "related" },
 ] as const;
 
 /**
@@ -42,57 +43,57 @@ export function ProductDetail({
   model: ListingModel;
   related: readonly ListingModel[];
 }) {
+  const t = useTranslations("detail");
+  const categoryLabelOf = useCategoryLabel();
   const [tab, setTab] = useState<(typeof TOC)[number]["id"]>("intro");
   const [copied, setCopied] = useState(false);
   const provider = resolveListingProvider(model);
   const cover = PROVIDER_COVER[provider];
   const providerLabel = PROVIDER_LABEL[provider];
-  const categoryLabel = CATEGORY_LABEL[model.category];
+  const categoryLabel = categoryLabelOf(model.category);
 
   const blurb = useMemo(() => {
     if (model.description && model.description !== model.publicModel) return model.description;
-    return `${providerLabel} 出品 · ${categoryLabel} · 上下文 ${model.context || "—"} · 可经 Router 统一接入。`;
-  }, [model, providerLabel, categoryLabel]);
+    return t("blurb", {
+      provider: providerLabel,
+      category: categoryLabel,
+      context: model.context || "—",
+    });
+  }, [model, providerLabel, categoryLabel, t]);
 
   const intro = useMemo(() => {
     return [
-      `${model.publicModel} 是 ${providerLabel} 在「${categoryLabel}」货架上的可售模型。`,
-      `通过 ${brand.name} Router 使用 OpenAI 兼容接口调用，无需分别对接多家上游。`,
-      model.sellable || model.routed
-        ? "当前货架状态：可售 / 已配置路由。"
-        : "当前为目录参考价，连通供给库存后即可按量调用。",
-    ].join("");
-  }, [model, providerLabel, categoryLabel]);
+      t("intro.what", {
+        model: model.publicModel,
+        provider: providerLabel,
+        category: categoryLabel,
+      }),
+      t("intro.how", { brandName: brand.name }),
+      model.sellable || model.routed ? t("intro.live") : t("intro.catalog"),
+    ].join(" ");
+  }, [model, providerLabel, categoryLabel, t]);
 
   const capabilities = useMemo(() => {
+    const price = {
+      input: formatPrice(model.inputPerMTok),
+      output: formatPrice(model.outputPerMTok),
+    };
     const items: Array<{ title: string; body: string }> = [
+      { title: t("cap.unifiedTitle"), body: t("cap.unifiedBody") },
+      { title: t("cap.meteredTitle"), body: t("cap.meteredBody", price) },
       {
-        title: "统一接入",
-        body: "一套 API Key / Base URL 覆盖多厂商模型，切换 public model id 即可。",
-      },
-      {
-        title: "按量计价",
-        body: `输入 ${formatPrice(model.inputPerMTok)}/1M · 输出 ${formatPrice(model.outputPerMTok)}/1M（目录价，以实际出账为准）。`,
-      },
-      {
-        title: "上下文",
-        body: `公开上下文窗口约 ${model.context || "—"}，适合长对话与文档任务（以模型实际上限为准）。`,
+        title: t("cap.contextTitle"),
+        body: t("cap.contextBody", { context: model.context || "—" }),
       },
     ];
     if (model.category === "reasoning") {
-      items.push({
-        title: "推理向",
-        body: "适合复杂规划、代码与多步工具调用场景。",
-      });
+      items.push({ title: t("cap.reasoningTitle"), body: t("cap.reasoningBody") });
     }
     if (model.category === "multimodal" || model.category === "image") {
-      items.push({
-        title: "多模态",
-        body: "支持图文等跨模态输入（以模型能力声明为准）。",
-      });
+      items.push({ title: t("cap.multimodalTitle"), body: t("cap.multimodalBody") });
     }
     return items;
-  }, [model]);
+  }, [model, t]);
 
   /**
    * The endpoints this model actually answers on.
@@ -106,49 +107,38 @@ export function ProductDetail({
   const apis = useMemo(() => {
     if (model.category === "image") {
       return [
-        {
-          name: "Images（生成）",
-          path: "/v1/images/generations",
-          method: "POST",
-          stability: "稳定",
-        },
-        { name: "Images（编辑）", path: "/v1/images/edits", method: "POST", stability: "稳定" },
+        { key: "imagesGenerate", path: "/v1/images/generations", method: "POST" },
+        { key: "imagesEdit", path: "/v1/images/edits", method: "POST" },
       ];
     }
     if (model.category === "audio") {
       return [
-        { name: "Audio（语音合成）", path: "/v1/audio/speech", method: "POST", stability: "稳定" },
-        {
-          name: "Audio（转写）",
-          path: "/v1/audio/transcriptions",
-          method: "POST",
-          stability: "稳定",
-        },
+        { key: "audioSpeech", path: "/v1/audio/speech", method: "POST" },
+        { key: "audioTranscribe", path: "/v1/audio/transcriptions", method: "POST" },
       ];
     }
     if (model.category === "data") {
-      return [
-        { name: "Embeddings（向量）", path: "/v1/embeddings", method: "POST", stability: "稳定" },
-      ];
+      return [{ key: "embeddings", path: "/v1/embeddings", method: "POST" }];
     }
     return [
-      { name: "Chat（聊天）", path: "/v1/chat/completions", method: "POST", stability: "稳定" },
+      { key: "chat", path: "/v1/chat/completions", method: "POST" },
       // Streaming is the same endpoint with `stream: true`, listed separately
       // because a buyer scanning the table is looking for the word.
-      { name: "Chat（流式）", path: "/v1/chat/completions", method: "POST", stability: "稳定" },
-      { name: "Responses（响应）", path: "/v1/responses", method: "POST", stability: "稳定" },
+      { key: "chatStream", path: "/v1/chat/completions", method: "POST" },
+      { key: "responses", path: "/v1/responses", method: "POST" },
     ];
   }, [model.category]);
 
   async function copyForAi() {
     const text = [
-      `模型: ${model.publicModel}`,
-      `厂商: ${providerLabel}`,
-      `分类: ${categoryLabel}`,
-      `输入: ${formatPrice(model.inputPerMTok)}/1M`,
-      `输出: ${formatPrice(model.outputPerMTok)}/1M`,
-      `上下文: ${model.context || "—"}`,
-      `接入: ${brand.name} Router OpenAI-compatible ${apis[0]?.path ?? "/v1/chat/completions"}`,
+      // Pasted into an AI assistant: kept in English, the lingua franca of model docs.
+      `Model: ${model.publicModel}`,
+      `Provider: ${providerLabel}`,
+      `Category: ${model.category}`,
+      `Input: ${formatPrice(model.inputPerMTok)}/1M`,
+      `Output: ${formatPrice(model.outputPerMTok)}/1M`,
+      `Context: ${model.context || "—"}`,
+      `Endpoint: ${brand.name} Router OpenAI-compatible ${apis[0]?.path ?? "/v1/chat/completions"}`,
     ].join("\n");
     try {
       await navigator.clipboard.writeText(text);
@@ -168,144 +158,146 @@ export function ProductDetail({
   return (
     <div className="router-market-shell py-5 md:py-7">
       {/* 面包屑 */}
-      <nav className="mb-5 flex flex-wrap items-center gap-1.5 text-[13px] text-neutral-10">
+      <nav className="mb-5 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
         <Link href="/?product_type=api" className="hover:text-neutral-12">
           API
         </Link>
-        <span className="text-neutral-7">/</span>
+        <span className="text-muted-foreground" aria-hidden>
+          /
+        </span>
         <Link
           href={`/models?cate=api&tag=${encodeURIComponent(model.category)}`}
           className="hover:text-neutral-12"
         >
           {categoryLabel}
         </Link>
-        <span className="text-neutral-7">/</span>
+        <span className="text-muted-foreground" aria-hidden>
+          /
+        </span>
         <Link
           href={`/models?cate=api&brand=${encodeURIComponent(provider)}`}
           className="hover:text-neutral-12"
         >
           {providerLabel}
         </Link>
-        <span className="text-neutral-7">/</span>
+        <span className="text-muted-foreground" aria-hidden>
+          /
+        </span>
         <span className="font-medium text-neutral-12">{model.publicModel}</span>
       </nav>
 
       {/* 顶区：封面 + 信息 + 指标 */}
       <section className="grid gap-5 lg:grid-cols-[240px_minmax(0,1.1fr)_minmax(240px,280px)] xl:grid-cols-[260px_minmax(0,1.15fr)_minmax(260px,300px)] xl:gap-6">
         <div
-          // allow-palette: depth ring on provider cover wash artwork, not app chrome
-          className="flex min-h-[200px] items-center justify-center overflow-hidden rounded-[20px] p-6 shadow-[0_8px_28px_rgb(15_23_42/0.06)] ring-1 ring-black/[0.04]"
+          className="flex min-h-[200px] items-center justify-center overflow-hidden rounded-[20px] p-6 shadow-ambient-md ring-1 ring-border"
           style={{ background: cover.wash }}
         >
-          <span
-            className={[
-              "inline-flex max-w-full items-center rounded-2xl px-4 py-3 shadow-md ring-1",
-              // allow-palette: chip surface pinned to provider cover art (light/dark chosen by cover.dark, not app theme)
-              cover.dark ? "bg-white ring-white/10" : "bg-white/96 ring-black/[0.04]",
-            ].join(" ")}
-          >
-            <BrandPill provider={provider} size={24} tone="light" />
+          <span className="inline-flex max-w-full items-center rounded-2xl bg-card/95 px-4 py-3 shadow-ambient-md ring-1 ring-border">
+            <BrandPill provider={provider} size={24} />
           </span>
         </div>
 
         <div className="min-w-0">
           <div className="flex flex-wrap items-start justify-between gap-3">
-            <h1 className="font-mono text-[22px] font-semibold tracking-tight text-neutral-12 md:text-[26px]">
+            <h1 className="font-mono text-2xl font-semibold tracking-tight text-neutral-12 md:text-2xl">
               {model.publicModel}
             </h1>
             <button
               type="button"
               onClick={() => void copyForAi()}
-              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-3.5 text-[12px] font-medium text-neutral-11 transition hover:border-neutral-7 hover:text-neutral-12"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-3.5 text-xs font-medium text-neutral-11 transition hover:border-neutral-7 hover:text-neutral-12"
             >
               <Copy className="h-3.5 w-3.5" aria-hidden />
-              {copied ? "已复制" : "复制给 AI"}
+              {copied ? t("copied") : t("copyForAi")}
             </button>
           </div>
 
-          <p className="mt-2 max-w-xl text-[14px] leading-relaxed text-neutral-11">{blurb}</p>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-neutral-11">{blurb}</p>
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-3 px-2.5 py-1 text-[11px] font-medium text-neutral-11">
-              <BrandMark provider={provider} size={14} surface="light" />
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-neutral-3 px-2.5 py-1 text-xs font-medium text-neutral-11">
+              <BrandMark provider={provider} size={14} />
               {categoryLabel}
             </span>
             {model.sellable || model.routed ? (
-              <span className="rounded-full bg-success/16 px-2.5 py-1 text-[11px] font-medium text-success-strong">
-                可售
+              <span className="rounded-full bg-success/10 px-2.5 py-1 text-xs font-medium text-success-strong">
+                {t("sellable")}
               </span>
             ) : (
-              <span className="rounded-full bg-neutral-3 px-2.5 py-1 text-[11px] text-neutral-10">
-                目录
+              <span className="rounded-full bg-neutral-3 px-2.5 py-1 text-xs text-muted-foreground">
+                {t("catalogOnly")}
               </span>
             )}
-            <span className="text-[12px] text-neutral-9">上下文 {model.context || "—"}</span>
+            <span className="text-xs text-muted-foreground">
+              {t("contextChip", { context: model.context || "—" })}
+            </span>
           </div>
 
-          <dl className="mt-5 space-y-1.5 text-[13px]">
+          <dl className="mt-5 space-y-1.5 text-sm">
             <div className="flex items-center justify-between gap-4 border-b border-neutral-4/80 py-1.5">
-              <dt className="text-neutral-10">输入</dt>
+              <dt className="text-muted-foreground">{t("input")}</dt>
               <dd className="font-mono font-medium text-blue-11">
                 {formatPrice(model.inputPerMTok)}/1M tokens
               </dd>
             </div>
             <div className="flex items-center justify-between gap-4 border-b border-neutral-4/80 py-1.5">
-              <dt className="text-neutral-10">输出</dt>
+              <dt className="text-muted-foreground">{t("output")}</dt>
               <dd className="font-mono font-medium text-blue-11">
                 {formatPrice(model.outputPerMTok)}/1M tokens
               </dd>
             </div>
             <div className="flex items-center justify-between gap-4 py-1.5">
-              <dt className="text-neutral-10">厂商</dt>
+              <dt className="text-muted-foreground">{t("provider")}</dt>
               <dd className="font-medium text-neutral-12">{providerLabel}</dd>
             </div>
           </dl>
-          <p className="mt-2 text-[12px] text-warning-strong">大额采购可联系支持获取专属价</p>
-
-          <div className="mt-5 flex flex-wrap items-center gap-2.5">
-            <Link
-              href="/docs"
-              className="inline-flex h-10 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-4 text-[13px] font-medium text-neutral-12 transition hover:bg-neutral-2"
-            >
-              <BookOpen className="h-4 w-4" aria-hidden />
-              查看文档
-            </Link>
-          </div>
+          <p className="mt-2 text-xs text-neutral-11">{t("volume")}</p>
         </div>
 
         <aside className="router-market-panel flex h-fit flex-col gap-4 p-4 md:p-5">
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/docs"
-              className="inline-flex h-10 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-4 text-[13px] font-medium text-neutral-12 transition hover:bg-neutral-2"
+              className="inline-flex h-10 items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1 px-4 text-sm font-medium text-neutral-12 transition hover:bg-neutral-2"
             >
               <BookOpen className="h-4 w-4" aria-hidden />
-              查看文档
+              {t("docs")}
             </Link>
             <Link
               href={`/use?model=${encodeURIComponent(model.publicModel)}`}
-              className="inline-flex h-10 items-center rounded-full bg-neutral-12 px-5 text-[13px] font-medium text-neutral-1 transition hover:bg-neutral-11"
+              className="inline-flex h-10 items-center rounded-full bg-neutral-12 px-5 text-sm font-medium text-neutral-1 transition-colors hover:bg-neutral-12/90"
             >
               Playground
             </Link>
           </div>
-          <p className="text-[11px] leading-relaxed text-neutral-9">
-            运行探针（成功率 / 延迟 / TPS）接入后在此展示；当前无上报数据。
-          </p>
+          <dl className="grid grid-cols-2 gap-3 border-t border-neutral-5 pt-4 text-sm">
+            <div>
+              <dt className="text-xs text-neutral-11">{t("input")}</dt>
+              <dd className="mt-0.5 font-mono font-medium text-neutral-12">
+                {formatPrice(model.inputPerMTok)}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs text-neutral-11">{t("output")}</dt>
+              <dd className="mt-0.5 font-mono font-medium text-neutral-12">
+                {formatPrice(model.outputPerMTok)}
+              </dd>
+            </div>
+          </dl>
         </aside>
       </section>
 
       {/* 下区：TOC + 内容 */}
       <section className="mt-8 grid gap-5 lg:grid-cols-[160px_minmax(0,1fr)] xl:grid-cols-[176px_minmax(0,1fr)] xl:gap-6">
         <nav className="router-market-panel sticky top-4 h-fit space-y-0.5 p-2">
-          {TOC.map((t) => (
+          {TOC.map((item) => (
             <button
-              key={t.id}
+              key={item.id}
               type="button"
-              onClick={() => scrollTo(t.id)}
+              onClick={() => scrollTo(item.id)}
               className={[
-                "flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-[13px] transition",
-                tab === t.id
+                "flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-sm transition",
+                tab === item.id
                   ? "bg-neutral-3 font-semibold text-neutral-12"
                   : "text-neutral-11 hover:bg-neutral-2",
               ].join(" ")}
@@ -313,25 +305,26 @@ export function ProductDetail({
               <span
                 className={[
                   "h-4 w-0.5 rounded-full",
-                  tab === t.id ? "bg-primary" : "bg-transparent",
+                  tab === item.id ? "bg-primary" : "bg-transparent",
                 ].join(" ")}
                 aria-hidden
               />
-              {t.label}
+              {t(`toc.${item.id}`)}
             </button>
           ))}
         </nav>
 
         <div className="min-w-0 space-y-4">
           <article id="pd-intro" className="router-market-panel scroll-mt-6 p-5 md:p-6">
-            <h2 className="text-[16px] font-semibold text-neutral-12">API介绍</h2>
-            <p className="mt-3 text-[14px] leading-relaxed text-neutral-11">{intro}</p>
+            <h2 className="text-base font-semibold text-neutral-12">{t("toc.intro")}</h2>
+            <p className="mt-3 text-sm leading-relaxed text-neutral-11">{intro}</p>
             <hr className="my-5 border-neutral-5" />
-            <h3 className="text-[14px] font-semibold text-blue-11">核心能力</h3>
+            <h3 className="text-sm font-semibold text-neutral-12">{t("capabilities")}</h3>
             <ul className="mt-3 space-y-3">
               {capabilities.map((c) => (
-                <li key={c.title} className="text-[13px] leading-relaxed text-neutral-11">
-                  <span className="font-semibold text-neutral-12">{c.title}：</span>
+                <li key={c.title} className="text-sm leading-relaxed text-neutral-11">
+                  <span className="font-semibold text-neutral-12">{c.title}</span>
+                  {" — "}
                   {c.body}
                 </li>
               ))}
@@ -344,18 +337,18 @@ export function ProductDetail({
             className="router-market-panel scroll-mt-6 overflow-hidden p-0"
           >
             <div className="border-b border-neutral-5 px-5 py-4 md:px-6">
-              <h2 className="text-[16px] font-semibold text-neutral-12">Playground</h2>
+              <h2 className="text-base font-semibold text-neutral-12">Playground</h2>
             </div>
             <div className="flex flex-col items-center justify-center px-6 py-14 text-center md:py-16">
               <PlaygroundEmptyArt />
-              <p className="mt-6 text-[14px] text-neutral-10">
-                登录后探索更多功能！ <AuthActions variant="compact" className="inline" />
+              <p className="mt-6 text-sm text-muted-foreground">
+                {t("signInMore")} <AuthActions variant="compact" className="inline" />
               </p>
               <Link
                 href={`/use?model=${encodeURIComponent(model.publicModel)}`}
-                className="mt-4 inline-flex h-10 items-center rounded-full bg-foreground px-5 text-[13px] font-medium text-background transition hover:bg-foreground/90"
+                className="mt-4 inline-flex h-10 items-center rounded-full bg-foreground px-5 text-sm font-medium text-background transition hover:bg-foreground/90"
               >
-                打开 Playground · {model.publicModel}
+                {t("openPlayground", { model: model.publicModel })}
               </Link>
             </div>
           </article>
@@ -365,58 +358,54 @@ export function ProductDetail({
             className="router-market-panel scroll-mt-6 overflow-hidden p-0 md:p-0"
           >
             <div className="border-b border-neutral-5 px-5 py-4 md:px-6">
-              <h2 className="text-[16px] font-semibold text-neutral-12">
-                API列表
-                <span className="ml-2 text-[13px] font-normal text-neutral-9">({apis.length})</span>
+              <h2 className="text-base font-semibold text-neutral-12">
+                {t("toc.apis")}
+                <span className="ml-2 text-sm font-normal text-muted-foreground">
+                  ({apis.length})
+                </span>
               </h2>
             </div>
             <div className="overflow-x-auto">
-              <Table bare className="w-full min-w-[640px] text-[13px]">
+              <Table bare className="w-full min-w-[640px] text-sm">
                 <TableHeader>
-                  <TableRow className="bg-neutral-2/80 text-[12px] text-neutral-10">
+                  <TableRow className="bg-neutral-2/80 text-xs text-muted-foreground">
                     <TableHead alignment="start" className="px-5 font-medium md:px-6">
-                      API描述
+                      {t("col.api")}
                     </TableHead>
                     <TableHead alignment="start" className="px-3 font-medium">
-                      接口地址
+                      {t("col.path")}
                     </TableHead>
                     <TableHead alignment="start" className="px-3 font-medium">
-                      方法
-                    </TableHead>
-                    <TableHead alignment="start" className="px-3 font-medium">
-                      稳定性
+                      {t("col.method")}
                     </TableHead>
                     <TableHead alignment="start" className="px-5 font-medium md:px-6">
-                      参数
+                      {t("col.params")}
                     </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody bordered>
                   {apis.map((a) => (
-                    <TableRow key={a.name}>
+                    <TableRow key={a.key}>
                       <TableCell
                         alignment="start"
                         className="px-5 py-3.5 font-medium text-neutral-12 md:px-6"
                       >
-                        {a.name}
+                        {t(`api.${a.key}`)}
                       </TableCell>
                       <TableCell
                         alignment="start"
-                        className="max-w-[280px] truncate px-3 py-3.5 font-mono text-[12px] text-neutral-11"
+                        className="max-w-[280px] truncate px-3 py-3.5 font-mono text-xs text-neutral-11"
                       >
                         {a.path}
                       </TableCell>
                       <TableCell alignment="start" className="px-3 py-3.5">
-                        <span className="rounded-md bg-neutral-3 px-1.5 py-0.5 text-[11px] font-semibold">
+                        <span className="rounded-md bg-neutral-3 px-1.5 py-0.5 text-xs font-semibold">
                           {a.method}
                         </span>
                       </TableCell>
-                      <TableCell alignment="start" className="px-3 py-3.5 text-success-strong">
-                        {a.stability}
-                      </TableCell>
                       <TableCell alignment="start" className="px-5 py-3.5 md:px-6">
                         <Link href="/docs" className="text-blue-11 hover:underline">
-                          查看详情
+                          {t("viewDetails")}
                         </Link>
                       </TableCell>
                     </TableRow>
@@ -428,26 +417,26 @@ export function ProductDetail({
 
           <article id="pd-pricing" className="router-market-panel scroll-mt-6 overflow-hidden p-0">
             <div className="border-b border-neutral-5 px-5 py-4 md:px-6">
-              <h2 className="text-[16px] font-semibold text-neutral-12">API价格表</h2>
+              <h2 className="text-base font-semibold text-neutral-12">{t("toc.pricing")}</h2>
             </div>
             <div className="overflow-x-auto">
-              <Table bare className="w-full min-w-[560px] text-[13px]">
+              <Table bare className="w-full min-w-[560px] text-sm">
                 <TableHeader>
-                  <TableRow className="bg-neutral-2/80 text-[12px] text-neutral-10">
+                  <TableRow className="bg-neutral-2/80 text-xs text-muted-foreground">
                     <TableHead alignment="start" className="px-5 font-medium md:px-6">
-                      模型
+                      {t("col.model")}
                     </TableHead>
                     <TableHead alignment="start" className="px-3 font-medium">
-                      上下文
+                      {t("col.context")}
                     </TableHead>
                     <TableHead alignment="start" className="px-3 font-medium">
-                      输入
+                      {t("input")}
                     </TableHead>
                     <TableHead alignment="start" className="px-3 font-medium">
-                      输出
+                      {t("output")}
                     </TableHead>
                     <TableHead alignment="start" className="px-5 font-medium md:px-6">
-                      说明
+                      {t("col.note")}
                     </TableHead>
                   </TableRow>
                 </TableHeader>
@@ -468,8 +457,11 @@ export function ProductDetail({
                     <TableCell alignment="start" className="px-3 py-3.5 font-mono text-blue-11">
                       {formatPrice(model.outputPerMTok)}/1M
                     </TableCell>
-                    <TableCell alignment="start" className="px-5 py-3.5 text-neutral-10 md:px-6">
-                      目录价 · 按量
+                    <TableCell
+                      alignment="start"
+                      className="px-5 py-3.5 text-muted-foreground md:px-6"
+                    >
+                      {t("listPrice")}
                     </TableCell>
                   </TableRow>
                 </TableBody>
@@ -478,9 +470,9 @@ export function ProductDetail({
           </article>
 
           <section id="pd-related" className="scroll-mt-6">
-            <h2 className="mb-4 text-[16px] font-semibold text-neutral-12">猜你喜欢</h2>
+            <h2 className="mb-4 text-base font-semibold text-neutral-12">{t("toc.related")}</h2>
             {related.length === 0 ? (
-              <p className="text-[13px] text-neutral-10">暂无相关模型</p>
+              <p className="text-sm text-muted-foreground">{t("noRelated")}</p>
             ) : (
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
                 {related.map((m) => (
@@ -524,11 +516,11 @@ function PlaygroundEmptyArt() {
       />
       {/* phone */}
       <rect x="148" y="36" width="88" height="128" rx="16" fill="var(--blue-3)" />
-      <rect x="156" y="48" width="72" height="104" rx="8" fill="white" />
+      <rect x="156" y="48" width="72" height="104" rx="8" fill="hsl(var(--card))" />
       <rect x="168" y="60" width="48" height="36" rx="8" fill="var(--blue-4)" opacity="0.55" />
       <rect x="168" y="106" width="48" height="28" rx="8" fill="var(--blue-4)" opacity="0.35" />
       {/* locks */}
-      <circle cx="192" cy="78" r="10" fill="white" />
+      <circle cx="192" cy="78" r="10" fill="hsl(var(--card))" />
       <rect x="186" y="76" width="12" height="10" rx="2" fill="hsl(var(--primary))" opacity="0.7" />
       <path
         d="M188 76v-4a4 4 0 018 0v4"
@@ -537,7 +529,7 @@ function PlaygroundEmptyArt() {
         fill="none"
         opacity="0.7"
       />
-      <circle cx="192" cy="120" r="8" fill="white" />
+      <circle cx="192" cy="120" r="8" fill="hsl(var(--card))" />
       <rect
         x="187"
         y="118"

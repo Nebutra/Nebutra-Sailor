@@ -12,6 +12,7 @@ import {
   Input,
 } from "@nebutra/ui/primitives";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -27,6 +28,7 @@ const profileSchema = z.object({
 type ProfileValues = z.infer<typeof profileSchema>;
 
 export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
+  const tc = useTranslations("copy.onboardingProfileSetupStep");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
 
@@ -81,8 +83,8 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Personalize your profile</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Add a logo and set your display name.</p>
+        <h2 className="text-2xl font-semibold tracking-tight">{tc("personalizeYourProfile")}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">{tc("addALogoAnd")}</p>
       </div>
 
       <Form {...form}>
@@ -97,7 +99,7 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
               {logoPreview ? (
                 <Image
                   src={logoPreview}
-                  alt="Logo"
+                  alt={tc("logo")}
                   fill
                   className="object-cover"
                   unoptimized={logoPreview.startsWith("data:")}
@@ -114,7 +116,7 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
               onChange={handleLogoChange}
               className="hidden"
             />
-            <p className="text-xs text-muted-foreground">Upload organization logo</p>
+            <p className="text-xs text-muted-foreground">{tc("uploadOrganizationLogo")}</p>
           </div>
 
           {/* Display name */}
@@ -123,8 +125,8 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
             name="displayName"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-1.5">
-                <FormLabel htmlFor="display-name">Display name</FormLabel>
-                <Input id="display-name" placeholder="Your full name" {...field} />
+                <FormLabel htmlFor="display-name">{tc("displayName")}</FormLabel>
+                <Input id="display-name" placeholder={tc("yourFullName")} {...field} />
                 <FormMessage />
               </FormItem>
             )}
@@ -140,7 +142,7 @@ export function ProfileSetupStep({ onComplete }: ProfileSetupStepProps) {
             className="w-full text-muted-foreground"
             onClick={onComplete}
           >
-            Skip for now
+            {tc("skipForNow")}
           </Button>
         </form>
       </Form>

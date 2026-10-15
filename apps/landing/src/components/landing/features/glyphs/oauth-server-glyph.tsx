@@ -43,7 +43,7 @@ export function OauthServerGlyph({ copy }: SubpackageGlyphProps) {
             {t.appLabel} · &lsquo;{APP_NAME}&rsquo;
           </span>
         </div>
-        <Connection className="h-3 w-3 shrink-0 text-muted-foreground/60" aria-hidden="true" />
+        <Connection className="h-3 w-3 shrink-0 text-muted-foreground" aria-hidden="true" />
       </div>
 
       {/* Scopes */}
@@ -63,7 +63,7 @@ export function OauthServerGlyph({ copy }: SubpackageGlyphProps) {
         <Button type="button" size="tiny" variant="default" prefix={<Check aria-hidden="true" />}>
           {t.approve}
         </Button>
-        <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground/80">
+        <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
           <Clock className="h-2.5 w-2.5" aria-hidden="true" />
           <span className="truncate">{t.token}</span>
         </div>

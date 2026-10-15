@@ -24,8 +24,8 @@ import {
   sanitizeReturnUrl,
 } from "@nebutra/auth";
 import { createAuth } from "@nebutra/auth/server";
+import { isOAuthProvider, type OAuthProvider } from "@nebutra/auth/sign-in/providers";
 import { logger } from "@nebutra/logger";
-import { isOAuthProvider, type OAuthProvider } from "@/lib/auth/oauth-providers";
 import { db } from "@/lib/db";
 import { applySessionHint } from "@/lib/session-hint";
 

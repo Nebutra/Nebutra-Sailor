@@ -95,32 +95,6 @@
       "hint": "Agente · strumenti"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Bot",
-      "chips": "Bot di chat · bot di disegno · conoscenza"
-    },
-    "productivity": {
-      "label": "Produttività",
-      "chips": "Arena modelli · scrittura AI"
-    },
-    "academic": {
-      "label": "Accademico",
-      "chips": "Kit PDF · Ricerca brevetti AI"
-    },
-    "image": {
-      "label": "Strumenti immagine",
-      "chips": "Studio 3D · Canvas"
-    },
-    "audio": {
-      "label": "Audio",
-      "chips": "Voce · Musica AI"
-    },
-    "code": {
-      "label": "Codice",
-      "chips": "Generatore web · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Panoramica",
     "keys": "Chiavi",

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRef } from "react";
 import {
   ACCENT_ACTIVE_CLASSES,
@@ -22,6 +23,7 @@ import {
  * currently-selected pill — Tab into the group lands on the active one.
  */
 export function ModePills() {
+  const tc = useTranslations("copy.commandPaletteModePills");
   const { mode, setMode } = useCommandMode();
   const buttonsRef = useRef<Array<HTMLButtonElement | null>>([]);
 
@@ -65,7 +67,7 @@ export function ModePills() {
   return (
     <div
       role="radiogroup"
-      aria-label="Command mode"
+      aria-label={tc("commandMode")}
       data-tour-id="mode-pills"
       className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >

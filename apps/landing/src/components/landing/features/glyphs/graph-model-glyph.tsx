@@ -26,9 +26,9 @@ function GraphNode({ kind, label }: { kind: NodeTone; label: string }) {
 
 function Edge({ label }: { label: string }) {
   return (
-    <span className="inline-flex items-center gap-1 font-mono text-[9.5px] uppercase tracking-wider text-neutral-10">
+    <span className="inline-flex items-center gap-1 font-mono text-[9.5px] uppercase tracking-wider text-neutral-11">
       <span className="rounded-[var(--radius-sm)] bg-neutral-3 px-1.5 py-0.5">{label}</span>
-      <ArrowRight className="h-3 w-3 text-neutral-9" />
+      <ArrowRight className="h-3 w-3 text-neutral-11" />
     </span>
   );
 }
@@ -85,7 +85,7 @@ export function GraphModelGlyph({ copy }: SubpackageGlyphProps) {
           <span className="font-mono text-[10px] font-medium text-neutral-12">
             {t.caption.title}
           </span>
-          <span className="text-[9.5px] text-neutral-10">{t.caption.subtitle}</span>
+          <span className="text-[9.5px] text-neutral-11">{t.caption.subtitle}</span>
         </div>
       </div>
     </div>

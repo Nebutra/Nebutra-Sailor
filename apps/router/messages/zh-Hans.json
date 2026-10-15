@@ -29,7 +29,8 @@
     "integrationHelp": "接入说明",
     "aiRecommend": "AI 推荐",
     "market": "集市",
-    "usageTitle": "快捷使用"
+    "usageTitle": "快捷使用",
+    "currencyNote": "计价与结算均为美元"
   },
   "channels": {
     "app": "应用集市",
@@ -96,29 +97,29 @@
     }
   },
   "toolTaxonomy": {
-    "bots": {
-      "label": "机器人",
-      "chips": "聊天机器人 · 绘画机器人 · 知识库"
+    "generator": {
+      "label": "生成器",
+      "chips": "UUID · 占位文本 · 随机字符串"
     },
-    "productivity": {
-      "label": "工作效率",
-      "chips": "模型竞技场 · AI 文案助手"
+    "converter": {
+      "label": "转换器",
+      "chips": "Base64 · Markdown 转 PDF"
     },
-    "academic": {
-      "label": "学术相关",
-      "chips": "PDF 工具箱 · AI 专利搜索"
+    "formatter": {
+      "label": "格式化",
+      "chips": "JSON · 大小写"
     },
-    "image": {
-      "label": "图片处理",
-      "chips": "3D 摄影棚 · Canvas"
+    "checker": {
+      "label": "检查器",
+      "chips": "DNS 泄漏 · 证件号码"
     },
-    "audio": {
-      "label": "音频相关",
-      "chips": "语音生成 · AI 音乐"
+    "comparator": {
+      "label": "对比",
+      "chips": "JSON 差异"
     },
-    "code": {
-      "label": "代码相关",
-      "chips": "网页生成器 · Forge"
+    "analyzer": {
+      "label": "分析器",
+      "chips": "字数统计 · JWT"
     }
   },
   "shortcuts": {
@@ -128,5 +129,456 @@
     "use": "试用",
     "docs": "文档",
     "models": "更多"
+  },
+  "auth": {
+    "signOut": "退出",
+    "signOutLong": "退出登录",
+    "signIn": "登录",
+    "signUp": "注册",
+    "signInOrUp": "登录 / 注册",
+    "noAccount": "没有账号？注册",
+    "signInPrompt": "点击登录"
+  },
+  "footer": {
+    "tagline": "一把密钥，接入所有模型。按量付费。",
+    "quickAccess": "快捷入口",
+    "support": "支持",
+    "legal": "法律",
+    "copyright": "© {year} {brandName}. 保留所有权利。",
+    "strapline": "API 集市 · 按量付费 · 多模型统一接入",
+    "links": {
+      "appMarket": "应用集市",
+      "apiMarket": "API 集市",
+      "models": "模型目录",
+      "console": "管理后台",
+      "quickUse": "快捷使用",
+      "forge": "Forge 工具",
+      "apiDocs": "API 文档",
+      "faq": "常见问题",
+      "contact": "联系我们",
+      "status": "系统状态",
+      "terms": "服务条款",
+      "privacy": "隐私政策",
+      "refund": "退款政策",
+      "cookies": "Cookie 政策"
+    }
+  },
+  "category": {
+    "chat": "语言大模型",
+    "reasoning": "推理模型",
+    "fast": "高性价比",
+    "multimodal": "多模态",
+    "image": "图片生成",
+    "video": "视频生成",
+    "audio": "音视频处理",
+    "data": "信息处理",
+    "rag": "RAG 相关",
+    "tools": "工具 API",
+    "other": "其他"
+  },
+  "card": {
+    "details": "{model} 详情",
+    "docs": "文档",
+    "try": "试用",
+    "input": "入 {price}/1M",
+    "output": "出 {price}/1M"
+  },
+  "banners": {
+    "label": "货架精选",
+    "previous": "上一张",
+    "next": "下一张",
+    "goTo": "第 {n} 张",
+    "current": "第 {n} / {total} 张",
+    "modalityKicker": "在售类目",
+    "liveKicker": "现已可用",
+    "shelf": "API 集市",
+    "viewAll": "查看全部",
+    "tryNow": "立即体验",
+    "price": "入 {input} · 出 {output} /1M",
+    "llm": {
+      "title": "语言大模型",
+      "subtitle": "对话 · 推理 · 高性价比全系可售"
+    },
+    "image": {
+      "title": "图片生成",
+      "subtitle": "文生图 · 多厂商统一接口"
+    },
+    "video": {
+      "title": "视频生成",
+      "subtitle": "文生视频 · 动态内容生产能力"
+    },
+    "audio": {
+      "title": "音视频处理",
+      "subtitle": "语音合成 · 转写 · 音频理解"
+    },
+    "data": {
+      "title": "信息处理",
+      "subtitle": "检索 · 抽取 · 知识增强"
+    },
+    "tools": {
+      "title": "工具 API",
+      "subtitle": "开发者工具与 Agent 能力接口"
+    }
+  },
+  "brandBlurb": {
+    "openai": "OpenAI 出品，通用对话与多模态旗舰",
+    "anthropic": "Anthropic Claude，工程与智能体向强推理",
+    "google": "Google Gemini，原生搜索与多模态",
+    "xai": "xAI Grok，工具调用与实时能力",
+    "deepseek": "DeepSeek，高性价比对话与推理",
+    "moonshot": "月之暗面 Kimi，长上下文中文能力",
+    "mistral": "Mistral，高效开源与商用模型",
+    "meta": "Meta Llama，开源生态主力",
+    "qwen": "通义千问，阿里云中文基座",
+    "zhipu": "智谱 GLM，中文基座与 Agent",
+    "minimax": "Minimax，MoE 通用与语音",
+    "cohere": "Cohere，企业检索与 Command 系列",
+    "perplexity": "Perplexity，搜索增强对话",
+    "baichuan": "百川智能，中文开源与商用",
+    "yi": "零一万物，中文与多语言模型",
+    "doubao": "豆包，字节跳动通用大模型",
+    "hunyuan": "腾讯混元，中文与多模态",
+    "nvidia": "NVIDIA Nemotron，开源推理与加速",
+    "other": "其他可售模型与接口"
+  },
+  "catalog": {
+    "allModels": "全部模型",
+    "categories": "分类",
+    "apps": "应用",
+    "filterPlaceholder": "在结果中筛选…",
+    "collapse": "折叠分类",
+    "expand": "展开分类",
+    "price": "价格",
+    "count": "{count} 个",
+    "gridView": "网格视图",
+    "listView": "列表视图",
+    "clear": "清除筛选",
+    "noMatchTitle": "没有符合筛选的模型",
+    "noMatchBody": "换个更短的关键词，或换一个分类。"
+  },
+  "detail": {
+    "blurb": "{provider} 出品 · {category} · 上下文 {context} · 可经 Router 统一接入。",
+    "intro": {
+      "what": "{model} 是 {provider} 在「{category}」货架上的可售模型。",
+      "how": "通过 {brandName} Router 使用 OpenAI 兼容接口调用，无需分别对接多家上游。",
+      "live": "当前货架状态：可售 / 已配置路由。",
+      "catalog": "当前为目录参考价，连通供给库存后即可按量调用。"
+    },
+    "cap": {
+      "unifiedTitle": "统一接入",
+      "unifiedBody": "一套 API Key / Base URL 覆盖多厂商模型，切换 public model id 即可。",
+      "meteredTitle": "按量计价",
+      "meteredBody": "输入 {input}/1M · 输出 {output}/1M（目录价，以实际出账为准）。",
+      "contextTitle": "上下文",
+      "contextBody": "公开上下文窗口约 {context}，适合长对话与文档任务（以模型实际上限为准）。",
+      "reasoningTitle": "推理向",
+      "reasoningBody": "适合复杂规划、代码与多步工具调用场景。",
+      "multimodalTitle": "多模态",
+      "multimodalBody": "支持图文等跨模态输入（以模型能力声明为准）。"
+    },
+    "copied": "已复制",
+    "copyForAi": "复制给 AI",
+    "sellable": "可售",
+    "catalogOnly": "目录",
+    "contextChip": "上下文 {context}",
+    "input": "输入",
+    "output": "输出",
+    "provider": "厂商",
+    "volume": "大额采购可联系支持获取专属价",
+    "docs": "查看文档",
+    "capabilities": "核心能力",
+    "signInMore": "登录后探索更多功能。",
+    "openPlayground": "打开 Playground · {model}",
+    "viewDetails": "查看详情",
+    "listPrice": "目录价 · 按量",
+    "noRelated": "货架上还没有相关模型。",
+    "toc": {
+      "intro": "API 介绍",
+      "apis": "API 列表",
+      "pricing": "API 价格表",
+      "related": "猜你喜欢"
+    },
+    "col": {
+      "api": "API 描述",
+      "path": "接口地址",
+      "method": "方法",
+      "params": "参数",
+      "model": "模型",
+      "context": "上下文",
+      "note": "说明"
+    },
+    "api": {
+      "imagesGenerate": "Images（生成）",
+      "imagesEdit": "Images（编辑）",
+      "audioSpeech": "Audio（语音合成）",
+      "audioTranscribe": "Audio（转写）",
+      "embeddings": "Embeddings（向量）",
+      "chat": "Chat（聊天）",
+      "chatStream": "Chat（流式）",
+      "responses": "Responses（响应）"
+    },
+    "metaFallback": "模型详情",
+    "metaTitle": "{model} · API 价格与文档",
+    "metaDescription": "{provider} {model} — {brandName} Router 可售货架详情、价格与接入说明。"
+  },
+  "console": {
+    "states": {
+      "loadFailed": "这块内容没能加载出来",
+      "emptyDefault": "这段时间没有记录",
+      "retry": "重试"
+    },
+    "errors": {
+      "generic": "请求失败，请重试。",
+      "network": "网络请求没有发出去，检查网络后重试。",
+      "status": {
+        "unauthorized": "登录状态已失效，请重新登录后再试。",
+        "forbidden": "当前账号没有这个操作的权限。",
+        "notFound": "这条记录不存在，可能已被删除。",
+        "conflict": "当前状态无法执行这个操作。",
+        "rateLimited": "请求过于频繁，稍等几秒再试。",
+        "notEnabled": "这个功能尚未开通。",
+        "server": "服务端出错了（HTTP {status}），请重试或联系我们。",
+        "rejected": "请求被拒绝（HTTP {status}）。",
+        "unexpected": "意外的响应状态 HTTP {status}。"
+      },
+      "code": {
+        "no_active_key": "这个账号还没有可用的 Key。到 Keys 页面创建一把，费用会记在它名下。",
+        "empty_message": "先写点内容再发送。",
+        "router_unconfigured": "供给尚未接通，稍后再试。"
+      },
+      "field": {
+        "amountRequired": "请输入金额。",
+        "amountNotNumber": "金额只能是数字。",
+        "amountMin": "金额至少 {min}。",
+        "amountMax": "单次最多 {max}。",
+        "limitNotNumber": "只能填数字，留空表示不限。",
+        "limitPositive": "要大于 0，留空表示不限。",
+        "limitInteger": "只能填整数。",
+        "limitMax": "最大 {max}。"
+      },
+      "upstreamEmpty": "上游没有返回内容。",
+      "upstreamInterrupted": "上游中断了这次请求。",
+      "requestFailed": "这次请求失败了。"
+    },
+    "keys": {
+      "description": "创建后完整密钥只显示一次。默认 scopes: models:* + tools:*。",
+      "status": {
+        "active": "启用中",
+        "disabled": "已停用",
+        "expired": "已过期",
+        "revoked": "已吊销"
+      },
+      "pending": {
+        "revoking": "吊销中",
+        "enabling": "启用中",
+        "disabling": "停用中",
+        "saving": "保存中"
+      },
+      "notice": {
+        "revoked": "已吊销 {name}，这把 Key 立即失效。",
+        "created": "已创建 {name}。"
+      },
+      "emptyTitle": "这个账号下还没有 Key",
+      "emptyDescription": "创建一把 Key 才能调用 /v1，密钥原文只在创建时显示一次。",
+      "col": {
+        "name": "名称",
+        "prefix": "前缀",
+        "status": "状态",
+        "spend": "今日 / 累计",
+        "rate": "速率",
+        "expires": "过期",
+        "actions": "操作"
+      },
+      "footer": "停用可以随时恢复；吊销不可撤销。用量与花费见 <link>用量</link>。",
+      "confirm": {
+        "title": "吊销 {name}",
+        "description": "吊销后这把 Key 立刻失效，且无法恢复。正在使用它的程序会收到 401。想临时暂停请改用「停用」。",
+        "confirm": "确认吊销",
+        "cancel": "取消"
+      },
+      "reveal": {
+        "title": "只显示这一次 · 关掉就再也读不到了",
+        "copy": "复制",
+        "copied": "已复制",
+        "saved": "我已保存"
+      },
+      "form": {
+        "name": "名称",
+        "rate": "速率 (req/s)",
+        "daily": "每日上限 $",
+        "total": "累计上限 $",
+        "unlimited": "不限",
+        "expires": "过期日 (UTC)",
+        "create": "创建 Key",
+        "creating": "创建中…",
+        "nameRequired": "给这把 Key 起个名字，便于以后对账。",
+        "nameEmpty": "名称不能为空。",
+        "expiresInvalid": "日期格式应为 2026-10-01。",
+        "saveLogs": "保存日志：{on, select, true {开} other {关}}",
+        "saveLogsHint": "关掉后这把 Key 的请求明细不再记录，账单仍然照常记账。",
+        "cancel": "取消",
+        "save": "保存"
+      },
+      "row": {
+        "created": "{date} 创建",
+        "neverExpires": "长期有效",
+        "edit": "编辑",
+        "collapse": "收起",
+        "enable": "启用",
+        "disable": "停用",
+        "revoke": "吊销 {name}"
+      }
+    },
+    "usage": {
+      "title": "用量",
+      "description": "花费、Token 与每一次请求的明细。时间窗口按 UTC 计算，与每日额度的重置时刻一致。",
+      "range": {
+        "24h": "近 24 小时",
+        "7d": "近 7 天",
+        "30d": "近 30 天",
+        "mtd": "本月至今"
+      },
+      "filter": {
+        "model": "模型",
+        "allModels": "全部模型",
+        "allKeys": "全部 Key",
+        "deletedKey": "{label}（已删除）"
+      },
+      "refresh": "刷新",
+      "export": "导出 CSV",
+      "trend": {
+        "title": "消费趋势",
+        "hourly": "按小时 · UTC",
+        "daily": "按天 · UTC",
+        "emptyTitle": "这段时间没有产生费用",
+        "emptyDescription": "换个时间范围，或者到快捷使用跑一次请求。",
+        "bar": "{bucket} · {amount} · {count} 次",
+        "peak": "峰值 {amount}"
+      },
+      "byModel": {
+        "title": "按模型",
+        "emptyTitle": "这段时间没有模型调用"
+      },
+      "byKey": {
+        "title": "按 Key",
+        "emptyTitle": "这段时间没有 Key 产生花费",
+        "deleted": "已删除的 Key"
+      },
+      "col": {
+        "model": "模型",
+        "requests": "请求",
+        "tokens": "输入 / 输出",
+        "cost": "花费",
+        "time": "时间",
+        "status": "状态",
+        "latency": "耗时",
+        "unitCost": "单价"
+      },
+      "tiles": {
+        "cost": "花费",
+        "requests": "请求数",
+        "tokens": "Token",
+        "tokensHint": "入 {input} · 出 {output}",
+        "average": "单次均价",
+        "averageEmpty": "还没有请求"
+      },
+      "records": {
+        "title": "请求明细",
+        "subtitle": "按时间倒序 · 每一行都对应一次扣费",
+        "emptyTitle": "这段时间没有请求",
+        "emptyDescription": "调整筛选条件，或用一把 Key 调用 /v1/chat/completions 试试。",
+        "loaded": "已加载 {count} 行",
+        "loading": "加载中…",
+        "more": "加载更多",
+        "end": "已经到底了"
+      }
+    },
+    "dashboard": {
+      "title": "数据汇总",
+      "description": "管理后台：充值 · Key · 接入。逛货架请回 API 集市首页。",
+      "actions": {
+        "usage": "用量",
+        "market": "API 集市",
+        "quickUse": "快捷使用"
+      },
+      "stat": {
+        "balance": "余额",
+        "keysHint": "{count} 把在用",
+        "monthSpend": "本月花费",
+        "requestsHint": "{count} 次请求",
+        "catalog": "目录模型"
+      },
+      "connect": {
+        "title": "接入参数",
+        "sampleModel": "示例 model"
+      },
+      "checklist": {
+        "title": "上线检查",
+        "balance": "钱包余额 > 0",
+        "activeKey": "至少一个可用 Key",
+        "keyUsed": "Key 被调用过（baseURL 已接通）",
+        "billed": "本月已有计费请求",
+        "done": "已完成",
+        "todo": "未完成"
+      },
+      "featured": {
+        "title": "目录精选",
+        "openMarket": "打开 API 集市 →",
+        "price": "入 {input} · 出 {output} /1M"
+      }
+    },
+    "docs": {
+      "title": "接入",
+      "description": "一把 Key，一个 baseURL。OpenAI、Anthropic、Responses 三种协议走同一入口。",
+      "sampleModel": "示例 model",
+      "images": "图片生成",
+      "limits": {
+        "title": "限额",
+        "rate": "每把 Key 默认 <mono>10</mono> 次/秒。超出时返回 <mono>429</mono>，并带上 <mono>x-ratelimit-limit</mono> / <mono>x-ratelimit-remaining</mono> / <mono>x-ratelimit-reset</mono> 与 <mono>retry-after</mono>。",
+        "quota": "Key 上还可以设总额度与单日额度，单日额度按 UTC 零点重置；触顶返回 <mono>402 key_quota_exceeded</mono>，余额不足返回 <mono>402 insufficient_balance</mono>。当前生效的数值由 <mono>GET {base}/limits</mono> 返回，用同一把 Key 调用即可。"
+      },
+      "col": {
+        "note": "说明"
+      },
+      "endpoints": {
+        "models": "公开模型列表",
+        "chat": "对话补全（流式 / 非流）",
+        "responses": "Responses API（Codex、Agents SDK）",
+        "messages": "Anthropic Messages（Claude Code、Anthropic SDK，x-api-key）",
+        "embeddings": "向量",
+        "imagesGenerations": "文生图（302.ai / OpenAI 同契约）",
+        "imagesEdits": "图生图（multipart：image + prompt + model + size）",
+        "limits": "这把 Key 的速率上限与额度余量"
+      }
+    },
+    "playground": {
+      "title": "快捷使用",
+      "description": "OpenAI 兼容对话 · 走计费边缘，结束后显示这一次的花费",
+      "defaultPrompt": "用一句话介绍 {brand} Router",
+      "model": "模型",
+      "message": "消息",
+      "send": "发送",
+      "sending": "请求中…",
+      "stop": "停止",
+      "billingNote": "用你账号下最新的一把 Key 计费",
+      "reply": "回复",
+      "emptyTitle": "发一条消息，回复会流式出现在这里",
+      "emptyDescription": "每次调用都会走计费边缘，结束后这里会显示它花了多少。",
+      "createKey": "去创建 Key",
+      "stopped": "已停止",
+      "tokens": "入 {input} · 出 {output}",
+      "settling": "结算中…"
+    },
+    "wallet": {
+      "title": "钱包",
+      "description": "预充后按量扣费，余额与消费明细写在同一账本。",
+      "balance": "当前余额",
+      "note": "按量扣费，单次请求精确到 6 位小数。花在哪里见 <link>用量</link>。",
+      "refresh": "刷新余额",
+      "topUp": "充值",
+      "amount": "金额 ({currency})",
+      "pay": "去付款",
+      "footnote": "最低 ${min}。支持银行卡、支付宝、微信支付，付完自动回到这里。"
+    }
   }
 }

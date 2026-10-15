@@ -1,4 +1,5 @@
 import { buildAuthCenterSignUpUrl, getAuthCenterOrigin, sanitizeReturnUrl } from "@nebutra/auth";
+import { detectEnabledOAuthProviders } from "@nebutra/auth/sign-in/providers";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -6,7 +7,6 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { SignUpForm } from "@/components/auth/sign-up-form";
-import { detectEnabledOAuthProviders } from "@/lib/auth/oauth-providers";
 
 type SearchParams = {
   returnUrl?: string;

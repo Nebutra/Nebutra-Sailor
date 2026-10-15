@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const messages: Record<string, string> = {
   "auth.security.changePassword.title": "Change password",
@@ -39,10 +40,13 @@ const messages: Record<string, string> = {
 };
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string) => {
-    const fullKey = `${namespace}.${key}`;
-    return messages[fullKey] ?? fullKey;
-  },
+  useTranslations: (namespace: string) =>
+    namespace.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string) => {
+          const fullKey = `${namespace}.${key}`;
+          return messages[fullKey] ?? fullKey;
+        },
 }));
 
 import { ChangePasswordForm } from "../change-password-form";

@@ -13,6 +13,7 @@ import {
   Input,
 } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   describeCallbackHint,
@@ -89,6 +90,7 @@ const STATUS_TONE: Record<LoginStatus, "ok" | "warn" | "bad" | "unknown"> = {
 };
 
 export function AddAccountDialog({ serviceId, syncAction, className }: AddAccountDialogProps) {
+  const tc = useTranslations("copy.adminPlatformAddAccountDialog");
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<Step>("provider");
   const [provider, setProvider] = useState<LoginProviderId>("codex");
@@ -231,7 +233,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
           setOpen(true);
         }}
       >
-        Add account
+        {tc("addAccount")}
       </Button>
       <Dialog
         open={open}
@@ -242,9 +244,11 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
       >
         <DialogContent className="max-w-2xl gap-0 p-0">
           <div className="border-border border-b px-5 py-4">
-            <DialogTitle className="font-semibold text-sm leading-5">Add account</DialogTitle>
+            <DialogTitle className="font-semibold text-sm leading-5">
+              {tc("addAccount")}
+            </DialogTitle>
             <DialogDescription className="mt-0.5 text-muted-foreground text-xs">
-              Logs a subscription account into the pool. Nothing leaves the private network.
+              {tc("logsASubscriptionAccount")}
             </DialogDescription>
           </div>
 
@@ -252,9 +256,9 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
             {/* Left: provider list */}
             <div className="border-border border-b md:border-r md:border-b-0">
               <p className="px-4 pt-3 pb-1.5 font-medium text-muted-foreground text-xs">
-                1 · Provider
+                {tc("provider")}
               </p>
-              <ul className="pb-2" aria-label="Provider">
+              <ul className="pb-2" aria-label={tc("provider2")}>
                 {LOGIN_PROVIDER_OPTIONS.map((option) => {
                   const active = option.id === provider;
                   return (
@@ -287,11 +291,9 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
             <div className="space-y-4 px-5 py-4">
               {step === "provider" ? (
                 <>
-                  <p className="font-medium text-muted-foreground text-xs">
-                    2 · Sign in on your own device
-                  </p>
+                  <p className="font-medium text-muted-foreground text-xs">{tc("signInOnYour")}</p>
                   <p className="leading-5">
-                    Start a sign-in for <span className="font-medium">{providerLabel}</span>. The
+                    {tc("startASignIn")} <span className="font-medium">{providerLabel}</span>. The
                     router returns a URL to approve in your browser; the account lands in the pool
                     once the callback is pasted back here.
                   </p>
@@ -300,9 +302,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
 
               {step === "signin" && start ? (
                 <>
-                  <p className="font-medium text-muted-foreground text-xs">
-                    2 · Sign in on your own device
-                  </p>
+                  <p className="font-medium text-muted-foreground text-xs">{tc("signInOnYour")}</p>
                   <div className="flex flex-wrap items-center gap-2">
                     <Button
                       type="button"
@@ -310,14 +310,14 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
                       variant="ink"
                       onClick={() => window.open(start.url, "_blank", "noopener,noreferrer")}
                     >
-                      Open sign-in
+                      {tc("openSignIn")}
                       <ArrowUpRight />
                     </Button>
                     <Button
                       type="button"
                       size="sm"
                       variant="outline"
-                      aria-label="Copy sign-in URL"
+                      aria-label={tc("copySignInURL")}
                       onClick={() => void copyUrl()}
                     >
                       {copied ? <Check /> : <Copy />}
@@ -334,7 +334,7 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
                   <p className="text-muted-foreground text-xs leading-4">
                     {describeCallbackHint(start.callbackHost)}
                   </p>
-                  <Field label="Callback URL" htmlFor="login-callback-url">
+                  <Field label={tc("callbackURL")} htmlFor="login-callback-url">
                     <Input
                       id="login-callback-url"
                       name="redirectUrl"
@@ -352,15 +352,15 @@ export function AddAccountDialog({ serviceId, syncAction, className }: AddAccoun
 
               {step === "done" ? (
                 <>
-                  <p className="font-medium text-muted-foreground text-xs">3 · Result</p>
+                  <p className="font-medium text-muted-foreground text-xs">{tc("result")}</p>
                   <div className="rounded-md border border-border bg-background px-3 py-2">
                     <p className="inline-flex items-center gap-2 leading-5">
                       <StatusDot tone="ok" />
-                      Account added — sync the channel so its models go on the shelf.
+                      {tc("accountAddedSyncThe")}
                     </p>
                     {result ? (
                       <p className="mt-1 font-mono text-muted-foreground text-xs">
-                        audit {result.auditId}
+                        {tc("audit", { auditId: result.auditId })}
                       </p>
                     ) : null}
                   </div>

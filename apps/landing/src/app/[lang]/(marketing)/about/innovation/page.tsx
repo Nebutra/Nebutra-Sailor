@@ -95,9 +95,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <section className="relative pt-32 md:pt-48 pb-24 md:pb-32 overflow-hidden">
         <AuroraBackground variant="vivid" position="top" intensity={0.6} />
         <div className="relative container mx-auto px-4 max-w-wide">
-          <span className="text-sm font-semibold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
-            {t("hero.eyebrow")}
-          </span>
+          <span className="text-sm text-muted-foreground mb-8 block">{t("hero.eyebrow")}</span>
           <AnimateIn preset="fadeUp">
             <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10 max-w-4xl"
@@ -123,9 +121,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <AuroraBackground variant="subtle" position="center" intensity={0.4} />
         <div className="relative container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16 md:mb-20">
-            <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
-              {t("harness.eyebrow")}
-            </span>
+            <span className="text-sm text-muted-foreground mb-4 block">{t("harness.eyebrow")}</span>
             <AnimateIn preset="fadeUp">
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"
@@ -158,10 +154,10 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 {/* Harness (outermost, highlighted) */}
                 <div className="flex flex-wrap items-baseline justify-between gap-3 mb-5">
                   <div className="flex items-baseline gap-4">
-                    <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       {t("layerLabel", { number: "03" })} · {harnessLayer.year}
                     </span>
-                    <span className="text-[10px] font-mono tracking-widest uppercase rounded-full border border-foreground bg-foreground text-background px-2.5 py-1">
+                    <span className="text-xs rounded-full border border-foreground bg-foreground text-background px-2.5 py-1">
                       {t("harness.currentTag")}
                     </span>
                   </div>
@@ -192,7 +188,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 {/* Context (middle) */}
                 <div className="rounded-[var(--radius-card)] border border-border bg-muted/30 p-5 md:p-8 lg:p-10">
                   <div className="flex flex-wrap items-baseline justify-between gap-3 mb-4">
-                    <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       {t("layerLabel", { number: "02" })} · {contextLayer.year}
                     </span>
                   </div>
@@ -219,7 +215,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                   {/* Weights (innermost) */}
                   <div className="rounded-[var(--radius-card)] border border-border/70 bg-background p-4 md:p-6">
                     <div className="flex flex-wrap items-baseline justify-between gap-3 mb-3">
-                      <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground">
+                      <span className="text-sm text-muted-foreground">
                         {t("layerLabel", { number: "01" })} · {weightsLayer.year}
                       </span>
                     </div>
@@ -256,7 +252,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-wide">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-5">
-              <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+              <span className="text-sm text-muted-foreground mb-4 block">
                 {t("pillarLabel", { number: "01" })}
               </span>
               <AnimateIn preset="fadeUp">
@@ -291,7 +287,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                     >
                       <div className="flex items-center justify-between mb-4">
                         <Icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
-                        <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
+                        <span className="text-sm text-muted-foreground">
                           H{(i + 1).toString().padStart(2, "0")}
                         </span>
                       </div>
@@ -316,7 +312,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <div className="container mx-auto px-4 max-w-wide">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
             <div className="lg:col-span-5 lg:order-2">
-              <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+              <span className="text-sm text-muted-foreground mb-4 block">
                 {t("pillarLabel", { number: "02" })}
               </span>
               <AnimateIn preset="fadeUp">
@@ -333,7 +329,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6">
                 {ossPillar.description}
               </p>
-              <p className="text-base text-muted-foreground/90 leading-relaxed border-l-2 border-border pl-4">
+              <p className="text-base text-muted-foreground leading-relaxed border-l-2 border-border pl-4">
                 {t("pillars.ossSupplement")}
               </p>
             </div>
@@ -354,9 +350,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                       >
                         {stat.value}
                       </span>
-                      <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mt-6">
-                        {stat.label}
-                      </span>
+                      <span className="text-sm text-muted-foreground mt-6">{stat.label}</span>
                     </div>
                   );
                 })}
@@ -370,7 +364,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <section className="py-24 md:py-32 border-y border-border/50 bg-muted/20">
         <div className="container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16 md:mb-20">
-            <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+            <span className="text-sm text-muted-foreground mb-4 block">
               {t("pillarLabel", { number: "03" })}
             </span>
             <AnimateIn preset="fadeUp">
@@ -404,7 +398,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                 >
                   <div className="flex items-center justify-between mb-5">
                     <Icon className="h-6 w-6 text-foreground" strokeWidth={1.5} />
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       P{(i + 1).toString().padStart(2, "0")}
                     </span>
                   </div>
@@ -426,7 +420,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <section className="py-24 md:py-32 border-b border-border/50 bg-background">
         <div className="container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16 md:mb-20">
-            <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+            <span className="text-sm text-muted-foreground mb-4 block">
               {t("orgPrinciples.eyebrow")}
             </span>
             <AnimateIn preset="fadeUp">
@@ -465,7 +459,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                     {principle.number}
                   </span>
                   <div className="relative">
-                    <span className="text-[10px] font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+                    <span className="text-sm text-muted-foreground mb-4 block">
                       {tp("label", { number: principle.number })}
                     </span>
                     <h3
@@ -489,7 +483,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
       <section className="py-24 md:py-32">
         <div className="container mx-auto px-4 max-w-wide">
           <div className="max-w-3xl mb-16">
-            <span className="text-xs font-mono tracking-widest uppercase text-muted-foreground mb-4 block">
+            <span className="text-sm text-muted-foreground mb-4 block">
               {t("timeline.eyebrow")}
             </span>
             <AnimateIn preset="fadeUp">
@@ -529,7 +523,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
                       className="absolute left-[-4px] md:left-[11.5rem] top-2 h-2 w-2 -translate-x-1/2 rounded-full bg-foreground"
                       aria-hidden
                     />
-                    <span className="w-full md:w-[11rem] text-sm font-mono tracking-widest uppercase text-muted-foreground md:pr-4">
+                    <span className="w-full md:w-[11rem] text-sm text-muted-foreground md:pr-4">
                       {ms.date}
                     </span>
                     <div className="md:pl-8 flex-1">
@@ -556,9 +550,7 @@ export default async function InnovationPage({ params }: { params: Promise<{ lan
         <AuroraBackground variant="vivid" position="bottom" intensity={0.7} />
         <div className="relative container mx-auto px-4 text-center max-w-4xl">
           <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-            <span className="text-sm font-semibold tracking-widest uppercase text-primary">
-              {t("cta.eyebrow")}
-            </span>
+            <span className="text-sm text-primary">{t("cta.eyebrow")}</span>
           </div>
           <AnimateIn preset="fadeUp">
             <h2

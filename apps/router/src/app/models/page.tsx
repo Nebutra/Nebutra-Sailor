@@ -17,15 +17,12 @@ type Props = {
 /** 对应 302 /product/list?cate=api&tag=&brand= */
 export default async function ModelsPage({ searchParams }: Props) {
   const { q, brand, tag, sort } = await searchParams;
-  const { models, fetchedNote, source, inventoryOk, inventorySources } =
-    await getPricedListingCatalog();
-  const inv = inventoryOk ? `库存 ${inventorySources.join(", ") || "—"}` : "库存未连通";
-  const note = `${fetchedNote} · ${inv} · ${source}`;
+  // Supply provenance is operator information (admin supply desk), not shelf copy.
+  const { models } = await getPricedListingCatalog();
 
   return (
     <ModelsCatalog
       models={models}
-      sourceNote={note}
       initialQuery={q?.trim() ?? ""}
       {...(brand ? { initialBrand: brand } : {})}
       {...(tag ? { initialTag: tag } : {})}

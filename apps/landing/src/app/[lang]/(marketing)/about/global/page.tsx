@@ -74,9 +74,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
         <AuroraBackground variant="subtle" />
         <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="emerge" className="max-w-4xl mx-auto text-center">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
-              {t("hero.eyebrow")}
-            </span>
+            <span className="text-sm text-muted-foreground mb-8 block">{t("hero.eyebrow")}</span>
             <h1
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-balance mb-10"
               style={{
@@ -146,9 +144,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
       <section className="py-24 md:py-32 bg-muted/30 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-              i18n · l10n
-            </span>
+            <span className="text-sm text-muted-foreground mb-6 block">i18n · l10n</span>
             <h2
               className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6"
               style={{
@@ -195,7 +191,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
       <section className="py-24 md:py-32 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-6xl">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
+            <span className="text-sm text-muted-foreground mb-6 block">
               {t("compliance.eyebrow")}
             </span>
             <h2
@@ -216,13 +212,13 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
             <div className="overflow-hidden rounded-[var(--radius-card)] border border-border/50 bg-background">
               {/* Header row — hidden on mobile */}
               <div className="hidden md:grid md:grid-cols-[1.2fr_1.5fr_1fr] gap-6 px-8 py-5 bg-muted/40 border-b border-border/50">
-                <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
+                <span className="text-sm text-muted-foreground">
                   {t("compliance.columns.region")}
                 </span>
-                <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground">
+                <span className="text-sm text-muted-foreground">
                   {t("compliance.columns.framework")}
                 </span>
-                <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-muted-foreground text-right">
+                <span className="text-sm text-muted-foreground text-right">
                   {t("compliance.columns.status")}
                 </span>
               </div>
@@ -233,7 +229,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                   className="grid grid-cols-1 md:grid-cols-[1.2fr_1.5fr_1fr] gap-2 md:gap-6 px-6 md:px-8 py-6 border-b border-border/50 last:border-b-0 hover:bg-muted/20 transition-colors"
                 >
                   <div className="flex flex-col md:block">
-                    <span className="md:hidden text-[10px] font-bold tracking-widest uppercase text-muted-foreground mb-1">
+                    <span className="md:hidden text-sm text-muted-foreground mb-1">
                       {t("compliance.columns.region")}
                     </span>
                     <span className="text-base font-semibold text-foreground">
@@ -241,7 +237,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                     </span>
                   </div>
                   <div className="flex flex-col md:block">
-                    <span className="md:hidden text-[10px] font-bold tracking-widest uppercase text-muted-foreground mb-1">
+                    <span className="md:hidden text-sm text-muted-foreground mb-1">
                       {t("compliance.columns.framework")}
                     </span>
                     <span className="text-base text-muted-foreground font-mono">
@@ -278,7 +274,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
       <section className="py-24 md:py-32 bg-muted/30 border-t border-border/50">
         <div className="container mx-auto px-4 max-w-wide">
           <AnimateIn preset="fadeUp" className="max-w-3xl mx-auto text-center mb-16 md:mb-20">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
+            <span className="text-sm text-muted-foreground mb-6 block">
               {t("payments.eyebrow")}
             </span>
             <h2
@@ -305,7 +301,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
                   >
                     {gw.name}
                   </span>
-                  <span className="text-[11px] font-mono tracking-wider uppercase text-muted-foreground">
+                  <span className="text-sm text-muted-foreground">
                     {t(`payments.regions.${gw.region}`)}
                   </span>
                 </div>
@@ -320,9 +316,7 @@ export default async function GlobalPage({ params }: { params: Promise<{ lang: s
         <div className="container mx-auto px-4 text-center max-w-4xl">
           <AnimateIn preset="emerge">
             <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-              <span className="text-sm font-bold tracking-widest uppercase text-primary">
-                {t("cta.eyebrow")}
-              </span>
+              <span className="text-sm text-primary">{t("cta.eyebrow")}</span>
             </div>
             <h2
               className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-8"

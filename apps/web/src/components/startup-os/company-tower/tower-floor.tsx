@@ -154,7 +154,7 @@ export function TowerFloor({
           </span>
           {/* Muted one-line preview — keys only, never values. */}
           {isBase ? null : (
-            <span className="truncate font-mono text-[10px] text-neutral-8">
+            <span className="truncate font-mono text-xs text-neutral-8">
               {previewLine(layer, manifestEntry)}
             </span>
           )}

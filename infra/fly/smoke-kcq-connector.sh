@@ -10,12 +10,19 @@ case "$CONNECTOR" in
 esac
 base=http://127.0.0.1:${KCQ_CONNECTOR_PORT:-$port}
 if [ "$CONNECTOR" = binance ]; then
-  curl -fsS --max-time 20 "$base/api/binance/orderbook?symbol=btcusdt" |
-    jq -e '(.bids | length) > 0 and (.asks | length) > 0'
+  api="$base/api/v1/market-data"
+  curl -fsS --max-time 25 "$api/sources/binance/probe" |
+    jq -e '.data.capabilities.trades.live == true'
+  curl -fsS --max-time 25 -H 'Content-Type: application/json' \
+    -d '{"sourceId":"binance","instrument":{"id":"binance:spot:BTCUSDT","symbol":"BTCUSDT","exchange":"BINANCE"},"period":"1min","adjustment":"none","limit":5}' \
+    "$api/bars" |
+    jq -e '{count:(.data.items|length),last:.data.items[-1]} | select(.count > 0 and .last.close > 0 and .last.timestamp > ((now - 10*60)*1000))'
+  curl -fsS --max-time 25 "$api/sources/binance/depth?symbol=BTCUSDT" |
+    jq -e '(.data.bids | length) > 0 and (.data.asks | length) > 0'
   stream=$(mktemp)
   trap 'rm -f "$stream"' EXIT
-  curl -fsSN --max-time 8 "$base/api/binance/depth-events?symbol=btcusdt" > "$stream" || test "$?" = 28
-  sed -n 's/^data: //p' "$stream" | head -1 | jq -e 'select(.type == "snapshot")'
+  curl -fsSN --max-time 12 "$api/sources/binance/trades/stream?symbol=BTCUSDT&kind=aggregated" > "$stream" || test "$?" = 28
+  sed -n 's/^data: //p' "$stream" | jq -se 'any(.[]; .type == "trades" and (.trades | length) > 0)'
   exit
 fi
 if [ "$CONNECTOR" = tdx ]; then

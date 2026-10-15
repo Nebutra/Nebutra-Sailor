@@ -233,12 +233,10 @@ function ExplorerRows({ level, nodes, parentPath, selectedPath }: ExplorerRowsPr
             }
           />
 
-          <TreeLabel className="font-mono text-[12px] leading-5 tracking-[-0.01em]">
-            {node.label}
-          </TreeLabel>
+          <TreeLabel className="font-mono text-[12px] leading-5">{node.label}</TreeLabel>
 
           {node.file ? (
-            <span className="ml-auto rounded-full bg-neutral-2 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.08em] text-neutral-8 opacity-0 transition-opacity group-hover/trigger:opacity-100">
+            <span className="ml-auto rounded-full bg-neutral-2 px-1.5 py-0.5 text-xs text-neutral-8 opacity-0 transition-opacity group-hover/trigger:opacity-100">
               {node.file.language}
             </span>
           ) : null}

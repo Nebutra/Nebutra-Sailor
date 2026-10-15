@@ -56,9 +56,7 @@ function StatusPill({ status }: { status: WebhookDeliveryView["status"] }) {
     retrying: "bg-warning/10 text-warning-strong",
   };
   return (
-    <span
-      className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase ${styles[status]}`}
-    >
+    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[status]}`}>
       {status}
     </span>
   );
@@ -70,6 +68,7 @@ export function WebhookDeliveriesPanel({
   onReplay,
   onClose,
 }: WebhookDeliveriesPanelProps) {
+  const tc = useTranslations("copy.webhooksWebhookDeliveriesPanel");
   const t = useTranslations("startupOs");
   // Pure UI state (which payload is expanded) stays local — not server cache.
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -114,26 +113,26 @@ export function WebhookDeliveriesPanel({
 
   return (
     <aside
-      aria-label="Webhook delivery history"
+      aria-label={tc("webhookDeliveryHistory")}
       className="flex h-full flex-col gap-4 border-l border-border bg-background p-6"
     >
       <header className="flex items-center justify-between">
-        <h3 className="text-base font-semibold text-foreground">Recent deliveries</h3>
+        <h3 className="text-base font-semibold text-foreground">{tc("recentDeliveries")}</h3>
         {onClose && (
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close deliveries panel"
+            aria-label={tc("closeDeliveriesPanel")}
             className="text-sm text-muted-foreground hover:text-foreground"
           >
-            Close
+            {tc("close")}
           </button>
         )}
       </header>
 
       {isLoading && (
         <p role="status" className="text-sm text-muted-foreground">
-          Loading…
+          {tc("loading")}
         </p>
       )}
       {error && (
@@ -157,7 +156,7 @@ export function WebhookDeliveriesPanel({
               <div className="flex items-center justify-between gap-3">
                 <div className="min-w-0">
                   <p className="font-mono text-xs text-foreground">{delivery.eventType}</p>
-                  <p className="mt-0.5 text-[10px] text-muted-foreground">
+                  <p className="mt-0.5 text-xs text-muted-foreground">
                     {new Date(delivery.createdAt).toLocaleString()}
                     {delivery.responseTimeMs !== null && ` · ${delivery.responseTimeMs}ms`}
                     {delivery.retryCount > 0 && ` · retries ${delivery.retryCount}`}
@@ -166,8 +165,8 @@ export function WebhookDeliveriesPanel({
                 <div className="flex items-center gap-2">
                   <StatusPill status={delivery.status} />
                   {delivery.statusCode !== null && (
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      HTTP {delivery.statusCode}
+                    <span className="font-mono text-xs text-muted-foreground">
+                      {tc("hTTP", { statusCode: String(delivery.statusCode) })}
                     </span>
                   )}
                 </div>
@@ -193,7 +192,7 @@ export function WebhookDeliveriesPanel({
               </div>
 
               {isOpen && (
-                <pre className="mt-2 max-h-48 overflow-auto rounded bg-muted p-2 text-[10px] text-foreground">
+                <pre className="mt-2 max-h-48 overflow-auto rounded bg-muted p-2 text-xs text-foreground">
                   {JSON.stringify(delivery.payload, null, 2)}
                   {delivery.errorMessage && `\n\nError: ${delivery.errorMessage}`}
                 </pre>

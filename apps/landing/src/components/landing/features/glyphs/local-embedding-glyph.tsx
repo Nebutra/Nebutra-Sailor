@@ -27,8 +27,8 @@ export function LocalEmbeddingGlyph(_props: SubpackageGlyphProps) {
         </Badge>
       </div>
 
-      <div className="flex items-center gap-1.5 font-mono text-[10px] text-neutral-10">
-        <Sparkles size={10} className="shrink-0 text-neutral-9" />
+      <div className="flex items-center gap-1.5 font-mono text-[10px] text-neutral-11">
+        <Sparkles size={10} className="shrink-0 text-neutral-11" />
         <span className="truncate">local · sentence-transformers/all-MiniLM-L6-v2</span>
       </div>
 
@@ -47,16 +47,16 @@ export function LocalEmbeddingGlyph(_props: SubpackageGlyphProps) {
 
       <div className="mt-2 flex flex-col gap-1 font-mono text-[10px]">
         <div className="flex items-center gap-1.5 text-neutral-11">
-          <Brain size={11} className="shrink-0 text-neutral-9" />
+          <Brain size={11} className="shrink-0 text-neutral-11" />
           <span>12ms per chunk</span>
-          <span className="text-neutral-8">·</span>
-          <span className="text-neutral-10">CPU only</span>
+          <span className="text-neutral-11">·</span>
+          <span className="text-neutral-11">CPU only</span>
         </div>
         <div className="flex items-center gap-1.5 text-neutral-11">
-          <LockClosed size={11} className="shrink-0 text-neutral-9" />
+          <LockClosed size={11} className="shrink-0 text-neutral-11" />
           <span>zero egress</span>
-          <span className="text-neutral-8">·</span>
-          <span className="text-neutral-10">privacy preserved</span>
+          <span className="text-neutral-11">·</span>
+          <span className="text-neutral-11">privacy preserved</span>
         </div>
       </div>
     </div>

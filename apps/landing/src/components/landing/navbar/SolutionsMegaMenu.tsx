@@ -37,7 +37,7 @@ export function SolutionsMegaMenu() {
           <div className="grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-4">
             {SOLUTION_GROUPS.map((group) => (
               <div key={group.id} className="flex flex-col gap-2">
-                <span className="px-2 text-[0.7rem] font-bold uppercase tracking-widest text-muted-foreground/60">
+                <span className="px-2 text-[0.7rem] font-bold uppercase tracking-widest text-muted-foreground">
                   {tNav(`groups.${group.id}`)}
                 </span>
                 <div className="flex flex-col gap-0.5">
@@ -49,12 +49,12 @@ export function SolutionsMegaMenu() {
                         href={`/solutions/${s.slug}` as LocalizedHref}
                         className="group/child flex items-start gap-2.5 rounded-[var(--radius-xl)] px-2 py-2 transition-colors duration-200 hover:bg-muted/80"
                       >
-                        <Icon className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground/60 transition-colors group-hover/child:text-foreground" />
+                        <Icon className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover/child:text-foreground" />
                         <span className="flex flex-col">
                           <span className="text-sm font-medium text-neutral-12">
                             {tNav(`items.${s.slug}.label`)}
                           </span>
-                          <span className="text-xs text-muted-foreground/80">
+                          <span className="text-xs text-muted-foreground">
                             {tNav(`items.${s.slug}.tagline`)}
                           </span>
                         </span>

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { controlFontSize, multilineFieldRadius } from "../tokens/components/control-ladder";
 import { type TextareaSize, textareaTokens } from "../tokens/components/textarea";
 import { cn } from "../utils/cn";
 import { asPlainStyle } from "../utils/primitive-props";
@@ -75,11 +76,13 @@ function getTextareaStyle(size: TextareaSize, style: unknown): TextareaCssVars {
     "--textarea-min-height": `${token.minHeight}px`,
     "--textarea-padding-x": `${token.paddingX}px`,
     "--textarea-padding-y": `${token.paddingY}px`,
-    "--textarea-font-size": `${token.fontSize}px`,
-    "--textarea-radius": `${token.radius}px`,
+    // Type size and corner from the shared control ladder: a textarea under the
+    // same label as an Input reads at the Input's size and rounds like it (up to
+    // the card radius — a pill is a single-line decision).
+    "--textarea-font-size": controlFontSize(size, token.fontSize),
+    "--textarea-radius": multilineFieldRadius(token.radius),
     "--textarea-focus-ring-width": `${textareaTokens.focusRingWidth}px`,
     borderRadius: "var(--textarea-radius)",
-    outline: "none",
     ...asPlainStyle(style),
   };
 }

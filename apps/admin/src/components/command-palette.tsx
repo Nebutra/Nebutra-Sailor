@@ -13,7 +13,7 @@ import type { ConsoleTab } from "./console-tabs";
 export function CommandPalette({ tabs }: { tabs: ConsoleTab[] }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  const targets = tabs.filter((t) => !t.disabled);
+  const targets = tabs;
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -40,9 +40,7 @@ export function CommandPalette({ tabs }: { tabs: ConsoleTab[] }) {
       >
         <MagnifyingGlass className="size-3.5 shrink-0" aria-hidden />
         <span className="flex-1 text-left">Jump to…</span>
-        <kbd className="rounded border border-border px-1.5 font-mono text-[11px] leading-4">
-          ⌘K
-        </kbd>
+        <kbd className="rounded border border-border px-1.5 font-mono text-xs leading-4">⌘K</kbd>
       </button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-md p-0">

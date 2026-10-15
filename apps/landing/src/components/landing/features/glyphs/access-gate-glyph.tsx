@@ -67,7 +67,7 @@ export function AccessGateGlyph({ copy }: SubpackageGlyphProps) {
       </div>
 
       {/* Footer: entitlement guard */}
-      <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground/80">
+      <div className="flex items-center gap-1 font-mono text-[9px] text-muted-foreground">
         <LockClosed className="h-2.5 w-2.5" aria-hidden="true" />
         <span className="truncate">{FOOTER}</span>
       </div>

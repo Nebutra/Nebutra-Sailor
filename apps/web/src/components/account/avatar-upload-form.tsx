@@ -194,6 +194,7 @@ export function AvatarUploadForm({
   deletePipeline,
   onUpdated,
 }: AvatarUploadFormProps) {
+  const tc = useTranslations("copy.accountAvatarUploadForm");
   const t = useTranslations("account.avatar");
   const [state, dispatch] = useReducer(avatarUploadReducer, {
     avatarUrl: initialAvatarUrl ?? null,
@@ -294,7 +295,7 @@ export function AvatarUploadForm({
           <div className="flex size-20 items-center justify-center overflow-hidden rounded-full border border-border bg-muted">
             <NextImage
               src={state.avatarUrl}
-              alt="User avatar"
+              alt={tc("userAvatar")}
               width={80}
               height={80}
               unoptimized
@@ -304,7 +305,7 @@ export function AvatarUploadForm({
         ) : (
           <img
             src={dicebearAvatarUrl(email ?? fallbackName)}
-            alt="Avatar preview"
+            alt={tc("avatarPreview")}
             width={80}
             height={80}
             className="size-20 rounded-full border border-border object-cover"

@@ -35,7 +35,7 @@ export async function GET(request: Request, context: RouteContext) {
   if (!key.saveLogs) {
     return NextResponse.json(
       {
-        error: "This key does not keep request logs. Turn on 保存日志 to start recording them.",
+        error: "This key does not keep request logs. Turn on Save logs to start recording them.",
         code: "logging_disabled",
       },
       { status: 403 },

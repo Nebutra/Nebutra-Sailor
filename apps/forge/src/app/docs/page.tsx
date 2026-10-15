@@ -78,7 +78,7 @@ export default function ApiDocsPage() {
 
         <Card className="border-neutral-6 p-5">
           <p className="mb-3 text-sm font-semibold">示例</p>
-          <pre className="overflow-x-auto rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-4 font-mono text-[12px] leading-relaxed">{`curl -X POST 'http://localhost:3105/api/v1/tools/invoke/text/word-count' \\
+          <pre className="overflow-x-auto rounded-[var(--radius-lg)] border border-neutral-6 bg-neutral-2 p-4 font-mono text-[12px] leading-relaxed">{`curl -X POST 'https://${brand.domains.forge}/api/v1/tools/invoke/text/word-count' \\
   -H 'Content-Type: application/json' \\
   -d '{"input":{"text":"hello 你好"}}'`}</pre>
         </Card>

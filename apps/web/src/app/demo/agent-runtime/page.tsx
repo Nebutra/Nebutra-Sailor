@@ -11,6 +11,7 @@ import {
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
 import { Card, Table } from "@nebutra/ui/primitives";
 import { connection } from "next/server";
+import { getTranslations } from "next-intl/server";
 
 /**
  * Demo route for the @nebutra/agent-runtime grammar.
@@ -20,6 +21,7 @@ import { connection } from "next/server";
  * with pure functions only — NO infrastructure, NO untrusted-code execution.
  */
 export default async function AgentRuntimeDemoPage() {
+  const tc = await getTranslations("copy.agentRuntimePage");
   await connection();
   const enabled = await isFeatureEnabled(FLAGS.AGENT_RUNTIME_DEMO);
 
@@ -28,10 +30,10 @@ export default async function AgentRuntimeDemoPage() {
       <main className="min-h-dvh bg-muted p-8 text-foreground">
         <div className="mx-auto max-w-4xl">
           <Card className="p-6">
-            <h1 className="font-semibold text-xl">Agent Runtime — disabled</h1>
+            <h1 className="font-semibold text-xl">{tc("agentRuntimeDisabled")}</h1>
             <p className="mt-2 text-muted-foreground text-sm">
-              The <code>agent-runtime</code> capability demo is behind a feature flag (
-              <code>{FLAGS.AGENT_RUNTIME_DEMO}</code>) and is off by default. Enable it per tenant
+              {tc("the")} <code>{tc("agentRuntime")}</code> capability demo is behind a feature flag
+              (<code>{FLAGS.AGENT_RUNTIME_DEMO}</code>) and is off by default. Enable it per tenant
               to view the runtime grammar.
             </p>
           </Card>
@@ -70,33 +72,32 @@ export default async function AgentRuntimeDemoPage() {
     <main className="min-h-dvh bg-muted p-8 text-foreground">
       <div className="mx-auto flex max-w-4xl flex-col gap-6">
         <header>
-          <h1 className="font-semibold text-2xl">Agent Runtime grammar</h1>
+          <h1 className="font-semibold text-2xl">{tc("agentRuntimeGrammar")}</h1>
           <p className="mt-1 text-muted-foreground text-sm">
-            Faithful, multi-tenant re-expression. Defaults: approval{" "}
-            <code>{DEFAULT_APPROVAL_POLICY.kind}</code>, capability{" "}
+            {tc("faithfulMultiTenantRe")} <code>{DEFAULT_APPROVAL_POLICY.kind}</code>, capability{" "}
             <code>{DEFAULT_CAPABILITY_POLICY.kind}</code>.
           </p>
         </header>
 
         <Card className="p-6">
-          <h2 className="font-medium">Tenant + thread serialization isolation</h2>
-          <p className="mt-2 text-muted-foreground text-sm">
-            Same thread id, different tenants — never share a serial lane:
-          </p>
+          <h2 className="font-medium">{tc("tenantThreadSerializationIsolation")}</h2>
+          <p className="mt-2 text-muted-foreground text-sm">{tc("sameThreadIdDifferent")}</p>
           <pre className="mt-2 overflow-x-auto rounded bg-muted p-3 text-xs">
-            org_a → {scopeKey(tenantA)}
-            {"\n"}org_b → {scopeKey(tenantB)}
+            {tc("orgAOrgB", {
+              value0: String(scopeKey(tenantA) ?? ""),
+              value1: String(scopeKey(tenantB) ?? ""),
+            })}
           </pre>
         </Card>
 
         <Card className="p-6">
-          <h2 className="font-medium">Rule decision × approval policy</h2>
+          <h2 className="font-medium">{tc("ruleDecisionApprovalPolicy")}</h2>
           <Table bare className="mt-3">
             <Table.Header>
               <Table.Row>
-                <Table.Head>rule</Table.Head>
-                <Table.Head>on_request</Table.Head>
-                <Table.Head alignment="start">never</Table.Head>
+                <Table.Head>{tc("rule")}</Table.Head>
+                <Table.Head>{tc("onRequest")}</Table.Head>
+                <Table.Head alignment="start">{tc("never")}</Table.Head>
               </Table.Row>
             </Table.Header>
             <Table.Body bordered>
@@ -114,10 +115,8 @@ export default async function AgentRuntimeDemoPage() {
         </Card>
 
         <Card className="p-6">
-          <h2 className="font-medium">External-sandbox seam</h2>
-          <p className="mt-2 text-muted-foreground text-sm">
-            Default executor outcome for an untrusted command:
-          </p>
+          <h2 className="font-medium">{tc("externalSandboxSeam")}</h2>
+          <p className="mt-2 text-muted-foreground text-sm">{tc("defaultExecutorOutcomeFor")}</p>
           <p className="mt-2 font-mono text-sm">{sandboxOutcome}</p>
         </Card>
       </div>

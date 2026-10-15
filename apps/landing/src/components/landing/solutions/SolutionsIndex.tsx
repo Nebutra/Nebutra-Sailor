@@ -24,7 +24,7 @@ export async function SolutionsIndex({ locale }: SolutionsIndexProps) {
   return (
     <div className="mx-auto max-w-wide px-4 pb-24 pt-28 md:px-6 md:pt-36">
       <AnimateIn preset="emerge">
-        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-muted-foreground/70">
+        <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-muted-foreground">
           {t("index.eyebrow")}
         </p>
         <h1 className="max-w-3xl text-3xl font-bold leading-tight text-neutral-12 md:text-5xl">
@@ -57,7 +57,7 @@ export async function SolutionsIndex({ locale }: SolutionsIndexProps) {
                           <span className="inline-flex size-10 items-center justify-center rounded-[var(--radius-xl)] bg-muted/60">
                             <Icon className="h-5 w-5 text-neutral-12" />
                           </span>
-                          <ArrowUpRight className="h-4 w-4 text-muted-foreground/50 transition-colors group-hover:text-foreground" />
+                          <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-foreground" />
                         </div>
                         <h3 className="mb-2 text-lg font-semibold text-neutral-12">
                           {t(`solutions.${s.slug}.label`)}

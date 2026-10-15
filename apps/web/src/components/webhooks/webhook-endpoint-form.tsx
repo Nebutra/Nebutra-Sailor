@@ -11,6 +11,7 @@ import {
   FormMessage,
   Input,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -77,6 +78,7 @@ export function WebhookEndpointForm({
   secondaryAction,
   onSubmit,
 }: WebhookEndpointFormProps) {
+  const tc = useTranslations("copy.webhooksWebhookEndpointForm");
   const form = useForm<WebhookEndpointFormValues>({
     resolver: zodResolver(webhookEndpointFormSchema),
     defaultValues: defaultValues ?? EMPTY_VALUES,
@@ -113,7 +115,7 @@ export function WebhookEndpointForm({
           render={({ field }) => (
             <FormItem className="space-y-0">
               <FormLabel className="mb-1 block text-sm font-medium text-foreground">
-                Endpoint URL
+                {tc("endpointURL")}
               </FormLabel>
               <FormControl>
                 <Input
@@ -134,7 +136,7 @@ export function WebhookEndpointForm({
           render={({ field }) => (
             <FormItem className="space-y-0">
               <fieldset>
-                <legend className="mb-2 text-sm font-medium text-foreground">Events</legend>
+                <legend className="mb-2 text-sm font-medium text-foreground">{tc("events")}</legend>
                 <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
                   {STANDARD_WEBHOOK_EVENTS.map((eventDef) => {
                     const checked = field.value.includes(eventDef.id);

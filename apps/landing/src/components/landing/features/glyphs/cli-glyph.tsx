@@ -20,7 +20,7 @@ export function CliGlyph(_props: SubpackageGlyphProps) {
       className="relative w-full overflow-hidden dark rounded-[var(--radius-lg)] bg-[oklch(0.16_0.012_250)] text-foreground"
     >
       <div className="flex items-center justify-between border-b border-foreground/5 px-3 py-1.5">
-        <div className="flex items-center gap-1.5 text-foreground/40">
+        <div className="flex items-center gap-1.5 text-muted-foreground">
           <TerminalWindow className="h-3.5 w-3.5" />
           <span className="font-mono text-[10px] uppercase tracking-wider">terminal</span>
         </div>
@@ -36,7 +36,7 @@ export function CliGlyph(_props: SubpackageGlyphProps) {
       <div className="flex flex-col gap-0.5 px-3 py-2 font-mono text-[11px] leading-[1.35]">
         {LINES.map((line, i) =>
           line.kind === "cmd" ? (
-            <div key={i} className="truncate text-muted-foreground/90">
+            <div key={i} className="truncate text-muted-foreground">
               {line.text}
             </div>
           ) : (

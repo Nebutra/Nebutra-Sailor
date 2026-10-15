@@ -88,17 +88,12 @@ vi.mock("@nebutra/ui/primitives", () => ({
   Separator: () => <hr />,
 }));
 
-vi.mock("../oauth-buttons", () => ({
-  OAuthButtons: ({
-    providers,
-    returnUrl,
-  }: {
-    providers?: readonly string[];
-    returnUrl?: string;
-  }) => (
+vi.mock("@nebutra/auth/sign-in", () => ({
+  oauthButtonsLabels: () => ({ continueWith: "Continue with", providerLoading: "Redirecting" }),
+  OAuthButtons: ({ providers, returnTo }: { providers?: readonly string[]; returnTo?: string }) => (
     <div
       data-provider-count={providers?.length ?? 0}
-      data-return-url={returnUrl}
+      data-return-url={returnTo}
       data-testid="oauth-buttons"
     />
   ),

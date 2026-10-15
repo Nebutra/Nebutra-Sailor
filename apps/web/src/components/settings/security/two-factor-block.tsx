@@ -187,6 +187,7 @@ export function TwoFactorBlock({
   onDisable,
   onChanged,
 }: TwoFactorBlockProps) {
+  const tc = useTranslations("copy.securityTwoFactorBlock");
   const t = useTranslations("auth.security.twoFactor");
   const tErrors = useTranslations("auth.errors");
   const tActions = useTranslations("Common.actions");
@@ -211,7 +212,7 @@ export function TwoFactorBlock({
         </div>
 
         <div className="rounded-[var(--radius-lg)] border border-dashed border-border bg-muted p-4">
-          <p className="text-sm font-medium text-foreground">Authenticator app setup</p>
+          <p className="text-sm font-medium text-foreground">{tc("authenticatorAppSetup")}</p>
           <p className="mt-1 text-sm text-muted-foreground">{capability.reason}</p>
         </div>
       </section>
@@ -530,13 +531,14 @@ function VerifyTotpForm({
   onCodeChange,
   onSubmit,
 }: VerifyTotpFormProps): React.ReactElement {
+  const tc = useTranslations("copy.securityTwoFactorBlock");
   return (
     <form className="space-y-4" onSubmit={onSubmit} noValidate>
       <p className="text-sm text-muted-foreground">{scanLabel}</p>
 
       <div className="flex flex-col items-start gap-3 rounded-[var(--radius-lg)] border border-border bg-muted p-4 sm:flex-row sm:items-center">
         <NextImage
-          alt="Two-factor QR code"
+          alt={tc("twoFactorQRCode")}
           // allow-palette: QR modules need a fixed light backdrop to stay camera-scannable in dark mode
           className="size-[200px] rounded bg-white p-2"
           height={200}
@@ -613,6 +615,7 @@ function BackupCodesPanel({
   onCopy,
   onFinish,
 }: BackupCodesPanelProps): React.ReactElement {
+  const tc = useTranslations("copy.securityTwoFactorBlock");
   return (
     <div className="space-y-4">
       <div>
@@ -640,7 +643,7 @@ function BackupCodesPanel({
         </Button>
         {copied && (
           <span className="text-xs text-muted-foreground" role="status">
-            Copied
+            {tc("copied")}
           </span>
         )}
       </div>

@@ -46,9 +46,55 @@ class NginxRoutesTest(unittest.TestCase):
 
     def test_unknown_paths_get_a_real_404_page_per_locale(self):
         self.assertIn("error_page 404 $kcq_not_found;", self.conf)
-        self.assertRegex(self.conf, r"map \$uri \$kcq_not_found \{\s*~\^/zh/ /zh/404\.html;\s*default /404\.html;")
-        body = dict(locations(self.conf))["~ ^/(zh/)?404\\.html$"]
+        self.assertRegex(
+            self.conf,
+            r"map \$uri \$kcq_not_found \{\s*~\^/zh/docs\(/\|\$\) /zh/docs/404\.html;\s*"
+            r"~\^/docs\(/\|\$\) /docs/404\.html;\s*~\^/zh/ /zh/404\.html;\s*default /404\.html;",
+        )
+        body = dict(locations(self.conf))["~ ^/(zh/)?(docs/)?404\\.html$"]
         self.assertIn("internal;", body)
+
+    def test_docs_are_extensionless_pages_with_one_url_each(self):
+        blocks = locations(self.conf)
+        matchers = [matcher for matcher, _ in blocks]
+        pages = dict(blocks)["~ ^/(zh/)?docs(/[^.]*)?$"]
+        self.assertIn("try_files $uri.html =404;", pages)
+        self.assertIn('add_header Cache-Control "no-cache" always;', pages)
+        # Trailing slash and .html both redirect to the bare path; the internal 404 must be matched
+        # first, since error_page re-enters location matching with /docs/404.html.
+        internal = matchers.index("~ ^/(zh/)?(docs/)?404\\.html$")
+        html = matchers.index("~ ^/((?:zh/)?docs(?:/[^.]*)?)\\.html$")
+        self.assertLess(internal, html)
+        self.assertIn("return 301 /$1$is_args$args;", dict(blocks)["~ ^/((?:zh/)?docs(?:/[^.]*?)?)/$"])
+        # OG images are matched before the immutable asset rule.
+        self.assertLess(matchers.index("~ ^/docs/og/.+\\.png$"), matchers.index("~* \\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|webp)$"))
+
+    def test_binance_v1_routes_preserve_real_trade_and_stream_contracts(self):
+        blocks = locations(self.conf)
+        for path in (
+            "/market/binance/api/v1/market-data/instruments/search",
+            "/market/binance/api/v1/market-data/bars",
+            "/market/binance/api/v1/market-data/trades",
+            "/market/binance/api/v1/market-data/trades/range",
+            "/market/binance/api/v1/market-data/sources/binance/probe",
+            "/market/binance/api/v1/market-data/sources/binance/depth",
+            "/market/binance/api/v1/market-data/sources/binance/stream",
+            "/market/binance/api/v1/market-data/sources/binance/trades/stream",
+            "/market/binance/api/v1/market-data/sources/binance/depth/stream",
+            "/market/binance/api/v1/market-data/sources/binance/trades/archive",
+        ):
+            matching = [(matcher, body) for matcher, body in blocks
+                        if matcher.startswith("~ ") and re.search(matcher[2:], path)]
+            matcher, body = matching[0]
+            self.assertIn("proxy_pass", body, path)
+            self.assertIn('Cache-Control "no-store"', body, path)
+            self.assertIn('proxy_set_header Origin "";', body, path)
+            self.assertIn('proxy_set_header Cookie "";', body, path)
+            self.assertIn('proxy_set_header Authorization "";', body, path)
+            if path.endswith(("/stream", "/archive")):
+                self.assertIn("proxy_buffering off;", body, path)
+                self.assertIn("gzip off;", body, path)
+        self.assertNotIn("/api/binance/", self.conf)
 
 
     def test_only_prerendered_public_files_are_edge_cacheable(self):

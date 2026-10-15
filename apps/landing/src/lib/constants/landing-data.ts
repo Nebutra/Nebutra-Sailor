@@ -214,6 +214,7 @@ const packageGroups = [
 export const SAILOR_EXCLUDED_PRODUCT_APPS = [
   "forge",
   "kcq",
+  "kcq-docs",
   "kuanlan",
   "para",
   "pebble",

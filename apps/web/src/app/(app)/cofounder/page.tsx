@@ -4,6 +4,7 @@ import { ArrowRight, Lightning, Sparkles, Users } from "@nebutra/icons";
 import { EmptyState } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { CofounderCard, type CofounderCardData } from "@/components/cofounder-match/cofounder-card";
 import type { CompanyContext } from "@/lib/startup-os/company-context/model";
@@ -41,6 +42,7 @@ const STEPS = [
 ] as const;
 
 export default function CofounderPage() {
+  const tc = useTranslations("copy.cofounderPage");
   const pathname = usePathname();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
   const [state, setState] = useState<LoadState>("loading");
@@ -95,7 +97,7 @@ export default function CofounderPage() {
         <div className="text-center">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-6 bg-neutral-1/80 px-3 py-1.5 text-xs font-semibold text-neutral-11 backdrop-blur">
             <Users className="size-3.5 text-primary" aria-hidden="true" />
-            OPC → Team
+            {tc("oPCTeam")}
           </span>
           <h1
             className="mt-5 text-3xl font-semibold tracking-[-0.04em] sm:text-4xl"
@@ -106,18 +108,17 @@ export default function CofounderPage() {
               backgroundClip: "text",
             }}
           >
-            Match your cofounder
+            {tc("matchYourCofounder")}
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-neutral-10">
-            Turn your one-person company into a team — matched with a complementary cofounder by
-            your compiled company, not a résumé.
+            {tc("turnYourOnePerson")}
           </p>
           <div className="mt-6 flex items-center justify-center">
             <Link
               href={`/${locale}/cofounder/discover`}
               className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-primary text-primary-foreground"
             >
-              Enter Discover
+              {tc("enterDiscover")}
               <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
@@ -127,7 +128,7 @@ export default function CofounderPage() {
 
         <div className="mt-10 flex flex-col items-center gap-3">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-neutral-9">
-            Preview · how cofounders see you
+            {tc("previewHowCofoundersSee")}
           </p>
           {state === "ready" && card ? (
             <CofounderCard data={card} preview />
@@ -135,14 +136,14 @@ export default function CofounderPage() {
             <div className="h-80 w-full max-w-sm animate-pulse rounded-[28px] border border-neutral-6 bg-neutral-2" />
           ) : (
             <EmptyState
-              title="Compile your company first"
-              description="Your cofounder card is built from your Startup OS company. Compile one to preview it."
+              title={tc("compileYourCompanyFirst")}
+              description={tc("yourCofounderCardIs")}
               action={
                 <Link
                   href={`/${locale}/startup-os`}
                   className="inline-flex items-center gap-2 rounded-full bg-neutral-12 px-4 py-2 text-sm font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 dark:text-neutral-12"
                 >
-                  Compile your company
+                  {tc("compileYourCompany")}
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               }
@@ -163,7 +164,9 @@ export default function CofounderPage() {
                   <span className="flex size-7 items-center justify-center rounded-lg bg-primary/10 dark:bg-primary/15">
                     <StepIcon className="size-3.5 text-primary" aria-hidden="true" />
                   </span>
-                  <span className="text-[11px] font-semibold text-neutral-9">Step {index + 1}</span>
+                  <span className="text-[11px] font-semibold text-neutral-9">
+                    {tc("step", { value0: String(index + 1) })}
+                  </span>
                 </div>
                 <p className="text-sm font-semibold text-neutral-12">{step.title}</p>
                 <p className="text-xs leading-5 text-neutral-10">{step.body}</p>
@@ -172,10 +175,7 @@ export default function CofounderPage() {
           })}
         </div>
 
-        <p className="mt-8 text-center text-xs text-neutral-9">
-          The cofounder pool is opt-in and opens in the matching release. This page previews how
-          your company will appear.
-        </p>
+        <p className="mt-8 text-center text-xs text-neutral-9">{tc("theCofounderPoolIs")}</p>
       </div>
     </section>
   );

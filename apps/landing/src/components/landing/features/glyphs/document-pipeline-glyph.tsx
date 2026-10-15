@@ -37,7 +37,7 @@ export function DocumentPipelineGlyph({ copy }: SubpackageGlyphProps) {
       </div>
 
       {/* Pipeline steps */}
-      <div className="flex items-center justify-between gap-1">
+      <div className="flex min-w-0 flex-wrap items-center justify-between gap-1">
         {steps.map((step, i) => (
           <div key={step.label} className="flex items-center gap-1">
             <Badge

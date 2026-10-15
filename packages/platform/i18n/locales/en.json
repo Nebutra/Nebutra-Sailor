@@ -52,6 +52,11 @@
       "previous": "Previous",
       "next": "Next",
       "pageOf": "Page {page} of {total}"
+    },
+    "forbidden": {
+      "title": "You don’t have access to Admin",
+      "description": "Admin is limited to workspace owners and admins. Ask an owner to change your role.",
+      "back": "Back to workspace"
     }
   },
   "Common": {
@@ -369,7 +374,7 @@
     },
     "signIn": {
       "title": "Log in to Nebutra",
-      "subtitle": "Choose how you want to sign in.",
+      "subtitle": "Welcome back. Sign in to continue.",
       "continueWith": "Continue with",
       "continueWithProvider": "Continue with {provider}",
       "providers": {
@@ -1266,7 +1271,32 @@
     "sortAlphabetical": "Alphabetical",
     "sortCreated": "Date created",
     "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "comingV2": "Coming in v2",
+    "nav": {
+      "product": "Product",
+      "admin": "Admin",
+      "startupOs": "Startup OS",
+      "connectors": "Connectors",
+      "cofounder": "Match your cofounder",
+      "alpha": "Alpha",
+      "owner": "Owner",
+      "settings": "Settings",
+      "general": "General",
+      "account": "Account",
+      "appearance": "Appearance",
+      "security": "Security",
+      "team": "Team",
+      "openPlatform": "Open Platform",
+      "apiKeys": "API Keys",
+      "providerKeys": "Provider Keys",
+      "webhooks": "Webhooks",
+      "notifications": "Notifications",
+      "referrals": "Referrals",
+      "shortcuts": "Shortcuts",
+      "auditLog": "Audit Log",
+      "billing": "Billing",
+      "usage": "Usage"
+    }
   },
   "startupOs": {
     "milestone": {
@@ -1367,6 +1397,901 @@
       "create": "Create organization",
       "switching": "Switching...",
       "error": "Could not switch organization. Try again."
+    }
+  },
+  "copy": {
+    "usagePage": {
+      "remainingThisPeriod": "{value0} {unit} remaining this period",
+      "quotaNearlyExhaustedUpgrade": "Quota nearly exhausted. Upgrade your plan to avoid service interruption.",
+      "approachingQuotaLimitConsider": "Approaching quota limit. Consider upgrading to avoid disruptions.",
+      "creditBalance": "Credit Balance",
+      "creditBalanceIsUnavailable": "Credit balance is unavailable right now. Usage metering below is still loaded from the gateway.",
+      "dailyRefresh": "Daily refresh",
+      "planAllowance": "Plan allowance",
+      "creditActivity": "Credit Activity",
+      "recentCreditGrantsAnd": "Recent credit grants and consumption events.",
+      "balance": "Balance {value0}",
+      "loadingUsageBreakdown": "Loading usage breakdown",
+      "selectAnOrganizationTo": "Select an organization to see the breakdown",
+      "meteredUsageIsRecorded": "Metered usage is recorded per organization. Switch to one to see how this period splits across models, providers and endpoints.",
+      "usageBreakdownUnavailable": "Usage breakdown unavailable",
+      "thisPeriodHasNo": "This period has no metered usage",
+      "modelCallsAndAPI": "Model calls and API requests are grouped here as soon as the first usage event lands in this billing period.",
+      "windowTo": "{period} window · {value1} to {value2}",
+      "usageMetering": "Usage & Metering",
+      "monitorCreditsAPICalls": "Monitor credits, API calls, AI token consumption, and quota status across your organization.",
+      "usageMetricsWillAppear": "Usage metrics will appear once your organization starts making API calls. Ensure the API gateway is connected.",
+      "aPICalls": "API Calls",
+      "aITokensUsed": "AI Tokens Used",
+      "billingPeriod": "Billing Period",
+      "usageBreakdown": "Usage Breakdown",
+      "thisPeriodSMetered": "This period’s metered usage, grouped by the dimensions recorded on each event.",
+      "managePlanAndLimits": "Manage plan and limits"
+    },
+    "startupOsStartupChatPanel": {
+      "startupOSConversationalBuild": "Startup OS conversational build",
+      "buildWithConversation": "Build with conversation",
+      "describeAChangeAnd": "Describe a change and the agent edits your workspace live.",
+      "conversationFailed": "Conversation failed",
+      "plan": "Plan",
+      "streaming": "streaming",
+      "describeAChangeTo": "Describe a change to start building your workspace.",
+      "writing": "Writing",
+      "artifactsTouched": "Artifacts touched",
+      "revertAndResendMessage": "Revert and resend message?",
+      "editMessage": "Edit message",
+      "yourMessageWillBe": "Your message will be updated and the conversation continues from here — the workspace reverts to before this turn, then re-runs.",
+      "cancel": "Cancel",
+      "editAndResend": "Edit and resend",
+      "copy": "Copy",
+      "helpful": "Helpful",
+      "notHelpful": "Not helpful",
+      "stopGenerating": "Stop generating",
+      "stop": "Stop",
+      "promptPlaceholder": "Add a pricing page, make the hero a brand gradient, generate a README…"
+    },
+    "embedPage": {
+      "interactiveDemo": "Interactive demo",
+      "dashboard": "Dashboard",
+      "totalEvents": "Total Events",
+      "activeUsers": "Active Users",
+      "signups": "Signups",
+      "revenue": "Revenue",
+      "planOverview": "Plan overview",
+      "starterUsageOverageEnabled": "Starter · Usage overage enabled · Monthly billing",
+      "dayProjectedRevenue": "30-day projected revenue",
+      "todaySnapshot": "Today snapshot",
+      "conversions": "Conversions",
+      "day": "Day",
+      "healthy": "Healthy",
+      "snapshot": "Snapshot: {value0}",
+      "tenant": "Tenant",
+      "status": "Status",
+      "events": "Events",
+      "users": "Users"
+    },
+    "cofounderMatchDiscoverDeck": {
+      "joinTheCofounderPool": "Join the cofounder pool",
+      "becomeDiscoverableToOther": "Become discoverable to other founders — opt in to start matching. You’re opt-out by default; leave anytime.",
+      "compileYourCompanyFirst": "Compile your company first",
+      "yourCofounderCardIs": "Your cofounder card is built from your Startup OS company. Compile one, then join the pool.",
+      "compileYourCompany": "Compile your company",
+      "couldnTLoadThe": "Couldn’t load the pool",
+      "somethingWentWrongLoading": "Something went wrong loading cofounder candidates.",
+      "tryAgain": "Try again",
+      "youReAllCaught": "You’re all caught up",
+      "noMoreFoundersTo": "No more founders to review right now. New companies appear here as founders join the pool.",
+      "interested": "Interested",
+      "pass": "Pass",
+      "whyYouTwoShould": "Why you two should build together — one honest paragraph.",
+      "pitchMessage": "Pitch message",
+      "cancel": "Cancel",
+      "sendPitch": "Send pitch",
+      "pitch": "Pitch",
+      "ofDragTapOr": "{value0} of {length} · drag, tap, or use ← → · matched on company, not a résumé",
+      "itSAMatch": "It’s a match —",
+      "youBothSignalledInterest": "You both signalled interest. Open the Cofounder Room to talk and decide whether to form a team.",
+      "viewMatches": "View matches"
+    },
+    "navigationPublicPageChrome": {
+      "systemStatus": "System status",
+      "logIn": "Log in",
+      "signUp": "Sign up",
+      "governedAIInfrastructureWith": "Governed AI infrastructure with predictable recovery surfaces.",
+      "recoverySurfaceOnline": "Recovery surface online",
+      "product": "Product",
+      "features": "Features",
+      "pricing": "Pricing",
+      "about": "About",
+      "resources": "Resources",
+      "docs": "Docs",
+      "roadmap": "Roadmap",
+      "contact": "Contact",
+      "governance": "Governance",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "credits": "Credits",
+      "openSource": "Open source"
+    },
+    "adminAdminDirectoryPanel": {
+      "directory": "Directory",
+      "usersAndOrganizations": "Users and organizations",
+      "uRLBackedAdminLookup": "URL-backed admin lookup for support triage. Search by name, email, organization, or slug, then edit the record in place.",
+      "searchUsersAndOrganizations": "Search users and organizations",
+      "nameEmailOrgSlug": "Name, email, org, slug",
+      "search": "Search",
+      "users": "Users",
+      "organizations": "Organizations",
+      "pageOfUsersOrganizations": "Page {currentPage} of {totalPages} · {totalUsers} users · {totalOrganizations} organizations",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "edit": "Edit {label}",
+      "open": "Open {label}",
+      "userEmail": "User email",
+      "emailVerified": "Email verified",
+      "organizationSlug": "Organization slug",
+      "plan": "Plan"
+    },
+    "growthReferralPanel": {
+      "loadingReferrals": "Loading referrals",
+      "invitationsAndRewards": "Invitations and rewards",
+      "tryAgain": "Try again",
+      "shareSailorEarnRewards": "Share Sailor, earn rewards",
+      "friendsGetFullAccess": "Friends get full access · You earn credits as each invite is claimed · Your level rises with the network you build.",
+      "referralCode": "Referral code",
+      "copyReferralCode": "Copy referral code",
+      "copy": "Copy",
+      "shareLink": "Share link",
+      "copyShareLink": "Copy share link",
+      "haveAFriendS": "Have a friend’s code",
+      "aBCD2345": "ABCD2345",
+      "codeRedeemedYourReferrer": "Code redeemed. Your referrer is credited.",
+      "level": "Level {id} · {title}",
+      "active": "Active",
+      "moreToUnlock": "{remaining} more to unlock"
+    },
+    "fleetPage": {
+      "fleet": "Fleet",
+      "probeNow": "Probe now",
+      "services": "Services",
+      "status": "Status",
+      "service": "Service",
+      "host": "Host",
+      "runtime": "Runtime",
+      "target": "Target",
+      "version": "Version",
+      "latency": "Latency",
+      "probed": "Probed",
+      "drift": "drift",
+      "notSwitchable": "not switchable"
+    },
+    "tenantsPage": {
+      "tenants": "Tenants",
+      "workspaceHealthAndTenant": "Workspace health and tenant-level metrics.",
+      "snapshot": "Snapshot: {value0}",
+      "healthy": "Healthy",
+      "events": "Events",
+      "activeUsers": "Active Users",
+      "revenue": "Revenue",
+      "tenant": "Tenant",
+      "status": "Status"
+    },
+    "adminPlatformAddAccountDialog": {
+      "addAccount": "Add account",
+      "logsASubscriptionAccount": "Logs a subscription account into the pool. Nothing leaves the private network.",
+      "provider": "1 · Provider",
+      "provider2": "Provider",
+      "signInOnYour": "2 · Sign in on your own device",
+      "startASignIn": "Start a sign-in for",
+      "openSignIn": "Open sign-in",
+      "copySignInURL": "Copy sign-in URL",
+      "callbackURL": "Callback URL",
+      "result": "3 · Result",
+      "accountAddedSyncThe": "Account added — sync the channel so its models go on the shelf.",
+      "audit": "audit {auditId}"
+    },
+    "adminAccessInviteIssuer": {
+      "accessGate": "Access gate",
+      "issueColdStartInvite": "Issue cold-start invite codes",
+      "generateBoundedInviteCodes": "Generate bounded invite codes for invite-only signup. Codes are returned once, then only their hashes are stored.",
+      "count": "Count",
+      "scope": "Scope",
+      "platform": "Platform",
+      "tenant": "Tenant",
+      "tenantID": "Tenant ID",
+      "emailLock": "Email lock",
+      "expiresAt": "Expires at",
+      "recentAccessInvites": "Recent access invites",
+      "refresh": "Refresh",
+      "redeemed": "{value0} · {scope} {value2} · redeemed {redemptionCount}/{maxRedemptions}",
+      "revoke": "Revoke"
+    },
+    "authSignUpForm": {
+      "checkYourEmail": "Check your email",
+      "weSentADigit": "We sent a 6-digit code to",
+      "verificationCode": "Verification code",
+      "didnTReceiveIt": "Didn’t receive it?",
+      "createYourAccount": "Create your account",
+      "startBuildingToday": "Start building today",
+      "socialSignUpIs": "Social sign-up is disabled while invite-only access is enabled. Use email sign-up with your invite code.",
+      "orContinueWith": "Or continue with",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "inviteCode": "Invite code",
+      "nebutraIsInviteOnly": "Nebutra is invite-only while the cold-start gate is enabled.",
+      "alreadyHaveAnAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "integrationsPage": {
+      "integrations": "Integrations",
+      "connectYourFavoriteTools": "Connect your favorite tools and services to supercharge your workflow.",
+      "connected": "Connected",
+      "pause": "Pause",
+      "resume": "Resume",
+      "disconnect": "Disconnect",
+      "getStartedByConnecting": "Get started by connecting one of the services below.",
+      "loadingIntegrations": "Loading integrations...",
+      "connect": "Connect",
+      "docs": "Docs",
+      "integrationConnectorsWillBe": "Integration connectors will be added in future updates."
+    },
+    "agentRuntimePage": {
+      "agentRuntimeDisabled": "Agent Runtime — disabled",
+      "the": "The",
+      "agentRuntime": "agent-runtime",
+      "agentRuntimeGrammar": "Agent Runtime grammar",
+      "faithfulMultiTenantRe": "Faithful, multi-tenant re-expression. Defaults: approval",
+      "tenantThreadSerializationIsolation": "Tenant + thread serialization isolation",
+      "sameThreadIdDifferent": "Same thread id, different tenants — never share a serial lane:",
+      "orgAOrgB": "org_a → {value0} org_b → {value1}",
+      "ruleDecisionApprovalPolicy": "Rule decision × approval policy",
+      "rule": "rule",
+      "onRequest": "on_request",
+      "never": "never",
+      "externalSandboxSeam": "External-sandbox seam",
+      "defaultExecutorOutcomeFor": "Default executor outcome for an untrusted command:"
+    },
+    "cofounderMatchRoomView": {
+      "thisIsnTA": "This isn’t a match yet",
+      "theCofounderRoomOpens": "The Cofounder Room opens only for mutual matches. Keep discovering — when you both signal interest, the room unlocks here.",
+      "discoverCofounders": "Discover cofounders",
+      "couldnTOpenThe": "Couldn’t open the room",
+      "somethingWentWrongPlease": "Something went wrong. Please refresh to try again.",
+      "roomOpen": "Room open",
+      "youBothWantTo": "You both want to build together.",
+      "formingTheTeamTurns": "Forming the team turns your one-person company into a shared Organization — your whole compiled company carries over and your cofounder is invited as an equal founder.",
+      "teamFormingInvitationSent": "Team forming — invitation sent",
+      "couldnTFormThe": "Couldn’t form the team. Please try again.",
+      "paidPlanRequired": "Paid plan required",
+      "openTheCofounderRoom": "Open the Cofounder Room with a paid plan",
+      "asTheFounderOpening": "As the founder opening the room, a paid plan unlocks the conversation with every match — no per-room fee.",
+      "upgradeToOpenThe": "Upgrade to open the room"
+    },
+    "personalizationPersonalizationPanel": {
+      "personalization": "Personalization",
+      "tellSailorWhatYou": "Tell Sailor what you do and how you want it to respond. These details are injected into every conversation as context.",
+      "nickname": "Nickname",
+      "whatShouldSailorCall": "What should Sailor call you?",
+      "occupation": "Occupation",
+      "eGProductDesigner": "e.g. Product Designer, Software Engineer",
+      "moreAboutYou": "More about you",
+      "iWorkInFintech": "I work in fintech, building infra for embedded payments. I prefer direct, technical answers without too many caveats…",
+      "backgroundPreferencesLocationAnything": "Background, preferences, location — anything that helps Sailor understand you better.",
+      "customInstructions": "Custom instructions",
+      "howShouldSailorRespond": "How should Sailor respond? Style, tone, format, focus areas. These take precedence over its defaults.",
+      "reset": "Reset",
+      "saveChanges": "Save changes"
+    },
+    "cinemaPage": {
+      "cinemaDisabled": "Cinema — disabled",
+      "the": "The",
+      "cinema": "cinema",
+      "cinemaFilmDirectorPipeline": "Cinema — film-director pipeline",
+      "runFilmPipeline": "runFilmPipeline",
+      "nebutraGraphModel": "@nebutra/graph-model",
+      "script": "Script",
+      "shotsClips": "Shots → clips",
+      "cameraContinuityTree": "Camera-continuity tree",
+      "root": "root:",
+      "cameras": "· cameras:"
+    },
+    "startupOsStartupBuilderHome": {
+      "startupAgentOS": "Startup Agent OS",
+      "whatAreWeBuilding": "What are we building?",
+      "oneSentenceCompilesInto": "One sentence compiles into a whole governed company — context, launch artifacts, live files, spatial canvas, and approval-gated runs.",
+      "startupProposition": "Startup proposition",
+      "describeTheStartupProposition": "Describe the startup proposition to compile into a tenant-scoped company workspace...",
+      "attachAFile": "Attach a file",
+      "attachATextFile": "Attach a text file to fold into the proposition",
+      "startupArena": "Startup arena",
+      "try": "Try",
+      "loadingRecentProjects": "Loading recent projects"
+    },
+    "cofounderPage": {
+      "oPCTeam": "OPC → Team",
+      "matchYourCofounder": "Match your cofounder",
+      "turnYourOnePerson": "Turn your one-person company into a team — matched with a complementary cofounder by your compiled company, not a résumé.",
+      "enterDiscover": "Enter Discover",
+      "previewHowCofoundersSee": "Preview · how cofounders see you",
+      "compileYourCompanyFirst": "Compile your company first",
+      "yourCofounderCardIs": "Your cofounder card is built from your Startup OS company. Compile one to preview it.",
+      "compileYourCompany": "Compile your company",
+      "step": "Step {value0}",
+      "theCofounderPoolIs": "The cofounder pool is opt-in and opens in the matching release. This page previews how your company will appear."
+    },
+    "canvasPage": {
+      "canvasDisabled": "Canvas — disabled",
+      "the": "The",
+      "canvas": "canvas",
+      "nebutraReel": "@nebutra/reel",
+      "canvasNodeGraphEditor": "Canvas — node-graph editor",
+      "interactive": "Interactive",
+      "xyflowReact": "@xyflow/react",
+      "editorControlledByAn": "editor, controlled by an immutable",
+      "reelGraph": "ReelGraph",
+      "verbatim": "verbatim."
+    },
+    "layer0Page": {
+      "layerDemoDisabled": "Layer 0 demo disabled",
+      "isOffByDefault": "is off by default.",
+      "layerCapabilityLoop": "Layer 0 capability loop",
+      "providerGatewayTraceSandbox": "Provider, gateway, trace, sandbox, content, and event contracts are wired through tenant-scoped local defaults.",
+      "capability": "Capability",
+      "doctor": "Doctor",
+      "debugFile": "Debug file",
+      "integrationCommand": "Integration command",
+      "pnpmLayer0Demo": "pnpm layer0:demo"
+    },
+    "notificationsNotificationPreferenceMatrix": {
+      "deliveryMatrix": "Delivery matrix",
+      "changesAreDisabledHere": "Changes are disabled here because the current notification runtime does not expose durable preference storage yet.",
+      "signal": "Signal",
+      "inbox": "Inbox",
+      "email": "Email",
+      "push": "Push",
+      "notes": "Notes",
+      "default": "Default:",
+      "routedOnlyWhereThis": "Routed only where this signal is meant to stay high-signal."
+    },
+    "providerKeysCreateProviderKeyDialog": {
+      "addProviderKey": "Add provider key",
+      "bringYourOwnAI": "Bring your own AI provider key. It is encrypted at rest and used in preference to the platform key for matching models.",
+      "provider": "Provider",
+      "aPIKey": "API key",
+      "baseURL": "Base URL",
+      "label": "Label",
+      "eGProduction": "e.g. Production",
+      "alwaysUseThisKey": "Always use this key",
+      "neverFallBackTo": "Never fall back to the platform key for this provider. Requests fail if your key is exhausted.",
+      "cancel": "Cancel"
+    },
+    "startupOsStartupCanvasPanel": {
+      "companyCanvas": "Company canvas",
+      "spatialGraph": "Spatial graph",
+      "dragNodesInspectDependencies": "Drag nodes, inspect dependencies, and start eligible runs from the same company-state surface.",
+      "zoomOut": "Zoom out",
+      "zoomIn": "Zoom in",
+      "reset": "Reset",
+      "canvasInspector": "Canvas inspector",
+      "nothingSelected": "Nothing selected",
+      "pickANodeOn": "Pick a node on the canvas to read its dependencies and run controls.",
+      "status": "Status: {status}",
+      "owner": "Owner: {owner}",
+      "dependencies": "Dependencies: {value0}",
+      "adapter": "Adapter: {adapter}",
+      "approval": "Approval: {approval}",
+      "budget": "Budget: ${value0}"
+    },
+    "authDeviceApprovalForm": {
+      "authorizeADevice": "Authorize a device",
+      "signedInAs": "Signed in as {signedInEmail}",
+      "deviceCode": "Device code",
+      "shownOnTheDevice": "Shown on the device you’re signing in.",
+      "xXXXXXXX": "XXXX-XXXX",
+      "code": "Code",
+      "wantsToSignIn": "wants to sign in as you on the",
+      "cLIIfYouDidn": "CLI. If you didn’t run",
+      "nebutraLogin": "nebutra login",
+      "deny": "Deny",
+      "approve": "Approve",
+      "tryAgain": "Try again"
+    },
+    "notificationsNotificationCenter": {
+      "new": "New",
+      "open": "Open",
+      "markRead": "Mark read",
+      "openNotifications": "Open notifications",
+      "notifications": "Notifications",
+      "unread": "{unreadCount} unread",
+      "markAllRead": "Mark all read",
+      "notificationSettings": "Notification settings"
+    },
+    "notificationsNotificationsDialog": {
+      "openNotifications": "Open notifications",
+      "notifications": "Notifications",
+      "new": "New",
+      "title": "Notifications",
+      "loading": "Loading…",
+      "loadFailed": "Notifications didn’t load",
+      "retry": "Try again",
+      "openItem": "Open"
+    },
+    "skillsSkillsGrid": {
+      "searchSkills": "Search skills…",
+      "officialOnly": "Official only",
+      "addACustomSkill": "Add a custom skill",
+      "authorYourOwnCapability": "Author your own capability with markdown + JSON schema.",
+      "getStarted": "Get started →",
+      "noSkillsMatch": "No skills match",
+      "tryADifferentSearch": "Try a different search or clear the Official-only filter.",
+      "official": "Official"
+    },
+    "platformPage": {
+      "inbox": "Inbox",
+      "needsAttention": "Needs attention",
+      "probed": "probed {value0}",
+      "nothingNeedsYouNext": "Nothing needs you. Next probe in 30 s.",
+      "unknown": "Unknown",
+      "signalsWhoseProbeFailed": "Signals whose probe failed. Not green, not red — not known.",
+      "unreachableProducts": "Unreachable products",
+      "fleet": "Fleet",
+      "allServices": "All {length} services →"
+    },
+    "teamTeamMemberList": {
+      "adminActionsDisabled": "Admin actions disabled",
+      "member": "Member",
+      "joined": "Joined",
+      "role": "Role",
+      "action": "Action",
+      "you": "You",
+      "owner": "Owner"
+    },
+    "connectorsConnectorsHub": {
+      "connectSailorWithYour": "Connect Sailor with your everyday apps, APIs, and MCPs",
+      "connectorsLetSailorRead": "Connectors let Sailor read and write across your stack — Stripe, Slack, your own APIs, MCP servers. Credentials are encrypted at the application layer.",
+      "addAConnector": "Add a connector",
+      "activeConnector": "{length, plural, one {# active connector} other {# active connectors}}",
+      "addConnector": "Add connector",
+      "removeThisConnector": "Remove this connector?",
+      "remove": "Remove",
+      "learnAboutConnectorsSecurity": "Learn about Connectors security"
+    },
+    "feedbackFeedbackDialog": {
+      "reportAnIssue": "Report an issue",
+      "helpUsUnderstandAnd": "Help us understand and fix what you ran into.",
+      "whereDidThisHappen": "Where did this happen?",
+      "whatHappened": "What happened?",
+      "whatDidYouExpect": "What did you expect? What actually happened? If you can, list the steps to reproduce.",
+      "minimumCharactersMaximum": "Minimum {MIN_DESCRIPTION} characters · maximum {MAX_DESCRIPTION}",
+      "allowUsToFollow": "Allow us to follow up via the email on your account.",
+      "cancel": "Cancel"
+    },
+    "onboardingProfileSetupStep": {
+      "personalizeYourProfile": "Personalize your profile",
+      "addALogoAnd": "Add a logo and set your display name.",
+      "logo": "Logo",
+      "uploadOrganizationLogo": "Upload organization logo",
+      "displayName": "Display name",
+      "yourFullName": "Your full name",
+      "skipForNow": "Skip for now"
+    },
+    "securityChangePasswordForm": {
+      "password": "Password",
+      "checkWhetherThisAccount": "Check whether this account has a credential sign-in method and explain the safest supported password path.",
+      "loadingPasswordCapabilities": "Loading password capabilities…",
+      "oAuthOnly": "OAuth only",
+      "credentialAttached": "Credential attached"
+    },
+    "authDesktopAuthCompleteHandoff": {
+      "desktopSignIn": "Desktop sign-in",
+      "openingNebutraFoundry": "Opening Nebutra Foundry",
+      "yourBrowserCreatedA": "Your browser created a short-lived desktop handoff. Continue in the app to finish sign-in.",
+      "webSession": "Web session",
+      "handoffExpiry": "Handoff expiry",
+      "openNebutraFoundry": "Open Nebutra Foundry"
+    },
+    "onboardingDashboardHintCard": {
+      "welcomeToYourSailor": "Welcome to your Sailor workspace.",
+      "takeTheStepTour": "Take the 4-step tour",
+      "skip": "Skip",
+      "dismissHint": "Dismiss hint",
+      "intro": "Press <kbd>⌘K</kbd> to open the command palette. Pick a <strong>mode</strong> below to focus your work: chat, data, workflow, or search."
+    },
+    "securitySecuritySettingsClient": {
+      "loadingSecuritySettings": "Loading security settings…",
+      "security": "Security",
+      "thisWorkspaceIsUsing": "This workspace is using {authProvider}. Advanced security controls are still being migrated into the shared Nebutra auth layer.",
+      "forNowManagePassword": "For now, manage password resets, MFA, and session policies from your auth provider dashboard.",
+      "signedInAs": "Signed in as",
+      "nebutraShowsEverySecurity": "Nebutra shows every security capability in one place, only enabling controls that the current auth layer can execute safely."
+    },
+    "companyTowerControlDeck": {
+      "northStarMetric": "North-star metric",
+      "activeBets": "Active bets",
+      "oKR": "OKR",
+      "roadmap": "Roadmap",
+      "liveRuns": "Live runs",
+      "bets": "Bets"
+    },
+    "startupOsStartupConnectorsMenu": {
+      "connectors": "Connectors",
+      "connectADataSource": "Connect a data source",
+      "connected": "Connected",
+      "connect": "Connect",
+      "manageConnectors": "Manage connectors"
+    },
+    "startupOsStartupWorkspaceFilesPanel": {
+      "files": "Files",
+      "pickAFile": "Pick a file",
+      "chooseAFileFrom": "Choose a file from the rail to read its generated source.",
+      "startupOSGeneratedApp": "Startup OS generated app preview",
+      "nothingToPreview": "Nothing to preview",
+      "thePreviewRendersAs": "The preview renders as soon as this project generates its first files."
+    },
+    "webhooksWebhooksList": {
+      "active": "Active",
+      "disabled": "Disabled",
+      "edit": "Edit",
+      "viewDeliveries": "View deliveries",
+      "delete": "Delete",
+      "loading": "Loading…",
+      "webhookEndpoints": "Webhook endpoints"
+    },
+    "teamPage": {
+      "organizationProfile": "Organization profile",
+      "updateYourOrganizationS": "Update your organization’s branding and display name.",
+      "inviteATeamMember": "Invite a team member",
+      "sendAnInvitationTo": "Send an invitation to add someone to your organization.",
+      "members": "Members"
+    },
+    "billingPricingPlanGrid": {
+      "billingInterval": "Billing interval",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "youCanRetryCheckout": "{checkoutError} You can retry checkout or contact support if the provider setup is still unavailable.",
+      "recommended": "Recommended",
+      "seat": "/ seat"
+    },
+    "webhooksWebhookDeliveriesPanel": {
+      "webhookDeliveryHistory": "Webhook delivery history",
+      "recentDeliveries": "Recent deliveries",
+      "closeDeliveriesPanel": "Close deliveries panel",
+      "close": "Close",
+      "loading": "Loading…",
+      "hTTP": "HTTP {statusCode}"
+    },
+    "adminPage": {
+      "thisIsADeliberately": "This is a deliberately minimal admin. For user/org CRUD, customer support flows, and content ops, see",
+      "docsAdminRetoolRecipe": "docs/admin/retool-recipe.md",
+      "wireRetoolToThe": "Wire Retool to the internal API in 30 minutes.",
+      "escapeHatches": "Escape hatches",
+      "debugOnlyUtilitiesNot": "Debug-only utilities. Not a substitute for Retool flows.",
+      "pOSTApiAdminImpersonate": "POST /api/admin/impersonate"
+    },
+    "supplyPage": {
+      "supply": "Supply",
+      "routerManifest": "Router manifest",
+      "advancedNativeConsole": "Advanced: the engine’s native console"
+    },
+    "teamInviteMemberForm": {
+      "member": "Member",
+      "admin": "Admin",
+      "viewer": "Viewer",
+      "invitationIsOnIts": "Invitation is on its way."
+    },
+    "atelierAtelierCanvas": {
+      "generatedAssetsLandHere": "Generated assets land here, placed by the server.",
+      "brief": "Brief",
+      "aSereneAlpineLake": "A serene alpine lake at dawn, editorial photography…",
+      "mockProviderNoAI": "Mock provider — no AI key needed. The server picks a non-overlapping position and persists before this panel is told."
+    },
+    "notificationsInboxBell": {
+      "notifications": "Notifications",
+      "markAllAsRead": "Mark all as read",
+      "viewAll": "View all"
+    },
+    "notificationsNotificationInboxPreview": {
+      "inboxPreview": "Inbox preview",
+      "thisIsTheSettings": "This is the settings-side preview of Nebutra’s in-app notification center. It is ready to be wired into the main shell once the main thread decides where the bell entry point should live.",
+      "unread": "{unreadCount} unread",
+      "new": "New",
+      "open": "Open",
+      "markRead": "Mark read"
+    },
+    "onboardingConnectIntegrationsStep": {
+      "connectYourTools": "Connect your tools",
+      "setUpIntegrationsTo": "Set up integrations to supercharge your workflow.",
+      "connected": "Connected",
+      "skipForNowGo": "Skip for now → Go to Dashboard"
+    },
+    "organizationInviteDialog": {
+      "admin": "Admin",
+      "member": "Member",
+      "viewer": "Viewer",
+      "cancel": "Cancel"
+    },
+    "companyTowerCompanyTower": {
+      "completeLayers": "{overallPercent}% complete · 9 layers",
+      "uploadASourceDocument": "Upload a source document",
+      "uploadDoc": "Upload doc",
+      "compileTheCompanyTower": "Compile the company tower",
+      "compile": "Compile"
+    },
+    "billingPage": {
+      "billing": "Billing",
+      "yourPlanAndEvery": "Your plan, and every order paid for any product in this organization."
+    },
+    "settingsPage": {
+      "dangerZone": "Danger Zone",
+      "theseActionsArePermanent": "These actions are permanent and cannot be undone.",
+      "deleteOrganization": "Delete Organization"
+    },
+    "shortcutsPage": {
+      "keyboardShortcuts": "Keyboard shortcuts",
+      "global": "Global",
+      "viaK": "via ⌘K",
+      "intro": "Press <kbd>⌘K</kbd> anywhere to run any command. Use <kbd>↑</kbd>/<kbd>↓</kbd> to navigate the list."
+    },
+    "webhooksPage": {
+      "webhooks": "Webhooks",
+      "subscribeToEventsEmitted": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint’s secret so you can verify authenticity.",
+      "newEndpoint": "New endpoint",
+      "activeEndpoints": "Active endpoints"
+    },
+    "providersDesignSystemShell": {
+      "breadcrumb": "Breadcrumb",
+      "dEVAUTHACTIVESynthetic": "DEV AUTH ACTIVE: synthetic \"Dev User\", no DB writes. Set",
+      "nEXTPUBLICAUTHPROVIDER": "NEXT_PUBLIC_AUTH_PROVIDER",
+      "toARealProvider": "to a real provider to disable.",
+      "mainContent": "Main content"
+    },
+    "notificationsInboxList": {
+      "loadingNotifications": "Loading notifications",
+      "notifications": "Notifications",
+      "unread": "Unread"
+    },
+    "notificationsNotificationRuntimeBanner": {
+      "notificationRuntime": "{providerLabel} notification runtime",
+      "preferences": "Preferences",
+      "inbox": "Inbox",
+      "missingIntegration": "Missing integration"
+    },
+    "providerKeysProviderKeysList": {
+      "alwaysUseThisKey": "Always use this key",
+      "preferFallBackTo": "Prefer, fall back to platform",
+      "providerKeys": "Provider keys",
+      "addYourFirstProvider": "Add your first provider key"
+    },
+    "reelReelStudio": {
+      "splitAScriptThe": "Split a script — the server builds a typed node graph here.",
+      "script": "Script",
+      "oneShotPerLine": "One shot per line…"
+    },
+    "securityTwoFactorBlock": {
+      "authenticatorAppSetup": "Authenticator app setup",
+      "twoFactorQRCode": "Two-factor QR code",
+      "copied": "Copied"
+    },
+    "startupOsStartupThreadPanel": {
+      "executeSelectedRun": "Execute selected run",
+      "recordedAction": "{activityCount, plural, one {# recorded action} other {# recorded actions}}.",
+      "toggleNavigation": "Toggle navigation"
+    },
+    "startupOsStartupWorkspaceShell": {
+      "preview": "Preview",
+      "code": "Code",
+      "canvas": "Canvas"
+    },
+    "webhooksEditWebhookDialog": {
+      "editEndpoint": "Edit endpoint",
+      "changingTheURLOr": "Changing the URL or the event list takes effect on the next delivery. The signing secret stays the same.",
+      "cancel": "Cancel"
+    },
+    "atelierPage": {
+      "atelier": "Atelier",
+      "describeWhatYouWant": "Describe what you want — the agent generates it and the server places it on the canvas."
+    },
+    "checkoutReturnCheckoutReturnContent": {
+      "processingPayment": "Processing payment",
+      "confirmingYourSubscription": "Confirming your subscription..."
+    },
+    "checkoutReturnPage": {
+      "almostThere": "Almost there",
+      "weAreConfirmingYour": "We are confirming your subscription with the payment provider."
+    },
+    "choosePlanPage": {
+      "chooseYourPlan": "Choose your plan",
+      "pickThePlanThat": "Pick the plan that fits your workspace. You can switch anytime from the billing page."
+    },
+    "discoverPage": {
+      "discoverCofounders": "Discover cofounders",
+      "oneCompanyAtA": "One company at a time. Pass, signal interest, or pitch — a mutual signal opens a Cofounder Room."
+    },
+    "matchesPage": {
+      "yourMatches": "Your matches",
+      "foundersYouAndThey": "Founders you and they both signalled interest in. The Cofounder Room — where the initiator opens the conversation — is the next step."
+    },
+    "profileIdPage": {
+      "cofounderRoom": "Cofounder Room",
+      "whereAMutualMatch": "Where a mutual match becomes a team."
+    },
+    "reelPage": {
+      "reel": "Reel",
+      "splitAScriptInto": "Split a script into shots — each becomes a typed node whose generated output flows through a versioned IO envelope."
+    },
+    "apiKeysApiKeysClient": {
+      "createAPIKey": "Create API key",
+      "loading": "Loading…"
+    },
+    "apiKeysCreateApiKeyForm": {
+      "thisKeyAppearsOnce": "This key appears once. Store it before closing.",
+      "eGProductionBackend": "e.g. Production backend"
+    },
+    "apiKeysPage": {
+      "aPIKeys": "API Keys",
+      "generateAndManageAPI": "Generate and manage API keys for programmatic access to {name}.",
+      "youDoNotHave": "You do not have permission to view API keys."
+    },
+    "settingsLayout": {
+      "settings": "Settings",
+      "manageYourOrganizationAnd": "Manage your organization and account settings"
+    },
+    "providerKeysPage": {
+      "providerKeys": "Provider Keys",
+      "bringYourOwnAI": "Bring your own AI provider keys. {name} prefers your key for matching models and falls back to the platform key unless you pin it.",
+      "youDoNotHave": "You do not have permission to view provider keys."
+    },
+    "providerKeysProviderKeysClient": {
+      "addProviderKey": "Add provider key",
+      "loading": "Loading…"
+    },
+    "completePage": {
+      "desktopSignIn": "Desktop sign-in",
+      "thisDesktopSignIn": "This desktop sign-in link is invalid",
+      "restartSignInFrom": "Restart sign-in from {DESKTOP_APP_NAME} to create a fresh, short-lived handoff."
+    },
+    "canvasCanvasDemoClient": {
+      "nodes": "nodes,",
+      "edges": "edges."
+    },
+    "webNotFound": {
+      "thisPageIsNot": "This page is not available.",
+      "checkTheURLOr": "Check the URL, or return to your dashboard."
+    },
+    "accountAvatarUploadForm": {
+      "userAvatar": "User avatar",
+      "avatarPreview": "Avatar preview"
+    },
+    "adminPlatformActionButton": {
+      "planning": "Planning…",
+      "noChangesInThis": "No changes in this plan.",
+      "affects": "Affects {value0}",
+      "planExpires": "Plan {planId} · expires {value1}",
+      "audit": "audit {auditId}"
+    },
+    "adminPlatformCommandPalette": {
+      "jumpTo": "Jump to…",
+      "jumpTo2": "Jump to"
+    },
+    "adminPlatformConsoleTabs": {
+      "console": "Console",
+      "shipsInBatch": "Ships in batch 2"
+    },
+    "brandBrandAssets": {
+      "nebutra": "Nebutra"
+    },
+    "cofounderMatchCofounderCard": {
+      "compiledCompany": "Compiled company",
+      "complementarity": "Complementarity"
+    },
+    "growthRedemptionCodeInput": {
+      "haveARedemptionCode": "Have a redemption code?",
+      "eNTERCODE": "ENTER-CODE",
+      "redeem": "Redeem"
+    },
+    "navigationThemeToggle": {
+      "toggleTheme": "Toggle theme",
+      "theme": "Theme"
+    },
+    "personalizationCommunicationPreferences": {
+      "communicationPreferences": "Communication preferences",
+      "decideWhatReachesYour": "Decide what reaches your inbox. You can change these anytime."
+    },
+    "companyTowerBrandKitFloor": {
+      "addABrandKit": "Add a brand-kit field",
+      "field": "field"
+    },
+    "companyTowerFieldCard": {
+      "lockedHumanApproved": "Locked — human-approved",
+      "locked": "Locked"
+    },
+    "webhooksWebhookEndpointForm": {
+      "endpointURL": "Endpoint URL",
+      "events": "Events"
+    },
+    "authError": {
+      "thisPageDidnT": "This page didn’t load.",
+      "somethingWentWrongOn": "Something went wrong on our side. Try again; it usually works the second time."
+    },
+    "authNotFound": {
+      "weCouldnTFind": "We couldn’t find that page.",
+      "theAddressMayBe": "The address may be mistyped, or the page has moved."
+    },
+    "authWechatLoginButton": {
+      "weChat": "WeChat"
+    },
+    "auditError": {
+      "failedToLoadAudit": "Failed to load audit log."
+    },
+    "billingError": {
+      "failedToLoadBilling": "Failed to load billing."
+    },
+    "webError": {
+      "somethingWentWrong": "Something went wrong.",
+      "thisPageDidnT": "This page didn’t load.",
+      "somethingWentWrongOn": "Something went wrong on our side. Try again; it usually works the second time."
+    },
+    "apiKeysApiKeyList": {
+      "created": "Created {value0} {value1}",
+      "revoked": "Revoked"
+    },
+    "developersPage": {
+      "openPlatform": "Open Platform",
+      "credentialsAndEventSubscriptions": "Credentials and event subscriptions for"
+    },
+    "notificationsPage": {
+      "notifications": "Notifications",
+      "tuneHowReachesYou": "Tune how {name} reaches you for workspace activity, billing risk, security events, and product operations. Managed providers can save these preferences immediately; preview mode shows the product defaults without pretending they are persisted."
+    },
+    "referralsPage": {
+      "referrals": "Referrals",
+      "shareYourCodeTrack": "Share your code, track who joined, and see where you sit on the {name} referral ladder."
+    },
+    "settingsSettingsNav": {
+      "settingsNavigation": "Settings navigation"
+    },
+    "tenantsError": {
+      "failedToLoadTenants": "Failed to load tenants."
+    },
+    "webLayout": {
+      "skipToContent": "Skip to content"
+    },
+    "adminPlatformConsoleShell": {
+      "admin": "Admin"
+    },
+    "billingBillingSelfService": {
+      "activePlan": "Active plan"
+    },
+    "billingPlanBadge": {
+      "upgrade": "Upgrade"
+    },
+    "cofounderMatchMatchesList": {
+      "openCofounderRoom": "Open Cofounder Room"
+    },
+    "commandPaletteModePills": {
+      "commandMode": "Command mode"
+    },
+    "notificationsNotificationsPageClient": {
+      "notificationFilter": "Notification filter"
+    },
+    "organizationsOrganizationLogoForm": {
+      "organizationLogoPreview": "Organization logo preview"
+    },
+    "securityConnectedAccountsBlock": {
+      "providerManaged": "Provider managed"
+    },
+    "securityPasskeysBlock": {
+      "available": "Available"
+    },
+    "valuesValuesStatement": {
+      "ourValuesCommitment": "Our values commitment"
+    },
+    "webhooksCreateWebhookDialog": {
+      "endpointCreatedTheSigning": "Endpoint created. The signing secret appears once.",
+      "storeItInYour": "Store it in your application’s secret manager before closing.",
+      "endpointURL": "Endpoint URL: {url}"
     }
   }
 }

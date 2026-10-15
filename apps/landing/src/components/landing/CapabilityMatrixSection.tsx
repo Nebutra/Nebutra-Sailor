@@ -1,6 +1,6 @@
 "use client";
 
-import { AuroraBackground } from "@nebutra/ui/primitives";
+import { AuroraBackground, Heading } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { AnimateIn, AnimateInGroup } from "./AnimateIn";
 import { AIGatewayCard, BillingCard, MultiTenantCard, RBACCard } from "./capability-cards";
@@ -11,28 +11,19 @@ export function CapabilityMatrixSection() {
   return (
     <section
       id="capabilities"
-      className="relative w-full scroll-mt-24 overflow-hidden bg-background py-24 md:py-32"
+      className="relative w-full scroll-mt-24 overflow-hidden bg-background py-24"
     >
       {/* Ambient aurora background */}
       <AuroraBackground variant="subtle" position="center" intensity={0.4} />
 
-      <div className="mx-auto max-w-wide px-4 md:px-6 relative z-10">
-        {/* Section header */}
-        <AnimateIn preset="emerge" inView className="mx-auto max-w-3xl text-center mb-16 md:mb-24">
-          <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 mb-6">
-            <span className="text-sm font-semibold text-primary tracking-wide uppercase">
-              {t("badge")}
-            </span>
-          </div>
-          <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-semibold text-foreground text-balance tracking-heading"
-            style={{
-              letterSpacing: "var(--tracking-heading)",
-              lineHeight: "var(--leading-heading)",
-            }}
-          >
+      <div className="relative z-10 px-8 xl:px-16">
+        {/* Section header, as the site's Intro sets one: left on the page grid, the label in
+            sentence case above it, no badge pill. */}
+        <AnimateIn preset="emerge" inView className="mb-16 md:mb-20">
+          <p className="mb-4 text-sm text-muted-foreground">{t("badge")}</p>
+          <Heading level={2} display className="max-w-3xl">
             {t("title")}
-          </h2>
+          </Heading>
         </AnimateIn>
 
         {/* 2x2 Capability Bento */}

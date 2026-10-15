@@ -1,8 +1,8 @@
 import { buildAuthCenterSignInUrl, getAuthCenterOrigin } from "@nebutra/auth/client";
 import { Button, Field, Input } from "@nebutra/ui/primitives";
-import { createRoute, useNavigate } from "@tanstack/react-router";
+import { createRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, useEffect, useState } from "react";
-import { useSessionScopeChanged } from "@/vite-app/auth-provider";
+import { sessionQueryOptions, useSessionScopeChanged } from "@/vite-app/auth-provider";
 import {
   DEMO_ACCOUNT,
   describeError,
@@ -182,5 +182,13 @@ function SignInRoute() {
 export const signInRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/sign-in",
+  // A signed-in visitor has nothing to do here: the header showed their name
+  // and "Sign out" above a sign-in form.
+  beforeLoad: async ({ context }) => {
+    const session = await context.queryClient
+      .ensureQueryData(sessionQueryOptions())
+      .catch(() => null);
+    if (session?.user) throw redirect({ to: "/welcome" });
+  },
   component: SignInRoute,
 });

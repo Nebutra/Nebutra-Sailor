@@ -78,11 +78,11 @@ export function OutreachEngineGlyph({ copy }: SubpackageGlyphProps) {
           <span>
             {sentLabel} <span className="text-neutral-12">· 247</span>
           </span>
-          <span className="text-neutral-7">/</span>
+          <span className="text-neutral-11">/</span>
           <span>
             {openLabel} <span className="text-neutral-12">· 38%</span>
           </span>
-          <span className="text-neutral-7">/</span>
+          <span className="text-neutral-11">/</span>
           <span>
             {replyLabel} <span className="text-neutral-12">· 12%</span>
           </span>

@@ -1,4 +1,5 @@
 "use client";
+// @copy-exempt: the fallback can render above or instead of the intl provider, so it cannot call t(); last-resort English.
 
 import { brand } from "@nebutra/brand/metadata";
 import { Button } from "@nebutra/ui/primitives";

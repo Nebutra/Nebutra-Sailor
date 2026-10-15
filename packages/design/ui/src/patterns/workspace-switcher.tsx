@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "../primitives/dropdown-menu";
 import { cn } from "../utils/cn";
+import { RENDERS_NATIVE_BUTTON } from "../utils/native-button";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -124,12 +125,17 @@ function TriggerButton({
   className,
   switchLabel = "Switch workspace",
   ref,
-}: TriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) {
+  ...rest
+}: TriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined } & Omit<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    keyof TriggerProps
+  >) {
   const isOwner = activeWorkspace.role === "owner";
 
   if (variant === "compact") {
     return (
       <button
+        {...rest}
         ref={ref}
         type="button"
         aria-label={switchLabel}
@@ -150,6 +156,7 @@ function TriggerButton({
 
   return (
     <button
+      {...rest}
       ref={ref}
       type="button"
       aria-label={switchLabel}
@@ -177,6 +184,11 @@ function TriggerButton({
     </button>
   );
 }
+// It renders a <button>: tell DropdownMenuTrigger so Base UI keeps native
+// button semantics instead of warning and layering role="button" on top. The
+// rest-spread above is what carries Base UI's handlers and aria-expanded —
+// they were dropped before, so the trigger never reported its state.
+(TriggerButton as unknown as Record<symbol, boolean>)[RENDERS_NATIVE_BUTTON] = true;
 TriggerButton.displayName = "WorkspaceSwitcherTrigger";
 
 // ─── Workspace List Item ──────────────────────────────────────────────────────

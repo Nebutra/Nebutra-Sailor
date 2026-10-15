@@ -72,14 +72,21 @@ export async function POST(request: Request) {
   const parsed = ChatBody.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) {
     return NextResponse.json(
-      { error: parsed.error.issues[0]?.message ?? "请求格式不对。" },
+      {
+        error: parsed.error.issues[0]?.message ?? "The request body is malformed.",
+        code: "invalid_body",
+      },
       { status: 400 },
     );
   }
   const body = parsed.data;
   const messages = body.messages ?? [{ role: "user" as const, content: body.prompt ?? "" }];
   if (messages.every((message) => message.content.trim() === "")) {
-    return NextResponse.json({ error: "先写点内容再发送。" }, { status: 400 });
+    return NextResponse.json(
+      // The console renders `code` in the viewer's language; `error` is the English fallback.
+      { error: "Write a message before sending.", code: "empty_message" },
+      { status: 400 },
+    );
   }
 
   const keys = await getApiKeyRepository().listDetailByTenant(ctx.tenantId);
@@ -87,7 +94,8 @@ export async function POST(request: Request) {
   if (!key) {
     return NextResponse.json(
       {
-        error: "这个账号还没有可用的 Key。到 Keys 页面创建一把，费用会记在它名下。",
+        error:
+          "This account has no active key. Create one on the Keys page; charges are billed to it.",
         code: "no_active_key",
       },
       { status: 409 },
@@ -133,13 +141,13 @@ export async function POST(request: Request) {
     return response;
   } catch (error) {
     if (error instanceof RouterSupplyUnavailableError) {
-      return refuse(503, "router_unconfigured", "供给尚未接通，稍后再试。");
+      return refuse(503, "router_unconfigured", "Supply isn't connected yet. Try again later.");
     }
     return refuse(
       // 502 never leaves the origin: Cloudflare swaps it for an HTML error page.
       503,
       "upstream_failed",
-      error instanceof Error ? error.message : "上游没有响应。",
+      error instanceof Error ? error.message : "The upstream did not respond.",
     );
   }
 }

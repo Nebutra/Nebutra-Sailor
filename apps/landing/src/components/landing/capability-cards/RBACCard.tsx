@@ -49,7 +49,7 @@ export function RBACCard() {
       {/* High-Fidelity Matrix Table Bleed */}
       <div
         style={{ boxShadow: "var(--ring-hairline)" }}
-        className="w-full max-w-[440px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-border bg-background dark:bg-muted transition-transform duration-150 group-hover:-translate-y-px origin-bottom flex flex-col"
+        className="w-full max-w-[440px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-border bg-background dark:bg-muted origin-bottom flex flex-col"
       >
         {/* Header */}
         <div className="flex items-center gap-2 px-6 py-4 border-b border-border/60 text-[11px] uppercase tracking-widest text-muted-foreground font-semibold bg-muted/20/[0.02]">
@@ -63,7 +63,7 @@ export function RBACCard() {
         <table className="w-full text-sm text-left flex-1 border-collapse">
           <thead className="bg-transparent">
             <tr className="border-b border-border/50">
-              <th className="py-3 px-6 text-[10px] font-semibold text-muted-foreground/80 uppercase tracking-widest w-[38%]">
+              <th className="py-3 px-6 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest w-[38%]">
                 Resource
               </th>
               {ROLES.map((role) => (
@@ -79,7 +79,7 @@ export function RBACCard() {
                         </AvatarFallback>
                       </Avatar>
                     </div>
-                    <span className="text-[10px] font-semibold text-muted-foreground/80 uppercase tracking-widest">
+                    <span className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
                       {role.name}
                     </span>
                   </div>

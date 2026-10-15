@@ -7,7 +7,7 @@
 import facts from "virtual:kcq-facts";
 import { SNIPPETS } from "./home/developer-snippets";
 import { INVESTOR_EMAIL } from "./investors/contact";
-import { INSTALL_COMMAND, LINKS } from "./links";
+import { docsPath, INSTALL_COMMAND, LINKS } from "./links";
 import { APP_PATH, KCQ_ORIGIN, PUBLIC_ROUTES, publicPath } from "./routes";
 
 export function renderLlmsTxt(): string {
@@ -25,8 +25,10 @@ export function renderLlmsTxt(): string {
     "",
     `- Workstation in the browser: ${KCQ_ORIGIN}${APP_PATH}`,
     `- Install the library: \`${INSTALL_COMMAND}\``,
-    `- Source and docs: ${LINKS.readme}`,
-    `- Architecture: ${LINKS.architecture}`,
+    `- Documentation: ${KCQ_ORIGIN}${docsPath("en")} (Chinese: ${KCQ_ORIGIN}${docsPath("zh")}); every page is also Markdown at <page>.md`,
+    `- Documentation for agents: ${KCQ_ORIGIN}${docsPath("en", "llms.txt")} and ${KCQ_ORIGIN}${docsPath("en", "llms-full.txt")}`,
+    `- Agent tool reference: ${KCQ_ORIGIN}${docsPath("en", "agent/tools")}`,
+    `- Source: ${LINKS.github}`,
     `- Package: ${LINKS.npm}`,
     "",
     "## Chart tools for agents",

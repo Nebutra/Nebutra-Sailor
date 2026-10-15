@@ -1,6 +1,6 @@
 <!--
   Nav (restraint benchmark rule 12, founder decision): six groups, wordmark · Agent · Developers ·
-  Benchmark · GitHub with its star count · Open workstation. Language, theme and the market-feed
+  Benchmark · Docs · GitHub with its star count · Open workstation. Language, theme and the market-feed
   status live in the footer. "Charts" and "Open source" stay scroll anchors on /home.
   - always opaque on the page ground, a 1px hairline once content scrolls under it;
   - on /home, the section in view is `aria-current="location"` and a 2px Cobalt bar slides under it
@@ -14,6 +14,7 @@ import { computed, nextTick, onMounted, ref, shallowRef, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { RouterLink, useRoute } from "vue-router";
 import activity from "../home/community/activity.json";
+import { docsPath } from "../links";
 import { APP_PATH, publicPath, type PublicLocale } from "../routes";
 import BrandMark from "./brand-mark.vue";
 import KcqIcon from "./kcq-icon.vue";
@@ -88,6 +89,9 @@ const starsLabel = computed(() =>
           </li>
           <li>
             <RouterLink :to="publicPath('benchmark', props.locale)">{{ t("nav.benchmark") }}</RouterLink>
+          </li>
+          <li>
+            <a :href="docsPath(props.locale)">{{ t("nav.docs") }}</a>
           </li>
         </ul>
         <span

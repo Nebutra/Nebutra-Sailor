@@ -95,32 +95,6 @@
       "hint": "Agent · công cụ"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Bot",
-      "chips": "Chat bot · bot vẽ · tri thức"
-    },
-    "productivity": {
-      "label": "Năng suất",
-      "chips": "Sân đấu mô hình · AI viết"
-    },
-    "academic": {
-      "label": "Học thuật",
-      "chips": "Bộ công cụ PDF · Tìm kiếm bằng sáng chế AI"
-    },
-    "image": {
-      "label": "Công cụ hình ảnh",
-      "chips": "Studio 3D · Canvas"
-    },
-    "audio": {
-      "label": "Âm thanh",
-      "chips": "Giọng nói · Nhạc AI"
-    },
-    "code": {
-      "label": "Mã nguồn",
-      "chips": "Trình tạo web · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Tổng quan",
     "keys": "Khóa",

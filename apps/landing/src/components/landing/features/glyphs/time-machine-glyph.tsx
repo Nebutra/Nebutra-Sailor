@@ -22,11 +22,11 @@ export function TimeMachineGlyph(_props: SubpackageGlyphProps) {
       {/* Header row */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5 font-mono text-[10px] text-neutral-11">
-          <Clock className="h-3 w-3 text-neutral-10" />
+          <Clock className="h-3 w-3 text-neutral-11" />
           <span>time-machine</span>
-          <span className="text-neutral-9">·</span>
+          <span className="text-neutral-11">·</span>
           <span>247 versions</span>
-          <span className="text-neutral-9">·</span>
+          <span className="text-neutral-11">·</span>
           <span>replay any</span>
         </div>
         <Button variant="outline" size="sm" className="h-6 gap-1 px-2 text-[10px]">
@@ -55,7 +55,7 @@ export function TimeMachineGlyph(_props: SubpackageGlyphProps) {
               )}
               <span
                 className={`font-mono font-semibold text-[9px] ${
-                  marker.active ? "text-primary" : "text-neutral-10"
+                  marker.active ? "text-primary" : "text-neutral-11"
                 }`}
               >
                 {marker.label}
@@ -80,7 +80,7 @@ export function TimeMachineGlyph(_props: SubpackageGlyphProps) {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-center font-mono text-[9px] text-neutral-10">
+      <div className="flex items-center justify-center font-mono text-[9px] text-neutral-11">
         point-in-time recovery · CRDT-safe
       </div>
     </div>

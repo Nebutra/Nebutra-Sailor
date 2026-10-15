@@ -7,6 +7,9 @@ product review to remove workflow-template framing. This is the top-level
 product direction. No production exposure. Any prototype must stay behind a
 default-off feature flag and be labeled as an unreviewed automated prototype.
 
+Superseded 2026-10-10: the 60-second brand-film proof was retired; the
+brand-film material below has been removed.
+
 ## Core company proposition
 
 A serious founder does not only need code generation, a template, or a landing
@@ -76,37 +79,10 @@ Internal boundary:
 
 The category boundary is narrow: `Startup -> Unicorn`.
 
-## First proof artifact: 60-Second Brand Film
+## First proof artifact
 
-The first proof artifact should be the 60-second brand film described in the
-public article:
-
-Input:
-
-- one sentence describing the startup thesis
-
-Output in roughly 60 seconds:
-
-- brand direction
-- logo concept
-- color palette and typography
-- 60-second multimodal brand film
-- matching sound/music direction
-- landing page draft
-- MVP repository scaffold
-- demand-signal map from public communities
-
-Why this first:
-
-- It is screenshot-friendly and shareable.
-- It compresses agency-grade output into a founder-grade operating loop.
-- It demonstrates the cross-modal coherence that single-purpose tools cannot
-  produce.
-- It creates a real emotional "we need this" moment before the heavier OS
-  surfaces are mature.
-
-This artifact bundle is not the whole product. It is the cold-start proof that
-the OS has a shared company context.
+> Superseded 2026-10-10: the 60-second brand-film proof was retired. It is no
+> longer a first proof artifact, Play, or positioning for Startup Agent OS.
 
 ## What each benchmark contributes
 
@@ -159,13 +135,12 @@ Secondary user:
 The OS should have seven first-class surfaces, and the first Dashboard
 experience should be the Startup OS Command Center. It should compile a startup
 thesis into CompanyContext, asset graph, operating runs, launch surface, and
-signals. The 60-second brand film is one proof artifact inside that system.
+signals.
 
 ### 1. Company Context Compiler
 
 The company-state layer:
 
-- 60-second brand film
 - thesis to MVP
 - MVP to customer discovery
 - customer discovery to pitch deck
@@ -288,7 +263,7 @@ Reuse:
   `@nebutra/image-pipeline`, `@nebutra/video-pipeline`, and
   `@nebutra/landing-builder` for the creative/product generation layer
 - `@nebutra/audio-pipeline`, `@nebutra/cinema`, and `@nebutra/reel/storyboard`
-  for brand film planning and multimodal composition
+  for multimodal composition
 - `@nebutra/outreach-engine` for demand-signal maps and campaign drafts
 - `@nebutra/billing`, `@nebutra/access-gate`, `@nebutra/waitlist`,
   `@nebutra/analytics`, `@nebutra/onboarding`
@@ -302,7 +277,6 @@ New build:
 
 - first-class CompanyContext contract for startup lifecycle state
 - first-class operating run contract for governed state mutations
-- 60-second brand film orchestration and artifact bundle
 - founder cockpit information architecture
 - OS-level data model for startup lifecycle state
 - lifecycle graph connecting thesis, product, design, deploy, launch, feedback,
@@ -317,7 +291,6 @@ New build:
 
 These existing proposals become subsystems:
 
-- 60-Second Brand Film Proof
 - [Launch Access Funnel](./2026-05-29-launch-access-funnel.md)
 - [Governed Agent Ops Workspace](./2026-05-29-governed-agent-ops-workspace.md)
 - [Confidence-Gated Support Deflection](./2026-05-29-confidence-gated-support-deflection.md)
@@ -332,13 +305,12 @@ Clarify the product map:
 - Generative Company OS as the operating model.
 - `create-sailor` as bootloader
 - CompanyContext as the system of record
-- 60-second brand film as the first proof artifact
 - founder cockpit as the main app
 - flow canvas as the central workspace
 - builder, creative, deploy, launch, agent, knowledge, support, billing as OS
   services
 
-### Phase 1: Dashboard Command Center and brand-film proof
+### Phase 1: Dashboard Command Center
 
 Ship the first coherent company-state surface:
 
@@ -348,8 +320,7 @@ Ship the first coherent company-state surface:
 - operating run ledger shape
 - brand context creation
 - logo/color/type direction
-- storyboard and script
-- image/video/audio generation handoff
+- image generation handoff
 - landing page draft
 - MVP repo scaffold handoff
 - demand-signal discovery
@@ -417,9 +388,7 @@ Only after the OS has real usage:
 
 ## Success metrics
 
-- thesis-to-shareable-brand-film completion rate
 - time from one-sentence thesis to coherent artifact bundle
-- share rate of generated brand-film result pages
 - time from scaffold to public launch
 - percent of startup setup completed through cockpit flows
 - number of product/design/deploy/launch artifacts connected in the lifecycle
@@ -434,9 +403,8 @@ Only after the OS has real usage:
 
 - The OS promise can outrun the actual product if the cockpit is only a shell.
 - Too many subsystems can blur the first product primitive. The first primitive
-  should be CompanyContext because it lets the 60-second brand film, landing,
-  MVP scaffold, launch, and support surfaces prove coherence from the same
-  source.
+  should be CompanyContext because it lets brand, landing, MVP scaffold,
+  launch, and support surfaces prove coherence from the same source.
 - Agent features must stay governed. Free-form automation without approvals,
   replay, and cost visibility would weaken the positioning.
 - Ecosystem features are tempting, but they should wait until the OS has real
@@ -470,8 +438,8 @@ building, Flowith-like agent canvas, and Product Hunt-like launch/community
 loops.
 
 The first build should be thesis-centered: ship the Dashboard Startup OS Command
-Center with CompanyContext, connected asset graph, governed operating runs, and
-the 60-second brand film as the first proof artifact. Then grow into lifecycle
+Center with CompanyContext, connected asset graph, and governed operating runs.
+Then grow into lifecycle
 spine, launch, builder, creative, agent, knowledge, and support surfaces. Do not
 lead with a generic marketplace, social graph, empty dashboard, or standalone
 page generator.

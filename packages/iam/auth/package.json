@@ -62,10 +62,15 @@
       "import": "./dist/react/index.js",
       "default": "./dist/react/index.js"
     },
-    "./components": {
-      "types": "./dist/components/index.d.ts",
-      "import": "./dist/components/index.js",
-      "default": "./dist/components/index.js"
+    "./sign-in": {
+      "types": "./dist/sign-in/index.d.ts",
+      "import": "./dist/sign-in/index.js",
+      "default": "./dist/sign-in/index.js"
+    },
+    "./sign-in/providers": {
+      "types": "./dist/sign-in/oauth-providers.d.ts",
+      "import": "./dist/sign-in/oauth-providers.js",
+      "default": "./dist/sign-in/oauth-providers.js"
     },
     "./edge-organization-config": {
       "types": "./dist/providers/better-auth/edge-organization-config.d.ts",
@@ -76,7 +81,8 @@
       "types": "./dist/browser.d.ts",
       "import": "./dist/browser.js",
       "default": "./dist/browser.js"
-    }
+    },
+    "./sign-in/sources.css": "./src/sign-in/sources.css"
   },
   "scripts": {
     "test": "vitest run",
@@ -118,6 +124,7 @@
   },
   "license": "FSL-1.1-ALv2",
   "files": [
-    "dist"
+    "dist",
+    "src/sign-in/sources.css"
   ]
 }

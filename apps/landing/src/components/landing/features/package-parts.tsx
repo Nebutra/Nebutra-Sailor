@@ -160,10 +160,10 @@ export function GlyphBento({
           <Link
             key={entry.slug}
             href={`/features/${entry.slug}`}
-            className={`group flex flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-card shadow-ambient-sm transition-[box-shadow,border-color] duration-micro hover:border-foreground/20 hover:shadow-ambient-md ${index === 0 ? "sm:col-span-2" : ""}`}
+            className={`group flex min-w-0 flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-card shadow-ambient-sm transition-[box-shadow,border-color] duration-micro hover:border-foreground/20 hover:shadow-ambient-md ${index === 0 ? "sm:col-span-2" : ""}`}
           >
             <div className="flex flex-1 items-center justify-center bg-background/40 p-5">
-              <div className="w-full">
+              <div className="w-full min-w-0">
                 <Glyph
                   entry={toSerializablePackageFeatureEntry(entry)}
                   copy={getGlyphCopy(entry.slug, t)}

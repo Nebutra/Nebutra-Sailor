@@ -64,14 +64,22 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { lang, slug } = await params;
-  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
-    return buildPageMetadata({
+  const unpublished = () =>
+    buildPageMetadata({
       title: `Not found — ${brand.name} Blog`,
       description: "This article is not published.",
       path: `/blog/${slug}`,
       locale: lang,
       publishedIn: unpublishedSet(`/blog/${slug}`),
     });
+  if (slug === EMPTY_BLOG_PLACEHOLDER_SLUG) {
+    return unpublished();
+  }
+  // A slug with no article answers 404 from the page before it touches
+  // request data, so its metadata must not either: runtime data here with a
+  // static page body is a prerender bailout, which Next serves as a 500.
+  if ((await loadCachedBlogArticle(lang, slug)).kind === "not-found") {
+    return unpublished();
   }
   await connection();
   return buildBlogMetadata(lang, slug);
@@ -279,7 +287,7 @@ async function BlogPostLoader({ params }: { params: Promise<Params> }) {
             <AnimateIn preset="emerge" inView>
               <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-end">
                 <div>
-                  <div className="mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                  <div className="mb-4 inline-flex items-center gap-2 text-sm text-muted-foreground">
                     <BookOpen className="size-3.5" aria-hidden />
                     {t("journalBadge")}
                   </div>

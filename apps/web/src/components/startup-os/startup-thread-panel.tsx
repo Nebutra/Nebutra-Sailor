@@ -24,6 +24,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { StartupChatPanel } from "./startup-chat-panel";
 import { formatRunStatus, isExecutableRun } from "./startup-os-model";
 import type { UseStartupConversationResult } from "./use-startup-conversation";
@@ -104,6 +105,7 @@ export function StartupThreadPanel({
   projects,
   selectedRun,
 }: StartupThreadPanelProps) {
+  const tc = useTranslations("copy.startupOsStartupThreadPanel");
   const threadItems = buildThreadItems(project, selectedRun);
 
   const history = (
@@ -144,7 +146,7 @@ export function StartupThreadPanel({
                   size="default"
                   disabled={!isExecutableRun(item.run) || isExecuting}
                   onClick={() => onExecuteRun(item.run?.id ?? "")}
-                  aria-label="Execute selected run"
+                  aria-label={tc("executeSelectedRun")}
                 >
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Button>
@@ -154,8 +156,11 @@ export function StartupThreadPanel({
         </div>
       ))}
       {activityCount > 0 ? (
-        <p className="px-1 text-[11px] text-neutral-10">
-          {activityCount} recorded action{activityCount !== 1 ? "s" : ""}.
+        <p className="px-1 text-xs text-neutral-10">
+          {tc("recordedAction", {
+            activityCount: String(activityCount),
+            value1: String(activityCount !== 1 ? "s" : ""),
+          })}
         </p>
       ) : null}
     </div>
@@ -191,6 +196,7 @@ function StartupThreadHeader({
   project: StartupOSProject;
   projects: readonly StartupOSProject[];
 }) {
+  const tc = useTranslations("copy.startupOsStartupThreadPanel");
   const otherProjects = projects.filter((item) => item.id !== project.id);
 
   return (
@@ -201,8 +207,8 @@ function StartupThreadHeader({
         shape="square"
         size="icon"
         onClick={onToggleNav}
-        aria-label="Toggle navigation"
-        title="Toggle navigation"
+        aria-label={tc("toggleNavigation")}
+        title={tc("toggleNavigation")}
       >
         <SidebarLeft className="size-4" aria-hidden="true" />
       </Button>
@@ -221,7 +227,7 @@ function StartupThreadHeader({
             <p className="truncate text-sm font-semibold text-neutral-12">
               {companyName(project.companyContext)}
             </p>
-            <p className="mt-0.5 truncate text-[11px] text-neutral-10">
+            <p className="mt-0.5 truncate text-xs text-neutral-10">
               {project.slug} · {project.arena} · {project.status}
             </p>
           </div>

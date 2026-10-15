@@ -14,10 +14,12 @@
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
 import { PageHeader } from "@nebutra/ui/layout";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { AtelierCanvas } from "@/components/atelier/atelier-canvas";
 import { getAuth, getTenantContext } from "@/lib/auth";
 
 export default async function AtelierPage() {
+  const tc = await getTranslations("copy.atelierPage");
   const { userId } = await getAuth();
   const { tenantId, plan } = await getTenantContext();
 
@@ -30,10 +32,7 @@ export default async function AtelierPage() {
 
   return (
     <section className="mx-auto w-full max-w-wide">
-      <PageHeader
-        title="Atelier"
-        description="Describe what you want — the agent generates it and the server places it on the canvas."
-      />
+      <PageHeader title={tc("atelier")} description={tc("describeWhatYouWant")} />
 
       <AtelierCanvas canvasId="demo" />
     </section>

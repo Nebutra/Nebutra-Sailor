@@ -71,9 +71,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
     <main id="main-content" className="flex flex-col flex-1 bg-background">
       <section className="container mx-auto max-w-wide px-4 py-32">
         <AnimateIn preset="emerge" className="mb-16 max-w-4xl">
-          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
-            {t("eyebrow")}
-          </p>
+          <p className="mb-4 text-sm text-primary">{t("eyebrow")}</p>
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-balance"
             style={{
@@ -109,7 +107,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
                         <h3 className="font-bold text-foreground group-hover:text-primary transition-colors">
                           {p.name}
                         </h3>
-                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/60 shrink-0 mt-1" />
+                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground shrink-0 mt-1" />
                       </div>
                       <div className="flex flex-wrap items-center gap-2">
                         <span
@@ -117,7 +115,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
                         >
                           {t(`status.${p.status}`)}
                         </span>
-                        <code className="text-xs text-muted-foreground/80 font-mono">
+                        <code className="text-xs text-muted-foreground font-mono">
                           {p.envVarPrefix}_API_KEY
                         </code>
                       </div>

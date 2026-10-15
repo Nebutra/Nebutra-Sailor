@@ -95,32 +95,6 @@
       "hint": "Agent · instrumente"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Boți",
-      "chips": "Chat bots · drawing bots · cunoștințe"
-    },
-    "productivity": {
-      "label": "Productivitate",
-      "chips": "Arena modele · scriere AI"
-    },
-    "academic": {
-      "label": "Academic",
-      "chips": "Set de instrumente PDF · Căutare brevete AI"
-    },
-    "image": {
-      "label": "Instrumente imagine",
-      "chips": "Studio 3D · Pânză"
-    },
-    "audio": {
-      "label": "Audio",
-      "chips": "Vorbire · Muzică AI"
-    },
-    "code": {
-      "label": "Cod",
-      "chips": "Generator web · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Prezentare generală",
     "keys": "Chei",

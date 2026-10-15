@@ -1,7 +1,7 @@
 name: Deploy KCQ to Fly
 
 # The chart library lives in its own repository. Build Nebutra's product shell,
-# ship it with the three pinned market connectors (GOTDX, Binance depth,
+# ship it with the three pinned market connectors (GOTDX, Binance V1,
 # TradingView) as one Fly Machine, and optionally cut over kcq.nebutra.com after
 # the Fly URL is healthy. Connector revisions stay pinned independently in
 # apps/kcq/connector-sources.json. ADR: docs/ops/nebutra/2026-10-09-kcq-consolidation.md
@@ -58,7 +58,7 @@ jobs:
     steps:
       - name: Setup flyctl
         uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1
-      - name: Verify real search and fresh bars or depth
+      - name: Verify real search, fresh bars and Binance trades
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
@@ -105,7 +105,7 @@ jobs:
       - name: Resolve immutable connector sources
         id: connectors
         run: |
-          node -e 'const s=require("./apps/kcq/connector-sources.json"); const o=[]; for (const k of ["gotdx","python"]) { if(!/^[a-f0-9]{40}$/.test(s[k].commit)) throw Error("Expected immutable SHA for "+k); o.push(k+"_repository="+s[k].repository, k+"_commit="+s[k].commit); } require("fs").appendFileSync(process.env.GITHUB_OUTPUT, o.join("\n")+"\n");'
+          node -e 'const s=require("./apps/kcq/connector-sources.json"); const o=[]; for (const k of ["gotdx","python","binance"]) { if(!/^[a-f0-9]{40}$/.test(s[k].commit)) throw Error("Expected immutable SHA for "+k); o.push(k+"_repository="+s[k].repository, k+"_commit="+s[k].commit); } require("fs").appendFileSync(process.env.GITHUB_OUTPUT, o.join("\n")+"\n");'
 
       - name: Checkout GOTDX connector
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -121,13 +121,20 @@ jobs:
           ref: ${{ steps.connectors.outputs.python_commit }}
           path: connector-python
 
+      - name: Checkout Binance V1 connector
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: ${{ steps.connectors.outputs.binance_repository }}
+          ref: ${{ steps.connectors.outputs.binance_commit }}
+          path: connector-binance
+
       # The shared action owns the Nebutra toolchain and root lockfile cache.
       # KCQ installs its separate frozen lockfile in the following step.
       - name: Setup product toolchain
         uses: ./.github/actions/setup-node-pnpm
         with:
           node-version: "22.23.2"
-          install-command: pnpm install --frozen-lockfile --filter @nebutra/kcq...
+          install-command: pnpm install --frozen-lockfile --filter @nebutra/kcq... --filter @nebutra/kcq-docs...
 
       - name: Validate library and product compatibility
         run: |
@@ -137,6 +144,17 @@ jobs:
           node apps/kcq/scripts/verify.mjs
           grep -q 'KCQ · Nebutra' apps/kcq/dist/index.html
 
+      # The docs (apps/kcq-docs) are generated from the same pinned checkout, so they describe the
+      # chart this deploy ships. Static export, served by the same nginx under /docs and /zh/docs.
+      - name: Build documentation
+        run: |
+          set -euo pipefail
+          export KCQ_SOURCE_DIR="$GITHUB_WORKSPACE/kcq-source"
+          pnpm turbo run build --filter=@nebutra/kcq-docs^...
+          pnpm --filter @nebutra/kcq-docs build
+          test -f apps/kcq-docs/dist/docs.html
+          test -f apps/kcq-docs/dist/zh/docs.html
+
       - name: Stage image (static product, nginx and connectors)
         run: |
           set -euo pipefail
@@ -144,9 +162,11 @@ jobs:
           rm -rf "$stage"
           mkdir -p "$stage/html"
           cp -R apps/kcq/dist/. "$stage/html/"
+          cp -R apps/kcq-docs/dist/. "$stage/html/"
           cp -R connector-gotdx "$stage/gotdx"
           cp -R connector-python "$stage/python"
-          rm -rf "$stage/gotdx/.git" "$stage/python/.git"
+          cp -R connector-binance "$stage/binance"
+          rm -rf "$stage/gotdx/.git" "$stage/python/.git" "$stage/binance/.git"
           cp infra/fly/Dockerfile.kcq "$stage/Dockerfile"
           cp infra/fly/kcq.nginx.conf "$stage/nginx.conf"
           cp infra/fly/kcq.security-headers.conf "$stage/security-headers.conf"
@@ -227,8 +247,9 @@ jobs:
             code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://nebutra-kcq.fly.dev/app || echo 000)
             home=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://nebutra-kcq.fly.dev/home || echo 000)
             health=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://nebutra-kcq.fly.dev/health || echo 000)
-            echo "try $i app=$code home=$home health=$health"
-            if [ "$code" = "200" ] && [ "$home" = "200" ] && [ "$health" = "200" ]; then
+            docs=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 https://nebutra-kcq.fly.dev/docs || echo 000)
+            echo "try $i app=$code home=$home docs=$docs health=$health"
+            if [ "$code" = "200" ] && [ "$home" = "200" ] && [ "$docs" = "200" ] && [ "$health" = "200" ]; then
               exit 0
             fi
             sleep 10
@@ -252,14 +273,16 @@ jobs:
       # the missing permission; the origin headers are correct either way.
       - name: Apply Cloudflare edge cache rules
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # A dedicated least-privilege token (Zone: Cache Rules Edit, Cache Purge, Zone Settings
+          # Edit, Zone Read on nebutra.com) when present; the general deploy token otherwise.
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           bash infra/ops/scripts/apply-kcq-edge-cache.sh rules
           bash infra/ops/scripts/apply-kcq-edge-cache.sh tiered
 
       - name: Purge public pages from the Cloudflare edge
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
           HTML_ROOT: ${{ env.STAGE }}/html
         run: bash infra/ops/scripts/apply-kcq-edge-cache.sh purge
 

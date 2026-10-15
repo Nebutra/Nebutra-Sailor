@@ -1,6 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { Bell, Envelope as Mail, DevicePhone as Smartphone } from "@nebutra/icons";
 import { loadNotificationSettingsSnapshot } from "@nebutra/notifications";
+import { getTranslations } from "next-intl/server";
 import { NotificationInboxPreview } from "@/components/notifications/notification-inbox-preview";
 import { NotificationPreferenceMatrix } from "@/components/notifications/notification-preference-matrix";
 import { NotificationRuntimeBanner } from "@/components/notifications/notification-runtime-banner";
@@ -17,6 +18,7 @@ export const metadata = {
 };
 
 export default async function NotificationSettingsPage({ params, searchParams }: Props) {
+  const tc = await getTranslations("copy.notificationsPage");
   const [{ locale }, query, { userId, orgId }] = await Promise.all([
     params,
     searchParams,
@@ -32,11 +34,9 @@ export default async function NotificationSettingsPage({ params, searchParams }:
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-lg font-semibold text-foreground">Notifications</h2>
+        <h2 className="text-lg font-semibold text-foreground">{tc("notifications")}</h2>
         <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Tune how {brand.name} reaches you for workspace activity, billing risk, security events,
-          and product operations. Managed providers can save these preferences immediately; preview
-          mode shows the product defaults without pretending they are persisted.
+          {tc("tuneHowReachesYou", { name: String(brand.name) })}
         </p>
       </div>
 

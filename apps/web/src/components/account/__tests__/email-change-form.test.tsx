@@ -2,18 +2,22 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 vi.mock("next-intl", () => ({
-  useTranslations: (ns?: string) => (key: string, params?: Record<string, string | number>) => {
-    const base = ns ? `${ns}.${key}` : key;
-    if (params && Object.keys(params).length > 0) {
-      const tail = Object.entries(params)
-        .map(([k, v]) => `${k}=${v}`)
-        .join(",");
-      return `${base}(${tail})`;
-    }
-    return base;
-  },
+  useTranslations: (ns?: string) =>
+    ns?.startsWith("copy.")
+      ? catalogT(ns)
+      : (key: string, params?: Record<string, string | number>) => {
+          const base = ns ? `${ns}.${key}` : key;
+          if (params && Object.keys(params).length > 0) {
+            const tail = Object.entries(params)
+              .map(([k, v]) => `${k}=${v}`)
+              .join(",");
+            return `${base}(${tail})`;
+          }
+          return base;
+        },
 }));
 
 import { EmailChangeForm } from "../email-change-form";

@@ -104,6 +104,35 @@ interface ThreadSummary {
   lastActivityAt: string;
 }
 
+/** English nav label → `Sidebar.nav.*` key (dashboard-nav groups, items, badges, settings sections). */
+const NAV_LABEL_KEYS: Record<string, string> = {
+  Product: "product",
+  Admin: "admin",
+  "Startup OS": "startupOs",
+  Connectors: "connectors",
+  "Match your cofounder": "cofounder",
+  Alpha: "alpha",
+  Owner: "owner",
+  Settings: "settings",
+  General: "general",
+  Account: "account",
+  Appearance: "appearance",
+  Security: "security",
+  Team: "team",
+  Developers: "openPlatform",
+  "Api Keys": "apiKeys",
+  "Provider Keys": "providerKeys",
+  Webhooks: "webhooks",
+  Notifications: "notifications",
+  Referrals: "referrals",
+  Shortcuts: "shortcuts",
+  "Audit Log": "auditLog",
+  Billing: "billing",
+  Usage: "usage",
+  Integrations: "connectors",
+  Cofounder: "cofounder",
+};
+
 export function DesignSystemShell(props: Props) {
   return (
     <SidebarProvider>
@@ -139,6 +168,7 @@ function renderNextLink({
 }
 
 function DesignSystemShellInner({ children, productCapabilities }: Props) {
+  const tc = useTranslations("copy.providersDesignSystemShell");
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
   const { collapsed, toggle } = useSidebar();
@@ -242,7 +272,17 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     }
     // Run once on mount; toast copy can't change after hydration.
   }, []);
-  const breadcrumbs = buildBreadcrumbs(pathname, navCapabilities);
+  // Nav and breadcrumb labels are English identifiers in dashboard-nav.ts and
+  // settings-nav.tsx; render them through the catalog.
+  const tNav = useTranslations("Sidebar.nav");
+  const navLabel = (label: string) => {
+    const key = NAV_LABEL_KEYS[label];
+    return key ? tNav(key) : label;
+  };
+  const breadcrumbs = buildBreadcrumbs(pathname, navCapabilities).map((crumb) => ({
+    ...crumb,
+    label: navLabel(crumb.label),
+  }));
   const currentBreadcrumb = breadcrumbs.at(-1);
 
   async function handleWorkspaceChange(nextWorkspaceId: string) {
@@ -447,20 +487,20 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
 
       const groupSection: SidebarNavSection = {
         id: group.title,
-        label: group.title,
+        label: navLabel(group.title),
         items: group.items.map((item) => ({
           id: item.href,
-          label: item.label,
+          label: navLabel(item.label),
           href: item.href,
           icon: item.icon,
-          badge: item.badge,
+          badge: item.badge ? { ...item.badge, label: navLabel(item.badge.label) } : undefined,
           isActive: isActiveRoute(pathname, item.href),
           children: item.children?.map((child) => ({
             id: child.href,
-            label: child.label,
+            label: navLabel(child.label),
             href: child.href,
             icon: child.icon,
-            badge: child.badge,
+            badge: child.badge ? { ...child.badge, label: navLabel(child.badge.label) } : undefined,
             isActive: isActiveRoute(pathname, child.href),
           })),
         })),
@@ -604,7 +644,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     breadcrumbs.length > 1 ? (
       <div className="mb-4 flex min-w-0 shrink-0 items-center">
         <h1 className="sr-only">{currentBreadcrumb?.label ?? "Dashboard"}</h1>
-        <nav aria-label="Breadcrumb" className="min-w-0">
+        <nav aria-label={tc("breadcrumb")} className="min-w-0">
           <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
             {breadcrumbs.map((crumb, index) => {
               const isLast = index === breadcrumbs.length - 1;
@@ -682,11 +722,11 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         >
           <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />
           <span>
-            DEV AUTH ACTIVE: synthetic "Dev User", no DB writes. Set{" "}
+            {tc("dEVAUTHACTIVESynthetic")}{" "}
             <code className="rounded bg-warning/15 px-1 font-mono text-[10px] text-warning-strong">
-              NEXT_PUBLIC_AUTH_PROVIDER
+              {tc("nEXTPUBLICAUTHPROVIDER")}
             </code>{" "}
-            to a real provider to disable.
+            {tc("toARealProvider")}
           </span>
         </div>
       ) : null}
@@ -696,7 +736,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         // would clip edge-to-edge canvases and add an unnecessary route shell.
         children
       ) : (
-        <section id="main-content" aria-label="Main content" className="content-area">
+        <section id="main-content" aria-label={tc("mainContent")} className="content-area">
           {children}
         </section>
       )}

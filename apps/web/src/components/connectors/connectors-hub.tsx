@@ -7,6 +7,7 @@ import {
   Trash as Trash2,
 } from "@nebutra/icons";
 import { Button, ConfirmDialog, toast } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 /**
@@ -58,6 +59,7 @@ interface Props {
 }
 
 export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
+  const tc = useTranslations("copy.connectorsConnectorsHub");
   const [busyId, setBusyId] = useState<string | null>(null);
   const [pendingRemove, setPendingRemove] = useState<ConnectorRow | null>(null);
 
@@ -87,13 +89,8 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
           <Cable className="h-4 w-4" />
         </div>
         <div>
-          <h2 className="text-sm font-semibold text-neutral-12">
-            Connect Sailor with your everyday apps, APIs, and MCPs
-          </h2>
-          <p className="mt-1 max-w-md text-xs text-neutral-10">
-            Connectors let Sailor read and write across your stack — Stripe, Slack, your own APIs,
-            MCP servers. Credentials are encrypted at the application layer.
-          </p>
+          <h2 className="text-sm font-semibold text-neutral-12">{tc("connectSailorWithYour")}</h2>
+          <p className="mt-1 max-w-md text-xs text-neutral-10">{tc("connectorsLetSailorRead")}</p>
         </div>
         {onAdd && (
           <Button
@@ -102,7 +99,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
             onClick={onAdd}
             prefix={<Plus className="h-3.5 w-3.5" />}
           >
-            Add a connector
+            {tc("addAConnector")}
           </Button>
         )}
       </section>
@@ -113,7 +110,10 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
     <section className="space-y-3">
       <div className="flex items-center justify-between">
         <p className="text-xs text-neutral-10">
-          {connectors.length} active connector{connectors.length === 1 ? "" : "s"}
+          {tc("activeConnector", {
+            length: String(connectors.length ?? ""),
+            value1: String(connectors.length === 1 ? "" : "s"),
+          })}
         </p>
         {onAdd && (
           <button
@@ -122,7 +122,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
             className="inline-flex items-center gap-1 text-xs font-medium text-primary transition-colors hover:text-primary dark:text-primary dark:hover:text-primary"
           >
             <Plus className="h-3 w-3" />
-            Add connector
+            {tc("addConnector")}
           </button>
         )}
       </div>
@@ -202,14 +202,14 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
         onOpenChange={(open) => {
           if (!open) setPendingRemove(null);
         }}
-        title="Remove this connector?"
+        title={tc("removeThisConnector")}
         description={
           pendingRemove
             ? `"${pendingRemove.name}" will be disconnected. Any agents using it will lose access immediately.`
             : undefined
         }
         variant="destructive"
-        confirmText="Remove"
+        confirmText={tc("remove")}
         loading={busyId === pendingRemove?.id}
         onConfirm={() => {
           if (pendingRemove) void performRemove(pendingRemove);
@@ -221,7 +221,7 @@ export function ConnectorsHub({ connectors, onAdd, onRemove }: Props) {
           href="/docs/connectors"
           className="inline-flex items-center gap-0.5 text-xs font-medium text-neutral-10 transition-colors hover:text-neutral-12"
         >
-          Learn about Connectors security
+          {tc("learnAboutConnectorsSecurity")}
           <ExternalLink className="h-3 w-3" />
         </a>
       </div>

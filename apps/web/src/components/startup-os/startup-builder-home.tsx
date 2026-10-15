@@ -35,6 +35,7 @@ import {
   SelectValue,
   Skeleton,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useRef } from "react";
 import { StartupConnectorsMenu } from "./startup-connectors-menu";
 
@@ -133,6 +134,7 @@ export function StartupBuilderHome({
   thesis,
   onThesisChange,
 }: StartupBuilderHomeProps) {
+  const tc = useTranslations("copy.startupOsStartupBuilderHome");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Real local-file attach: fold a text file's content into the proposition so it
@@ -161,7 +163,7 @@ export function StartupBuilderHome({
           <div className="mx-auto w-full max-w-3xl text-center">
             <span className="inline-flex items-center gap-2 rounded-full bg-neutral-2 px-3 py-1.5 text-xs font-semibold text-neutral-11">
               <Lightning className="size-3.5 text-primary" aria-hidden="true" />
-              Startup Agent OS
+              {tc("startupAgentOS")}
             </span>
             <h2
               className="mt-6 text-4xl font-semibold tracking-tight sm:text-6xl"
@@ -172,11 +174,10 @@ export function StartupBuilderHome({
                 backgroundClip: "text",
               }}
             >
-              What are we building?
+              {tc("whatAreWeBuilding")}
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-neutral-11">
-              One sentence compiles into a whole governed company — context, launch artifacts, live
-              files, spatial canvas, and approval-gated runs.
+              {tc("oneSentenceCompilesInto")}
             </p>
 
             <div
@@ -190,11 +191,11 @@ export function StartupBuilderHome({
  input below). */}
               <textarea
                 data-allow-native
-                aria-label="Startup proposition"
+                aria-label={tc("startupProposition")}
                 value={thesis}
                 onChange={(event) => onThesisChange(event.target.value)}
                 disabled={disabled || isLoading}
-                placeholder="Describe the startup proposition to compile into a tenant-scoped company workspace..."
+                placeholder={tc("describeTheStartupProposition")}
                 className="block min-h-[150px] w-full resize-none border-0 bg-transparent p-5 text-lg leading-7 text-neutral-12 outline-none placeholder:text-neutral-10 disabled:cursor-not-allowed disabled:opacity-60 sm:p-6"
               />
               <div className="flex flex-col gap-3 px-4 pb-4 sm:flex-row sm:items-center sm:justify-between">
@@ -217,8 +218,8 @@ export function StartupBuilderHome({
                     shape="circle"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={disabled || isLoading}
-                    aria-label="Attach a file"
-                    title="Attach a text file to fold into the proposition"
+                    aria-label={tc("attachAFile")}
+                    title={tc("attachATextFile")}
                   >
                     <Paperclip className="size-4" aria-hidden="true" />
                   </Button>
@@ -228,7 +229,7 @@ export function StartupBuilderHome({
                     disabled={disabled || isLoading}
                   >
                     <SelectTrigger
-                      aria-label="Startup arena"
+                      aria-label={tc("startupArena")}
                       className="h-auto w-fit rounded-full bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 transition-colors hover:bg-neutral-3 disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       <SelectValue />
@@ -259,7 +260,7 @@ export function StartupBuilderHome({
 
             {thesis.trim().length === 0 ? (
               <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-                <span className="text-xs text-neutral-10">Try</span>
+                <span className="text-xs text-neutral-10">{tc("try")}</span>
                 {EXAMPLE_THESES[arena].map((example) => (
                   <Button
                     key={example}
@@ -330,11 +331,12 @@ function StartupRecentProjects({
   projects: readonly StartupOSProject[];
   selectedProjectId: string | null;
 }) {
+  const tc = useTranslations("copy.startupOsStartupBuilderHome");
   if (isLoading) {
     return (
       <div className="mx-auto mt-8 grid max-w-2xl gap-2 sm:grid-cols-2">
         {["one", "two"].map((key) => (
-          <Skeleton key={key} rounded height={64} aria-label="Loading recent projects" />
+          <Skeleton key={key} rounded height={64} aria-label={tc("loadingRecentProjects")} />
         ))}
       </div>
     );
@@ -360,7 +362,7 @@ function StartupRecentProjects({
           <span className="block w-full truncate text-sm font-semibold">
             {companyName(project.companyContext)}
           </span>
-          <span className="block w-full truncate text-[11px] font-normal opacity-80">
+          <span className="block w-full truncate text-xs font-normal opacity-80">
             {project.arena} / {project.status}
           </span>
         </Button>

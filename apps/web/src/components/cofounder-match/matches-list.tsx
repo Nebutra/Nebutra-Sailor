@@ -10,6 +10,7 @@ import { cofounderMatchesQueryOptions } from "@/lib/queries/cofounder";
 import { CofounderCard } from "./cofounder-card";
 
 export function MatchesList() {
+  const tc = useTranslations("copy.cofounderMatchMatchesList");
   const t = useTranslations("startupOs");
   const pathname = usePathname();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
@@ -69,7 +70,7 @@ export function MatchesList() {
             className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold bg-primary text-primary-foreground"
           >
             <Sparkles className="size-4" aria-hidden="true" />
-            Open Cofounder Room
+            {tc("openCofounderRoom")}
           </Link>
         </div>
       ))}

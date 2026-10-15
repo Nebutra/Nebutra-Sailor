@@ -97,7 +97,7 @@ export function QueueShowcase(props: PackageShowcaseProps) {
             >
               <span>{pill.label}</span>
               <span
-                className={`tabular-nums ${isActive ? "text-background/70" : "text-muted-foreground/70"}`}
+                className={`tabular-nums ${isActive ? "text-background/70" : "text-muted-foreground"}`}
               >
                 {pill.count.toLocaleString(numLocale)}
               </span>

@@ -2,20 +2,22 @@ import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { ArrowRight } from "@nebutra/icons";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { requireOrg } from "@/lib/auth";
 import { DEVELOPER_CONSOLE_LINKS } from "@/lib/developer-console";
 
 export const metadata = { title: "Open Platform — Settings" };
 
 export default async function DeveloperConsolePage() {
+  const tc = await getTranslations("copy.developersPage");
   await requireOrg();
 
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-xl font-semibold text-foreground">Open Platform</h1>
+        <h1 className="text-xl font-semibold text-foreground">{tc("openPlatform")}</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Credentials and event subscriptions for {brand.name}. The public catalog is on{" "}
+          {tc("credentialsAndEventSubscriptions")} {brand.name}. The public catalog is on{" "}
           <a
             href={getBrandOrigin("open")}
             className="text-foreground underline-offset-4 hover:underline"

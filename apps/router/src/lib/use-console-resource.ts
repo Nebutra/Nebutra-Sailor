@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createRequestLane, describeError, isAbortError } from "@/lib/console-client";
 
@@ -52,6 +53,9 @@ export function useConsoleResource<T>(
   // effect depend on `key` alone instead of re-firing on each render.
   const loadRef = useRef(load);
   loadRef.current = load;
+  const t = useTranslations("console.errors");
+  const tRef = useRef(t);
+  tRef.current = t;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: the loader is held in a ref on purpose; `key` and `nonce` are the only things that should restart a load
   useEffect(() => {
@@ -71,7 +75,7 @@ export function useConsoleResource<T>(
         setResource((previous) => ({
           status: "error",
           data: previous.data,
-          error: describeError(error),
+          error: describeError(error, tRef.current),
         }));
       });
 

@@ -20,6 +20,8 @@
 @import "@nebutra/theme/skins.css";
 @import "@nebutra/theme/morph.css";
 @import "tw-animate-css";
+/* The Landing Motion System: tokens, hero headline, grouped reveal. */
+@import "./landing-motion.css";
 
 /* Typography plugin — enables prose classes for legal/content pages */
 @plugin "@tailwindcss/typography";
@@ -84,14 +86,28 @@
  * curve while the frame holds still. Entrance only — the outgoing page is
  * replaced at once, as the page it becomes is already the answer. */
 .site-page-enter {
-  animation: site-page-enter var(--duration-cinematic) var(--ease-out) both;
+  animation: site-page-enter var(--landing-medium) var(--landing-ease) both;
 }
+/* Opacity and transform only: a full-page blur repaints every pixel of the
+ * page on every frame of the entrance (Landing Motion System §6). */
 @keyframes site-page-enter {
   from {
     opacity: 0;
     transform: translateY(12px);
-    filter: blur(4px);
   }
+}
+
+/* Reading craft. Headings break into even lines and body copy avoids a lone
+ * last word; Chinese and Japanese get the quarter-em gap before and after
+ * Latin words and numbers where the copy did not type one. */
+:where(h1, h2, h3) {
+  text-wrap: balance;
+}
+:where(p, li, dd, figcaption, summary) {
+  text-wrap: pretty;
+}
+:where(:lang(zh), :lang(ja)) {
+  text-autospace: normal;
 }
 @media (prefers-reduced-motion: reduce) {
   .site-page-enter {

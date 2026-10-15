@@ -5,6 +5,7 @@ import {
   isAuthFeatureEnabled,
   sanitizeReturnUrl,
 } from "@nebutra/auth";
+import { detectEnabledOAuthProviders } from "@nebutra/auth/sign-in/providers";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -14,7 +15,7 @@ import { AuthSplitLayout } from "@/components/auth/auth-split-layout";
 import { MagicLinkPanel } from "@/components/auth/magic-link-panel";
 import { PasskeyPanel } from "@/components/auth/passkey-panel";
 import { SignInForm } from "@/components/auth/sign-in-form";
-import { detectEnabledOAuthProviders } from "@/lib/auth/oauth-providers";
+import { getAuth } from "@/lib/auth";
 
 /**
  * Better Auth multi-app RP: this route always soft-redirects to the brand
@@ -87,6 +88,9 @@ async function SignInPageContent({
     }
     redirect(buildAuthCenterSignInUrl(returnTo));
   }
+
+  // This host is the auth center: a signed-in visitor goes where they were headed.
+  if ((await getAuth()).userId) redirect(returnUrl ?? "/workspace");
 
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined;
 

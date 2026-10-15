@@ -109,11 +109,10 @@ describe("@nebutra/web dashboard UI governance", () => {
       expect(source).not.toContain("Invitation sent!");
     }
 
-    expect(readFileSync(SETTINGS_API_KEY_FORM, "utf8")).toContain("This key appears once.");
-    expect(readFileSync(API_KEY_DIALOG, "utf8")).toContain("This key appears once.");
-    expect(readFileSync(WEBHOOK_DIALOG, "utf8")).toContain(
-      "Endpoint created. The signing secret appears once.",
-    );
+    // The copy lives in the catalog now; the forms read it through t().
+    const en = readFileSync(SHARED_EN_MESSAGES, "utf8");
+    expect(en).toContain("This key appears once.");
+    expect(en).toContain("Endpoint created. The signing secret appears once.");
   });
 
   it("does not animate dashboard page shells or product lists", () => {

@@ -22,6 +22,8 @@ const PUBLIC_PATHS = [
   "/zh/investors",
 ];
 const HREFLANGS = ["en", "zh-Hans", "x-default"];
+/** Documentation roots (apps/kcq-docs), served by the same nginx. */
+const DOCS_ROOTS = ["/docs", "/zh/docs"];
 
 describe("kcq public surface", () => {
   it("brand.domains carries the kcq host", () => {
@@ -35,11 +37,13 @@ describe("kcq public surface", () => {
 
     expect(group).toMatch(/^Disallow:\s*\/\s*$/m);
     // `$` anchors each page; /assets/ lets crawlers render the prerendered pages; /llms.txt is the
-    // same pages as plain text for agents (apps/kcq/src/public/llms.ts).
+    // same pages as plain text for agents (apps/kcq/src/public/llms.ts). The docs (apps/kcq-docs)
+    // are allowed by prefix and list their own pages in /docs/sitemap.xml.
     expect(allowed.sort()).toEqual(
-      [...PUBLIC_PATHS.map((path) => `${path}$`), "/assets/", "/llms.txt$"].sort(),
+      [...PUBLIC_PATHS.map((path) => `${path}$`), "/assets/", "/llms.txt$", ...DOCS_ROOTS].sort(),
     );
     expect(robots).toContain(`Sitemap: ${ORIGIN}/sitemap.xml`);
+    expect(robots).toContain(`Sitemap: ${ORIGIN}/docs/sitemap.xml`);
   });
 
   it("sitemap.xml lists each public page with reciprocal hreflang alternates", () => {
@@ -66,6 +70,21 @@ describe("kcq public surface", () => {
     expect(fallbacks.length).toBeGreaterThan(0);
     for (const directive of fallbacks) expect(directive).toBe("try_files /index.html =404;");
     expect(/location \/ \{([^}]*)\}/.exec(nginx)?.[1]).toContain("try_files $uri =404;");
+  });
+
+  it("nginx serves the docs as extensionless pages with their own 404s", () => {
+    const nginx = read("infra/fly/kcq.nginx.conf");
+    expect(nginx).toMatch(
+      /location ~ \^\/\(zh\/\)\?docs\(\/\[\^\.\]\*\)\?\$ \{\s*try_files \$uri\.html =404;/,
+    );
+    expect(nginx).toContain("~^/docs(/|$) /docs/404.html;");
+    expect(nginx).toContain("~^/zh/docs(/|$) /zh/docs/404.html;");
+  });
+
+  it("one deploy ships the product and its docs", () => {
+    const workflow = read(".github/workflows/deploy-kcq-fly.yml");
+    expect(workflow).toContain("apps/kcq-docs/dist/.");
+    expect(workflow).toContain("https://nebutra-kcq.fly.dev/docs");
   });
 
   it("deploy smokes probe the app and a public page, not the `/` redirect", () => {

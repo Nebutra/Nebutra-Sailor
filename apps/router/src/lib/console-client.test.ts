@@ -45,9 +45,13 @@ describe("parseErrorEnvelope", () => {
   });
 
   it("translates the statuses the console can actually hit", () => {
-    expect(parseErrorEnvelope(401, {}).message).toContain("登录");
-    expect(parseErrorEnvelope(403, {}).message).toContain("权限");
-    expect(parseErrorEnvelope(429, {}).message).toContain("频繁");
+    expect(parseErrorEnvelope(401, {}).messageKey).toBe("status.unauthorized");
+    expect(parseErrorEnvelope(403, {}).messageKey).toBe("status.forbidden");
+    expect(parseErrorEnvelope(429, {}).messageKey).toBe("status.rateLimited");
+    expect(parseErrorEnvelope(503, {})).toMatchObject({
+      messageKey: "status.server",
+      values: { status: "503" },
+    });
   });
 });
 

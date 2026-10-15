@@ -1,3 +1,4 @@
+// @copy-exempt: apps/idp has no message runtime (no next-intl); its consent and error copy moves when it gets one.
 // @brand-exempt: OAuth consent shell copy for Nebutra IdP
 /**
  * OAuth Consent Screen (Authorization Page)

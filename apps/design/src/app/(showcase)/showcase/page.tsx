@@ -1,100 +1,98 @@
 import type { Metadata } from "next";
+import { FitStage } from "@/components/fit-stage";
 import { ShowcaseDemo } from "@/components/showcase-demo";
-import { showcaseDemos } from "@/lib/showcase";
+import { showcaseGroups } from "@/lib/showcase";
 import { SITE_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: `Showcase — ${SITE_NAME}`,
   description:
-    "The expressive half of the library — backgrounds, shaders, device mockups, text effects and motion pieces — rendered live from the @nebutra/ui catalog.",
+    "The rest of the @nebutra/ui catalog, rendered live and grouped by category, one card per component.",
 };
 
 /**
- * The half of the library that only design-docs ever showed.
+ * The part of the catalog the component pages do not cover, organised the way
+ * the catalog is: by category, one card per component.
  *
- * This site documented the controls — button, input, table — and none of the
- * expressive surface: the globes, shaders, aurora text, confetti, device
- * mockups and animated backgrounds that make a landing page. All of it lives in
- * `@nebutra/docs-shared` and was reachable only through the app being retired,
- * so retiring that app would have taken it with it.
- *
- * The list is the directory, not a registry — see `lib/showcase.ts`. Demos whose
- * name matches a component that already has a page are filtered out, so this
- * section is exactly what the rest of the site does not cover.
+ * It used to be every demo file in alphabetical order — 131 cards, four
+ * accordions and five carousels in a row, each an 880px stage shrunk to 40%, so
+ * most cards read as an empty white box under a mono file name. Benchmarked
+ * against Geist's component overview (category bands, one framed preview per
+ * component) and shadcn's blocks (uniform frame, centred preview, plain title).
  */
-/** Width every demo renders at before being scaled into its card — roughly the
- *  article column these were written for. */
-const STAGE_WIDTH = 880;
-
-/** What makes an 880px stage read inside a 210px-tall card: small, but legible
- *  rather than merely shrunk. */
-const STAGE_SCALE = 0.4;
 
 export default function ShowcasePage() {
-  const demos = showcaseDemos();
+  const groups = showcaseGroups();
+  const total = groups.reduce((n, g) => n + g.items.length, 0);
 
   return (
-    <div className="flex flex-col gap-10">
-      <header className="flex max-w-3xl flex-col gap-4">
-        <h1 className="font-semibold text-3xl text-foreground tracking-tight">Showcase</h1>
-        <p className="text-muted-foreground">
-          The expressive half of the library — backgrounds, shaders, device mockups, text effects,
-          charts and motion pieces. Every card below is a real demo from{" "}
-          <code className="font-mono text-sm">@nebutra/ui/catalog</code>, rendered live.
+    <div className="flex flex-col">
+      <header className="flex max-w-3xl flex-col gap-4 py-12">
+        <h1 className="text-4xl text-foreground tracking-display [font-weight:var(--font-weight-heading,600)]">
+          Showcase
+        </h1>
+        <p className="text-lg text-neutral-11">
+          The rest of the library, rendered live from{" "}
+          <code className="font-mono text-base">@nebutra/ui/catalog</code>: {total} components
+          without a page of their own yet, grouped as the catalog groups them.
         </p>
-        <p className="text-muted-foreground text-sm">
-          The list is the catalog, filtered against the components that already have their own page,
-          so it is precisely what this site did not previously show.{" "}
-          <strong className="font-medium text-foreground">{demos.length}</strong> demos.
-        </p>
+        <nav aria-label="Categories" className="flex flex-wrap gap-2 pt-2">
+          {groups.map((group) => (
+            <a
+              className="rounded-[var(--radius-pill,9999px)] border border-border bg-card px-3 py-1 text-neutral-11 text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+              href={`#${group.id}`}
+              key={group.id}
+            >
+              {group.title}
+              <span className="ms-1.5 text-muted-foreground tabular-nums">
+                {group.items.length}
+              </span>
+            </a>
+          ))}
+        </nav>
       </header>
 
-      {demos.length === 0 ? (
-        <p className="text-muted-foreground text-sm">
-          No demos found. The <code className="font-mono text-xs">@nebutra/ui</code> catalog lists
-          none outside the component pages.
-        </p>
-      ) : (
-        <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {demos.map((demo) => (
-            <li
-              className="flex flex-col overflow-hidden rounded-xl bg-muted/40 shadow-ambient-sm"
-              key={demo.id}
+      {groups.map((group) => (
+        <section
+          aria-labelledby={`${group.id}-title`}
+          className="scroll-mt-20 border-border border-t py-12"
+          id={group.id}
+          key={group.id}
+        >
+          <div className="mb-6 flex items-baseline justify-between gap-4">
+            <h2
+              className="text-2xl text-foreground tracking-heading [font-weight:var(--font-weight-heading,600)]"
+              id={`${group.id}-title`}
             >
-              {/* Demos size themselves very differently — a globe wants room, a
-                  badge wants none. The card gives every one the same frame and
-                  clips what overflows, so the grid stays a grid. */}
-              {/* A fixed stage, scaled down — not a small box with the overflow
-                  clipped. These demos are written for an article column, so
-                  dropping them into a 330px card and hiding what spills gave
-                  fragments: a feature grid cut mid-tile, a menubar with its
-                  dropdown sliced off, body copy squeezed into a one-character
-                  column. Every one read as broken, and the few that genuinely
-                  were became impossible to pick out.
-
-                  Rendering at the width they were designed for and scaling the
-                  result is what a thumbnail is: nothing is cropped, the demo
-                  never learns it is small, and the cards share a shape. */}
-              <div className="relative h-[210px] overflow-hidden bg-card">
-                <div
-                  className="pointer-events-none absolute top-0 left-1/2 origin-top p-6"
-                  style={{
-                    width: STAGE_WIDTH,
-                    marginLeft: -STAGE_WIDTH / 2,
-                    transform: `scale(${STAGE_SCALE})`,
-                  }}
-                >
-                  <ShowcaseDemo id={demo.id} />
+              {group.title}
+            </h2>
+            <span className="text-muted-foreground text-sm tabular-nums">
+              {group.items.length} {group.items.length === 1 ? "component" : "components"}
+            </span>
+          </div>
+          <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+            {group.items.map((item) => (
+              <li
+                className="flex flex-col overflow-hidden rounded-[var(--radius-lg)] border border-border bg-card"
+                key={item.id}
+              >
+                <FitStage>
+                  <ShowcaseDemo id={item.demo} />
+                </FitStage>
+                <div className="flex items-center justify-between gap-3 border-border border-t px-4 py-3">
+                  <span className="font-medium text-foreground text-sm">{item.title}</span>
+                  <span className="flex items-center gap-2 text-muted-foreground text-xs">
+                    {item.status === "experimental" ? <span>Experimental</span> : null}
+                    {item.variants > 1 ? (
+                      <span className="tabular-nums">{item.variants} demos</span>
+                    ) : null}
+                  </span>
                 </div>
-              </div>
-              <div className="flex items-baseline justify-between gap-2 p-4">
-                <span className="font-medium text-foreground text-sm">{demo.label}</span>
-                <code className="font-mono text-[10px] text-muted-foreground">{demo.id}</code>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </div>
   );
 }

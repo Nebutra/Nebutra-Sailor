@@ -26,6 +26,9 @@ for (const path of [
 }
 process.env.KCQ_SOURCE_DIR = source;
 run(["install", "--frozen-lockfile"], source);
+// Contract tests import sibling packages through their dist exports (e.g.
+// @363045841yyt/klinechart-plot-contracts), so a fresh checkout builds first.
+run(["build:packages"], source);
 run(
   [
     "--dir",
@@ -42,7 +45,6 @@ run(
   ["--dir", "packages/vue", "exec", "vitest", "run", "src/components/TopToolbar.slots.test.ts"],
   source,
 );
-run(["build:packages"], source);
 // Build every workspace package KCQ depends on (dist exports such as @nebutra/billing/links),
 // not a hand-kept list that silently goes stale when a dependency is added.
 run(["turbo", "run", "build", "--filter=@nebutra/kcq^..."]);

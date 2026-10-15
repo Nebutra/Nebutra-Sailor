@@ -61,7 +61,7 @@ export default async function CareersPage({ params }: { params: Promise<{ lang: 
     <main id="main-content" className="flex flex-col flex-1 bg-background">
       <section className="container mx-auto max-w-4xl px-4 py-32">
         <AnimateIn preset="emerge">
-          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">Careers</p>
+          <p className="mb-4 text-sm text-primary">Careers</p>
           <h1
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-foreground mb-6"
             style={{

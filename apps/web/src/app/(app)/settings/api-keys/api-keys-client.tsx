@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { type ApiKey, ApiKeysList } from "@/components/api-keys/api-keys-list";
 import {
@@ -46,6 +47,7 @@ async function revokeKey(id: string): Promise<void> {
 }
 
 export function ApiKeysPageClient() {
+  const tc = useTranslations("copy.apiKeysApiKeysClient");
   // Pure UI state (dialog open/close) stays local — not server cache.
   const [dialogOpen, setDialogOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -114,7 +116,7 @@ export function ApiKeysPageClient() {
           onClick={() => setDialogOpen(true)}
           className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-[background-color] hover:bg-primary/90"
         >
-          Create API key
+          {tc("createAPIKey")}
         </button>
       </div>
 
@@ -125,7 +127,7 @@ export function ApiKeysPageClient() {
       ) : null}
 
       {keysQuery.isPending ? (
-        <p className="text-sm text-muted-foreground">Loading…</p>
+        <p className="text-sm text-muted-foreground">{tc("loading")}</p>
       ) : (
         <ApiKeysList keys={keys} onCreate={() => setDialogOpen(true)} onRevoke={handleRevoke} />
       )}

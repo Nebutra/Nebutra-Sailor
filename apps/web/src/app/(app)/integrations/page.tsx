@@ -73,6 +73,7 @@ function DocumentPipelineSection() {
 // ── Component ────────────────────────────────────────────────────────────────
 
 export default function IntegrationsPage() {
+  const tc = useTranslations("copy.integrationsPage");
   const tSos = useTranslations("startupOs");
   const queryClient = useQueryClient();
   const integrationsQuery = useQuery(integrationsQueryOptions());
@@ -120,11 +121,8 @@ export default function IntegrationsPage() {
   const connectedTypes = new Set(integrations.map((i) => i.type));
 
   return (
-    <section className="mx-auto w-full max-w-wide" aria-label="Integrations">
-      <PageHeader
-        title="Integrations"
-        description="Connect your favorite tools and services to supercharge your workflow."
-      />
+    <section className="mx-auto w-full max-w-wide" aria-label={tc("integrations")}>
+      <PageHeader title={tc("integrations")} description={tc("connectYourFavoriteTools")} />
 
       {/* Document pipeline — rehomed from the converged dashboard Home */}
 
@@ -135,7 +133,7 @@ export default function IntegrationsPage() {
       {/* Connected Integrations */}
       {integrations.length > 0 && (
         <>
-          <h2 className="mt-8 text-lg font-semibold text-neutral-12">Connected</h2>
+          <h2 className="mt-8 text-lg font-semibold text-neutral-12">{tc("connected")}</h2>
 
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {integrations.map((integration) => {
@@ -182,11 +180,11 @@ export default function IntegrationsPage() {
                     >
                       {integration.isActive ? (
                         <>
-                          <Settings className="h-3 w-3" /> Pause
+                          <Settings className="h-3 w-3" /> {tc("pause")}
                         </>
                       ) : (
                         <>
-                          <Check className="h-3 w-3" /> Resume
+                          <Check className="h-3 w-3" /> {tc("resume")}
                         </>
                       )}
                     </button>
@@ -195,7 +193,7 @@ export default function IntegrationsPage() {
                       onClick={() => handleDisconnect(integration.id)}
                       className="flex items-center gap-1 rounded-[var(--radius-md)] bg-destructive/10 px-2.5 py-1.5 text-xs font-medium text-destructive-strong transition-colors hover:bg-destructive/10/70"
                     >
-                      <X className="h-3 w-3" /> Disconnect
+                      <X className="h-3 w-3" /> {tc("disconnect")}
                     </button>
                   </div>
                 </Card>
@@ -211,15 +209,13 @@ export default function IntegrationsPage() {
         {integrations.length > 0 ? "Available" : "Connect an Integration"}
       </h2>
       {integrations.length === 0 && !loading && (
-        <p className="mt-1 text-sm text-neutral-11">
-          Get started by connecting one of the services below.
-        </p>
+        <p className="mt-1 text-sm text-neutral-11">{tc("getStartedByConnecting")}</p>
       )}
 
       {loading ? (
         <div className="mt-8 flex items-center justify-center gap-2 py-12 text-neutral-10">
           <Loader2 className="h-5 w-5 animate-spin" />
-          <span className="text-sm">Loading integrations...</span>
+          <span className="text-sm">{tc("loadingIntegrations")}</span>
         </div>
       ) : (
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -254,7 +250,7 @@ export default function IntegrationsPage() {
                 <div className="mt-4 flex items-center gap-2">
                   {isConnected ? (
                     <span className="flex items-center gap-1 text-xs font-medium text-success-strong">
-                      <Check className="h-3.5 w-3.5" /> Connected
+                      <Check className="h-3.5 w-3.5" /> {tc("connected")}
                     </span>
                   ) : (
                     <button
@@ -268,7 +264,7 @@ export default function IntegrationsPage() {
                       ) : (
                         <Plus className="h-3 w-3" />
                       )}
-                      Connect
+                      {tc("connect")}
                     </button>
                   )}
                   <a
@@ -277,7 +273,7 @@ export default function IntegrationsPage() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-1 text-xs text-neutral-10 transition-colors hover:text-neutral-12"
                   >
-                    <ExternalLink className="h-3 w-3" /> Docs
+                    <ExternalLink className="h-3 w-3" /> {tc("docs")}
                   </a>
                 </div>
               </Card>
@@ -291,7 +287,7 @@ export default function IntegrationsPage() {
         <Card className="mt-8 p-8">
           <EmptyState
             title={tSos("emptyState.integrations")}
-            description="Integration connectors will be added in future updates."
+            description={tc("integrationConnectorsWillBe")}
           />
         </Card>
       )}

@@ -29,7 +29,7 @@ export function AtelierCanvasGlyph(_props: SubpackageGlyphProps) {
 
       <div className="mt-5 flex items-start gap-3">
         <div className="relative h-[80px] w-[120px] shrink-0 rounded-[var(--radius-sm)] border border-neutral-7 bg-neutral-1">
-          <div className="absolute left-1.5 top-1.5 flex items-center gap-1 font-mono text-[8.5px] text-neutral-9">
+          <div className="absolute left-1.5 top-1.5 flex items-center gap-1 font-mono text-[8.5px] text-neutral-11">
             <Image size={9} aria-hidden />
             <span>canvas</span>
           </div>
@@ -53,17 +53,17 @@ export function AtelierCanvasGlyph(_props: SubpackageGlyphProps) {
                 key={layer.name}
                 className="flex items-center gap-1.5 rounded-[var(--radius-sm)] bg-neutral-1 px-1.5 py-1"
               >
-                <span className="text-neutral-9">·</span>
+                <span className="text-neutral-11">·</span>
                 <span
                   className={`flex-1 truncate ${
-                    layer.visible ? "text-neutral-12" : "text-neutral-9"
+                    layer.visible ? "text-neutral-12" : "text-neutral-11"
                   }`}
                 >
                   {layer.name}
                 </span>
                 <VisibilityIcon
                   size={11}
-                  className={`shrink-0 ${layer.visible ? "text-neutral-11" : "text-neutral-8"}`}
+                  className={`shrink-0 ${layer.visible ? "text-neutral-11" : "text-neutral-11"}`}
                 />
               </div>
             );
@@ -71,7 +71,7 @@ export function AtelierCanvasGlyph(_props: SubpackageGlyphProps) {
         </div>
       </div>
 
-      <div className="absolute bottom-1.5 left-3 right-3 font-mono text-[9.5px] text-neutral-9">
+      <div className="absolute bottom-1.5 left-3 right-3 font-mono text-[9.5px] text-neutral-11">
         layers · masks · ai-brushes
       </div>
     </div>

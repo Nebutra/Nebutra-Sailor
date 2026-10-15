@@ -67,14 +67,14 @@ export function VideoPipelineGlyph(_props: SubpackageGlyphProps) {
                 </span>
               </div>
               {idx < STAGES.length - 1 ? (
-                <ArrowRight className="h-3 w-3 shrink-0 text-neutral-9" />
+                <ArrowRight className="h-3 w-3 shrink-0 text-neutral-11" />
               ) : null}
             </div>
           );
         })}
       </div>
 
-      <div className="flex items-center justify-between font-mono text-[10px] text-neutral-10">
+      <div className="flex items-center justify-between font-mono text-[10px] text-neutral-11">
         <span>FFmpeg · CDN-ready · multi-bitrate</span>
       </div>
     </div>

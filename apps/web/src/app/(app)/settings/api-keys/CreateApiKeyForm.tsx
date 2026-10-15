@@ -1,6 +1,7 @@
 "use client";
 
 import { Input, useCopyToClipboard } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useActionState } from "react";
 import { type CreateKeyState, createApiKey } from "./actions";
 
@@ -11,15 +12,14 @@ interface Props {
 const INITIAL: CreateKeyState = { status: "idle" };
 
 export function CreateApiKeyForm({ orgId }: Props) {
+  const tc = useTranslations("copy.apiKeysCreateApiKeyForm");
   const [state, action, isPending] = useActionState(createApiKey, INITIAL);
   const { copied, copy } = useCopyToClipboard({ timeout: 2000, showToast: false });
 
   if (state.status === "success") {
     return (
       <div className="rounded-[var(--radius-md)] border border-warning/60 bg-warning/10 p-4">
-        <p className="mb-2 text-sm font-medium text-warning-strong">
-          This key appears once. Store it before closing.
-        </p>
+        <p className="mb-2 text-sm font-medium text-warning-strong">{tc("thisKeyAppearsOnce")}</p>
         <div className="flex items-center gap-2">
           <code className="flex-1 rounded bg-background px-3 py-2 font-mono text-xs text-warning-strong shadow-inner">
             {state.key}
@@ -43,7 +43,7 @@ export function CreateApiKeyForm({ orgId }: Props) {
         type="text"
         name="name"
         required
-        placeholder="e.g. Production backend"
+        placeholder={tc("eGProductionBackend")}
         disabled={isPending}
       />
       <button

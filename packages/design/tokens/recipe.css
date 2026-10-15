@@ -56,8 +56,12 @@
   --control-height-icon-sm: 1.75rem; /* 28 */
   --control-height-icon-md: 2rem; /* 32 */
   --control-height-icon-lg: 2.25rem; /* 36 */
-  --control-font-size-tiny: 0.6875rem; /* 11 */
-  --control-font-size-sm: 0.75rem; /* 12 */
+  /* 12 / 14 / 14 / 16 — the Geist and Radix ladder: a 32px control sets 14px
+     type, the same as a 40px one. sm was 12px, below all three references and
+     smaller than Select's own 14px at the same height. Compact languages
+     restate tiny/sm/md in their skin (11 / 12 / 13). */
+  --control-font-size-tiny: 0.75rem; /* 12 */
+  --control-font-size-sm: 0.875rem; /* 14 */
   --control-font-size-md: 0.875rem; /* 14 */
   --control-font-size-lg: 1rem; /* 16 */
   --font-weight-medium: 500;
@@ -310,13 +314,13 @@
 @property --control-font-size-tiny {
   syntax: "<length>";
   inherits: true;
-  initial-value: 11px;
+  initial-value: 12px;
 }
 
 @property --control-font-size-sm {
   syntax: "<length>";
   inherits: true;
-  initial-value: 12px;
+  initial-value: 14px;
 }
 
 @property --control-font-size-md {

@@ -1,4 +1,5 @@
 "use client";
+// @copy-exempt: apps/idp has no message runtime (no next-intl); its consent and error copy moves when it gets one.
 
 /**
  * Consent Form — token-aligned actions (deny / authorize).

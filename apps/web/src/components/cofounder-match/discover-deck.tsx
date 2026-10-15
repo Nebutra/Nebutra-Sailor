@@ -6,6 +6,7 @@ import { Button, Textarea } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CofounderCard, type CofounderCardData } from "./cofounder-card";
 
@@ -22,6 +23,7 @@ const SWIPE_THRESHOLD = 110;
 const CARD_TRANSITION = "transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease-out";
 
 export function DiscoverDeck() {
+  const tc = useTranslations("copy.cofounderMatchDiscoverDeck");
   const pathname = usePathname();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
 
@@ -150,8 +152,8 @@ export function DiscoverDeck() {
   if (state === "needs-optin") {
     return (
       <EmptyState
-        title="Join the cofounder pool"
-        description="Become discoverable to other founders — opt in to start matching. You're opt-out by default; leave anytime."
+        title={tc("joinTheCofounderPool")}
+        description={tc("becomeDiscoverableToOther")}
         action={
           <Button
             type="button"
@@ -170,14 +172,14 @@ export function DiscoverDeck() {
   if (state === "needs-company") {
     return (
       <EmptyState
-        title="Compile your company first"
-        description="Your cofounder card is built from your Startup OS company. Compile one, then join the pool."
+        title={tc("compileYourCompanyFirst")}
+        description={tc("yourCofounderCardIs")}
         action={
           <Link
             href={`/${locale}/startup-os`}
             className="inline-flex items-center gap-2 rounded-full bg-neutral-12 px-4 py-2 text-sm font-semibold text-neutral-1 transition-colors hover:bg-neutral-11 dark:text-neutral-12"
           >
-            Compile your company
+            {tc("compileYourCompany")}
             <ArrowRight className="size-4" aria-hidden="true" />
           </Link>
         }
@@ -188,11 +190,11 @@ export function DiscoverDeck() {
   if (state === "error") {
     return (
       <EmptyState
-        title="Couldn't load the pool"
-        description="Something went wrong loading cofounder candidates."
+        title={tc("couldnTLoadThe")}
+        description={tc("somethingWentWrongLoading")}
         action={
           <Button type="button" variant="outline" shape="pill" onClick={() => void load()}>
-            Try again
+            {tc("tryAgain")}
           </Button>
         }
       />
@@ -203,10 +205,7 @@ export function DiscoverDeck() {
     return (
       <div className="flex flex-col items-center gap-5">
         {matched ? <MatchBanner card={matched} locale={locale} /> : null}
-        <EmptyState
-          title="You're all caught up"
-          description="No more founders to review right now. New companies appear here as founders join the pool."
-        />
+        <EmptyState title={tc("youReAllCaught")} description={tc("noMoreFoundersTo")} />
       </div>
     );
   }
@@ -291,7 +290,7 @@ export function DiscoverDeck() {
               className="pointer-events-none absolute left-4 top-4 -rotate-12 rounded-md border-2 border-success px-2 py-0.5 text-sm font-extrabold uppercase tracking-wider text-success-strong"
               style={{ opacity: likeOpacity }}
             >
-              Interested
+              {tc("interested")}
             </span>
             <span
               className="pointer-events-none absolute right-4 top-4 rotate-12 rounded-md border-2 px-2 py-0.5 text-sm font-extrabold uppercase tracking-wider"
@@ -301,7 +300,7 @@ export function DiscoverDeck() {
                 borderColor: "var(--status-danger)",
               }}
             >
-              Pass
+              {tc("pass")}
             </span>
           </div>
         </div>
@@ -312,9 +311,9 @@ export function DiscoverDeck() {
           <Textarea
             value={pitch}
             onChange={(e) => setPitch(e.target.value.slice(0, PITCH_MAX))}
-            placeholder="Why you two should build together — one honest paragraph."
+            placeholder={tc("whyYouTwoShould")}
             rows={3}
-            aria-label="Pitch message"
+            aria-label={tc("pitchMessage")}
           />
           <div className="mt-2 flex items-center justify-between">
             <button
@@ -325,7 +324,7 @@ export function DiscoverDeck() {
               }}
               className="text-xs font-medium text-neutral-10"
             >
-              Cancel
+              {tc("cancel")}
             </button>
             <Button
               type="button"
@@ -335,14 +334,14 @@ export function DiscoverDeck() {
               onClick={() => void act("PITCH", pitch.trim())}
               prefix={<PaperAirplane className="size-3.5" aria-hidden="true" />}
             >
-              Send pitch
+              {tc("sendPitch")}
             </Button>
           </div>
         </div>
       ) : (
         <div className="flex items-center gap-4">
           <DeckAction
-            label="Pass"
+            label={tc("pass")}
             hint="←"
             onClick={() => commit("PASS", -1)}
             disabled={busy || leaving !== 0}
@@ -351,7 +350,7 @@ export function DiscoverDeck() {
             <Cross className="size-6" aria-hidden="true" />
           </DeckAction>
           <DeckAction
-            label="Pitch"
+            label={tc("pitch")}
             hint="P"
             small
             onClick={() => setPitchMode(true)}
@@ -361,7 +360,7 @@ export function DiscoverDeck() {
             <PaperAirplane className="size-5" aria-hidden="true" />
           </DeckAction>
           <DeckAction
-            label="Interested"
+            label={tc("interested")}
             hint="→"
             onClick={() => commit("INTERESTED", 1)}
             disabled={busy || leaving !== 0}
@@ -373,7 +372,7 @@ export function DiscoverDeck() {
       )}
 
       <p className="text-center text-xs text-neutral-9">
-        {index + 1} of {cards.length} · drag, tap, or use ← → · matched on company, not a résumé
+        {tc("ofDragTapOr", { value0: index + 1, length: cards.length })}
       </p>
     </div>
   );
@@ -418,21 +417,19 @@ function DeckAction({
 }
 
 function MatchBanner({ card, locale }: { card: DiscoverCard; locale: string }) {
+  const tc = useTranslations("copy.cofounderMatchDiscoverDeck");
   return (
     <div className="w-full max-w-sm rounded-2xl border border-primary/30 bg-primary/5 p-4 dark:bg-primary/15">
       <div className="flex items-center gap-2 text-sm font-semibold text-primary">
         <Sparkles className="size-4" aria-hidden="true" />
-        It's a match — {card.companyName}
+        {tc("itSAMatch")} {card.companyName}
       </div>
-      <p className="mt-1 text-xs text-neutral-11">
-        You both signalled interest. Open the Cofounder Room to talk and decide whether to form a
-        team.
-      </p>
+      <p className="mt-1 text-xs text-neutral-11">{tc("youBothSignalledInterest")}</p>
       <Link
         href={`/${locale}/cofounder/matches`}
         className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-primary"
       >
-        View matches
+        {tc("viewMatches")}
         <ArrowRight className="size-3.5" aria-hidden="true" />
       </Link>
     </div>

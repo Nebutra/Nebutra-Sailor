@@ -45,7 +45,7 @@ export function ResourcesMegaMenu() {
                 key={group.id}
                 className={`flex flex-col gap-2 ${index === 0 ? "pr-1" : "border-l border-border/50 pl-8"}`}
               >
-                <span className="px-2.5 text-[0.7rem] font-bold uppercase tracking-widest text-muted-foreground/60">
+                <span className="px-2.5 text-[0.7rem] font-bold uppercase tracking-widest text-muted-foreground">
                   {tCatalog(`groups.${group.id}`)}
                 </span>
                 <div className="flex flex-col gap-0.5">
@@ -53,18 +53,15 @@ export function ResourcesMegaMenu() {
                     const Icon = item.icon;
                     const inner = (
                       <>
-                        <Icon className="mt-0.5 size-[18px] shrink-0 text-muted-foreground/60 transition-colors group-hover/child:text-foreground" />
+                        <Icon className="mt-0.5 size-[18px] shrink-0 text-muted-foreground transition-colors group-hover/child:text-foreground" />
                         <span className="flex flex-col">
                           <span className="inline-flex items-center gap-1 text-sm font-semibold text-neutral-12">
                             {tCatalog(`items.${item.id}.label`)}
                             {item.external && (
-                              <ArrowUpRight
-                                className="size-3 text-muted-foreground/60"
-                                aria-hidden
-                              />
+                              <ArrowUpRight className="size-3 text-muted-foreground" aria-hidden />
                             )}
                           </span>
-                          <span className="text-xs text-muted-foreground/80">
+                          <span className="text-xs text-muted-foreground">
                             {tCatalog(`items.${item.id}.tagline`)}
                           </span>
                         </span>

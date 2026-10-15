@@ -19,10 +19,14 @@ const menubarFocusClassName =
   "hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground";
 
 export const overlayPrimitiveClassNames = {
-  modalSurface:
-    "rounded-[var(--radius-md)] border-border/70 bg-popover/95 text-popover-foreground shadow-xl",
-  popoverSurface: "rounded-[var(--radius-md)] border-border/70 bg-popover/95 shadow-md",
-  menuSurface: "rounded-[var(--radius-md)] border-border/70 bg-popover/95 shadow-md",
+  // These three are merged AFTER tokens/components/overlay.ts and used to
+  // override it: the dialog came out at a 6px radius (token: --radius-xl),
+  // 95% see-through with no blur, and its hairline edge was replaced by
+  // shadow-xl; popover and menus dropped to 6px while Select's list was 12px.
+  // The surface is the token's to decide. Kept as keys for API compatibility.
+  modalSurface: "text-popover-foreground",
+  popoverSurface: "",
+  menuSurface: "",
   commandFrame: "rounded-[var(--radius-md)] bg-popover text-popover-foreground",
   commandDialogSurface: "overflow-hidden p-0",
   commandItem: [

@@ -60,7 +60,7 @@ function PlaybookCard({ item, t }: { item: PlaybookItem; t: CatalogTranslator })
             {t(`items.${item.id}.title`)}
           </h3>
           {item.badge && (
-            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-primary dark:bg-primary/15 dark:text-primary">
+            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary dark:bg-primary/15 dark:text-primary">
               {t(`items.${item.id}.badge`)}
             </span>
           )}
@@ -100,9 +100,7 @@ export default async function PlaybookPage({ params }: { params: Promise<{ lang:
     <main className="mx-auto w-full max-w-wide px-4 pb-24 pt-32 sm:px-6 flex-1">
       <AnimateIn preset="fadeUp">
         <div className="text-center">
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.12em] text-neutral-11">
-            {t("page.eyebrow")}
-          </p>
+          <p className="mb-3 text-sm font-medium text-neutral-11">{t("page.eyebrow")}</p>
           <h1 className="text-4xl font-bold tracking-tight text-neutral-12 sm:text-5xl">
             {t("page.title")}
           </h1>

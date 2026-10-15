@@ -2,6 +2,7 @@
 
 import { Table } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { type FormEvent, useState } from "react";
 
 // The directory table sits flush inside the panel that already owns the border
@@ -83,6 +84,7 @@ export function AdminDirectoryPanel({
   totalOrganizations,
   pageSize = DEFAULT_PAGE_SIZE,
 }: AdminDirectoryPanelProps) {
+  const tc = useTranslations("copy.adminAdminDirectoryPanel");
   const currentPage = normalizePage(page);
   const normalizedPageSize = normalizePageSize(pageSize);
   const totalPages = Math.max(
@@ -98,12 +100,13 @@ export function AdminDirectoryPanel({
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="font-medium text-sm text-muted-foreground uppercase tracking-[0.18em]">
-            Directory
+            {tc("directory")}
           </p>
-          <h2 className="mt-2 font-semibold text-2xl text-foreground">Users and organizations</h2>
+          <h2 className="mt-2 font-semibold text-2xl text-foreground">
+            {tc("usersAndOrganizations")}
+          </h2>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-            URL-backed admin lookup for support triage. Search by name, email, organization, or
-            slug, then edit the record in place.
+            {tc("uRLBackedAdminLookup")}
           </p>
         </div>
 
@@ -120,25 +123,25 @@ export function AdminDirectoryPanel({
           ) : null}
           <input
             data-allow-native
-            aria-label="Search users and organizations"
+            aria-label={tc("searchUsersAndOrganizations")}
             className="min-w-0 flex-1 rounded-[var(--radius-xl)] border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition focus:border-[color:hsl(var(--primary))] /20"
             name="q"
             type="search"
             defaultValue={query}
-            placeholder="Name, email, org, slug"
+            placeholder={tc("nameEmailOrgSlug")}
           />
           <button
             type="submit"
             className="rounded-[var(--radius-xl)] bg-[color:hsl(var(--primary))] px-4 py-2 font-medium text-background text-sm transition-[background-color] hover:bg-[color:hsl(var(--primary)/0.9)]"
           >
-            Search
+            {tc("search")}
           </button>
         </form>
       </div>
 
       <div className="mt-6 grid gap-4 xl:grid-cols-2">
         <DirectoryTable
-          title="Users"
+          title={tc("users")}
           empty="No users match this query."
           rows={users.map((user) => ({
             kind: "user",
@@ -151,7 +154,7 @@ export function AdminDirectoryPanel({
           }))}
         />
         <DirectoryTable
-          title="Organizations"
+          title={tc("organizations")}
           empty="No organizations match this query."
           rows={organizations.map((organization) => ({
             kind: "organization",
@@ -168,8 +171,12 @@ export function AdminDirectoryPanel({
 
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-sm">
         <p className="text-muted-foreground">
-          Page {currentPage} of {totalPages} · {totalUsers} users · {totalOrganizations}{" "}
-          organizations
+          {tc("pageOfUsersOrganizations", {
+            currentPage,
+            totalPages,
+            totalUsers,
+            totalOrganizations,
+          })}
         </p>
         <div className="flex gap-2">
           {hasPrevious ? (
@@ -177,7 +184,7 @@ export function AdminDirectoryPanel({
               href={buildAdminHref(query, currentPage - 1, normalizedPageSize)}
               className="rounded-[var(--radius-lg)] border border-border px-3 py-1.5 font-medium text-foreground transition hover:bg-muted"
             >
-              Previous page
+              {tc("previousPage")}
             </Link>
           ) : null}
           {hasNext ? (
@@ -185,7 +192,7 @@ export function AdminDirectoryPanel({
               href={buildAdminHref(query, currentPage + 1, normalizedPageSize)}
               className="rounded-[var(--radius-lg)] border border-border px-3 py-1.5 font-medium text-foreground transition hover:bg-muted"
             >
-              Next page
+              {tc("nextPage")}
             </Link>
           ) : null}
         </div>
@@ -224,6 +231,7 @@ function DirectoryTable({
 }
 
 function DirectoryTableRow({ row }: { row: DirectoryRow }) {
+  const tc = useTranslations("copy.adminAdminDirectoryPanel");
   const [open, setOpen] = useState(false);
   const [pending, setPending] = useState(false);
   const [impersonating, setImpersonating] = useState(false);
@@ -260,14 +268,14 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
     const body =
       row.kind === "user"
         ? {
-            name: String(form.get("name") ?? ""),
-            email: String(form.get("email") ?? ""),
+            name: String(form.get("name")),
+            email: String(form.get("email")),
             emailVerified: form.get("emailVerified") === "on",
           }
         : {
-            name: String(form.get("name") ?? ""),
-            slug: String(form.get("slug") ?? ""),
-            plan: String(form.get("plan") ?? ""),
+            name: String(form.get("name")),
+            slug: String(form.get("slug")),
+            plan: String(form.get("plan")),
           };
     const endpoint =
       row.kind === "user"
@@ -319,11 +327,11 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
               onClick={() => setOpen((value) => !value)}
               className="rounded-[var(--radius-lg)] border border-border px-2.5 py-1.5 font-medium text-foreground text-xs transition hover:bg-muted"
             >
-              Edit {row.label}
+              {tc("edit", { label: row.label })}
             </button>
           </div>
           <Link href={row.editHref} className="sr-only">
-            Open {row.label}
+            {tc("open", { label: row.label })}
           </Link>
         </Table.Cell>
       </Table.Row>
@@ -343,7 +351,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
               {row.kind === "user" ? (
                 <>
                   <label className="text-xs font-medium text-muted-foreground">
-                    User email
+                    {tc("userEmail")}
                     <input
                       data-allow-native
                       name="email"
@@ -359,13 +367,13 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                       type="checkbox"
                       defaultChecked={row.emailVerified}
                     />
-                    Email verified
+                    {tc("emailVerified")}
                   </label>
                 </>
               ) : (
                 <>
                   <label className="text-xs font-medium text-muted-foreground">
-                    Organization slug
+                    {tc("organizationSlug")}
                     <input
                       data-allow-native
                       name="slug"
@@ -374,7 +382,7 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
                     />
                   </label>
                   <label className="text-xs font-medium text-muted-foreground">
-                    Plan
+                    {tc("plan")}
                     <input
                       data-allow-native
                       name="plan"

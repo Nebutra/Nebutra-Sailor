@@ -8,6 +8,7 @@ import {
 } from "@nebutra/icons";
 import { DashboardMetricTile, DashboardPanel } from "@nebutra/ui/patterns";
 import { Card } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import { AccessInviteIssuer } from "@/components/admin/access-invite-issuer";
@@ -143,6 +144,7 @@ function readParam(value: string | string[] | undefined): string {
 }
 
 function RetoolBanner() {
+  const tc = useTranslations("copy.adminPage");
   return (
     <div
       className="mb-6 rounded-[var(--radius-xl)] border p-4"
@@ -157,12 +159,11 @@ function RetoolBanner() {
             className="mt-0.5 size-4 shrink-0 text-[color:hsl(var(--primary))]"
           />
           <p className="text-sm text-neutral-12">
-            This is a deliberately minimal admin. For user/org CRUD, customer support flows, and
-            content ops, see{" "}
+            {tc("thisIsADeliberately")}{" "}
             <code className="rounded bg-neutral-3 px-1.5 py-0.5 font-mono text-neutral-12 text-xs">
-              docs/admin/retool-recipe.md
+              {tc("docsAdminRetoolRecipe")}
             </code>{" "}
-            Wire Retool to the internal API in 30 minutes.
+            {tc("wireRetoolToThe")}
           </p>
         </div>
       </div>
@@ -171,6 +172,7 @@ function RetoolBanner() {
 }
 
 export default async function AdminPage({ searchParams }: { searchParams: AdminSearchParams }) {
+  const tc = await getTranslations("copy.adminPage");
   const params = await searchParams;
   const directory = await listAdminDirectory({
     query: readParam(params.q),
@@ -187,13 +189,11 @@ export default async function AdminPage({ searchParams }: { searchParams: AdminS
       </Suspense>
 
       <Card className="mt-6 p-4 sm:p-6">
-        <h3 className="text-sm font-medium text-neutral-12">Escape hatches</h3>
-        <p className="mt-1 text-neutral-10 text-xs">
-          Debug-only utilities. Not a substitute for Retool flows.
-        </p>
+        <h3 className="text-sm font-medium text-neutral-12">{tc("escapeHatches")}</h3>
+        <p className="mt-1 text-neutral-10 text-xs">{tc("debugOnlyUtilitiesNot")}</p>
         <ul className="mt-3 space-y-1.5 text-neutral-11 text-sm">
           <li>
-            <code className="font-mono text-xs">POST /api/admin/impersonate</code>
+            <code className="font-mono text-xs">{tc("pOSTApiAdminImpersonate")}</code>
             {": "}
             capability-gated (matrix currently unsupported → 501 until an adapter ships it)
           </li>

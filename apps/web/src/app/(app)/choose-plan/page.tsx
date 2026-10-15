@@ -1,5 +1,6 @@
 import { brand } from "@nebutra/brand/metadata";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { type PricingPlan, PricingPlanGrid } from "@/components/billing/pricing-plan-grid";
 import { getAuth } from "@/lib/auth";
 import { hasActivePlan } from "@/lib/billing/active-plan";
@@ -45,6 +46,7 @@ const STATIC_PLANS: PricingPlan[] = [
 ];
 
 export default async function ChoosePlanPage() {
+  const tc = await getTranslations("copy.choosePlanPage");
   const { userId, orgId } = await getAuth();
   const { active } = orgId ? await hasActivePlan(orgId) : { active: false };
 
@@ -56,10 +58,8 @@ export default async function ChoosePlanPage() {
   return (
     <section className="mx-auto w-full max-w-wide px-4 py-12 md:px-6">
       <header className="mx-auto mb-10 max-w-2xl text-center">
-        <h1 className="font-bold text-3xl text-foreground lg:text-4xl">Choose your plan</h1>
-        <p className="mt-3 text-muted-foreground text-sm lg:text-base">
-          Pick the plan that fits your workspace. You can switch anytime from the billing page.
-        </p>
+        <h1 className="font-bold text-3xl text-foreground lg:text-4xl">{tc("chooseYourPlan")}</h1>
+        <p className="mt-3 text-muted-foreground text-sm lg:text-base">{tc("pickThePlanThat")}</p>
       </header>
 
       <PricingPlanGrid plans={STATIC_PLANS} orgId={orgId ?? undefined} />

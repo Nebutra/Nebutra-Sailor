@@ -28,9 +28,9 @@ export function StarterFooter({ variant = "default" }: { variant?: "default" | "
     .filter((column) => column.links.length > 0);
 
   return (
-    <footer className="border-t border-border bg-background px-4 md:px-6">
+    <footer className="border-t border-border bg-background">
       {variant === "default" ? (
-        <div className="mx-auto grid max-w-wide gap-10 py-14 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+        <div className="mx-auto grid max-w-wide gap-10 px-4 py-14 md:grid-cols-[1.4fr_repeat(3,1fr)] md:px-6">
           <div className="max-w-xs">
             <Link
               href="/"
@@ -47,12 +47,12 @@ export function StarterFooter({ variant = "default" }: { variant?: "default" | "
               <p className="text-sm font-medium text-foreground">
                 {t(`columns.${column.id}.title`)}
               </p>
-              <ul className="mt-4 space-y-2.5">
+              <ul className="mt-2 md:mt-4 md:space-y-2.5">
                 {column.links.map((link) => (
                   <li key={link.href}>
                     <StarterLink
                       href={link.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      className="inline-flex min-h-10 items-center text-sm text-muted-foreground transition-colors duration-micro hover:text-foreground md:min-h-0"
                     >
                       {t(`columns.${column.id}.links.${link.id}`)}
                     </StarterLink>
@@ -63,7 +63,7 @@ export function StarterFooter({ variant = "default" }: { variant?: "default" | "
           ))}
         </div>
       ) : null}
-      <div className="mx-auto flex max-w-wide flex-wrap items-center justify-between gap-4 border-t border-border py-6 first:border-t-0">
+      <div className="mx-auto flex max-w-wide flex-wrap items-center justify-between gap-4 border-t border-border px-4 py-6 first:border-t-0 md:px-6">
         <p className="text-sm text-muted-foreground">
           © {year ?? ""} {brand.nameFull || brand.name}. {t("rights")}
         </p>

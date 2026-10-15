@@ -97,9 +97,9 @@ export function rebrandManagementConsole(html: string): string {
     "    background: #171717; color: #fff; }",
     "  body { padding-top: 30px !important; }",
     "</style>",
-    `<div id="nebutra-note">${brand.name} Admin · 引擎原生控制台（高级）。鉴权已由 ${brand.name} 代理注入，登录框可填任意值。日常操作请回到 /supply。</div>`,
+    `<div id="nebutra-note">${brand.name} Admin · engine console (advanced). ${brand.name} injects the credentials; any value works in the login box. Everyday operations belong on /supply.</div>`,
   ].join("\n");
   return html
-    .replace(/<title>[^<]*<\/title>/i, `<title>${brand.name} Admin · 引擎控制台</title>`)
+    .replace(/<title>[^<]*<\/title>/i, `<title>${brand.name} Admin · Engine console</title>`)
     .replace(/<body([^>]*)>/i, (_m, attrs: string) => `<body${attrs}>${note}`);
 }

@@ -154,7 +154,7 @@ export function createMarketLocalePicker(
             <Globe className="h-4 w-4 shrink-0" aria-hidden />
             <span className="truncate text-left normal-case tracking-normal">
               <span className="text-foreground">{activeLocale.pathTag}</span>
-              <span className="text-muted-foreground/70"> · </span>
+              <span className="text-muted-foreground"> · </span>
               <span>{labels.languageEndonym}</span>
             </span>
           </>
@@ -200,7 +200,7 @@ export function createMarketLocalePicker(
                         Without it every row was one short word against a wide
                         empty gutter, which is what made the list read as
                         unfinished rather than sparse. */}
-                    <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground/70">
+                    <span className="shrink-0 text-[11px] tabular-nums text-muted-foreground">
                       {entry.language}
                     </span>
                     <Check

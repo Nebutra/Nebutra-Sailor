@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { AsyncSection, SkeletonRows } from "@/components/console-states";
 import { type ApiKeyRow, type ApiKeyStatus, consoleApi } from "@/lib/console-api";
@@ -40,13 +41,6 @@ import { useConsoleResource } from "@/lib/use-console-resource";
  * one until the page was reloaded.
  */
 
-const STATUS_LABEL: Record<ApiKeyStatus, string> = {
-  active: "启用中",
-  disabled: "已停用",
-  expired: "已过期",
-  revoked: "已吊销",
-};
-
 /** Four statuses, four colours — the word alone is easy to skim past. */
 const STATUS_TONE: Record<
   ApiKeyStatus,
@@ -64,6 +58,8 @@ interface Notice {
 }
 
 export function KeysClient() {
+  const t = useTranslations("console.keys");
+  const tErrors = useTranslations("console.errors");
   const { resource, reload, set } = useConsoleResource<ApiKeyRow[]>("keys", (signal) =>
     consoleApi.listKeys(signal),
   );
@@ -100,12 +96,12 @@ export function KeysClient() {
         await call();
       } catch (error) {
         set(previous);
-        setNotice({ tone: "error", text: describeError(error) });
+        setNotice({ tone: "error", text: describeError(error, tErrors) });
       } finally {
         markPending(id, null);
       }
     },
-    [rows, set, markPending],
+    [rows, set, markPending, tErrors],
   );
 
   const patch = useCallback(
@@ -129,15 +125,15 @@ export function KeysClient() {
     async (row: ApiKeyRow) => {
       await mutate(
         row.id,
-        "吊销中",
+        t("pending.revoking"),
         rows.filter((candidate) => candidate.id !== row.id),
         async () => {
           await consoleApi.revokeKey(row.id);
-          setNotice({ tone: "success", text: `已吊销 ${row.name}，这把 Key 立即失效。` });
+          setNotice({ tone: "success", text: t("notice.revoked", { name: row.name }) });
         },
       );
     },
-    [mutate, rows],
+    [mutate, rows, t],
   );
 
   return (
@@ -147,7 +143,7 @@ export function KeysClient() {
           setIssued({ id: key.id, fullKey: key.fullKey });
           const { fullKey: _fullKey, ...row } = key;
           set([row, ...rows]);
-          setNotice({ tone: "success", text: `已创建 ${row.name}。` });
+          setNotice({ tone: "success", text: t("notice.created", { name: row.name }) });
         }}
         onFailed={(message) => setNotice({ tone: "error", text: message })}
       />
@@ -161,34 +157,34 @@ export function KeysClient() {
           resource={resource}
           onRetry={reload}
           isEmpty={(data) => data.length === 0}
-          emptyTitle="这个账号下还没有 Key"
-          emptyDescription="创建一把 Key 才能调用 /v1，密钥原文只在创建时显示一次。"
+          emptyTitle={t("emptyTitle")}
+          emptyDescription={t("emptyDescription")}
           skeleton={<SkeletonRows rows={3} columns={5} />}
         >
           {(data) => (
-            <Table bare className="w-full min-w-[720px] text-[12px]">
+            <Table bare className="w-full min-w-[720px] text-xs">
               <TableHeader>
-                <TableRow className="bg-neutral-2/50 text-[11px] text-neutral-10">
+                <TableRow className="bg-neutral-2/50 text-xs text-muted-foreground">
                   <TableHead alignment="start" className="font-medium">
-                    名称
+                    {t("col.name")}
                   </TableHead>
                   <TableHead alignment="start" className="font-medium">
-                    前缀
+                    {t("col.prefix")}
                   </TableHead>
                   <TableHead alignment="start" className="font-medium">
-                    状态
+                    {t("col.status")}
                   </TableHead>
                   <TableHead alignment="end" className="font-medium">
-                    今日 / 累计
+                    {t("col.spend")}
                   </TableHead>
                   <TableHead alignment="end" className="font-medium">
-                    速率
+                    {t("col.rate")}
                   </TableHead>
                   <TableHead alignment="start" className="font-medium">
-                    过期
+                    {t("col.expires")}
                   </TableHead>
                   <TableHead alignment="end" className="font-medium">
-                    <span className="sr-only">操作</span>
+                    <span className="sr-only">{t("col.actions")}</span>
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -205,14 +201,16 @@ export function KeysClient() {
                       onToggleDisabled={() =>
                         void patch(
                           row,
-                          row.status === "disabled" ? "启用中" : "停用中",
+                          row.status === "disabled"
+                            ? t("pending.enabling")
+                            : t("pending.disabling"),
                           { status: row.status === "disabled" ? "active" : "disabled" },
                           { disabled: row.status !== "disabled" },
                         )
                       }
                       onSave={(changes, body) => {
                         setEditing(null);
-                        void patch(row, "保存中", changes, body);
+                        void patch(row, t("pending.saving"), changes, body);
                       }}
                       onRevoke={() => setConfirming(row)}
                     />
@@ -224,12 +222,14 @@ export function KeysClient() {
         </AsyncSection>
       </div>
 
-      <p className="text-[11px] text-neutral-10">
-        停用可以随时恢复；吊销不可撤销。用量与花费见{" "}
-        <Link href="/usage" className="underline underline-offset-2">
-          用量
-        </Link>
-        。
+      <p className="text-xs text-muted-foreground">
+        {t.rich("footer", {
+          link: (chunks) => (
+            <Link href="/usage" className="underline underline-offset-2">
+              {chunks}
+            </Link>
+          ),
+        })}
       </p>
 
       <ConfirmDialog
@@ -238,10 +238,10 @@ export function KeysClient() {
           if (!open) setConfirming(null);
         }}
         variant="destructive"
-        title={`吊销 ${confirming?.name ?? ""}`}
-        description="吊销后这把 Key 立刻失效，且无法恢复。正在使用它的程序会收到 401。想临时暂停请改用「停用」。"
-        confirmText="确认吊销"
-        cancelText="取消"
+        title={t("confirm.title", { name: confirming?.name ?? "" })}
+        description={t("confirm.description")}
+        confirmText={t("confirm.confirm")}
+        cancelText={t("confirm.cancel")}
         onConfirm={async () => {
           const target = confirming;
           setConfirming(null);
@@ -267,7 +267,7 @@ function NoticeLine({ notice }: { notice: Notice }) {
     <p
       role={error ? "alert" : "status"}
       className={[
-        "rounded-[var(--radius-md)] border px-3 py-2 text-[12px]",
+        "rounded-[var(--radius-md)] border px-3 py-2 text-xs",
         error
           ? "border-destructive/35 bg-destructive/8 text-destructive-strong"
           : "border-success/35 bg-success/8 text-success-strong",
@@ -279,11 +279,12 @@ function NoticeLine({ notice }: { notice: Notice }) {
 }
 
 function RevealOnce({ fullKey, onDismiss }: { fullKey: string; onDismiss: () => void }) {
+  const t = useTranslations("console.keys.reveal");
   const [copied, setCopied] = useState(false);
   return (
     <div className="rounded-[var(--radius-md)] border border-warning/35 bg-warning/8 p-3">
-      <p className="text-[12px] font-semibold">只显示这一次 · 关掉就再也读不到了</p>
-      <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 p-2 font-mono text-[11px]">
+      <p className="text-xs font-semibold">{t("title")}</p>
+      <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 p-2 font-mono text-xs">
         {fullKey}
       </pre>
       <div className="mt-2 flex items-center gap-2">
@@ -300,10 +301,10 @@ function RevealOnce({ fullKey, onDismiss }: { fullKey: string; onDismiss: () => 
           }}
         >
           {copied ? <Check className="mr-1 h-3 w-3" /> : <Copy className="mr-1 h-3 w-3" />}
-          {copied ? "已复制" : "复制"}
+          {copied ? t("copied") : t("copy")}
         </Button>
         <Button type="button" variant="ghost" size="sm" className="h-7" onClick={onDismiss}>
-          我已保存
+          {t("saved")}
         </Button>
       </div>
     </div>
@@ -317,6 +318,8 @@ function CreateKeyForm({
   onCreated: (key: ApiKeyRow & { fullKey: string }) => void;
   onFailed: (message: string) => void;
 }) {
+  const t = useTranslations("console.keys.form");
+  const tErrors = useTranslations("console.errors");
   const [name, setName] = useState("default");
   const [rate, setRate] = useState("");
   const [daily, setDaily] = useState("");
@@ -326,13 +329,15 @@ function CreateKeyForm({
 
   const submit = async () => {
     const nextErrors: Record<string, string> = {};
-    if (!name.trim()) nextErrors.name = "给这把 Key 起个名字，便于以后对账。";
+    if (!name.trim()) nextErrors.name = t("nameRequired");
     const parsedRate = parseOptionalPositive(rate, { max: 1000, integer: true });
-    if (!parsedRate.ok) nextErrors.rate = parsedRate.message;
+    if (!parsedRate.ok) nextErrors.rate = tErrors(parsedRate.error.key, parsedRate.error.values);
     const parsedDaily = parseOptionalPositive(daily, { max: 1_000_000 });
-    if (!parsedDaily.ok) nextErrors.daily = parsedDaily.message;
+    if (!parsedDaily.ok)
+      nextErrors.daily = tErrors(parsedDaily.error.key, parsedDaily.error.values);
     const parsedTotal = parseOptionalPositive(total, { max: 1_000_000 });
-    if (!parsedTotal.ok) nextErrors.total = parsedTotal.message;
+    if (!parsedTotal.ok)
+      nextErrors.total = tErrors(parsedTotal.error.key, parsedTotal.error.values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
     if (!parsedRate.ok || !parsedDaily.ok || !parsedTotal.ok) return;
@@ -352,7 +357,7 @@ function CreateKeyForm({
       setDaily("");
       setTotal("");
     } catch (error) {
-      onFailed(describeError(error));
+      onFailed(describeError(error, tErrors));
     } finally {
       setCreating(false);
     }
@@ -361,7 +366,7 @@ function CreateKeyForm({
   return (
     <div className="grid gap-2 rounded-[var(--radius-md)] border border-neutral-6 p-3 sm:grid-cols-[minmax(0,1fr)_7rem_7rem_7rem_auto] sm:items-end">
       <Input
-        label="名称"
+        label={t("name")}
         id="key-name"
         value={name}
         onChange={(event) => setName(event.target.value)}
@@ -369,30 +374,30 @@ function CreateKeyForm({
         {...(errors.name ? { error: errors.name } : {})}
       />
       <NumberField
-        label="速率 (req/s)"
+        label={t("rate")}
         id="key-rate"
         min={1}
         value={rate}
         onValueChange={(value) => setRate(value == null ? "" : String(value))}
-        placeholder="不限"
+        placeholder={t("unlimited")}
         {...(errors.rate ? { error: errors.rate } : {})}
       />
       <NumberField
-        label="每日上限 $"
+        label={t("daily")}
         id="key-daily"
         min={0}
         value={daily}
         onValueChange={(value) => setDaily(value == null ? "" : String(value))}
-        placeholder="不限"
+        placeholder={t("unlimited")}
         {...(errors.daily ? { error: errors.daily } : {})}
       />
       <NumberField
-        label="累计上限 $"
+        label={t("total")}
         id="key-total"
         min={0}
         value={total}
         onValueChange={(value) => setTotal(value == null ? "" : String(value))}
-        placeholder="不限"
+        placeholder={t("unlimited")}
         {...(errors.total ? { error: errors.total } : {})}
       />
       <Button
@@ -403,7 +408,7 @@ function CreateKeyForm({
         disabled={creating}
         onClick={() => void submit()}
       >
-        {creating ? "创建中…" : "创建 Key"}
+        {creating ? t("creating") : t("create")}
       </Button>
     </div>
   );
@@ -426,39 +431,40 @@ function KeyRowView({
   onSave: (changes: Partial<ApiKeyRow>, body: PatchBody) => void;
   onRevoke: () => void;
 }) {
+  const t = useTranslations("console.keys");
   return (
     <>
       <TableRow className="hover:bg-neutral-2/40">
         <TableCell alignment="start" className="font-medium">
           {row.name}
-          <span className="ml-2 font-normal text-[10px] text-neutral-9">
-            {formatDate(row.createdAt)} 创建
+          <span className="ml-2 font-normal text-xs text-muted-foreground">
+            {t("row.created", { date: formatDate(row.createdAt) })}
           </span>
         </TableCell>
-        <TableCell alignment="start" className="font-mono text-[11px] text-neutral-11">
+        <TableCell alignment="start" className="font-mono text-xs text-neutral-11">
           {row.keyPrefix}…
         </TableCell>
         <TableCell alignment="start">
           <Badge variant={STATUS_TONE[row.status]} size="sm">
-            {STATUS_LABEL[row.status]}
+            {t(`status.${row.status}`)}
           </Badge>
         </TableCell>
-        <TableCell alignment="end" className="tabular-nums text-[11px]">
+        <TableCell alignment="end" className="tabular-nums text-xs">
           {formatAmount(row.cost.daily)}
           {row.limits.daily === null ? "" : ` / ${formatAmount(row.limits.daily)}`}
-          <span className="text-neutral-9"> · </span>
+          <span className="text-muted-foreground"> · </span>
           {formatAmount(row.cost.total)}
           {row.limits.total === null ? "" : ` / ${formatAmount(row.limits.total)}`}
         </TableCell>
-        <TableCell alignment="end" className="tabular-nums text-[11px]">
+        <TableCell alignment="end" className="tabular-nums text-xs">
           {row.rateLimitRps} r/s
         </TableCell>
-        <TableCell alignment="start" className="text-[11px] text-neutral-10">
-          {row.expiresAt ? formatDateTime(row.expiresAt) : "长期有效"}
+        <TableCell alignment="start" className="text-xs text-muted-foreground">
+          {row.expiresAt ? formatDateTime(row.expiresAt) : t("row.neverExpires")}
         </TableCell>
         <TableCell alignment="end">
           <div className="flex items-center justify-end gap-1">
-            {busy ? <span className="mr-1 text-[11px] text-neutral-10">{busy}…</span> : null}
+            {busy ? <span className="mr-1 text-xs text-muted-foreground">{busy}…</span> : null}
             <Button
               type="button"
               variant="ghost"
@@ -468,7 +474,7 @@ function KeyRowView({
               aria-expanded={expanded}
               onClick={onToggleEdit}
             >
-              {expanded ? "收起" : "编辑"}
+              {expanded ? t("row.collapse") : t("row.edit")}
             </Button>
             <Button
               type="button"
@@ -478,7 +484,7 @@ function KeyRowView({
               disabled={busy !== null}
               onClick={onToggleDisabled}
             >
-              {row.status === "disabled" ? "启用" : "停用"}
+              {row.status === "disabled" ? t("row.enable") : t("row.disable")}
             </Button>
             <Button
               type="button"
@@ -486,7 +492,7 @@ function KeyRowView({
               size="sm"
               className="h-7 text-destructive-strong"
               disabled={busy !== null}
-              aria-label={`吊销 ${row.name}`}
+              aria-label={t("row.revoke", { name: row.name })}
               onClick={onRevoke}
             >
               <Trash className="h-3 w-3" />
@@ -514,6 +520,8 @@ function KeyEditor({
   onSave: (changes: Partial<ApiKeyRow>, body: PatchBody) => void;
   onCancel: () => void;
 }) {
+  const t = useTranslations("console.keys.form");
+  const tErrors = useTranslations("console.errors");
   const [name, setName] = useState(row.name);
   const [rate, setRate] = useState(String(row.rateLimitRps));
   const [daily, setDaily] = useState(row.limits.daily === null ? "" : String(row.limits.daily));
@@ -524,15 +532,17 @@ function KeyEditor({
 
   const submit = () => {
     const nextErrors: Record<string, string> = {};
-    if (!name.trim()) nextErrors.name = "名称不能为空。";
+    if (!name.trim()) nextErrors.name = t("nameEmpty");
     const parsedRate = parseOptionalPositive(rate, { max: 1000, integer: true });
-    if (!parsedRate.ok) nextErrors.rate = parsedRate.message;
+    if (!parsedRate.ok) nextErrors.rate = tErrors(parsedRate.error.key, parsedRate.error.values);
     const parsedDaily = parseOptionalPositive(daily, { max: 1_000_000 });
-    if (!parsedDaily.ok) nextErrors.daily = parsedDaily.message;
+    if (!parsedDaily.ok)
+      nextErrors.daily = tErrors(parsedDaily.error.key, parsedDaily.error.values);
     const parsedTotal = parseOptionalPositive(total, { max: 1_000_000 });
-    if (!parsedTotal.ok) nextErrors.total = parsedTotal.message;
+    if (!parsedTotal.ok)
+      nextErrors.total = tErrors(parsedTotal.error.key, parsedTotal.error.values);
     const expiresAt = expires.trim() ? endOfUtcDayIso(expires) : null;
-    if (expires.trim() && expiresAt === null) nextErrors.expires = "日期格式应为 2026-10-01。";
+    if (expires.trim() && expiresAt === null) nextErrors.expires = t("expiresInvalid");
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
     if (!parsedRate.ok || !parsedDaily.ok || !parsedTotal.ok) return;
@@ -558,14 +568,14 @@ function KeyEditor({
   return (
     <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_6rem_6rem_6rem_9rem] sm:items-end">
       <Input
-        label="名称"
+        label={t("name")}
         id={`edit-name-${row.id}`}
         value={name}
         onChange={(event) => setName(event.target.value)}
         {...(errors.name ? { error: errors.name } : {})}
       />
       <NumberField
-        label="速率 (req/s)"
+        label={t("rate")}
         id={`edit-rate-${row.id}`}
         min={1}
         value={rate}
@@ -573,25 +583,25 @@ function KeyEditor({
         {...(errors.rate ? { error: errors.rate } : {})}
       />
       <NumberField
-        label="每日上限 $"
+        label={t("daily")}
         id={`edit-daily-${row.id}`}
         min={0}
         value={daily}
         onValueChange={(value) => setDaily(value == null ? "" : String(value))}
-        placeholder="不限"
+        placeholder={t("unlimited")}
         {...(errors.daily ? { error: errors.daily } : {})}
       />
       <NumberField
-        label="累计上限 $"
+        label={t("total")}
         id={`edit-total-${row.id}`}
         min={0}
         value={total}
         onValueChange={(value) => setTotal(value == null ? "" : String(value))}
-        placeholder="不限"
+        placeholder={t("unlimited")}
         {...(errors.total ? { error: errors.total } : {})}
       />
       <Input
-        label="过期日 (UTC)"
+        label={t("expires")}
         id={`edit-expires-${row.id}`}
         type="date"
         value={expires}
@@ -607,17 +617,15 @@ function KeyEditor({
           aria-pressed={saveLogs}
           onClick={() => setSaveLogs((value) => !value)}
         >
-          保存日志：{saveLogs ? "开" : "关"}
+          {t("saveLogs", { on: String(saveLogs) })}
         </Button>
-        <span className="text-[11px] text-neutral-10">
-          关掉后这把 Key 的请求明细不再记录，账单仍然照常记账。
-        </span>
+        <span className="text-xs text-muted-foreground">{t("saveLogsHint")}</span>
         <div className="ml-auto flex gap-2">
           <Button type="button" variant="ghost" size="sm" className="h-7" onClick={onCancel}>
-            取消
+            {t("cancel")}
           </Button>
           <Button type="button" variant="ink" size="sm" className="h-7" onClick={submit}>
-            保存
+            {t("save")}
           </Button>
         </div>
       </div>

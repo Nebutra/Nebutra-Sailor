@@ -47,21 +47,18 @@ export async function NotificationInboxPreview({
   inboxReason,
   unreadCount,
 }: Props) {
+  const tc = await getTranslations("copy.notificationsNotificationInboxPreview");
   const t = await getTranslations("notifications.page");
   return (
     <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-base font-semibold text-foreground">Inbox preview</h3>
-          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-            This is the settings-side preview of Nebutra&apos;s in-app notification center. It is
-            ready to be wired into the main shell once the main thread decides where the bell entry
-            point should live.
-          </p>
+          <h3 className="text-base font-semibold text-foreground">{tc("inboxPreview")}</h3>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{tc("thisIsTheSettings")}</p>
         </div>
 
         <div className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-foreground">
-          {unreadCount} unread
+          {tc("unread", { unreadCount: String(unreadCount) })}
         </div>
       </div>
 
@@ -94,7 +91,7 @@ export async function NotificationInboxPreview({
                     <p className="text-sm font-medium text-foreground">{item.title}</p>
                     {!item.read ? (
                       <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary">
-                        New
+                        {tc("new")}
                       </span>
                     ) : null}
                   </div>
@@ -111,7 +108,7 @@ export async function NotificationInboxPreview({
                       href={item.href}
                       className="inline-flex items-center gap-1 rounded-[var(--radius-md)] border border-border px-2.5 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
                     >
-                      Open
+                      {tc("open")}
                       <ExternalLink className="h-3.5 w-3.5" aria-hidden />
                     </Link>
                   ) : null}
@@ -135,7 +132,7 @@ export async function NotificationInboxPreview({
                             : runtime.reason
                         }
                       >
-                        Mark read
+                        {tc("markRead")}
                       </button>
                     </form>
                   ) : null}

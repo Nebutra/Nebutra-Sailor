@@ -16,6 +16,7 @@ import { type TalkCopy, TalkForm } from "@/nebutra/investors/talk-form";
 import { ACME_SITE, ROUTES } from "@/nebutra/routes";
 import { sitePageMeta } from "@/nebutra/seo";
 import { Band, Intro } from "@/nebutra/ui/page";
+import { RevealGroup } from "@/shared/animation/reveal-group";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -25,13 +26,10 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   );
 }
 
-/** The chapters, in the order the page tells them. Each is a Band id. */
-const CHAPTERS = ["why", "built", "practice", "work", "next", "talk"] as const;
 const SHIFTS = ["code", "solo", "global"] as const;
 const PRINCIPLES = ["architecture", "rules", "tools", "open"] as const;
 
 const signature = (chunks: ReactNode) => <span className="signature">{chunks}</span>;
-const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
  * nebutra.com/investors — the story told to a VC or a strategic partner, so
@@ -71,14 +69,14 @@ export default async function InvestorsPage({ params }: { params: Promise<{ lang
 
   return (
     <main id="main-content">
-      {/* Purpose — one sentence, the stage, one action. */}
+      {/* Purpose — one sentence, the stage, two actions, one visual. Nothing above the headline. */}
       <section className="relative isolate overflow-hidden px-8 pt-28 pb-16 xl:px-16">
         <div aria-hidden className="site-hero-glow" />
         <div className="relative z-10">
-          <p className="text-sm text-muted-foreground">{t("hero.kicker")}</p>
           <Intro
             level={1}
-            className="mt-6 max-w-4xl"
+            lang={lang}
+            className="max-w-4xl"
             title={t.rich("hero.title", { signature })}
             lead={t("hero.lead")}
           />
@@ -91,56 +89,40 @@ export default async function InvestorsPage({ params }: { params: Promise<{ lang
               <a href="#talk-call">{t("hero.secondary")}</a>
             </Button>
           </div>
-          <nav aria-label={t("chapters.label")} className="mt-16">
-            <ol className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
-              {CHAPTERS.map((c, i) => (
-                <li key={c}>
-                  <a
-                    href={`#${c}`}
-                    className="text-muted-foreground transition-colors duration-micro hover:text-foreground"
-                  >
-                    <span className="font-mono tabular-nums">{pad(i + 1)}</span>{" "}
-                    {t(`chapters.${c}`)}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
         </div>
       </section>
 
-      {/* The products, drifting — the site's hero reel, pausing on hover, still under reduced motion. */}
-      <section aria-label={t("hero.reelLabel")} className="site-reel overflow-hidden pb-24">
-        <ul className="site-reel-track flex w-max gap-6 px-3">
-          {[0, 1].map((copy) =>
-            reel.map((r) => (
-              <li
-                key={`${copy}-${r.domain}`}
-                aria-hidden={copy === 1 || undefined}
-                className="w-80 shrink-0 md:w-[26rem]"
-              >
-                <BrowserFrame
-                  domain={r.domain}
-                  shot={r.shot}
-                  alt={copy === 1 ? "" : r.alt}
-                  sizes="(min-width: 768px) 26rem, 20rem"
-                  priority={copy === 0}
-                />
-              </li>
-            )),
-          )}
+      {/* The hero's one visual: the live products in a row that holds still. It
+          scrolls sideways by hand (snap, keyboard-focusable); nothing drifts. */}
+      <section aria-label={t("hero.reelLabel")} className="site-reel pb-16 md:pb-28">
+        <ul
+          // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrollable region must be reachable by keyboard (WCAG 2.1.1).
+          tabIndex={0}
+          aria-label={t("hero.reelLabel")}
+          className="flex snap-x snap-mandatory scroll-px-8 gap-6 overflow-x-auto px-8 [scrollbar-width:none] xl:scroll-px-16 xl:px-16"
+        >
+          {reel.map((r, i) => (
+            <li key={r.domain} className="w-80 shrink-0 snap-start md:w-[26rem]">
+              <BrowserFrame
+                domain={r.domain}
+                shot={r.shot}
+                alt={r.alt}
+                sizes="(min-width: 768px) 26rem, 20rem"
+                priority={i < 2}
+              />
+            </li>
+          ))}
         </ul>
       </section>
 
       {/* 01 — Why now. */}
-      <Band id="why" className="scroll-mt-8">
+      <Band id="why">
         <Intro title={t("why.title")} lead={t("why.lead")} />
         <FirstYear lang={lang} />
-        <ol className="mt-20 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
-          {SHIFTS.map((k, i) => (
+        <RevealGroup as="ol" className="mt-20 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
+          {SHIFTS.map((k) => (
             <li key={k} className="border-t border-border pt-6">
-              <p className="font-mono text-sm tabular-nums text-muted-foreground">{pad(i + 1)}</p>
-              <Heading level={3} className="mt-3 text-balance">
+              <Heading level={3} className="text-balance">
                 {t(`why.shifts.${k}.title`)}
               </Heading>
               <p className="mt-3 text-base text-muted-foreground text-pretty">
@@ -148,11 +130,11 @@ export default async function InvestorsPage({ params }: { params: Promise<{ lang
               </p>
             </li>
           ))}
-        </ol>
+        </RevealGroup>
       </Band>
 
       {/* 02 — What we've built: the structure, the platform, the products. */}
-      <Band id="built" className="scroll-mt-8">
+      <Band id="built">
         <Intro title={t("built.title")} lead={t("built.lead")} />
         <EcosystemMap lang={lang} />
 
@@ -198,39 +180,34 @@ export default async function InvestorsPage({ params }: { params: Promise<{ lang
       </Band>
 
       <Band>
-        <Intro title={t("products.title")} lead={t("products.lead")} />
+        <Intro title={t("products.title")} />
         <ProductGallery lang={lang} />
       </Band>
 
       {/* 03 — Going global: the second line of business. */}
-      <Band id="practice" className="scroll-mt-8">
+      <Band id="practice">
         <Practice lang={lang} />
       </Band>
 
       {/* 04 — How we work: beliefs, stated as sentences someone could repeat. */}
-      <Band id="work" className="scroll-mt-8">
+      <Band id="work">
         <Intro title={t("work.title")} />
-        <ol className="mt-14 grid grid-cols-1 gap-x-16 gap-y-14 lg:grid-cols-2">
-          {PRINCIPLES.map((k, i) => (
-            <li key={k} className="grid grid-cols-[3rem_minmax(0,1fr)] gap-x-4">
-              <span className="pt-2 font-mono text-sm tabular-nums text-muted-foreground">
-                {pad(i + 1)}
-              </span>
-              <div>
-                <Heading level={2} as="h3" className="text-balance">
-                  {t(`work.${k}.title`)}
-                </Heading>
-                <p className="mt-4 max-w-xl text-base text-muted-foreground text-pretty">
-                  {t(`work.${k}.body`)}
-                </p>
-              </div>
+        <RevealGroup as="ol" className="mt-14 grid grid-cols-1 gap-x-16 gap-y-12 lg:grid-cols-2">
+          {PRINCIPLES.map((k) => (
+            <li key={k} className="border-t border-border pt-6">
+              <Heading level={3} className="text-balance">
+                {t(`work.${k}.title`)}
+              </Heading>
+              <p className="mt-3 max-w-xl text-base text-muted-foreground text-pretty">
+                {t(`work.${k}.body`)}
+              </p>
             </li>
           ))}
-        </ol>
+        </RevealGroup>
       </Band>
 
       {/* 05 — Where it goes. The vision, named as in development. */}
-      <Band id="next" className="relative isolate scroll-mt-8 overflow-hidden py-32">
+      <Band id="next" className="relative isolate overflow-hidden">
         <div aria-hidden className="site-hero-glow" />
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           <Heading level={2} display className="text-balance">
@@ -246,10 +223,10 @@ export default async function InvestorsPage({ params }: { params: Promise<{ lang
       </Band>
 
       {/* 06 — The ask. The deck goes out after an intro; it is never on the page. */}
-      <Band id="talk" className="scroll-mt-8">
-        <span id="talk-deck" aria-hidden className="block scroll-mt-8" />
-        <span id="talk-call" aria-hidden className="block scroll-mt-8" />
-        <span id="talk-partner" aria-hidden className="block scroll-mt-8" />
+      <Band id="talk">
+        <span id="talk-deck" aria-hidden className="block scroll-mt-16" />
+        <span id="talk-call" aria-hidden className="block scroll-mt-16" />
+        <span id="talk-partner" aria-hidden className="block scroll-mt-16" />
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
           <div>
             <Intro title={t("talk.title")} lead={t("talk.lead")} />

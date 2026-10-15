@@ -85,11 +85,8 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
       {/* Contact Cards */}
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {contacts.map((contact) => (
-          <div
-            key={contact.email}
-            className="rounded-[var(--radius-lg)] border border-border p-6 transition-colors hover:border-blue-8 dark:hover:border-blue-7"
-          >
-            <h3 className="font-semibold text-foreground">{contact.title}</h3>
+          <div key={contact.email} className="rounded-[var(--radius-lg)] border border-border p-6">
+            <h2 className="font-semibold text-foreground">{contact.title}</h2>
             <p className="mt-1 text-sm text-muted-foreground">{contact.description}</p>
             <a
               href={`mailto:${contact.email}`}

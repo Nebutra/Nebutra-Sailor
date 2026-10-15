@@ -2,6 +2,7 @@
 
 import { ArrowRight, Check, Sparkles } from "@nebutra/icons";
 import { ToggleGroup, ToggleGroupItem } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState, useTransition } from "react";
 
 export type BillingInterval = "month" | "year";
@@ -156,6 +157,7 @@ export function PricingPlanGrid({
   onSelectError,
   className,
 }: PricingPlanGridProps) {
+  const tc = useTranslations("copy.billingPricingPlanGrid");
   const visiblePlans = useMemo(
     () => dedupeDefaultFreePlans(plans).filter((plan) => plan.id !== activePlanId),
     [plans, activePlanId],
@@ -210,13 +212,13 @@ export function PricingPlanGrid({
             variant="pill"
             value={billingInterval}
             onValueChange={(value) => setBillingInterval(value as BillingInterval)}
-            aria-label="Billing interval"
+            aria-label={tc("billingInterval")}
           >
             <ToggleGroupItem value="month" variant="pill">
-              Monthly
+              {tc("monthly")}
             </ToggleGroupItem>
             <ToggleGroupItem value="year" variant="pill">
-              Yearly
+              {tc("yearly")}
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
@@ -227,8 +229,7 @@ export function PricingPlanGrid({
           role="alert"
           className="mb-4 rounded-[var(--radius-2xl)] border border-warning/30 bg-warning/10 px-4 py-3 text-warning-strong text-sm"
         >
-          {checkoutError} You can retry checkout or contact support if the provider setup is still
-          unavailable.
+          {tc("youCanRetryCheckout", { checkoutError: String(checkoutError) })}
         </div>
       )}
 
@@ -269,6 +270,7 @@ function isPerSeatPlan(plan: PricingPlan, price: PricingPlanPrice | null): boole
 }
 
 function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps) {
+  const tc = useTranslations("copy.billingPricingPlanGrid");
   const price = findPriceForInterval(plan, interval);
   const recommended = plan.recommended ?? false;
   const isFree = isFreeLikePlan(plan);
@@ -299,7 +301,7 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
       {recommended && (
         <span className="-top-3 -translate-x-1/2 absolute left-1/2 inline-flex items-center gap-1 rounded-full bg-[color:hsl(var(--primary))] px-3 py-1 font-medium text-[color:hsl(var(--background))] text-xs">
           <Sparkles className="size-3" aria-hidden="true" />
-          Recommended
+          {tc("recommended")}
         </span>
       )}
 
@@ -318,7 +320,7 @@ function PlanCard({ plan, interval, loading, disabled, onSelect }: PlanCardProps
             data-testid={`pricing-plan-${plan.id}-per-seat`}
             className="ml-1 text-muted-foreground text-sm"
           >
-            / seat
+            {tc("seat")}
           </span>
         )}
       </div>

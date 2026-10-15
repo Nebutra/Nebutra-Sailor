@@ -26,7 +26,13 @@ export default async function CompanyPage({ params }: { params: Promise<{ lang: 
   return (
     <main id="main-content">
       <section className="px-8 pt-28 pb-20 xl:px-16">
-        <Intro level={1} title={t("hero.title")} lead={t("hero.lead")} cn={t("hero.cn")} />
+        <Intro
+          level={1}
+          lang={lang}
+          title={t("hero.title")}
+          lead={t("hero.lead")}
+          cn={t("hero.cn")}
+        />
         <Link
           href="/blog/why-we-build-nebutra"
           className="mt-10 inline-flex text-sm text-secondary-foreground hover:text-foreground"

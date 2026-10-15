@@ -52,6 +52,11 @@
       "previous": "上一页",
       "next": "下一页",
       "pageOf": "第 {page} 页 / 共 {total} 页"
+    },
+    "forbidden": {
+      "title": "你没有管理后台的访问权限",
+      "description": "管理后台仅对工作空间所有者和管理员开放。请联系所有者调整你的角色。",
+      "back": "返回工作空间"
     }
   },
   "Common": {
@@ -368,7 +373,7 @@
     },
     "signIn": {
       "title": "登录 Nebutra",
-      "subtitle": "选择你想用的登录方式。",
+      "subtitle": "欢迎回来，登录后继续。",
       "continueWith": "使用",
       "continueWithProvider": "使用 {provider} 继续",
       "providers": {
@@ -1231,7 +1236,31 @@
     "sortAlphabetical": "按字母",
     "sortCreated": "创建时间",
     "archiveAll": "全部归档",
-    "comingV2": "将在 v2 推出"
+    "comingV2": "将在 v2 推出",
+    "nav": {
+      "product": "产品",
+      "admin": "管理",
+      "connectors": "连接器",
+      "cofounder": "匹配合伙人",
+      "alpha": "内测",
+      "owner": "所有者",
+      "settings": "设置",
+      "general": "通用",
+      "account": "账号",
+      "appearance": "外观",
+      "security": "安全",
+      "team": "团队",
+      "openPlatform": "开放平台",
+      "apiKeys": "API 密钥",
+      "providerKeys": "服务商密钥",
+      "webhooks": "Webhooks",
+      "notifications": "通知",
+      "referrals": "邀请",
+      "shortcuts": "快捷键",
+      "auditLog": "审计日志",
+      "billing": "账单",
+      "usage": "用量"
+    }
   },
   "startupOs": {
     "milestone": {
@@ -1321,6 +1350,874 @@
     "default": {
       "emptyTitle": "第一个工作空间，从这里开始。",
       "emptyDescription": "创建一个工作空间，开始你的旅程。"
+    }
+  },
+  "copy": {
+    "usagePage": {
+      "remainingThisPeriod": "本周期剩余 {value0} {unit}",
+      "quotaNearlyExhaustedUpgrade": "额度即将用尽。升级套餐以免服务中断。",
+      "approachingQuotaLimitConsider": "已接近额度上限。可以考虑升级，避免中断。",
+      "creditBalance": "积分余额",
+      "creditBalanceIsUnavailable": "积分余额暂时无法读取。下方的用量计量仍从网关正常加载。",
+      "dailyRefresh": "每日刷新",
+      "planAllowance": "套餐额度",
+      "creditActivity": "积分动态",
+      "recentCreditGrantsAnd": "最近的积分发放与消耗记录。",
+      "balance": "余额 {value0}",
+      "loadingUsageBreakdown": "正在加载用量明细",
+      "selectAnOrganizationTo": "选择一个组织以查看明细",
+      "meteredUsageIsRecorded": "计量用量按组织记录。切换到某个组织，即可查看本周期在模型、服务商和端点之间的分布。",
+      "usageBreakdownUnavailable": "用量明细无法加载",
+      "thisPeriodHasNo": "本周期还没有计量用量",
+      "modelCallsAndAPI": "本计费周期出现第一条用量事件后，模型调用和 API 请求会在这里分组显示。",
+      "windowTo": "{period} 窗口 · {value1} 至 {value2}",
+      "usageMetering": "用量与计量",
+      "monitorCreditsAPICalls": "查看整个组织的积分、API 调用、AI token 消耗和额度状态。",
+      "usageMetricsWillAppear": "组织开始调用 API 后，这里会显示用量指标。请确认 API 网关已连接。",
+      "aPICalls": "API 调用",
+      "aITokensUsed": "已用 AI Token",
+      "billingPeriod": "计费周期",
+      "usageBreakdown": "用量明细",
+      "thisPeriodSMetered": "本周期的计量用量，按每条事件记录的维度分组。",
+      "managePlanAndLimits": "管理套餐与额度"
+    },
+    "startupOsStartupChatPanel": {
+      "startupOSConversationalBuild": "Startup OS 对话式构建",
+      "buildWithConversation": "用对话来构建",
+      "describeAChangeAnd": "描述一项改动，智能体会实时修改你的工作区。",
+      "conversationFailed": "对话失败",
+      "plan": "计划",
+      "streaming": "生成中",
+      "describeAChangeTo": "描述一项改动，开始构建你的工作区。",
+      "writing": "正在写入",
+      "artifactsTouched": "涉及的产物",
+      "revertAndResendMessage": "回退并重新发送？",
+      "editMessage": "编辑消息",
+      "yourMessageWillBe": "消息会被更新，对话从这里继续——工作区先回退到本轮之前，再重新执行。",
+      "cancel": "取消",
+      "editAndResend": "编辑并重新发送",
+      "copy": "复制",
+      "helpful": "有帮助",
+      "notHelpful": "没帮助",
+      "stopGenerating": "停止生成",
+      "stop": "停止",
+      "promptPlaceholder": "再加一个定价页、把 hero 改成品牌渐变、生成 README…"
+    },
+    "embedPage": {
+      "interactiveDemo": "交互演示",
+      "dashboard": "仪表盘",
+      "totalEvents": "事件总数",
+      "activeUsers": "活跃用户",
+      "signups": "注册",
+      "revenue": "收入",
+      "planOverview": "套餐概览",
+      "starterUsageOverageEnabled": "Starter · 已开启超额用量 · 按月计费",
+      "dayProjectedRevenue": "30 天预计收入",
+      "todaySnapshot": "今日快照",
+      "conversions": "转化",
+      "day": "天",
+      "healthy": "正常",
+      "snapshot": "快照：{value0}",
+      "tenant": "租户",
+      "status": "状态",
+      "events": "事件",
+      "users": "用户"
+    },
+    "cofounderMatchDiscoverDeck": {
+      "joinTheCofounderPool": "加入合伙人池",
+      "becomeDiscoverableToOther": "让其他创始人能发现你——选择加入后开始匹配。默认不加入，随时可以退出。",
+      "compileYourCompanyFirst": "先编译你的公司",
+      "yourCofounderCardIs": "你的合伙人名片来自 Startup OS 里的公司。先编译一个，再加入合伙人池。",
+      "compileYourCompany": "编译你的公司",
+      "couldnTLoadThe": "合伙人池加载失败",
+      "somethingWentWrongLoading": "加载合伙人候选时出了问题。",
+      "tryAgain": "重试",
+      "youReAllCaught": "都看完了",
+      "noMoreFoundersTo": "目前没有更多创始人可看。有新公司加入合伙人池时会出现在这里。",
+      "interested": "感兴趣",
+      "pass": "跳过",
+      "whyYouTwoShould": "你们为什么应该一起做——写一段真诚的话。",
+      "pitchMessage": "推荐语",
+      "cancel": "取消",
+      "sendPitch": "发送推荐",
+      "pitch": "推荐",
+      "ofDragTapOr": "第 {value0} / {length} 个 · 拖动、点按或使用 ← → · 按公司匹配，而非简历",
+      "itSAMatch": "匹配成功——",
+      "youBothSignalledInterest": "你们都表示了兴趣。打开合伙人房间，聊聊并决定是否组队。",
+      "viewMatches": "查看匹配"
+    },
+    "navigationPublicPageChrome": {
+      "systemStatus": "系统状态",
+      "logIn": "登录",
+      "signUp": "注册",
+      "governedAIInfrastructureWith": "可治理的 AI 基础设施，恢复路径可预期。",
+      "recoverySurfaceOnline": "恢复页面在线",
+      "product": "产品",
+      "features": "功能",
+      "pricing": "定价",
+      "about": "关于",
+      "resources": "资源",
+      "docs": "文档",
+      "roadmap": "路线图",
+      "contact": "联系我们",
+      "governance": "治理",
+      "privacy": "隐私",
+      "terms": "条款",
+      "credits": "致谢",
+      "openSource": "开源"
+    },
+    "adminAdminDirectoryPanel": {
+      "directory": "目录",
+      "usersAndOrganizations": "用户与组织",
+      "uRLBackedAdminLookup": "用于支持排查的管理查询，状态保存在 URL 中。按名称、邮箱、组织或 slug 搜索，然后直接编辑记录。",
+      "searchUsersAndOrganizations": "搜索用户和组织",
+      "nameEmailOrgSlug": "名称、邮箱、组织、slug",
+      "search": "搜索",
+      "users": "用户",
+      "organizations": "组织",
+      "pageOfUsersOrganizations": "第 {currentPage} / {totalPages} 页 · {totalUsers} 个用户 · {totalOrganizations} 个组织",
+      "previousPage": "上一页",
+      "nextPage": "下一页",
+      "edit": "编辑 {label}",
+      "open": "打开 {label}",
+      "userEmail": "用户邮箱",
+      "emailVerified": "邮箱已验证",
+      "organizationSlug": "组织 slug",
+      "plan": "套餐"
+    },
+    "growthReferralPanel": {
+      "loadingReferrals": "正在加载邀请信息",
+      "invitationsAndRewards": "邀请与奖励",
+      "tryAgain": "重试",
+      "shareSailorEarnRewards": "分享 Sailor，获得奖励",
+      "friendsGetFullAccess": "好友获得完整权限 · 每个邀请被领取后你都能获得积分 · 你建立的网络越大，等级越高。",
+      "referralCode": "邀请码",
+      "copyReferralCode": "复制邀请码",
+      "copy": "复制",
+      "shareLink": "分享链接",
+      "copyShareLink": "复制分享链接",
+      "haveAFriendS": "有好友的邀请码？",
+      "codeRedeemedYourReferrer": "兑换成功，邀请人已获得奖励。",
+      "level": "等级 {id} · {title}",
+      "active": "已生效",
+      "moreToUnlock": "再邀请 {remaining} 人即可解锁"
+    },
+    "fleetPage": {
+      "fleet": "服务集群",
+      "probeNow": "立即探测",
+      "services": "服务",
+      "status": "状态",
+      "service": "服务",
+      "host": "主机",
+      "runtime": "运行时",
+      "target": "目标",
+      "version": "版本",
+      "latency": "延迟",
+      "probed": "探测时间",
+      "drift": "漂移",
+      "notSwitchable": "不可切换"
+    },
+    "tenantsPage": {
+      "tenants": "租户",
+      "workspaceHealthAndTenant": "工作区健康状况与租户级指标。",
+      "snapshot": "快照：{value0}",
+      "healthy": "正常",
+      "events": "事件",
+      "activeUsers": "活跃用户",
+      "revenue": "收入",
+      "tenant": "租户",
+      "status": "状态"
+    },
+    "adminPlatformAddAccountDialog": {
+      "addAccount": "添加账号",
+      "logsASubscriptionAccount": "把一个订阅账号登录进账号池。数据不会离开私有网络。",
+      "provider": "1 · 服务商",
+      "provider2": "服务商",
+      "signInOnYour": "2 · 在你自己的设备上登录",
+      "startASignIn": "发起登录：",
+      "openSignIn": "打开登录页",
+      "copySignInURL": "复制登录链接",
+      "callbackURL": "回调 URL",
+      "result": "3 · 结果",
+      "accountAddedSyncThe": "账号已添加——同步渠道后，它的模型就会上架。",
+      "audit": "审计 {auditId}"
+    },
+    "adminAccessInviteIssuer": {
+      "accessGate": "访问控制",
+      "issueColdStartInvite": "发放冷启动邀请码",
+      "generateBoundedInviteCodes": "为仅限邀请的注册生成有限次数的邀请码。邀请码只显示一次，之后只保存哈希。",
+      "count": "数量",
+      "scope": "范围",
+      "platform": "平台",
+      "tenant": "租户",
+      "tenantID": "租户 ID",
+      "emailLock": "绑定邮箱",
+      "expiresAt": "过期时间",
+      "recentAccessInvites": "最近的访问邀请",
+      "refresh": "刷新",
+      "redeemed": "{value0} · {scope} {value2} · 已兑换 {redemptionCount}/{maxRedemptions}",
+      "revoke": "撤销"
+    },
+    "authSignUpForm": {
+      "checkYourEmail": "查看你的邮箱",
+      "weSentADigit": "我们已发送 6 位验证码到",
+      "verificationCode": "验证码",
+      "didnTReceiveIt": "没收到？",
+      "createYourAccount": "创建账号",
+      "startBuildingToday": "今天就开始构建",
+      "socialSignUpIs": "仅限邀请模式开启时，第三方账号注册不可用。请用邮箱和邀请码注册。",
+      "orContinueWith": "或使用以下方式继续",
+      "firstName": "名",
+      "lastName": "姓",
+      "email": "邮箱",
+      "password": "密码",
+      "inviteCode": "邀请码",
+      "nebutraIsInviteOnly": "冷启动阶段，Nebutra 仅限邀请注册。",
+      "alreadyHaveAnAccount": "已有账号？",
+      "signIn": "登录"
+    },
+    "integrationsPage": {
+      "integrations": "集成",
+      "connectYourFavoriteTools": "连接你常用的工具和服务，让工作流更顺手。",
+      "connected": "已连接",
+      "pause": "暂停",
+      "resume": "恢复",
+      "disconnect": "断开",
+      "getStartedByConnecting": "先连接下面的任意一个服务。",
+      "loadingIntegrations": "正在加载集成…",
+      "connect": "连接",
+      "docs": "文档",
+      "integrationConnectorsWillBe": "更多集成连接器会在后续版本加入。"
+    },
+    "agentRuntimePage": {
+      "agentRuntimeDisabled": "Agent Runtime——已停用",
+      "the": "",
+      "agentRuntimeGrammar": "Agent Runtime 语法",
+      "faithfulMultiTenantRe": "忠实的多租户重新表达。默认：审批",
+      "tenantThreadSerializationIsolation": "租户 + 线程串行化隔离",
+      "sameThreadIdDifferent": "相同线程 id、不同租户——永远不共享同一串行通道：",
+      "ruleDecisionApprovalPolicy": "规则决策 × 审批策略",
+      "rule": "规则",
+      "externalSandboxSeam": "外部沙箱接缝",
+      "defaultExecutorOutcomeFor": "不可信命令的默认执行结果："
+    },
+    "cofounderMatchRoomView": {
+      "thisIsnTA": "还不是匹配",
+      "theCofounderRoomOpens": "合伙人房间只对双向匹配开放。继续浏览——你们都表示兴趣后，房间会在这里解锁。",
+      "discoverCofounders": "发现合伙人",
+      "couldnTOpenThe": "房间打不开",
+      "somethingWentWrongPlease": "出了点问题，请刷新后重试。",
+      "roomOpen": "房间已开放",
+      "youBothWantTo": "你们都想一起做。",
+      "formingTheTeamTurns": "组队会把你的一人公司变成共享组织——已编译的公司完整保留，你的合伙人以平等创始人身份受邀加入。",
+      "teamFormingInvitationSent": "正在组队——邀请已发送",
+      "couldnTFormThe": "组队没有成功，请重试。",
+      "paidPlanRequired": "需要付费套餐",
+      "openTheCofounderRoom": "使用付费套餐开启合伙人房间",
+      "asTheFounderOpening": "作为开启房间的创始人，付费套餐可解锁与所有匹配的对话——不按房间收费。",
+      "upgradeToOpenThe": "升级以开启房间"
+    },
+    "personalizationPersonalizationPanel": {
+      "personalization": "个性化",
+      "tellSailorWhatYou": "告诉 Sailor 你做什么、希望它如何回应。这些信息会作为上下文加入每一次对话。",
+      "nickname": "昵称",
+      "whatShouldSailorCall": "Sailor 该怎么称呼你？",
+      "occupation": "职业",
+      "eGProductDesigner": "例如：产品设计师、软件工程师",
+      "moreAboutYou": "更多关于你",
+      "iWorkInFintech": "我在金融科技行业，做嵌入式支付的基础设施。我喜欢直接、偏技术的回答，不要太多免责声明…",
+      "backgroundPreferencesLocationAnything": "背景、偏好、所在地——任何能帮 Sailor 更了解你的信息。",
+      "customInstructions": "自定义指令",
+      "howShouldSailorRespond": "Sailor 应该怎样回应？风格、语气、格式、关注点。这些设置优先于默认行为。",
+      "reset": "重置",
+      "saveChanges": "保存更改"
+    },
+    "cinemaPage": {
+      "cinemaDisabled": "Cinema——已停用",
+      "the": "",
+      "cinemaFilmDirectorPipeline": "Cinema——导演式影片流水线",
+      "script": "脚本",
+      "shotsClips": "镜头 → 片段",
+      "cameraContinuityTree": "机位连续性树",
+      "root": "根：",
+      "cameras": "· 机位："
+    },
+    "startupOsStartupBuilderHome": {
+      "whatAreWeBuilding": "我们要做什么？",
+      "oneSentenceCompilesInto": "一句话编译成一整家受治理的公司——上下文、发布产物、在线文件、空间画布，以及需审批的运行。",
+      "startupProposition": "创业设想",
+      "describeTheStartupProposition": "描述你的创业设想，编译成一个租户隔离的公司工作区…",
+      "attachAFile": "附加文件",
+      "attachATextFile": "附加一个文本文件，并入创业设想",
+      "startupArena": "创业竞技场",
+      "try": "试试",
+      "loadingRecentProjects": "正在加载最近的项目"
+    },
+    "cofounderPage": {
+      "oPCTeam": "一人公司 → 团队",
+      "matchYourCofounder": "匹配你的合伙人",
+      "turnYourOnePerson": "把你的一人公司变成团队——按已编译的公司匹配互补的合伙人，而不是简历。",
+      "enterDiscover": "进入发现",
+      "previewHowCofoundersSee": "预览 · 合伙人眼中的你",
+      "compileYourCompanyFirst": "先编译你的公司",
+      "yourCofounderCardIs": "你的合伙人名片来自 Startup OS 里的公司。编译一个即可预览。",
+      "compileYourCompany": "编译你的公司",
+      "step": "第 {value0} 步",
+      "theCofounderPoolIs": "合伙人池需要主动加入，会在匹配功能发布时开放。此页预览你的公司将如何展示。"
+    },
+    "canvasPage": {
+      "canvasDisabled": "Canvas——已停用",
+      "the": "",
+      "canvasNodeGraphEditor": "Canvas——节点图编辑器",
+      "interactive": "可交互的",
+      "editorControlledByAn": "编辑器，由一个不可变的",
+      "verbatim": "原样控制。"
+    },
+    "layer0Page": {
+      "layerDemoDisabled": "Layer 0 演示已停用",
+      "isOffByDefault": "默认关闭。",
+      "layerCapabilityLoop": "Layer 0 能力闭环",
+      "providerGatewayTraceSandbox": "服务商、网关、追踪、沙箱、内容和事件契约都通过租户隔离的本地默认值接通。",
+      "capability": "能力",
+      "doctor": "诊断",
+      "debugFile": "调试文件",
+      "integrationCommand": "集成命令"
+    },
+    "notificationsNotificationPreferenceMatrix": {
+      "deliveryMatrix": "投递矩阵",
+      "changesAreDisabledHere": "当前通知运行时还没有持久化的偏好存储，所以这里暂不能修改。",
+      "signal": "信号",
+      "inbox": "收件箱",
+      "email": "邮件",
+      "push": "推送",
+      "notes": "说明",
+      "default": "默认：",
+      "routedOnlyWhereThis": "只在这个信号需要保持高价值的渠道投递。"
+    },
+    "providerKeysCreateProviderKeyDialog": {
+      "addProviderKey": "添加服务商密钥",
+      "bringYourOwnAI": "使用你自己的 AI 服务商密钥。密钥加密存储，匹配的模型会优先使用它，而不是平台密钥。",
+      "provider": "服务商",
+      "aPIKey": "API 密钥",
+      "label": "名称",
+      "eGProduction": "例如：生产环境",
+      "alwaysUseThisKey": "始终使用这个密钥",
+      "neverFallBackTo": "不回退到该服务商的平台密钥。你的密钥额度用尽时请求会失败。",
+      "cancel": "取消"
+    },
+    "startupOsStartupCanvasPanel": {
+      "companyCanvas": "公司画布",
+      "spatialGraph": "空间图",
+      "dragNodesInspectDependencies": "拖动节点、查看依赖，并在同一个公司状态面板里发起可运行的任务。",
+      "zoomOut": "缩小",
+      "zoomIn": "放大",
+      "reset": "重置",
+      "canvasInspector": "画布检查器",
+      "nothingSelected": "未选择任何内容",
+      "pickANodeOn": "在画布上选择一个节点，查看它的依赖和运行控制。",
+      "status": "状态：{status}",
+      "owner": "负责人：{owner}",
+      "dependencies": "依赖：{value0}",
+      "adapter": "适配器：{adapter}",
+      "approval": "审批：{approval}",
+      "budget": "预算：${value0}"
+    },
+    "authDeviceApprovalForm": {
+      "authorizeADevice": "授权设备",
+      "signedInAs": "当前登录：{signedInEmail}",
+      "deviceCode": "设备码",
+      "shownOnTheDevice": "显示在你正在登录的设备上。",
+      "code": "代码",
+      "wantsToSignIn": "想以你的身份登录",
+      "cLIIfYouDidn": "CLI。如果你没有运行",
+      "deny": "拒绝",
+      "approve": "批准",
+      "tryAgain": "重试"
+    },
+    "notificationsNotificationCenter": {
+      "new": "新",
+      "open": "打开",
+      "markRead": "标为已读",
+      "openNotifications": "打开通知",
+      "notifications": "通知",
+      "unread": "{unreadCount} 条未读",
+      "markAllRead": "全部标为已读",
+      "notificationSettings": "通知设置"
+    },
+    "notificationsNotificationsDialog": {
+      "openNotifications": "打开通知",
+      "notifications": "通知",
+      "new": "新",
+      "title": "通知",
+      "loading": "加载中…",
+      "loadFailed": "通知加载失败",
+      "retry": "重试",
+      "openItem": "打开"
+    },
+    "skillsSkillsGrid": {
+      "searchSkills": "搜索技能…",
+      "officialOnly": "仅看官方",
+      "addACustomSkill": "添加自定义技能",
+      "authorYourOwnCapability": "用 markdown + JSON schema 编写你自己的能力。",
+      "getStarted": "开始 →",
+      "noSkillsMatch": "没有匹配的技能",
+      "tryADifferentSearch": "换个关键词，或关闭“仅看官方”。",
+      "official": "官方"
+    },
+    "platformPage": {
+      "inbox": "收件箱",
+      "needsAttention": "需要处理",
+      "probed": "{value0} 探测",
+      "nothingNeedsYouNext": "没有需要你处理的事。下次探测在 30 秒后。",
+      "unknown": "未知",
+      "signalsWhoseProbeFailed": "探测失败的信号。不是绿，也不是红——是未知。",
+      "unreachableProducts": "无法访问的产品",
+      "fleet": "服务集群",
+      "allServices": "全部 {length} 个服务 →"
+    },
+    "teamTeamMemberList": {
+      "adminActionsDisabled": "管理操作已禁用",
+      "member": "成员",
+      "joined": "加入时间",
+      "role": "角色",
+      "action": "操作",
+      "you": "你",
+      "owner": "所有者"
+    },
+    "connectorsConnectorsHub": {
+      "connectSailorWithYour": "把 Sailor 接入你日常用的应用、API 和 MCP",
+      "connectorsLetSailorRead": "连接器让 Sailor 在你的工具链中读写——Stripe、Slack、你自己的 API、MCP 服务器。凭据在应用层加密。",
+      "addAConnector": "添加连接器",
+      "activeConnector": "{length} 个已启用的连接器",
+      "addConnector": "添加连接器",
+      "removeThisConnector": "移除这个连接器？",
+      "remove": "移除",
+      "learnAboutConnectorsSecurity": "了解连接器的安全机制"
+    },
+    "feedbackFeedbackDialog": {
+      "reportAnIssue": "报告问题",
+      "helpUsUnderstandAnd": "帮我们弄清并修复你遇到的问题。",
+      "whereDidThisHappen": "问题出现在哪里？",
+      "whatHappened": "发生了什么？",
+      "whatDidYouExpect": "你预期的是什么？实际发生了什么？方便的话，列出复现步骤。",
+      "minimumCharactersMaximum": "至少 {MIN_DESCRIPTION} 个字符 · 最多 {MAX_DESCRIPTION} 个",
+      "allowUsToFollow": "允许我们通过账号邮箱跟进。",
+      "cancel": "取消"
+    },
+    "onboardingProfileSetupStep": {
+      "personalizeYourProfile": "完善你的资料",
+      "addALogoAnd": "添加标志并设置显示名称。",
+      "logo": "标志",
+      "uploadOrganizationLogo": "上传组织标志",
+      "displayName": "显示名称",
+      "yourFullName": "你的全名",
+      "skipForNow": "稍后再说"
+    },
+    "securityChangePasswordForm": {
+      "password": "密码",
+      "checkWhetherThisAccount": "检查这个账号是否有密码登录方式，并说明最安全的密码修改途径。",
+      "loadingPasswordCapabilities": "正在加载密码设置…",
+      "oAuthOnly": "仅第三方登录",
+      "credentialAttached": "已设置密码"
+    },
+    "authDesktopAuthCompleteHandoff": {
+      "desktopSignIn": "桌面端登录",
+      "openingNebutraFoundry": "正在打开 Nebutra Foundry",
+      "yourBrowserCreatedA": "浏览器已生成一个短时有效的桌面端交接。请在应用中继续完成登录。",
+      "webSession": "网页会话",
+      "handoffExpiry": "交接有效期",
+      "openNebutraFoundry": "打开 Nebutra Foundry"
+    },
+    "onboardingDashboardHintCard": {
+      "welcomeToYourSailor": "欢迎来到你的 Sailor 工作区。",
+      "takeTheStepTour": "开始 4 步导览",
+      "skip": "跳过",
+      "dismissHint": "关闭提示",
+      "intro": "按 <kbd>⌘K</kbd> 打开命令面板。在下方选择一个<strong>模式</strong>来聚焦你的工作：对话、数据、工作流或搜索。"
+    },
+    "securitySecuritySettingsClient": {
+      "loadingSecuritySettings": "正在加载安全设置…",
+      "security": "安全",
+      "thisWorkspaceIsUsing": "此工作区使用 {authProvider}。高级安全控制仍在迁移到共享的 Nebutra 认证层。",
+      "forNowManagePassword": "目前请在你的认证服务商后台管理密码重置、多因素认证和会话策略。",
+      "signedInAs": "当前登录：",
+      "nebutraShowsEverySecurity": "Nebutra 把所有安全能力集中在这里，只开放当前认证层能安全执行的控制项。"
+    },
+    "companyTowerControlDeck": {
+      "northStarMetric": "北极星指标",
+      "activeBets": "进行中的押注",
+      "roadmap": "路线图",
+      "liveRuns": "运行中",
+      "bets": "押注"
+    },
+    "startupOsStartupConnectorsMenu": {
+      "connectors": "连接器",
+      "connectADataSource": "连接一个数据源",
+      "connected": "已连接",
+      "connect": "连接",
+      "manageConnectors": "管理连接器"
+    },
+    "startupOsStartupWorkspaceFilesPanel": {
+      "files": "文件",
+      "pickAFile": "选择一个文件",
+      "chooseAFileFrom": "从侧栏选择文件，查看生成的源码。",
+      "startupOSGeneratedApp": "Startup OS 生成的应用预览",
+      "nothingToPreview": "没有可预览的内容",
+      "thePreviewRendersAs": "项目生成第一批文件后，预览就会显示。"
+    },
+    "webhooksWebhooksList": {
+      "active": "已启用",
+      "disabled": "已停用",
+      "edit": "编辑",
+      "viewDeliveries": "查看投递",
+      "delete": "删除",
+      "loading": "加载中…",
+      "webhookEndpoints": "Webhook 端点"
+    },
+    "teamPage": {
+      "organizationProfile": "组织资料",
+      "updateYourOrganizationS": "更新组织的品牌和显示名称。",
+      "inviteATeamMember": "邀请团队成员",
+      "sendAnInvitationTo": "发送邀请，把成员加入你的组织。",
+      "members": "成员"
+    },
+    "billingPricingPlanGrid": {
+      "billingInterval": "计费周期",
+      "monthly": "按月",
+      "yearly": "按年",
+      "youCanRetryCheckout": "{checkoutError} 你可以重试结账；如果支付服务仍不可用，请联系支持。",
+      "recommended": "推荐",
+      "seat": "/ 席位"
+    },
+    "webhooksWebhookDeliveriesPanel": {
+      "webhookDeliveryHistory": "Webhook 投递记录",
+      "recentDeliveries": "最近的投递",
+      "closeDeliveriesPanel": "关闭投递面板",
+      "close": "关闭",
+      "loading": "加载中…"
+    },
+    "adminPage": {
+      "thisIsADeliberately": "这是一个刻意精简的管理后台。用户/组织增删改查、客服流程和内容运营，请参阅",
+      "wireRetoolToThe": "30 分钟把 Retool 接到内部 API。",
+      "escapeHatches": "应急工具",
+      "debugOnlyUtilitiesNot": "仅用于调试的工具，不能替代 Retool 流程。"
+    },
+    "supplyPage": {
+      "supply": "供给",
+      "routerManifest": "Router 清单",
+      "advancedNativeConsole": "高级：引擎原生控制台"
+    },
+    "teamInviteMemberForm": {
+      "member": "成员",
+      "admin": "管理员",
+      "viewer": "只读成员",
+      "invitationIsOnIts": "邀请已发出。"
+    },
+    "atelierAtelierCanvas": {
+      "generatedAssetsLandHere": "生成的素材会出现在这里，由服务器摆放位置。",
+      "brief": "需求",
+      "aSereneAlpineLake": "黎明时分宁静的高山湖泊，杂志摄影风格…",
+      "mockProviderNoAI": "模拟服务商——无需 AI 密钥。服务器会挑一个不重叠的位置并先保存，再通知这个面板。"
+    },
+    "notificationsInboxBell": {
+      "notifications": "通知",
+      "markAllAsRead": "全部标为已读",
+      "viewAll": "查看全部"
+    },
+    "notificationsNotificationInboxPreview": {
+      "inboxPreview": "收件箱预览",
+      "thisIsTheSettings": "这是 Nebutra 应用内通知中心在设置页的预览。主线程确定铃铛入口的位置后，就可以接入主框架。",
+      "unread": "{unreadCount} 条未读",
+      "new": "新",
+      "open": "打开",
+      "markRead": "标为已读"
+    },
+    "onboardingConnectIntegrationsStep": {
+      "connectYourTools": "连接你的工具",
+      "setUpIntegrationsTo": "设置集成，让工作流更顺手。",
+      "connected": "已连接",
+      "skipForNowGo": "稍后再说 → 进入工作台"
+    },
+    "organizationInviteDialog": {
+      "admin": "管理员",
+      "member": "成员",
+      "viewer": "只读成员",
+      "cancel": "取消"
+    },
+    "companyTowerCompanyTower": {
+      "completeLayers": "已完成 {overallPercent}% · 共 9 层",
+      "uploadASourceDocument": "上传源文档",
+      "uploadDoc": "上传文档",
+      "compileTheCompanyTower": "编译公司塔",
+      "compile": "编译"
+    },
+    "billingPage": {
+      "billing": "账单",
+      "yourPlanAndEvery": "你的套餐，以及这个组织为任何产品支付的每一笔订单。"
+    },
+    "settingsPage": {
+      "dangerZone": "危险操作",
+      "theseActionsArePermanent": "这些操作不可撤销。",
+      "deleteOrganization": "删除组织"
+    },
+    "shortcutsPage": {
+      "keyboardShortcuts": "键盘快捷键",
+      "global": "全局",
+      "viaK": "通过 ⌘K",
+      "intro": "在任意位置按 <kbd>⌘K</kbd> 即可运行任何命令。用 <kbd>↑</kbd>/<kbd>↓</kbd> 在列表中移动。"
+    },
+    "webhooksPage": {
+      "subscribeToEventsEmitted": "订阅工作区发出的事件。每个请求体都会用你端点的密钥签名，方便你校验真实性。",
+      "newEndpoint": "新建端点",
+      "activeEndpoints": "已启用的端点"
+    },
+    "providersDesignSystemShell": {
+      "breadcrumb": "面包屑",
+      "dEVAUTHACTIVESynthetic": "开发认证已启用：模拟的 \"Dev User\"，不写数据库。把",
+      "toARealProvider": "设为真实的认证服务商即可关闭。",
+      "mainContent": "主要内容"
+    },
+    "notificationsInboxList": {
+      "loadingNotifications": "正在加载通知",
+      "notifications": "通知",
+      "unread": "未读"
+    },
+    "notificationsNotificationRuntimeBanner": {
+      "notificationRuntime": "{providerLabel} 通知运行时",
+      "preferences": "偏好",
+      "inbox": "收件箱",
+      "missingIntegration": "缺少集成"
+    },
+    "providerKeysProviderKeysList": {
+      "alwaysUseThisKey": "始终使用这个密钥",
+      "preferFallBackTo": "优先使用，失败时回退到平台密钥",
+      "providerKeys": "服务商密钥",
+      "addYourFirstProvider": "添加第一个服务商密钥"
+    },
+    "reelReelStudio": {
+      "splitAScriptThe": "拆分脚本——服务器会在这里构建带类型的节点图。",
+      "script": "脚本",
+      "oneShotPerLine": "每行一个镜头…"
+    },
+    "securityTwoFactorBlock": {
+      "authenticatorAppSetup": "设置身份验证器应用",
+      "twoFactorQRCode": "双因素认证二维码",
+      "copied": "已复制"
+    },
+    "startupOsStartupThreadPanel": {
+      "executeSelectedRun": "执行选中的运行",
+      "recordedAction": "已记录 {activityCount} 个操作。",
+      "toggleNavigation": "切换导航"
+    },
+    "startupOsStartupWorkspaceShell": {
+      "preview": "预览",
+      "code": "代码",
+      "canvas": "画布"
+    },
+    "webhooksEditWebhookDialog": {
+      "editEndpoint": "编辑端点",
+      "changingTheURLOr": "修改 URL 或事件列表会在下一次投递时生效。签名密钥保持不变。",
+      "cancel": "取消"
+    },
+    "atelierPage": {
+      "describeWhatYouWant": "描述你想要的——智能体生成内容，服务器把它放到画布上。"
+    },
+    "checkoutReturnCheckoutReturnContent": {
+      "processingPayment": "正在处理付款",
+      "confirmingYourSubscription": "正在确认你的订阅…"
+    },
+    "checkoutReturnPage": {
+      "almostThere": "马上就好",
+      "weAreConfirmingYour": "正在与支付服务商确认你的订阅。"
+    },
+    "choosePlanPage": {
+      "chooseYourPlan": "选择套餐",
+      "pickThePlanThat": "选择适合你工作区的套餐。之后可随时在账单页切换。"
+    },
+    "discoverPage": {
+      "discoverCofounders": "发现合伙人",
+      "oneCompanyAtA": "一次看一家公司。跳过、表示兴趣或发送推荐——双向感兴趣即开启合伙人房间。"
+    },
+    "matchesPage": {
+      "yourMatches": "你的匹配",
+      "foundersYouAndThey": "你们彼此都表示了兴趣的创始人。下一步是合伙人房间，由发起方开启对话。"
+    },
+    "profileIdPage": {
+      "cofounderRoom": "合伙人房间",
+      "whereAMutualMatch": "双向匹配在这里变成团队。"
+    },
+    "reelPage": {
+      "splitAScriptInto": "把脚本拆成镜头——每个镜头都是一个带类型的节点，生成结果通过带版本的 IO 信封流转。"
+    },
+    "apiKeysApiKeysClient": {
+      "createAPIKey": "创建 API 密钥",
+      "loading": "加载中…"
+    },
+    "apiKeysCreateApiKeyForm": {
+      "thisKeyAppearsOnce": "这个密钥只显示一次。关闭前请妥善保存。",
+      "eGProductionBackend": "例如：生产后端"
+    },
+    "apiKeysPage": {
+      "aPIKeys": "API 密钥",
+      "generateAndManageAPI": "生成和管理用于程序化访问 {name} 的 API 密钥。",
+      "youDoNotHave": "你没有查看 API 密钥的权限。"
+    },
+    "settingsLayout": {
+      "settings": "设置",
+      "manageYourOrganizationAnd": "管理组织和账号设置"
+    },
+    "providerKeysPage": {
+      "providerKeys": "服务商密钥",
+      "bringYourOwnAI": "使用你自己的 AI 服务商密钥。匹配的模型会优先用你的密钥，除非你固定使用，否则失败时回退到平台密钥——{name} 会自动处理。",
+      "youDoNotHave": "你没有查看服务商密钥的权限。"
+    },
+    "providerKeysProviderKeysClient": {
+      "addProviderKey": "添加服务商密钥",
+      "loading": "加载中…"
+    },
+    "completePage": {
+      "desktopSignIn": "桌面端登录",
+      "thisDesktopSignIn": "这个桌面端登录链接无效",
+      "restartSignInFrom": "请从 {DESKTOP_APP_NAME} 重新发起登录，生成新的短时交接。"
+    },
+    "canvasCanvasDemoClient": {
+      "nodes": "个节点，",
+      "edges": "条边。"
+    },
+    "webNotFound": {
+      "thisPageIsNot": "这个页面不存在。",
+      "checkTheURLOr": "检查一下网址，或返回工作台。"
+    },
+    "accountAvatarUploadForm": {
+      "userAvatar": "用户头像",
+      "avatarPreview": "头像预览"
+    },
+    "adminPlatformActionButton": {
+      "planning": "正在生成计划…",
+      "noChangesInThis": "此计划没有任何变更。",
+      "affects": "影响 {value0}",
+      "planExpires": "计划 {planId} · {value1} 过期",
+      "audit": "审计 {auditId}"
+    },
+    "adminPlatformCommandPalette": {
+      "jumpTo": "跳转到…",
+      "jumpTo2": "跳转到"
+    },
+    "adminPlatformConsoleTabs": {
+      "console": "控制台",
+      "shipsInBatch": "第 2 批上线"
+    },
+    "brandBrandAssets": {},
+    "cofounderMatchCofounderCard": {
+      "compiledCompany": "已编译的公司",
+      "complementarity": "互补度"
+    },
+    "growthRedemptionCodeInput": {
+      "haveARedemptionCode": "有兑换码？",
+      "eNTERCODE": "输入兑换码",
+      "redeem": "兑换"
+    },
+    "navigationThemeToggle": {
+      "toggleTheme": "切换主题",
+      "theme": "主题"
+    },
+    "personalizationCommunicationPreferences": {
+      "communicationPreferences": "沟通偏好",
+      "decideWhatReachesYour": "决定哪些内容发到你的收件箱。随时可以修改。"
+    },
+    "companyTowerBrandKitFloor": {
+      "addABrandKit": "添加品牌资产字段",
+      "field": "字段"
+    },
+    "companyTowerFieldCard": {
+      "lockedHumanApproved": "已锁定——经人工确认",
+      "locked": "已锁定"
+    },
+    "webhooksWebhookEndpointForm": {
+      "endpointURL": "端点 URL",
+      "events": "事件"
+    },
+    "authError": {
+      "thisPageDidnT": "这个页面没有加载出来。",
+      "somethingWentWrongOn": "我们这边出了点问题。再试一次，通常就能好。"
+    },
+    "authNotFound": {
+      "weCouldnTFind": "找不到这个页面。",
+      "theAddressMayBe": "网址可能有误，或页面已移动。"
+    },
+    "authWechatLoginButton": {
+      "weChat": "微信"
+    },
+    "auditError": {
+      "failedToLoadAudit": "审计日志加载失败。"
+    },
+    "billingError": {
+      "failedToLoadBilling": "账单加载失败。"
+    },
+    "webError": {
+      "somethingWentWrong": "出了点问题。",
+      "thisPageDidnT": "这个页面没有加载出来。",
+      "somethingWentWrongOn": "我们这边出了点问题。再试一次，通常就能好。"
+    },
+    "apiKeysApiKeyList": {
+      "created": "创建于 {value0} {value1}",
+      "revoked": "已撤销"
+    },
+    "developersPage": {
+      "openPlatform": "开放平台",
+      "credentialsAndEventSubscriptions": "凭据与事件订阅："
+    },
+    "notificationsPage": {
+      "notifications": "通知",
+      "tuneHowReachesYou": "调整 {name} 在工作区动态、账单风险、安全事件和产品运营方面如何通知你。托管服务商可以立即保存这些偏好；预览模式只展示产品默认值，不会假装已保存。"
+    },
+    "referralsPage": {
+      "referrals": "邀请",
+      "shareYourCodeTrack": "分享你的邀请码，查看谁已加入，以及你在 {name} 邀请榜上的位置。"
+    },
+    "settingsSettingsNav": {
+      "settingsNavigation": "设置导航"
+    },
+    "tenantsError": {
+      "failedToLoadTenants": "租户加载失败。"
+    },
+    "webLayout": {
+      "skipToContent": "跳到正文"
+    },
+    "adminPlatformConsoleShell": {
+      "admin": "管理"
+    },
+    "billingBillingSelfService": {
+      "activePlan": "当前套餐"
+    },
+    "billingPlanBadge": {
+      "upgrade": "升级"
+    },
+    "cofounderMatchMatchesList": {
+      "openCofounderRoom": "打开合伙人房间"
+    },
+    "commandPaletteModePills": {
+      "commandMode": "命令模式"
+    },
+    "notificationsNotificationsPageClient": {
+      "notificationFilter": "通知筛选"
+    },
+    "organizationsOrganizationLogoForm": {
+      "organizationLogoPreview": "组织标志预览"
+    },
+    "securityConnectedAccountsBlock": {
+      "providerManaged": "由服务商管理"
+    },
+    "securityPasskeysBlock": {
+      "available": "可用"
+    },
+    "valuesValuesStatement": {
+      "ourValuesCommitment": "我们的价值承诺"
+    },
+    "webhooksCreateWebhookDialog": {
+      "endpointCreatedTheSigning": "端点已创建。签名密钥只显示一次。",
+      "storeItInYour": "关闭前，请把它存入应用的密钥管理器。",
+      "endpointURL": "端点 URL：{url}"
     }
   }
 }

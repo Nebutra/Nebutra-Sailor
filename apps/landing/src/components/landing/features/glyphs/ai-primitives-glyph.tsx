@@ -45,16 +45,16 @@ export function AiPrimitivesGlyph(_props: SubpackageGlyphProps) {
               key={row.name}
               className="flex items-center gap-2 rounded-[var(--radius-sm)] bg-neutral-1 px-2 py-1"
             >
-              <Icon size={11} className="shrink-0 text-neutral-10" />
+              <Icon size={11} className="shrink-0 text-neutral-11" />
               <span className="w-[78px] shrink-0 text-neutral-12">{row.name}</span>
-              <span className="text-neutral-9">=</span>
+              <span className="text-neutral-11">=</span>
               <span className="truncate text-neutral-11">{row.sig}</span>
             </div>
           );
         })}
       </div>
 
-      <div className="absolute bottom-1.5 left-3 right-3 font-mono text-[9.5px] text-neutral-9">
+      <div className="absolute bottom-1.5 left-3 right-3 font-mono text-[9.5px] text-neutral-11">
         consumed by @nebutra/agents
       </div>
     </div>

@@ -120,8 +120,17 @@ describe("resolving a preset", () => {
     assert.equal(dual.brand.darkDefault, true);
     assert.deepEqual(dual.warnings, []);
 
-    // gsap ships one palette, dark: there is no light one to switch to
-    const single = resolvePreset({ base: "gsap", mode: "light" }, baseOf("gsap"), {
+    // gsap has both palettes since 2026-10-10: light mode now switches it
+    const gsapLight = resolvePreset({ base: "gsap", mode: "light" }, baseOf("gsap"), {
+      id: "p",
+      name: "P",
+    });
+    assert.equal(gsapLight.brand.darkDefault, false);
+    assert.deepEqual(gsapLight.warnings, []);
+
+    // a package with one palette, dark: there is no light one to switch to
+    const { modes: _modes, ...gsapSingle } = baseOf("gsap");
+    const single = resolvePreset({ base: "gsap", mode: "light" }, gsapSingle, {
       id: "p",
       name: "P",
     });

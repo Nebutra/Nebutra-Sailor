@@ -1,6 +1,6 @@
 /**
  * Brand carrier skin: Vanta (vanta) v1.0.0
- * darkDefault=false dualMode=false button=solid
+ * darkDefault=false dualMode=true button=solid
  * fonts=0 mode=global
  * Contract: roles.action → --primary; roles.brand → --brand-mark (never default CTA)
  */
@@ -17,7 +17,7 @@ html[data-brand="vanta"] {
   --role-quiet: 250 100% 92%;
   --role-quiet-fg: 272 100% 14%;
   --role-muted: 240 20% 93%;
-  --role-muted-fg: 238 11% 48%;
+  --role-muted-fg: 238 11% 44%;
   --role-border: 240 17% 11%;
   --role-input: 240 17% 11%;
   --role-ring: 268 95% 39%;
@@ -38,7 +38,7 @@ html[data-brand="vanta"] {
   --secondary: 250 100% 92%;
   --secondary-foreground: 272 100% 14%;
   --muted: 240 20% 93%;
-  --muted-foreground: 238 11% 48%;
+  --muted-foreground: 238 11% 44%;
   --accent: 250 100% 92%;
   --accent-foreground: 272 100% 14%;
   --destructive: 0 72% 51%;
@@ -75,10 +75,10 @@ html[data-brand="vanta"] {
   --neutral-5: color-mix(in oklab, hsl(240 17% 11%) 60%, hsl(0 0% 100%));
   --neutral-6: color-mix(in oklab, hsl(240 17% 11%) 80%, hsl(0 0% 100%));
   --neutral-7: hsl(240 17% 11%);
-  --neutral-8: color-mix(in oklab, hsl(238 11% 48%) 25%, hsl(240 17% 11%));
-  --neutral-9: color-mix(in oklab, hsl(238 11% 48%) 50%, hsl(240 17% 11%));
-  --neutral-10: color-mix(in oklab, hsl(238 11% 48%) 75%, hsl(240 17% 11%));
-  --neutral-11: hsl(238 11% 48%);
+  --neutral-8: color-mix(in oklab, hsl(238 11% 44%) 25%, hsl(240 17% 11%));
+  --neutral-9: color-mix(in oklab, hsl(238 11% 44%) 50%, hsl(240 17% 11%));
+  --neutral-10: color-mix(in oklab, hsl(238 11% 44%) 75%, hsl(240 17% 11%));
+  --neutral-11: hsl(238 11% 44%);
   --neutral-12: hsl(240 17% 11%);
 
   /* Recipe (action language + free elev/radii) */
@@ -161,4 +161,81 @@ html[data-brand="vanta"] {
   --brand-category-steel: #9e9fb7;
   --brand-category-ash: #dfdfe9;
   --brand-decorative-hero-wash: #ddd6ff;
+}
+
+.dark,
+html.dark[data-brand="vanta"] {
+  /* ── Color roles (carrier) ── */
+  --role-canvas: 260 30% 7%;
+  --role-canvas-fg: 220 23% 95%;
+  --role-surface: 262 28% 11%;
+  --role-surface-fg: 220 23% 95%;
+  --role-action: 266 92% 74%;
+  --role-action-fg: 272 100% 10%;
+  --role-quiet: 266 35% 22%;
+  --role-quiet-fg: 250 100% 92%;
+  --role-muted: 262 25% 14%;
+  --role-muted-fg: 240 12% 66%;
+  --role-border: 250 15% 30%;
+  --role-input: 250 15% 30%;
+  --role-ring: 266 92% 74%;
+  --role-brand: 250 100% 92%;
+  --role-brand-fg: 272 100% 14%;
+  --brand-mark: 250 100% 92%;
+  --brand-mark-foreground: 272 100% 14%;
+
+  /* ── shadcn bridge (primary = action CTA) ── */
+  --background: 260 30% 7%;
+  --foreground: 220 23% 95%;
+  --card: 262 28% 11%;
+  --card-foreground: 220 23% 95%;
+  --popover: 262 28% 11%;
+  --popover-foreground: 220 23% 95%;
+  --primary: 266 92% 74%;
+  --primary-foreground: 272 100% 10%;
+  --secondary: 266 35% 22%;
+  --secondary-foreground: 250 100% 92%;
+  --muted: 262 25% 14%;
+  --muted-foreground: 240 12% 66%;
+  --accent: 266 35% 22%;
+  --accent-foreground: 250 100% 92%;
+  --destructive: 0 84% 66%;
+  --destructive-foreground: 260 30% 7%;
+  --border: 250 15% 30%;
+  --input: 250 15% 30%;
+  --ring: 266 92% 74%;
+  --warning: 44 100% 53%;
+  --warning-foreground: 240 17% 11%;
+  --info: 270 70% 72%;
+  --info-foreground: 260 30% 7%;
+  --sidebar: 262 28% 11%;
+  --sidebar-foreground: 220 23% 95%;
+  --sidebar-primary: 266 92% 74%;
+  --sidebar-primary-foreground: 272 100% 10%;
+  --sidebar-accent: 266 35% 22%;
+  --sidebar-accent-foreground: 250 100% 92%;
+  --sidebar-border: 250 15% 30%;
+  --sidebar-ring: 266 92% 74%;
+  --brand-primary: hsl(250 100% 92%);
+  --brand-accent: hsl(266 92% 74%);
+  --brand-accent-foreground: hsl(272 100% 10%);
+  --brand-tertiary: hsl(266 92% 74%);
+  --brand-gradient: hsl(var(--primary));
+  --brand-gradient-reverse: hsl(var(--primary));
+  --brand-gradient-vertical: hsl(var(--primary));
+  --brand-gradient-radial: hsl(var(--primary));
+
+  /* ── Neutral ramp, anchored on this language's roles ── */
+  --neutral-1: hsl(260 30% 7%);
+  --neutral-2: hsl(262 28% 11%);
+  --neutral-3: color-mix(in oklab, hsl(250 15% 30%) 20%, hsl(262 28% 11%));
+  --neutral-4: color-mix(in oklab, hsl(250 15% 30%) 40%, hsl(262 28% 11%));
+  --neutral-5: color-mix(in oklab, hsl(250 15% 30%) 60%, hsl(262 28% 11%));
+  --neutral-6: color-mix(in oklab, hsl(250 15% 30%) 80%, hsl(262 28% 11%));
+  --neutral-7: hsl(250 15% 30%);
+  --neutral-8: color-mix(in oklab, hsl(240 12% 66%) 25%, hsl(250 15% 30%));
+  --neutral-9: color-mix(in oklab, hsl(240 12% 66%) 50%, hsl(250 15% 30%));
+  --neutral-10: color-mix(in oklab, hsl(240 12% 66%) 75%, hsl(250 15% 30%));
+  --neutral-11: hsl(240 12% 66%);
+  --neutral-12: hsl(220 23% 95%);
 }

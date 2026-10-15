@@ -1,0 +1,136 @@
+---
+title: Installation
+description: Choose the KLineChartQuant package for your stack, install it, and know which rendering backend the browser will use.
+---
+
+KLineChartQuant ships as a framework-free core plus thin bindings. Install the binding for your stack; it brings the chart UI, and the core does the work underneath.
+
+## Choose a package
+
+| Package | Use it when | Peer dependencies |
+| --- | --- | --- |
+| `@363045841yyt/klinechart` | You build with Vue 3, or want the `<kline-chart>` Web Component. Includes the full chart UI: toolbar, settings, drawing tools and agent panel. | `vue ^3.4.0`, `@363045841yyt/klinechart-core`, `@363045841yyt/klinechart-agent-runtime` |
+| `@363045841yyt/klinechart-react` | You build with React. `KLineChartWC` renders the Web Component from the Vue package. | `react ^18.0.0 \|\| ^19.0.0`, `@363045841yyt/klinechart-core` |
+| `@363045841yyt/klinechart-angular` | You build with Angular and want a headless chart canvas with signals and DI, without the Vue UI. | `@angular/core` and `@angular/common` 17, 18 or 19, `rxjs ^7`, `@363045841yyt/klinechart-core` |
+| `@363045841yyt/klinechart-core` | You need the engine, `ChartController`, the market-data model or agent tools directly. Zero framework dependencies. | — |
+| `@363045841yyt/klinechart-agent-runtime` | You run an AI agent against the chart in the browser or Node. | — |
+
+Package managers do not always install peer dependencies for you, so the commands below list them explicitly.
+
+## Install
+
+### Vue
+
+<Tabs groupId="pm" persist items={["pnpm", "npm", "yarn"]}>
+<Tab value="pnpm">
+
+```bash
+pnpm add @363045841yyt/klinechart @363045841yyt/klinechart-core @363045841yyt/klinechart-agent-runtime vue
+```
+
+</Tab>
+<Tab value="npm">
+
+```bash
+npm install @363045841yyt/klinechart @363045841yyt/klinechart-core @363045841yyt/klinechart-agent-runtime vue
+```
+
+</Tab>
+<Tab value="yarn">
+
+```bash
+yarn add @363045841yyt/klinechart @363045841yyt/klinechart-core @363045841yyt/klinechart-agent-runtime vue
+```
+
+</Tab>
+</Tabs>
+
+Import the stylesheet once, usually in your entry file:
+
+```ts title="main.ts"
+import '@363045841yyt/klinechart/style.css'
+import { createApp } from 'vue'
+import App from './App.vue'
+
+createApp(App).mount('#app')
+```
+
+### React
+
+<Tabs groupId="pm" persist items={["pnpm", "npm", "yarn"]}>
+<Tab value="pnpm">
+
+```bash
+pnpm add @363045841yyt/klinechart-react @363045841yyt/klinechart-core react
+```
+
+</Tab>
+<Tab value="npm">
+
+```bash
+npm install @363045841yyt/klinechart-react @363045841yyt/klinechart-core react
+```
+
+</Tab>
+<Tab value="yarn">
+
+```bash
+yarn add @363045841yyt/klinechart-react @363045841yyt/klinechart-core react
+```
+
+</Tab>
+</Tabs>
+
+The React package depends on `@363045841yyt/klinechart` and loads its Web Component build on the client. That build carries its own styles inside the shadow root, so there is no stylesheet to import.
+
+### Web Component
+
+Install `@363045841yyt/klinechart` as for Vue, then import the element entry:
+
+```ts
+import '@363045841yyt/klinechart/web-component'
+```
+
+This entry registers `<kline-chart>` and bundles Vue, the core and the built-in market-data sources into one module, so the page does not need Vue of its own. Styles are injected into the element's shadow root.
+
+## Exports
+
+| Import path | What it gives you |
+| --- | --- |
+| `@363045841yyt/klinechart` | `KlineChart` and other Vue components, composables, types such as `CustomDataSource` |
+| `@363045841yyt/klinechart/web-component` | Registers `<kline-chart>`; exports `KLineChartElement` |
+| `@363045841yyt/klinechart/style.css` | Styles for the Vue components |
+| `@363045841yyt/klinechart-core/market-data` | `MarketDataProvider` types, the provider registry and `SourceRouter` |
+| `@363045841yyt/klinechart-core/controllers` | `ChartController` types and `getRegisteredChartTools` |
+
+The full list for each package is in the [package reference](/docs/reference/packages).
+
+## Node version
+
+The packages are ES modules for bundlers. The Vue package declares `node ^22.12.0 || >=24.0.0` and the agent runtime declares `^22.19.0 || >=24.0.0`. If you work on the KLineChartQuant monorepo itself, it requires `^22.19.0 || >=24.11.0`.
+
+## Rendering backends
+
+The chart draws with WebGPU, WebGL2 or Canvas2D. Which one it uses comes from the `rendererBackend` setting, resolved in this order:
+
+1. `rendererBackend` passed explicitly in the `settings` prop.
+2. The value the user saved earlier, stored in the browser.
+3. A one-time capability check of the browser: WebGPU if available, then WebGL2, then Canvas2D.
+
+At runtime the renderer host still falls back if the preferred backend fails to start: `webgpu` tries WebGPU, then WebGL, then Canvas; `webgl` tries WebGL, then Canvas. Without a usable DOM, such as during server rendering, the preference defaults to `webgl` and nothing is drawn until the chart mounts in a browser.
+
+To pin a backend, for example for screenshot tests:
+
+```vue
+<KlineChart :settings="{ rendererBackend: 'canvas' }" />
+```
+
+The [rendering pipeline](/docs/architecture/rendering-pipeline) explains how frames are built and submitted.
+
+## Next
+
+<Cards>
+  <Card title="Your first chart" href="/docs/quickstart" description="Render a chart from inline data." />
+  <Card title="Embedding in an app" href="/docs/guides/embedding" description="Props, slots, events and server rendering." />
+  <Card title="Package reference" href="/docs/reference/packages" description="Every export of every package." />
+</Cards>
