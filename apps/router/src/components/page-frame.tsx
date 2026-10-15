@@ -22,18 +22,16 @@ export function PageFrame({
   const max = width === "wide" ? "max-w-[1280px]" : "max-w-4xl";
   return (
     <div
-      className={["mx-auto w-full px-4 py-4 md:px-5 md:py-5", max, className]
+      className={["mx-auto w-full px-4 py-6 md:px-6 md:py-8", max, className]
         .filter(Boolean)
         .join(" ")}
     >
       {title ? (
-        <div className="mb-4 flex flex-wrap items-start justify-between gap-3 border-b border-neutral-6 pb-3">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div className="min-w-0">
-            <h1 className="text-base font-semibold tracking-tight text-neutral-12">{title}</h1>
+            <h1 className="text-xl font-semibold tracking-tight text-foreground">{title}</h1>
             {description ? (
-              <p className="mt-0.5 max-w-3xl text-xs leading-snug text-muted-foreground">
-                {description}
-              </p>
+              <p className="mt-1 max-w-3xl text-sm text-muted-foreground">{description}</p>
             ) : null}
           </div>
           {actions ? (

@@ -38,104 +38,6 @@
       "dark": "Dark"
     }
   },
-  "channels": {
-    "app": "App market",
-    "api": "API market",
-    "models": "Model catalog",
-    "client": "Client"
-  },
-  "market": {
-    "new": "New",
-    "hot": "Hot",
-    "forYou": "For you",
-    "grid": "Grid",
-    "list": "List",
-    "apiShelf": "API shelf",
-    "toolShelf": "Tool shelf",
-    "categories": "Categories",
-    "apps": "Apps",
-    "newRelease": "New release",
-    "forgeTitle": "Forge tool workspace",
-    "forgeBlurb": "Text transforms, codecs, forms, and composable tools. The app market lab points at Forge.",
-    "openForge": "Open Forge →",
-    "allApi": "All APIs →",
-    "all": "All →",
-    "viewAll": "View all {label} →",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "hiTitle": "Enterprise AI resource platform",
-    "hiSubtitle": "Match every need with the right AI",
-    "sellable": "Sellable",
-    "walletTopup": "Top up"
-  },
-  "apiTaxonomy": {
-    "llm": {
-      "label": "Language models",
-      "hint": "Chat · reasoning"
-    },
-    "image-gen": {
-      "label": "Image generation",
-      "hint": "Text-to-image"
-    },
-    "image-edit": {
-      "label": "Image editing",
-      "hint": "Edit · matting"
-    },
-    "video": {
-      "label": "Video generation",
-      "hint": "Text-to-video"
-    },
-    "audio": {
-      "label": "Audio & video",
-      "hint": "Speech · transcription"
-    },
-    "data": {
-      "label": "Information",
-      "hint": "Retrieval · extract"
-    },
-    "rag": {
-      "label": "RAG",
-      "hint": "Knowledge-augmented"
-    },
-    "tools": {
-      "label": "Tool APIs",
-      "hint": "Agent · tools"
-    }
-  },
-  "toolTaxonomy": {
-    "generator": {
-      "label": "Generators",
-      "chips": "UUID · Lorem ipsum · random strings"
-    },
-    "converter": {
-      "label": "Converters",
-      "chips": "Base64 · Markdown to PDF"
-    },
-    "formatter": {
-      "label": "Formatters",
-      "chips": "JSON · text case"
-    },
-    "checker": {
-      "label": "Checkers",
-      "chips": "DNS leak · ID numbers"
-    },
-    "comparator": {
-      "label": "Comparators",
-      "chips": "JSON diff"
-    },
-    "analyzer": {
-      "label": "Analyzers",
-      "chips": "Word count · JWT"
-    }
-  },
-  "shortcuts": {
-    "dashboard": "Overview",
-    "keys": "Keys",
-    "wallet": "Wallet",
-    "use": "Try",
-    "docs": "Docs",
-    "models": "More"
-  },
   "auth": {
     "signOut": "Sign out",
     "signOutLong": "Sign out",
@@ -182,86 +84,6 @@
     "tools": "Tool APIs",
     "other": "Other"
   },
-  "card": {
-    "details": "{model} details",
-    "docs": "Docs",
-    "try": "Try it",
-    "input": "In {price}/1M",
-    "output": "Out {price}/1M"
-  },
-  "banners": {
-    "label": "Featured on the shelf",
-    "previous": "Previous slide",
-    "next": "Next slide",
-    "goTo": "Go to slide {n}",
-    "current": "Slide {n} of {total}",
-    "modalityKicker": "On the shelf",
-    "liveKicker": "Available now",
-    "shelf": "API market",
-    "viewAll": "View all",
-    "tryNow": "Try it now",
-    "price": "In {input} · Out {output} /1M",
-    "llm": {
-      "title": "Language models",
-      "subtitle": "Chat, reasoning and best-value models"
-    },
-    "image": {
-      "title": "Image generation",
-      "subtitle": "Text-to-image from every provider, one interface"
-    },
-    "video": {
-      "title": "Video generation",
-      "subtitle": "Text-to-video for motion content"
-    },
-    "audio": {
-      "title": "Audio & video",
-      "subtitle": "Speech synthesis, transcription, audio understanding"
-    },
-    "data": {
-      "title": "Information",
-      "subtitle": "Retrieval, extraction, knowledge augmentation"
-    },
-    "tools": {
-      "title": "Tool APIs",
-      "subtitle": "Developer tools and agent capabilities"
-    }
-  },
-  "brandBlurb": {
-    "openai": "OpenAI flagship chat and multimodal models",
-    "anthropic": "Claude: strong reasoning for engineering and agents",
-    "google": "Gemini: native search and multimodal",
-    "xai": "Grok: tool calling and real-time",
-    "deepseek": "Best-value chat and reasoning",
-    "moonshot": "Kimi: long context, strong Chinese",
-    "mistral": "Efficient open and commercial models",
-    "meta": "Llama: the open-source workhorse",
-    "qwen": "Qwen: Alibaba Cloud foundation models",
-    "zhipu": "GLM: Chinese foundation models and agents",
-    "minimax": "MoE general and speech models",
-    "cohere": "Enterprise retrieval and the Command family",
-    "perplexity": "Search-augmented chat",
-    "baichuan": "Chinese open and commercial models",
-    "yi": "Chinese and multilingual models",
-    "doubao": "ByteDance general models",
-    "hunyuan": "Tencent Chinese and multimodal models",
-    "nvidia": "Nemotron: open reasoning and acceleration",
-    "other": "Other models and endpoints on the shelf"
-  },
-  "catalog": {
-    "allModels": "All models",
-    "categories": "Categories",
-    "apps": "Apps",
-    "filterPlaceholder": "Filter results…",
-    "collapse": "Collapse categories",
-    "expand": "Expand categories",
-    "price": "Price",
-    "count": "{count, plural, one {# model} other {# models}}",
-    "gridView": "Grid view",
-    "listView": "List view",
-    "clear": "Clear filters",
-    "noMatchTitle": "Nothing matches these filters",
-    "noMatchBody": "Try a shorter search or another category."
-  },
   "detail": {
     "blurb": "{provider} · {category} · {context} context · one endpoint through Router.",
     "intro": {
@@ -303,7 +125,8 @@
       "playground": "Playground",
       "apis": "Endpoints",
       "pricing": "Pricing",
-      "related": "Related models"
+      "related": "Related models",
+      "quickstart": "Quickstart"
     },
     "col": {
       "api": "Endpoint",
@@ -312,7 +135,9 @@
       "params": "Parameters",
       "model": "Model",
       "context": "Context",
-      "note": "Note"
+      "note": "Note",
+      "unit": "Unit",
+      "price": "Price"
     },
     "api": {
       "imagesGenerate": "Images (generate)",
@@ -326,7 +151,13 @@
     },
     "metaFallback": "Model details",
     "metaTitle": "{model} · API pricing and docs",
-    "metaDescription": "{provider} {model} on {brandName} Router: price, context and how to call it."
+    "metaDescription": "{provider} {model} on {brandName} Router: price, context and how to call it.",
+    "status": "Status",
+    "breadcrumb": "Breadcrumb",
+    "copyId": "Copy model id",
+    "tryIt": "Try in playground",
+    "onThisPage": "On this page",
+    "blurbNoContext": "{provider} · {category} · one endpoint through Router."
   },
   "console": {
     "states": {
@@ -518,7 +349,8 @@
         "keysHint": "{count} active",
         "monthSpend": "Spend this month",
         "requestsHint": "{count, plural, one {# request} other {# requests}}",
-        "catalog": "Catalog models"
+        "catalog": "Catalog models",
+        "catalogHint": "{count} on sale"
       },
       "connect": {
         "title": "Connection",
@@ -535,8 +367,7 @@
       },
       "featured": {
         "title": "Featured models",
-        "openMarket": "Open API market →",
-        "price": "In {input} · out {output} /1M"
+        "openMarket": "Open API market →"
       }
     },
     "docs": {
@@ -593,6 +424,60 @@
       "amount": "Amount ({currency})",
       "pay": "Continue to payment",
       "footnote": "Minimum ${min}. Pay by card, Alipay or WeChat Pay; you come back here when it's done."
+    }
+  },
+  "shelf": {
+    "nav": {
+      "label": "Main",
+      "models": "Models",
+      "docs": "Docs",
+      "playground": "Playground",
+      "console": "Console",
+      "searchPlaceholder": "Search models"
+    },
+    "hero": {
+      "title": "One API for every model.",
+      "subtitle": "{models} models from {providers} providers behind one OpenAI-compatible endpoint. Pay per token, no contract per upstream.",
+      "searchPlaceholder": "Search models, e.g. claude, gpt, deepseek",
+      "searchLabel": "Search models",
+      "searchSubmit": "Search",
+      "getKey": "Get an API key",
+      "readDocs": "Read the docs",
+      "codeTitle": "Your first request"
+    },
+    "home": {
+      "modelsTitle": "Models",
+      "modelsSubtitle": "{live} on sale now. Prices are per 1M tokens.",
+      "allModels": "All {count} models",
+      "providersTitle": "Providers",
+      "providerCount": "{count, plural, one {# model} other {# models}}"
+    },
+    "col": {
+      "model": "Model",
+      "context": "Context",
+      "input": "Input",
+      "output": "Output",
+      "open": "Open"
+    },
+    "metaLine": "{input} in · {output} out",
+    "perMillion": "Prices per 1M tokens",
+    "copy": "Copy",
+    "copied": "Copied",
+    "catalog": {
+      "title": "Models",
+      "subtitle": "{count} models, priced at what the API charges.",
+      "searchPlaceholder": "Search models",
+      "search": "Search",
+      "categories": "Categories",
+      "providers": "Providers",
+      "all": "All",
+      "count": "{count, plural, one {# model} other {# models}}",
+      "clear": "Clear filters",
+      "sortPrice": "Sort by price",
+      "sortPriceAsc": "Price: low to high",
+      "sortPriceDesc": "Price: high to low",
+      "noMatchTitle": "Nothing matches these filters",
+      "noMatchBody": "Try a broader search or clear the filters."
     }
   }
 }

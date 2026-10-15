@@ -2,6 +2,7 @@ import "server-only";
 
 import { getSystemDb } from "@nebutra/db";
 import { RouterBillingRepository, type RouterPriceRow } from "@nebutra/repositories";
+import { cache } from "react";
 import {
   getListedModelBySlug,
   getListingCatalog,
@@ -89,9 +90,15 @@ export function applyPublishedPrices(
  * So the split is a build constraint as much as a naming one: the raw catalogue
  * is client-safe, and anything that knows our real prices stays on the server.
  */
-export async function getPricedListingCatalog(): Promise<
-  Awaited<ReturnType<typeof getListingCatalog>>
-> {
+export const getPricedListingCatalog = cache(loadPricedListingCatalog);
+
+/**
+ * Deduplicated per request with React `cache()` — the detail page's metadata
+ * and body, and the shell, all ask for it. Deliberately not cached across
+ * requests: a price published in admin must be the price on the next page
+ * view, because the shelf quotes what the edge will charge.
+ */
+async function loadPricedListingCatalog(): Promise<Awaited<ReturnType<typeof getListingCatalog>>> {
   const catalog = await getListingCatalog();
   const [prices, availability] = await Promise.all([
     publishedPriceMap(),
@@ -100,8 +107,8 @@ export async function getPricedListingCatalog(): Promise<
   return { ...catalog, models: applyPublishedPrices(catalog.models, prices, availability) };
 }
 
-/** One model by slug, priced. */
-export async function getPricedModelBySlug(slug: string): Promise<ListingModel | null> {
+/** One model by slug, priced. Deduplicated per request (metadata + page). */
+export const getPricedModelBySlug = cache(async (slug: string): Promise<ListingModel | null> => {
   const model = await getListedModelBySlug(slug);
   if (!model) return null;
   const [prices, availability] = await Promise.all([
@@ -109,7 +116,7 @@ export async function getPricedModelBySlug(slug: string): Promise<ListingModel |
     availabilityFor([model.publicModel]),
   ]);
   return applyPublishedPrices([model], prices, availability)[0] ?? null;
-}
+});
 
 /** Related models for the detail page, priced. */
 export async function getPricedRelatedListings(

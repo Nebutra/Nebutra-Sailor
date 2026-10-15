@@ -1493,10 +1493,6 @@
         "count": 1
       },
       {
-        "file": "apps/router/src/components/market-banner-carousel.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/typelens/src/components/work-grid.tsx",
         "count": 1
       },
@@ -1638,10 +1634,6 @@
         "count": 8
       },
       {
-        "file": "apps/router/src/components/models-catalog.tsx",
-        "count": 5
-      },
-      {
         "file": "apps/web/src/components/notifications/notifications-page-client.tsx",
         "count": 5
       },
@@ -1671,18 +1663,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/solutions/vc/VcDirectory.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/router/src/components/console-shell.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/router/src/components/market-banner-carousel.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/router/src/components/market-home.tsx",
         "count": 3
       },
       {
@@ -1747,10 +1727,6 @@
       },
       {
         "file": "apps/mail-preview/src/components/preview-pane.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/router/src/components/product-detail.tsx",
         "count": 2
       },
       {
@@ -1903,6 +1879,10 @@
       },
       {
         "file": "apps/para/src/components/shell/profile-button.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/components/console-shell.tsx",
         "count": 1
       },
       {
@@ -2751,10 +2731,6 @@
         "count": 2
       },
       {
-        "file": "apps/router/src/components/brand-marks.tsx",
-        "count": 2
-      },
-      {
         "file": "apps/web/src/components/notifications/notification-center.tsx",
         "count": 2
       },
@@ -2848,10 +2824,6 @@
       },
       {
         "file": "apps/para/src/components/shell/app-sidebar.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/market-home.tsx",
         "count": 1
       },
       {
@@ -3011,10 +2983,6 @@
         "count": 1
       },
       {
-        "file": "apps/router/src/components/product-detail.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/sailor-docs/src/components/page-actions.tsx",
         "count": 1
       },
@@ -3170,10 +3138,6 @@
       {
         "file": "apps/pebble/src/app/globals.css",
         "count": 7
-      },
-      {
-        "file": "apps/router/src/components/market-banner-carousel.tsx",
-        "count": 1
       },
       {
         "file": "apps/sailor-docs/src/components/feedback/client.tsx",

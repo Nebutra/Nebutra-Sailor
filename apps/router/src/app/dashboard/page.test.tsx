@@ -34,6 +34,9 @@ vi.mock("@/lib/wallet", () => ({
   getBalanceForDisplay: (...args: unknown[]) => getBalanceForDisplay(...args),
 }));
 
+// The featured table draws vendor marks from @lobehub/icons, whose ESM build
+// does not load under vitest; the marks are not what this file tests.
+vi.mock("@/components/model-table", () => ({ ModelTable: () => null }));
 vi.mock("@/lib/model-routes", () => ({ getBaseUrlHint: () => "https://api.example.test/v1" }));
 
 vi.mock("@/lib/listing-catalog", () => ({

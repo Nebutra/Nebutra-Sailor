@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { ProductDetail } from "@/components/product-detail";
 import { PROVIDER_LABEL, resolveListingProvider } from "@/lib/listing-catalog";
+import { getBaseUrlHint } from "@/lib/model-routes";
 import { getPricedModelBySlug, getPricedRelatedListings } from "@/lib/shelf-prices";
 
 export const dynamic = "force-dynamic";
@@ -30,8 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 /**
- * 对齐 302: /product/detail/{model-id}
- * 例: /product/detail/gemini-3.5-flash
+ * /product/detail/{model-id}, e.g. /product/detail/gemini-3.5-flash
  */
 export default async function ProductDetailPage({ params }: Props) {
   const { slug } = await params;
@@ -40,5 +40,5 @@ export default async function ProductDetailPage({ params }: Props) {
 
   const related = await getPricedRelatedListings(model, 8);
 
-  return <ProductDetail model={model} related={related} />;
+  return <ProductDetail model={model} related={related} baseUrl={getBaseUrlHint()} />;
 }

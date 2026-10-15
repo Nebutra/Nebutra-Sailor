@@ -1,7 +1,11 @@
+import { getTranslations } from "next-intl/server";
 import { ModelsCatalog } from "@/components/models-catalog";
 import { getPricedListingCatalog } from "@/lib/shelf-prices";
 
-export const metadata = { title: "API 集市" };
+export async function generateMetadata() {
+  const t = await getTranslations("shelf.catalog");
+  return { title: t("title") };
+}
 export const dynamic = "force-dynamic";
 
 type Props = {
@@ -14,7 +18,7 @@ type Props = {
   }>;
 };
 
-/** 对应 302 /product/list?cate=api&tag=&brand= */
+/** /models?tag=&brand=&q=&sort= — filtered on the server. */
 export default async function ModelsPage({ searchParams }: Props) {
   const { q, brand, tag, sort } = await searchParams;
   // Supply provenance is operator information (admin supply desk), not shelf copy.

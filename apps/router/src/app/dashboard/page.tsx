@@ -6,10 +6,10 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { CopyField } from "@/components/copy-field";
+import { ModelTable } from "@/components/model-table";
 import { PageFrame } from "@/components/page-frame";
 import { requireAuth } from "@/lib/auth";
 import { usageRepository } from "@/lib/console-usage";
-import { formatPrice, PROVIDER_LABEL } from "@/lib/listing-catalog";
 import { getBaseUrlHint } from "@/lib/model-routes";
 import { getApiKeyRepository, resolveSessionTenantId } from "@/lib/router-keys";
 import { getPricedListingCatalog } from "@/lib/shelf-prices";
@@ -23,9 +23,9 @@ export async function generateMetadata() {
 
 function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: string }) {
   return (
-    <div className="rounded-[var(--radius-md)] border border-neutral-6 bg-neutral-1 px-3 py-2.5">
+    <div className="rounded-[var(--radius-lg)] border border-border bg-card px-4 py-3">
       <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="mt-0.5 text-lg font-semibold tabular-nums tracking-tight">{value}</p>
+      <p className="mt-1 text-xl font-semibold tabular-nums tracking-tight">{value}</p>
       {hint ? (
         <p className="mt-0.5 truncate font-mono text-xs text-muted-foreground">{hint}</p>
       ) : null}
@@ -60,7 +60,7 @@ export default async function DashboardPage() {
         },
       ];
   const baseUrl = getBaseUrlHint();
-  const { models, fetchedNote } = await getPricedListingCatalog();
+  const { models } = await getPricedListingCatalog();
   const sample =
     models.find((m) => m.routed)?.publicModel ?? models[0]?.publicModel ?? DEFAULT_PUBLIC_MODEL;
 
@@ -136,7 +136,13 @@ export default async function DashboardPage() {
           }
           hint={t("stat.requestsHint", { count: usage.requestCount })}
         />
-        <Stat label={t("stat.catalog")} value={models.length} hint={fetchedNote} />
+        <Stat
+          label={t("stat.catalog")}
+          value={models.length}
+          hint={t("stat.catalogHint", {
+            count: models.filter((m) => m.sellable || m.routed).length,
+          })}
+        />
       </div>
 
       <div className="mb-4 grid gap-3 lg:grid-cols-[1.4fr_1fr]">
@@ -192,27 +198,7 @@ export default async function DashboardPage() {
           {t("featured.openMarket")}
         </Link>
       </div>
-      <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-        {models.slice(0, 6).map((m) => (
-          <Link
-            key={m.publicModel}
-            href={`/use?model=${encodeURIComponent(m.publicModel)}`}
-            className="rounded-[var(--radius-lg)] border border-neutral-6 p-3 hover:border-neutral-8 hover:bg-neutral-2/40"
-          >
-            <div className="flex items-start justify-between gap-2">
-              <p className="font-mono text-xs font-semibold">{m.publicModel}</p>
-              <span className="text-xs text-muted-foreground">{PROVIDER_LABEL[m.provider]}</span>
-            </div>
-            <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{m.name}</p>
-            <p className="mt-2 font-mono text-xs tabular-nums text-neutral-11">
-              {t("featured.price", {
-                input: formatPrice(m.inputPerMTok),
-                output: formatPrice(m.outputPerMTok),
-              })}
-            </p>
-          </Link>
-        ))}
-      </div>
+      <ModelTable models={models.slice(0, 6)} caption={t("featured.title")} />
     </PageFrame>
   );
 }

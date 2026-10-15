@@ -20,8 +20,6 @@ const LANDING = `https://${brand.domains.landing}`;
 
 /** Labels are message keys under `footer.*`; every href resolves to a real page. */
 const QUICK_ACCESS = [
-  { key: "appMarket", href: "/?product_type=tool" },
-  { key: "apiMarket", href: "/?product_type=api" },
   { key: "models", href: "/models" },
   { key: "console", href: "/dashboard" },
   { key: "quickUse", href: "/use" },
@@ -79,14 +77,14 @@ export function MarketFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-12 border-t border-[var(--rm-panel-border,var(--neutral-6))] bg-neutral-1/80">
+    <footer className="mt-12 border-t border-border">
       <div className="router-market-shell grid gap-10 py-14 md:grid-cols-[1.15fr_1fr] md:gap-14 lg:grid-cols-[1.2fr_1.6fr]">
         {/* Brand column */}
         <div className="min-w-0">
           <Link href="/" className="inline-flex items-center" aria-label={brand.name}>
             <BrandLogo variant="horizontal" className="h-7 w-auto" />
           </Link>
-          <p className="mt-4 max-w-xs text-sm text-neutral-11">{t("tagline")}</p>
+          <p className="mt-4 max-w-xs text-sm text-muted-foreground">{t("tagline")}</p>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">
             {SOCIAL.map((s) => {
@@ -98,7 +96,7 @@ export function MarketFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-3 text-neutral-12 transition-colors hover:bg-neutral-4"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                 >
                   <Icon size={15} className="h-[15px] w-[15px]" />
                 </a>
@@ -142,8 +140,8 @@ export function MarketFooter() {
         </div>
       </div>
 
-      <div className="border-t border-[var(--rm-panel-border,var(--neutral-6))]">
-        <div className="router-market-shell flex flex-col gap-1 py-5 text-xs text-neutral-11 md:flex-row md:items-center md:justify-between">
+      <div className="border-t border-border">
+        <div className="router-market-shell flex flex-col gap-1 py-5 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
           <p>{t("copyright", { year, brandName: brand.name })}</p>
           <p>{t("strapline")}</p>
         </div>

@@ -1,253 +1,94 @@
 "use client";
 
 /**
- * AI vendor brand art — @lobehub/icons registry.
- * Keep PROVIDER_BRAND in sync with ListingProvider in listing-catalog.ts.
+ * AI vendor marks, from the @lobehub/icons registry.
+ *
+ * Imported per component (`es/<Brand>/components/Mono|Color`), never from the
+ * package barrel: each brand's index also pulls its Avatar and Combine, which
+ * import @lobehub/ui, antd-style and emotion — about 3 MB of client JavaScript
+ * on every Router page to draw an 18px logo.
+ *
+ * Mono marks draw in currentColor (foreground ink), so black vendor marks
+ * (OpenAI, xAI, Moonshot) stay visible in dark mode. Colour marks keep their
+ * registered colours.
+ *
+ * Keep in sync with ListingProvider in listing-catalog.ts.
  */
 
-import {
-  Baichuan,
-  Claude,
-  Cohere,
-  DeepSeek,
-  Doubao,
-  Gemini,
-  Grok,
-  Hunyuan,
-  Meta,
-  Minimax,
-  Mistral,
-  Moonshot,
-  Nvidia,
-  OpenAI,
-  Perplexity,
-  Qwen,
-  Yi,
-  Zhipu,
-} from "@lobehub/icons";
+import BaichuanColor from "@lobehub/icons/es/Baichuan/components/Color";
+import ClaudeColor from "@lobehub/icons/es/Claude/components/Color";
+import CohereColor from "@lobehub/icons/es/Cohere/components/Color";
+import DeepSeekColor from "@lobehub/icons/es/DeepSeek/components/Color";
+import DoubaoColor from "@lobehub/icons/es/Doubao/components/Color";
+import GeminiColor from "@lobehub/icons/es/Gemini/components/Color";
+import GrokMono from "@lobehub/icons/es/Grok/components/Mono";
+import HunyuanColor from "@lobehub/icons/es/Hunyuan/components/Color";
+import MetaColor from "@lobehub/icons/es/Meta/components/Color";
+import MinimaxColor from "@lobehub/icons/es/Minimax/components/Color";
+import MistralColor from "@lobehub/icons/es/Mistral/components/Color";
+import MoonshotMono from "@lobehub/icons/es/Moonshot/components/Mono";
+import NvidiaColor from "@lobehub/icons/es/Nvidia/components/Color";
+import OpenAIMono from "@lobehub/icons/es/OpenAI/components/Mono";
+import PerplexityColor from "@lobehub/icons/es/Perplexity/components/Color";
+import QwenColor from "@lobehub/icons/es/Qwen/components/Color";
+import YiColor from "@lobehub/icons/es/Yi/components/Color";
+import ZhipuColor from "@lobehub/icons/es/Zhipu/components/Color";
 import type { ComponentType, CSSProperties } from "react";
 import type { ListingProvider } from "@/lib/listing-catalog";
-import { PROVIDER_LABEL } from "@/lib/listing-catalog";
 
-type IconProps = {
+type IconComponent = ComponentType<{
   size?: number | string;
   className?: string;
   style?: CSSProperties;
-  color?: string;
+}>;
+
+const MARKS: Record<Exclude<ListingProvider, "other">, { Mark: IconComponent; mono: boolean }> = {
+  openai: { Mark: OpenAIMono as IconComponent, mono: true },
+  anthropic: { Mark: ClaudeColor as IconComponent, mono: false },
+  google: { Mark: GeminiColor as IconComponent, mono: false },
+  xai: { Mark: GrokMono as IconComponent, mono: true },
+  deepseek: { Mark: DeepSeekColor as IconComponent, mono: false },
+  moonshot: { Mark: MoonshotMono as IconComponent, mono: true },
+  mistral: { Mark: MistralColor as IconComponent, mono: false },
+  meta: { Mark: MetaColor as IconComponent, mono: false },
+  qwen: { Mark: QwenColor as IconComponent, mono: false },
+  zhipu: { Mark: ZhipuColor as IconComponent, mono: false },
+  minimax: { Mark: MinimaxColor as IconComponent, mono: false },
+  cohere: { Mark: CohereColor as IconComponent, mono: false },
+  perplexity: { Mark: PerplexityColor as IconComponent, mono: false },
+  baichuan: { Mark: BaichuanColor as IconComponent, mono: false },
+  yi: { Mark: YiColor as IconComponent, mono: false },
+  doubao: { Mark: DoubaoColor as IconComponent, mono: false },
+  hunyuan: { Mark: HunyuanColor as IconComponent, mono: false },
+  nvidia: { Mark: NvidiaColor as IconComponent, mono: false },
 };
-
-type CombineProps = IconProps & { type?: "color" | "mono" | string };
-
-export type LobeBrandIcon = ComponentType<IconProps> & {
-  Color?: ComponentType<IconProps>;
-  Combine?: ComponentType<CombineProps>;
-  Text?: ComponentType<IconProps>;
-  title?: string;
-  colorPrimary?: string;
-};
-
-export type CoverTheme = { wash: string };
-
-type BrandEntry = {
-  Icon: LobeBrandIcon;
-  colorMark: boolean;
-  label?: string;
-};
-
-/**
- * A provider's cover is its own brand hue (the registry's `colorPrimary`) mixed
- * into the card surface — never a fixed pastel. The card token has a light and
- * a dark value, so the same recipe gives a soft tint in light mode and a deep
- * one in dark, and the cover cannot glare out of a dark page.
- */
-function coverFor(Icon: LobeBrandIcon): CoverTheme {
-  const hue = Icon.colorPrimary ?? "var(--neutral-8)";
-  return {
-    wash: `linear-gradient(145deg, color-mix(in oklab, ${hue} 26%, hsl(var(--card))) 0%, color-mix(in oklab, ${hue} 12%, hsl(var(--card))) 55%, color-mix(in oklab, ${hue} 5%, hsl(var(--card))) 100%)`,
-  };
-}
-
-export const PROVIDER_BRAND: Record<ListingProvider, BrandEntry> = {
-  openai: {
-    Icon: OpenAI as LobeBrandIcon,
-    colorMark: false,
-  },
-  anthropic: {
-    Icon: Claude as LobeBrandIcon,
-    colorMark: true,
-    label: "Anthropic",
-  },
-  google: {
-    Icon: Gemini as LobeBrandIcon,
-    colorMark: true,
-    label: "Google",
-  },
-  xai: {
-    Icon: Grok as LobeBrandIcon,
-    colorMark: false,
-    label: "xAI",
-  },
-  deepseek: {
-    Icon: DeepSeek as LobeBrandIcon,
-    colorMark: true,
-  },
-  moonshot: {
-    Icon: Moonshot as LobeBrandIcon,
-    colorMark: false,
-  },
-  mistral: {
-    Icon: Mistral as LobeBrandIcon,
-    colorMark: true,
-  },
-  meta: {
-    Icon: Meta as LobeBrandIcon,
-    colorMark: true,
-  },
-  qwen: {
-    Icon: Qwen as LobeBrandIcon,
-    colorMark: true,
-    label: "通义千问",
-  },
-  zhipu: {
-    Icon: Zhipu as LobeBrandIcon,
-    colorMark: true,
-    label: "智谱",
-  },
-  minimax: {
-    Icon: Minimax as LobeBrandIcon,
-    colorMark: true,
-  },
-  cohere: {
-    Icon: Cohere as LobeBrandIcon,
-    colorMark: true,
-  },
-  perplexity: {
-    Icon: Perplexity as LobeBrandIcon,
-    colorMark: true,
-  },
-  baichuan: {
-    Icon: Baichuan as LobeBrandIcon,
-    colorMark: true,
-    label: "百川",
-  },
-  yi: {
-    Icon: Yi as LobeBrandIcon,
-    colorMark: true,
-    label: "零一万物",
-  },
-  doubao: {
-    Icon: Doubao as LobeBrandIcon,
-    colorMark: true,
-    label: "豆包",
-  },
-  hunyuan: {
-    Icon: Hunyuan as LobeBrandIcon,
-    colorMark: true,
-    label: "腾讯混元",
-  },
-  nvidia: {
-    Icon: Nvidia as LobeBrandIcon,
-    colorMark: true,
-    label: "NVIDIA",
-  },
-  other: {
-    Icon: Meta as LobeBrandIcon,
-    colorMark: false,
-    label: "Other",
-  },
-};
-
-export const PROVIDER_COVER: Record<ListingProvider, CoverTheme> = Object.fromEntries(
-  (Object.keys(PROVIDER_BRAND) as ListingProvider[]).map((k) => [
-    k,
-    coverFor(PROVIDER_BRAND[k].Icon),
-  ]),
-) as Record<ListingProvider, CoverTheme>;
-
-function brandTitle(provider: ListingProvider): string {
-  const entry = PROVIDER_BRAND[provider];
-  return entry.Icon.title ?? entry.label ?? PROVIDER_LABEL[provider];
-}
 
 export function BrandMark({
   provider,
   size = 20,
   className,
-  forceMono = false,
 }: {
   provider: ListingProvider;
   size?: number;
   className?: string;
-  forceMono?: boolean;
 }) {
   if (provider === "other") {
     return (
       <span
-        className={className}
-        style={{
-          display: "inline-flex",
-          width: size,
-          height: size,
-          borderRadius: 6,
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: Math.max(10, Number(size) * 0.45),
-          fontWeight: 700,
-          background: "var(--neutral-4)",
-          color: "var(--neutral-11)",
-        }}
+        className={[
+          "inline-flex items-center justify-center rounded-[var(--radius-sm)] bg-muted font-semibold text-muted-foreground",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        style={{ width: size, height: size, fontSize: Math.max(9, size * 0.45) }}
         aria-hidden
       >
         AI
       </span>
     );
   }
-  const { Icon, colorMark } = PROVIDER_BRAND[provider];
-  const useColor = !forceMono && colorMark && Icon.Color;
-  const Mark = useColor && Icon.Color ? Icon.Color : Icon;
-  const props: IconProps = { size };
-  // Mono marks draw in currentColor: foreground ink, so black-on-black vendor
-  // marks (OpenAI, xAI) turn light in dark mode instead of disappearing.
-  const markClass = useColor ? className : [className, "text-foreground"].filter(Boolean).join(" ");
-  if (markClass) props.className = markClass;
-  return <Mark {...props} />;
-}
-
-export function BrandPill({ provider, size = 22 }: { provider: ListingProvider; size?: number }) {
-  const entry = PROVIDER_BRAND[provider];
-  const title = brandTitle(provider);
-  const markSize = typeof size === "number" ? size : 22;
-
-  if (provider === "other") {
-    return (
-      <span
-        className="inline-flex max-w-full flex-row flex-nowrap items-center gap-2 text-foreground"
-        title={title}
-      >
-        <BrandMark provider="other" size={markSize} />
-        <span className="text-sm leading-none font-semibold tracking-tight">Other</span>
-      </span>
-    );
-  }
-
-  const { Icon, colorMark } = entry;
-  const useColor = colorMark && Icon.Color;
-  const Mark = useColor && Icon.Color ? Icon.Color : Icon;
-  const Wordmark = Icon.Text;
-
-  // Ink is the foreground token via currentColor, so the wordmark and any mono
-  // mark follow the theme; colour marks keep their registered colours.
-  return (
-    <span
-      className="inline-flex max-w-full flex-row flex-nowrap items-center gap-2 text-foreground"
-      title={title}
-    >
-      <Mark size={markSize} />
-      {Wordmark ? (
-        <Wordmark size={Math.round(markSize * 0.82)} />
-      ) : (
-        <span className="text-sm leading-none font-semibold tracking-tight">{title}</span>
-      )}
-    </span>
-  );
+  const { Mark, mono } = MARKS[provider];
+  const markClass = mono ? [className, "text-foreground"].filter(Boolean).join(" ") : className;
+  return <Mark size={size} {...(markClass ? { className: markClass } : {})} />;
 }
