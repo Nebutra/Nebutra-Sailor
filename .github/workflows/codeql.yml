@@ -17,6 +17,9 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+  # Bot PRs: a GITHUB_TOKEN push fires nothing, so i18n-translate.yml
+  # dispatches this to put the two required checks on its head commit.
+  workflow_dispatch:
   schedule:
     # Weekly scan — catches newly published CVEs in code that hasn't changed
     - cron: "0 19 * * 6"
