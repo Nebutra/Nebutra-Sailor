@@ -1989,8 +1989,8 @@
     "sailor": {
       "hero": {
         "lead": "Start from a working template with sign-in and organizations, billing by card worldwide or WeChat Pay and Alipay in China, Postgres tenant isolation, and a design system you set up in Sailor Studio. The company planner, which compiles your company into nine layers of context, is in development.",
-        "cn": "Sailor 是给做 AI 产品的团队用的创业操作系统。",
-        "title": "Sailor is the <signature>Startup OS</signature> for teams building AI products."
+        "cn": "把你的公司跑在 Sailor 上。",
+        "title": "Run your startup on <signature>Sailor.</signature>"
       },
       "install": {
         "copyLabel": "Copy",
@@ -2227,7 +2227,7 @@
         }
       },
       "sailor": {
-        "title": "Sailor is the Startup OS for teams building AI products.",
+        "title": "Run your startup on Sailor.",
         "lead": "One command scaffolds a multi-tenant product with auth, billing, audit and a design system already decided. Providers switch between global and China stacks by configuration, and agents read the same rules the code is held to.",
         "acme": "The template as it ships, deployed.",
         "source": "Read the source",

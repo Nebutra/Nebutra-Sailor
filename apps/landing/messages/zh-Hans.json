@@ -1983,7 +1983,7 @@
     "sailor": {
       "hero": {
         "lead": "从一个能跑的模板开始：登录和组织、全球银行卡与国内微信支付宝收款、Postgres 租户隔离，还有在 Sailor Studio 里定好的设计系统。把公司编译成九层上下文的公司规划器还在开发中。",
-        "title": "Sailor 是给做 AI 产品的团队用的<signature>创业操作系统。</signature>"
+        "title": "把你的公司跑在 <signature>Sailor</signature> 上。"
       },
       "install": {
         "copyLabel": "复制",
@@ -2204,7 +2204,7 @@
         }
       },
       "sailor": {
-        "title": "Sailor 是给做 AI 产品的团队用的创业操作系统。",
+        "title": "把你的公司跑在 Sailor 上。",
         "lead": "一条命令，生成一个多租户产品：身份认证、计费、审计和设计系统都已定好。供应商通过配置在全球与中国两套体系之间切换；Agent 读到的，正是代码同样要遵守的规则。",
         "acme": "模板原样部署后的样子。",
         "source": "阅读源码",

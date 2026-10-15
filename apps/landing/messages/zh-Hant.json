@@ -1911,7 +1911,7 @@
     "sailor": {
       "hero": {
         "lead": "從一個能跑的模板開始：登入和組織、全球信用卡與國內微信支付寶收款、Postgres 租戶隔離，還有在 Sailor Studio 裡定好的設計系統。把公司編譯成九層上下文的公司規劃器還在開發中。",
-        "title": "Sailor 是給做 AI 產品的團隊用的<signature>創業作業系統。</signature>"
+        "title": "把你的公司跑在 <signature>Sailor</signature> 上。"
       },
       "install": {
         "copyLabel": "複製",
@@ -2143,7 +2143,7 @@
         }
       },
       "sailor": {
-        "title": "Sailor 是給做 AI 產品的團隊用的創業作業系統。",
+        "title": "把你的公司跑在 Sailor 上。",
         "lead": "一條指令即可搭建多租戶產品，內建認證、計費、審計與已確定的設計系統。供應商可透過設定切換全球與中國技術棧，代理程式遵循與程式碼相同的規範。",
         "acme": "模板交付時的樣貌，已部署上線。",
         "source": "閱讀原始碼",
