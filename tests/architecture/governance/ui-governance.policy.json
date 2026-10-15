@@ -189,7 +189,7 @@
           "NotificationsDialog",
           "UserMenu",
           "breadcrumbs.length > 1 ?",
-          "aria-label=\"Breadcrumb\"",
+          "aria-label={tc(\"breadcrumb\")}",
           "Feedback now lives solely"
         ],
         "forbiddenContains": [
