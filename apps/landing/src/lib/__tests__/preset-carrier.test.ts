@@ -22,8 +22,12 @@ describe("carrierForPreset", () => {
     expect(css).toMatch(/--primary:\s*262/);
   });
 
-  it("says when a knob cannot apply", () => {
-    expect(carrierForPreset({ base: "gsap", mode: "light" }).warning).toMatch(/one palette/);
+  it("says when a preset cannot apply", () => {
+    // Every built-in language is dual-mode since the control-ladder batch, so
+    // the one-palette warning is covered in @nebutra/tokens' preset tests; the
+    // carrier's own refusal is an unknown base.
+    expect(carrierForPreset({ base: "nope" } as never).warning).toMatch(/not a built-in language/);
+    expect(carrierForPreset({ base: "gsap", mode: "light" }).warning).toBeUndefined();
   });
 
   it("paints factory explicitly where the page around it wears another brand", () => {

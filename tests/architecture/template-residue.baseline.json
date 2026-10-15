@@ -25,7 +25,6 @@
     "apps/landing/src/lib/app-redirects.test.ts",
     "apps/landing/src/lib/app-url.test.ts",
     "apps/landing/src/lib/constants/resources-data.ts",
-    "apps/landing/src/lib/public-assets.test.ts",
     "apps/landing/src/lib/seo/__tests__/site-routes.test.ts",
     "apps/landing/src/lib/seo/__tests__/structured-data.test.ts",
     "apps/landing/src/lib/session-home-redirect.test.ts",
