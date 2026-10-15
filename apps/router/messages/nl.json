@@ -95,32 +95,6 @@
       "hint": "Agent · tools"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Bots",
-      "chips": "Chatbots · tekenbots · kennis"
-    },
-    "productivity": {
-      "label": "Productiviteit",
-      "chips": "Modelarena · AI-schrijven"
-    },
-    "academic": {
-      "label": "Academisch",
-      "chips": "PDF-toolkit · AI-patentzoeken"
-    },
-    "image": {
-      "label": "Afbeeldingstools",
-      "chips": "3D-studio · Canvas"
-    },
-    "audio": {
-      "label": "Audio",
-      "chips": "Spraak · AI muziek"
-    },
-    "code": {
-      "label": "Code",
-      "chips": "Webgenerator · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Overzicht",
     "keys": "Sleutels",

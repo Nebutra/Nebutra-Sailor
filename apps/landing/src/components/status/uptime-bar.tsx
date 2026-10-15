@@ -109,7 +109,6 @@ export function UptimeBar({ days, className }: { days: UptimeDay[]; className?: 
               tabIndex={index === 0 ? 0 : -1}
               aria-label={dayLabel(day)}
               aria-describedby={isActive ? `${chartId}-tip` : undefined}
-              title={dayLabel(day)}
               className={cn(
                 "relative min-w-0 flex-1 rounded-[2px]",
                 // z-10 stays: the global focus outline sits 2px outside the

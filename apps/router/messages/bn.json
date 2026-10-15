@@ -95,32 +95,6 @@
       "hint": "এজেন্ট · টুল"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "বট",
-      "chips": "চ্যাট বট · ড্রয়িং বট · জ্ঞান"
-    },
-    "productivity": {
-      "label": "প্রোডাক্টিভিটি",
-      "chips": "মডেল অ্যারেনা · AI লেখা"
-    },
-    "academic": {
-      "label": "শিক্ষামূলক",
-      "chips": "PDF টুলকিট · AI পেটেন্ট সার্চ"
-    },
-    "image": {
-      "label": "ইমেজ টুলস",
-      "chips": "3D স্টুডিও · ক্যানভাস"
-    },
-    "audio": {
-      "label": "অডিও",
-      "chips": "স্পিচ · AI মিউজিক"
-    },
-    "code": {
-      "label": "কোড",
-      "chips": "ওয়েব জেনারেটর · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "সংক্ষিপ্ত বিবরণ",
     "keys": "কী",

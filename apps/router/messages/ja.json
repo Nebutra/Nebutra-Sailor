@@ -95,32 +95,6 @@
       "hint": "エージェント · ツール"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "ボット",
-      "chips": "チャットボット · 描画ボット · ナレッジ"
-    },
-    "productivity": {
-      "label": "生産性",
-      "chips": "モデルアリーナ · AIライティング"
-    },
-    "academic": {
-      "label": "学術",
-      "chips": "PDFツールキット · AI特許検索"
-    },
-    "image": {
-      "label": "画像ツール",
-      "chips": "3Dスタジオ · キャンバス"
-    },
-    "audio": {
-      "label": "オーディオ",
-      "chips": "音声 · AI音楽"
-    },
-    "code": {
-      "label": "コード",
-      "chips": "Webジェネレーター · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "概要",
     "keys": "キー",

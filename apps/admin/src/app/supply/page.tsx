@@ -96,7 +96,7 @@ export default async function SupplyPage() {
     <>
       <PageTitle
         title="Supply"
-        subtitle={`API-key 渠道和账号号池都在 New-API 后面汇成一条 ${brand.domains.router}/v1。`}
+        subtitle={`API-key channels and the account pool both sit behind New-API and leave as one ${brand.domains.router}/v1.`}
         actions={
           <>
             {domainActions.map((action) => (
@@ -162,7 +162,7 @@ export default async function SupplyPage() {
             rel="noreferrer"
             className="underline-offset-4 hover:text-foreground hover:underline"
           >
-            高级：引擎原生控制台
+            Advanced: the engine’s own console
           </a>
         </p>
       ) : null}

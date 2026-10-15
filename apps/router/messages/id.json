@@ -95,32 +95,6 @@
       "hint": "Agen · alat"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Bot",
-      "chips": "Bot obrolan · bot gambar · pengetahuan"
-    },
-    "productivity": {
-      "label": "Produktivitas",
-      "chips": "Arena model · penulisan AI"
-    },
-    "academic": {
-      "label": "Akademik",
-      "chips": "Toolkit PDF · Pencarian paten AI"
-    },
-    "image": {
-      "label": "Alat gambar",
-      "chips": "Studio 3D · Kanvas"
-    },
-    "audio": {
-      "label": "Audio",
-      "chips": "Suara · Musik AI"
-    },
-    "code": {
-      "label": "Kode",
-      "chips": "Generator web · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Ringkasan",
     "keys": "Kunci",

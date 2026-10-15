@@ -14,11 +14,9 @@ type Props = {
 export default async function MarketHomePage({ searchParams }: Props) {
   const { product_type } = await searchParams;
   const productType = product_type === "tool" ? "tool" : "api";
-  const { models, fetchedNote, source, inventoryOk, inventorySources } =
-    await getPricedListingCatalog();
+  // Supply provenance (inventory source, cache age) is operator information:
+  // it lives on admin.nebutra.com's supply desk, not on the public shelf.
+  const { models } = await getPricedListingCatalog();
 
-  const inv = inventoryOk ? `库存 ${inventorySources.join(", ") || "—"}` : "库存未连通";
-  const note = `${fetchedNote} · ${inv} · ${source}`;
-
-  return <MarketHome models={models} sourceNote={note} productType={productType} />;
+  return <MarketHome models={models} productType={productType} />;
 }

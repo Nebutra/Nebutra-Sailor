@@ -1,8 +1,12 @@
+import { getTranslations } from "next-intl/server";
 import { PlaygroundClient } from "@/components/playground-client";
 import { requireAuth } from "@/lib/auth";
 import { getListedModelIds } from "@/lib/listing-catalog";
 
-export const metadata = { title: "快捷使用" };
+export async function generateMetadata() {
+  const t = await getTranslations("console.playground");
+  return { title: t("title") };
+}
 export const dynamic = "force-dynamic";
 
 type Props = { searchParams: Promise<{ model?: string }> };
@@ -17,6 +21,7 @@ type Props = { searchParams: Promise<{ model?: string }> };
  */
 export default async function UsePage({ searchParams }: Props) {
   await requireAuth("/use");
+  const t = await getTranslations("console.playground");
   const { model } = await searchParams;
   const models = await getListedModelIds();
   const seed = model?.trim();
@@ -31,10 +36,8 @@ export default async function UsePage({ searchParams }: Props) {
 
   return (
     <div className="mx-auto max-w-[1200px] px-4 py-6 md:px-6">
-      <h1 className="text-[20px] font-semibold tracking-tight text-neutral-12">快捷使用</h1>
-      <p className="mt-1 text-[13px] text-neutral-10">
-        OpenAI 兼容对话 · 走计费边缘，结束后显示这一次的花费
-      </p>
+      <h1 className="text-xl font-semibold tracking-tight text-neutral-12">{t("title")}</h1>
+      <p className="mt-1 text-sm text-muted-foreground">{t("description")}</p>
       <div className="mt-5">
         <PlaygroundClient models={list} {...(seed ? { initialModel: seed } : {})} />
       </div>

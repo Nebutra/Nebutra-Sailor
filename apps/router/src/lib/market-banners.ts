@@ -13,23 +13,25 @@ function bannerSrc(name: string): string {
 
 export type MarketBanner = {
   id: string;
-  kicker: string;
+  /** Modality frames: copy lives at `banners.<copyKey>.{title,subtitle}` in messages. */
+  copyKey?: "llm" | "image" | "video" | "audio" | "data" | "tools";
+  /** Model frames: the model id and its display name, not translated. */
   title: string;
   subtitle: string;
   href: string;
   provider: ListingProvider;
   publicModel: string;
   coverSrc?: string;
-  priceLine?: string;
+  price?: { input: string; output: string };
 };
 
 /** Static modality banners (302 图/视频/语音… 货架叙事) */
 export const MODALITY_BANNERS: readonly MarketBanner[] = [
   {
     id: "mod-llm",
-    kicker: "模型实测",
-    title: "语言大模型",
-    subtitle: "对话 · 推理 · 高性价比全系可售",
+    copyKey: "llm",
+    title: "",
+    subtitle: "",
     href: "/models?cate=api&tag=chat",
     provider: "openai",
     publicModel: "llm",
@@ -37,9 +39,9 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
   },
   {
     id: "mod-image",
-    kicker: "模型实测",
-    title: "图片生成",
-    subtitle: "文生图 · 多厂商统一接口",
+    copyKey: "image",
+    title: "",
+    subtitle: "",
     href: "/models?cate=api&tag=image",
     provider: "google",
     publicModel: "image",
@@ -47,9 +49,9 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
   },
   {
     id: "mod-video",
-    kicker: "模型实测",
-    title: "视频生成",
-    subtitle: "文生视频 · 动态内容生产能力",
+    copyKey: "video",
+    title: "",
+    subtitle: "",
     href: "/models?cate=api&tag=video",
     provider: "xai",
     publicModel: "video",
@@ -57,9 +59,9 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
   },
   {
     id: "mod-audio",
-    kicker: "模型实测",
-    title: "音视频处理",
-    subtitle: "语音合成 · 转写 · 音频理解",
+    copyKey: "audio",
+    title: "",
+    subtitle: "",
     href: "/models?cate=api&tag=audio",
     provider: "openai",
     publicModel: "audio",
@@ -67,9 +69,9 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
   },
   {
     id: "mod-data",
-    kicker: "模型实测",
-    title: "信息处理",
-    subtitle: "检索 · 抽取 · 知识增强",
+    copyKey: "data",
+    title: "",
+    subtitle: "",
     href: "/models?cate=api&tag=data",
     provider: "cohere",
     publicModel: "data",
@@ -77,9 +79,9 @@ export const MODALITY_BANNERS: readonly MarketBanner[] = [
   },
   {
     id: "mod-tools",
-    kicker: "模型实测",
-    title: "工具 API",
-    subtitle: "开发者工具与 Agent 能力接口",
+    copyKey: "tools",
+    title: "",
+    subtitle: "",
     href: "/models?cate=api&tag=tools",
     provider: "anthropic",
     publicModel: "tools",
@@ -130,13 +132,12 @@ function toBanner(m: ListingModel, provider: ListingProvider): MarketBanner {
     m.outputPerMTok > 0 ? `$${m.outputPerMTok.toFixed(m.outputPerMTok < 1 ? 2 : 0)}` : "—";
   return {
     id: m.publicModel,
-    kicker: "模型实测",
     title: displayTitle(m.publicModel),
     subtitle: m.name || m.publicModel,
     href: `/use?model=${encodeURIComponent(m.publicModel)}`,
     provider,
     publicModel: m.publicModel,
-    priceLine: `入 ${inP} · 出 ${outP} /1M`,
+    price: { input: inP, output: outP },
   };
 }
 

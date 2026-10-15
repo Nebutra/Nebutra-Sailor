@@ -29,7 +29,8 @@
     "integrationHelp": "Integration guide",
     "aiRecommend": "AI picks",
     "market": "Market",
-    "usageTitle": "Quick use"
+    "usageTitle": "Quick use",
+    "currencyNote": "Priced and settled in US dollars"
   },
   "channels": {
     "app": "App market",
@@ -62,22 +63,64 @@
     "walletTopup": "Top up"
   },
   "apiTaxonomy": {
-    "llm": { "label": "Language models", "hint": "Chat · reasoning" },
-    "image-gen": { "label": "Image generation", "hint": "Text-to-image" },
-    "image-edit": { "label": "Image editing", "hint": "Edit · matting" },
-    "video": { "label": "Video generation", "hint": "Text-to-video" },
-    "audio": { "label": "Audio & video", "hint": "Speech · transcription" },
-    "data": { "label": "Information", "hint": "Retrieval · extract" },
-    "rag": { "label": "RAG", "hint": "Knowledge-augmented" },
-    "tools": { "label": "Tool APIs", "hint": "Agent · tools" }
+    "llm": {
+      "label": "Language models",
+      "hint": "Chat · reasoning"
+    },
+    "image-gen": {
+      "label": "Image generation",
+      "hint": "Text-to-image"
+    },
+    "image-edit": {
+      "label": "Image editing",
+      "hint": "Edit · matting"
+    },
+    "video": {
+      "label": "Video generation",
+      "hint": "Text-to-video"
+    },
+    "audio": {
+      "label": "Audio & video",
+      "hint": "Speech · transcription"
+    },
+    "data": {
+      "label": "Information",
+      "hint": "Retrieval · extract"
+    },
+    "rag": {
+      "label": "RAG",
+      "hint": "Knowledge-augmented"
+    },
+    "tools": {
+      "label": "Tool APIs",
+      "hint": "Agent · tools"
+    }
   },
   "toolTaxonomy": {
-    "bots": { "label": "Bots", "chips": "Chat bots · drawing bots · knowledge" },
-    "productivity": { "label": "Productivity", "chips": "Model arena · AI writing" },
-    "academic": { "label": "Academic", "chips": "PDF toolkit · AI patent search" },
-    "image": { "label": "Image tools", "chips": "3D studio · Canvas" },
-    "audio": { "label": "Audio", "chips": "Speech · AI music" },
-    "code": { "label": "Code", "chips": "Web generator · Forge" }
+    "generator": {
+      "label": "Generators",
+      "chips": "UUID · Lorem ipsum · random strings"
+    },
+    "converter": {
+      "label": "Converters",
+      "chips": "Base64 · Markdown to PDF"
+    },
+    "formatter": {
+      "label": "Formatters",
+      "chips": "JSON · text case"
+    },
+    "checker": {
+      "label": "Checkers",
+      "chips": "DNS leak · ID numbers"
+    },
+    "comparator": {
+      "label": "Comparators",
+      "chips": "JSON diff"
+    },
+    "analyzer": {
+      "label": "Analyzers",
+      "chips": "Word count · JWT"
+    }
   },
   "shortcuts": {
     "dashboard": "Overview",
@@ -86,5 +129,464 @@
     "use": "Try",
     "docs": "Docs",
     "models": "More"
+  },
+  "auth": {
+    "signOut": "Sign out",
+    "signOutLong": "Sign out",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signInOrUp": "Sign in / Sign up",
+    "noAccount": "No account? Sign up",
+    "signInPrompt": "Sign in"
+  },
+  "footer": {
+    "tagline": "One key for every model. Pay as you go.",
+    "quickAccess": "Quick access",
+    "support": "Support",
+    "legal": "Legal",
+    "copyright": "© {year} {brandName}. All rights reserved.",
+    "strapline": "API market · pay as you go · one endpoint for every model",
+    "links": {
+      "appMarket": "App market",
+      "apiMarket": "API market",
+      "models": "Model catalog",
+      "console": "Console",
+      "quickUse": "Quick use",
+      "forge": "Forge tools",
+      "apiDocs": "API docs",
+      "faq": "FAQ",
+      "contact": "Contact",
+      "status": "System status",
+      "terms": "Terms of service",
+      "privacy": "Privacy policy",
+      "refund": "Refund policy",
+      "cookies": "Cookie policy"
+    }
+  },
+  "category": {
+    "chat": "Language models",
+    "reasoning": "Reasoning",
+    "fast": "Best value",
+    "multimodal": "Multimodal",
+    "image": "Image generation",
+    "video": "Video generation",
+    "audio": "Audio & video",
+    "data": "Information",
+    "rag": "RAG",
+    "tools": "Tool APIs",
+    "other": "Other"
+  },
+  "card": {
+    "details": "{model} details",
+    "docs": "Docs",
+    "try": "Try it",
+    "input": "In {price}/1M",
+    "output": "Out {price}/1M"
+  },
+  "banners": {
+    "label": "Featured on the shelf",
+    "previous": "Previous slide",
+    "next": "Next slide",
+    "goTo": "Go to slide {n}",
+    "current": "Slide {n} of {total}",
+    "modalityKicker": "On the shelf",
+    "liveKicker": "Available now",
+    "shelf": "API market",
+    "viewAll": "View all",
+    "tryNow": "Try it now",
+    "price": "In {input} · Out {output} /1M",
+    "llm": {
+      "title": "Language models",
+      "subtitle": "Chat, reasoning and best-value models"
+    },
+    "image": {
+      "title": "Image generation",
+      "subtitle": "Text-to-image from every provider, one interface"
+    },
+    "video": {
+      "title": "Video generation",
+      "subtitle": "Text-to-video for motion content"
+    },
+    "audio": {
+      "title": "Audio & video",
+      "subtitle": "Speech synthesis, transcription, audio understanding"
+    },
+    "data": {
+      "title": "Information",
+      "subtitle": "Retrieval, extraction, knowledge augmentation"
+    },
+    "tools": {
+      "title": "Tool APIs",
+      "subtitle": "Developer tools and agent capabilities"
+    }
+  },
+  "brandBlurb": {
+    "openai": "OpenAI flagship chat and multimodal models",
+    "anthropic": "Claude: strong reasoning for engineering and agents",
+    "google": "Gemini: native search and multimodal",
+    "xai": "Grok: tool calling and real-time",
+    "deepseek": "Best-value chat and reasoning",
+    "moonshot": "Kimi: long context, strong Chinese",
+    "mistral": "Efficient open and commercial models",
+    "meta": "Llama: the open-source workhorse",
+    "qwen": "Qwen: Alibaba Cloud foundation models",
+    "zhipu": "GLM: Chinese foundation models and agents",
+    "minimax": "MoE general and speech models",
+    "cohere": "Enterprise retrieval and the Command family",
+    "perplexity": "Search-augmented chat",
+    "baichuan": "Chinese open and commercial models",
+    "yi": "Chinese and multilingual models",
+    "doubao": "ByteDance general models",
+    "hunyuan": "Tencent Chinese and multimodal models",
+    "nvidia": "Nemotron: open reasoning and acceleration",
+    "other": "Other models and endpoints on the shelf"
+  },
+  "catalog": {
+    "allModels": "All models",
+    "categories": "Categories",
+    "apps": "Apps",
+    "filterPlaceholder": "Filter results…",
+    "collapse": "Collapse categories",
+    "expand": "Expand categories",
+    "price": "Price",
+    "count": "{count, plural, one {# model} other {# models}}",
+    "gridView": "Grid view",
+    "listView": "List view",
+    "clear": "Clear filters",
+    "noMatchTitle": "Nothing matches these filters",
+    "noMatchBody": "Try a shorter search or another category."
+  },
+  "detail": {
+    "blurb": "{provider} · {category} · {context} context · one endpoint through Router.",
+    "intro": {
+      "what": "{model} is {provider}’s model on the {category} shelf.",
+      "how": "Call it through {brandName} Router’s OpenAI-compatible API, with no separate contract for each upstream.",
+      "live": "It is on sale and routed now.",
+      "catalog": "The price shown is the catalogue reference; calls open once supply is connected."
+    },
+    "cap": {
+      "unifiedTitle": "One endpoint",
+      "unifiedBody": "One API key and base URL cover every provider; switch models by changing the model id.",
+      "meteredTitle": "Pay per use",
+      "meteredBody": "Input {input}/1M · output {output}/1M (list price; your invoice is the final figure).",
+      "contextTitle": "Context",
+      "contextBody": "A public context window of about {context}, suited to long conversations and documents (the model’s own limit applies).",
+      "reasoningTitle": "Reasoning",
+      "reasoningBody": "Suited to planning, code and multi-step tool use.",
+      "multimodalTitle": "Multimodal",
+      "multimodalBody": "Accepts image and text input (as the model declares)."
+    },
+    "copied": "Copied",
+    "copyForAi": "Copy for AI",
+    "sellable": "On sale",
+    "catalogOnly": "Catalogue",
+    "contextChip": "Context {context}",
+    "input": "Input",
+    "output": "Output",
+    "provider": "Provider",
+    "volume": "Buying in volume? Contact support for a dedicated price.",
+    "docs": "Read the docs",
+    "capabilities": "Capabilities",
+    "signInMore": "Sign in to do more.",
+    "openPlayground": "Open the playground · {model}",
+    "viewDetails": "View details",
+    "listPrice": "List price · pay per use",
+    "noRelated": "Nothing related on the shelf yet.",
+    "toc": {
+      "intro": "Overview",
+      "playground": "Playground",
+      "apis": "Endpoints",
+      "pricing": "Pricing",
+      "related": "Related models"
+    },
+    "col": {
+      "api": "Endpoint",
+      "path": "Path",
+      "method": "Method",
+      "params": "Parameters",
+      "model": "Model",
+      "context": "Context",
+      "note": "Note"
+    },
+    "api": {
+      "imagesGenerate": "Images (generate)",
+      "imagesEdit": "Images (edit)",
+      "audioSpeech": "Audio (speech)",
+      "audioTranscribe": "Audio (transcribe)",
+      "embeddings": "Embeddings",
+      "chat": "Chat",
+      "chatStream": "Chat (streaming)",
+      "responses": "Responses"
+    },
+    "metaFallback": "Model details",
+    "metaTitle": "{model} · API pricing and docs",
+    "metaDescription": "{provider} {model} on {brandName} Router: price, context and how to call it."
+  },
+  "console": {
+    "states": {
+      "loadFailed": "This section didn't load",
+      "emptyDefault": "Nothing was recorded in this period",
+      "retry": "Retry"
+    },
+    "errors": {
+      "generic": "The request failed. Try again.",
+      "network": "The request didn't go out. Check your connection and try again.",
+      "status": {
+        "unauthorized": "Your session expired. Sign in again and retry.",
+        "forbidden": "This account isn't allowed to do that.",
+        "notFound": "This record doesn't exist. It may have been deleted.",
+        "conflict": "This action can't run in the current state.",
+        "rateLimited": "Too many requests. Wait a few seconds and try again.",
+        "notEnabled": "This feature isn't switched on yet.",
+        "server": "The server hit an error (HTTP {status}). Try again or contact us.",
+        "rejected": "The request was refused (HTTP {status}).",
+        "unexpected": "Unexpected response status HTTP {status}."
+      },
+      "code": {
+        "no_active_key": "This account has no active key. Create one on the Keys page; charges are billed to it.",
+        "empty_message": "Write a message before sending.",
+        "router_unconfigured": "Supply isn't connected yet. Try again later."
+      },
+      "field": {
+        "amountRequired": "Enter an amount.",
+        "amountNotNumber": "The amount must be a number.",
+        "amountMin": "The amount must be at least {min}.",
+        "amountMax": "At most {max} per top-up.",
+        "limitNotNumber": "Numbers only. Leave blank for no limit.",
+        "limitPositive": "Must be greater than 0. Leave blank for no limit.",
+        "limitInteger": "Whole numbers only.",
+        "limitMax": "At most {max}."
+      },
+      "upstreamEmpty": "The upstream returned nothing.",
+      "upstreamInterrupted": "The upstream cut this request short.",
+      "requestFailed": "This request failed."
+    },
+    "keys": {
+      "title": "API Keys",
+      "description": "The full key is shown once, at creation. Default scopes: models:* + tools:*.",
+      "status": {
+        "active": "Active",
+        "disabled": "Disabled",
+        "expired": "Expired",
+        "revoked": "Revoked"
+      },
+      "pending": {
+        "revoking": "Revoking",
+        "enabling": "Enabling",
+        "disabling": "Disabling",
+        "saving": "Saving"
+      },
+      "notice": {
+        "revoked": "Revoked {name}. The key stopped working immediately.",
+        "created": "Created {name}."
+      },
+      "emptyTitle": "Create a key to start calling the API",
+      "emptyDescription": "A key is required to call /v1. Its secret is shown once, at creation.",
+      "col": {
+        "name": "Name",
+        "prefix": "Prefix",
+        "status": "Status",
+        "spend": "Today / total",
+        "rate": "Rate",
+        "expires": "Expires",
+        "actions": "Actions"
+      },
+      "footer": "Disabling can be undone at any time; revoking cannot. See <link>Usage</link> for spend.",
+      "confirm": {
+        "title": "Revoke {name}",
+        "description": "Revoking stops this key immediately and can't be undone. Programs using it will get 401. To pause it, use Disable instead.",
+        "confirm": "Revoke key",
+        "cancel": "Cancel"
+      },
+      "reveal": {
+        "title": "Shown once · it can't be read again after you close this",
+        "copy": "Copy",
+        "copied": "Copied",
+        "saved": "I've saved it"
+      },
+      "form": {
+        "name": "Name",
+        "rate": "Rate (req/s)",
+        "daily": "Daily cap $",
+        "total": "Total cap $",
+        "unlimited": "No limit",
+        "expires": "Expiry date (UTC)",
+        "create": "Create key",
+        "creating": "Creating…",
+        "nameRequired": "Name the key so you can reconcile it later.",
+        "nameEmpty": "Enter a name.",
+        "expiresInvalid": "Use the date format 2026-10-01.",
+        "saveLogs": "Save logs: {on, select, true {on} other {off}}",
+        "saveLogsHint": "With logs off, request details for this key aren't recorded; billing continues as usual.",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "row": {
+        "created": "created {date}",
+        "neverExpires": "Never",
+        "edit": "Edit",
+        "collapse": "Collapse",
+        "enable": "Enable",
+        "disable": "Disable",
+        "revoke": "Revoke {name}"
+      }
+    },
+    "usage": {
+      "title": "Usage",
+      "description": "Spend, tokens and every request in detail. Windows are in UTC, matching when daily caps reset.",
+      "range": {
+        "24h": "Last 24 hours",
+        "7d": "Last 7 days",
+        "30d": "Last 30 days",
+        "mtd": "Month to date"
+      },
+      "filter": {
+        "model": "Model",
+        "allModels": "All models",
+        "key": "Key",
+        "allKeys": "All keys",
+        "deletedKey": "{label} (deleted)"
+      },
+      "refresh": "Refresh",
+      "export": "Export CSV",
+      "trend": {
+        "title": "Spend trend",
+        "hourly": "Hourly · UTC",
+        "daily": "Daily · UTC",
+        "emptyTitle": "Nothing was spent in this period",
+        "emptyDescription": "Pick another range, or run a request from Quick use.",
+        "bar": "{bucket} · {amount} · {count, plural, one {# request} other {# requests}}",
+        "peak": "Peak {amount}"
+      },
+      "byModel": {
+        "title": "By model",
+        "emptyTitle": "Models you call in this period show up here"
+      },
+      "byKey": {
+        "title": "By key",
+        "emptyTitle": "Keys that spend in this period show up here",
+        "deleted": "Deleted key"
+      },
+      "col": {
+        "model": "Model",
+        "requests": "Requests",
+        "tokens": "Input / output",
+        "cost": "Cost",
+        "key": "Key",
+        "time": "Time",
+        "status": "Status",
+        "latency": "Latency",
+        "unitCost": "Unit price"
+      },
+      "tiles": {
+        "cost": "Spend",
+        "requests": "Requests",
+        "tokens": "Tokens",
+        "tokensHint": "In {input} · out {output}",
+        "average": "Avg per request",
+        "averageEmpty": "Awaiting the first request"
+      },
+      "records": {
+        "title": "Request log",
+        "subtitle": "Newest first · each row is one charge",
+        "emptyTitle": "Requests in this period show up here",
+        "emptyDescription": "Adjust the filters, or call /v1/chat/completions with a key.",
+        "loaded": "{count, plural, one {# row} other {# rows}} loaded",
+        "loading": "Loading…",
+        "more": "Load more",
+        "end": "End of list"
+      }
+    },
+    "dashboard": {
+      "title": "Overview",
+      "description": "Console: top-ups · keys · integration. Browse the shelf from the API market home.",
+      "actions": {
+        "usage": "Usage",
+        "market": "API market",
+        "quickUse": "Quick use"
+      },
+      "stat": {
+        "balance": "Balance",
+        "balanceHint": "prepaid wallet",
+        "keys": "API Keys",
+        "keysHint": "{count} active",
+        "monthSpend": "Spend this month",
+        "requestsHint": "{count, plural, one {# request} other {# requests}}",
+        "catalog": "Catalog models"
+      },
+      "connect": {
+        "title": "Connection",
+        "sampleModel": "Sample model"
+      },
+      "checklist": {
+        "title": "Launch checklist",
+        "balance": "Wallet balance > 0",
+        "activeKey": "At least one active key",
+        "keyUsed": "A key has been called (baseURL connected)",
+        "billed": "Billed requests this month",
+        "done": "Done",
+        "todo": "Not done"
+      },
+      "featured": {
+        "title": "Featured models",
+        "openMarket": "Open API market →",
+        "price": "In {input} · out {output} /1M"
+      }
+    },
+    "docs": {
+      "title": "Integration",
+      "description": "One key, one baseURL. OpenAI, Anthropic and Responses protocols share one entry point.",
+      "sampleModel": "Sample model",
+      "images": "Image generation",
+      "limits": {
+        "title": "Limits",
+        "rate": "Each key defaults to <mono>10</mono> requests per second. Beyond that it returns <mono>429</mono> with <mono>x-ratelimit-limit</mono> / <mono>x-ratelimit-remaining</mono> / <mono>x-ratelimit-reset</mono> and <mono>retry-after</mono>.",
+        "quota": "A key can also carry a total and a daily quota; the daily quota resets at midnight UTC. Hitting it returns <mono>402 key_quota_exceeded</mono>; an empty balance returns <mono>402 insufficient_balance</mono>. Call <mono>GET {base}/limits</mono> with the same key for the values in force."
+      },
+      "col": {
+        "method": "Method",
+        "path": "Path",
+        "note": "Description"
+      },
+      "endpoints": {
+        "models": "Public model list",
+        "chat": "Chat completions (streaming or not)",
+        "responses": "Responses API (Codex, Agents SDK)",
+        "messages": "Anthropic Messages (Claude Code, Anthropic SDK, x-api-key)",
+        "embeddings": "Embeddings",
+        "imagesGenerations": "Text to image (302.ai / OpenAI contract)",
+        "imagesEdits": "Image to image (multipart: image + prompt + model + size)",
+        "limits": "This key's rate limit and remaining quota"
+      }
+    },
+    "playground": {
+      "title": "Quick use",
+      "description": "OpenAI-compatible chat · runs through the billing edge and shows what each call cost",
+      "defaultPrompt": "Describe {brand} Router in one sentence",
+      "model": "Model",
+      "message": "Message",
+      "send": "Send",
+      "sending": "Sending…",
+      "stop": "Stop",
+      "billingNote": "Billed to the newest key on your account",
+      "reply": "Reply",
+      "emptyTitle": "Send a message and the reply streams in here",
+      "emptyDescription": "Every call goes through the billing edge; its cost shows here when it finishes.",
+      "createKey": "Create a key",
+      "stopped": "Stopped",
+      "tokens": "In {input} · out {output}",
+      "settling": "Settling…"
+    },
+    "wallet": {
+      "title": "Wallet",
+      "description": "Prepay, then pay per use. Balance and spend live in one ledger.",
+      "balance": "Current balance",
+      "note": "Billed per use, to 6 decimal places per request. See <link>Usage</link> for where it went.",
+      "refresh": "Refresh balance",
+      "topUp": "Top up",
+      "amount": "Amount ({currency})",
+      "pay": "Continue to payment",
+      "footnote": "Minimum ${min}. Pay by card, Alipay or WeChat Pay; you come back here when it's done."
+    }
   }
 }

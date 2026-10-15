@@ -4,6 +4,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { DEFAULT_PUBLIC_MODEL } from "@nebutra/router-supply";
 import { Button, Select, Textarea } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { StatePanel } from "@/components/console-states";
 import { consoleApi } from "@/lib/console-api";
@@ -50,6 +51,8 @@ interface Turn {
   answer: string;
   status: "streaming" | "done" | "cancelled" | "failed";
   error: string | null;
+  /** The refusal was "no active key", so the error offers the way to make one. */
+  needsKey: boolean;
   promptTokens: number | null;
   completionTokens: number | null;
   requestId: string | null;
@@ -68,9 +71,11 @@ export function PlaygroundClient({
   initialModel?: string;
   variant?: "usage" | "embedded";
 }) {
+  const t = useTranslations("console.playground");
+  const tErrors = useTranslations("console.errors");
   const options = useMemo(() => (models.length > 0 ? models : [DEFAULT_PUBLIC_MODEL]), [models]);
   const [model, setModel] = useState(() => initialModel ?? options[0] ?? DEFAULT_PUBLIC_MODEL);
-  const [prompt, setPrompt] = useState(`用一句话介绍 ${brand.name} Router`);
+  const [prompt, setPrompt] = useState(() => t("defaultPrompt", { brand: brand.name }));
   const [turns, setTurns] = useState<Turn[]>([]);
   const [running, setRunning] = useState(false);
   const laneRef = useRef(createRequestLane());
@@ -94,6 +99,7 @@ export function PlaygroundClient({
       answer: "",
       status: "streaming",
       error: null,
+      needsKey: false,
       promptTokens: null,
       completionTokens: null,
       requestId: null,
@@ -117,7 +123,7 @@ export function PlaygroundClient({
       patchTurn(id, { requestId });
 
       if (!response.body) {
-        patchTurn(id, { status: "failed", error: "上游没有返回内容。" });
+        patchTurn(id, { status: "failed", error: tErrors("upstreamEmpty") });
         return;
       }
 
@@ -136,7 +142,7 @@ export function PlaygroundClient({
           const record = readRecord(streamedError);
           patchTurn(id, {
             status: "failed",
-            error: readString(record.message, "上游中断了这次请求。"),
+            error: readString(record.message, tErrors("upstreamInterrupted")),
             answer,
           });
           return;
@@ -174,14 +180,16 @@ export function PlaygroundClient({
         patchTurn(id, { status: "cancelled" });
         return;
       }
-      patchTurn(id, { status: "failed", error: describeError(error), settling: false });
-      if (error instanceof ConsoleError && error.code === "no_active_key") {
-        patchTurn(id, { error: error.message });
-      }
+      patchTurn(id, {
+        status: "failed",
+        error: describeError(error, tErrors),
+        needsKey: error instanceof ConsoleError && error.code === "no_active_key",
+        settling: false,
+      });
     } finally {
       setRunning(false);
     }
-  }, [model, prompt, running, patchTurn]);
+  }, [model, prompt, running, patchTurn, tErrors]);
 
   const stop = () => {
     laneRef.current.cancel();
@@ -201,10 +209,10 @@ export function PlaygroundClient({
     >
       <div className="flex min-h-0 flex-col space-y-3 rounded-[var(--radius-lg)] border border-neutral-6 p-3 md:p-4">
         <Select
-          label="模型"
+          label={t("model")}
           id="router-model"
           size="small"
-          className="font-mono text-[12px]"
+          className="font-mono text-xs"
           value={model}
           onValueChange={(value) => {
             if (value) setModel(value);
@@ -212,15 +220,13 @@ export function PlaygroundClient({
           options={options.map((candidate) => ({ value: candidate, label: candidate }))}
         />
         <Textarea
-          label="消息"
+          label={t("message")}
           id="router-prompt"
           value={prompt}
           onChange={(event) => setPrompt(event.target.value)}
           rows={tall ? 12 : 8}
           className={
-            tall
-              ? "min-h-[200px] flex-1 font-mono text-[13px]"
-              : "min-h-[160px] font-mono text-[12px]"
+            tall ? "min-h-[200px] flex-1 font-mono text-sm" : "min-h-[160px] font-mono text-xs"
           }
         />
         <div className="flex flex-wrap items-center gap-2">
@@ -232,28 +238,25 @@ export function PlaygroundClient({
             disabled={running || prompt.trim() === ""}
             onClick={() => void send()}
           >
-            {running ? "请求中…" : "发送"}
+            {running ? t("sending") : t("send")}
           </Button>
           {running ? (
             <Button type="button" variant="outline" size="sm" className="h-9" onClick={stop}>
-              停止
+              {t("stop")}
             </Button>
           ) : null}
-          <span className="text-[11px] text-neutral-10">用你账号下最新的一把 Key 计费</span>
+          <span className="text-xs text-muted-foreground">{t("billingNote")}</span>
         </div>
       </div>
 
       <div className="flex min-h-[240px] flex-col overflow-hidden rounded-[var(--radius-lg)] border border-neutral-6 lg:min-h-0">
         <div className="flex items-center justify-between border-b border-neutral-6 bg-neutral-2/50 px-3 py-2">
-          <span className="text-[12px] font-semibold">回复</span>
-          <span className="font-mono text-[10px] text-neutral-10">{model}</span>
+          <span className="text-xs font-semibold">{t("reply")}</span>
+          <span className="font-mono text-xs text-muted-foreground">{model}</span>
         </div>
         <div className="flex-1 overflow-auto">
           {turns.length === 0 ? (
-            <StatePanel
-              title="发一条消息，回复会流式出现在这里"
-              description="每次调用都会走计费边缘，结束后这里会显示它花了多少。"
-            />
+            <StatePanel title={t("emptyTitle")} description={t("emptyDescription")} />
           ) : (
             <ul className="divide-y divide-neutral-6">
               {turns.map((turn) => (
@@ -270,38 +273,43 @@ export function PlaygroundClient({
 }
 
 function TurnView({ turn }: { turn: Turn }) {
+  const t = useTranslations("console.playground");
+  const tErrors = useTranslations("console.errors");
   return (
     <>
-      <p className="mb-1.5 line-clamp-2 text-[11px] text-neutral-10">{turn.prompt}</p>
+      <p className="mb-1.5 line-clamp-2 text-xs text-muted-foreground">{turn.prompt}</p>
       {turn.status === "failed" ? (
         <div
           role="alert"
-          className="rounded-[var(--radius-md)] border border-destructive/35 bg-destructive/8 px-2.5 py-2 text-[12px] text-destructive-strong"
+          className="rounded-[var(--radius-md)] border border-destructive/35 bg-destructive/8 px-2.5 py-2 text-xs text-destructive-strong"
         >
-          {turn.error ?? "这次请求失败了。"}
-          {turn.error?.includes("Key") ? (
+          {turn.error ?? tErrors("requestFailed")}
+          {turn.needsKey ? (
             <>
               {" "}
               <Link href="/keys" className="underline underline-offset-2">
-                去创建 Key
+                {t("createKey")}
               </Link>
             </>
           ) : null}
         </div>
       ) : (
-        <pre className="whitespace-pre-wrap font-mono text-[13px] leading-relaxed text-neutral-12">
+        <pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed text-neutral-12">
           {turn.answer}
           {turn.status === "streaming" ? (
             <span className="ml-0.5 inline-block h-3 w-1.5 animate-pulse bg-neutral-9" />
           ) : null}
         </pre>
       )}
-      <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] text-neutral-10">
+      <p className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-muted-foreground">
         <span>{turn.model}</span>
-        {turn.status === "cancelled" ? <span>已停止</span> : null}
+        {turn.status === "cancelled" ? <span>{t("stopped")}</span> : null}
         {turn.promptTokens !== null && turn.completionTokens !== null ? (
           <span>
-            入 {formatTokens(turn.promptTokens)} · 出 {formatTokens(turn.completionTokens)}
+            {t("tokens", {
+              input: formatTokens(turn.promptTokens),
+              output: formatTokens(turn.completionTokens),
+            })}
           </span>
         ) : null}
         {turn.cost !== null ? (
@@ -309,7 +317,7 @@ function TurnView({ turn }: { turn: Turn }) {
             {formatAmount(turn.cost)} {turn.currency}
           </span>
         ) : turn.settling ? (
-          <span>结算中…</span>
+          <span>{t("settling")}</span>
         ) : null}
         {turn.requestId ? <span>{turn.requestId.slice(0, 8)}</span> : null}
       </p>

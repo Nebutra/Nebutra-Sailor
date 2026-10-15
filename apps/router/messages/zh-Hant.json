@@ -29,7 +29,8 @@
     "integrationHelp": "整合指南",
     "aiRecommend": "AI 推薦",
     "market": "市場",
-    "usageTitle": "快速使用"
+    "usageTitle": "快速使用",
+    "currencyNote": "計價與結算均為美元"
   },
   "channels": {
     "app": "App 市場",
@@ -96,29 +97,29 @@
     }
   },
   "toolTaxonomy": {
-    "bots": {
-      "label": "機器人",
-      "chips": "聊天機器人 · 繪圖機器人 · 知識"
+    "generator": {
+      "label": "產生器",
+      "chips": "UUID · 佔位文字 · 隨機字串"
     },
-    "productivity": {
-      "label": "生產力",
-      "chips": "模型競技場 · AI 寫作"
+    "converter": {
+      "label": "轉換器",
+      "chips": "Base64 · Markdown 轉 PDF"
     },
-    "academic": {
-      "label": "學術",
-      "chips": "PDF 工具包 · AI 專利搜尋"
+    "formatter": {
+      "label": "格式化",
+      "chips": "JSON · 大小寫"
     },
-    "image": {
-      "label": "影像工具",
-      "chips": "3D 工作室 · 畫布"
+    "checker": {
+      "label": "檢查器",
+      "chips": "DNS 洩漏 · 證件號碼"
     },
-    "audio": {
-      "label": "音訊",
-      "chips": "語音 · AI 音樂"
+    "comparator": {
+      "label": "比對",
+      "chips": "JSON 差異"
     },
-    "code": {
-      "label": "程式碼",
-      "chips": "網頁產生器 · Forge"
+    "analyzer": {
+      "label": "分析器",
+      "chips": "字數統計 · JWT"
     }
   },
   "shortcuts": {
@@ -128,5 +129,464 @@
     "use": "試用",
     "docs": "文件",
     "models": "更多"
+  },
+  "auth": {
+    "signOut": "登出",
+    "signOutLong": "登出",
+    "signIn": "登入",
+    "signUp": "註冊",
+    "signInOrUp": "登入 / 註冊",
+    "noAccount": "沒有帳號？註冊",
+    "signInPrompt": "點擊登入"
+  },
+  "footer": {
+    "tagline": "一把金鑰，接入所有模型。按量付費。",
+    "quickAccess": "快捷入口",
+    "support": "支援",
+    "legal": "法律",
+    "copyright": "© {year} {brandName}. 保留所有權利。",
+    "strapline": "API 集市 · 按量付費 · 多模型統一接入",
+    "links": {
+      "appMarket": "應用集市",
+      "apiMarket": "API 集市",
+      "models": "模型目錄",
+      "console": "管理後台",
+      "quickUse": "快捷使用",
+      "forge": "Forge 工具",
+      "apiDocs": "API 文件",
+      "faq": "常見問題",
+      "contact": "聯絡我們",
+      "status": "系統狀態",
+      "terms": "服務條款",
+      "privacy": "隱私政策",
+      "refund": "退款政策",
+      "cookies": "Cookie 政策"
+    }
+  },
+  "category": {
+    "chat": "語言大模型",
+    "reasoning": "推理模型",
+    "fast": "高性價比",
+    "multimodal": "多模態",
+    "image": "圖片生成",
+    "video": "影片生成",
+    "audio": "影音處理",
+    "data": "資訊處理",
+    "rag": "RAG 相關",
+    "tools": "工具 API",
+    "other": "其他"
+  },
+  "card": {
+    "details": "{model} 詳情",
+    "docs": "文件",
+    "try": "試用",
+    "input": "入 {price}/1M",
+    "output": "出 {price}/1M"
+  },
+  "banners": {
+    "label": "貨架精選",
+    "previous": "上一張",
+    "next": "下一張",
+    "goTo": "第 {n} 張",
+    "current": "第 {n} / {total} 張",
+    "modalityKicker": "在售類目",
+    "liveKicker": "現已可用",
+    "shelf": "API 集市",
+    "viewAll": "查看全部",
+    "tryNow": "立即體驗",
+    "price": "入 {input} · 出 {output} /1M",
+    "llm": {
+      "title": "語言大模型",
+      "subtitle": "對話 · 推理 · 高性價比全系可售"
+    },
+    "image": {
+      "title": "圖片生成",
+      "subtitle": "文生圖 · 多廠商統一介面"
+    },
+    "video": {
+      "title": "影片生成",
+      "subtitle": "文生影片 · 動態內容生產能力"
+    },
+    "audio": {
+      "title": "影音處理",
+      "subtitle": "語音合成 · 轉寫 · 音訊理解"
+    },
+    "data": {
+      "title": "資訊處理",
+      "subtitle": "檢索 · 抽取 · 知識增強"
+    },
+    "tools": {
+      "title": "工具 API",
+      "subtitle": "開發者工具與 Agent 能力介面"
+    }
+  },
+  "brandBlurb": {
+    "openai": "OpenAI 出品，通用对话与多模态旗舰",
+    "anthropic": "Anthropic Claude，工程与智能体向强推理",
+    "google": "Google Gemini，原生搜索与多模态",
+    "xai": "xAI Grok，工具调用与实时能力",
+    "deepseek": "DeepSeek，高性价比对话与推理",
+    "moonshot": "月之暗面 Kimi，长上下文中文能力",
+    "mistral": "Mistral，高效开源与商用模型",
+    "meta": "Meta Llama，开源生态主力",
+    "qwen": "通义千问，阿里云中文基座",
+    "zhipu": "智谱 GLM，中文基座与 Agent",
+    "minimax": "Minimax，MoE 通用与语音",
+    "cohere": "Cohere，企业检索与 Command 系列",
+    "perplexity": "Perplexity，搜索增强对话",
+    "baichuan": "百川智能，中文开源与商用",
+    "yi": "零一万物，中文与多语言模型",
+    "doubao": "豆包，字节跳动通用大模型",
+    "hunyuan": "腾讯混元，中文与多模态",
+    "nvidia": "NVIDIA Nemotron，开源推理与加速",
+    "other": "其他可售模型与接口"
+  },
+  "catalog": {
+    "allModels": "全部模型",
+    "categories": "分類",
+    "apps": "應用",
+    "filterPlaceholder": "在結果中篩選…",
+    "collapse": "收合分類",
+    "expand": "展開分類",
+    "price": "價格",
+    "count": "{count} 個",
+    "gridView": "網格檢視",
+    "listView": "列表檢視",
+    "clear": "清除篩選",
+    "noMatchTitle": "沒有符合篩選的模型",
+    "noMatchBody": "換個更短的關鍵字，或換一個分類。"
+  },
+  "detail": {
+    "blurb": "{provider} 出品 · {category} · 上下文 {context} · 可經 Router 統一接入。",
+    "intro": {
+      "what": "{model} 是 {provider} 在「{category}」貨架上的可售模型。",
+      "how": "透過 {brandName} Router 使用 OpenAI 相容介面呼叫，無需分別對接多家上游。",
+      "live": "目前貨架狀態：可售 / 已設定路由。",
+      "catalog": "目前為目錄參考價，連通供給庫存後即可按量呼叫。"
+    },
+    "cap": {
+      "unifiedTitle": "統一接入",
+      "unifiedBody": "一套 API Key / Base URL 涵蓋多廠商模型，切換 public model id 即可。",
+      "meteredTitle": "按量計價",
+      "meteredBody": "輸入 {input}/1M · 輸出 {output}/1M（目錄價，以實際出帳為準）。",
+      "contextTitle": "上下文",
+      "contextBody": "公開上下文視窗約 {context}，適合長對話與文件任務（以模型實際上限為準）。",
+      "reasoningTitle": "推理向",
+      "reasoningBody": "適合複雜規劃、程式碼與多步工具呼叫場景。",
+      "multimodalTitle": "多模態",
+      "multimodalBody": "支援圖文等跨模態輸入（以模型能力宣告為準）。"
+    },
+    "copied": "已複製",
+    "copyForAi": "複製給 AI",
+    "sellable": "可售",
+    "catalogOnly": "目錄",
+    "contextChip": "上下文 {context}",
+    "input": "輸入",
+    "output": "輸出",
+    "provider": "廠商",
+    "volume": "大額採購可聯絡支援取得專屬價",
+    "docs": "查看文件",
+    "capabilities": "核心能力",
+    "signInMore": "登入後探索更多功能。",
+    "openPlayground": "開啟 Playground · {model}",
+    "viewDetails": "查看詳情",
+    "listPrice": "目錄價 · 按量",
+    "noRelated": "貨架上還沒有相關模型。",
+    "toc": {
+      "intro": "API 介紹",
+      "playground": "Playground",
+      "apis": "API 列表",
+      "pricing": "API 價格表",
+      "related": "猜你喜歡"
+    },
+    "col": {
+      "api": "API 描述",
+      "path": "介面位址",
+      "method": "方法",
+      "params": "參數",
+      "model": "模型",
+      "context": "上下文",
+      "note": "說明"
+    },
+    "api": {
+      "imagesGenerate": "Images（生成）",
+      "imagesEdit": "Images（編輯）",
+      "audioSpeech": "Audio（語音合成）",
+      "audioTranscribe": "Audio（轉寫）",
+      "embeddings": "Embeddings（向量）",
+      "chat": "Chat（聊天）",
+      "chatStream": "Chat（串流）",
+      "responses": "Responses（回應）"
+    },
+    "metaFallback": "模型詳情",
+    "metaTitle": "{model} · API 價格與文件",
+    "metaDescription": "{provider} {model} — {brandName} Router 可售貨架詳情、價格與接入說明。"
+  },
+  "console": {
+    "states": {
+      "loadFailed": "這塊內容沒能載入出來",
+      "emptyDefault": "這段時間沒有記錄",
+      "retry": "重試"
+    },
+    "errors": {
+      "generic": "請求失敗，請重試。",
+      "network": "網路請求沒有發出去，檢查網路後重試。",
+      "status": {
+        "unauthorized": "登入狀態已失效，請重新登入後再試。",
+        "forbidden": "目前帳號沒有這個操作的權限。",
+        "notFound": "這筆記錄不存在，可能已被刪除。",
+        "conflict": "目前狀態無法執行這個操作。",
+        "rateLimited": "請求過於頻繁，稍等幾秒再試。",
+        "notEnabled": "這個功能尚未開通。",
+        "server": "服務端出錯了（HTTP {status}），請重試或聯絡我們。",
+        "rejected": "請求被拒絕（HTTP {status}）。",
+        "unexpected": "意外的回應狀態 HTTP {status}。"
+      },
+      "code": {
+        "no_active_key": "這個帳號還沒有可用的 Key。到 Keys 頁面建立一把，費用會記在它名下。",
+        "empty_message": "先寫點內容再傳送。",
+        "router_unconfigured": "供給尚未接通，稍後再試。"
+      },
+      "field": {
+        "amountRequired": "請輸入金額。",
+        "amountNotNumber": "金額只能是數字。",
+        "amountMin": "金額至少 {min}。",
+        "amountMax": "單次最多 {max}。",
+        "limitNotNumber": "只能填數字，留空表示不限。",
+        "limitPositive": "要大於 0，留空表示不限。",
+        "limitInteger": "只能填整數。",
+        "limitMax": "最大 {max}。"
+      },
+      "upstreamEmpty": "上游沒有回傳內容。",
+      "upstreamInterrupted": "上游中斷了這次請求。",
+      "requestFailed": "這次請求失敗了。"
+    },
+    "keys": {
+      "title": "API Keys",
+      "description": "建立後完整金鑰只顯示一次。預設 scopes: models:* + tools:*。",
+      "status": {
+        "active": "啟用中",
+        "disabled": "已停用",
+        "expired": "已過期",
+        "revoked": "已撤銷"
+      },
+      "pending": {
+        "revoking": "撤銷中",
+        "enabling": "啟用中",
+        "disabling": "停用中",
+        "saving": "儲存中"
+      },
+      "notice": {
+        "revoked": "已撤銷 {name}，這把 Key 立即失效。",
+        "created": "已建立 {name}。"
+      },
+      "emptyTitle": "這個帳號下還沒有 Key",
+      "emptyDescription": "建立一把 Key 才能呼叫 /v1，金鑰原文只在建立時顯示一次。",
+      "col": {
+        "name": "名稱",
+        "prefix": "前綴",
+        "status": "狀態",
+        "spend": "今日 / 累計",
+        "rate": "速率",
+        "expires": "過期",
+        "actions": "操作"
+      },
+      "footer": "停用可以隨時恢復；撤銷不可復原。用量與花費見 <link>用量</link>。",
+      "confirm": {
+        "title": "撤銷 {name}",
+        "description": "撤銷後這把 Key 立刻失效，且無法恢復。正在使用它的程式會收到 401。想暫時停用請改用「停用」。",
+        "confirm": "確認撤銷",
+        "cancel": "取消"
+      },
+      "reveal": {
+        "title": "只顯示這一次 · 關掉就再也讀不到了",
+        "copy": "複製",
+        "copied": "已複製",
+        "saved": "我已儲存"
+      },
+      "form": {
+        "name": "名稱",
+        "rate": "速率 (req/s)",
+        "daily": "每日上限 $",
+        "total": "累計上限 $",
+        "unlimited": "不限",
+        "expires": "過期日 (UTC)",
+        "create": "建立 Key",
+        "creating": "建立中…",
+        "nameRequired": "給這把 Key 取個名字，方便日後對帳。",
+        "nameEmpty": "名稱不能為空。",
+        "expiresInvalid": "日期格式應為 2026-10-01。",
+        "saveLogs": "儲存日誌：{on, select, true {開} other {關}}",
+        "saveLogsHint": "關掉後這把 Key 的請求明細不再記錄，帳單仍然照常記帳。",
+        "cancel": "取消",
+        "save": "儲存"
+      },
+      "row": {
+        "created": "{date} 建立",
+        "neverExpires": "長期有效",
+        "edit": "編輯",
+        "collapse": "收合",
+        "enable": "啟用",
+        "disable": "停用",
+        "revoke": "撤銷 {name}"
+      }
+    },
+    "usage": {
+      "title": "用量",
+      "description": "花費、Token 與每一次請求的明細。時間視窗按 UTC 計算，與每日額度的重置時刻一致。",
+      "range": {
+        "24h": "近 24 小時",
+        "7d": "近 7 天",
+        "30d": "近 30 天",
+        "mtd": "本月至今"
+      },
+      "filter": {
+        "model": "模型",
+        "allModels": "全部模型",
+        "key": "Key",
+        "allKeys": "全部 Key",
+        "deletedKey": "{label}（已刪除）"
+      },
+      "refresh": "重新整理",
+      "export": "匯出 CSV",
+      "trend": {
+        "title": "消費趨勢",
+        "hourly": "按小時 · UTC",
+        "daily": "按天 · UTC",
+        "emptyTitle": "這段時間沒有產生費用",
+        "emptyDescription": "換個時間範圍，或者到快捷使用跑一次請求。",
+        "bar": "{bucket} · {amount} · {count} 次",
+        "peak": "峰值 {amount}"
+      },
+      "byModel": {
+        "title": "按模型",
+        "emptyTitle": "這段時間沒有模型呼叫"
+      },
+      "byKey": {
+        "title": "按 Key",
+        "emptyTitle": "這段時間沒有 Key 產生花費",
+        "deleted": "已刪除的 Key"
+      },
+      "col": {
+        "model": "模型",
+        "requests": "請求",
+        "tokens": "輸入 / 輸出",
+        "cost": "花費",
+        "key": "Key",
+        "time": "時間",
+        "status": "狀態",
+        "latency": "耗時",
+        "unitCost": "單價"
+      },
+      "tiles": {
+        "cost": "花費",
+        "requests": "請求數",
+        "tokens": "Token",
+        "tokensHint": "入 {input} · 出 {output}",
+        "average": "單次均價",
+        "averageEmpty": "還沒有請求"
+      },
+      "records": {
+        "title": "請求明細",
+        "subtitle": "按時間倒序 · 每一列都對應一次扣費",
+        "emptyTitle": "這段時間沒有請求",
+        "emptyDescription": "調整篩選條件，或用一把 Key 呼叫 /v1/chat/completions 試試。",
+        "loaded": "已載入 {count} 列",
+        "loading": "載入中…",
+        "more": "載入更多",
+        "end": "已經到底了"
+      }
+    },
+    "dashboard": {
+      "title": "資料彙總",
+      "description": "管理後台：儲值 · Key · 接入。逛貨架請回 API 市集首頁。",
+      "actions": {
+        "usage": "用量",
+        "market": "API 市集",
+        "quickUse": "快捷使用"
+      },
+      "stat": {
+        "balance": "餘額",
+        "balanceHint": "prepaid wallet",
+        "keys": "API Keys",
+        "keysHint": "{count} 把使用中",
+        "monthSpend": "本月花費",
+        "requestsHint": "{count} 次請求",
+        "catalog": "目錄模型"
+      },
+      "connect": {
+        "title": "接入參數",
+        "sampleModel": "範例 model"
+      },
+      "checklist": {
+        "title": "上線檢查",
+        "balance": "錢包餘額 > 0",
+        "activeKey": "至少一把可用 Key",
+        "keyUsed": "Key 被呼叫過（baseURL 已接通）",
+        "billed": "本月已有計費請求",
+        "done": "已完成",
+        "todo": "未完成"
+      },
+      "featured": {
+        "title": "目錄精選",
+        "openMarket": "開啟 API 市集 →",
+        "price": "入 {input} · 出 {output} /1M"
+      }
+    },
+    "docs": {
+      "title": "接入",
+      "description": "一把 Key，一個 baseURL。OpenAI、Anthropic、Responses 三種協定走同一入口。",
+      "sampleModel": "範例 model",
+      "images": "圖片生成",
+      "limits": {
+        "title": "限額",
+        "rate": "每把 Key 預設 <mono>10</mono> 次/秒。超出時回傳 <mono>429</mono>，並帶上 <mono>x-ratelimit-limit</mono> / <mono>x-ratelimit-remaining</mono> / <mono>x-ratelimit-reset</mono> 與 <mono>retry-after</mono>。",
+        "quota": "Key 上還可以設總額度與單日額度，單日額度按 UTC 零點重置；觸頂回傳 <mono>402 key_quota_exceeded</mono>，餘額不足回傳 <mono>402 insufficient_balance</mono>。目前生效的數值由 <mono>GET {base}/limits</mono> 回傳，用同一把 Key 呼叫即可。"
+      },
+      "col": {
+        "method": "Method",
+        "path": "Path",
+        "note": "說明"
+      },
+      "endpoints": {
+        "models": "公開模型列表",
+        "chat": "對話補全（串流 / 非串流）",
+        "responses": "Responses API（Codex、Agents SDK）",
+        "messages": "Anthropic Messages（Claude Code、Anthropic SDK，x-api-key）",
+        "embeddings": "向量",
+        "imagesGenerations": "文生圖（302.ai / OpenAI 同契約）",
+        "imagesEdits": "圖生圖（multipart：image + prompt + model + size）",
+        "limits": "這把 Key 的速率上限與額度餘量"
+      }
+    },
+    "playground": {
+      "title": "快捷使用",
+      "description": "OpenAI 相容對話 · 走計費邊緣，結束後顯示這一次的花費",
+      "defaultPrompt": "用一句話介紹 {brand} Router",
+      "model": "模型",
+      "message": "訊息",
+      "send": "傳送",
+      "sending": "請求中…",
+      "stop": "停止",
+      "billingNote": "用你帳號下最新的一把 Key 計費",
+      "reply": "回覆",
+      "emptyTitle": "傳一則訊息，回覆會串流出現在這裡",
+      "emptyDescription": "每次呼叫都會走計費邊緣，結束後這裡會顯示它花了多少。",
+      "createKey": "去建立 Key",
+      "stopped": "已停止",
+      "tokens": "入 {input} · 出 {output}",
+      "settling": "結算中…"
+    },
+    "wallet": {
+      "title": "錢包",
+      "description": "預充後按量扣費，餘額與消費明細寫在同一帳本。",
+      "balance": "目前餘額",
+      "note": "按量扣費，單次請求精確到 6 位小數。花在哪裡見 <link>用量</link>。",
+      "refresh": "重新整理餘額",
+      "topUp": "儲值",
+      "amount": "金額 ({currency})",
+      "pay": "去付款",
+      "footnote": "最低 ${min}。支援銀行卡、支付寶、微信支付，付完自動回到這裡。"
+    }
   }
 }

@@ -225,32 +225,16 @@
         "count": 52
       },
       {
-        "file": "apps/router/src/components/market-home.tsx",
-        "count": 35
-      },
-      {
-        "file": "apps/router/src/components/product-detail.tsx",
-        "count": 34
-      },
-      {
         "file": "apps/design/src/app/(brand)/brand/page.tsx",
         "count": 27
       },
       {
-        "file": "apps/router/src/components/usage-client.tsx",
-        "count": 23
-      },
-      {
         "file": "apps/router/src/components/market-banner-carousel.tsx",
-        "count": 18
+        "count": 1
       },
       {
         "file": "apps/landing/src/components/landing/blog-portable-text.tsx",
         "count": 15
-      },
-      {
-        "file": "apps/router/src/components/console-shell.tsx",
-        "count": 14
       },
       {
         "file": "apps/landing/src/app/[lang]/(marketing)/about/global/page.tsx",
@@ -265,20 +249,12 @@
         "count": 14
       },
       {
-        "file": "apps/router/src/components/keys-client.tsx",
-        "count": 13
-      },
-      {
         "file": "apps/landing/src/nebutra/studio/studio-workbench.tsx",
         "count": 5
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/layers/page.tsx",
         "count": 9
-      },
-      {
-        "file": "apps/router/src/app/dashboard/page.tsx",
-        "count": 12
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/color/page.tsx",
@@ -306,14 +282,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/MonorepoFileTree.tsx",
-        "count": 10
-      },
-      {
-        "file": "apps/router/src/components/models-catalog.tsx",
-        "count": 10
-      },
-      {
-        "file": "apps/router/src/components/playground-client.tsx",
         "count": 10
       },
       {
@@ -461,14 +429,6 @@
         "count": 7
       },
       {
-        "file": "apps/router/src/app/docs/page.tsx",
-        "count": 7
-      },
-      {
-        "file": "apps/router/src/components/product-card.tsx",
-        "count": 7
-      },
-      {
         "file": "apps/web/src/components/startup-os/company-tower/field-card.tsx",
         "count": 7
       },
@@ -542,14 +502,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/use-cases/mockups/IPMockup.tsx",
-        "count": 6
-      },
-      {
-        "file": "apps/router/src/components/auth-actions.tsx",
-        "count": 6
-      },
-      {
-        "file": "apps/router/src/components/market-footer.tsx",
         "count": 6
       },
       {
@@ -662,10 +614,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/use-cases/mockups/OPCMockup.tsx",
-        "count": 5
-      },
-      {
-        "file": "apps/router/src/components/wallet-client.tsx",
         "count": 5
       },
       {
@@ -1009,22 +957,6 @@
         "count": 3
       },
       {
-        "file": "apps/admin/src/app/fleet/page.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/admin/src/app/page.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/admin/src/components/console-shell.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/admin/src/components/signal-strip.tsx",
-        "count": 2
-      },
-      {
         "file": "apps/design/src/app/(foundations)/icons/page.tsx",
         "count": 1
       },
@@ -1173,26 +1105,6 @@
         "count": 2
       },
       {
-        "file": "apps/router/src/app/use/page.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/router/src/components/brand-marks.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/router/src/components/console-states.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/router/src/components/copy-field.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/router/src/components/page-frame.tsx",
-        "count": 2
-      },
-      {
         "file": "apps/typelens/src/components/filter-bar.tsx",
         "count": 2
       },
@@ -1275,18 +1187,6 @@
       {
         "file": "packages/design/ui/src/primitives/mcp-tool.tsx",
         "count": 2
-      },
-      {
-        "file": "apps/admin/src/components/command-palette.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/admin/src/components/console-tabs.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/admin/src/components/panel.tsx",
-        "count": 1
       },
       {
         "file": "apps/design/src/app/(showcase)/showcase/page.tsx",
@@ -1607,7 +1507,7 @@
       },
       {
         "file": "apps/router/src/components/models-catalog.tsx",
-        "count": 6
+        "count": 5
       },
       {
         "file": "apps/web/src/components/notifications/notifications-page-client.tsx",
@@ -1731,10 +1631,6 @@
       },
       {
         "file": "apps/mail-preview/src/components/preview-pane.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/router/src/components/auth-actions.tsx",
         "count": 2
       },
       {
@@ -1887,14 +1783,6 @@
       },
       {
         "file": "apps/para/src/components/shell/profile-button.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/usage-client.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/wallet-client.tsx",
         "count": 1
       },
       {
@@ -2756,15 +2644,7 @@
         "count": 2
       },
       {
-        "file": "apps/router/src/components/auth-actions.tsx",
-        "count": 2
-      },
-      {
         "file": "apps/router/src/components/brand-marks.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/router/src/components/market-banner-carousel.tsx",
         "count": 2
       },
       {
@@ -2789,14 +2669,6 @@
       },
       {
         "file": "apps/admin/src/app/staff/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/admin/src/components/console-shell.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/admin/src/components/console-tabs.tsx",
         "count": 1
       },
       {
@@ -2856,14 +2728,6 @@
         "count": 1
       },
       {
-        "file": "apps/landing/src/components/status/status-page-view.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/landing/src/components/status/uptime-bar.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/landing/src/nebutra/home/sailor-cli.tsx",
         "count": 1
       },
@@ -2884,23 +2748,7 @@
         "count": 1
       },
       {
-        "file": "apps/router/src/components/console-shell.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/market-footer.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/router/src/components/market-home.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/product-card.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/router/src/components/usage-client.tsx",
         "count": 1
       },
       {
@@ -3310,6 +3158,91 @@
       },
       {
         "file": "packages/design/ui/src/primitives/bento-grid.tsx",
+        "count": 1
+      }
+    ]
+  },
+  "localhostLinks": {
+    "description": "Shrink-only: dev-server URL literals in apps/** source. A missing env var must fall back to the brand domain. scripts/lint-no-localhost-links.mjs",
+    "allowlist": [
+      {
+        "file": "apps/admin/src/lib/auth.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/auth/src/lib/auth.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/auth/src/worker-edge.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/app/api/v1/dns-leak/sessions/[id]/route.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/forge/src/app/api/v1/dns-leak/sessions/route.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/idp/src/lib/oidc-config.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/kuanlan/src/lib/auth-urls.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/app/[lang]/(marketing)/get-license/LicenseWizard.tsx",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/app/api/license/route.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/landing/src/lib/env.ts",
+        "count": 2
+      },
+      {
+        "file": "apps/landing/src/nebutra/home/sailor-cli.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/para/src/lib/auth-urls.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/router/src/lib/auth.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/api/organizations/[orgId]/members/route.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/app/layout.tsx",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/lib/api.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/web/src/lib/env.ts",
+        "count": 4
+      },
+      {
+        "file": "apps/web/src/lib/public-url-defaults.ts",
+        "count": 4
+      },
+      {
+        "file": "apps/web/src/lib/warehouse/gold.ts",
+        "count": 1
+      },
+      {
+        "file": "apps/web/vite.config.ts",
         "count": 1
       }
     ]

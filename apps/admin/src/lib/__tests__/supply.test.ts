@@ -52,7 +52,7 @@ describe("rebrandManagementConsole", () => {
     const out = rebrandManagementConsole(
       '<html><head><title>CLI Proxy API Management Center</title></head><body class="x"><div id="app"></div></body></html>',
     );
-    expect(out).toMatch(/<title>[^<]+ Admin · 引擎控制台<\/title>/);
+    expect(out).toMatch(/<title>[^<]+ Admin · Engine console<\/title>/);
     expect(out).toMatch(/<body class="x"><style id="nebutra-skin">/);
     expect(out).toContain('id="nebutra-note"');
     expect(out).not.toContain("Management Center");

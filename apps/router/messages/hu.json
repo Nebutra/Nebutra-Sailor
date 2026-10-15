@@ -95,32 +95,6 @@
       "hint": "Ügynök · eszközök"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Botok",
-      "chips": "Csevegőbotok · rajzolóbotok · tudás"
-    },
-    "productivity": {
-      "label": "Termelékenység",
-      "chips": "Modellverseny · AI-írás"
-    },
-    "academic": {
-      "label": "Akadémiai",
-      "chips": "PDF eszközök · AI szabadalomkeresés"
-    },
-    "image": {
-      "label": "Képeszközök",
-      "chips": "3D stúdió · Vázlat"
-    },
-    "audio": {
-      "label": "Hang",
-      "chips": "Beszéd · AI zene"
-    },
-    "code": {
-      "label": "Kód",
-      "chips": "Webgenerátor · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Áttekintés",
     "keys": "Kulcsok",

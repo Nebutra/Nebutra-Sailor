@@ -92,11 +92,12 @@ function toDate(iso: string | null): Date | null {
 
 export type RangeKey = "24h" | "7d" | "30d" | "mtd";
 
-export const RANGE_OPTIONS: ReadonlyArray<{ key: RangeKey; label: string }> = [
-  { key: "24h", label: "近 24 小时" },
-  { key: "7d", label: "近 7 天" },
-  { key: "30d", label: "近 30 天" },
-  { key: "mtd", label: "本月至今" },
+/** Labels live in the catalog under `console.usage.range.<key>`. */
+export const RANGE_OPTIONS: ReadonlyArray<{ key: RangeKey }> = [
+  { key: "24h" },
+  { key: "7d" },
+  { key: "30d" },
+  { key: "mtd" },
 ];
 
 export function parseRange(raw: string | null): RangeKey {
@@ -137,18 +138,32 @@ export function granularityFor(range: RangeKey): "hour" | "day" {
  * either "leave this ceiling unset" or "you have to type an amount", never a
  * silent zero.
  */
-export type FieldResult<T> = { ok: true; value: T } | { ok: false; message: string };
+export type FieldResult<T> = { ok: true; value: T } | { ok: false; error: FieldError };
+
+/**
+ * Why a field was rejected, as a catalog key under `console.errors` plus its
+ * ICU values — the caller renders it with its own translator, so this module
+ * stays pure and locale-free.
+ */
+export interface FieldError {
+  key: `field.${string}`;
+  values?: Record<string, string>;
+}
+
+function reject(key: FieldError["key"], values?: Record<string, string>) {
+  return { ok: false as const, error: values ? { key, values } : { key } };
+}
 
 export function parseRequiredAmount(
   raw: string,
   bounds: { min: number; max: number },
 ): FieldResult<number> {
   const trimmed = raw.trim();
-  if (!trimmed) return { ok: false, message: "请输入金额。" };
+  if (!trimmed) return reject("field.amountRequired");
   const value = Number(trimmed);
-  if (!Number.isFinite(value)) return { ok: false, message: "金额只能是数字。" };
-  if (value < bounds.min) return { ok: false, message: `金额至少 ${bounds.min}。` };
-  if (value > bounds.max) return { ok: false, message: `单次最多 ${bounds.max}。` };
+  if (!Number.isFinite(value)) return reject("field.amountNotNumber");
+  if (value < bounds.min) return reject("field.amountMin", { min: String(bounds.min) });
+  if (value > bounds.max) return reject("field.amountMax", { max: String(bounds.max) });
   return { ok: true, value };
 }
 
@@ -160,10 +175,10 @@ export function parseOptionalPositive(
   const trimmed = raw.trim();
   if (!trimmed) return { ok: true, value: null };
   const value = Number(trimmed);
-  if (!Number.isFinite(value)) return { ok: false, message: "只能填数字，留空表示不限。" };
-  if (value <= 0) return { ok: false, message: "要大于 0，留空表示不限。" };
-  if (bounds.integer && !Number.isInteger(value)) return { ok: false, message: "只能填整数。" };
-  if (value > bounds.max) return { ok: false, message: `最大 ${bounds.max}。` };
+  if (!Number.isFinite(value)) return reject("field.limitNotNumber");
+  if (value <= 0) return reject("field.limitPositive");
+  if (bounds.integer && !Number.isInteger(value)) return reject("field.limitInteger");
+  if (value > bounds.max) return reject("field.limitMax", { max: String(bounds.max) });
   return { ok: true, value };
 }
 

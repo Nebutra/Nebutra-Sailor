@@ -2,6 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from "@nebutra/icons";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 import { BrandMark, BrandPill } from "@/components/brand-marks";
 import { PROVIDER_LABEL } from "@/lib/listing-catalog";
@@ -16,6 +17,7 @@ const AUTO_MS = 5200;
 export function MarketBannerCarousel({ banners }: { banners: readonly MarketBanner[] }) {
   const slides = banners.length > 0 ? banners : [];
   const [index, setIndex] = useState(0);
+  const t = useTranslations("banners");
   const [paused, setPaused] = useState(false);
 
   const len = slides.length;
@@ -28,20 +30,16 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
   );
 
   useEffect(() => {
-    if (len <= 1 || paused) return;
+    // Autoplay stops for reduced motion (WCAG 2.2.2): the frames still page by hand.
+    if (len <= 1 || paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const t = window.setInterval(() => {
       setIndex((i) => (i + 1) % len);
     }, AUTO_MS);
     return () => window.clearInterval(t);
   }, [len, paused]);
 
-  if (len === 0) {
-    return (
-      <section className="flex min-h-[300px] items-center justify-center rounded-[20px] bg-neutral-12 text-neutral-8 md:min-h-[340px]">
-        <p className="text-[14px]">暂无轮播物料</p>
-      </section>
-    );
-  }
+  // No banners means no live inventory to feature; the shelf below still renders.
+  if (len === 0) return null;
 
   const current = slides[index] ?? slides[0];
   if (!current) {
@@ -54,11 +52,13 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
       className="relative h-full min-h-[300px] overflow-hidden rounded-[22px] bg-[color-mix(in_srgb,var(--blue-3)_22%,white)] text-neutral-12 shadow-[0_16px_48px_rgb(15_23_42/0.09)] ring-1 ring-black/[0.04] md:min-h-[320px] xl:min-h-[340px]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
       aria-roledescription="carousel"
-      aria-label="模型实测轮播"
+      aria-label={t("label")}
     >
       {slides.map((b, i) => (
-        <Slide key={b.id} banner={b} active={i === index} />
+        <Slide key={b.id} banner={b} active={i === index} t={t} />
       ))}
 
       {/* 左右箭头 */}
@@ -66,7 +66,7 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
         <>
           <button
             type="button"
-            aria-label="上一帧"
+            aria-label={t("previous")}
             onClick={() => go(-1)}
             // allow-palette: glass nav chip over promo banner art, must read on any banner regardless of theme
             className="absolute top-1/2 left-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/55 text-neutral-12 shadow-sm backdrop-blur-md transition hover:bg-white/80"
@@ -75,7 +75,7 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
           </button>
           <button
             type="button"
-            aria-label="下一帧"
+            aria-label={t("next")}
             onClick={() => go(1)}
             // allow-palette: glass nav chip over promo banner art, must read on any banner regardless of theme
             className="absolute top-1/2 right-2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/50 bg-white/55 text-neutral-12 shadow-sm backdrop-blur-md transition hover:bg-white/80"
@@ -92,7 +92,7 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
             <button
               key={b.id}
               type="button"
-              aria-label={`第 ${i + 1} 帧`}
+              aria-label={t("goTo", { n: i + 1 })}
               aria-current={i === index}
               onClick={() => setIndex(i)}
               className={[
@@ -106,15 +106,23 @@ export function MarketBannerCarousel({ banners }: { banners: readonly MarketBann
         </div>
       ) : null}
 
-      <span className="sr-only">
-        当前：{current.title}（{index + 1}/{len}）
-      </span>
+      <span className="sr-only">{t("current", { n: index + 1, total: len })}</span>
     </section>
   );
 }
 
-function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
+function Slide({
+  banner,
+  active,
+  t,
+}: {
+  banner: MarketBanner;
+  active: boolean;
+  t: ReturnType<typeof useTranslations<"banners">>;
+}) {
   const isArt = Boolean(banner.coverSrc);
+  const title = banner.copyKey ? t(`${banner.copyKey}.title`) : banner.title;
+  const subtitle = banner.copyKey ? t(`${banner.copyKey}.subtitle`) : banner.subtitle;
 
   return (
     <Link
@@ -161,20 +169,18 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
           /* 模态叙事帧：深色字叠在浅弥散物料上 */
           <>
             <div className="max-w-[54%]">
-              <p className="text-[13px] font-medium tracking-wide text-neutral-10">
-                {banner.kicker}
-              </p>
-              <h2 className="mt-3.5 text-[32px] leading-[1.12] font-semibold tracking-tight text-neutral-12 md:text-[40px]">
-                {banner.title}
+              <p className="text-sm font-medium text-neutral-11">{t("modalityKicker")}</p>
+              <h2 className="mt-3.5 text-3xl leading-tight font-semibold tracking-tight text-neutral-12 md:text-4xl">
+                {title}
               </h2>
-              <p className="mt-3 max-w-md text-[14px] leading-relaxed text-neutral-11 md:text-[15px]">
-                {banner.subtitle}
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-neutral-11 md:text-base">
+                {subtitle}
               </p>
             </div>
             <div className="flex items-end justify-between gap-3">
-              <span className="text-[11px] tracking-wide text-neutral-9">API 集市 · 可售货架</span>
-              <span className="rounded-full bg-foreground px-3.5 py-1.5 text-[12px] font-medium text-background shadow-sm">
-                查看全部
+              <span className="text-xs text-neutral-11">{t("shelf")}</span>
+              <span className="rounded-full bg-foreground px-3.5 py-1.5 text-xs font-medium text-background shadow-sm">
+                {t("viewAll")}
               </span>
             </div>
           </>
@@ -183,8 +189,8 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
           <>
             <div className="flex items-start justify-between gap-4">
               <div className="flex min-w-0 flex-1 flex-col gap-3">
-                <p className="text-[12px] font-medium tracking-wide text-neutral-10">
-                  {PROVIDER_LABEL[banner.provider]} · {banner.kicker}
+                <p className="text-xs font-medium tracking-wide text-muted-foreground">
+                  {PROVIDER_LABEL[banner.provider]} · {t("liveKicker")}
                 </p>
                 <div className="flex items-center gap-3.5">
                   {/* allow-palette: chip surface pinned to match BrandMark surface="light" */}
@@ -192,29 +198,20 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
                     <BrandMark provider={banner.provider} size={36} surface="light" />
                   </span>
                   <div className="min-w-0">
-                    <h2 className="truncate font-mono text-[28px] leading-none font-semibold tracking-tight text-neutral-12 md:text-[36px]">
+                    <h2 className="truncate font-mono text-3xl leading-none font-semibold tracking-tight text-neutral-12 md:text-4xl">
                       {banner.title}
                     </h2>
-                    <p
-                      className="mt-2 line-clamp-1 text-[14px] text-neutral-10"
-                      title={banner.subtitle}
-                    >
-                      {banner.subtitle}
-                    </p>
+                    <p className="mt-2 line-clamp-1 text-sm text-muted-foreground">{subtitle}</p>
                   </div>
                 </div>
               </div>
               <div className="hidden min-w-0 max-w-[42%] shrink flex-col items-end text-right sm:flex">
-                <p className="text-[11px] font-medium tracking-[0.14em] text-neutral-9 uppercase">
-                  Model Review
-                </p>
                 {/* 大号型号字：不 truncate，用 clamp 字号 + 可换行保证完整可见 */}
                 <p
                   className="mt-1 w-full text-right font-bold leading-[1.05] tracking-tight break-words text-neutral-12"
                   style={{
                     fontSize: "clamp(1.5rem, 2.6vw, 2.75rem)",
                   }}
-                  title={banner.publicModel}
                 >
                   {shortHeadline(banner.publicModel)}
                 </p>
@@ -226,12 +223,14 @@ function Slide({ banner, active }: { banner: MarketBanner; active: boolean }) {
                 <span className="inline-flex items-center rounded-xl border border-white/80 bg-white/85 px-2 py-1.5 shadow-sm backdrop-blur-sm">
                   <BrandPill provider={banner.provider} size={16} tone="light" />
                 </span>
-                {banner.priceLine ? (
-                  <span className="font-mono text-[11px] text-neutral-10">{banner.priceLine}</span>
+                {banner.price ? (
+                  <span className="font-mono text-xs text-neutral-11">
+                    {t("price", banner.price)}
+                  </span>
                 ) : null}
               </div>
-              <span className="rounded-full bg-foreground px-3.5 py-1.5 text-[12px] font-medium text-background shadow-sm">
-                立即体验
+              <span className="rounded-full bg-foreground px-3.5 py-1.5 text-xs font-medium text-background shadow-sm">
+                {t("tryNow")}
               </span>
             </div>
           </>

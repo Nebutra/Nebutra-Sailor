@@ -288,6 +288,12 @@ const CASES: Case[] = [
       'export const C = () => <button type="button" disabled title="Upgrade to export">Export</button>;\n',
   },
   {
+    // A dev-port link shipped to production (router.nebutra.com, 2026-10-10).
+    guard: "lint-no-localhost-links",
+    violation:
+      'export const C = () => <a href={process.env.NEXT_PUBLIC_FORGE_URL ?? "http://localhost:3105"}>Forge</a>;\n',
+  },
+  {
     // A copy action with no feedback and no failure path.
     guard: "lint-no-raw-clipboard",
     violation:

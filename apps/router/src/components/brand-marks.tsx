@@ -241,7 +241,7 @@ export function BrandPill({
         title={title}
       >
         <BrandMark provider="other" size={markSize} />
-        <span className="text-[13px] leading-none font-semibold tracking-tight">Other</span>
+        <span className="text-sm leading-none font-semibold tracking-tight">Other</span>
       </span>
     );
   }
@@ -263,7 +263,7 @@ export function BrandPill({
       {Wordmark ? (
         <Wordmark size={Math.round(markSize * 0.82)} style={{ color: ink }} />
       ) : (
-        <span className="text-[13px] leading-none font-semibold tracking-tight">{title}</span>
+        <span className="text-sm leading-none font-semibold tracking-tight">{title}</span>
       )}
     </span>
   );

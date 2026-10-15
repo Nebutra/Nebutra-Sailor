@@ -4,6 +4,7 @@ import { checkoutLink } from "@nebutra/billing/links";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { Button, NumberField } from "@nebutra/ui/primitives";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { AsyncSection, RetryButton, Skeleton } from "@/components/console-states";
 import { consoleApi, type WalletBalance } from "@/lib/console-api";
@@ -37,6 +38,8 @@ export function checkoutUrl(amount: number, returnTo: string): string {
 }
 
 export function WalletClient() {
+  const t = useTranslations("console.wallet");
+  const tErrors = useTranslations("console.errors");
   const { resource, reload } = useConsoleResource<WalletBalance>("wallet", (signal) =>
     consoleApi.wallet(signal),
   );
@@ -48,7 +51,7 @@ export function WalletClient() {
   const topUp = () => {
     const parsed = parseRequiredAmount(amount, { min: MIN_TOP_UP, max: 10_000 });
     if (!parsed.ok) {
-      setFieldError(parsed.message);
+      setFieldError(tErrors(parsed.error.key, parsed.error.values));
       return;
     }
     window.location.assign(checkoutUrl(parsed.value, `${window.location.origin}/wallet`));
@@ -57,7 +60,7 @@ export function WalletClient() {
   return (
     <div className="grid gap-3 lg:grid-cols-[minmax(0,16rem)_1fr]">
       <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
-        <p className="text-[11px] text-neutral-10">当前余额</p>
+        <p className="text-xs text-muted-foreground">{t("balance")}</p>
         <AsyncSection
           resource={resource}
           onRetry={reload}
@@ -66,54 +69,58 @@ export function WalletClient() {
           {(data) => (
             <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight">
               {formatAmount(data.balance)}
-              <span className="ml-1.5 text-sm font-medium text-neutral-10">{data.currency}</span>
+              <span className="ml-1.5 text-sm font-medium text-muted-foreground">
+                {data.currency}
+              </span>
             </p>
           )}
         </AsyncSection>
-        <p className="mt-2 text-[11px] leading-snug text-neutral-10">
-          按量扣费，单次请求精确到 6 位小数。花在哪里见{" "}
-          <Link href="/usage" className="underline underline-offset-2">
-            用量
-          </Link>
-          。
+        <p className="mt-2 text-xs leading-snug text-muted-foreground">
+          {t.rich("note", {
+            link: (chunks) => (
+              <Link href="/usage" className="underline underline-offset-2">
+                {chunks}
+              </Link>
+            ),
+          })}
         </p>
         {resource.status === "ready" ? (
           <div className="mt-2">
-            <RetryButton onRetry={reload} label="刷新余额" />
+            <RetryButton onRetry={reload} label={t("refresh")} />
           </div>
         ) : null}
       </div>
 
       <div className="rounded-[var(--radius-md)] border border-neutral-6 p-3">
-        <p className="mb-2 text-[12px] font-semibold">充值</p>
+        <p className="mb-2 text-xs font-semibold">{t("topUp")}</p>
         <div className="mb-2 flex flex-wrap gap-1.5">
           {PRESETS.map((preset) => {
             const active = amount === String(preset);
             return (
-              <button
+              <Button
                 key={preset}
                 type="button"
+                variant="outline"
+                size="sm"
                 aria-pressed={active}
                 onClick={() => {
                   setAmount(String(preset));
                   setFieldError(null);
                 }}
                 className={[
-                  "h-7 rounded-full border px-2.5 text-[11px] tabular-nums transition-colors",
-                  active
-                    ? "border-neutral-8 bg-neutral-3 font-medium"
-                    : "font-medium border-neutral-6 text-neutral-11 hover:bg-neutral-2",
+                  "h-7 rounded-full px-2.5 text-xs font-medium tabular-nums",
+                  active ? "border-neutral-8 bg-neutral-3" : "border-neutral-6 text-neutral-11",
                 ].join(" ")}
               >
                 +{preset}
-              </button>
+              </Button>
             );
           })}
         </div>
         <div className="flex flex-wrap items-end gap-2">
           <div className="w-32">
             <NumberField
-              label={`金额 (${currency})`}
+              label={t("amount", { currency })}
               id="topup-amount"
               min={MIN_TOP_UP}
               value={amount}
@@ -125,11 +132,11 @@ export function WalletClient() {
             />
           </div>
           <Button type="button" variant="ink" size="sm" className="h-9" onClick={topUp}>
-            去付款
+            {t("pay")}
           </Button>
         </div>
-        <p className="mt-2 text-[11px] leading-snug text-neutral-10">
-          最低 ${MIN_TOP_UP}。支持银行卡、支付宝、微信支付，付完自动回到这里。
+        <p className="mt-2 text-xs leading-snug text-muted-foreground">
+          {t("footnote", { min: String(MIN_TOP_UP) })}
         </p>
       </div>
     </div>

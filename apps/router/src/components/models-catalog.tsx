@@ -1,10 +1,13 @@
 "use client";
 
 import { ChevronDown, ChevronUp } from "@nebutra/icons";
+import { Button, EmptyState, Input } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState, useTransition } from "react";
 import { ProductCard } from "@/components/product-card";
+import { useCategoryLabel } from "@/hooks/use-category-label";
 import {
   CATEGORY_LABEL,
   type ListingCategory,
@@ -121,19 +124,19 @@ function buildModelsHref(opts: {
  */
 export function ModelsCatalog({
   models,
-  sourceNote,
   initialQuery = "",
   initialBrand,
   initialTag,
   initialSort = "default",
 }: {
   models: readonly ListingModel[];
-  sourceNote: string;
   initialQuery?: string;
   initialBrand?: string;
   initialTag?: string;
   initialSort?: string;
 }) {
+  const t = useTranslations("catalog");
+  const categoryLabel = useCategoryLabel();
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -203,14 +206,14 @@ export function ModelsCatalog({
       const brands = [...brandMap.entries()]
         .sort((a, b) => b[1] - a[1])
         .map(([p, n]) => ({ provider: p, label: PROVIDER_LABEL[p], count: n }));
-      return { c, label: CATEGORY_LABEL[c], count: items.length, brands };
+      return { c, label: categoryLabel(c), count: items.length, brands };
     }).filter(Boolean) as Array<{
       c: ListingCategory;
       label: string;
       count: number;
       brands: Array<{ provider: ListingProvider; label: string; count: number }>;
     }>;
-  }, [models]);
+  }, [models, categoryLabel]);
 
   const filtered = useMemo(() => {
     const needle = draft.trim().toLowerCase();
@@ -235,29 +238,30 @@ export function ModelsCatalog({
   const title =
     cat === "all"
       ? brand === "all"
-        ? "全部模型"
+        ? t("allModels")
         : PROVIDER_LABEL[brand]
       : brand === "all"
-        ? CATEGORY_LABEL[cat]
-        : `${CATEGORY_LABEL[cat]} · ${PROVIDER_LABEL[brand]}`;
+        ? categoryLabel(cat)
+        : `${categoryLabel(cat)} · ${PROVIDER_LABEL[brand]}`;
 
   return (
     <div className="router-market-shell py-6 md:py-8">
       {/* taxonomy mega-panel */}
       <div className="rounded-2xl border border-neutral-6">
         <div className="flex flex-wrap items-center gap-2 px-3 py-2.5 md:px-4">
-          <span className="text-[12px] font-semibold">分类</span>
-          <span className="rounded-full bg-neutral-12 px-2 py-0.5 text-[10px] font-medium text-neutral-1">
+          <span className="text-xs font-semibold">{t("categories")}</span>
+          <span className="rounded-full bg-neutral-12 px-2 py-0.5 text-xs font-medium text-neutral-1">
             API
           </span>
           <Link
             href="/?product_type=tool"
-            className="rounded-full bg-neutral-3 px-2 py-0.5 text-[10px] text-neutral-11 hover:bg-neutral-4"
+            className="rounded-full bg-neutral-3 px-2 py-0.5 text-xs text-neutral-11 hover:bg-neutral-4"
           >
-            应用
+            {t("apps")}
           </Link>
-          <input
-            data-allow-native
+          <Input
+            size="sm"
+            aria-label={t("filterPlaceholder")}
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={(e) => {
@@ -266,14 +270,14 @@ export function ModelsCatalog({
             onBlur={(e) => {
               if (e.currentTarget.value !== applied.q) pushFilters({ q: e.currentTarget.value });
             }}
-            placeholder="在结果中筛选…"
-            className="ml-auto h-8 w-full max-w-[220px] rounded-full border border-neutral-6 px-3 text-[12px] outline-none md:w-auto"
+            placeholder={t("filterPlaceholder")}
+            wrapperClassName="ml-auto w-full max-w-56 md:w-auto"
           />
-          <button
-            type="button"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-neutral-11 hover:bg-neutral-2"
+          <Button
+            variant="ghost"
+            iconSize="md"
             aria-expanded={taxonomyOpen}
-            aria-label={taxonomyOpen ? "折叠分类" : "展开分类"}
+            aria-label={taxonomyOpen ? t("collapse") : t("expand")}
             onClick={() => setTaxonomyOpen((v) => !v)}
           >
             {taxonomyOpen ? (
@@ -281,7 +285,7 @@ export function ModelsCatalog({
             ) : (
               <ChevronDown className="h-4 w-4" aria-hidden />
             )}
-          </button>
+          </Button>
         </div>
 
         {taxonomyOpen ? (
@@ -292,7 +296,7 @@ export function ModelsCatalog({
                   type="button"
                   onClick={() => pushFilters({ tag: cat === row.c ? "all" : row.c, brand: "all" })}
                   className={[
-                    "inline-flex shrink-0 items-center gap-1 text-[12px] font-medium",
+                    "inline-flex shrink-0 items-center gap-1 text-xs font-medium",
                     cat === row.c
                       ? "text-neutral-12 underline decoration-2 underline-offset-4"
                       : "text-neutral-11 hover:text-neutral-12",
@@ -300,7 +304,7 @@ export function ModelsCatalog({
                 >
                   <MarketIcon name={API_CATEGORY_ICON[row.c]} className="h-3.5 w-3.5 opacity-70" />
                   {row.label}
-                  <span className="ml-1 font-normal text-neutral-9">{row.count}</span>
+                  <span className="ml-1 font-normal text-muted-foreground">{row.count}</span>
                 </button>
                 {row.brands.map((b) => {
                   const active = cat === row.c && brand === b.provider;
@@ -310,10 +314,10 @@ export function ModelsCatalog({
                       type="button"
                       onClick={() => pushFilters({ tag: row.c, brand: b.provider })}
                       className={[
-                        "text-[12px]",
+                        "text-xs",
                         active
                           ? "font-medium text-neutral-12"
-                          : "font-medium text-neutral-10 hover:text-neutral-12",
+                          : "font-medium text-muted-foreground hover:text-neutral-12",
                       ].join(" ")}
                     >
                       {b.label}
@@ -327,8 +331,8 @@ export function ModelsCatalog({
       </div>
 
       <div className="mt-4 mb-3 flex flex-wrap items-center justify-between gap-2">
-        <h1 className="text-[15px] font-semibold">{title}</h1>
-        <div className="flex items-center gap-3 text-[12px] text-neutral-11">
+        <h1 className="text-base font-semibold">{title}</h1>
+        <div className="flex items-center gap-3 text-xs text-neutral-11">
           <button
             type="button"
             className={sort.startsWith("price") ? "font-semibold text-neutral-12" : ""}
@@ -343,34 +347,34 @@ export function ModelsCatalog({
               });
             }}
           >
-            价格 {sort === "price-asc" ? "↑" : sort === "price-desc" ? "↓" : "↕"}
+            {t("price")} {sort === "price-asc" ? "↑" : sort === "price-desc" ? "↓" : "↕"}
           </button>
-          <span className="tabular-nums">{filtered.length} 个</span>
+          <span className="tabular-nums">{t("count", { count: filtered.length })}</span>
           <div className="flex rounded-lg border border-neutral-6 p-0.5">
             <button
               type="button"
-              aria-label="网格视图"
+              aria-label={t("gridView")}
               aria-pressed={view === "grid"}
               onClick={() => setView("grid")}
               className={[
                 "inline-flex h-7 w-7 items-center justify-center rounded-md",
                 view === "grid"
                   ? "bg-neutral-3 text-neutral-12"
-                  : "text-neutral-10 hover:text-neutral-12",
+                  : "text-muted-foreground hover:text-neutral-12",
               ].join(" ")}
             >
               <MarketIcon name="grid" className="h-3.5 w-3.5" />
             </button>
             <button
               type="button"
-              aria-label="列表视图"
+              aria-label={t("listView")}
               aria-pressed={view === "list"}
               onClick={() => setView("list")}
               className={[
                 "inline-flex h-7 w-7 items-center justify-center rounded-md",
                 view === "list"
                   ? "bg-neutral-3 text-neutral-12"
-                  : "text-neutral-10 hover:text-neutral-12",
+                  : "text-muted-foreground hover:text-neutral-12",
               ].join(" ")}
             >
               <MarketIcon name="list" className="h-3.5 w-3.5" />
@@ -378,7 +382,7 @@ export function ModelsCatalog({
           </div>
           {pathname.startsWith("/models") && (cat !== "all" || brand !== "all" || draft) ? (
             <Link href="/models?cate=api" className="hover:text-neutral-12">
-              清除筛选
+              {t("clear")}
             </Link>
           ) : null}
         </div>
@@ -399,9 +403,17 @@ export function ModelsCatalog({
       )}
 
       {filtered.length === 0 ? (
-        <p className="py-16 text-center text-[13px] text-neutral-10">没有匹配的模型</p>
+        <EmptyState
+          className="mt-4"
+          title={t("noMatchTitle")}
+          description={t("noMatchBody")}
+          action={
+            <Button asChild variant="outline" size="sm">
+              <Link href="/models?cate=api">{t("clear")}</Link>
+            </Button>
+          }
+        />
       ) : null}
-      <p className="mt-4 text-[11px] text-neutral-10">{sourceNote}</p>
     </div>
   );
 }

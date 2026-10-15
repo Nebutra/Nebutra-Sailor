@@ -11,31 +11,35 @@ import {
   LogoVisa,
 } from "@nebutra/icons";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { ComponentType, SVGProps } from "react";
 import { BrandLogo } from "@/components/brand-logo";
+import { forgeHref } from "@/lib/forge-url";
 
+const LANDING = `https://${brand.domains.landing}`;
+
+/** Labels are message keys under `footer.*`; every href resolves to a real page. */
 const QUICK_ACCESS = [
-  { label: "应用集市", href: "/?product_type=tool" },
-  { label: "API 集市", href: "/?product_type=api" },
-  { label: "模型目录", href: "/models" },
-  { label: "管理后台", href: "/dashboard" },
-  { label: "快捷使用", href: "/use" },
+  { key: "appMarket", href: "/?product_type=tool" },
+  { key: "apiMarket", href: "/?product_type=api" },
+  { key: "models", href: "/models" },
+  { key: "console", href: "/dashboard" },
+  { key: "quickUse", href: "/use" },
 ] as const;
 
 const SUPPORT = [
-  { label: "客户端", href: "http://localhost:3105", external: true },
-  { label: "API 文档", href: "/docs" },
-  { label: "费用说明", href: "/docs" },
-  { label: "常见问题", href: "/docs" },
-  { label: "帮助中心", href: "/docs" },
-  { label: "联系我们", href: "/docs" },
+  { key: "forge", href: forgeHref(), external: true },
+  { key: "apiDocs", href: "/docs" },
+  { key: "faq", href: `${LANDING}/faq`, external: true },
+  { key: "contact", href: `${LANDING}/contact`, external: true },
+  { key: "status", href: `https://${brand.domains.status}`, external: true },
 ] as const;
 
 const LEGAL = [
-  { label: "服务条款", href: "/docs" },
-  { label: "隐私政策", href: "/docs" },
-  { label: "退款政策", href: "/docs" },
-  { label: "知识产权", href: "/docs" },
+  { key: "terms", href: `${LANDING}/terms`, external: true },
+  { key: "privacy", href: `${LANDING}/privacy`, external: true },
+  { key: "refund", href: `${LANDING}/refund`, external: true },
+  { key: "cookies", href: `${LANDING}/cookies`, external: true },
 ] as const;
 
 type SvgIcon = ComponentType<SVGProps<SVGSVGElement> & { size?: number | string }>;
@@ -71,6 +75,7 @@ const PAY_BADGES: readonly {
  * Social/pay logos: @nebutra/icons (Visa/MC/Amex) + compact brand marks (JCB/UnionPay)
  */
 export function MarketFooter() {
+  const t = useTranslations("footer");
   const year = new Date().getFullYear();
 
   return (
@@ -81,8 +86,7 @@ export function MarketFooter() {
           <Link href="/" className="inline-flex items-center" aria-label={brand.name}>
             <BrandLogo variant="horizontal" className="h-7 w-auto" />
           </Link>
-          <p className="mt-4 text-[13px] leading-relaxed text-neutral-10">Need more information?</p>
-          <p className="mt-1 text-[12px] text-neutral-9">{brand.name} · Router API 集市（lab）</p>
+          <p className="mt-4 max-w-xs text-sm text-neutral-11">{t("tagline")}</p>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">
             {SOCIAL.map((s) => {
@@ -94,7 +98,7 @@ export function MarketFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-3 text-neutral-12 transition hover:bg-neutral-4"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-neutral-3 text-neutral-12 transition-colors hover:bg-neutral-4"
                 >
                   <Icon size={15} className="h-[15px] w-[15px]" />
                 </a>
@@ -108,7 +112,7 @@ export function MarketFooter() {
               return (
                 <span
                   key={p.id}
-                  title={p.label}
+                  role="img"
                   aria-label={p.label}
                   className={[
                     // allow-palette: payment network mark (Visa/MC/Amex) badge requires fixed white per brand guidelines
@@ -129,18 +133,16 @@ export function MarketFooter() {
 
         {/* Link columns */}
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-          <FooterCol title="Quick Access" links={QUICK_ACCESS} />
-          <FooterCol title="Support" links={SUPPORT} />
-          <FooterCol title="Legal" links={LEGAL} />
+          <FooterCol title={t("quickAccess")} links={QUICK_ACCESS} t={t} />
+          <FooterCol title={t("support")} links={SUPPORT} t={t} />
+          <FooterCol title={t("legal")} links={LEGAL} t={t} />
         </div>
       </div>
 
       <div className="border-t border-[var(--rm-panel-border,var(--neutral-6))]">
-        <div className="router-market-shell flex flex-col gap-1 py-5 text-[12px] text-neutral-9 md:flex-row md:items-center md:justify-between">
-          <p>
-            © {year} {brand.name}. All rights reserved.
-          </p>
-          <p className="text-neutral-8">API 集市 · 按量付费 · 多模型统一接入</p>
+        <div className="router-market-shell flex flex-col gap-1 py-5 text-xs text-neutral-11 md:flex-row md:items-center md:justify-between">
+          <p>{t("copyright", { year, brandName: brand.name })}</p>
+          <p>{t("strapline")}</p>
         </div>
       </div>
     </footer>
@@ -150,29 +152,31 @@ export function MarketFooter() {
 function FooterCol({
   title,
   links,
+  t,
 }: {
   title: string;
-  links: readonly { label: string; href: string; external?: boolean }[];
+  links: readonly { key: string; href: string; external?: boolean }[];
+  t: (key: string) => string;
 }) {
   return (
     <div>
-      <p className="text-[13px] font-semibold text-neutral-12">{title}</p>
+      <p className="text-sm font-medium text-neutral-12">{title}</p>
       <ul className="mt-3 space-y-2">
         {links.map((l) => (
-          <li key={l.label}>
+          <li key={l.key}>
             {l.external ? (
               <a
                 href={l.href}
-                className="text-[12px] text-neutral-10 transition hover:text-neutral-12"
+                className="text-sm text-neutral-11 transition-colors hover:text-neutral-12"
               >
-                {l.label}
+                {t(`links.${l.key}`)}
               </a>
             ) : (
               <Link
                 href={l.href}
-                className="text-[12px] text-neutral-10 transition hover:text-neutral-12"
+                className="text-sm text-neutral-11 transition-colors hover:text-neutral-12"
               >
-                {l.label}
+                {t(`links.${l.key}`)}
               </Link>
             )}
           </li>

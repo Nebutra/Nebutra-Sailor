@@ -95,32 +95,6 @@
       "hint": "Ajan · araçlar"
     }
   },
-  "toolTaxonomy": {
-    "bots": {
-      "label": "Botlar",
-      "chips": "Sohbet botları · çizim botları · bilgi"
-    },
-    "productivity": {
-      "label": "Verimlilik",
-      "chips": "Model arenası · AI yazma"
-    },
-    "academic": {
-      "label": "Akademik",
-      "chips": "PDF araç seti · AI patent araması"
-    },
-    "image": {
-      "label": "Görsel araçları",
-      "chips": "3D stüdyo · Tuval"
-    },
-    "audio": {
-      "label": "Ses",
-      "chips": "Konuşma · AI müzik"
-    },
-    "code": {
-      "label": "Kod",
-      "chips": "Web oluşturucu · Forge"
-    }
-  },
   "shortcuts": {
     "dashboard": "Genel bakış",
     "keys": "Anahtarlar",

@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@nebutra/ui/primitives";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { type ReactNode, useCallback, useMemo, useState } from "react";
 import { AsyncSection, Skeleton, SkeletonRows } from "@/components/console-states";
 import {
@@ -56,6 +57,7 @@ import { type ConsoleResource, useConsoleResource } from "@/lib/use-console-reso
 const ALL = "__all__";
 
 export function UsageClient() {
+  const t = useTranslations("console.usage");
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -112,20 +114,20 @@ export function UsageClient() {
           {RANGE_OPTIONS.map((option) => {
             const active = option.key === range;
             return (
-              <button
+              <Button
                 key={option.key}
                 type="button"
+                variant="outline"
+                size="sm"
                 aria-pressed={active}
                 onClick={() => setParam({ range: option.key })}
                 className={[
-                  "h-7 rounded-full border px-3 text-[11px] transition-colors",
-                  active
-                    ? "border-neutral-8 bg-neutral-3 font-medium"
-                    : "font-medium border-neutral-6 text-neutral-11 hover:bg-neutral-2",
+                  "h-7 rounded-full px-3 text-xs font-medium",
+                  active ? "border-neutral-8 bg-neutral-3" : "border-neutral-6 text-neutral-11",
                 ].join(" ")}
               >
-                {option.label}
-              </button>
+                {t(`range.${option.key}`)}
+              </Button>
             );
           })}
         </div>
@@ -133,13 +135,13 @@ export function UsageClient() {
         <div className="ml-auto flex flex-wrap items-center gap-2">
           <div className="w-44">
             <Select
-              label="模型"
+              label={t("filter.model")}
               id="usage-model"
               size="small"
               value={model ?? ALL}
               onValueChange={(value) => setParam({ model: !value || value === ALL ? null : value })}
               options={[
-                { value: ALL, label: "全部模型" },
+                { value: ALL, label: t("filter.allModels") },
                 ...(byModel.resource.data ?? []).map((row) => ({
                   value: row.model,
                   label: row.model,
@@ -149,22 +151,24 @@ export function UsageClient() {
           </div>
           <div className="w-44">
             <Select
-              label="Key"
+              label={t("filter.key")}
               id="usage-key"
               size="small"
               value={keyId ?? ALL}
               onValueChange={(value) => setParam({ keyId: !value || value === ALL ? null : value })}
               options={[
-                { value: ALL, label: "全部 Key" },
+                { value: ALL, label: t("filter.allKeys") },
                 ...(byKey.resource.data ?? []).map((row) => ({
                   value: row.keyId,
-                  label: row.name ?? `${row.keyPrefix ?? row.keyId.slice(0, 8)}（已删除）`,
+                  label:
+                    row.name ??
+                    t("filter.deletedKey", { label: row.keyPrefix ?? row.keyId.slice(0, 8) }),
                 })),
               ]}
             />
           </div>
           <Button type="button" variant="outline" size="sm" className="h-8" onClick={refreshAll}>
-            刷新
+            {t("refresh")}
           </Button>
           <Button asChild variant="outline" size="sm" className="h-8">
             <a
@@ -173,7 +177,7 @@ export function UsageClient() {
               className="inline-flex items-center gap-1"
             >
               <Download className="h-3.5 w-3.5" />
-              导出 CSV
+              {t("export")}
             </a>
           </Button>
         </div>
@@ -181,13 +185,16 @@ export function UsageClient() {
 
       <SummaryTiles resource={summary.resource} onRetry={summary.reload} />
 
-      <Panel title="消费趋势" subtitle={granularity === "hour" ? "按小时 · UTC" : "按天 · UTC"}>
+      <Panel
+        title={t("trend.title")}
+        subtitle={granularity === "hour" ? t("trend.hourly") : t("trend.daily")}
+      >
         <AsyncSection
           resource={history.resource}
           onRetry={history.reload}
           isEmpty={(data) => data.buckets.every((bucket) => bucket.cost === 0)}
-          emptyTitle="这段时间没有产生费用"
-          emptyDescription="换个时间范围，或者到快捷使用跑一次请求。"
+          emptyTitle={t("trend.emptyTitle")}
+          emptyDescription={t("trend.emptyDescription")}
           skeleton={<Skeleton className="m-3 h-32" />}
         >
           {(data) => <HistoryChart history={data} />}
@@ -195,29 +202,31 @@ export function UsageClient() {
       </Panel>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <Panel title="按模型">
+        <Panel title={t("byModel.title")}>
           <AsyncSection
             resource={byModel.resource}
             onRetry={byModel.reload}
             isEmpty={(data) => data.length === 0}
-            emptyTitle="这段时间没有模型调用"
+            emptyTitle={t("byModel.emptyTitle")}
             skeleton={<SkeletonRows rows={3} columns={4} />}
           >
             {(data) => (
-              <Table bare className="w-full text-[12px]">
+              <Table bare className="w-full text-xs">
                 <TableHeader>
-                  <HeadRow labels={["模型", "请求", "输入 / 输出", "花费"]} />
+                  <HeadRow
+                    labels={[t("col.model"), t("col.requests"), t("col.tokens"), t("col.cost")]}
+                  />
                 </TableHeader>
                 <TableBody bordered>
                   {data.map((row) => (
                     <TableRow key={row.model}>
-                      <TableCell alignment="start" className="font-mono text-[11px]">
+                      <TableCell alignment="start" className="font-mono text-xs">
                         {row.model}
                       </TableCell>
                       <TableCell alignment="end" className="tabular-nums">
                         {formatCount(row.requests)}
                       </TableCell>
-                      <TableCell alignment="end" className="tabular-nums text-[11px]">
+                      <TableCell alignment="end" className="tabular-nums text-xs">
                         {formatTokens(row.promptTokens)} / {formatTokens(row.completionTokens)}
                       </TableCell>
                       <TableCell alignment="end" className="tabular-nums font-medium">
@@ -231,25 +240,25 @@ export function UsageClient() {
           </AsyncSection>
         </Panel>
 
-        <Panel title="按 Key">
+        <Panel title={t("byKey.title")}>
           <AsyncSection
             resource={byKey.resource}
             onRetry={byKey.reload}
             isEmpty={(data) => data.length === 0}
-            emptyTitle="这段时间没有 Key 产生花费"
+            emptyTitle={t("byKey.emptyTitle")}
             skeleton={<SkeletonRows rows={3} columns={3} />}
           >
             {(data) => (
-              <Table bare className="w-full text-[12px]">
+              <Table bare className="w-full text-xs">
                 <TableHeader>
-                  <HeadRow labels={["Key", "请求", "花费"]} />
+                  <HeadRow labels={[t("col.key"), t("col.requests"), t("col.cost")]} />
                 </TableHeader>
                 <TableBody bordered>
                   {data.map((row) => (
                     <TableRow key={row.keyId}>
                       <TableCell alignment="start">
-                        {row.name ?? "已删除的 Key"}
-                        <span className="ml-2 font-mono text-[10px] text-neutral-9">
+                        {row.name ?? t("byKey.deleted")}
+                        <span className="ml-2 font-mono text-xs text-muted-foreground">
                           {row.keyPrefix ? `${row.keyPrefix}…` : row.keyId.slice(0, 8)}
                         </span>
                       </TableCell>
@@ -275,7 +284,7 @@ export function UsageClient() {
 
 function HeadRow({ labels }: { labels: readonly string[] }) {
   return (
-    <TableRow className="bg-neutral-2/50 text-[11px] text-neutral-10">
+    <TableRow className="bg-neutral-2/50 text-xs text-muted-foreground">
       {labels.map((label, index) => (
         <TableHead
           key={label}
@@ -303,8 +312,8 @@ function Panel({
   return (
     <section className="overflow-hidden rounded-[var(--radius-md)] border border-neutral-6">
       <div className="flex items-center gap-2 border-b border-neutral-6 bg-neutral-2/40 px-3 py-2">
-        <h2 className="text-[12px] font-semibold">{title}</h2>
-        {subtitle ? <span className="text-[11px] text-neutral-10">{subtitle}</span> : null}
+        <h2 className="text-xs font-semibold">{title}</h2>
+        {subtitle ? <span className="text-xs text-muted-foreground">{subtitle}</span> : null}
         {actions ? <div className="ml-auto">{actions}</div> : null}
       </div>
       {children}
@@ -319,6 +328,7 @@ function SummaryTiles({
   resource: ConsoleResource<UsageSummary>;
   onRetry: () => void;
 }) {
+  const t = useTranslations("console.usage.tiles");
   return (
     <div className="rounded-[var(--radius-md)] border border-neutral-6">
       <AsyncSection
@@ -336,17 +346,20 @@ function SummaryTiles({
           const average = data.requestCount > 0 ? data.totalCost / data.requestCount : 0;
           return (
             <div className="grid grid-cols-2 gap-2 p-3 sm:grid-cols-4">
-              <Tile label="花费" value={formatMoney(data.totalCost, data.currency)} />
-              <Tile label="请求数" value={formatCount(data.requestCount)} />
+              <Tile label={t("cost")} value={formatMoney(data.totalCost, data.currency)} />
+              <Tile label={t("requests")} value={formatCount(data.requestCount)} />
               <Tile
-                label="Token"
+                label={t("tokens")}
                 value={formatTokens(data.totalTokens)}
-                hint={`入 ${formatTokens(data.promptTokens)} · 出 ${formatTokens(data.completionTokens)}`}
+                hint={t("tokensHint", {
+                  input: formatTokens(data.promptTokens),
+                  output: formatTokens(data.completionTokens),
+                })}
               />
               <Tile
-                label="单次均价"
+                label={t("average")}
                 value={data.requestCount > 0 ? formatAmount(average) : "—"}
-                hint={data.requestCount > 0 ? data.currency : "还没有请求"}
+                hint={data.requestCount > 0 ? data.currency : t("averageEmpty")}
               />
             </div>
           );
@@ -359,9 +372,9 @@ function SummaryTiles({
 function Tile({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
     <div className="rounded-[var(--radius-md)] bg-neutral-2/50 px-3 py-2">
-      <p className="text-[11px] text-neutral-10">{label}</p>
+      <p className="text-xs text-muted-foreground">{label}</p>
       <p className="mt-0.5 text-lg font-semibold tabular-nums tracking-tight">{value}</p>
-      {hint ? <p className="mt-0.5 text-[10px] text-neutral-10">{hint}</p> : null}
+      {hint ? <p className="mt-0.5 text-xs text-muted-foreground">{hint}</p> : null}
     </div>
   );
 }
@@ -373,27 +386,31 @@ function Tile({ label, value, hint }: { label: string; value: string; hint?: str
  * happen to be non-zero.
  */
 function HistoryChart({ history }: { history: UsageHistory }) {
+  const t = useTranslations("console.usage.trend");
   const peak = history.buckets.reduce((max, bucket) => Math.max(max, bucket.cost), 0);
   return (
     <div className="p-3">
       <ul className="flex h-32 items-end gap-[2px]">
         {history.buckets.map((bucket) => {
           const height = peak > 0 ? Math.max(2, Math.round((bucket.cost / peak) * 100)) : 2;
-          const label = `${formatBucket(bucket.bucket, history.granularity)} · ${formatAmount(bucket.cost)} · ${formatCount(bucket.requests)} 次`;
+          const label = t("bar", {
+            bucket: formatBucket(bucket.bucket, history.granularity),
+            amount: formatAmount(bucket.cost),
+            count: Math.round(bucket.requests),
+          });
           return (
             <li
               key={bucket.bucket}
               className="min-w-[3px] flex-1 rounded-t-[2px] bg-neutral-8"
               style={{ height: `${height}%` }}
-              title={label}
               aria-label={label}
             />
           );
         })}
       </ul>
-      <div className="mt-1 flex justify-between text-[10px] text-neutral-10">
+      <div className="mt-1 flex justify-between text-xs text-muted-foreground">
         <span>{formatBucket(history.buckets[0]?.bucket ?? "", history.granularity)}</span>
-        <span>峰值 {formatAmount(peak)}</span>
+        <span>{t("peak", { amount: formatAmount(peak) })}</span>
         <span>
           {formatBucket(
             history.buckets[history.buckets.length - 1]?.bucket ?? "",
@@ -414,6 +431,8 @@ function RecordsPanel({
   model: string | null;
   keyId: string | null;
 }) {
+  const t = useTranslations("console.usage");
+  const tErrors = useTranslations("console.errors");
   const query = { ...period, model, keyId, limit: 50 };
   const { resource, reload, set } = useConsoleResource<UsageRecordsPage>(
     `records:${period.from}|${period.to}|${model ?? ""}|${keyId ?? ""}`,
@@ -431,55 +450,63 @@ function RecordsPanel({
       const next = await consoleApi.usageRecords({ ...query, cursor: page.nextCursor });
       set({ rows: [...page.rows, ...next.rows], nextCursor: next.nextCursor });
     } catch (error) {
-      setMoreError(describeError(error));
+      setMoreError(describeError(error, tErrors));
     } finally {
       setLoadingMore(false);
     }
   };
 
   return (
-    <Panel title="请求明细" subtitle="按时间倒序 · 每一行都对应一次扣费">
+    <Panel title={t("records.title")} subtitle={t("records.subtitle")}>
       <AsyncSection
         resource={resource}
         onRetry={reload}
         isEmpty={(data) => data.rows.length === 0}
-        emptyTitle="这段时间没有请求"
-        emptyDescription="调整筛选条件，或用一把 Key 调用 /v1/chat/completions 试试。"
+        emptyTitle={t("records.emptyTitle")}
+        emptyDescription={t("records.emptyDescription")}
         skeleton={<SkeletonRows rows={5} columns={6} />}
       >
         {(data) => (
           <>
             <div className="overflow-x-auto">
-              <Table bare className="w-full min-w-[860px] text-[12px]">
+              <Table bare className="w-full min-w-[860px] text-xs">
                 <TableHeader>
                   <HeadRow
-                    labels={["时间", "模型", "状态", "输入 / 输出", "耗时", "单价", "花费"]}
+                    labels={[
+                      t("col.time"),
+                      t("col.model"),
+                      t("col.status"),
+                      t("col.tokens"),
+                      t("col.latency"),
+                      t("col.unitCost"),
+                      t("col.cost"),
+                    ]}
                   />
                 </TableHeader>
                 <TableBody bordered>
                   {data.rows.map((row) => (
                     <TableRow key={row.id}>
-                      <TableCell alignment="start" className="whitespace-nowrap text-[11px]">
+                      <TableCell alignment="start" className="whitespace-nowrap text-xs">
                         {formatDateTime(row.occurredAt)}
                         {row.requestId ? (
-                          <span className="ml-2 font-mono text-[10px] text-neutral-9">
+                          <span className="ml-2 font-mono text-xs text-muted-foreground">
                             {row.requestId.slice(0, 8)}
                           </span>
                         ) : null}
                       </TableCell>
-                      <TableCell alignment="end" className="font-mono text-[11px]">
+                      <TableCell alignment="end" className="font-mono text-xs">
                         {row.model ?? "—"}
                       </TableCell>
                       <TableCell alignment="end" className="tabular-nums">
                         <StatusPill status={row.status} />
                       </TableCell>
-                      <TableCell alignment="end" className="tabular-nums text-[11px]">
+                      <TableCell alignment="end" className="tabular-nums text-xs">
                         {formatTokens(row.promptTokens)} / {formatTokens(row.completionTokens)}
                       </TableCell>
-                      <TableCell alignment="end" className="tabular-nums text-[11px]">
+                      <TableCell alignment="end" className="tabular-nums text-xs">
                         {formatLatency(row.latencyMs)}
                       </TableCell>
-                      <TableCell alignment="end" className="tabular-nums text-[11px]">
+                      <TableCell alignment="end" className="tabular-nums text-xs">
                         {formatOptionalAmount(row.unitCost)}
                       </TableCell>
                       <TableCell alignment="end" className="tabular-nums font-medium">
@@ -491,9 +518,11 @@ function RecordsPanel({
               </Table>
             </div>
             <div className="flex items-center gap-2 border-t border-neutral-6 px-3 py-2">
-              <span className="text-[11px] text-neutral-10">已加载 {data.rows.length} 行</span>
+              <span className="text-xs text-muted-foreground">
+                {t("records.loaded", { count: data.rows.length })}
+              </span>
               {moreError ? (
-                <span role="alert" className="text-[11px] text-destructive-strong">
+                <span role="alert" className="text-xs text-destructive-strong">
                   {moreError}
                 </span>
               ) : null}
@@ -506,10 +535,10 @@ function RecordsPanel({
                   disabled={loadingMore}
                   onClick={() => void loadMore()}
                 >
-                  {loadingMore ? "加载中…" : "加载更多"}
+                  {loadingMore ? t("records.loading") : t("records.more")}
                 </Button>
               ) : (
-                <span className="ml-auto text-[11px] text-neutral-9">已经到底了</span>
+                <span className="ml-auto text-xs text-muted-foreground">{t("records.end")}</span>
               )}
             </div>
           </>
@@ -520,12 +549,12 @@ function RecordsPanel({
 }
 
 function StatusPill({ status }: { status: number | null }) {
-  if (status === null) return <span className="text-neutral-9">—</span>;
+  if (status === null) return <span className="text-muted-foreground">—</span>;
   const ok = status >= 200 && status < 300;
   return (
     <span
       className={[
-        "rounded-full px-1.5 py-0.5 text-[10px] font-medium tabular-nums",
+        "rounded-full px-1.5 py-0.5 text-xs font-medium tabular-nums",
         ok ? "bg-success/14 text-success-strong" : "bg-destructive/14 text-destructive-strong",
       ].join(" ")}
     >
