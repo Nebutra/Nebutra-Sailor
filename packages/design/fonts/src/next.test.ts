@@ -11,7 +11,7 @@ const here = (rel: string) => fileURLToPath(new URL(rel, import.meta.url));
 const SOURCE = readFileSync(here("./next.ts"), "utf8");
 const faces = [
   ...SOURCE.matchAll(
-    /const (\w+) = localFont\(\{\s*src: \[\s*\{\s*path: "([^"]+)",\s*weight: "(\d+ \d+)",\s*style: "normal",\s*\},\s*\],\s*display: "swap",\s*preload: false,\s*(?:adjustFontFallback: "Times New Roman",\s*)?declarations: \[\{ prop: "font-family", value: "'([^']+)'" \}\],\s*(?:adjustFontFallback: "Times New Roman",\s*)?variable: "(--font-[\w-]+)",/g,
+    /const (\w+) = localFont\(\{\s*src: \[\s*\{\s*path: "([^"]+)",\s*weight: "(\d+ \d+)",\s*style: "normal",\s*\},\s*\],\s*display: "swap",\s*preload: false,\s*(?:adjustFontFallback: "Times New Roman",\s*)?declarations: \[\s*\{ prop: "font-family", value: "'([^']+)'" \},\s*\{\s*prop: "unicode-range",\s*value:\s*"[^"]+",\s*\},\s*\],\s*(?:adjustFontFallback: "Times New Roman",\s*)?variable: "(--font-[\w-]+)",/g,
   ),
 ].map(([, name = "", path = "", weight = "", family = "", variable = ""]) => ({
   name,
@@ -30,6 +30,10 @@ describe("registry faces (@nebutra/fonts/next)", () => {
   it("preloads none of the registry faces (a page fetches one only when it renders in it)", () => {
     expect(SOURCE.match(/localFont\(\{/g)?.length).toBe(19);
     expect(SOURCE.match(/preload: false,/g)?.length).toBe(19);
+  });
+
+  it("gives every face its Latin unicode-range (no download just to skip a CJK glyph)", () => {
+    expect(SOURCE.match(/prop: "unicode-range"/g)?.length).toBe(19);
   });
 
   it("declares every face the registry list exports", () => {
