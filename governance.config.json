@@ -382,9 +382,7 @@
     ]
   },
   "brandHex": {
-    "allowlist": [
-      "apps/forge/src/components/sota-runners.tsx"
-    ]
+    "allowlist": ["apps/forge/src/components/sota-runners.tsx"]
   },
   "repositorySeam": {
     "coreDomains": [
@@ -399,14 +397,8 @@
       "^apps/web/src/app/\\[locale\\]/\\(app\\)/organization-invitation/",
       "^apps/web/src/lib/invitations\\.ts$"
     ],
-    "seamPaths": [
-      "^packages/platform/repositories/",
-      "^packages/platform/db/"
-    ],
-    "dbAccessors": [
-      "getTenantDb",
-      "getSystemDb"
-    ],
+    "seamPaths": ["^packages/platform/repositories/", "^packages/platform/db/"],
+    "dbAccessors": ["getTenantDb", "getSystemDb"],
     "allowlist": [
       "apps/web/src/app/api/invitations/[invitationId]/accept/route.ts",
       "apps/web/src/app/api/onboarding/invite-members/route.ts",
@@ -435,9 +427,7 @@
     ]
   },
   "microcopyRules": {
-    "scanRoots": [
-      "apps/web/src"
-    ],
+    "scanRoots": ["apps/web/src"],
     "excludePaths": [
       "/api/",
       "\\.test\\.tsx?$",
@@ -541,10 +531,6 @@
         "count": 9
       },
       {
-        "file": "apps/web/src/components/startup-os/startup-chat-panel.tsx",
-        "count": 9
-      },
-      {
         "file": "apps/design/src/app/(foundations)/copywriting/page.tsx",
         "count": 8
       },
@@ -574,10 +560,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/use-cases/mockups/EnterpriseMockup.tsx",
-        "count": 8
-      },
-      {
-        "file": "apps/web/src/app/(app)/settings/shortcuts/page.tsx",
         "count": 8
       },
       {
@@ -641,18 +623,6 @@
         "count": 7
       },
       {
-        "file": "apps/web/src/components/startup-os/company-tower/field-card.tsx",
-        "count": 7
-      },
-      {
-        "file": "apps/web/src/components/startup-os/startup-canvas-panel.tsx",
-        "count": 7
-      },
-      {
-        "file": "apps/auth/src/components/auth-banner.tsx",
-        "count": 6
-      },
-      {
         "file": "apps/forge/src/components/site-footer.tsx",
         "count": 6
       },
@@ -710,10 +680,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/use-cases/mockups/IPMockup.tsx",
-        "count": 6
-      },
-      {
-        "file": "apps/web/src/components/auth/auth-banner.tsx",
         "count": 6
       },
       {
@@ -833,12 +799,16 @@
         "count": 5
       },
       {
-        "file": "apps/web/src/components/growth/referral-panel.tsx",
+        "file": "apps/web/src/components/startup-os/company-tower/field-card.tsx",
         "count": 5
       },
       {
         "file": "packages/design/ui/src/patterns/artifact-shift-card.tsx",
         "count": 5
+      },
+      {
+        "file": "apps/auth/src/components/auth-banner.tsx",
+        "count": 4
       },
       {
         "file": "apps/design/src/app/(patterns)/patterns/[slug]/page.tsx",
@@ -1005,11 +975,7 @@
         "count": 4
       },
       {
-        "file": "apps/web/src/components/startup-os/startup-os-file-tree.tsx",
-        "count": 4
-      },
-      {
-        "file": "apps/web/src/components/webhooks/webhook-deliveries-panel.tsx",
+        "file": "apps/web/src/components/auth/auth-banner.tsx",
         "count": 4
       },
       {
@@ -1162,10 +1128,6 @@
       },
       {
         "file": "apps/web/src/components/personalization/personalization-panel.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/web/src/components/startup-os/company-tower/control-deck.tsx",
         "count": 3
       },
       {
@@ -1378,14 +1340,6 @@
       },
       {
         "file": "apps/web/src/components/skills/skills-grid.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/web/src/components/startup-os/company-tower/company-tower.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/web/src/components/startup-os/startup-thread-panel.tsx",
         "count": 2
       },
       {
@@ -1625,27 +1579,11 @@
         "count": 1
       },
       {
-        "file": "apps/web/src/components/onboarding/dashboard-hint-card.tsx",
+        "file": "apps/web/src/components/startup-os/startup-chat-panel.tsx",
         "count": 1
       },
       {
-        "file": "apps/web/src/components/startup-os/company-tower/tower-floor.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/startup-os/startup-builder-home.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/startup-os/startup-connectors-menu.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/startup-os/startup-workspace-files-panel.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/webhooks/webhooks-list.tsx",
+        "file": "apps/web/src/components/startup-os/startup-os-file-tree.tsx",
         "count": 1
       },
       {
@@ -2341,10 +2279,7 @@
     "allowlist": {}
   },
   "siteClaims": {
-    "scanRoots": [
-      "apps/landing/src",
-      "apps/landing/messages"
-    ],
+    "scanRoots": ["apps/landing/src", "apps/landing/messages"],
     "excludePaths": [
       "\\.test\\.tsx?$",
       "/__tests__/",
