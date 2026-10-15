@@ -5,13 +5,14 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 vi.mock("next-intl", () => ({
   useFormatter: () => ({
     relativeTime: () => "localized relative time",
   }),
   useLocale: () => "en",
-  useTranslations: () => (key: string) => key,
+  useTranslations: (ns?: string) => (ns?.startsWith("copy.") ? catalogT(ns) : (key: string) => key),
 }));
 
 import { NotificationsDialog } from "../notifications-dialog";

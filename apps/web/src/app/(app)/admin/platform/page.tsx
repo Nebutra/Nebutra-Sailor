@@ -1,6 +1,7 @@
 import "server-only";
 import { roleAtLeast } from "@nebutra/contracts/admin";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { ActionButton } from "@/components/admin-platform/action-button";
 import { FleetStrip } from "@/components/admin-platform/fleet-strip";
 import { PageTitle, Panel } from "@/components/admin-platform/panel";
@@ -75,6 +76,7 @@ function InboxRow({ item, role, now }: { item: InboxItem; role: string; now: num
 }
 
 export default async function PlatformInboxPage() {
+  const tc = await getTranslations("copy.platformPage");
   const staff = await requireStaff();
   const caller = { userId: staff.userId, role: staff.role };
   const [inbox, fleet] = await Promise.all([cachedInbox(caller), cachedFleet()]);
@@ -96,21 +98,19 @@ export default async function PlatformInboxPage() {
 
   return (
     <>
-      <PageTitle title="Inbox" subtitle={`${today} · ${environmentLabel()}`} />
+      <PageTitle title={tc("inbox")} subtitle={`${today} · ${environmentLabel()}`} />
 
       <Panel
-        title="Needs attention"
+        title={tc("needsAttention")}
         count={inbox.items.length}
         aside={
           <span className="text-muted-foreground text-xs">
-            probed {relativeTime(inbox.probedAt, now)}
+            {tc("probed", { value0: String(relativeTime(inbox.probedAt, now)) })}
           </span>
         }
       >
         {inbox.items.length === 0 ? (
-          <p className="px-4 py-6 text-muted-foreground text-sm">
-            Nothing needs you. Next probe in 30 s.
-          </p>
+          <p className="px-4 py-6 text-muted-foreground text-sm">{tc("nothingNeedsYouNext")}</p>
         ) : (
           <ul>
             {inbox.items.map((item) => (
@@ -122,9 +122,9 @@ export default async function PlatformInboxPage() {
 
       {inbox.unknown.length > 0 ? (
         <Panel
-          title="Unknown"
+          title={tc("unknown")}
           count={inbox.unknown.length}
-          description="Signals whose probe failed. Not green, not red — not known."
+          description={tc("signalsWhoseProbeFailed")}
         >
           <ul>
             {inbox.unknown.map((item) => (
@@ -135,7 +135,7 @@ export default async function PlatformInboxPage() {
       ) : null}
 
       {inbox.failures.length > 0 ? (
-        <Panel title="Unreachable products" count={inbox.failures.length}>
+        <Panel title={tc("unreachableProducts")} count={inbox.failures.length}>
           <ul>
             {inbox.failures.map((f) => (
               <li
@@ -154,7 +154,7 @@ export default async function PlatformInboxPage() {
       ) : null}
 
       <Panel
-        title="Fleet"
+        title={tc("fleet")}
         count={`${fleet.length}${drift ? ` · ${drift} drift` : ""}`}
         aside={
           <>
@@ -165,7 +165,7 @@ export default async function PlatformInboxPage() {
               href="/admin/platform/fleet"
               className="text-muted-foreground text-xs hover:text-foreground"
             >
-              All {fleet.length} services →
+              {tc("allServices", { length: String(fleet.length ?? "") })}
             </Link>
           </>
         }

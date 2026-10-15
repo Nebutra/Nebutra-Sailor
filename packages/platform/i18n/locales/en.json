@@ -1658,6 +1658,224 @@
       "howShouldSailorRespond": "How should Sailor respond? Style, tone, format, focus areas. These take precedence over its defaults.",
       "reset": "Reset",
       "saveChanges": "Save changes"
+    },
+    "cinemaPage": {
+      "cinemaDisabled": "Cinema — disabled",
+      "the": "The",
+      "cinema": "cinema",
+      "cinemaFilmDirectorPipeline": "Cinema — film-director pipeline",
+      "runFilmPipeline": "runFilmPipeline",
+      "nebutraGraphModel": "@nebutra/graph-model",
+      "script": "Script",
+      "shotsClips": "Shots → clips",
+      "cameraContinuityTree": "Camera-continuity tree",
+      "root": "root:",
+      "cameras": "· cameras:"
+    },
+    "startupOsStartupBuilderHome": {
+      "startupAgentOS": "Startup Agent OS",
+      "whatAreWeBuilding": "What are we building?",
+      "oneSentenceCompilesInto": "One sentence compiles into a whole governed company — context, launch artifacts, live files, spatial canvas, and approval-gated runs.",
+      "startupProposition": "Startup proposition",
+      "describeTheStartupProposition": "Describe the startup proposition to compile into a tenant-scoped company workspace...",
+      "attachAFile": "Attach a file",
+      "attachATextFile": "Attach a text file to fold into the proposition",
+      "startupArena": "Startup arena",
+      "try": "Try",
+      "loadingRecentProjects": "Loading recent projects"
+    },
+    "cofounderPage": {
+      "oPCTeam": "OPC → Team",
+      "matchYourCofounder": "Match your cofounder",
+      "turnYourOnePerson": "Turn your one-person company into a team — matched with a complementary cofounder by your compiled company, not a résumé.",
+      "enterDiscover": "Enter Discover",
+      "previewHowCofoundersSee": "Preview · how cofounders see you",
+      "compileYourCompanyFirst": "Compile your company first",
+      "yourCofounderCardIs": "Your cofounder card is built from your Startup OS company. Compile one to preview it.",
+      "compileYourCompany": "Compile your company",
+      "step": "Step {value0}",
+      "theCofounderPoolIs": "The cofounder pool is opt-in and opens in the matching release. This page previews how your company will appear."
+    },
+    "canvasPage": {
+      "canvasDisabled": "Canvas — disabled",
+      "the": "The",
+      "canvas": "canvas",
+      "nebutraReel": "@nebutra/reel",
+      "canvasNodeGraphEditor": "Canvas — node-graph editor",
+      "interactive": "Interactive",
+      "xyflowReact": "@xyflow/react",
+      "editorControlledByAn": "editor, controlled by an immutable",
+      "reelGraph": "ReelGraph",
+      "verbatim": "verbatim."
+    },
+    "layer0Page": {
+      "layerDemoDisabled": "Layer 0 demo disabled",
+      "isOffByDefault": "is off by default.",
+      "layerCapabilityLoop": "Layer 0 capability loop",
+      "providerGatewayTraceSandbox": "Provider, gateway, trace, sandbox, content, and event contracts are wired through tenant-scoped local defaults.",
+      "capability": "Capability",
+      "doctor": "Doctor",
+      "debugFile": "Debug file",
+      "integrationCommand": "Integration command",
+      "pnpmLayer0Demo": "pnpm layer0:demo"
+    },
+    "notificationsNotificationPreferenceMatrix": {
+      "deliveryMatrix": "Delivery matrix",
+      "changesAreDisabledHere": "Changes are disabled here because the current notification runtime does not expose durable preference storage yet.",
+      "signal": "Signal",
+      "inbox": "Inbox",
+      "email": "Email",
+      "push": "Push",
+      "notes": "Notes",
+      "default": "Default:",
+      "routedOnlyWhereThis": "Routed only where this signal is meant to stay high-signal."
+    },
+    "providerKeysCreateProviderKeyDialog": {
+      "addProviderKey": "Add provider key",
+      "bringYourOwnAI": "Bring your own AI provider key. It is encrypted at rest and used in preference to the platform key for matching models.",
+      "provider": "Provider",
+      "aPIKey": "API key",
+      "baseURL": "Base URL",
+      "label": "Label",
+      "eGProduction": "e.g. Production",
+      "alwaysUseThisKey": "Always use this key",
+      "neverFallBackTo": "Never fall back to the platform key for this provider. Requests fail if your key is exhausted.",
+      "cancel": "Cancel"
+    },
+    "startupOsStartupCanvasPanel": {
+      "companyCanvas": "Company canvas",
+      "spatialGraph": "Spatial graph",
+      "dragNodesInspectDependencies": "Drag nodes, inspect dependencies, and start eligible runs from the same company-state surface.",
+      "zoomOut": "Zoom out",
+      "zoomIn": "Zoom in",
+      "reset": "Reset",
+      "canvasInspector": "Canvas inspector",
+      "nothingSelected": "Nothing selected",
+      "pickANodeOn": "Pick a node on the canvas to read its dependencies and run controls.",
+      "status": "Status: {status}",
+      "owner": "Owner: {owner}",
+      "dependencies": "Dependencies: {value0}",
+      "adapter": "Adapter: {adapter}",
+      "approval": "Approval: {approval}",
+      "budget": "Budget: ${value0}"
+    },
+    "authDeviceApprovalForm": {
+      "authorizeADevice": "Authorize a device",
+      "signedInAs": "Signed in as {signedInEmail}",
+      "deviceCode": "Device code",
+      "shownOnTheDevice": "Shown on the device you’re signing in.",
+      "xXXXXXXX": "XXXX-XXXX",
+      "code": "Code",
+      "wantsToSignIn": "wants to sign in as you on the",
+      "cLIIfYouDidn": "CLI. If you didn’t run",
+      "nebutraLogin": "nebutra login",
+      "deny": "Deny",
+      "approve": "Approve",
+      "tryAgain": "Try again"
+    },
+    "notificationsNotificationCenter": {
+      "new": "New",
+      "open": "Open",
+      "markRead": "Mark read",
+      "openNotifications": "Open notifications",
+      "notifications": "Notifications",
+      "unread": "{unreadCount} unread",
+      "markAllRead": "Mark all read",
+      "notificationSettings": "Notification settings"
+    },
+    "notificationsNotificationsDialog": {
+      "openNotifications": "Open notifications",
+      "notifications": "Notifications",
+      "通知": "通知",
+      "加载中": "加载中…",
+      "通知加载失败": "通知加载失败",
+      "重试": "重试",
+      "new": "New",
+      "打开": "打开"
+    },
+    "skillsSkillsGrid": {
+      "searchSkills": "Search skills…",
+      "officialOnly": "Official only",
+      "addACustomSkill": "Add a custom skill",
+      "authorYourOwnCapability": "Author your own capability with markdown + JSON schema.",
+      "getStarted": "Get started →",
+      "noSkillsMatch": "No skills match",
+      "tryADifferentSearch": "Try a different search or clear the Official-only filter.",
+      "official": "Official"
+    },
+    "authorizePage": {
+      "invalidRequest": "Invalid Request",
+      "missingInteractionID": "Missing interaction ID.",
+      "authorizationUIUnavailable": "Authorization UI unavailable",
+      "nebutraOwnedSSOIs": "Nebutra-owned SSO is deployed only after the login and consent interaction handlers are connected to the canonical user session.",
+      "authorizeAccess": "Authorize Access",
+      "wantsToAccessYour": "wants to access your Nebutra account",
+      "requestedPermissions": "Requested Permissions",
+      "byAuthorizingYouAgree": "By authorizing, you agree to share the above data with this application. You can revoke access at any time from your Nebutra settings."
+    },
+    "platformPage": {
+      "inbox": "Inbox",
+      "needsAttention": "Needs attention",
+      "probed": "probed {value0}",
+      "nothingNeedsYouNext": "Nothing needs you. Next probe in 30 s.",
+      "unknown": "Unknown",
+      "signalsWhoseProbeFailed": "Signals whose probe failed. Not green, not red — not known.",
+      "unreachableProducts": "Unreachable products",
+      "fleet": "Fleet",
+      "allServices": "All {length} services →"
+    },
+    "teamTeamMemberList": {
+      "adminActionsDisabled": "Admin actions disabled",
+      "member": "Member",
+      "joined": "Joined",
+      "role": "Role",
+      "action": "Action",
+      "you": "You",
+      "owner": "Owner"
+    },
+    "connectorsConnectorsHub": {
+      "connectSailorWithYour": "Connect Sailor with your everyday apps, APIs, and MCPs",
+      "connectorsLetSailorRead": "Connectors let Sailor read and write across your stack — Stripe, Slack, your own APIs, MCP servers. Credentials are encrypted at the application layer.",
+      "addAConnector": "Add a connector",
+      "activeConnector": "{length} active connector{value1}",
+      "addConnector": "Add connector",
+      "removeThisConnector": "Remove this connector?",
+      "remove": "Remove",
+      "learnAboutConnectorsSecurity": "Learn about Connectors security"
+    },
+    "feedbackFeedbackDialog": {
+      "reportAnIssue": "Report an issue",
+      "helpUsUnderstandAnd": "Help us understand and fix what you ran into.",
+      "whereDidThisHappen": "Where did this happen?",
+      "whatHappened": "What happened?",
+      "whatDidYouExpect": "What did you expect? What actually happened? If you can, list the steps to reproduce.",
+      "minimumCharactersMaximum": "Minimum {MIN_DESCRIPTION} characters · maximum {MAX_DESCRIPTION}",
+      "allowUsToFollow": "Allow us to follow up via the email on your account.",
+      "cancel": "Cancel"
+    },
+    "onboardingProfileSetupStep": {
+      "personalizeYourProfile": "Personalize your profile",
+      "addALogoAnd": "Add a logo and set your display name.",
+      "logo": "Logo",
+      "uploadOrganizationLogo": "Upload organization logo",
+      "displayName": "Display name",
+      "yourFullName": "Your full name",
+      "skipForNow": "Skip for now"
+    },
+    "securityChangePasswordForm": {
+      "password": "Password",
+      "checkWhetherThisAccount": "Check whether this account has a credential sign-in method and explain the safest supported password path.",
+      "loadingPasswordCapabilities": "Loading password capabilities…",
+      "oAuthOnly": "OAuth only",
+      "credentialAttached": "Credential attached"
+    },
+    "authDesktopAuthCompleteHandoff": {
+      "desktopSignIn": "Desktop sign-in",
+      "openingNebutraFoundry": "Opening Nebutra Foundry",
+      "yourBrowserCreatedA": "Your browser created a short-lived desktop handoff. Continue in the app to finish sign-in.",
+      "webSession": "Web session",
+      "handoffExpiry": "Handoff expiry",
+      "openNebutraFoundry": "Open Nebutra Foundry"
     }
   }
 }

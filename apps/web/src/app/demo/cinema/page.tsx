@@ -2,6 +2,7 @@ import { runFilmPipeline } from "@nebutra/cinema";
 import { FLAGS, isFeatureEnabled } from "@nebutra/feature-flags";
 import { Card } from "@nebutra/ui/primitives";
 import { connection } from "next/server";
+import { getTranslations } from "next-intl/server";
 
 /**
  * Demo route for the `cinema` capability absorption (codename `cinema`).
@@ -13,6 +14,7 @@ import { connection } from "next/server";
  * provider. Real use wires the steps to @nebutra/agents.
  */
 export default async function CinemaDemoPage() {
+  const tc = await getTranslations("copy.cinemaPage");
   await connection();
   const enabled = await isFeatureEnabled(FLAGS.CINEMA_DEMO);
 
@@ -21,9 +23,9 @@ export default async function CinemaDemoPage() {
       <main className="min-h-dvh bg-muted p-8 text-foreground">
         <div className="mx-auto max-w-4xl">
           <Card className="p-6">
-            <h1 className="font-semibold text-xl">Cinema — disabled</h1>
+            <h1 className="font-semibold text-xl">{tc("cinemaDisabled")}</h1>
             <p className="mt-2 text-muted-foreground text-sm">
-              The <code>cinema</code> capability demo is behind a feature flag (
+              {tc("the")} <code>{tc("cinema")}</code> capability demo is behind a feature flag (
               <code>{FLAGS.CINEMA_DEMO}</code>) and is off by default. Enable it per tenant to run
               the film-director pipeline.
             </p>
@@ -58,20 +60,21 @@ export default async function CinemaDemoPage() {
     <main className="min-h-dvh bg-muted p-8 text-foreground">
       <div className="mx-auto flex max-w-4xl flex-col gap-6">
         <header>
-          <h1 className="font-semibold text-2xl">Cinema — film-director pipeline</h1>
+          <h1 className="font-semibold text-2xl">{tc("cinemaFilmDirectorPipeline")}</h1>
           <p className="mt-1 text-muted-foreground text-sm">
-            <code>runFilmPipeline</code> with deterministic injected steps — no model, no network.
-            Camera tree is acyclic + root-anchored (guarded via <code>@nebutra/graph-model</code>).
+            <code>{tc("runFilmPipeline")}</code> with deterministic injected steps — no model, no
+            network. Camera tree is acyclic + root-anchored (guarded via{" "}
+            <code>{tc("nebutraGraphModel")}</code>).
           </p>
         </header>
 
         <Card className="p-6">
-          <h2 className="font-medium">Script</h2>
+          <h2 className="font-medium">{tc("script")}</h2>
           <p className="mt-2 text-muted-foreground text-sm">{film.script}</p>
         </Card>
 
         <Card className="p-6">
-          <h2 className="font-medium">Shots → clips</h2>
+          <h2 className="font-medium">{tc("shotsClips")}</h2>
           <ul className="mt-2 space-y-1 text-sm">
             {film.clips.map((c) => (
               <li key={c.uri} className="flex justify-between">
@@ -83,9 +86,9 @@ export default async function CinemaDemoPage() {
         </Card>
 
         <Card className="p-6">
-          <h2 className="font-medium">Camera-continuity tree</h2>
+          <h2 className="font-medium">{tc("cameraContinuityTree")}</h2>
           <p className="mt-2 text-muted-foreground text-sm">
-            root: <code>{film.cameraTree.rootId}</code> · cameras:{" "}
+            {tc("root")} <code>{film.cameraTree.rootId}</code> {tc("cameras")}{" "}
             <code>{film.cameraTree.cameras.length}</code>
           </p>
         </Card>

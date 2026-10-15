@@ -2,6 +2,7 @@
 
 import { ArrowRight, Check, Clock, ShieldCheck } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import type React from "react";
 import { useEffect } from "react";
 
@@ -14,6 +15,7 @@ export function DesktopAuthCompleteHandoff({
   redirectUrl,
   expiresAt,
 }: DesktopAuthCompleteHandoffProps) {
+  const tc = useTranslations("copy.authDesktopAuthCompleteHandoff");
   useEffect(() => {
     window.location.assign(redirectUrl);
   }, [redirectUrl]);
@@ -36,14 +38,13 @@ export function DesktopAuthCompleteHandoff({
 
         <div className="min-w-0 flex-1">
           <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
-            Desktop sign-in
+            {tc("desktopSignIn")}
           </p>
           <h1 className="mt-2 text-2xl font-semibold tracking-normal text-foreground">
-            Opening Nebutra Foundry
+            {tc("openingNebutraFoundry")}
           </h1>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            Your browser created a short-lived desktop handoff. Continue in the app to finish
-            sign-in.
+            {tc("yourBrowserCreatedA")}
           </p>
         </div>
       </div>
@@ -51,12 +52,12 @@ export function DesktopAuthCompleteHandoff({
       <div className="mt-6 grid gap-2">
         <StatusRow
           icon={<ShieldCheck className="h-4 w-4 text-success-strong" />}
-          label="Web session"
+          label={tc("webSession")}
           state="Verified"
         />
         <StatusRow
           icon={<Clock className="h-4 w-4 text-muted-foreground" />}
-          label="Handoff expiry"
+          label={tc("handoffExpiry")}
           state={new Date(expiresAt).toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -66,7 +67,7 @@ export function DesktopAuthCompleteHandoff({
 
       <Button asChild variant="ink" className="mt-6 w-full">
         <a href={redirectUrl}>
-          Open Nebutra Foundry
+          {tc("openNebutraFoundry")}
           <ArrowRight className="h-4 w-4" aria-hidden />
         </a>
       </Button>

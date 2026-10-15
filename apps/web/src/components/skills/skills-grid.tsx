@@ -9,6 +9,7 @@ import {
   Sparkles,
 } from "@nebutra/icons";
 import { Button, Input } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
 /**
@@ -65,6 +66,7 @@ const CATEGORY_LABELS: Record<SkillCategory, string> = {
 };
 
 export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
+  const tc = useTranslations("copy.skillsSkillsGrid");
   const [query, setQuery] = useState("");
   const [officialOnly, setOfficialOnly] = useState(false);
   const [busyId, setBusyId] = useState<string | null>(null);
@@ -103,14 +105,14 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search skills…"
+            placeholder={tc("searchSkills")}
           />
         </div>
         <label className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-neutral-7 bg-neutral-1 px-3 py-1.5 text-xs font-medium text-neutral-11">
           <BadgeCheck
             className={`h-3.5 w-3.5 ${officialOnly ? "text-primary" : "text-neutral-10"}`}
           />
-          Official only
+          {tc("officialOnly")}
           <input
             data-allow-native
             type="checkbox"
@@ -133,14 +135,12 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
               <Plus className="h-4 w-4" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-neutral-12">Add a custom skill</p>
-              <p className="text-xs text-neutral-10">
-                Author your own capability with markdown + JSON schema.
-              </p>
+              <p className="text-sm font-semibold text-neutral-12">{tc("addACustomSkill")}</p>
+              <p className="text-xs text-neutral-10">{tc("authorYourOwnCapability")}</p>
             </div>
           </div>
           <span className="text-xs font-medium text-primary group-hover:text-primary dark:text-primary dark:group-hover:text-primary">
-            Get started →
+            {tc("getStarted")}
           </span>
         </button>
       )}
@@ -149,10 +149,8 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
       {filtered.length === 0 ? (
         <div className="rounded-[var(--radius-xl)] border border-dashed border-neutral-7 bg-neutral-1 px-6 py-10 text-center/[0.02]">
           <Sparkles className="mx-auto h-6 w-6 text-neutral-9" />
-          <p className="mt-3 text-sm font-medium text-neutral-12">No skills match</p>
-          <p className="mt-1 text-xs text-neutral-10">
-            Try a different search or clear the Official-only filter.
-          </p>
+          <p className="mt-3 text-sm font-medium text-neutral-12">{tc("noSkillsMatch")}</p>
+          <p className="mt-1 text-xs text-neutral-10">{tc("tryADifferentSearch")}</p>
         </div>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -176,7 +174,7 @@ export function SkillsGrid({ skills, onToggle, onAddCustom }: Props) {
                     {skill.isOfficial && (
                       <BadgeCheck
                         className="h-3.5 w-3.5 shrink-0 text-primary"
-                        aria-label="Official"
+                        aria-label={tc("official")}
                       />
                     )}
                   </div>

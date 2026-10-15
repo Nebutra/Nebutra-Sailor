@@ -6,6 +6,7 @@ import type {
 } from "@nebutra/notifications";
 import { Button, Table } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import { updateNotificationPreference } from "@/app/(app)/settings/notifications/actions";
 
 interface Props {
@@ -43,11 +44,12 @@ export function NotificationPreferenceMatrix({
   preferenceSource,
   sections,
 }: Props) {
+  const tc = useTranslations("copy.notificationsNotificationPreferenceMatrix");
   return (
     <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
-          <h3 className="text-base font-semibold text-foreground">Delivery matrix</h3>
+          <h3 className="text-base font-semibold text-foreground">{tc("deliveryMatrix")}</h3>
           <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
             Copy-first from the proven `supastarter` pattern, but adapted to Nebutra&apos;s
             operator-facing signals. Each cell controls whether a notification category is allowed
@@ -73,8 +75,7 @@ export function NotificationPreferenceMatrix({
 
       {!runtime.canManagePreferences ? (
         <div className="mt-4 rounded-[var(--radius-lg)] border border-warning/20 bg-warning/10 px-4 py-3 text-sm text-warning-strong">
-          Changes are disabled here because the current notification runtime does not expose durable
-          preference storage yet.
+          {tc("changesAreDisabledHere")}
         </div>
       ) : null}
 
@@ -94,12 +95,12 @@ export function NotificationPreferenceMatrix({
             >
               <Table.Header className="bg-muted">
                 <Table.Row>
-                  <Table.Head className={MATRIX_HEADING}>Signal</Table.Head>
-                  <Table.Head className={MATRIX_HEADING}>Inbox</Table.Head>
-                  <Table.Head className={MATRIX_HEADING}>Email</Table.Head>
-                  <Table.Head className={MATRIX_HEADING}>Push</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>{tc("signal")}</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>{tc("inbox")}</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>{tc("email")}</Table.Head>
+                  <Table.Head className={MATRIX_HEADING}>{tc("push")}</Table.Head>
                   <Table.Head alignment="start" className={MATRIX_HEADING}>
-                    Notes
+                    {tc("notes")}
                   </Table.Head>
                 </Table.Row>
               </Table.Header>
@@ -171,8 +172,8 @@ export function NotificationPreferenceMatrix({
                           ))}
                         {row.cells.every((cell) => !cell.reason) ? (
                           <li>
-                            <span className="font-medium text-foreground">Default:</span> Routed
-                            only where this signal is meant to stay high-signal.
+                            <span className="font-medium text-foreground">{tc("default")}</span>{" "}
+                            {tc("routedOnlyWhereThis")}
                           </li>
                         ) : null}
                       </ul>

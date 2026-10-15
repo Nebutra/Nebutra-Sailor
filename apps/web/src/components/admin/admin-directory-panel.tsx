@@ -268,14 +268,14 @@ function DirectoryTableRow({ row }: { row: DirectoryRow }) {
     const body =
       row.kind === "user"
         ? {
-            name: String(form.get("name") ?? ""),
-            email: String(form.get("email") ?? ""),
+            name: String(form.get("name")),
+            email: String(form.get("email")),
             emailVerified: form.get("emailVerified") === "on",
           }
         : {
-            name: String(form.get("name") ?? ""),
-            slug: String(form.get("slug") ?? ""),
-            plan: String(form.get("plan") ?? ""),
+            name: String(form.get("name")),
+            slug: String(form.get("slug")),
+            plan: String(form.get("plan")),
           };
     const endpoint =
       row.kind === "user"
