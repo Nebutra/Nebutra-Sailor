@@ -8,6 +8,19 @@ import { cn } from "../utils/cn";
 import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
 
+type PortalContainer = React.ComponentProps<typeof BaseMenu.Portal>["container"];
+
+/**
+ * Portal into the fullscreen element while one is active: the browser renders
+ * only that subtree in fullscreen, so a menu portalled to <body> opens unseen
+ * (KCQ issue #299, the workspace menu in a fullscreen chart).
+ */
+function fullscreenPortalContainer(): HTMLElement | undefined {
+  if (typeof document === "undefined") return undefined;
+  const element = document.fullscreenElement;
+  return element instanceof HTMLElement ? element : undefined;
+}
+
 type DropdownMenuContextValue = {
   setOpen: (open: boolean) => void;
 };
@@ -133,12 +146,15 @@ DropdownMenuSubTrigger.displayName = "DropdownMenuSubTrigger";
 const DropdownMenuSubContent = ({
   className,
   style,
+  container,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseMenu.Popup> & {
+  /** Portal target; defaults to the active fullscreen element, else <body>. */
+  container?: PortalContainer;
   ref?: React.Ref<React.ElementRef<typeof BaseMenu.Popup>> | undefined;
 }) => (
-  <BaseMenu.Portal>
+  <BaseMenu.Portal container={container ?? fullscreenPortalContainer()}>
     <BaseMenu.Positioner style={{ zIndex: overlayZIndex.popover }}>
       <BaseMenu.Popup
         ref={ref}
@@ -161,6 +177,8 @@ export interface DropdownMenuContentProps
   sideOffset?: React.ComponentProps<typeof BaseMenu.Positioner>["sideOffset"];
   alignOffset?: React.ComponentProps<typeof BaseMenu.Positioner>["alignOffset"];
   side?: React.ComponentProps<typeof BaseMenu.Positioner>["side"];
+  /** Portal target; defaults to the active fullscreen element, else <body>. */
+  container?: PortalContainer;
 }
 
 const DropdownMenuContent = ({
@@ -170,12 +188,13 @@ const DropdownMenuContent = ({
   align = "center",
   alignOffset = 0,
   side = "bottom",
+  container,
   ref,
   ...props
 }: DropdownMenuContentProps & {
   ref?: React.Ref<React.ElementRef<typeof BaseMenu.Popup>> | undefined;
 }) => (
-  <BaseMenu.Portal>
+  <BaseMenu.Portal container={container ?? fullscreenPortalContainer()}>
     <BaseMenu.Positioner
       sideOffset={sideOffset}
       align={align}
