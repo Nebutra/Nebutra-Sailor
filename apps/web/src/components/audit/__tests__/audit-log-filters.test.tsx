@@ -3,9 +3,11 @@ import "@testing-library/jest-dom/vitest";
 import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string) => `${namespace}.${key}`,
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.") ? catalogT(namespace) : (key: string) => `${namespace}.${key}`,
 }));
 
 // Partial mock: the DS Select renders a base-ui listbox whose popup needs a

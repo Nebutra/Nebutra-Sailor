@@ -1876,6 +1876,198 @@
       "webSession": "Web session",
       "handoffExpiry": "Handoff expiry",
       "openNebutraFoundry": "Open Nebutra Foundry"
+    },
+    "onboardingDashboardHintCard": {
+      "welcomeToYourSailor": "Welcome to your Sailor workspace.",
+      "press": "Press",
+      "toOpenTheCommand": "to open the command palette. Pick a",
+      "mode": "mode",
+      "belowToFocusYour": "below to focus your work: chat, data, workflow, or search.",
+      "takeTheStepTour": "Take the 4-step tour",
+      "skip": "Skip",
+      "dismissHint": "Dismiss hint"
+    },
+    "securitySecuritySettingsClient": {
+      "loadingSecuritySettings": "Loading security settings…",
+      "security": "Security",
+      "thisWorkspaceIsUsing": "This workspace is using {authProvider}. Advanced security controls are still being migrated into the shared Nebutra auth layer.",
+      "forNowManagePassword": "For now, manage password resets, MFA, and session policies from your auth provider dashboard.",
+      "signedInAs": "Signed in as",
+      "nebutraShowsEverySecurity": "Nebutra shows every security capability in one place, only enabling controls that the current auth layer can execute safely."
+    },
+    "companyTowerControlDeck": {
+      "northStarMetric": "North-star metric",
+      "activeBets": "Active bets",
+      "oKR": "OKR",
+      "roadmap": "Roadmap",
+      "liveRuns": "Live runs",
+      "bets": "Bets"
+    },
+    "startupOsStartupConnectorsMenu": {
+      "connectors": "Connectors",
+      "connectADataSource": "Connect a data source",
+      "connected": "Connected",
+      "connect": "Connect",
+      "manageConnectors": "Manage connectors"
+    },
+    "startupOsStartupWorkspaceFilesPanel": {
+      "files": "Files",
+      "pickAFile": "Pick a file",
+      "chooseAFileFrom": "Choose a file from the rail to read its generated source.",
+      "startupOSGeneratedApp": "Startup OS generated app preview",
+      "nothingToPreview": "Nothing to preview",
+      "thePreviewRendersAs": "The preview renders as soon as this project generates its first files."
+    },
+    "webhooksWebhooksList": {
+      "active": "Active",
+      "disabled": "Disabled",
+      "edit": "Edit",
+      "viewDeliveries": "View deliveries",
+      "delete": "Delete",
+      "loading": "Loading…",
+      "webhookEndpoints": "Webhook endpoints"
+    },
+    "teamPage": {
+      "organizationProfile": "Organization profile",
+      "updateYourOrganizationS": "Update your organization’s branding and display name.",
+      "inviteATeamMember": "Invite a team member",
+      "sendAnInvitationTo": "Send an invitation to add someone to your organization.",
+      "members": "Members"
+    },
+    "billingPricingPlanGrid": {
+      "billingInterval": "Billing interval",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "youCanRetryCheckout": "{checkoutError} You can retry checkout or contact support if the provider setup is still unavailable.",
+      "recommended": "Recommended",
+      "seat": "/ seat"
+    },
+    "webhooksWebhookDeliveriesPanel": {
+      "webhookDeliveryHistory": "Webhook delivery history",
+      "recentDeliveries": "Recent deliveries",
+      "closeDeliveriesPanel": "Close deliveries panel",
+      "close": "Close",
+      "loading": "Loading…",
+      "hTTP": "HTTP {statusCode}"
+    },
+    "adminPage": {
+      "thisIsADeliberately": "This is a deliberately minimal admin. For user/org CRUD, customer support flows, and content ops, see",
+      "docsAdminRetoolRecipe": "docs/admin/retool-recipe.md",
+      "wireRetoolToThe": "Wire Retool to the internal API in 30 minutes.",
+      "escapeHatches": "Escape hatches",
+      "debugOnlyUtilitiesNot": "Debug-only utilities. Not a substitute for Retool flows.",
+      "pOSTApiAdminImpersonate": "POST /api/admin/impersonate"
+    },
+    "supplyPage": {
+      "supply": "Supply",
+      "routerManifest": "Router manifest",
+      "高级引擎原生控制台": "高级：引擎原生控制台"
+    },
+    "teamInviteMemberForm": {
+      "member": "Member",
+      "admin": "Admin",
+      "viewer": "Viewer",
+      "invitationIsOnIts": "Invitation is on its way."
+    },
+    "atelierAtelierCanvas": {
+      "generatedAssetsLandHere": "Generated assets land here, placed by the server.",
+      "brief": "Brief",
+      "aSereneAlpineLake": "A serene alpine lake at dawn, editorial photography…",
+      "mockProviderNoAI": "Mock provider — no AI key needed. The server picks a non-overlapping position and persists before this panel is told."
+    },
+    "notificationsInboxBell": {
+      "notifications": "Notifications",
+      "markAllAsRead": "Mark all as read",
+      "viewAll": "View all"
+    },
+    "notificationsNotificationInboxPreview": {
+      "inboxPreview": "Inbox preview",
+      "thisIsTheSettings": "This is the settings-side preview of Nebutra’s in-app notification center. It is ready to be wired into the main shell once the main thread decides where the bell entry point should live.",
+      "unread": "{unreadCount} unread",
+      "new": "New",
+      "open": "Open",
+      "markRead": "Mark read"
+    },
+    "onboardingConnectIntegrationsStep": {
+      "connectYourTools": "Connect your tools",
+      "setUpIntegrationsTo": "Set up integrations to supercharge your workflow.",
+      "connected": "Connected",
+      "skipForNowGo": "Skip for now → Go to Dashboard"
+    },
+    "organizationInviteDialog": {
+      "admin": "Admin",
+      "member": "Member",
+      "viewer": "Viewer",
+      "cancel": "Cancel"
+    },
+    "companyTowerCompanyTower": {
+      "completeLayers": "{overallPercent}% complete · 9 layers",
+      "uploadASourceDocument": "Upload a source document",
+      "uploadDoc": "Upload doc",
+      "compileTheCompanyTower": "Compile the company tower",
+      "compile": "Compile"
+    },
+    "billingPage": {
+      "billing": "Billing",
+      "yourPlanAndEvery": "Your plan, and every order paid for any product in this organization."
+    },
+    "settingsPage": {
+      "dangerZone": "Danger Zone",
+      "theseActionsArePermanent": "These actions are permanent and cannot be undone.",
+      "deleteOrganization": "Delete Organization"
+    },
+    "shortcutsPage": {
+      "keyboardShortcuts": "Keyboard shortcuts",
+      "press": "Press",
+      "anywhereToRunAny": "anywhere to run any command. Use",
+      "toNavigateTheList": "to navigate the list.",
+      "global": "Global",
+      "viaK": "via ⌘K"
+    },
+    "webhooksPage": {
+      "webhooks": "Webhooks",
+      "subscribeToEventsEmitted": "Subscribe to events emitted by your workspace. We sign every payload with your endpoint’s secret so you can verify authenticity.",
+      "newEndpoint": "New endpoint",
+      "activeEndpoints": "Active endpoints"
+    },
+    "providersDesignSystemShell": {
+      "breadcrumb": "Breadcrumb",
+      "dEVAUTHACTIVESynthetic": "DEV AUTH ACTIVE: synthetic \"Dev User\", no DB writes. Set",
+      "nEXTPUBLICAUTHPROVIDER": "NEXT_PUBLIC_AUTH_PROVIDER",
+      "toARealProvider": "to a real provider to disable.",
+      "mainContent": "Main content"
+    },
+    "notificationsInboxList": {
+      "loadingNotifications": "Loading notifications",
+      "notifications": "Notifications",
+      "unread": "Unread"
+    },
+    "notificationsNotificationRuntimeBanner": {
+      "notificationRuntime": "{providerLabel} notification runtime",
+      "preferences": "Preferences",
+      "inbox": "Inbox",
+      "missingIntegration": "Missing integration"
+    },
+    "providerKeysProviderKeysList": {
+      "alwaysUseThisKey": "Always use this key",
+      "preferFallBackTo": "Prefer, fall back to platform",
+      "providerKeys": "Provider keys",
+      "addYourFirstProvider": "Add your first provider key"
+    },
+    "reelReelStudio": {
+      "splitAScriptThe": "Split a script — the server builds a typed node graph here.",
+      "script": "Script",
+      "oneShotPerLine": "One shot per line…"
+    },
+    "securityTwoFactorBlock": {
+      "authenticatorAppSetup": "Authenticator app setup",
+      "twoFactorQRCode": "Two-factor QR code",
+      "copied": "Copied"
+    },
+    "startupOsStartupThreadPanel": {
+      "executeSelectedRun": "Execute selected run",
+      "recordedAction": "{activityCount} recorded action{value1}.",
+      "toggleNavigation": "Toggle navigation"
     }
   }
 }

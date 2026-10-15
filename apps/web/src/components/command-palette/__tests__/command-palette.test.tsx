@@ -4,6 +4,7 @@ import { act, cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Scope } from "@/lib/permissions";
+import { catalogT } from "@/test/catalog";
 
 // jsdom polyfills — cmdk uses ResizeObserver and scrollIntoView internally.
 if (typeof globalThis.ResizeObserver === "undefined") {
@@ -75,10 +76,13 @@ const i18n: Record<string, string> = {
 };
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string) => {
-    const fullKey = `${namespace}.${key}`;
-    return i18n[fullKey] ?? fullKey;
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string) => {
+          const fullKey = `${namespace}.${key}`;
+          return i18n[fullKey] ?? fullKey;
+        },
 }));
 
 import { FeedbackDialogProvider } from "@/components/feedback/feedback-dialog-provider";

@@ -2,6 +2,7 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const messages: Record<string, string> = {
   "billing.activePlan.title": "Active plan",
@@ -27,11 +28,14 @@ function interpolate(template: string, vars?: Record<string, unknown>): string {
 }
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string, vars?: Record<string, unknown>) => {
-    const fullKey = namespace ? `${namespace}.${key}` : key;
-    const template = messages[fullKey];
-    return template ? interpolate(template, vars) : fullKey;
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string, vars?: Record<string, unknown>) => {
+          const fullKey = namespace ? `${namespace}.${key}` : key;
+          const template = messages[fullKey];
+          return template ? interpolate(template, vars) : fullKey;
+        },
   useFormatter: () => ({
     relativeTime: (_d: Date) => "just now",
     dateTime: (_d: Date, _opts?: unknown) => "Jan 1, 2026",

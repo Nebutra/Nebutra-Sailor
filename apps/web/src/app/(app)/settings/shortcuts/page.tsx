@@ -67,6 +67,7 @@ function KeyCap({ children }: { children: React.ReactNode }) {
 }
 
 export default function ShortcutsPage() {
+  const tc = useTranslations("copy.shortcutsPage");
   const t = useTranslations("commandPalette");
   const { can } = usePermission();
 
@@ -75,13 +76,13 @@ export default function ShortcutsPage() {
   return (
     <section className="space-y-8">
       <header>
-        <h1 className="text-base font-semibold text-neutral-12">Keyboard shortcuts</h1>
+        <h1 className="text-base font-semibold text-neutral-12">{tc("keyboardShortcuts")}</h1>
         <p className="mt-1 text-sm text-neutral-11">
-          Press{" "}
+          {tc("press")}{" "}
           <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px]">
             ⌘K
           </kbd>{" "}
-          anywhere to run any command. Use{" "}
+          {tc("anywhereToRunAny")}{" "}
           <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px]">
             ↑
           </kbd>
@@ -89,7 +90,7 @@ export default function ShortcutsPage() {
           <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px]">
             ↓
           </kbd>{" "}
-          to navigate the list.
+          {tc("toNavigateTheList")}
         </p>
       </header>
 
@@ -97,7 +98,7 @@ export default function ShortcutsPage() {
 
       <div>
         <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-10">
-          Global
+          {tc("global")}
         </h2>
         <Table
           bare
@@ -171,7 +172,7 @@ export default function ShortcutsPage() {
                               ))}
                             </div>
                           ) : (
-                            <span className="text-[11px] text-neutral-10">via ⌘K</span>
+                            <span className="text-[11px] text-neutral-10">{tc("viaK")}</span>
                           )}
                         </Table.Cell>
                       </Table.Row>

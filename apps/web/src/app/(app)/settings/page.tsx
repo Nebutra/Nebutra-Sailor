@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { AvatarUploadForm } from "@/components/account/avatar-upload-form";
 import { ProfileForm } from "@/components/account/profile-form";
 import { getUser, requireOrg } from "@/lib/auth";
@@ -5,6 +6,7 @@ import { getUser, requireOrg } from "@/lib/auth";
 export const metadata = { title: "Settings" };
 
 export default async function SettingsPage() {
+  const tc = await getTranslations("copy.settingsPage");
   await requireOrg();
   const user = await getUser();
 
@@ -19,15 +21,13 @@ export default async function SettingsPage() {
       />
 
       <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <h2 className="mb-4 text-base font-semibold text-foreground">Danger Zone</h2>
-        <p className="mb-4 text-sm text-muted-foreground">
-          These actions are permanent and cannot be undone.
-        </p>
+        <h2 className="mb-4 text-base font-semibold text-foreground">{tc("dangerZone")}</h2>
+        <p className="mb-4 text-sm text-muted-foreground">{tc("theseActionsArePermanent")}</p>
         <button
           type="button"
           className="rounded-[var(--radius-md)] border border-destructive/40 px-4 py-2 text-sm font-medium text-destructive-strong transition-colors hover:bg-destructive/10"
         >
-          Delete Organization
+          {tc("deleteOrganization")}
         </button>
       </section>
     </div>

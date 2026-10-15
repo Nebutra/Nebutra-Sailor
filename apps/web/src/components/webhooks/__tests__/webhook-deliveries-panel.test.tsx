@@ -4,16 +4,20 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 import { WebhookDeliveriesPanel, type WebhookDeliveryView } from "../webhook-deliveries-panel";
 
 vi.mock("next-intl", () => ({
-  useTranslations: () => (key: string) => {
-    const messages: Record<string, string> = {
-      "errors.loadWebhookDeliveries": "Deliveries could not be loaded.",
-      "errors.replayWebhookDelivery": "Replay did not go through.",
-    };
-    return messages[key] ?? key;
-  },
+  useTranslations: (copyNs?: string) =>
+    copyNs?.startsWith("copy.")
+      ? catalogT(copyNs)
+      : (key: string) => {
+          const messages: Record<string, string> = {
+            "errors.loadWebhookDeliveries": "Deliveries could not be loaded.",
+            "errors.replayWebhookDelivery": "Replay did not go through.",
+          };
+          return messages[key] ?? key;
+        },
 }));
 
 const deliveries: WebhookDeliveryView[] = [

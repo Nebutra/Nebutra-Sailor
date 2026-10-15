@@ -5,16 +5,20 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 import { type WebhookEndpointView, WebhooksList } from "../webhooks-list";
 
 vi.mock("next-intl", () => ({
-  useTranslations: () => (key: string) => {
-    const messages: Record<string, string> = {
-      "emptyState.webhookEndpoints": "Add an endpoint above to start receiving events.",
-      "errors.loadWebhookEndpoints": "Endpoints could not be loaded.",
-    };
-    return messages[key] ?? key;
-  },
+  useTranslations: (copyNs?: string) =>
+    copyNs?.startsWith("copy.")
+      ? catalogT(copyNs)
+      : (key: string) => {
+          const messages: Record<string, string> = {
+            "emptyState.webhookEndpoints": "Add an endpoint above to start receiving events.",
+            "errors.loadWebhookEndpoints": "Endpoints could not be loaded.",
+          };
+          return messages[key] ?? key;
+        },
 }));
 
 const sample: WebhookEndpointView = {

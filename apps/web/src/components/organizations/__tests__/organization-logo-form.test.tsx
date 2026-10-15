@@ -5,9 +5,11 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type React from "react";
 import type { ReactNode } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 vi.mock("next-intl", () => ({
-  useTranslations: () => (key: string) => key,
+  useTranslations: (copyNs?: string) =>
+    copyNs?.startsWith("copy.") ? catalogT(copyNs) : (key: string) => key,
 }));
 
 vi.mock("next/image", () => ({

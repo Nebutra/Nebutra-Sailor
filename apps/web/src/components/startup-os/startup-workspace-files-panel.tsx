@@ -19,6 +19,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useDeferredValue, useEffect, useState } from "react";
 import { StartupOsCodeView } from "./startup-os-code-view";
 import { StartupOsFileTree } from "./startup-os-file-tree";
@@ -43,6 +44,7 @@ export function StartupWorkspaceFilesPanel({
   previewHtml,
   selectedFile,
 }: StartupWorkspaceFilesPanelProps) {
+  const tc = useTranslations("copy.startupOsStartupWorkspaceFilesPanel");
   const [draftContent, setDraftContent] = useState(selectedFile?.content ?? "");
   const deferredDraftContent = useDeferredValue(draftContent);
   const tree = buildStartupExplorerTree(files);
@@ -72,7 +74,7 @@ export function StartupWorkspaceFilesPanel({
             className={`min-h-0 min-w-0 flex-col bg-neutral-2 ${view === "code" ? "flex" : "hidden"}`}
           >
             <p className="shrink-0 px-4 pb-1 pt-3 text-[11px] font-semibold uppercase tracking-widest text-neutral-10">
-              Files
+              {tc("files")}
             </p>
             <div className="min-h-0 flex-1 overflow-auto px-2 pb-3">
               <StartupOsFileTree
@@ -104,8 +106,8 @@ export function StartupWorkspaceFilesPanel({
                     className="border-0 bg-transparent"
                     icon={<EmptyState.Icon icon={<FolderClosed className="size-5" />} />}
                     size="sm"
-                    title="Pick a file"
-                    description="Choose a file from the rail to read its generated source."
+                    title={tc("pickAFile")}
+                    description={tc("chooseAFileFrom")}
                   />
                 </div>
               )}
@@ -118,7 +120,7 @@ export function StartupWorkspaceFilesPanel({
             >
               {livePreviewHtml ? (
                 <iframe
-                  title="Startup OS generated app preview"
+                  title={tc("startupOSGeneratedApp")}
                   sandbox=""
                   srcDoc={livePreviewHtml}
                   // allow-palette: fixed browser-canvas white behind arbitrary generated app content, not app chrome
@@ -130,8 +132,8 @@ export function StartupWorkspaceFilesPanel({
                     className="border-0 bg-transparent"
                     icon={<EmptyState.Icon icon={<PreviewEye className="size-5" />} />}
                     size="sm"
-                    title="Nothing to preview"
-                    description="The preview renders as soon as this project generates its first files."
+                    title={tc("nothingToPreview")}
+                    description={tc("thePreviewRendersAs")}
                   />
                 </div>
               )}

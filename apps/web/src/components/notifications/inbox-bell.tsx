@@ -4,6 +4,7 @@ import { Bell } from "@nebutra/icons";
 import { Button } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import pLimit from "p-limit";
 import { useEffect, useRef, useState } from "react";
 import { queryKeys } from "@/lib/query-keys";
@@ -81,6 +82,7 @@ export function InboxBell({
   apiBase = "/api/notifications",
   fetcher,
 }: InboxBellProps): React.ReactElement {
+  const tc = useTranslations("copy.notificationsInboxBell");
   const fetchImpl = fetcher ?? (typeof fetch !== "undefined" ? fetch : undefined);
 
   // Pure UI state — dropdown open/close + its outside-click container — stays
@@ -263,19 +265,19 @@ export function InboxBell({
 
       {open ? (
         <section
-          aria-label="Notifications"
+          aria-label={tc("notifications")}
           data-testid="inbox-bell-panel"
           className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-[var(--radius-lg)] border border-border bg-background shadow-lg sm:w-96"
         >
           <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-            <h2 className="text-sm font-semibold text-foreground">Notifications</h2>
+            <h2 className="text-sm font-semibold text-foreground">{tc("notifications")}</h2>
             <button
               type="button"
               onClick={handleMarkAllRead}
               disabled={unreadCount === 0 || markAllReadMutation.isPending}
               className="text-xs font-medium text-primary hover:underline disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Mark all as read
+              {tc("markAllAsRead")}
             </button>
           </div>
 
@@ -289,7 +291,7 @@ export function InboxBell({
               onClick={() => setOpen(false)}
               className="text-xs font-medium text-primary hover:underline"
             >
-              View all
+              {tc("viewAll")}
             </Link>
           </div>
         </section>

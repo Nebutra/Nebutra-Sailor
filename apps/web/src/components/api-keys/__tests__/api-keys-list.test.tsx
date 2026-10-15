@@ -3,6 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 // ApiKeysList uses next-intl for dates and empty-state copy.
 vi.mock("next-intl", () => ({
@@ -11,11 +12,14 @@ vi.mock("next-intl", () => ({
       d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
     relativeTime: (_d: Date) => "just now",
   }),
-  useTranslations: () => (key: string) =>
-    ({
-      "emptyState.apiKeys": "No keys yet.",
-      "emptyState.apiKeysCta": "Create your first key",
-    })[key] ?? key,
+  useTranslations: (copyNs?: string) =>
+    copyNs?.startsWith("copy.")
+      ? catalogT(copyNs)
+      : (key: string) =>
+          ({
+            "emptyState.apiKeys": "No keys yet.",
+            "emptyState.apiKeysCta": "Create your first key",
+          })[key] ?? key,
 }));
 
 import { type ApiKey, ApiKeysList } from "@/components/api-keys/api-keys-list";

@@ -164,6 +164,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 function NorthStarRow({ layer }: { layer: ContextLayer }) {
+  const tc = useTranslations("copy.companyTowerControlDeck");
   const t = useTranslations("startupOs");
   const nsm = asText(fieldValueOf(layer, "nsm"));
   const bets = parseBets(fieldValueOf(layer, "bets"));
@@ -171,14 +172,14 @@ function NorthStarRow({ layer }: { layer: ContextLayer }) {
   return (
     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
       <KpiCard
-        title="North-star metric"
+        title={tc("northStarMetric")}
         value={nsm ?? "Not set"}
         icon={<Target aria-hidden="true" className="size-5 text-neutral-10" />}
         description={nsm ? undefined : "Define the single metric the company optimizes."}
       />
       <div className="rounded-[var(--radius-lg)] border border-neutral-6 bg-card p-4">
         <MetricCard
-          label="Active bets"
+          label={tc("activeBets")}
           value={bets.length}
           icon={<ChartActivity aria-hidden="true" />}
           description={bets.length > 0 ? bets.slice(0, 2).join(" · ") : t("execution.noBets")}
@@ -189,6 +190,7 @@ function NorthStarRow({ layer }: { layer: ContextLayer }) {
 }
 
 function OkrSection({ layer }: { layer: ContextLayer }) {
+  const tc = useTranslations("copy.companyTowerControlDeck");
   const okrRaw = fieldValueOf(layer, "okrs");
   const objective = parseObjective(okrRaw);
   const keyResults = parseKeyResults(okrRaw);
@@ -199,7 +201,7 @@ function OkrSection({ layer }: { layer: ContextLayer }) {
 
   return (
     <section className="flex flex-col gap-2">
-      <SectionLabel>OKR</SectionLabel>
+      <SectionLabel>{tc("oKR")}</SectionLabel>
       {objective ? <p className="text-sm text-neutral-12">{objective}</p> : null}
       <div className="flex flex-col gap-2.5">
         {keyResults.map((kr) => {
@@ -228,13 +230,14 @@ function OkrSection({ layer }: { layer: ContextLayer }) {
 }
 
 function RoadmapSection({ layer }: { layer: ContextLayer }) {
+  const tc = useTranslations("copy.companyTowerControlDeck");
   const items = parseRoadmap(fieldValueOf(layer, "roadmap"));
   if (items.length === 0) {
     return null;
   }
   return (
     <section className="flex flex-col gap-2">
-      <SectionLabel>Roadmap</SectionLabel>
+      <SectionLabel>{tc("roadmap")}</SectionLabel>
       <div className="flex flex-wrap items-center gap-1.5">
         {items.map((item) => (
           <ColorBadge
@@ -255,11 +258,12 @@ function RoadmapSection({ layer }: { layer: ContextLayer }) {
 }
 
 function LiveRunsSection({ layer }: { layer: ContextLayer }) {
+  const tc = useTranslations("copy.companyTowerControlDeck");
   const t = useTranslations("startupOs");
   const runs = parseLiveRuns(fieldValueOf(layer, "live_runs"));
   return (
     <section className="flex flex-col gap-2">
-      <SectionLabel>Live runs</SectionLabel>
+      <SectionLabel>{tc("liveRuns")}</SectionLabel>
       {runs.length === 0 ? (
         <p className="text-xs italic text-neutral-9">{t("execution.noRuns")}</p>
       ) : (
@@ -283,6 +287,7 @@ function LiveRunsSection({ layer }: { layer: ContextLayer }) {
 }
 
 export function ControlDeck({ layer }: ControlDeckProps) {
+  const tc = useTranslations("copy.companyTowerControlDeck");
   const bets = parseBets(fieldValueOf(layer, "bets"));
 
   return (
@@ -295,7 +300,7 @@ export function ControlDeck({ layer }: ControlDeckProps) {
 
       {bets.length > 0 ? (
         <section className="flex flex-col gap-2">
-          <SectionLabel>Bets</SectionLabel>
+          <SectionLabel>{tc("bets")}</SectionLabel>
           <div className="flex flex-wrap gap-1.5">
             {bets.map((bet) => (
               <Badge key={bet} variant="gray-subtle" size="sm">

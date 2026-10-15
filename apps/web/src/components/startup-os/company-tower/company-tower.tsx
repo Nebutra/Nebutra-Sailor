@@ -11,6 +11,7 @@ import type {
 import { companyName } from "@nebutra/startup-os/company-context/projection";
 import { Badge, Button, DotPattern } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
+import { useTranslations } from "next-intl";
 import { BrandKitFloor } from "./brand-kit-floor";
 import { ControlDeck } from "./control-deck";
 import { TowerFloor } from "./tower-floor";
@@ -70,6 +71,7 @@ export function CompanyTower({
   onCompile,
   onUploadDoc,
 }: CompanyTowerProps) {
+  const tc = useTranslations("copy.companyTowerCompanyTower");
   const manifest = buildManifest(context);
   const byId = new Map<LayerId, ContextManifestLayer>(
     manifest.layers.map((layer) => [layer.id, layer]),
@@ -103,7 +105,7 @@ export function CompanyTower({
             <div className="flex min-w-0 flex-col">
               <h2 className="truncate text-base font-semibold text-neutral-12">{name}</h2>
               <span className="font-mono text-[10px] tabular-nums text-neutral-9">
-                {overallPercent}% complete · 9 layers
+                {tc("completeLayers", { overallPercent: String(overallPercent) })}
               </span>
             </div>
           </div>
@@ -119,10 +121,10 @@ export function CompanyTower({
               size="sm"
               prefix={<ArrowUp aria-hidden="true" />}
               disabled={onUploadDoc === undefined}
-              aria-label="Upload a source document"
+              aria-label={tc("uploadASourceDocument")}
               onClick={() => onUploadDoc?.()}
             >
-              Upload doc
+              {tc("uploadDoc")}
             </Button>
             <Button
               type="button"
@@ -130,11 +132,11 @@ export function CompanyTower({
               size="sm"
               prefix={<Sparkles aria-hidden="true" />}
               disabled={onCompile === undefined}
-              aria-label="Compile the company tower"
+              aria-label={tc("compileTheCompanyTower")}
               onClick={() => onCompile?.()}
               className="border-0 bg-primary text-primary-foreground disabled:opacity-50"
             >
-              Compile
+              {tc("compile")}
             </Button>
           </div>
         </header>

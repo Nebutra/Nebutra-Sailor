@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { ChangeOrganizationNameForm } from "@/components/organizations/change-organization-name-form";
 import { DeleteOrganizationForm } from "@/components/organizations/delete-organization-form";
 import { PermissionGate } from "@/components/PermissionGate";
@@ -10,6 +11,7 @@ import { TeamMemberList } from "./TeamMemberList";
 export const metadata = { title: "Team — Settings" };
 
 export default async function TeamPage() {
+  const tc = await getTranslations("copy.teamPage");
   const { orgId } = await requireOrg();
 
   const organization = await db.organization.findUnique({
@@ -25,10 +27,10 @@ export default async function TeamPage() {
       {/* Organization profile — admins only */}
       <PermissionGate require="team:manage">
         <section className="p-6 rounded-[var(--radius-lg)] border border-border bg-background">
-          <h2 className="mb-1 text-base font-semibold text-foreground">Organization profile</h2>
-          <p className="mb-4 text-sm text-muted-foreground">
-            Update your organization's branding and display name.
-          </p>
+          <h2 className="mb-1 text-base font-semibold text-foreground">
+            {tc("organizationProfile")}
+          </h2>
+          <p className="mb-4 text-sm text-muted-foreground">{tc("updateYourOrganizationS")}</p>
           <div className="space-y-6">
             <OrganizationLogoFormWithInvalidation
               orgId={orgId}
@@ -43,17 +45,17 @@ export default async function TeamPage() {
       {/* Invite section — admins only */}
       <PermissionGate require="team:invite">
         <section className="p-6 rounded-[var(--radius-lg)] border border-border bg-background">
-          <h2 className="mb-1 text-base font-semibold text-foreground">Invite a team member</h2>
-          <p className="mb-4 text-sm text-muted-foreground">
-            Send an invitation to add someone to your organization.
-          </p>
+          <h2 className="mb-1 text-base font-semibold text-foreground">
+            {tc("inviteATeamMember")}
+          </h2>
+          <p className="mb-4 text-sm text-muted-foreground">{tc("sendAnInvitationTo")}</p>
           <InviteMemberForm orgId={orgId} />
         </section>
       </PermissionGate>
 
       {/* Members list */}
       <section className="p-6 rounded-[var(--radius-lg)] border border-border bg-background">
-        <h2 className="mb-4 text-base font-semibold text-foreground">Members</h2>
+        <h2 className="mb-4 text-base font-semibold text-foreground">{tc("members")}</h2>
         <TeamMemberList orgId={orgId} />
       </section>
 

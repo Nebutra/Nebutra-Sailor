@@ -47,6 +47,7 @@ interface InviteDialogProps {
 }
 
 export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogProps) {
+  const tc = useTranslations("copy.organizationInviteDialog");
   const t = useTranslations("settings.organization.invite");
   const titleId = useId();
 
@@ -144,9 +145,9 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="admin">Admin</SelectItem>
-                      <SelectItem value="member">Member</SelectItem>
-                      <SelectItem value="viewer">Viewer</SelectItem>
+                      <SelectItem value="admin">{tc("admin")}</SelectItem>
+                      <SelectItem value="member">{tc("member")}</SelectItem>
+                      <SelectItem value="viewer">{tc("viewer")}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -169,7 +170,7 @@ export function InviteDialog({ orgId, open, onClose, onSuccess }: InviteDialogPr
                 onClick={onClose}
                 disabled={formState.isSubmitting}
               >
-                Cancel
+                {tc("cancel")}
               </Button>
               <Button
                 type="submit"

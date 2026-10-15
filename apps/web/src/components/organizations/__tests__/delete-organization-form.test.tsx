@@ -2,6 +2,7 @@
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const pushMock = vi.fn();
 
@@ -10,7 +11,8 @@ vi.mock("next/navigation", () => ({
 }));
 
 vi.mock("next-intl", () => ({
-  useTranslations: (ns: string) => (key: string) => `${ns}.${key}`,
+  useTranslations: (ns: string) =>
+    ns?.startsWith("copy.") ? catalogT(ns) : (key: string) => `${ns}.${key}`,
 }));
 
 import { DeleteOrganizationForm } from "../delete-organization-form";

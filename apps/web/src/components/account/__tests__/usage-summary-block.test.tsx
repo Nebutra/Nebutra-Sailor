@@ -5,19 +5,23 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 import { UsageSummaryBlock } from "../usage-summary-block";
 
 vi.mock("next-intl", () => ({
-  useTranslations: () => (key: string) => {
-    const messages: Record<string, string> = {
-      "subscription.usageTitle": "Usage this period",
-      "subscription.usageApiCalls": "API calls",
-      "subscription.usageAiTokens": "AI tokens",
-      "subscription.usageUnavailable": "Usage is unavailable right now.",
-      "subscription.usageRetry": "Retry",
-    };
-    return messages[key] ?? key;
-  },
+  useTranslations: (copyNs?: string) =>
+    copyNs?.startsWith("copy.")
+      ? catalogT(copyNs)
+      : (key: string) => {
+          const messages: Record<string, string> = {
+            "subscription.usageTitle": "Usage this period",
+            "subscription.usageApiCalls": "API calls",
+            "subscription.usageAiTokens": "AI tokens",
+            "subscription.usageUnavailable": "Usage is unavailable right now.",
+            "subscription.usageRetry": "Retry",
+          };
+          return messages[key] ?? key;
+        },
 }));
 
 const USAGE = {

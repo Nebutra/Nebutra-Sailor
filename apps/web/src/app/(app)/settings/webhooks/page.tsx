@@ -1,6 +1,7 @@
 "use client";
 
 import { useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import {
   CreateWebhookDialog,
@@ -34,6 +35,7 @@ async function deleteEndpoint(id: string) {
 }
 
 export default function WebhooksSettingsPage() {
+  const tc = useTranslations("copy.webhooksPage");
   const queryClient = useQueryClient();
   const [activeDeliveries, setActiveDeliveries] = useState<string | null>(null);
   const [editing, setEditing] = useState<WebhookEndpointView | null>(null);
@@ -63,20 +65,17 @@ export default function WebhooksSettingsPage() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-xl font-semibold text-foreground">Webhooks</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Subscribe to events emitted by your workspace. We sign every payload with your
-          endpoint&apos;s secret so you can verify authenticity.
-        </p>
+        <h1 className="text-xl font-semibold text-foreground">{tc("webhooks")}</h1>
+        <p className="mt-1 text-sm text-muted-foreground">{tc("subscribeToEventsEmitted")}</p>
       </header>
 
       <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <h2 className="mb-4 text-base font-semibold text-foreground">New endpoint</h2>
+        <h2 className="mb-4 text-base font-semibold text-foreground">{tc("newEndpoint")}</h2>
         <CreateWebhookDialog onCreated={handleCreated} />
       </section>
 
       <section className="rounded-[var(--radius-lg)] border border-border bg-background p-6">
-        <h2 className="mb-4 text-base font-semibold text-foreground">Active endpoints</h2>
+        <h2 className="mb-4 text-base font-semibold text-foreground">{tc("activeEndpoints")}</h2>
         <WebhooksList
           onToggleActive={(id, next) => patchEndpoint(id, { isActive: next })}
           onDelete={deleteEndpoint}

@@ -5,6 +5,7 @@ import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 // next-intl mock — InboxList (rendered inside the dropdown) calls
 // useFormatter().relativeTime. Return a stable string so the timestamp render
@@ -13,6 +14,7 @@ vi.mock("next-intl", () => ({
   useFormatter: () => ({
     relativeTime: () => "just now",
   }),
+  useTranslations: (copyNs?: string) => catalogT(copyNs),
 }));
 
 import { InboxBell } from "../inbox-bell";

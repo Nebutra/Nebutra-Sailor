@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge, DataList, type DataListColumn } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export type ProviderId = "OPENAI" | "ANTHROPIC" | "GOOGLE" | "SILICONFLOW" | "CUSTOM";
@@ -90,6 +91,7 @@ export function ProviderKeysList({
   error,
   onRetry,
 }: ProviderKeysListProps) {
+  const tc = useTranslations("copy.providerKeysProviderKeysList");
   const columns: readonly DataListColumn<ProviderKey>[] = [
     {
       id: "provider",
@@ -123,10 +125,10 @@ export function ProviderKeysList({
           // blue-subtle is bg-primary/10 + text-primary — 5.71:1, AA-safe in
           // both themes. Never surface a raw --status-* as foreground here.
           <Badge variant="blue-subtle" size="sm">
-            Always use this key
+            {tc("alwaysUseThisKey")}
           </Badge>
         ) : (
-          <span className="text-xs text-muted-foreground">Prefer, fall back to platform</span>
+          <span className="text-xs text-muted-foreground">{tc("preferFallBackTo")}</span>
         ),
     },
     {
@@ -147,7 +149,7 @@ export function ProviderKeysList({
   return (
     <div className="rounded-[var(--radius-lg)] bg-muted/25 p-2">
       <DataList<ProviderKey>
-        label="Provider keys"
+        label={tc("providerKeys")}
         data-testid="provider-keys-list"
         columns={columns}
         rows={keys}
@@ -169,7 +171,7 @@ export function ProviderKeysList({
                   data-testid="provider-keys-empty-add"
                   className="rounded-[var(--radius-md)] px-4 py-2 text-sm font-medium bg-primary text-primary-foreground transition-[background-color] hover:bg-primary/90"
                 >
-                  Add your first provider key
+                  {tc("addYourFirstProvider")}
                 </button>
               ),
             }

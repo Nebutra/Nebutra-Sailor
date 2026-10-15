@@ -9,7 +9,7 @@ import {
   Trash as Trash2,
 } from "@nebutra/icons";
 import Link from "next/link";
-import { useFormatter } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 
 // =============================================================================
 // InboxList: shared rendering for both the bell dropdown and the full page
@@ -48,8 +48,9 @@ function getIconForType(type: string): typeof Bell {
 }
 
 export function InboxListSkeleton({ count = 3 }: { count?: number }): React.ReactElement {
+  const tc = useTranslations("copy.notificationsInboxList");
   return (
-    <ul className="divide-y divide-border" aria-label="Loading notifications">
+    <ul className="divide-y divide-border" aria-label={tc("loadingNotifications")}>
       {Array.from({ length: count }).map((_, i) => (
         <li key={`notification-skeleton-${i}`} className="flex animate-pulse gap-3 px-4 py-3">
           <div className="size-8 rounded-full bg-muted" />
@@ -92,6 +93,7 @@ export function InboxList({
   onToggleSelect,
   variant = "compact",
 }: InboxListProps): React.ReactElement {
+  const tc = useTranslations("copy.notificationsInboxList");
   const format = useFormatter();
 
   if (loading) {
@@ -103,7 +105,11 @@ export function InboxList({
   }
 
   return (
-    <ul className="divide-y divide-border" data-testid="inbox-list" aria-label="Notifications">
+    <ul
+      className="divide-y divide-border"
+      data-testid="inbox-list"
+      aria-label={tc("notifications")}
+    >
       {notifications.map((item) => {
         const Icon = getIconForType(item.type);
         const href = typeof item.data?.href === "string" ? (item.data.href as string) : undefined;
@@ -160,7 +166,7 @@ export function InboxList({
             {!item.read ? (
               <span
                 role="status"
-                aria-label="Unread"
+                aria-label={tc("unread")}
                 className="mt-1.5 size-2 shrink-0 rounded-full bg-primary"
               />
             ) : null}

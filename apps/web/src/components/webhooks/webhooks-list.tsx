@@ -47,6 +47,7 @@ export function WebhooksList({
   onViewDeliveries,
   onEdit,
 }: WebhooksListProps) {
+  const tc = useTranslations("copy.webhooksWebhooksList");
   const t = useTranslations("startupOs");
   const queryClient = useQueryClient();
   const listKey = queryKeys.webhooks.list();
@@ -151,11 +152,11 @@ export function WebhooksList({
         // muted-on-muted. Both clear AA, unlike the old raw emerald-100/700 pair.
         endpoint.isActive ? (
           <Badge variant="green-subtle" size="sm">
-            Active
+            {tc("active")}
           </Badge>
         ) : (
           <Badge variant="gray-subtle" size="sm">
-            Disabled
+            {tc("disabled")}
           </Badge>
         ),
     },
@@ -182,7 +183,7 @@ export function WebhooksList({
               onClick={() => onEdit(endpoint)}
               className="text-primary hover:underline"
             >
-              Edit
+              {tc("edit")}
             </button>
           )}
           {onToggleActive && (
@@ -200,7 +201,7 @@ export function WebhooksList({
               onClick={() => onViewDeliveries(endpoint.id)}
               className="text-muted-foreground hover:text-foreground"
             >
-              View deliveries
+              {tc("viewDeliveries")}
             </button>
           )}
           {onDelete && (
@@ -209,7 +210,7 @@ export function WebhooksList({
               onClick={() => handleDelete(endpoint)}
               className="text-destructive-strong hover:text-destructive-strong/80"
             >
-              Delete
+              {tc("delete")}
             </button>
           )}
         </div>
@@ -232,11 +233,11 @@ export function WebhooksList({
           role="status" was the only screen-reader tell during a fetch. */}
       {endpointsQuery.isPending ? (
         <p className="sr-only" role="status">
-          Loading…
+          {tc("loading")}
         </p>
       ) : null}
       <DataList<WebhookEndpointView>
-        label="Webhook endpoints"
+        label={tc("webhookEndpoints")}
         columns={columns}
         rows={endpoints}
         getRowKey={(endpoint) => endpoint.id}

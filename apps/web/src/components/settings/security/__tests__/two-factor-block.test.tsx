@@ -4,6 +4,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import userEvent from "@testing-library/user-event";
 import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const messages: Record<string, string> = {
   "auth.security.twoFactor.title": "Two-factor authentication",
@@ -39,10 +40,13 @@ const messages: Record<string, string> = {
 };
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string) => {
-    const fullKey = `${namespace}.${key}`;
-    return messages[fullKey] ?? fullKey;
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string) => {
+          const fullKey = `${namespace}.${key}`;
+          return messages[fullKey] ?? fullKey;
+        },
 }));
 
 // Mock @nebutra/ui/components Button to avoid heavy transitive deps (e.g. @emoji-mart/data

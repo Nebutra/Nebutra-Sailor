@@ -2,6 +2,7 @@
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const useAuthMock = vi.fn();
 const signOutMock = vi.fn().mockResolvedValue(undefined);
@@ -11,7 +12,8 @@ vi.mock("@nebutra/auth/client", () => ({
 }));
 
 vi.mock("next-intl", () => ({
-  useTranslations: (ns?: string) => (key: string) => (ns ? `${ns}.${key}` : key),
+  useTranslations: (ns?: string) =>
+    ns?.startsWith("copy.") ? catalogT(ns) : (key: string) => (ns ? `${ns}.${key}` : key),
   useLocale: () => "en",
 }));
 

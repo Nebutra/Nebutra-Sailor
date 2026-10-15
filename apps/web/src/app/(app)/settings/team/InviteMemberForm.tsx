@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useActionState } from "react";
 import { type InviteState, inviteTeamMember } from "./actions";
 
@@ -18,6 +19,7 @@ interface Props {
 const INITIAL: InviteState = { status: "idle" };
 
 export function InviteMemberForm({ orgId }: Props) {
+  const tc = useTranslations("copy.teamInviteMemberForm");
   const [state, action, isPending] = useActionState(inviteTeamMember, INITIAL);
 
   return (
@@ -37,9 +39,9 @@ export function InviteMemberForm({ orgId }: Props) {
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="org:member">Member</SelectItem>
-          <SelectItem value="org:admin">Admin</SelectItem>
-          <SelectItem value="org:viewer">Viewer</SelectItem>
+          <SelectItem value="org:member">{tc("member")}</SelectItem>
+          <SelectItem value="org:admin">{tc("admin")}</SelectItem>
+          <SelectItem value="org:viewer">{tc("viewer")}</SelectItem>
         </SelectContent>
       </Select>
 
@@ -52,7 +54,7 @@ export function InviteMemberForm({ orgId }: Props) {
       </button>
 
       {state.status === "success" && (
-        <p className="self-center text-sm text-success-strong">Invitation is on its way.</p>
+        <p className="self-center text-sm text-success-strong">{tc("invitationIsOnIts")}</p>
       )}
       {state.status === "error" && (
         <p className="self-center text-sm text-destructive-strong">{state.message}</p>

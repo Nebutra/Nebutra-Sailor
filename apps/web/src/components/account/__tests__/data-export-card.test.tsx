@@ -2,9 +2,11 @@
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 vi.mock("next-intl", () => ({
-  useTranslations: (ns?: string) => (key: string) => (ns ? `${ns}.${key}` : key),
+  useTranslations: (ns?: string) =>
+    ns?.startsWith("copy.") ? catalogT(ns) : (key: string) => (ns ? `${ns}.${key}` : key),
 }));
 
 import { DataExportCard } from "../data-export-card";

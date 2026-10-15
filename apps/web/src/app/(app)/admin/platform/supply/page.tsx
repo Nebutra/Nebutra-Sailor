@@ -1,6 +1,7 @@
 import "server-only";
 import { brand } from "@nebutra/brand/metadata";
 import { type AdminManifest, type ResourceList, roleAtLeast } from "@nebutra/contracts/admin";
+import { getTranslations } from "next-intl/server";
 import { ActionButton } from "@/components/admin-platform/action-button";
 import { AddAccountDialog } from "@/components/admin-platform/add-account-dialog";
 import { PageTitle, Panel } from "@/components/admin-platform/panel";
@@ -33,6 +34,7 @@ const TRANSIENT_RESOURCES = new Set(["login"]);
  * Cloudflare Access policy it still needs on the gateway's own host/path.
  */
 export default async function PlatformSupplyPage() {
+  const tc = await getTranslations("copy.supplyPage");
   const staff = await requireStaff();
   const caller = { userId: staff.userId, role: staff.role };
 
@@ -51,8 +53,8 @@ export default async function PlatformSupplyPage() {
   if (!manifest || !domain) {
     return (
       <>
-        <PageTitle title="Supply" />
-        <Panel title="Router manifest">
+        <PageTitle title={tc("supply")} />
+        <Panel title={tc("routerManifest")}>
           <p className="px-4 py-4 text-destructive-strong text-sm">
             {loadError ? (
               <>
@@ -104,7 +106,7 @@ export default async function PlatformSupplyPage() {
   return (
     <>
       <PageTitle
-        title="Supply"
+        title={tc("supply")}
         subtitle={`API-key 渠道和账号号池都在 New-API 后面汇成一条 ${brand.domains.router}/v1。`}
         actions={
           <>
@@ -171,7 +173,7 @@ export default async function PlatformSupplyPage() {
             rel="noreferrer"
             className="underline-offset-4 hover:text-foreground hover:underline"
           >
-            高级：引擎原生控制台
+            {tc("高级引擎原生控制台")}
           </a>
         </p>
       ) : null}

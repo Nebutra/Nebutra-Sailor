@@ -2,9 +2,11 @@
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DeleteAccountForm } from "@/components/settings/security/delete-account-form";
+import { catalogT } from "@/test/catalog";
 
 vi.mock("next-intl", () => ({
-  useTranslations: () => (key: string) => key,
+  useTranslations: (copyNs?: string) =>
+    copyNs?.startsWith("copy.") ? catalogT(copyNs) : (key: string) => key,
 }));
 
 afterEach(() => {

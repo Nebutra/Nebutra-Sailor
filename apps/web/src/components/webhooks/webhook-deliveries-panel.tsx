@@ -70,6 +70,7 @@ export function WebhookDeliveriesPanel({
   onReplay,
   onClose,
 }: WebhookDeliveriesPanelProps) {
+  const tc = useTranslations("copy.webhooksWebhookDeliveriesPanel");
   const t = useTranslations("startupOs");
   // Pure UI state (which payload is expanded) stays local — not server cache.
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -114,26 +115,26 @@ export function WebhookDeliveriesPanel({
 
   return (
     <aside
-      aria-label="Webhook delivery history"
+      aria-label={tc("webhookDeliveryHistory")}
       className="flex h-full flex-col gap-4 border-l border-border bg-background p-6"
     >
       <header className="flex items-center justify-between">
-        <h3 className="text-base font-semibold text-foreground">Recent deliveries</h3>
+        <h3 className="text-base font-semibold text-foreground">{tc("recentDeliveries")}</h3>
         {onClose && (
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close deliveries panel"
+            aria-label={tc("closeDeliveriesPanel")}
             className="text-sm text-muted-foreground hover:text-foreground"
           >
-            Close
+            {tc("close")}
           </button>
         )}
       </header>
 
       {isLoading && (
         <p role="status" className="text-sm text-muted-foreground">
-          Loading…
+          {tc("loading")}
         </p>
       )}
       {error && (
@@ -167,7 +168,7 @@ export function WebhookDeliveriesPanel({
                   <StatusPill status={delivery.status} />
                   {delivery.statusCode !== null && (
                     <span className="font-mono text-[10px] text-muted-foreground">
-                      HTTP {delivery.statusCode}
+                      {tc("hTTP", { statusCode: String(delivery.statusCode) })}
                     </span>
                   )}
                 </div>

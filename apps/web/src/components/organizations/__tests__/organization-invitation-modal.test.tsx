@@ -2,6 +2,7 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 import { createQueryWrapper } from "@/test/query-wrapper";
 
 const messages: Record<string, string> = {
@@ -31,11 +32,14 @@ function interpolate(template: string, vars?: Record<string, unknown>): string {
 }
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string, vars?: Record<string, unknown>) => {
-    const fullKey = `${namespace}.${key}`;
-    const template = messages[fullKey];
-    return template ? interpolate(template, vars) : fullKey;
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string, vars?: Record<string, unknown>) => {
+          const fullKey = `${namespace}.${key}`;
+          const template = messages[fullKey];
+          return template ? interpolate(template, vars) : fullKey;
+        },
 }));
 
 const pushMock = vi.fn();

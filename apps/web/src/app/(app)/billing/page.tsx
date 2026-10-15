@@ -1,5 +1,6 @@
 import { LoadingState, PageHeader } from "@nebutra/ui/layout";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 import {
   ActivePlanCard,
@@ -55,15 +56,13 @@ function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
  * number, went with it.
  */
 async function BillingContent({ journeyNotice }: { journeyNotice: BillingJourneyNotice | null }) {
+  const tc = await getTranslations("copy.billingPage");
   const tenant = await getTenantContext();
   const billingModel = buildBillingSelfServiceModel({ currentPlan: tenant.plan });
 
   return (
     <>
-      <PageHeader
-        title="Billing"
-        description="Your plan, and every order paid for any product in this organization."
-      />
+      <PageHeader title={tc("billing")} description={tc("yourPlanAndEvery")} />
 
       <div className="space-y-4">
         {journeyNotice && <BillingReturnNotice notice={journeyNotice} />}
@@ -84,11 +83,12 @@ interface BillingPageProps {
 }
 
 export default async function BillingPage({ searchParams }: BillingPageProps) {
+  const tc = await getTranslations("copy.billingPage");
   const resolvedSearchParams = searchParams ? await searchParams : {};
   const journeyNotice = resolveBillingJourneyNotice(resolvedSearchParams);
 
   return (
-    <section className="mx-auto w-full max-w-wide" aria-label="Billing">
+    <section className="mx-auto w-full max-w-wide" aria-label={tc("billing")}>
       <Suspense fallback={<LoadingState message="Loading billing overview..." />}>
         <BillingContent journeyNotice={journeyNotice} />
       </Suspense>

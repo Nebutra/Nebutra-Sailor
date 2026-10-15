@@ -11,6 +11,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { INTEGRATION_CATALOG } from "@/lib/integrations/catalog";
 import { integrationsQueryOptions } from "@/lib/queries/integrations";
 
@@ -24,6 +25,7 @@ import { integrationsQueryOptions } from "@/lib/queries/integrations";
  * No fabricated providers — to add one, extend the catalog + gateway.
  */
 export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
+  const tc = useTranslations("copy.startupOsStartupConnectorsMenu");
   const pathname = usePathname();
   const router = useRouter();
   const locale = pathname.split("/").filter(Boolean)[0] || "en";
@@ -40,15 +42,15 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
     <DropdownMenu>
       <DropdownMenuTrigger
         disabled={disabled}
-        aria-label="Connectors"
-        title="Connectors"
+        aria-label={tc("connectors")}
+        title={tc("connectors")}
         className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-neutral-7 bg-neutral-1 text-neutral-11 shadow-none transition-colors hover:bg-neutral-2 disabled:cursor-not-allowed disabled:opacity-60"
       >
         <Connection className="size-4" aria-hidden="true" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" sideOffset={8} className="w-80 p-1.5">
         <DropdownMenuLabel className="px-2 pb-1.5 pt-1 text-[11px] font-medium uppercase tracking-wide text-neutral-9">
-          Connect a data source
+          {tc("connectADataSource")}
         </DropdownMenuLabel>
         {INTEGRATION_CATALOG.map((entry) => {
           const Icon = entry.icon;
@@ -70,10 +72,10 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
               {connected ? (
                 <span className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-success-strong">
                   <CheckCircle className="size-3.5" aria-hidden="true" />
-                  Connected
+                  {tc("connected")}
                 </span>
               ) : (
-                <span className="shrink-0 text-xs font-medium text-primary">Connect</span>
+                <span className="shrink-0 text-xs font-medium text-primary">{tc("connect")}</span>
               )}
             </DropdownMenuItem>
           );
@@ -86,7 +88,7 @@ export function StartupConnectorsMenu({ disabled }: { disabled?: boolean }) {
           <span className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-dashed border-neutral-7 text-neutral-10">
             <Plus className="size-4" aria-hidden="true" />
           </span>
-          Manage connectors
+          {tc("manageConnectors")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

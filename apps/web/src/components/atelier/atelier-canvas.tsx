@@ -13,6 +13,7 @@
 import type { CanvasElement, CanvasFile, ScenePatch } from "@nebutra/atelier-canvas";
 import { Sparkles } from "@nebutra/icons";
 import { Button, Textarea, toast } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 
 /** Scene coords can run large; scale them into a fixed viewport. */
@@ -23,6 +24,7 @@ interface AtelierCanvasProps {
 }
 
 export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
+  const tc = useTranslations("copy.atelierAtelierCanvas");
   const [elements, setElements] = useState<CanvasElement[]>([]);
   const [files, setFiles] = useState<CanvasFile[]>([]);
   const [prompt, setPrompt] = useState("");
@@ -69,7 +71,7 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
       <div className="relative h-[560px] overflow-auto rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-2">
         {elements.length === 0 ? (
           <div className="absolute inset-0 flex items-center justify-center text-neutral-11">
-            <p className="text-sm">Generated assets land here, placed by the server.</p>
+            <p className="text-sm">{tc("generatedAssetsLandHere")}</p>
           </div>
         ) : (
           elements.map((el) => {
@@ -110,11 +112,11 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
       {/* Prompt panel */}
 
       <div className="flex h-full flex-col gap-3 rounded-[var(--radius-lg)] border border-neutral-7 bg-neutral-1 p-4">
-        <h2 className="font-semibold text-neutral-12 text-sm">Brief</h2>
+        <h2 className="font-semibold text-neutral-12 text-sm">{tc("brief")}</h2>
         <Textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder="A serene alpine lake at dawn, editorial photography…"
+          placeholder={tc("aSereneAlpineLake")}
           rows={5}
           disabled={busy}
         />
@@ -122,10 +124,7 @@ export function AtelierCanvas({ canvasId }: AtelierCanvasProps) {
           <Sparkles className="mr-2 h-4 w-4" />
           {busy ? "Generating…" : "Generate"}
         </Button>
-        <p className="mt-auto text-neutral-11 text-xs">
-          Mock provider — no AI key needed. The server picks a non-overlapping position and persists
-          before this panel is told.
-        </p>
+        <p className="mt-auto text-neutral-11 text-xs">{tc("mockProviderNoAI")}</p>
       </div>
     </div>
   );

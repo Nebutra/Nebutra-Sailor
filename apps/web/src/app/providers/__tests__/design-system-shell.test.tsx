@@ -5,6 +5,7 @@ import { cleanup, render, screen, waitFor, within } from "@testing-library/react
 import userEvent from "@testing-library/user-event";
 import type { ReactElement } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 // Vitest 4 may expose Node's experimental localStorage, which does not always
 // implement the complete Storage API under jsdom.
@@ -46,7 +47,8 @@ vi.mock("@/hooks/usePermission", () => ({
 }));
 
 vi.mock("next-intl", () => ({
-  useTranslations: () => (key: string) => key,
+  useTranslations: (copyNs?: string) =>
+    copyNs?.startsWith("copy.") ? catalogT(copyNs) : (key: string) => key,
 }));
 
 // dashboard-nav.ts imports `routing.locales` from this module; the real module

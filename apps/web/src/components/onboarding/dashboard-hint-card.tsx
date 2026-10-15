@@ -4,6 +4,7 @@ import { Compass, Sparkles, Cross as X } from "@nebutra/icons";
 import { useTour } from "@nebutra/onboarding";
 import { AnimateIn } from "@nebutra/ui/components";
 import { Button } from "@nebutra/ui/primitives";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { DASHBOARD_TOUR_V1 } from "@/lib/onboarding/dashboard-tour";
 
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function DashboardHintCard({ cookieName }: Props) {
+  const tc = useTranslations("copy.onboardingDashboardHintCard");
   const [isVisible, setIsVisible] = useState(true);
   const tour = useTour();
 
@@ -47,17 +49,15 @@ export function DashboardHintCard({ cookieName }: Props) {
           </div>
 
           <div className="flex-1 pr-6">
-            <p className="text-sm font-semibold text-neutral-12">
-              Welcome to your Sailor workspace.
-            </p>
+            <p className="text-sm font-semibold text-neutral-12">{tc("welcomeToYourSailor")}</p>
             <p className="mt-1 text-xs leading-relaxed text-neutral-11">
-              Press{" "}
+              {tc("press")}{" "}
               <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-[10px] text-neutral-12">
                 ⌘K
               </kbd>{" "}
-              to open the command palette. Pick a{" "}
-              <span className="font-medium text-neutral-12">mode</span> below to focus your work:
-              chat, data, workflow, or search.
+              {tc("toOpenTheCommand")}{" "}
+              <span className="font-medium text-neutral-12">{tc("mode")}</span>{" "}
+              {tc("belowToFocusYour")}
             </p>
 
             <div className="mt-3 flex items-center gap-2">
@@ -68,10 +68,10 @@ export function DashboardHintCard({ cookieName }: Props) {
                 onClick={startTour}
                 prefix={<Compass className="size-3" />}
               >
-                Take the 4-step tour
+                {tc("takeTheStepTour")}
               </Button>
               <Button type="button" variant="ghost" shape="pill" size="tiny" onClick={dismiss}>
-                Skip
+                {tc("skip")}
               </Button>
             </div>
           </div>
@@ -83,7 +83,7 @@ export function DashboardHintCard({ cookieName }: Props) {
             size="tiny"
             className="absolute right-0 top-0"
             onClick={dismiss}
-            aria-label="Dismiss hint"
+            aria-label={tc("dismissHint")}
           >
             <X className="size-3.5" />
           </Button>

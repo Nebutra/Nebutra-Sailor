@@ -139,6 +139,7 @@ function renderNextLink({
 }
 
 function DesignSystemShellInner({ children, productCapabilities }: Props) {
+  const tc = useTranslations("copy.providersDesignSystemShell");
   const pathname = usePathname();
   const { isSignedIn, session } = useAuth();
   const { collapsed, toggle } = useSidebar();
@@ -604,7 +605,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     breadcrumbs.length > 1 ? (
       <div className="mb-4 flex min-w-0 shrink-0 items-center">
         <h1 className="sr-only">{currentBreadcrumb?.label ?? "Dashboard"}</h1>
-        <nav aria-label="Breadcrumb" className="min-w-0">
+        <nav aria-label={tc("breadcrumb")} className="min-w-0">
           <ol className="flex min-w-0 items-center gap-1 text-[12px] text-muted-foreground">
             {breadcrumbs.map((crumb, index) => {
               const isLast = index === breadcrumbs.length - 1;
@@ -682,11 +683,11 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         >
           <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />
           <span>
-            DEV AUTH ACTIVE: synthetic "Dev User", no DB writes. Set{" "}
+            {tc("dEVAUTHACTIVESynthetic")}{" "}
             <code className="rounded bg-warning/15 px-1 font-mono text-[10px] text-warning-strong">
-              NEXT_PUBLIC_AUTH_PROVIDER
+              {tc("nEXTPUBLICAUTHPROVIDER")}
             </code>{" "}
-            to a real provider to disable.
+            {tc("toARealProvider")}
           </span>
         </div>
       ) : null}
@@ -696,7 +697,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         // would clip edge-to-edge canvases and add an unnecessary route shell.
         children
       ) : (
-        <section id="main-content" aria-label="Main content" className="content-area">
+        <section id="main-content" aria-label={tc("mainContent")} className="content-area">
           {children}
         </section>
       )}

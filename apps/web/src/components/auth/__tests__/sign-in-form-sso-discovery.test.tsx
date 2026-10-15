@@ -23,6 +23,7 @@ import {
   type UseFormReturn,
 } from "react-hook-form";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { catalogT } from "@/test/catalog";
 
 const pushMock = vi.fn();
 
@@ -62,11 +63,14 @@ vi.mock("next/link", () => ({
 }));
 
 vi.mock("next-intl", () => ({
-  useTranslations: (namespace: string) => (key: string, values?: Record<string, unknown>) => {
-    const template = messages[`${namespace}.${key}`] ?? `${namespace}.${key}`;
-    if (!values) return template;
-    return template.replace(/\{(\w+)\}/g, (_, name: string) => String(values[name] ?? ""));
-  },
+  useTranslations: (namespace: string) =>
+    namespace?.startsWith("copy.")
+      ? catalogT(namespace)
+      : (key: string, values?: Record<string, unknown>) => {
+          const template = messages[`${namespace}.${key}`] ?? `${namespace}.${key}`;
+          if (!values) return template;
+          return template.replace(/\{(\w+)\}/g, (_, name: string) => String(values[name] ?? ""));
+        },
 }));
 
 vi.mock("@marsidev/react-turnstile", () => ({
