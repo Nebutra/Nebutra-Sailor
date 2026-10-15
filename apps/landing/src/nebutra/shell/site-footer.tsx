@@ -65,7 +65,7 @@ export async function SiteFooter({ lang }: { lang?: string }) {
           <p className="mt-2 max-w-xs text-sm text-muted-foreground">{t("tagline")}</p>
         </div>
         <nav
-          aria-label="Footer"
+          aria-label={t("nav")}
           className="col-span-2 grid grid-cols-2 gap-10 md:col-span-3 md:grid-cols-subgrid"
         >
           {cols.map((c) => (

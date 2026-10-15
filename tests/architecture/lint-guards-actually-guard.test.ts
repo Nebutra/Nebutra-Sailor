@@ -308,6 +308,13 @@ const CASES: Case[] = [
       'export const C = ({ v }: { v: string }) => (\n  <button type="button" onClick={() => void navigator.clipboard.writeText(v)}>Copy</button>\n);\n',
   },
   {
+    // A mono, letter-spaced uppercase micro-label on the marketing site ("AI look").
+    guard: "lint-eyebrow-labels",
+    violation:
+      'export const C = () => <span className="font-mono text-xs tracking-widest uppercase">Chapter I</span>;\n',
+    path: "apps/landing/src/__lint_guard_probe.tsx",
+  },
+  {
     // Erasing a shared primitive's surface instead of using its variant.
     guard: "lint-primitive-override",
     violation:

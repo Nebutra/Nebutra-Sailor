@@ -41,9 +41,7 @@ export async function SailorTiers({ lang }: { lang: string }) {
                 style={{ background: "var(--brand-gradient)" }}
               />
             ) : null}
-            <p className="text-xs uppercase tracking-wider text-muted-foreground">
-              {t(`${tier.key}.badge` as Key)}
-            </p>
+            <p className="text-sm text-muted-foreground">{t(`${tier.key}.badge` as Key)}</p>
             <p className="mt-4 flex items-baseline gap-2 tabular-nums">
               <span className="font-heading text-4xl tracking-tight text-foreground">
                 {t(`${tier.key}.price` as Key)}

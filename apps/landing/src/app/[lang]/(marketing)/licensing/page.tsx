@@ -178,12 +178,12 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Badge>
 
               <div className="mb-6">
-                <h3
+                <h2
                   className="text-2xl font-semibold mb-2"
                   style={{ letterSpacing: "var(--tracking-tight)" }}
                 >
                   {t("plans.community.title")}
-                </h3>
+                </h2>
                 <p className="text-sm font-medium text-muted-foreground">
                   {t("plans.community.subtitle")}
                 </p>
@@ -261,12 +261,12 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Suspense>
 
               <div className="mb-6">
-                <h3
+                <h2
                   className="text-2xl font-semibold mb-2"
                   style={{ letterSpacing: "var(--tracking-tight)" }}
                 >
                   {t("plans.team.title")}
-                </h3>
+                </h2>
                 <p className="text-sm font-medium text-muted-foreground">
                   {t("plans.team.subtitle")}
                 </p>
@@ -327,12 +327,12 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
               </Badge>
 
               <div className="mb-6">
-                <h3
+                <h2
                   className="text-2xl font-semibold mb-2"
                   style={{ letterSpacing: "var(--tracking-tight)" }}
                 >
                   {t("plans.enterprise.title")}
-                </h3>
+                </h2>
                 <p className="text-sm font-medium text-muted-foreground">
                   {t("plans.enterprise.subtitle")}
                 </p>
@@ -384,9 +384,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
         <div className="border-t border-border pt-14">
           <AnimateIn preset="emerge" inView>
             <div className="mx-auto max-w-2xl text-center">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                FAQ
-              </p>
+              <p className="mb-4 text-sm text-primary">FAQ</p>
               <h2
                 className="text-3xl font-semibold md:text-4xl"
                 style={{

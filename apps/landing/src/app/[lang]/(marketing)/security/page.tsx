@@ -89,9 +89,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
       <section className="container mx-auto max-w-[1100px] px-4 py-32 relative">
         {/* Hero */}
         <AnimateIn preset="emerge" className="mb-20 max-w-3xl">
-          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
-            {t("hero.eyebrow")}
-          </p>
+          <p className="mb-4 text-sm text-primary">{t("hero.eyebrow")}</p>
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-balance"
             style={{
@@ -133,7 +131,7 @@ export default async function SecurityPage({ params }: { params: Promise<{ lang:
                           {t(`capabilities.${cap.key}.title`)}
                         </h3>
                         {cap.wip && (
-                          <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                          <span className="rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
                             {t("integrationWip")}
                           </span>
                         )}

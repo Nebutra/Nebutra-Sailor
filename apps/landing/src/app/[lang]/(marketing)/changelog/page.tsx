@@ -1,5 +1,4 @@
 import { getChangelogEntries } from "@nebutra/sanity/queries";
-import { AnimateIn } from "@nebutra/ui/components";
 import type { Metadata } from "next";
 import { cacheLife } from "next/cache";
 import Image from "next/image";
@@ -9,8 +8,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { InteractiveChangelog, type Release } from "@/components/landing/InteractiveChangelog";
 import { type Locale, routing } from "@/i18n/routing";
 import { STATIC_CHANGELOG_RELEASES } from "@/lib/changelog-releases";
-import { landingPublicSrc } from "@/lib/public-assets";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+import { Intro } from "@/nebutra/ui/page";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
@@ -42,8 +41,6 @@ export async function generateMetadata({
     },
   };
 }
-
-const FALLBACK_RELEASE_IMAGE = landingPublicSrc("screenshots/demo-dashboard-command.webp");
 
 interface PortableTextChild {
   text?: string;
@@ -155,7 +152,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
 
   const mappedReleases: Release[] = useCms
     ? cmsEntries.map((entry) => {
-        // Extract first image from body for preview, or use default
+        // A release shows a picture only when its own body carries one.
         const firstBodyImage = entry.body?.find((b) => b._type === "image")?.asset?.url;
 
         return {
@@ -164,12 +161,12 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           date: entry.publishedAt?.split("T")[0] ?? "",
           tag: entry.type || "feature",
           excerpt: entry.summary ?? entry.title,
-          image: firstBodyImage || FALLBACK_RELEASE_IMAGE,
+          image: firstBodyImage,
           content: entry.body ? (
             <PortableTextRenderer blocks={entry.body} />
           ) : (
-            <div className="prose prose-sm max-w-none">
-              <ul className="list-disc pl-4 space-y-2 mt-4">
+            <div>
+              <ul className="list-disc space-y-2 pl-5 marker:text-muted-foreground">
                 {entry.summary
                   ?.split("\n")
                   .filter(Boolean)
@@ -179,7 +176,6 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
               </ul>
             </div>
           ),
-          contributors: [],
         } as Release;
       })
     : STATIC_CHANGELOG_RELEASES.map((r) => {
@@ -189,57 +185,70 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
           date: r.date,
           tag: r.tag.toLowerCase(),
           excerpt: r.summary,
-          image: FALLBACK_RELEASE_IMAGE,
           content: (
-            <div className="prose prose-sm max-w-none">
-              <ul className="list-disc pl-4 space-y-2 mt-4">
+            <div>
+              <ul className="list-disc space-y-2 pl-5 marker:text-muted-foreground">
                 {r.highlights.map((h) => (
                   <li key={h}>{h}</li>
                 ))}
               </ul>
             </div>
           ),
-          contributors: [],
         } as Release;
       });
 
   return (
     <main id="main-content" className="flex-1 bg-background">
-      <InteractiveChangelog releases={mappedReleases} />
+      <section className="px-8 pt-28 pb-16 xl:px-16">
+        <Intro level={1} title={t("title")} lead={t("lead")} />
+      </section>
 
-      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-        <AnimateIn preset="fade" inView>
-          <p className="text-center text-sm text-muted-foreground">
-            {t.rich("subscribe", {
-              rss: (chunks) => (
-                <Link
-                  href="/api/changelog/rss"
-                  className="font-medium text-primary underline-offset-4 hover:underline"
-                >
-                  {chunks}
-                </Link>
-              ),
-              atom: (chunks) => (
-                <Link
-                  href="/api/changelog/atom"
-                  className="font-medium text-primary underline-offset-4 hover:underline"
-                >
-                  {chunks}
-                </Link>
-              ),
-              handle: (chunks) => (
-                <a
-                  href="https://x.com/nebutra_ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-primary underline-offset-4 hover:underline"
-                >
-                  {chunks}
-                </a>
-              ),
-            })}
-          </p>
-        </AnimateIn>
+      <InteractiveChangelog
+        releases={mappedReleases}
+        labels={{
+          searchLabel: t("searchLabel"),
+          searchPlaceholder: t("searchPlaceholder"),
+          all: t("all"),
+          listLabel: t("listLabel"),
+          readRelease: t("readRelease"),
+          copyLink: t("copyLink"),
+          linkCopied: t("linkCopied"),
+          noMatchTitle: t("noMatch.title"),
+          noMatchLead: t("noMatch.lead"),
+        }}
+      />
+
+      <section className="px-8 py-16 xl:px-16">
+        <p className="text-sm text-secondary-foreground">
+          {t.rich("subscribe", {
+            rss: (chunks) => (
+              <Link
+                href="/api/changelog/rss"
+                className="text-foreground underline underline-offset-4 decoration-border transition-colors duration-micro hover:decoration-foreground"
+              >
+                {chunks}
+              </Link>
+            ),
+            atom: (chunks) => (
+              <Link
+                href="/api/changelog/atom"
+                className="text-foreground underline underline-offset-4 decoration-border transition-colors duration-micro hover:decoration-foreground"
+              >
+                {chunks}
+              </Link>
+            ),
+            handle: (chunks) => (
+              <a
+                href="https://x.com/nebutra_ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground underline underline-offset-4 decoration-border transition-colors duration-micro hover:decoration-foreground"
+              >
+                {chunks}
+              </a>
+            ),
+          })}
+        </p>
       </section>
     </main>
   );

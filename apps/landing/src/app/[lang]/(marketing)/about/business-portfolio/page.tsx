@@ -56,9 +56,7 @@ export default async function BusinessPortfolioPage({
       {/* ─── Section 1 · Hero ─────────────────────────────────────────────── */}
       <section className="pt-32 md:pt-48 pb-20 md:pb-24 border-b border-border/50">
         <div className="container mx-auto px-4 max-w-wide">
-          <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-8 block">
-            {t("hero.kicker")}
-          </span>
+          <span className="text-sm text-muted-foreground mb-8 block">{t("hero.kicker")}</span>
 
           <AnimateIn preset="fadeUp">
             <h1
@@ -86,14 +84,12 @@ export default async function BusinessPortfolioPage({
                 >
                   {s.count}
                 </span>
-                <span className="text-xs md:text-sm font-mono tracking-wider uppercase text-muted-foreground">
-                  {s.label}
-                </span>
+                <span className="text-sm text-muted-foreground">{s.label}</span>
               </div>
             ))}
           </div>
 
-          <p className="mt-10 text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
+          <p className="mt-10 text-sm text-muted-foreground">
             {t("hero.totalLabel", { count: totalCount })}
           </p>
         </div>
@@ -121,7 +117,7 @@ export default async function BusinessPortfolioPage({
                 <div className="max-w-2xl">
                   <div className="inline-flex items-center gap-3 mb-6 px-3 py-1.5 rounded-full border border-border bg-background">
                     <Icon className="h-4 w-4 text-foreground" aria-hidden="true" />
-                    <span className="text-xs font-mono tracking-[0.2em] uppercase text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       {t("groupLabel", { letter })}
                       {" · "}
                       {t("groupItemsLabel", { count: group.items.length })}
@@ -145,7 +141,7 @@ export default async function BusinessPortfolioPage({
                   </p>
                 </div>
 
-                <div className="hidden lg:flex items-end text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/60">
+                <div className="hidden lg:flex items-end text-sm text-muted-foreground">
                   {String(groupIdx + 1).padStart(2, "0")} /{" "}
                   {String(CAPABILITY_GROUPS.length).padStart(2, "0")}
                 </div>
@@ -163,7 +159,7 @@ export default async function BusinessPortfolioPage({
                       className="group relative h-full flex flex-col gap-4 p-7 md:p-8 rounded-[var(--radius-2xl)] border border-border bg-background hover:border-foreground/40 transition-[border-color] duration-flow ease-out"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground/70">
+                        <span className="text-sm text-muted-foreground">
                           {letter}.{String(idx + 1).padStart(2, "0")}
                         </span>
                         <Icon
@@ -192,9 +188,7 @@ export default async function BusinessPortfolioPage({
       <section className="py-24 md:py-32 bg-background border-b border-border/50">
         <div className="container mx-auto px-4 max-w-wide">
           <div className="mb-16 md:mb-20 max-w-3xl">
-            <span className="text-sm font-bold tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-              {t("matrix.kicker")}
-            </span>
+            <span className="text-sm text-muted-foreground mb-6 block">{t("matrix.kicker")}</span>
             <AnimateIn preset="fadeUp">
               <h2
                 className="text-3xl md:text-4xl lg:text-5xl font-semibold text-balance mb-6"
@@ -221,7 +215,7 @@ export default async function BusinessPortfolioPage({
                 >
                   <div className="flex items-center gap-3 pb-5 border-b border-border/60">
                     <Icon className="h-5 w-5 text-foreground" aria-hidden="true" />
-                    <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       {String.fromCharCode(65 + groupIdx)} · {group.items.length}
                     </span>
                   </div>
@@ -255,9 +249,7 @@ export default async function BusinessPortfolioPage({
       <section className="py-32 md:py-40 bg-background">
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <div className="inline-block mb-8 px-4 py-1.5 rounded-full border border-border bg-muted/30">
-            <span className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground">
-              {t("cta.kicker")}
-            </span>
+            <span className="text-sm text-muted-foreground">{t("cta.kicker")}</span>
           </div>
 
           <AnimateIn preset="fadeUp">

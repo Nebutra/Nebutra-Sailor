@@ -1932,8 +1932,11 @@
       "privacy": "Privacy",
       "terms": "Terms",
       "credits": "Credits",
-      "investors": "Investors"
-    }
+      "investors": "Investors",
+      "nav": "Footer"
+    },
+    "filterAll": "All",
+    "essayLabel": "Essay · {date}"
   },
   "sitePages": {
     "home": {
@@ -4595,7 +4598,20 @@
       "title": "Changelog — {brandName}",
       "description": "Every release, shipped with obsessive attention to detail."
     },
-    "subscribe": "Subscribe to release notes via <rss>RSS</rss> or <atom>Atom</atom> or follow <handle>@nebutra_ai</handle>."
+    "subscribe": "Subscribe to release notes via <rss>RSS</rss> or <atom>Atom</atom> or follow <handle>@nebutra_ai</handle>.",
+    "title": "Changelog",
+    "lead": "What changed in Sailor, release by release: the version, the date and what it means for a project built on it.",
+    "searchLabel": "Search releases",
+    "searchPlaceholder": "Search releases",
+    "all": "All",
+    "listLabel": "Releases",
+    "readRelease": "Read the release",
+    "copyLink": "Copy link to this release",
+    "linkCopied": "Link copied",
+    "noMatch": {
+      "title": "Nothing matches that search",
+      "lead": "Clear the search or pick another tag."
+    }
   },
   "newsPage": {
     "meta": {

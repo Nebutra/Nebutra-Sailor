@@ -71,9 +71,7 @@ export default async function ModelsPage({ params }: { params: Promise<{ lang: s
     <main id="main-content" className="flex flex-col flex-1 bg-background">
       <section className="container mx-auto max-w-wide px-4 py-32">
         <AnimateIn preset="emerge" className="mb-16 max-w-4xl">
-          <p className="mb-4 text-sm font-bold tracking-[0.2em] text-primary uppercase">
-            {t("eyebrow")}
-          </p>
+          <p className="mb-4 text-sm text-primary">{t("eyebrow")}</p>
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-semibold mb-6 text-balance"
             style={{

@@ -2,6 +2,7 @@
 
 import { FilterPills } from "@nebutra/ui/primitives";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import type { EssayCardData } from "./essay-feature";
@@ -48,6 +49,7 @@ function useFlip(key: string) {
 /** The Journal as a grid of covers, optionally filterable by the essays' own tags. */
 export function EssayGrid({ posts, filter = false }: { posts: EssayCardData[]; filter?: boolean }) {
   const tags = [...new Set(posts.flatMap((p) => p.tags))].slice(0, 8);
+  const t = useTranslations("siteShell");
   const [tag, setTag] = useState("all");
   const shown = posts.filter((p) => tag === "all" || p.tags.includes(tag));
   const grid = useFlip(tag);
@@ -59,7 +61,10 @@ export function EssayGrid({ posts, filter = false }: { posts: EssayCardData[]; f
           variant="subtle"
           value={tag}
           onValueChange={setTag}
-          options={[{ value: "all", label: "All" }, ...tags.map((t) => ({ value: t, label: t }))]}
+          options={[
+            { value: "all", label: t("filterAll") },
+            ...tags.map((t) => ({ value: t, label: t })),
+          ]}
           className="mb-10"
         />
       ) : null}
@@ -76,9 +81,9 @@ export function EssayGrid({ posts, filter = false }: { posts: EssayCardData[]; f
               />
             </div>
             <p className="mt-4 text-sm tabular-nums text-muted-foreground">{p.date}</p>
-            <p className="mt-2 font-heading text-xl font-medium text-foreground text-balance">
+            <h3 className="mt-2 font-heading text-xl font-medium text-foreground text-balance">
               {p.title}
-            </p>
+            </h3>
             <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{p.excerpt}</p>
           </Link>
         ))}

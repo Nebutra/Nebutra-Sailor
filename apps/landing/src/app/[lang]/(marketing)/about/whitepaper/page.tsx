@@ -98,11 +98,9 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
       <section className="pt-32 md:pt-48 pb-20 md:pb-28">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="flex items-center gap-4 mb-10">
-            <span className="text-xs md:text-sm font-mono tracking-[0.25em] uppercase text-muted-foreground">
-              {t("hero.eyebrow")}
-            </span>
+            <span className="text-sm text-muted-foreground">{t("hero.eyebrow")}</span>
             <span className="h-px flex-1 bg-border/70" />
-            <span className="inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground">
+            <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
               <Clock className="h-3.5 w-3.5" aria-hidden />
               {t("hero.readTime")}
             </span>
@@ -124,7 +122,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             <blockquote className="text-xl md:text-2xl lg:text-[1.7rem] font-medium leading-relaxed text-foreground/90 text-balance">
               {quote.text}
             </blockquote>
-            <figcaption className="mt-6 text-xs md:text-sm font-mono tracking-[0.2em] uppercase text-muted-foreground">
+            <figcaption className="mt-6 text-sm text-muted-foreground">
               {quote.attribution}
             </figcaption>
           </figure>
@@ -136,9 +134,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
           >
             <div className="flex items-center gap-3 mb-5">
               <BookOpen className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
-              <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
-                {t("hero.tocKicker")}
-              </span>
+              <span className="text-sm text-muted-foreground">{t("hero.tocKicker")}</span>
             </div>
             <ol className="flex flex-col gap-3">
               {toc.map((entry) => (
@@ -147,7 +143,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                     href={`#${entry.id}`}
                     className="group flex items-baseline gap-4 text-foreground/90 hover:text-foreground transition-colors"
                   >
-                    <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-muted-foreground w-8 shrink-0">
+                    <span className="text-sm text-muted-foreground w-8 shrink-0">
                       {entry.roman}
                     </span>
                     <span className="text-base md:text-lg font-medium group-hover:underline underline-offset-4 decoration-border">
@@ -177,7 +173,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             </span>
             <div className="flex items-center gap-3 mb-6">
               <Compass className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
-              <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
+              <span className="text-sm text-muted-foreground">
                 {t("chapters.chapter")} Ⅰ · {t("chapters.iTitle")}
               </span>
             </div>
@@ -201,18 +197,14 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
 
           {/* Core objectives */}
           <div className="mt-16 md:mt-20">
-            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
-              {t("goalsKicker")}
-            </span>
+            <span className="text-sm text-muted-foreground mb-6 block">{t("goalsKicker")}</span>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
               {goals.map((goal, idx) => (
                 <article
                   key={goal.key}
                   className="h-full rounded-[var(--radius-2xl)] border border-border/60 bg-background p-6 md:p-7"
                 >
-                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-4 block">
-                    0{idx + 1}
-                  </span>
+                  <span className="text-sm text-muted-foreground mb-4 block">0{idx + 1}</span>
                   <h3 className="text-lg md:text-xl font-bold tracking-tight text-foreground mb-3">
                     {goal.title}
                   </h3>
@@ -242,7 +234,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             </span>
             <div className="flex items-center gap-3 mb-6">
               <Network className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
-              <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
+              <span className="text-sm text-muted-foreground">
                 {t("chapters.chapter")} Ⅱ · {t("chapters.iiTitle")}
               </span>
             </div>
@@ -277,15 +269,11 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   key={key}
                   className="group h-full rounded-[var(--radius-card)] border border-border/60 bg-muted/20 p-8 md:p-10 transition-colors duration-500 hover:border-border hover:bg-muted/40"
                 >
-                  <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-6 block">
-                    0{idx + 1} / 03
-                  </span>
+                  <span className="text-sm text-muted-foreground mb-6 block">0{idx + 1} / 03</span>
                   <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-2">
                     {content.category}
                   </h3>
-                  <p className="text-[11px] font-mono tracking-[0.2em] uppercase text-muted-foreground mb-6">
-                    {content.subtitle}
-                  </p>
+                  <p className="text-sm text-muted-foreground mb-6">{content.subtitle}</p>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                     {content.description}
                   </p>
@@ -312,7 +300,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             </span>
             <div className="flex items-center gap-3 mb-6">
               <Layers className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
-              <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
+              <span className="text-sm text-muted-foreground">
                 {t("chapters.chapter")} Ⅲ · {t("chapters.iiiTitle")}
               </span>
             </div>
@@ -340,7 +328,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             <article className="h-full rounded-[var(--radius-card)] border border-border/60 bg-background p-8 md:p-10 flex flex-col">
               <div className="flex items-center gap-3 mb-6">
                 <Layers className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
-                <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
+                <span className="text-sm text-muted-foreground">
                   {t("sectionIII.builderEyebrow")}
                 </span>
               </div>
@@ -360,7 +348,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                 {builder.description}
               </p>
 
-              <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
+              <span className="text-sm text-muted-foreground mb-4 block">
                 {t("sectionIII.highlightsKicker")}
               </span>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto">
@@ -370,7 +358,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                     className="rounded-[var(--radius-xl)] border border-border/50 bg-muted/20 p-4"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+                      <span className="text-sm text-muted-foreground">
                         B{String(idx + 1).padStart(2, "0")}
                       </span>
                     </div>
@@ -389,7 +377,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             <article className="h-full rounded-[var(--radius-card)] border border-border/60 bg-background p-8 md:p-10 flex flex-col">
               <div className="flex items-center gap-3 mb-6">
                 <Network className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
-                <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
+                <span className="text-sm text-muted-foreground">
                   {t("sectionIII.sleptonsEyebrow")}
                 </span>
               </div>
@@ -409,7 +397,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                 {sleptons.description}
               </p>
 
-              <span className="text-[10px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-4 block">
+              <span className="text-sm text-muted-foreground mb-4 block">
                 {t("sectionIII.highlightsKicker")}
               </span>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-auto">
@@ -419,7 +407,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                     className="rounded-[var(--radius-xl)] border border-border/50 bg-muted/20 p-4"
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-muted-foreground">
+                      <span className="text-sm text-muted-foreground">
                         S{String(idx + 1).padStart(2, "0")}
                       </span>
                     </div>
@@ -453,7 +441,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
             </span>
             <div className="flex items-center gap-3 mb-6">
               <Shield className="h-4 w-4 text-foreground" strokeWidth={1.5} aria-hidden />
-              <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground">
+              <span className="text-sm text-muted-foreground">
                 {t("chapters.chapter")} Ⅳ · {t("chapters.ivTitle")}
               </span>
             </div>
@@ -494,7 +482,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                   >
                     {content.number}
                   </span>
-                  <span className="relative font-mono text-[10px] tracking-[0.25em] uppercase text-muted-foreground mb-6 block">
+                  <span className="relative text-sm text-muted-foreground mb-6 block">
                     {tp("label", { number: content.number })}
                   </span>
                   <h3 className="relative text-xl md:text-2xl font-bold tracking-tight text-foreground mb-5 leading-snug">
@@ -521,9 +509,7 @@ export default async function WhitepaperPage({ params }: { params: Promise<{ lan
                 aria-hidden
               />
               <div>
-                <p className="text-[11px] font-mono tracking-[0.25em] uppercase text-muted-foreground mb-2">
-                  {t("hero.updated")}
-                </p>
+                <p className="text-sm text-muted-foreground mb-2">{t("hero.updated")}</p>
                 <Link
                   href="/about"
                   className="group inline-flex items-center gap-2 text-sm md:text-base font-medium text-foreground hover:text-foreground/80 transition-colors"

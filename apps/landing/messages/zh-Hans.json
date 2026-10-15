@@ -1928,8 +1928,11 @@
       "privacy": "隐私",
       "terms": "条款",
       "credits": "致谢",
-      "investors": "投资人"
-    }
+      "investors": "投资人",
+      "nav": "页脚"
+    },
+    "filterAll": "全部",
+    "essayLabel": "文章 · {date}"
   },
   "sitePages": {
     "home": {
@@ -4516,7 +4519,20 @@
       "title": "更新日志 — {brandNameCn}",
       "description": "每一次发布，都追求极致的细节。"
     },
-    "subscribe": "通过 <rss>RSS</rss> 或 <atom>Atom</atom> 订阅更新，或关注 <handle>@nebutra_ai</handle>。"
+    "subscribe": "通过 <rss>RSS</rss> 或 <atom>Atom</atom> 订阅更新，或关注 <handle>@nebutra_ai</handle>。",
+    "title": "更新日志",
+    "lead": "Sailor 每个版本改了什么：版本号、日期，以及它对基于 Sailor 的项目意味着什么。",
+    "searchLabel": "搜索版本",
+    "searchPlaceholder": "搜索版本",
+    "all": "全部",
+    "listLabel": "版本",
+    "readRelease": "查看这个版本",
+    "copyLink": "复制这个版本的链接",
+    "linkCopied": "链接已复制",
+    "noMatch": {
+      "title": "没有匹配的版本",
+      "lead": "清空搜索，或换一个标签。"
+    }
   },
   "newsPage": {
     "meta": {

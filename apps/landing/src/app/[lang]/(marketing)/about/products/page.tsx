@@ -53,9 +53,7 @@ export default async function FounderOsPage({ params }: { params: Promise<{ lang
 
       {LAYER_KEYS.map((key) => (
         <Band key={key}>
-          <p className="text-xs uppercase tracking-wide text-muted-foreground">
-            {t(layerKey(key, "status"))}
-          </p>
+          <p className="text-sm text-muted-foreground">{t(layerKey(key, "status"))}</p>
           <Intro
             title={LAYER_NAMES[key]}
             lead={t(layerKey(key, "line"))}

@@ -2,6 +2,7 @@ import { resolveBlogCover } from "@nebutra/blog";
 import { getImageUrl } from "@nebutra/sanity/image";
 import { cacheLife } from "next/cache";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { type BlogPostWithSource, getAllPosts } from "@/lib/blog";
 
@@ -56,6 +57,7 @@ export async function EssayFeature() {
   const post = posts.find((p) => p.slug === FEATURED) ?? posts[0];
   if (!post) return null;
   const cover = coverOf(post, 1600, 900);
+  const t = await getTranslations("siteShell");
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -73,11 +75,11 @@ export async function EssayFeature() {
       </div>
       <div>
         <p className="text-sm tabular-nums text-muted-foreground">
-          Essay · {post.date?.slice(0, 10)}
+          {t("essayLabel", { date: post.date?.slice(0, 10) ?? "" })}
         </p>
-        <p className="mt-3 font-heading text-4xl font-medium text-foreground text-balance md:text-5xl">
+        <h2 className="mt-3 font-heading text-4xl font-medium tracking-heading text-foreground text-balance md:text-5xl">
           {post.title}
-        </p>
+        </h2>
         <p className="mt-4 text-lg text-muted-foreground">{post.excerpt}</p>
       </div>
     </Link>

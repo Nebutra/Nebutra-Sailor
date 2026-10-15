@@ -60,7 +60,7 @@ export function MultiTenantCard() {
       {/* High-Fidelity Code Editor with tabs, line numbers, and terminal */}
       <div
         style={{ boxShadow: "var(--ring-hairline)" }}
-        className="w-full max-w-[420px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-border bg-background dark:bg-muted transition-transform duration-150 group-hover:-translate-y-px origin-bottom"
+        className="w-full max-w-[420px] mt-auto relative overflow-hidden rounded-t-[var(--radius-card)] border-x border-t border-border bg-background dark:bg-muted origin-bottom"
       >
         {/* Window Chrome */}
         <div className="flex items-center gap-1.5 px-5 py-3 border-b border-border/60 bg-muted/30">
@@ -86,7 +86,7 @@ export function MultiTenantCard() {
         </div>
 
         {/* Code Area with Line Numbers */}
-        <div className="bg-transparent overflow-hidden">
+        <div className="overflow-x-auto bg-transparent">
           <pre className="font-mono text-[12px] sm:text-[13px] leading-[1.7] whitespace-pre">
             {CODE_LINES.map((line) => (
               <div
