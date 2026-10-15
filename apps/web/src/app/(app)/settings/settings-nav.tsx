@@ -5,23 +5,24 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 const NAV_ITEMS = [
-  { href: "/settings", label: "General" },
-  { href: "/settings/account", label: "Account" },
-  { href: "/settings/appearance", label: "Appearance" },
-  { href: "/settings/security", label: "Security" },
-  { href: "/settings/team", label: "Team" },
-  { href: "/settings/developers", label: "Open Platform" },
-  { href: "/settings/api-keys", label: "API Keys" },
-  { href: "/settings/provider-keys", label: "Provider Keys" },
-  { href: "/settings/webhooks", label: "Webhooks" },
-  { href: "/settings/notifications", label: "Notifications" },
-  { href: "/settings/referrals", label: "Referrals" },
-  { href: "/settings/shortcuts", label: "Shortcuts" },
-  { href: "/settings/audit-log", label: "Audit Log" },
-  { href: "/billing", label: "Billing" },
+  { href: "/settings", labelKey: "general" },
+  { href: "/settings/account", labelKey: "account" },
+  { href: "/settings/appearance", labelKey: "appearance" },
+  { href: "/settings/security", labelKey: "security" },
+  { href: "/settings/team", labelKey: "team" },
+  { href: "/settings/developers", labelKey: "openPlatform" },
+  { href: "/settings/api-keys", labelKey: "apiKeys" },
+  { href: "/settings/provider-keys", labelKey: "providerKeys" },
+  { href: "/settings/webhooks", labelKey: "webhooks" },
+  { href: "/settings/notifications", labelKey: "notifications" },
+  { href: "/settings/referrals", labelKey: "referrals" },
+  { href: "/settings/shortcuts", labelKey: "shortcuts" },
+  { href: "/settings/audit-log", labelKey: "auditLog" },
+  { href: "/billing", labelKey: "billing" },
 ];
 
 export function SettingsNav() {
+  const tNav = useTranslations("Sidebar.nav");
   const tc = useTranslations("copy.settingsSettingsNav");
   const pathname = usePathname();
 
@@ -32,7 +33,7 @@ export function SettingsNav() {
     >
       {/* Responsive: Scroll — a horizontal strip below md, a rail from md up. */}
       <ul className="flex gap-1 md:block md:space-y-0.5">
-        {NAV_ITEMS.map(({ href, label }) => {
+        {NAV_ITEMS.map(({ href, labelKey }) => {
           const isActive =
             href === "/settings" ? /\/settings$/.test(pathname) : pathname.includes(href);
           return (
@@ -46,7 +47,7 @@ export function SettingsNav() {
                     : "font-medium text-neutral-11 hover:bg-neutral-2 hover:text-neutral-12"
                 }`}
               >
-                {label}
+                {tNav(labelKey)}
               </Link>
             </li>
           );

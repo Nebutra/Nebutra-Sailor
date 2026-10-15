@@ -104,6 +104,35 @@ interface ThreadSummary {
   lastActivityAt: string;
 }
 
+/** English nav label → `Sidebar.nav.*` key (dashboard-nav groups, items, badges, settings sections). */
+const NAV_LABEL_KEYS: Record<string, string> = {
+  Product: "product",
+  Admin: "admin",
+  "Startup OS": "startupOs",
+  Connectors: "connectors",
+  "Match your cofounder": "cofounder",
+  Alpha: "alpha",
+  Owner: "owner",
+  Settings: "settings",
+  General: "general",
+  Account: "account",
+  Appearance: "appearance",
+  Security: "security",
+  Team: "team",
+  Developers: "openPlatform",
+  "Api Keys": "apiKeys",
+  "Provider Keys": "providerKeys",
+  Webhooks: "webhooks",
+  Notifications: "notifications",
+  Referrals: "referrals",
+  Shortcuts: "shortcuts",
+  "Audit Log": "auditLog",
+  Billing: "billing",
+  Usage: "usage",
+  Integrations: "connectors",
+  Cofounder: "cofounder",
+};
+
 export function DesignSystemShell(props: Props) {
   return (
     <SidebarProvider>
@@ -243,7 +272,17 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     }
     // Run once on mount; toast copy can't change after hydration.
   }, []);
-  const breadcrumbs = buildBreadcrumbs(pathname, navCapabilities);
+  // Nav and breadcrumb labels are English identifiers in dashboard-nav.ts and
+  // settings-nav.tsx; render them through the catalog.
+  const tNav = useTranslations("Sidebar.nav");
+  const navLabel = (label: string) => {
+    const key = NAV_LABEL_KEYS[label];
+    return key ? tNav(key) : label;
+  };
+  const breadcrumbs = buildBreadcrumbs(pathname, navCapabilities).map((crumb) => ({
+    ...crumb,
+    label: navLabel(crumb.label),
+  }));
   const currentBreadcrumb = breadcrumbs.at(-1);
 
   async function handleWorkspaceChange(nextWorkspaceId: string) {
@@ -448,20 +487,20 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
 
       const groupSection: SidebarNavSection = {
         id: group.title,
-        label: group.title,
+        label: navLabel(group.title),
         items: group.items.map((item) => ({
           id: item.href,
-          label: item.label,
+          label: navLabel(item.label),
           href: item.href,
           icon: item.icon,
-          badge: item.badge,
+          badge: item.badge ? { ...item.badge, label: navLabel(item.badge.label) } : undefined,
           isActive: isActiveRoute(pathname, item.href),
           children: item.children?.map((child) => ({
             id: child.href,
-            label: child.label,
+            label: navLabel(child.label),
             href: child.href,
             icon: child.icon,
-            badge: child.badge,
+            badge: child.badge ? { ...child.badge, label: navLabel(child.badge.label) } : undefined,
             isActive: isActiveRoute(pathname, child.href),
           })),
         })),

@@ -48,7 +48,9 @@ vi.mock("@/hooks/usePermission", () => ({
 
 vi.mock("next-intl", () => ({
   useTranslations: (copyNs?: string) =>
-    copyNs?.startsWith("copy.") ? catalogT(copyNs) : (key: string) => key,
+    copyNs?.startsWith("copy.") || copyNs === "Sidebar.nav"
+      ? catalogT(copyNs)
+      : (key: string) => key,
 }));
 
 // dashboard-nav.ts imports `routing.locales` from this module; the real module

@@ -227,7 +227,7 @@ export function StartupChatPanel({
             <PromptInputBox
               isLoading={isStreaming}
               onSend={handleSend}
-              placeholder={tc("再加一个定价页把Hero改成品牌渐变")}
+              placeholder={tc("promptPlaceholder")}
             />
           </div>
         </footer>

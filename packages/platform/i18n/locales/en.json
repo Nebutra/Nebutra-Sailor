@@ -1271,7 +1271,32 @@
     "sortAlphabetical": "Alphabetical",
     "sortCreated": "Date created",
     "archiveAll": "Archive all",
-    "comingV2": "Coming in v2"
+    "comingV2": "Coming in v2",
+    "nav": {
+      "product": "Product",
+      "admin": "Admin",
+      "startupOs": "Startup OS",
+      "connectors": "Connectors",
+      "cofounder": "Match your cofounder",
+      "alpha": "Alpha",
+      "owner": "Owner",
+      "settings": "Settings",
+      "general": "General",
+      "account": "Account",
+      "appearance": "Appearance",
+      "security": "Security",
+      "team": "Team",
+      "openPlatform": "Open Platform",
+      "apiKeys": "API Keys",
+      "providerKeys": "Provider Keys",
+      "webhooks": "Webhooks",
+      "notifications": "Notifications",
+      "referrals": "Referrals",
+      "shortcuts": "Shortcuts",
+      "auditLog": "Audit Log",
+      "billing": "Billing",
+      "usage": "Usage"
+    }
   },
   "startupOs": {
     "milestone": {
@@ -1408,7 +1433,6 @@
       "buildWithConversation": "Build with conversation",
       "describeAChangeAnd": "Describe a change and the agent edits your workspace live.",
       "conversationFailed": "Conversation failed",
-      "再加一个定价页把Hero改成品牌渐变": "再加一个定价页、把 hero 改成品牌渐变、生成 README…",
       "plan": "Plan",
       "streaming": "streaming",
       "describeAChangeTo": "Describe a change to start building your workspace.",
@@ -1423,7 +1447,8 @@
       "helpful": "Helpful",
       "notHelpful": "Not helpful",
       "stopGenerating": "Stop generating",
-      "stop": "Stop"
+      "stop": "Stop",
+      "promptPlaceholder": "Add a pricing page, make the hero a brand gradient, generate a README…"
     },
     "embedPage": {
       "interactiveDemo": "Interactive demo",
@@ -1786,12 +1811,12 @@
     "notificationsNotificationsDialog": {
       "openNotifications": "Open notifications",
       "notifications": "Notifications",
-      "通知": "通知",
-      "加载中": "加载中…",
-      "通知加载失败": "通知加载失败",
-      "重试": "重试",
       "new": "New",
-      "打开": "打开"
+      "title": "Notifications",
+      "loading": "Loading…",
+      "loadFailed": "Notifications didn’t load",
+      "retry": "Try again",
+      "openItem": "Open"
     },
     "skillsSkillsGrid": {
       "searchSkills": "Search skills…",
@@ -1802,16 +1827,6 @@
       "noSkillsMatch": "No skills match",
       "tryADifferentSearch": "Try a different search or clear the Official-only filter.",
       "official": "Official"
-    },
-    "authorizePage": {
-      "invalidRequest": "Invalid Request",
-      "missingInteractionID": "Missing interaction ID.",
-      "authorizationUIUnavailable": "Authorization UI unavailable",
-      "nebutraOwnedSSOIs": "Nebutra-owned SSO is deployed only after the login and consent interaction handlers are connected to the canonical user session.",
-      "authorizeAccess": "Authorize Access",
-      "wantsToAccessYour": "wants to access your Nebutra account",
-      "requestedPermissions": "Requested Permissions",
-      "byAuthorizingYouAgree": "By authorizing, you agree to share the above data with this application. You can revoke access at any time from your Nebutra settings."
     },
     "platformPage": {
       "inbox": "Inbox",
@@ -1837,7 +1852,7 @@
       "connectSailorWithYour": "Connect Sailor with your everyday apps, APIs, and MCPs",
       "connectorsLetSailorRead": "Connectors let Sailor read and write across your stack — Stripe, Slack, your own APIs, MCP servers. Credentials are encrypted at the application layer.",
       "addAConnector": "Add a connector",
-      "activeConnector": "{length} active connector{value1}",
+      "activeConnector": "{length, plural, one {# active connector} other {# active connectors}}",
       "addConnector": "Add connector",
       "removeThisConnector": "Remove this connector?",
       "remove": "Remove",
@@ -1961,7 +1976,7 @@
     "supplyPage": {
       "supply": "Supply",
       "routerManifest": "Router manifest",
-      "高级引擎原生控制台": "高级：引擎原生控制台"
+      "advancedNativeConsole": "Advanced: the engine’s native console"
     },
     "teamInviteMemberForm": {
       "member": "Member",
@@ -2066,7 +2081,7 @@
     },
     "startupOsStartupThreadPanel": {
       "executeSelectedRun": "Execute selected run",
-      "recordedAction": "{activityCount} recorded action{value1}.",
+      "recordedAction": "{activityCount, plural, one {# recorded action} other {# recorded actions}}.",
       "toggleNavigation": "Toggle navigation"
     },
     "startupOsStartupWorkspaceShell": {

@@ -173,7 +173,7 @@ export default async function PlatformSupplyPage() {
             rel="noreferrer"
             className="underline-offset-4 hover:text-foreground hover:underline"
           >
-            {tc("高级引擎原生控制台")}
+            {tc("advancedNativeConsole")}
           </a>
         </p>
       ) : null}

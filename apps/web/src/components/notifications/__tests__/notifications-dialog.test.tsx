@@ -84,7 +84,7 @@ describe("NotificationsDialog", () => {
     renderWithClient(<NotificationsDialog />);
 
     await user.click(screen.getByRole("button", { name: /open notifications/i }));
-    expect(screen.getByText("加载中…")).toBeInTheDocument();
+    expect(screen.getByText("Loading…")).toBeInTheDocument();
 
     expect(fetchMock).toHaveBeenCalledWith(
       "/api/notifications",
@@ -99,7 +99,7 @@ describe("NotificationsDialog", () => {
     await waitFor(() => {
       expect(screen.getByText("Release shipped")).toBeInTheDocument();
     });
-    expect(screen.queryByText("加载中…")).not.toBeInTheDocument();
+    expect(screen.queryByText("Loading…")).not.toBeInTheDocument();
     expect(screen.getByText("New")).toBeInTheDocument();
   });
 
@@ -113,9 +113,9 @@ describe("NotificationsDialog", () => {
     await user.click(screen.getByRole("button", { name: /open notifications/i }));
 
     await waitFor(() => {
-      expect(screen.getByRole("alert")).toHaveTextContent("通知加载失败");
+      expect(screen.getByRole("alert")).toHaveTextContent("Notifications didn’t load");
     });
-    expect(screen.getByRole("button", { name: "重试" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Try again" })).toBeEnabled();
     expect(screen.queryByText("暂无通知")).not.toBeInTheDocument();
   });
 });

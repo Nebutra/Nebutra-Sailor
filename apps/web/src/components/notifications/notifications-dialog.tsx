@@ -149,7 +149,7 @@ export function NotificationsDialog() {
           {/* Header — centered title. DialogContent already provides its own
  top-right close button; do NOT add another. */}
           <div className="border-b border-border px-6 pt-6 pb-4">
-            <h2 className="text-center text-lg font-semibold text-foreground">{tc("通知")}</h2>
+            <h2 className="text-center text-lg font-semibold text-foreground">{tc("title")}</h2>
 
             {/* Tab bar — segmented control */}
             <div className="mt-4 flex justify-center">
@@ -174,13 +174,13 @@ export function NotificationsDialog() {
           {/* Feed */}
           <div className="max-h-[68vh] overflow-y-auto px-6 py-6">
             {snapshotQuery.isPending && !snapshot ? (
-              <p className="py-10 text-center text-sm text-muted-foreground">{tc("加载中")}</p>
+              <p className="py-10 text-center text-sm text-muted-foreground">{tc("loading")}</p>
             ) : snapshotQuery.isError && !snapshot ? (
               <div
                 role="alert"
                 className="flex flex-col items-center gap-3 py-10 text-center text-sm text-muted-foreground"
               >
-                <p>{tc("通知加载失败")}</p>
+                <p>{tc("loadFailed")}</p>
                 <button
                   type="button"
                   onClick={() => {
@@ -188,7 +188,7 @@ export function NotificationsDialog() {
                   }}
                   className="inline-flex h-8 items-center rounded-[var(--radius-md)] border border-border px-3 text-xs font-medium text-foreground transition-colors hover:bg-muted"
                 >
-                  {tc("重试")}
+                  {tc("retry")}
                 </button>
               </div>
             ) : filtered.length === 0 ? (
@@ -238,7 +238,7 @@ export function NotificationsDialog() {
                                 onClick={() => setOpen(false)}
                                 className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary dark:text-primary dark:hover:text-primary"
                               >
-                                {tc("打开")}
+                                {tc("openItem")}
                                 <ExternalLink className="size-3" aria-hidden="true" />
                               </Link>
                             )}
