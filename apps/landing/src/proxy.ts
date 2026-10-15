@@ -274,5 +274,10 @@ export const config = {
     // twitter-image — at the root or under a route) are files, not pages: the
     // locale rewrite turned the root ones into 404s.
     "/((?!api|trpc|_next|_vercel|(?:.*/)?(?:opengraph-image|twitter-image|apple-icon|icon)(?:$|/)|.*\\..*).*)",
+    // Release pages are named by version ("/changelog/1.7"), and the catch-all
+    // above skips any path with a dot as a file — so the canonical,
+    // unprefixed URL of every release never reached the locale rewrite and
+    // answered 404 (sitemap entries and the changelog's own links included).
+    "/changelog/:version",
   ],
 };

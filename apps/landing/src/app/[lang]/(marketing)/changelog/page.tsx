@@ -156,7 +156,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
         const firstBodyImage = entry.body?.find((b) => b._type === "image")?.asset?.url;
 
         return {
-          title: `v${entry.version}: ${entry.title}`,
+          title: entry.title,
           version: entry.version,
           date: entry.publishedAt?.split("T")[0] ?? "",
           tag: entry.type || "feature",
@@ -180,7 +180,7 @@ export default async function ChangelogPage({ params }: { params: Promise<{ lang
       })
     : STATIC_CHANGELOG_RELEASES.map((r) => {
         return {
-          title: `v${r.version}: ${r.title}`,
+          title: r.title,
           version: r.version,
           date: r.date,
           tag: r.tag.toLowerCase(),

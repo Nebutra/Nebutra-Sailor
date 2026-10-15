@@ -26,7 +26,7 @@ export const CodeExecutionGlyph = ({ copy }: SubpackageGlyphProps) => {
       style={{ height: 160 }}
     >
       {/* Top-right runtime badge */}
-      <div className="flex items-center justify-between">
+      <div className="flex min-w-0 flex-wrap items-center justify-between gap-1">
         <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
           <Code className="h-3 w-3" />
           <span className="font-mono">sandbox.runCommand</span>
