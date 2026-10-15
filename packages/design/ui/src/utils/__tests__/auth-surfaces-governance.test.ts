@@ -10,10 +10,13 @@ import {
 
 const REPO_ROOT = join(process.cwd(), "../../..");
 
+// Both apps render the shared sign-in shell; layout contracts live in it.
 const SPLIT_LAYOUTS = [
   "apps/auth/src/components/auth-split-layout.tsx",
   "apps/web/src/components/auth/auth-split-layout.tsx",
 ] as const;
+
+const SHARED_SPLIT_SHELL = "packages/iam/auth/src/sign-in/auth-split-shell.tsx";
 
 const AUTH_SURFACES = [
   "apps/auth/src/components/credentials-form.tsx",
@@ -24,10 +27,7 @@ const AUTH_SURFACES = [
   "apps/web/src/components/auth/passkey-panel.tsx",
 ] as const;
 
-const OAUTH_BUTTONS = [
-  "apps/auth/src/components/oauth-buttons.tsx",
-  "apps/web/src/components/auth/oauth-buttons.tsx",
-] as const;
+const OAUTH_BUTTONS = ["packages/iam/auth/src/sign-in/oauth-buttons.tsx"] as const;
 
 const FOREGROUND_FILL_FIGHT =
   /bg-\[hsl\(var\(--foreground\)\)\][\s\S]{0,120}text-\[hsl\(var\(--background\)\)\]/;
@@ -44,26 +44,35 @@ describe("auth surface layout contracts", () => {
     expect(AUTH_PRIMARY_CTA_CLASS).toContain("w-full");
   });
 
-  it("both product AuthSplitLayouts apply width SSOT without card chrome", () => {
+  it("both product AuthSplitLayouts delegate to the shared sign-in shell", () => {
     for (const rel of SPLIT_LAYOUTS) {
       const source = readFileSync(join(REPO_ROOT, rel), "utf8");
-      expect(source, rel).toContain("AUTH_FORM_COLUMN_CLASS");
-      expect(source, rel).not.toContain("AUTH_FORM_CARD_CLASS");
-      // Server-safe path only — @nebutra/ui/utils was once client-stamped and
-      // RSC treated AUTH_FORM_* as client proxies (login card className empty).
-      expect(source, rel).toContain('from "@nebutra/ui/utils/auth-surfaces"');
+      expect(source, rel).toContain('from "@nebutra/auth/sign-in"');
+      expect(source, rel).toContain("AuthSplitShell");
       expect(source, rel).toContain("getMarketingHomeUrl");
-      // Forbid bare barrel import of AUTH_FORM_* (cn from @nebutra/ui/utils is fine).
-      expect(source, rel).not.toMatch(
-        /import\s*\{[^}]*AUTH_FORM_COLUMN_CLASS[^}]*\}\s*from\s*["']@nebutra\/ui\/utils["']/,
-      );
+      expect(source, rel).not.toContain("AUTH_FORM_CARD_CLASS");
       expect(source, rel).not.toMatch(/max-w-sm(?![\w-])/);
       expect(source, rel).not.toMatch(/max-w-xs(?![\w-])/);
-      // Nested card chrome ban (border + rounded + shadow wrappers).
       expect(source, rel).not.toMatch(
         /rounded-2xl border border-border bg-background p-6 shadow-sm/,
       );
     }
+  });
+
+  it("shared sign-in shell applies width SSOT without card chrome", () => {
+    const source = readFileSync(join(REPO_ROOT, SHARED_SPLIT_SHELL), "utf8");
+    expect(source).toContain("AUTH_FORM_COLUMN_CLASS");
+    expect(source).not.toContain("AUTH_FORM_CARD_CLASS");
+    // Server-safe path only — @nebutra/ui/utils was once client-stamped and
+    // RSC treated AUTH_FORM_* as client proxies (login card className empty).
+    expect(source).toContain('from "@nebutra/ui/utils/auth-surfaces"');
+    // Forbid bare barrel import of AUTH_FORM_* (cn from @nebutra/ui/utils is fine).
+    expect(source).not.toMatch(
+      /import\s*\{[^}]*AUTH_FORM_COLUMN_CLASS[^}]*\}\s*from\s*["']@nebutra\/ui\/utils["']/,
+    );
+    expect(source).not.toMatch(/max-w-sm(?![\w-])/);
+    expect(source).not.toMatch(/max-w-xs(?![\w-])/);
+    expect(source).not.toMatch(/rounded-2xl border border-border bg-background p-6 shadow-sm/);
   });
 
   it("utils barrel + auth-surfaces entry stay free of use client (RSC-safe)", () => {
