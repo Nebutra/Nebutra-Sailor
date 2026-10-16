@@ -350,7 +350,7 @@
         },
         "sales": {
           "title": "Commercial Deployment",
-          "description": "Support plans, {brandName} and Sailor trademark licences, and private cluster-environment deployments."
+          "description": "Support plans, {brandName} trademark licences, and private cluster-environment deployments."
         },
         "support": {
           "title": "Expert-Level Support",
