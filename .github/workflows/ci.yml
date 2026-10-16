@@ -761,6 +761,14 @@ jobs:
           AUTH_PROVIDER: "better-auth"
           NEXT_PUBLIC_AUTH_PROVIDER: "better-auth"
           NEXT_TELEMETRY_DISABLED: "1"
+          # A production build of apps/web refuses to bake in a localhost
+          # default for its public origins (589fe7c9e) and this step runs it
+          # with env validation on, so it gets non-local origins, as the build
+          # job above and every deploy workflow pass.
+          NEXT_PUBLIC_SITE_URL: "https://example.com"
+          NEXT_PUBLIC_APP_URL: "https://app.example.com"
+          NEXT_PUBLIC_API_URL: "https://api.example.com"
+          NEXT_PUBLIC_STUDIO_URL: "https://studio.example.com"
           DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci"
 
       - name: Upload web release logs

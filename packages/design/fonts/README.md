@@ -61,10 +61,11 @@ Chosen 2026-09-25 by measuring what competitors ship: MiniMax and Moonshot set
 Chinese in MiSans, DeepSeek and Databricks set Latin in DM Sans. Geist stays the
 body/UI face for its tabular figures.
 
-### Wiring an app
+### Wiring an app in the Sailor monorepo
 
-Apps do not import this package. They take the loader from `@nebutra/tokens/fonts`,
-which composes Geist, Geist Mono and these brand faces into one class:
+Inside the Sailor monorepo, apps take the loader from `@nebutra/tokens/fonts`
+rather than from this package directly. It composes Geist, Geist Mono and these
+brand faces into one class:
 
 ```tsx
 import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
@@ -74,7 +75,7 @@ import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
     <FontFaces />
 ```
 
-`scripts/lint-font-pipeline.mjs` fails a `next/font`, `geist/font` or
+There, `scripts/lint-font-pipeline.mjs` fails a `next/font`, `geist/font` or
 `@nebutra/fonts/next*` import anywhere else (2026-10-16: auth and idp had wired
 one of the three loaders and rendered in the OS font).
 

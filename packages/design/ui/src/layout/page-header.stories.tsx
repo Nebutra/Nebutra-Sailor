@@ -24,6 +24,18 @@ export const Default: Story = {
   },
 };
 
+export const TitleOnly: Story = {
+  args: { title: "Analytics" },
+};
+
+export const WithActions: Story = {
+  args: {
+    title: "API keys",
+    description: "Create and revoke API keys for programmatic access.",
+    actions: <button type="button">Create key</button>,
+  },
+};
+
 export const AllVariants: Story = {
   render: () => (
     <div className="space-y-10">
