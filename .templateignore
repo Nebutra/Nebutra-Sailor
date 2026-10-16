@@ -493,3 +493,7 @@ docs/architecture/2026-10-09-kcq-brand-architecture.md
 
 # Instance-only KCQ upstream/product compatibility gate
 .github/workflows/kcq-compatibility.yml
+
+# Nebutra Status productisation proposal — Nebutra's own status.nebutra.com and
+# the xiaoya integration, not something a scaffold inherits.
+docs/proposals/2026-10-16-status-product.md
