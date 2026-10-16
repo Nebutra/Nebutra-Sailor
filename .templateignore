@@ -7,7 +7,8 @@
 #
 # Rules:
 #   - Use gitignore syntax (supports globs, negation with `!`).
-#   - Keep packages/* fully intact (they are the reusable primitives).
+#   - Keep packages/* intact (they are the reusable primitives); the only
+#     exceptions are assets no code reads, under "Scaffold weight" below.
 #   - Preserve skeleton files (layout.tsx, globals.css, package.json, etc.).
 #   - When adding new Nebutra-owned code, add it here.
 #
@@ -497,3 +498,33 @@ docs/architecture/2026-10-09-kcq-brand-architecture.md
 # Nebutra Status productisation proposal — Nebutra's own status.nebutra.com and
 # the xiaoya integration, not something a scaffold inherits.
 docs/proposals/2026-10-16-status-product.md
+# ---------------------------------------------------------------------------
+# Scaffold weight — files nothing in a scaffold reads (2026-10-16 tarball
+# diet; measured against the mirror's codeload tarball, 19.8 MB before).
+# Each entry is either Nebutra-only material or an asset with no reader.
+# ---------------------------------------------------------------------------
+# Poppins: nothing loads it (no @font-face, no OG renderer, no brand:sync
+# mapping); metadata.ts only lists the paths. brand-favicon-completeness keeps
+# Thin / Regular / Bold on disk, so those three ship and the other 15 do not.
+packages/design/brand/assets/fonts/poppins/*
+!packages/design/brand/assets/fonts/poppins/Poppins-Thin.otf
+!packages/design/brand/assets/fonts/poppins/Poppins-Regular.otf
+!packages/design/brand/assets/fonts/poppins/Poppins-Bold.otf
+# Sub-brand art is read only by apps/forge and apps/router (stripped above).
+packages/design/brand/assets/sub-brand/
+# A Nebutra dashboard screenshot no story, test or component imports.
+packages/design/ui/src/primitives/fixtures/
+# Nebutra's product-pricing story imports a landing module template-build
+# strips (product-offer-list), so it fails the scaffold's Storybook build.
+apps/storybook/src/stories/ProductPricing.stories.tsx
+# TypeLens (a Nebutra product) design study: screenshots and route notes.
+docs/design/typelens-fiu-study/
+# Nebutra's Product Hunt launch kit (press / PR, like /marketing/).
+content/producthunt/
+# Nightly cold-start smoke of the published create-sailor against this
+# mirror: it tests Nebutra's release, not the consumer's project.
+.github/workflows/scaffold-nightly.yml
+
+# The GitHub social-preview card for this repository (uploaded by hand in
+# repo settings); README.md references the other docs/assets files.
+docs/assets/social-preview.png

@@ -1,0 +1,358 @@
+name: Scaffold Nightly
+
+# Public proof that Sailor runs from zero, every night, the way a new user
+# meets it: the *published* create-sailor from npm, the Sailor-Template mirror
+# it downloads, a cold runner with nothing cached. Customer Path
+# (customer-path.yml) gates the same path from this checkout before a release;
+# this one checks what is actually live on npm and the mirror afterwards, so a
+# registry, mirror or dependency drift shows up the next morning instead of in
+# a user's terminal. The README badge reads this workflow's status.
+#
+#   1. npx create-sailor@latest smoke-app --yes --json   (download + install)
+#   2. nebutra status --json                             (the agent interface)
+#   3. pnpm build                                        (the full typed build)
+#   4. pnpm dev, empty .env                              (ADR 2026-09-24 §4)
+#   5. GET the gateway health route and the product app's /welcome
+#   6. Chromium signs in with the seeded demo account through the real
+#      sign-in form, then opens /welcome and /billing: no HTTP >= 400 and no
+#      error-boundary text on either page
+#
+# Timings land in the job summary. Screenshots are always uploaded; logs are
+# uploaded when anything fails.
+# Source-repo only: .templateignore strips it from the mirror.
+
+on:
+  schedule:
+    - cron: "23 4 * * *" # nightly 04:23 UTC
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "create-sailor version or dist-tag to scaffold with"
+        type: string
+        default: "latest"
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  NO_COLOR: "1"
+  FORCE_COLOR: "0"
+  # pnpm 11 checks the install before every `pnpm run`; the scaffold was just
+  # installed by create-sailor, so the check only adds noise (same as
+  # customer-path.yml).
+  npm_config_verify_deps_before_run: "false"
+  CREATE_SAILOR_VERSION: ${{ inputs.version || 'latest' }}
+
+jobs:
+  scaffold:
+    name: create-sailor → status → build → dev → sign-in
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      # The checkout is only for the shared setup action (Node 22 + the pnpm
+      # version package.json pins). Nothing from it is installed or built.
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Setup Node.js and pnpm (no cache)
+        uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: "22"
+          cache: ""
+          install: "false"
+
+      - name: Scaffold from npm
+        id: scaffold
+        timeout-minutes: 25
+        working-directory: ${{ runner.temp }}
+        run: |
+          set -euo pipefail
+          mkdir -p logs
+          start=$(date +%s)
+          set +e
+          npx --yes "create-sailor@${CREATE_SAILOR_VERSION}" smoke-app --yes --pm pnpm --json \
+            > logs/scaffold.ndjson 2> logs/scaffold.stderr.log
+          status=$?
+          set -e
+          end=$(date +%s)
+          echo "seconds=$((end - start))" >> "$GITHUB_OUTPUT"
+          version=$(grep -m1 '"event":"start"' logs/scaffold.ndjson | sed -E 's/.*"version":"([^"]+)".*/\1/' || true)
+          echo "version=${version:-unknown}" >> "$GITHUB_OUTPUT"
+          if [ "$status" -ne 0 ] || ! grep -q '"event":"done"' logs/scaffold.ndjson; then
+            echo "::error::create-sailor exited ${status} without a done event"
+            tail -n 40 logs/scaffold.ndjson logs/scaffold.stderr.log || true
+            exit 1
+          fi
+          if grep -q '"status":"error"' logs/scaffold.ndjson; then
+            echo "::error::create-sailor reported a failed step"
+            grep '"status":"error"' logs/scaffold.ndjson
+            exit 1
+          fi
+          test -f smoke-app/package.json
+          echo "files=$(cd smoke-app && git ls-files --cached --others --exclude-standard | wc -l | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
+      # `nebutra status --json` is what an agent reads after scaffolding
+      # (ADR 2026-09-24 §7). It continues on error so the build and the app
+      # still report; the Verdict step fails the run if it failed.
+      - name: Status (nebutra status --json)
+        id: status
+        continue-on-error: true
+        timeout-minutes: 5
+        working-directory: ${{ runner.temp }}/smoke-app
+        run: |
+          set -euo pipefail
+          set +e
+          pnpm exec nebutra status --json > ../logs/status.json 2> ../logs/status.stderr.log
+          status=$?
+          set -e
+          cat ../logs/status.json || true
+          if [ "$status" -ne 0 ]; then
+            echo "::error::nebutra status --json exited ${status}"
+            cat ../logs/status.stderr.log || true
+            exit "$status"
+          fi
+          if ! node -e 'JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf8"))' ../logs/status.json; then
+            echo "::error::nebutra status --json did not print JSON"
+            exit 1
+          fi
+
+      - name: Build (pnpm build)
+        id: build
+        continue-on-error: true
+        timeout-minutes: 35
+        working-directory: ${{ runner.temp }}/smoke-app
+        # A production build refuses to bake localhost into rendered links
+        # (packages/design/brand metadata-helpers.ts), so it is given public
+        # origins the way a deploy would be. These three are in turbo.json's
+        # build env list; nothing built here is deployed.
+        env:
+          NEXT_PUBLIC_SITE_URL: https://smoke.example.com
+          NEXT_PUBLIC_APP_URL: https://app.smoke.example.com
+          NEXT_PUBLIC_API_URL: https://api.smoke.example.com
+        run: |
+          set -euo pipefail
+          start=$(date +%s)
+          set +e
+          pnpm build > ../logs/build.log 2>&1
+          status=$?
+          set -e
+          echo "seconds=$(( $(date +%s) - start ))" >> "$GITHUB_OUTPUT"
+          if [ "$status" -ne 0 ]; then
+            echo "::error::pnpm build exited ${status}"
+            tail -n 60 ../logs/build.log
+            exit "$status"
+          fi
+
+      # `pnpm dev` is the documented first run: product app, site and gateway
+      # with no keys, no Docker and a PGlite preview database. It prints
+      # "Sailor preview is running" once every app has answered.
+      - name: Start (pnpm dev)
+        id: dev
+        timeout-minutes: 20
+        working-directory: ${{ runner.temp }}/smoke-app
+        run: |
+          set -euo pipefail
+          log=../logs/dev.log
+          start=$(date +%s)
+          setsid pnpm dev > "$log" 2>&1 < /dev/null &
+          echo $! > ../dev.pid
+          for _ in $(seq 1 900); do
+            if grep -q "Sailor preview is running" "$log"; then break; fi
+            if ! kill -0 "$(cat ../dev.pid)" 2>/dev/null; then
+              echo "::error::pnpm dev exited before the preview was ready"
+              tail -n 80 "$log"
+              exit 1
+            fi
+            sleep 1
+          done
+          if ! grep -q "Sailor preview is running" "$log"; then
+            echo "::error::pnpm dev was not ready within 15 minutes"
+            tail -n 80 "$log"
+            exit 1
+          fi
+          echo "seconds=$(( $(date +%s) - start ))" >> "$GITHUB_OUTPUT"
+          web=$(grep -oE 'Product app +http://localhost:[0-9]+' "$log" | grep -oE 'http://localhost:[0-9]+' | tail -n1)
+          api=$(grep -oE 'API gateway +http://localhost:[0-9]+' "$log" | grep -oE 'http://localhost:[0-9]+' | tail -n1)
+          echo "web=${web}" >> "$GITHUB_OUTPUT"
+          echo "api=${api}" >> "$GITHUB_OUTPUT"
+          echo "product app: ${web}  gateway: ${api}"
+
+      - name: Health
+        id: health
+        timeout-minutes: 5
+        env:
+          WEB: ${{ steps.dev.outputs.web }}
+          API: ${{ steps.dev.outputs.api }}
+        run: |
+          set -euo pipefail
+          test -n "$WEB" && test -n "$API"
+          body="$RUNNER_TEMP/logs/health.json"
+          code=$(curl -sS -o "$body" -w '%{http_code}' --retry 5 --retry-all-errors --retry-delay 3 "$API/api/misc/health")
+          echo "gateway /api/misc/health → ${code}"
+          cat "$body"; echo
+          echo "gateway=${code}" >> "$GITHUB_OUTPUT"
+          echo "status=$(sed -nE 's/.*"status":"(healthy|degraded|unhealthy)".*/\1/p' "$body" | head -n1)" >> "$GITHUB_OUTPUT"
+          welcome=$(curl -sS -o /dev/null -w '%{http_code}' --retry 5 --retry-all-errors --retry-delay 3 "$WEB/welcome")
+          echo "product app /welcome → ${welcome}"
+          echo "welcome=${welcome}" >> "$GITHUB_OUTPUT"
+          if [ "$code" != "200" ]; then
+            echo "::error::gateway health answered ${code}"
+            exit 1
+          fi
+          if [ "$welcome" != "200" ]; then
+            echo "::error::product app /welcome answered ${welcome}"
+            exit 1
+          fi
+
+      # A page can answer 200 and still render an error boundary (a fresh
+      # scaffold once showed "This page didn't load · tp.raw is not a
+      # function" on /billing), so a browser walks the signed-in app.
+      # @playwright/test is a direct devDependency of apps/web, so the script
+      # lives there for module resolution.
+      - name: Install Chromium
+        id: chromium
+        timeout-minutes: 10
+        working-directory: ${{ runner.temp }}/smoke-app
+        run: pnpm --filter @nebutra/web exec playwright install --with-deps chromium
+
+      - name: Sign in and open /billing (browser)
+        id: browser
+        timeout-minutes: 10
+        working-directory: ${{ runner.temp }}/smoke-app/apps/web
+        env:
+          WEB: ${{ steps.dev.outputs.web }}
+          SHOTS: ${{ runner.temp }}/screenshots
+          DEMO_EMAIL: admin@example.com
+          DEMO_PASSWORD: preview-demo
+        run: |
+          set -euo pipefail
+          cat > .scaffold-nightly-browser.mjs <<'EOF'
+          import fs from "node:fs";
+          import { chromium } from "@playwright/test";
+
+          const web = process.env.WEB;
+          const shots = process.env.SHOTS;
+          fs.mkdirSync(shots, { recursive: true });
+          // Error-boundary and framework error copy; any of it on a page fails the run.
+          const broken = /didn['’]t load|is not a function|Application error|Unhandled Runtime Error|Internal Server Error/i;
+          const failures = [];
+          const browser = await chromium.launch();
+          const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+          page.on("pageerror", (error) => console.log(`page error: ${error.message}`));
+
+          async function check(path, name) {
+            await page.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => {});
+            await page.waitForTimeout(1_500);
+            await page.screenshot({ path: `${shots}/${name}.png`, fullPage: true });
+            const text = await page.locator("body").innerText();
+            const hit = text.match(broken);
+            if (hit) failures.push(`${path}: the page shows "${hit[0]}"`);
+          }
+
+          async function visit(path, name) {
+            const response = await page.goto(`${web}${path}`, { waitUntil: "domcontentloaded", timeout: 120_000 });
+            const code = response ? response.status() : 0;
+            console.log(`${path} → ${code}`);
+            if (code === 0 || code >= 400) failures.push(`${path}: HTTP ${code}`);
+            await check(path, name);
+          }
+
+          await visit("/sign-in", "sign-in");
+          await page.locator("#email").fill(process.env.DEMO_EMAIL);
+          await page.locator("#password").fill(process.env.DEMO_PASSWORD);
+          await Promise.all([
+            page.waitForURL(/\/welcome/, { timeout: 60_000 }).catch(() => {}),
+            page.locator('form button[type="submit"]').first().click(),
+          ]);
+          try {
+            await page.getByText(/Signed in as /).waitFor({ timeout: 30_000 });
+            console.log(`signed in as ${process.env.DEMO_EMAIL}`);
+          } catch {
+            const alerts = await page.locator("[role=alert]").allInnerTexts();
+            failures.push(`sign-in: the demo account did not sign in${alerts.length ? `: ${alerts.join(" ")}` : ""}`);
+          }
+          await check("/welcome (signed in)", "welcome-signed-in");
+          await visit("/billing", "billing");
+          await browser.close();
+
+          if (failures.length) {
+            for (const failure of failures) console.log(`::error::${failure}`);
+            process.exit(1);
+          }
+          console.log("sign-in, /welcome and /billing render without errors");
+          EOF
+          node .scaffold-nightly-browser.mjs
+
+      - name: Stop the preview
+        if: always()
+        run: |
+          pid_file="$RUNNER_TEMP/dev.pid"
+          if [ -f "$pid_file" ]; then
+            kill -TERM -- "-$(cat "$pid_file")" 2>/dev/null || true
+            sleep 3
+            kill -KILL -- "-$(cat "$pid_file")" 2>/dev/null || true
+          fi
+
+      - name: Summary
+        if: always()
+        env:
+          VERSION: ${{ steps.scaffold.outputs.version }}
+          FILES: ${{ steps.scaffold.outputs.files }}
+          SCAFFOLD_S: ${{ steps.scaffold.outputs.seconds }}
+          SCAFFOLD_OUTCOME: ${{ steps.scaffold.outcome }}
+          BUILD_S: ${{ steps.build.outputs.seconds }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+          DEV_S: ${{ steps.dev.outputs.seconds }}
+          DEV_OUTCOME: ${{ steps.dev.outcome }}
+          HEALTH_CODE: ${{ steps.health.outputs.gateway }}
+          HEALTH_STATUS: ${{ steps.health.outputs.status }}
+          WELCOME_CODE: ${{ steps.health.outputs.welcome }}
+          STATUS_OUTCOME: ${{ steps.status.outcome }}
+          BROWSER_OUTCOME: ${{ steps.browser.outcome }}
+        run: |
+          {
+            echo "## Sailor from zero — create-sailor@${VERSION:-?}"
+            echo
+            echo "| Step | Result | Seconds |"
+            echo "| --- | --- | ---: |"
+            echo "| \`npx create-sailor@${CREATE_SAILOR_VERSION} smoke-app\` (download + install, ${FILES:-?} files) | ${SCAFFOLD_OUTCOME} | ${SCAFFOLD_S:-–} |"
+            echo "| \`nebutra status --json\` | ${STATUS_OUTCOME} | |"
+            echo "| \`pnpm build\` | ${BUILD_OUTCOME} | ${BUILD_S:-–} |"
+            echo "| \`pnpm dev\` until every app answers (cold start) | ${DEV_OUTCOME} | ${DEV_S:-–} |"
+            echo "| gateway \`/api/misc/health\` | ${HEALTH_CODE:-–} ${HEALTH_STATUS:-} | |"
+            echo "| product app \`/welcome\` | ${WELCOME_CODE:-–} | |"
+            echo "| browser: demo sign-in → \`/welcome\` → \`/billing\` | ${BROWSER_OUTCOME} | |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # Status and build continue on error so the later steps still report;
+      # the run itself must not pass when either failed.
+      - name: Verdict
+        if: steps.status.outcome == 'failure' || steps.build.outcome == 'failure'
+        env:
+          STATUS_OUTCOME: ${{ steps.status.outcome }}
+          BUILD_OUTCOME: ${{ steps.build.outcome }}
+        run: |
+          echo "::error::nebutra status: ${STATUS_OUTCOME}; pnpm build: ${BUILD_OUTCOME} — see the logs artifact"
+          exit 1
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scaffold-nightly-screenshots
+          path: ${{ runner.temp }}/screenshots
+          retention-days: 14
+          if-no-files-found: ignore
+
+      - name: Upload logs
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: scaffold-nightly-logs
+          path: ${{ runner.temp }}/logs
+          retention-days: 14
+          if-no-files-found: ignore

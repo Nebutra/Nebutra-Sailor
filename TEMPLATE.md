@@ -41,6 +41,13 @@ my-app/ contains only the reusable skeleton
 - **Internal planning / governance** — `docs/plans/`, `governance/*.current.json`
 - **Build artifacts** — `artifacts/`, `playwright-report/`, `test-results/`
 - **Env + locks** — `.env*` (except `.env.example`), `openstatus.lock`
+- **Scaffold weight** — assets nothing in a scaffold reads: the 15 Poppins
+  cuts no code loads (Thin / Regular / Bold stay for the brand test), the
+  sub-brand art only stripped apps use, an unreferenced UI fixture screenshot,
+  the TypeLens design study, the Product Hunt kit, and Nebutra's product-pricing
+  Storybook story (it imports a landing module the build strips)
+- **Source-repo CI** — `scaffold-nightly` (cold-start smoke of the published
+  `create-sailor` against this mirror)
 
 ## Instance vs product — the declared boundary
 
