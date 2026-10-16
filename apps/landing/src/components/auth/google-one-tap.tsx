@@ -58,22 +58,51 @@ function getPostLoginUrl(appUrl: string): string {
  */
 const ONE_TAP_DELAY_MS = 3000;
 
-/** Run `task` once the page has loaded, waited `delayMs`, and the main thread is idle. */
+/**
+ * The prompt also waits for the visitor to engage with the page (scroll, tap,
+ * key). Chrome's FedCM logs "Not signed in with the identity provider." as a
+ * console error whenever the visitor has no Google session, so a prompt fired
+ * at every page view put an error on every visit that was never going to sign
+ * in — including every audit (Lighthouse best-practices). A visitor who reads
+ * on still gets it, a few seconds in, exactly as before.
+ */
+const ENGAGEMENT_EVENTS = ["pointerdown", "keydown", "scroll", "touchstart", "wheel"] as const;
+
+/** Run `task` once the page has loaded, waited `delayMs`, the visitor has engaged, and the main thread is idle. */
 function whenPageSettles(task: () => void, delayMs: number): () => void {
   let timer: ReturnType<typeof setTimeout> | undefined;
   let idle: number | undefined;
+  let engaged = false;
+  let waited = false;
+  const run = () => {
+    if (!engaged || !waited) return;
+    stopListening();
+    if (typeof window.requestIdleCallback === "function") {
+      idle = window.requestIdleCallback(task, { timeout: 2000 });
+    } else {
+      task();
+    }
+  };
+  const onEngage = () => {
+    engaged = true;
+    run();
+  };
+  const stopListening = () => {
+    for (const type of ENGAGEMENT_EVENTS) window.removeEventListener(type, onEngage);
+  };
+  for (const type of ENGAGEMENT_EVENTS) {
+    window.addEventListener(type, onEngage, { once: true, passive: true });
+  }
   const schedule = () => {
     timer = setTimeout(() => {
-      if (typeof window.requestIdleCallback === "function") {
-        idle = window.requestIdleCallback(task, { timeout: 2000 });
-      } else {
-        task();
-      }
+      waited = true;
+      run();
     }, delayMs);
   };
   if (document.readyState === "complete") schedule();
   else window.addEventListener("load", schedule, { once: true });
   return () => {
+    stopListening();
     window.removeEventListener("load", schedule);
     if (timer !== undefined) clearTimeout(timer);
     if (idle !== undefined) window.cancelIdleCallback?.(idle);

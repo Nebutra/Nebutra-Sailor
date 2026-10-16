@@ -396,6 +396,34 @@ jobs:
           if [ "${{ matrix.app }}" = "web" ]; then paths="/sign-in"; fi
           node scripts/verify-no-localhost-urls.mjs "https://${{ matrix.fly_app }}.fly.dev" $paths
 
+      # Edge cache for the prerendered public pages (apps/landing/src/lib/edge-cache.ts sends the
+      # headers; infra/ops/scripts/apply-landing-edge-cache.sh owns the Cache Rules for nebutra.com
+      # and www). Fail-soft: a token without Cache Rules / Zone Settings / Cache Purge gets a
+      # ::warning naming the missing permission; the origin headers are correct either way.
+      - name: Apply Cloudflare edge cache rules
+        if: matrix.app == 'landing'
+        env:
+          # A dedicated least-privilege token (Zone: Cache Rules Edit, Cache Purge, Zone Settings
+          # Edit, Zone Read on nebutra.com) when present; the general deploy token otherwise.
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          EDGE_GROUP: nebutra
+        run: |
+          bash infra/ops/scripts/apply-landing-edge-cache.sh rules
+          bash infra/ops/scripts/apply-landing-edge-cache.sh tiered
+
+      - name: Purge public pages from the Cloudflare edge
+        if: matrix.app == 'landing'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          EDGE_GROUP: nebutra
+        run: bash infra/ops/scripts/apply-landing-edge-cache.sh purge
+
+      # Warn-only: the DNS may still point elsewhere (before a cutover) or a rule may still be
+      # propagating; the step reports what the edge does, it does not gate the deploy.
+      - name: Verify the edge cache on nebutra.com
+        if: matrix.app == 'landing'
+        run: bash infra/ops/scripts/verify-landing-edge-cache.sh https://nebutra.com nebutra || echo "::warning title=Landing edge cache::verify-landing-edge-cache.sh reported failures on https://nebutra.com"
+
       # A 200 on the home page says the process is up, not that the station can
       # take money. router.nebutra.com is the paid surface: cutting its DNS to a
       # deployment with an empty shelf, or one whose edge lets an unkeyed request

@@ -24,6 +24,8 @@ on:
       - "infra/fly/acme.toml"
       - "infra/runtime/docker/Dockerfile.standalone"
       - ".github/workflows/deploy-acme.yml"
+      - "infra/iac/cloudflare/edge-cache/**"
+      - "infra/ops/scripts/apply-landing-edge-cache.sh"
 
 permissions:
   contents: read
@@ -172,6 +174,25 @@ jobs:
           html=$(curl -sS --max-time 30 "https://${FLY_APP}.fly.dev/")
           printf '%s' "$html" | grep -q "href=\"${DEMO_CTA_URL}\"" \
             || { echo "::error::Sign in / Get started do not lead to ${DEMO_CTA_URL}"; exit 1; }
+
+      # Edge cache for the template's prerendered pages; the same script and origin headers as
+      # nebutra.com (deploy-fly.yml), for the acme host group. Fail-soft.
+      - name: Apply Cloudflare edge cache rules
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          EDGE_GROUP: acme
+        run: |
+          bash infra/ops/scripts/apply-landing-edge-cache.sh rules
+          bash infra/ops/scripts/apply-landing-edge-cache.sh tiered
+
+      - name: Purge acme.nebutra.com from the Cloudflare edge
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+          EDGE_GROUP: acme
+        run: bash infra/ops/scripts/apply-landing-edge-cache.sh purge
+
+      - name: Verify the edge cache on acme.nebutra.com
+        run: bash infra/ops/scripts/verify-landing-edge-cache.sh "$SITE" acme || echo "::warning title=Acme edge cache::verify-landing-edge-cache.sh reported failures on $SITE"
 
       - name: Issue the Fly certificate
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.cutover == 'true'

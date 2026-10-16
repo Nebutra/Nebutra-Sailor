@@ -12,6 +12,7 @@ import { type HostAlias, routeHost } from "@/lib/host-aliases";
 import { routing } from "./i18n/routing";
 import { createLegacyAppRedirectUrl } from "./lib/app-redirects";
 import { createDocsLocaleRedirectPath, createDocsRewriteUrl } from "./lib/docs-routing";
+import { applyEdgeCacheHeaders } from "./lib/edge-cache";
 import { SELF_FRAMED_PAGE } from "./lib/security/framing";
 import { shouldBounceSignedInVisitorToApp } from "./lib/session-home-redirect";
 
@@ -239,6 +240,8 @@ export default function proxy(request: NextRequest): NextResponse {
     rewriteUrl.pathname = hostRoute.pathname;
     request = new NextRequest(rewriteUrl, { headers: request.headers });
   }
+  // The page actually rendered: a host alias serves one section at its root.
+  const routePath = hostRoute.kind === "rewrite" ? hostRoute.pathname : pathname;
 
   // 1. Resolve market: NEXT_MARKET cookie > geo > path language default > US
   const pathLang = routing.locales.find(
@@ -257,6 +260,17 @@ export default function proxy(request: NextRequest): NextResponse {
 
   // 3. Process with next-intl
   const response = intlMiddleware(request) as NextResponse;
+
+  // Prerendered public pages are cached at the edge; everything else is told
+  // not to be (lib/edge-cache.ts). Status pages are rendered per request.
+  applyEdgeCacheHeaders(
+    response,
+    {
+      method: request.method,
+      pathname: host === STATUS_HOST ? "/status" : routePath,
+    },
+    routing.locales,
+  );
 
   return withSecurityHeaders(response, pathname);
 }

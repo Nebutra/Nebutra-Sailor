@@ -19,6 +19,9 @@ const KCQ_SHOT = SHOWCASE.find((s) => s.id === "kcq")?.shot;
  * this site is served in), then a smaller row for KCQ, incubated on Sailor.
  * Each one names the layers it answers to (LayerTags).
  *
+ * The band has no title of its own, so each business is the section's h2
+ * (styled as h3): an h3 straight under the hero's h1 skipped a level.
+ *
  * Responsive: Stack. Two columns from md up; one below.
  */
 export async function Offerings({ lang }: { lang: string }) {
@@ -39,7 +42,7 @@ export async function Offerings({ lang }: { lang: string }) {
               priority
             />
           </a>
-          <Heading level={3} className="mt-8">
+          <Heading level={3} as="h2" className="mt-8">
             Sailor
           </Heading>
           <p className="mt-3 max-w-xl text-base text-muted-foreground text-pretty">
@@ -65,7 +68,7 @@ export async function Offerings({ lang }: { lang: string }) {
               {t("consulting.caption", { count: routing.locales.length })}
             </figcaption>
           </figure>
-          <Heading level={3} className="mt-8">
+          <Heading level={3} as="h2" className="mt-8">
             {t("consulting.title")}
           </Heading>
           <p className="mt-3 max-w-xl text-base text-muted-foreground text-pretty">

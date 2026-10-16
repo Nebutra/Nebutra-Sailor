@@ -1,0 +1,20 @@
+{
+  "description": "Cloudflare edge cache for apps/landing (nebutra.com and its template, acme.nebutra.com). Applied by infra/ops/scripts/apply-landing-edge-cache.sh; emulated locally by scripts/perf/edge-cache-proxy.mjs. Which pages are public is the origin's decision (apps/landing/src/lib/edge-cache.ts sends Cloudflare-CDN-Cache-Control); these rules only make the hosts eligible and bypass what must never be cached.",
+  "groups": {
+    "nebutra": {
+      "hosts": ["nebutra.com", "www.nebutra.com"],
+      "verify": "https://nebutra.com"
+    },
+    "acme": {
+      "hosts": ["acme.nebutra.com"],
+      "verify": "https://acme.nebutra.com"
+    }
+  },
+  "bypass": {
+    "pathPrefixes": ["/api/", "/docs", "/r/", "/status", "/_next/data/", "/_next/image"],
+    "paths": ["/preset-preview.css", "/status.json", "/status.atom", "/workspace"],
+    "requestHeaders": ["rsc", "next-router-prefetch", "next-router-state-tree", "authorization"],
+    "note": "Second layer only: every page rendered per request (pricing, licensing, status in any locale\u2026) already answers Cloudflare-CDN-Cache-Control: no-store from the origin. These are what must never be cached whatever the origin says: API and route handlers, the docs zone, image optimisation (it varies on Accept, which Cloudflare ignores), the preset stylesheet (it varies on a cookie), and RSC/prefetch requests (they vary on headers)."
+  },
+  "purgeFallbackLocales": ["", "zh-Hans", "zh-Hant", "ja", "de"]
+}
