@@ -1,9 +1,11 @@
+import { getStatusKv } from "@nebutra/status";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { getStatusSnapshot } from "./status-checks";
 
 describe("getStatusSnapshot", () => {
-  afterEach(() => {
+  afterEach(async () => {
     vi.unstubAllGlobals();
+    await getStatusKv().clear?.();
   });
 
   it("caps concurrent service probes to avoid status page request bursts", async () => {

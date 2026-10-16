@@ -1,3 +1,4 @@
+import { createHash, timingSafeEqual } from "node:crypto";
 import {
   createIncident,
   createIncidentInputSchema,
@@ -27,14 +28,21 @@ function unauthorized(): NextResponse {
   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 }
 
+/** Constant-time: hashing first makes both sides the same length. */
+function tokenMatches(candidate: string | null | undefined, expected: string): boolean {
+  if (!candidate) return false;
+  const a = createHash("sha256").update(candidate).digest();
+  const b = createHash("sha256").update(expected).digest();
+  return timingSafeEqual(a, b);
+}
+
 function isAuthorized(request: Request): boolean {
   const expected = process.env.STATUS_ADMIN_TOKEN;
   if (!expected) return false;
 
   const header = request.headers.get("authorization");
-  if (header?.startsWith("Bearer ") && header.slice(7) === expected) return true;
-  if (request.headers.get("x-status-admin-token") === expected) return true;
-  return false;
+  if (header?.startsWith("Bearer ") && tokenMatches(header.slice(7), expected)) return true;
+  return tokenMatches(request.headers.get("x-status-admin-token"), expected);
 }
 
 export async function GET() {

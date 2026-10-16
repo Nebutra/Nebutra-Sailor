@@ -10,7 +10,7 @@ vendor adapters: Nebutra runs its own status page and dogfoods this package.
 | Uptime math | `src/math.ts` | Day colour and uptime from the ratio (browser-safe, no storage imports) |
 | Incidents | `src/incidents.ts` | Incidents and maintenance windows with an update timeline |
 | Notifications | `src/notify.ts` | Feishu interactive card + Slack blocks on every incident write |
-| Store | `src/store.ts` | Upstash REST KV (outside the app stack), in-memory in dev and tests |
+| Store | `src/store.ts` | Upstash REST protocol KV (self-hosted Redis on Fly in production), in-memory in dev and tests |
 
 ```ts
 import { buildStatusSnapshot } from "@nebutra/status";

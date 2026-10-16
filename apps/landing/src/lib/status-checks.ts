@@ -58,10 +58,14 @@ export function getServiceTargets(): ServiceTarget[] {
   ];
 }
 
-export function getStatusSnapshot(): Promise<StatusSnapshot> {
+/** Readers share one probe run per minute; the cron always probes fresh. */
+const STATUS_VIEW_MAX_AGE_MS = 60_000;
+
+export function getStatusSnapshot(options: { fresh?: boolean } = {}): Promise<StatusSnapshot> {
   return buildStatusSnapshot(getServiceTargets(), {
     userAgent: `${brand.name}-Status/1.0`,
     concurrency: STATUS_PROBE_CONCURRENCY,
+    maxAgeMs: options.fresh ? 0 : STATUS_VIEW_MAX_AGE_MS,
     onStateChange: async (changes) => {
       const { statusMailContext } = await import("./status-mail");
       await sendAlerts(statusMailContext(), changes);
