@@ -4,6 +4,7 @@ import {
   dayUptime,
   type EvidenceReading,
   evaluateComponent,
+  evidenceLine,
   judgeEvidence,
   overallState,
   pageVerdict,
@@ -174,5 +175,59 @@ describe("page and day rollups", () => {
     expect(dayState({ total: 1440, degraded: 20, outage: 0 })).toBe("degraded");
     expect(dayState({ total: 1440, degraded: 0, outage: 100 })).toBe("outage");
     expect(dayUptime({ total: 100, degraded: 10, outage: 5 })).toBeCloseTo(0.92);
+  });
+});
+
+describe("evidenceLine", () => {
+  it("prefers the deepest fresh proof, then the newest, and lists silent sources longest first", () => {
+    const evidence = [
+      reading({ source: "monitor:a", coverage: "dependency", checkedAt: ago(5) }),
+      reading({ source: "fleet", coverage: "device", checkedAt: ago(60) }),
+      reading({ source: "journey-old", coverage: "synthetic", checkedAt: ago(100) }),
+      reading({ source: "journey-new", coverage: "synthetic", checkedAt: ago(10), latencyMs: 300 }),
+      reading({ source: "gone", coverage: "synthetic", checkedAt: ago(5000), state: "outage" }),
+      reading({ source: "quiet", coverage: "upstream", checkedAt: ago(700) }),
+    ].map((r) => judgeEvidence(r, now));
+    const line = evidenceLine(evidence);
+    expect(line.primary).toEqual({
+      source: "journey-new",
+      coverage: "synthetic",
+      state: "operational",
+      checkedAt: ago(10),
+      latencyMs: 300,
+    });
+    expect(line.stale).toEqual([
+      {
+        source: "gone",
+        coverage: "synthetic",
+        lastState: "outage",
+        checkedAt: ago(5000),
+        ageSeconds: 5000,
+      },
+      {
+        source: "quiet",
+        coverage: "upstream",
+        lastState: "operational",
+        checkedAt: ago(700),
+        ageSeconds: 700,
+      },
+    ]);
+  });
+
+  it("has no primary when every source is silent", () => {
+    const line = evidenceLine([judgeEvidence(reading({ checkedAt: ago(500) }), now)]);
+    expect(line.primary).toBeNull();
+    expect(line.stale).toHaveLength(1);
+  });
+
+  it("falls through coverages in order", () => {
+    const pick = (coverages: EvidenceReading["coverage"][]) =>
+      evidenceLine(
+        coverages.map((coverage) => judgeEvidence(reading({ source: coverage, coverage }), now)),
+      ).primary?.coverage;
+    expect(pick(["manual", "dependency", "upstream", "device"])).toBe("device");
+    expect(pick(["manual", "dependency", "upstream"])).toBe("upstream");
+    expect(pick(["manual", "dependency"])).toBe("dependency");
+    expect(pick(["manual"])).toBe("manual");
   });
 });

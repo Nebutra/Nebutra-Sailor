@@ -52,6 +52,24 @@ export const statusConfigSchema = z.object({
     description: z.string().max(500).optional(),
     locales: z.array(z.string().min(2).max(16)).min(1).default(["en"]),
     compatProfile: z.enum(["xiaoya-v1"]).optional(),
+    /** An https URL. Host the file anywhere the page's visitors can reach (a CDN, the main site). */
+    logo: z
+      .string()
+      .url()
+      .max(2000)
+      .refine((u) => u.startsWith("https://"), "logo must be an https URL")
+      .optional(),
+    /** The operator's main site; the page header links to it. */
+    url: z
+      .string()
+      .url()
+      .max(2000)
+      .refine((u) => /^https?:\/\//.test(u), "url must be http(s)")
+      .optional(),
+    brandColor: z
+      .string()
+      .regex(/^#[0-9a-fA-F]{6}$/, "brandColor is #RRGGBB")
+      .optional(),
   }),
   groups: z
     .array(
@@ -92,6 +110,9 @@ export async function applyConfig(db: StatusDb, raw: StatusConfig) {
       description: config.page.description ?? null,
       locales: config.page.locales,
       compatProfile: config.page.compatProfile ?? null,
+      logoUrl: config.page.logo ?? null,
+      siteUrl: config.page.url ?? null,
+      brandColor: config.page.brandColor?.toLowerCase() ?? null,
     };
     const page = await tx.page.upsert({
       where: { slug: config.page.slug },

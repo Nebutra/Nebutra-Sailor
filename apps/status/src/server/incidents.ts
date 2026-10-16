@@ -8,12 +8,14 @@ import type { StatusDb } from "./db";
 
 const impact = z.enum(["none", "minor", "major", "critical"]);
 const status = z.enum(["investigating", "identified", "monitoring", "resolved"]);
+const titleI18n = z.record(z.string().min(2).max(16), z.string().trim().min(1).max(200));
 const i18n = z.record(z.string().min(2).max(16), z.string().min(1).max(4000));
 
 export const createIncidentSchema = z
   .object({
     kind: z.enum(["incident", "maintenance"]).default("incident"),
     title: z.string().trim().min(1).max(200),
+    titleI18n: titleI18n.optional(),
     impact: impact.default("minor"),
     status: status.default("investigating"),
     message: z.string().trim().min(1).max(4000),
@@ -33,6 +35,7 @@ export const updateIncidentSchema = z.object({
   status: status.optional(),
   impact: impact.optional(),
   title: z.string().trim().min(1).max(200).optional(),
+  titleI18n: titleI18n.optional(),
   message: z.string().trim().min(1).max(4000).optional(),
   messageI18n: i18n.optional(),
   components: z.array(z.string().min(1)).max(100).optional(),
@@ -96,6 +99,7 @@ export async function createIncident(
       pageId: page.id,
       kind: input.kind,
       title: input.title,
+      titleI18n: input.titleI18n ?? Prisma.DbNull,
       impact: input.impact,
       status: input.status,
       scheduledStart: input.scheduledStart ? new Date(input.scheduledStart) : null,
@@ -164,6 +168,7 @@ export async function updateIncident(
         status: nextStatus,
         ...(input.impact ? { impact: input.impact } : {}),
         ...(input.title ? { title: input.title } : {}),
+        ...(input.titleI18n ? { titleI18n: input.titleI18n } : {}),
         resolvedAt: nextStatus === "resolved" ? (current.resolvedAt ?? now) : null,
         updatedAt: now,
       },

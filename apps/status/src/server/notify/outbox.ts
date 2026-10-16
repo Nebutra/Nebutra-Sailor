@@ -295,7 +295,7 @@ function incidentNotice(
   return {
     id: incident.id,
     kind: incident.kind,
-    title: incident.title,
+    title: (locale && incident.titleI18n?.[locale]) || incident.title,
     impact: incident.impact,
     status: incident.status,
     message,

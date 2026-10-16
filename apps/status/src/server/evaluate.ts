@@ -186,3 +186,69 @@ export function dayState(day: {
   if ((day.outage + day.degraded) / day.total >= 0.01) return "degraded";
   return "operational";
 }
+
+/** Which fresh source speaks for a component: the deepest proof first. */
+const COVERAGE_RANK: Record<EvidenceCoverage, number> = {
+  synthetic: 0,
+  device: 1,
+  upstream: 2,
+  dependency: 3,
+  manual: 4,
+};
+
+export interface EvidenceLine {
+  /** The fresh source that best proves the component's state, or null when none is fresh. */
+  primary: {
+    source: string;
+    coverage: EvidenceCoverage;
+    state: ComponentState;
+    checkedAt: Date;
+    latencyMs: number | null;
+  } | null;
+  /** Sources gone silent, longest silence first. */
+  stale: Array<{
+    source: string;
+    coverage: EvidenceCoverage;
+    lastState: ComponentState;
+    checkedAt: Date;
+    ageSeconds: number;
+  }>;
+}
+
+/**
+ * The inputs for a component's one-line evidence caption ("verified by a
+ * synthetic journey 2 min ago · probe-x silent for 3 h"), so renderings do
+ * not re-derive them. Among fresh sources, synthetic beats device beats
+ * upstream beats dependency beats manual; ties go to the newest reading.
+ */
+export function evidenceLine(evidence: JudgedEvidence[]): EvidenceLine {
+  const fresh = evidence
+    .filter((e) => !e.stale)
+    .sort(
+      (a, b) =>
+        COVERAGE_RANK[a.coverage] - COVERAGE_RANK[b.coverage] ||
+        b.checkedAt.getTime() - a.checkedAt.getTime(),
+    );
+  const best = fresh[0];
+  return {
+    primary: best
+      ? {
+          source: best.source,
+          coverage: best.coverage,
+          state: best.effectiveState,
+          checkedAt: best.checkedAt,
+          latencyMs: best.latencyMs,
+        }
+      : null,
+    stale: evidence
+      .filter((e) => e.stale)
+      .sort((a, b) => b.ageSeconds - a.ageSeconds)
+      .map((e) => ({
+        source: e.source,
+        coverage: e.coverage,
+        lastState: e.lastState,
+        checkedAt: e.checkedAt,
+        ageSeconds: Math.round(e.ageSeconds),
+      })),
+  };
+}

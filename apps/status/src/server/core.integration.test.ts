@@ -266,3 +266,59 @@ describe("incidents", () => {
     ).rejects.toThrow(/Unknown components: ghost/);
   });
 });
+
+describe("branding and translated titles", () => {
+  it("carries page branding from the config into the snapshot", async () => {
+    await applyConfig(t.db, {
+      ...config,
+      page: {
+        ...config.page,
+        logo: "https://cdn.acme.test/logo.svg",
+        url: "https://acme.test",
+        brandColor: "#2E65EE",
+      },
+    });
+    const snapshot = await buildPageSnapshot(t.db, { slug: "acme" }, { now });
+    expect(snapshot?.page).toMatchObject({
+      logoUrl: "https://cdn.acme.test/logo.svg",
+      siteUrl: "https://acme.test",
+      brandColor: "#2e65ee",
+    });
+    await expect(
+      applyConfig(t.db, {
+        ...config,
+        page: { ...config.page, logo: "http://cdn.acme.test/logo.svg" },
+      }),
+    ).rejects.toThrow(/https/);
+    await expect(
+      applyConfig(t.db, { ...config, page: { ...config.page, brandColor: "blue" } }),
+    ).rejects.toThrow(/RRGGBB/);
+    // Dropping branding from the file clears it.
+    await applyConfig(t.db, config);
+    const cleared = await buildPageSnapshot(t.db, { slug: "acme" }, { now });
+    expect(cleared?.page).toMatchObject({ logoUrl: null, siteUrl: null, brandColor: null });
+  });
+
+  it("stores incident title translations on create and update", async () => {
+    const { page } = await applyConfig(t.db, config);
+    const created = await createIncident(
+      t.db,
+      page,
+      { title: "登录异常", titleI18n: { en: "Sign-in errors" }, message: "排查中" },
+      now,
+    );
+    await updateIncident(
+      t.db,
+      page.id,
+      created.id,
+      { titleI18n: { en: "Sign-in errors (EU)" } },
+      now,
+    );
+    const snapshot = await buildPageSnapshot(t.db, { slug: "acme" }, { now });
+    expect(snapshot?.activeIncidents[0]).toMatchObject({
+      title: "登录异常",
+      titleI18n: { en: "Sign-in errors (EU)" },
+    });
+    expect(snapshot?.components[0]?.evidenceLine).toEqual({ primary: null, stale: [] });
+  });
+});

@@ -258,7 +258,13 @@ describe("xiaoya-v1 bytes", () => {
     await createIncident(
       t.db,
       page,
-      { title: "Slow", impact: "minor", message: "Looking into it", components: ["login"] },
+      {
+        title: "Slow",
+        titleI18n: { "zh-CN": "变慢" },
+        impact: "minor",
+        message: "Looking into it",
+        components: ["login"],
+      },
       at,
     );
     const snap = await buildPageSnapshot(t.db, { slug: "x" }, { now: at });

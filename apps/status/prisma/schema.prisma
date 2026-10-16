@@ -157,6 +157,11 @@ model Page {
   customDomain  String?  @unique @map("custom_domain")
   /// A legacy JSON shape this page also serves, e.g. "xiaoya-v1".
   compatProfile String?  @map("compat_profile")
+  /// Branding from status.config.json: an https logo URL, the operator's main
+  /// site (the header link), and an optional #RRGGBB accent.
+  logoUrl       String?  @map("logo_url")
+  siteUrl       String?  @map("site_url")
+  brandColor    String?  @map("brand_color")
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 
@@ -288,6 +293,8 @@ model Incident {
   pageId          String         @map("page_id")
   kind            IncidentKind   @default(incident)
   title           String
+  /// Locale → title, for locales other than the page default.
+  titleI18n       Json?          @map("title_i18n")
   impact          IncidentImpact @default(minor)
   status          IncidentStatus @default(investigating)
   scheduledStart  DateTime?      @map("scheduled_start")

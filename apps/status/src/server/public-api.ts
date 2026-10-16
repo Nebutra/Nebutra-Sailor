@@ -4,7 +4,7 @@
  *
  * `version` changes only on a breaking change; fields are added freely.
  */
-import type { EvidenceCoverage } from "./evaluate";
+import { type EvidenceCoverage, evidenceLine } from "./evaluate";
 import { iso } from "./http";
 import type { PageSnapshot, SnapshotComponent, SnapshotIncident } from "./snapshot";
 
@@ -15,6 +15,7 @@ export function incidentJson(i: SnapshotIncident) {
     id: i.id,
     kind: i.kind,
     title: i.title,
+    titleI18n: i.titleI18n ?? null,
     impact: i.impact,
     status: i.status,
     phase: i.phase,
@@ -49,6 +50,13 @@ function componentJson(c: SnapshotComponent) {
     lastSuccessAt: iso(v.lastSuccessAt),
     latencyMs: v.latencyMs,
     note: v.note,
+    evidence: (() => {
+      const line = c.evidenceLine ?? evidenceLine(v.evidence);
+      return {
+        primary: line.primary && { ...line.primary, checkedAt: iso(line.primary.checkedAt) },
+        stale: line.stale.map((e) => ({ ...e, checkedAt: iso(e.checkedAt) })),
+      };
+    })(),
     uptime90: c.uptime90,
     days: c.days.map((d) => ({
       date: d.date,
@@ -69,6 +77,9 @@ export function statusJson(snapshot: PageSnapshot, pageUrl: string) {
       description: snapshot.page.description,
       locales: snapshot.page.locales,
       url: pageUrl,
+      logo: snapshot.page.logoUrl,
+      siteUrl: snapshot.page.siteUrl,
+      brandColor: snapshot.page.brandColor,
     },
     generatedAt: iso(snapshot.generatedAt),
     overall: snapshot.overall,

@@ -11,7 +11,9 @@ import {
   type ComponentVerdict,
   dayState,
   dayUptime,
+  type EvidenceLine,
   evaluateComponent,
+  evidenceLine,
   pageVerdict,
 } from "./evaluate";
 import { maintenancePhase } from "./incidents";
@@ -35,6 +37,8 @@ export interface SnapshotComponent {
   groupKey: string | null;
   isPublic: boolean;
   verdict: ComponentVerdict;
+  /** Ready-made inputs for the component's evidence caption. Always set by buildPageSnapshot. */
+  evidenceLine?: EvidenceLine;
   days: SnapshotDay[];
   uptime90: number | null;
 }
@@ -43,6 +47,8 @@ export interface SnapshotIncident {
   id: string;
   kind: "incident" | "maintenance";
   title: string;
+  /** Locale → title, for locales other than the page default. Always set by buildPageSnapshot. */
+  titleI18n?: Record<string, string> | null;
   impact: "none" | "minor" | "major" | "critical";
   status: "investigating" | "identified" | "monitoring" | "resolved";
   phase: "scheduled" | "in_progress" | "completed" | null;
@@ -69,6 +75,12 @@ export interface PageSnapshot {
     description: string | null;
     locales: string[];
     compatProfile: string | null;
+    /** https URL of the page logo. */
+    logoUrl: string | null;
+    /** The operator's main site, for the header link. */
+    siteUrl: string | null;
+    /** #RRGGBB accent, when the operator set one. */
+    brandColor: string | null;
   };
   generatedAt: Date;
   overall: "operational" | "degraded" | "outage";
@@ -102,6 +114,7 @@ export interface IncidentRow {
   id: string;
   kind: "incident" | "maintenance";
   title: string;
+  titleI18n?: unknown;
   impact: "none" | "minor" | "major" | "critical";
   status: "investigating" | "identified" | "monitoring" | "resolved";
   scheduledStart: Date | null;
@@ -118,6 +131,7 @@ export function toSnapshotIncident(i: IncidentRow, now: Date): SnapshotIncident 
     id: i.id,
     kind: i.kind,
     title: i.title,
+    titleI18n: (i.titleI18n as Record<string, string> | null | undefined) ?? null,
     impact: i.impact,
     status: i.status,
     phase: i.kind === "maintenance" ? maintenancePhase(i, now) : null,
@@ -233,6 +247,7 @@ export async function buildPageSnapshot(
       groupKey: c.group?.key ?? null,
       isPublic: c.isPublic,
       verdict,
+      evidenceLine: evidenceLine(verdict.evidence),
       days,
       uptime90,
     };
@@ -247,6 +262,9 @@ export async function buildPageSnapshot(
       description: page.description,
       locales: page.locales,
       compatProfile: page.compatProfile,
+      logoUrl: page.logoUrl,
+      siteUrl: page.siteUrl,
+      brandColor: page.brandColor,
     },
     generatedAt: now,
     ...pageVerdict(components.map((c) => c.verdict)),

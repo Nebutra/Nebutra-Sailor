@@ -73,7 +73,10 @@ curl -b jar -X POST http://localhost:3140/api/v1/keys -H 'content-type: applicat
   "page": {
     "slug": "acme", "title": "Acme Status", "description": "…",
     "locales": ["zh-CN", "en"],          // 第一个是默认语言
-    "compatProfile": "xiaoya-v1"         // 可选
+    "compatProfile": "xiaoya-v1",        // 可选
+    "logo": "https://cdn.acme.example/logo.svg",  // 可选，必须是 https URL（放在 CDN 或主站上；实例不托管文件）
+    "url": "https://acme.example",       // 可选，页头链接回主站
+    "brandColor": "#2E65EE"              // 可选，#RRGGBB
   },
   "groups": [{ "key": "product", "name": "产品", "nameI18n": { "en": "Product" }, "description": "…" }],
   "components": [{
@@ -166,7 +169,7 @@ curl -X POST https://status.example.com/api/v1/pages/acme/subscribe -H 'content-
 | 路径 | 说明 |
 |---|---|
 | `GET /api/v1/pages/:slug/status` | 原生 JSON（`version: 1`），只含公开组件，`s-maxage=15` |
-| `GET/POST /api/v1/pages/:slug/incidents`、`PATCH …/incidents/:id` | 事故与维护；`incidents:write` key 或 editor 以上的登录会话 |
+| `GET/POST /api/v1/pages/:slug/incidents`、`PATCH …/incidents/:id` | 事故与维护；`incidents:write` key 或 editor 以上的登录会话。`titleI18n` / `messageI18n` 为其他语言的标题与正文（兼容 profile 只输出原标题） |
 | `GET /api/v1/pages/:slug/feed.atom`、`feed.rss` | 事故与维护订阅源 |
 | `GET /compat/xiaoya-v1/:slug/status.json` | 兼容 profile |
 | `POST /api/v1/auth/{setup,sign-in,sign-out}`、`GET /api/v1/auth/me` | 账号 |
@@ -334,7 +337,11 @@ Writes authenticated by the session cookie must carry a matching `Origin` header
   → `200 {pass:true}` or `412` with a per-component `reason`
   (`unknown_component | no_evidence | stale | failing | before_since`).
 - **Status JSON** — `GET /api/v1/pages/:slug/status`, versioned (`version: 1`), public components only.
-- **Incidents** — `GET/POST /api/v1/pages/:slug/incidents`, `PATCH …/incidents/:id`.
+- **Incidents** — `GET/POST /api/v1/pages/:slug/incidents`, `PATCH …/incidents/:id`;
+  `titleI18n` and `messageI18n` carry the other locales (compat profiles keep the plain title).
+- **Branding** — `page.logo` (an https URL; the instance hosts no files), `page.url` (the
+  operator's main site, linked from the header) and `page.brandColor` (`#RRGGBB`) in
+  `status.config.json`.
 - **Feeds** — `feed.atom` and `feed.rss` under the page.
 - **Compat `xiaoya-v1`** — `GET /compat/xiaoya-v1/:slug/status.json`, and `GET /api/v1/status`
   when `STATUS_COMPAT_ROOT=xiaoya-v1` and `STATUS_DEFAULT_PAGE` are set. Byte-compatible with

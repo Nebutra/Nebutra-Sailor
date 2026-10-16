@@ -94,6 +94,8 @@ describe("GET status", () => {
     expect(body.components.map((c: { key: string }) => c.key)).toEqual(["sign-in", "api"]);
     expect(body.generatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/);
     expect(body.components[0].days).toHaveLength(90);
+    expect(body.components[0].evidence).toEqual({ primary: null, stale: [] });
+    expect(body.page).toMatchObject({ logo: null, siteUrl: null, brandColor: null });
   });
 
   it("404s an unknown page", async () => {
