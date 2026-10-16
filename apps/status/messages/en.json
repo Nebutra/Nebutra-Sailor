@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "statusOf": "{title} status",
+    "fallbackTitle": "Nebutra Status"
+  },
+  "verdict": {
+    "operational": "All systems operational",
+    "degraded": "Some systems are degraded",
+    "outage": "Some systems are down",
+    "affected": "Affected: {names}",
+    "maintenanceNote": "Maintenance in progress on {names}",
+    "latestReading": "Latest reading {time}",
+    "waiting": "Waiting for the first reading"
+  },
+  "state": {
+    "operational": "Operational",
+    "degraded": "Degraded",
+    "outage": "Outage",
+    "maintenance": "Maintenance",
+    "unknown": "Unknown",
+    "no_data": "No data"
+  },
+  "impact": {
+    "none": "No impact",
+    "minor": "Minor impact",
+    "major": "Major impact",
+    "critical": "Critical impact"
+  },
+  "incidentStatus": {
+    "investigating": "Investigating",
+    "identified": "Identified",
+    "monitoring": "Monitoring",
+    "resolved": "Resolved"
+  },
+  "sections": {
+    "active": "Active incidents",
+    "maintenance": "Maintenance",
+    "components": "Components",
+    "recent": "Recent incidents",
+    "history": "History"
+  },
+  "incident": {
+    "ongoingFor": "Ongoing for {duration}",
+    "lasted": "Lasted {duration}",
+    "affects": "Affects {names}",
+    "back": "Back to status",
+    "progress": "Progress",
+    "updates": "Updates",
+    "notReached": "Not yet",
+    "skipped": "Skipped",
+    "started": "Started",
+    "resolvedAt": "Resolved",
+    "duration": "Duration",
+    "components": "Affected components",
+    "noComponents": "No component was marked as affected.",
+    "openDetails": "Open incident: {title}",
+    "maintenance": "Maintenance"
+  },
+  "maintenance": {
+    "scheduled": "Scheduled maintenance",
+    "in_progress": "Maintenance in progress",
+    "completed": "Maintenance completed",
+    "window": "{start} – {end}"
+  },
+  "group": {
+    "count": "{count, plural, one {# component} other {# components}}",
+    "expand": "Show components in {name}",
+    "collapse": "Hide components in {name}",
+    "ungrouped": "Services"
+  },
+  "uptime": {
+    "value": "{value} uptime",
+    "unmeasured": "Not measured yet"
+  },
+  "bar": {
+    "summary": "{days}-day history, {known} days with readings.",
+    "noReadings": "No readings this day",
+    "readings": "{count, plural, one {# reading} other {# readings}}",
+    "avgLatency": "Avg {value}",
+    "noIncidents": "No incidents recorded",
+    "stateDetected": "{state} in readings",
+    "start": "{days} days ago",
+    "today": "Today",
+    "dayLabel": "{date}: {state}",
+    "dayLabelUptime": "{date}: {state}, {uptime} uptime",
+    "dayIncidents": "{count, plural, one {# incident} other {# incidents}}"
+  },
+  "evidence": {
+    "synthetic": "Synthetic journey verified",
+    "synthetic_failing": "Synthetic journey failing",
+    "device": "Device heartbeat",
+    "device_failing": "Device heartbeat failing",
+    "upstream": "Upstream status",
+    "upstream_failing": "Upstream reports a problem",
+    "dependency": "Dependency check",
+    "dependency_failing": "Dependency check failing",
+    "manual": "Manual check",
+    "manual_failing": "Manually marked as affected",
+    "none": "Evidence source not connected",
+    "stale": "No new reading for {minutes} min",
+    "staleHours": "No new reading for {hours} h",
+    "staleAlso": "one source quiet for {minutes} min",
+    "staleAlsoHours": "one source quiet for {hours} h",
+    "explain": "What this colour rests on: the freshest proof and how old it is."
+  },
+  "history": {
+    "title": "History",
+    "subtitle": "The last 90 days, day by day.",
+    "outsideWindow": "Outside the 90-day window",
+    "future": "Not yet",
+    "quietMonth": "No incidents this month.",
+    "quietWindow": "No incidents in the last 90 days.",
+    "viewHistory": "View history",
+    "legend": "Legend"
+  },
+  "footer": {
+    "powered": "Powered by {product}",
+    "subscribe": "Subscribe",
+    "atom": "Atom feed",
+    "rss": "RSS feed",
+    "language": "Language"
+  },
+  "home": {
+    "emptyTitle": "This instance has no status page yet",
+    "emptyBody": "Declare a page and its components in status.config.json; the instance applies it on start. The README walks through it.",
+    "unconfiguredTitle": "Database not configured",
+    "unconfiguredBody": "Set STATUS_DATABASE_URL and restart the instance. The README lists every setting.",
+    "chooseTitle": "Status pages",
+    "chooseBody": "This instance publishes several pages. Set STATUS_DEFAULT_PAGE to open one here directly."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This status page or incident does not exist, or it is no longer published.",
+    "home": "Go to the status page"
+  }
+}

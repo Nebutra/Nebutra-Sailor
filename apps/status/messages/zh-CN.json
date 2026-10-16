@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "statusOf": "{title} 服务状态",
+    "fallbackTitle": "Nebutra Status"
+  },
+  "verdict": {
+    "operational": "所有系统运行正常",
+    "degraded": "部分系统性能下降",
+    "outage": "部分系统中断",
+    "affected": "受影响：{names}",
+    "maintenanceNote": "{names} 正在维护",
+    "latestReading": "最新读数 {time}",
+    "waiting": "等待第一次读数"
+  },
+  "state": {
+    "operational": "正常",
+    "degraded": "性能下降",
+    "outage": "中断",
+    "maintenance": "维护中",
+    "unknown": "状态未知",
+    "no_data": "无数据"
+  },
+  "impact": {
+    "none": "无影响",
+    "minor": "轻微影响",
+    "major": "严重影响",
+    "critical": "重大影响"
+  },
+  "incidentStatus": {
+    "investigating": "调查中",
+    "identified": "已定位",
+    "monitoring": "观察中",
+    "resolved": "已解决"
+  },
+  "sections": {
+    "active": "进行中的事件",
+    "maintenance": "维护",
+    "components": "系统组件",
+    "recent": "近期事件",
+    "history": "历史记录"
+  },
+  "incident": {
+    "ongoingFor": "已持续 {duration}",
+    "lasted": "持续 {duration}",
+    "affects": "影响 {names}",
+    "back": "返回状态页",
+    "progress": "处理进度",
+    "updates": "更新记录",
+    "notReached": "尚未到达",
+    "skipped": "已跳过",
+    "started": "开始",
+    "resolvedAt": "解决",
+    "duration": "持续时间",
+    "components": "受影响组件",
+    "noComponents": "这次事件没有标记受影响的组件。",
+    "openDetails": "查看事件：{title}",
+    "maintenance": "维护"
+  },
+  "maintenance": {
+    "scheduled": "计划维护",
+    "in_progress": "维护进行中",
+    "completed": "维护已完成",
+    "window": "{start} 至 {end}"
+  },
+  "group": {
+    "count": "{count} 个组件",
+    "expand": "展开 {name} 的组件",
+    "collapse": "收起 {name} 的组件",
+    "ungrouped": "服务"
+  },
+  "uptime": {
+    "value": "可用率 {value}",
+    "unmeasured": "尚未开始统计"
+  },
+  "bar": {
+    "summary": "过去 {days} 天的记录，其中 {known} 天有读数。",
+    "noReadings": "这一天没有读数",
+    "readings": "{count} 次读数",
+    "avgLatency": "平均 {value}",
+    "noIncidents": "当天没有事件",
+    "stateDetected": "读数显示{state}",
+    "start": "{days} 天前",
+    "today": "今天",
+    "dayLabel": "{date}：{state}",
+    "dayLabelUptime": "{date}：{state}，可用率 {uptime}",
+    "dayIncidents": "{count} 个事件"
+  },
+  "evidence": {
+    "synthetic": "用户旅程已验证",
+    "synthetic_failing": "用户旅程未通过",
+    "device": "设备心跳",
+    "device_failing": "设备心跳异常",
+    "upstream": "上游状态",
+    "upstream_failing": "上游报告故障",
+    "dependency": "依赖探测",
+    "dependency_failing": "依赖探测未通过",
+    "manual": "人工确认",
+    "manual_failing": "人工标记为受影响",
+    "none": "尚未接入证据来源",
+    "stale": "{minutes} 分钟没有新读数",
+    "staleHours": "{hours} 小时没有新读数",
+    "staleAlso": "有一个来源 {minutes} 分钟没有新读数",
+    "staleAlsoHours": "有一个来源 {hours} 小时没有新读数",
+    "explain": "这个颜色的依据：最新的一条证据，以及它有多新。"
+  },
+  "history": {
+    "title": "历史记录",
+    "subtitle": "最近 90 天，逐日记录。",
+    "outsideWindow": "不在 90 天统计窗口内",
+    "future": "尚未到来",
+    "quietMonth": "本月没有事件。",
+    "quietWindow": "最近 90 天没有事件。",
+    "viewHistory": "查看历史记录",
+    "legend": "图例"
+  },
+  "footer": {
+    "powered": "由 {product} 提供",
+    "subscribe": "订阅",
+    "atom": "Atom 订阅源",
+    "rss": "RSS 订阅源",
+    "language": "语言"
+  },
+  "home": {
+    "emptyTitle": "这个实例还没有状态页",
+    "emptyBody": "在 status.config.json 中声明页面和组件，实例启动时会自动应用。具体步骤见 README。",
+    "unconfiguredTitle": "数据库尚未配置",
+    "unconfiguredBody": "设置 STATUS_DATABASE_URL 后重启实例。全部配置项见 README。",
+    "chooseTitle": "状态页",
+    "chooseBody": "这个实例发布了多个页面。设置 STATUS_DEFAULT_PAGE 可以让首页直接打开其中一个。"
+  },
+  "notFound": {
+    "title": "找不到这个页面",
+    "body": "这个状态页或事件不存在，或者已经不再公开。",
+    "home": "前往状态页"
+  }
+}
