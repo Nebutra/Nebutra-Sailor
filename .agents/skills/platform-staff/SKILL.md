@@ -1,6 +1,8 @@
 ---
 name: platform-staff
-description: Check, grant or revoke platform staff access (who may operate the platform itself: owner, operator, support, readonly) through the nebutra CLI or the nebutra MCP tools. Use when asked "who has admin access", to give someone platform/admin/staff access, to take it away, to rotate an on-call, or to hand over ownership. Not for tenant or organization members, and never by editing the database directly.
+description: 'Check, grant or revoke platform staff access (who may operate the platform itself: owner, operator, support, readonly) through the nebutra CLI or the nebutra MCP tools. Use when asked "who has admin access", to give someone platform/admin/staff access, to take it away, to rotate an on-call, or to hand over ownership. Not for tenant or organization members, and never by editing the database directly.'
+metadata:
+  internal: true
 ---
 
 # Platform staff, from the agent
