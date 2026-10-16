@@ -1,6 +1,6 @@
 /**
- * Configuration as code — the self-hosted edition's equivalent of Mintlify's
- * docs.json. A `status.config.json` checked into the operator's repo declares
+ * Configuration as code, in the lineage of Gatus's YAML config: a
+ * `status.config.json` checked into the operator's repo declares
  * the page, its groups, components and monitors; the instance applies it on
  * start. Incidents, evidence and subscribers are runtime data and never live
  * in the file.
