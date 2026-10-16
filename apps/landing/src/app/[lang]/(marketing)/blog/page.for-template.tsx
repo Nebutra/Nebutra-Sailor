@@ -135,16 +135,13 @@ function localizedTagHref(lang: string, tag: string): string {
   return `${localizedBlogHref(lang)}/tag/${getBlogUrlSegment(tag)}`;
 }
 
-function getFallbackTopics(isZh: boolean): string[] {
-  return isZh
-    ? ["AI SaaS", "平台工程", "设计系统", "治理"]
-    : ["AI SaaS", "Platform Engineering", "Design System", "Governance"];
-}
-
-function toBlogHeroTopics(tags: string[], lang: string, isZh: boolean): BlogHeroTopic[] {
-  const topics = tags.length > 0 ? tags : getFallbackTopics(isZh);
-
-  return topics.map((topic) => ({
+/**
+ * Topics are the posts' own tags. There is no stand-in list: a tag page with
+ * no posts answers 404 (#774), so an invented topic is a broken link — the
+ * sample posts carry no tags, and the nav stays hidden until real ones exist.
+ */
+function toBlogHeroTopics(tags: string[], lang: string): BlogHeroTopic[] {
+  return tags.map((topic) => ({
     href: localizedTagHref(lang, topic),
     label: topic,
   }));
@@ -202,7 +199,7 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
   const blogLanguage = toBlogLanguage(lang);
   const posts = await getCachedAllPosts(blogLanguage);
   const topTags = getTopTags(posts);
-  const heroTopics = toBlogHeroTopics(topTags, lang, isZh);
+  const heroTopics = toBlogHeroTopics(topTags, lang);
   const latestRailPosts = posts.map((post) => toBlogRailPost(post, lang, isZh));
 
   return (

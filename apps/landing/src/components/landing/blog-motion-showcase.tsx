@@ -139,35 +139,37 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
           </p>
         </div>
 
-        <nav aria-label={isZh ? "博客主题" : "Blog topics"} className="min-w-0">
-          <p className="mb-4 text-xs font-semibold uppercase text-muted-foreground">
-            {isZh ? "按主题浏览" : "Browse by topic"}
-          </p>
-          {/*
+        {topics.length > 0 && (
+          <nav aria-label={isZh ? "博客主题" : "Blog topics"} className="min-w-0">
+            <p className="mb-4 text-xs font-semibold uppercase text-muted-foreground">
+              {isZh ? "按主题浏览" : "Browse by topic"}
+            </p>
+            {/*
             At rest every topic sits on the same edge at full strength. Hover
             (or keyboard focus) on the list dims the others and nudges only the
             hovered row's arrow — the text never moves. This used to track an
             "active" index in state that defaulted to the first row and never
             reset on leave, so one row always stood 8px proud of the rest.
           */}
-          <div className="group/topics flex flex-col">
-            {topics.map((topic) => (
-              <Link
-                key={topic.label}
-                href={topic.href}
-                className="group/topic relative -mx-2 rounded-[var(--radius-md)] px-2 py-1.5 transition-opacity duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none group-hover/topics:opacity-45 group-has-[:focus-visible]/topics:opacity-45 hover:opacity-100! focus-visible:opacity-100!"
-              >
-                <span className="flex min-w-0 items-center gap-3 text-3xl font-semibold leading-display text-foreground sm:text-4xl lg:text-5xl">
-                  <span className="min-w-0 text-balance">{topic.label}</span>
-                  <ArrowRight
-                    className="size-8 shrink-0 text-muted-foreground transition-[transform,color] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none group-hover/topic:translate-x-1.5 group-hover/topic:text-foreground group-focus-visible/topic:translate-x-1.5 group-focus-visible/topic:text-foreground sm:size-9 lg:size-10"
-                    aria-hidden
-                  />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </nav>
+            <div className="group/topics flex flex-col">
+              {topics.map((topic) => (
+                <Link
+                  key={topic.label}
+                  href={topic.href}
+                  className="group/topic relative -mx-2 rounded-[var(--radius-md)] px-2 py-1.5 transition-opacity duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none group-hover/topics:opacity-45 group-has-[:focus-visible]/topics:opacity-45 hover:opacity-100! focus-visible:opacity-100!"
+                >
+                  <span className="flex min-w-0 items-center gap-3 text-3xl font-semibold leading-display text-foreground sm:text-4xl lg:text-5xl">
+                    <span className="min-w-0 text-balance">{topic.label}</span>
+                    <ArrowRight
+                      className="size-8 shrink-0 text-muted-foreground transition-[transform,color] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none group-hover/topic:translate-x-1.5 group-hover/topic:text-foreground group-focus-visible/topic:translate-x-1.5 group-focus-visible/topic:text-foreground sm:size-9 lg:size-10"
+                      aria-hidden
+                    />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </nav>
+        )}
       </div>
     </div>
   );
