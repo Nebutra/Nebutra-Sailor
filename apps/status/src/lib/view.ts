@@ -185,6 +185,8 @@ export interface EvidenceLine {
   at: Date | null;
   /** Set when some source has gone quiet: minutes since its last reading. */
   staleMinutes: number | null;
+  /** The quiet source's name and seconds since it last reported. */
+  quiet: { source: string; ageSeconds: number } | null;
 }
 
 /**
@@ -199,23 +201,33 @@ export function evidenceLine(verdict: ComponentVerdict, now: Date): EvidenceLine
     (acc, e) => (!acc || e.checkedAt > acc ? e.checkedAt : acc),
     null,
   );
+  const quietest = stale.reduce<(typeof stale)[number] | null>(
+    (acc, e) => (!acc || e.checkedAt > acc.checkedAt ? e : acc),
+    null,
+  );
+  const quiet = quietest
+    ? {
+        source: quietest.source,
+        ageSeconds: Math.max(0, (now.getTime() - quietest.checkedAt.getTime()) / 1000),
+      }
+    : null;
   const staleMinutes = quietSince
     ? Math.max(1, Math.floor((now.getTime() - quietSince.getTime()) / 60_000))
     : null;
   if (verdict.evidence.length === 0) {
-    return { kind: "none", passing: false, at: null, staleMinutes: null };
+    return { kind: "none", passing: false, at: null, staleMinutes: null, quiet: null };
   }
   if (fresh.length === 0) {
-    return { kind: "stale", passing: false, at: quietSince, staleMinutes };
+    return { kind: "stale", passing: false, at: quietSince, staleMinutes, quiet };
   }
   for (const coverage of COVERAGE_RANK) {
     const of = fresh.filter((e) => e.coverage === coverage);
     if (of.length === 0) continue;
     const newest = of.reduce((a, b) => (b.checkedAt > a.checkedAt ? b : a));
     const passing = of.every((e) => e.effectiveState === "operational");
-    return { kind: coverage, passing, at: newest.checkedAt, staleMinutes };
+    return { kind: coverage, passing, at: newest.checkedAt, staleMinutes, quiet };
   }
-  return { kind: "none", passing: false, at: null, staleMinutes };
+  return { kind: "none", passing: false, at: null, staleMinutes, quiet };
 }
 
 /** The newest reading across every component — what "updated" honestly means. */

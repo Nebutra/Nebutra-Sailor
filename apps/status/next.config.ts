@@ -10,6 +10,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   output: "standalone",
   transpilePackages: [
+    "@nebutra/brand",
     "@nebutra/fonts",
     "@nebutra/icons",
     "@nebutra/status",

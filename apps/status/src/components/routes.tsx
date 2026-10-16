@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { getSnapshot, homeTarget } from "@/lib/data";
-import { normalizeLocale } from "@/lib/locale";
+import { type AppLocale, normalizeLocale, pickI18n } from "@/lib/locale";
 import { requestLocale, requestTimeZone } from "@/lib/request-locale";
 import type { PageSnapshot } from "@/server/snapshot";
 import { HistoryView } from "./history-view";
@@ -14,6 +14,14 @@ import { PageShell } from "./page-shell";
 import { StatusView } from "./status-view";
 
 export type Query = Record<string, string | string[] | undefined>;
+
+/** Components a reader can narrow a subscription to, in their language. */
+export function subscribableComponents(snapshot: PageSnapshot, locale: AppLocale) {
+  return snapshot.components.map((c) => ({
+    key: c.key,
+    name: pickI18n(c.name, c.nameI18n, locale),
+  }));
+}
 
 export async function loadSnapshotOr404(slug: string): Promise<PageSnapshot> {
   const snapshot = await getSnapshot(slug);
@@ -65,7 +73,12 @@ export async function StatusRoute({
     requestTimeZone(),
   ]);
   return (
-    <PageShell locale={locale} page={snapshot.page} path={path}>
+    <PageShell
+      locale={locale}
+      page={snapshot.page}
+      path={path}
+      components={subscribableComponents(snapshot, locale)}
+    >
       <StatusView snapshot={snapshot} locale={locale} timeZone={timeZone} />
     </PageShell>
   );
@@ -80,7 +93,12 @@ export async function HistoryRoute({ slug, query }: { slug: string; query: Query
     requestTimeZone(),
   ]);
   return (
-    <PageShell locale={locale} page={snapshot.page} path={path}>
+    <PageShell
+      locale={locale}
+      page={snapshot.page}
+      path={path}
+      components={subscribableComponents(snapshot, locale)}
+    >
       <HistoryView snapshot={snapshot} locale={locale} timeZone={timeZone} />
     </PageShell>
   );

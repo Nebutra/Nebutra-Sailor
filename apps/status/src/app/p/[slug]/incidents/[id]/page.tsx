@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { IncidentView } from "@/components/incident-view";
 import { PageShell } from "@/components/page-shell";
-import { adoptLangParam, loadSnapshotOr404 } from "@/components/routes";
+import { adoptLangParam, loadSnapshotOr404, subscribableComponents } from "@/components/routes";
 import { getIncident, getSnapshot } from "@/lib/data";
 import type { IncidentProps } from "@/lib/page-params";
 import { requestLocale, requestTimeZone } from "@/lib/request-locale";
@@ -39,7 +39,12 @@ export default async function IncidentPage({ params, searchParams }: IncidentPro
     requestTimeZone(),
   ]);
   return (
-    <PageShell locale={locale} page={snapshot.page} path={path}>
+    <PageShell
+      locale={locale}
+      page={snapshot.page}
+      path={path}
+      components={subscribableComponents(snapshot, locale)}
+    >
       <IncidentView
         incident={incident}
         components={snapshot.components}

@@ -5,6 +5,9 @@
  *   STATUS_DATABASE_URL=postgres://… npx prisma migrate deploy
  *   STATUS_DATABASE_URL=postgres://… npx tsx scripts/seed-demo.ts
  *
+ * To keep the preview live afterwards, run scripts/preview-pulse.ts next to
+ * the server: it pushes fresh evidence every 30 s.
+ *
  * The page it creates (slug `demo`) is bilingual, has groups, a fresh
  * synthetic journey, a quiet source, an open incident, scheduled
  * maintenance and resolved history — every state the page can draw.

@@ -46,7 +46,8 @@ export function formatRelative(date: Date, now: Date, locale: AppLocale): string
   const seconds = Math.round((date.getTime() - now.getTime()) / 1000);
   const abs = Math.abs(seconds);
   const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
-  if (abs < 45) return rtf.format(0, "second");
+  if (abs < 5) return rtf.format(0, "second");
+  if (abs < 60) return rtf.format(seconds, "second");
   if (abs < 3600) return rtf.format(Math.round(seconds / 60), "minute");
   if (abs < 86_400) return rtf.format(Math.round(seconds / 3600), "hour");
   return rtf.format(Math.round(seconds / 86_400), "day");
@@ -85,4 +86,17 @@ export function formatDateTime(date: Date, locale: AppLocale, timeZone?: string)
     hour12: false,
     ...(timeZone ? { timeZone } : {}),
   }).format(date);
+}
+
+/** "23 分钟" / "23 min" — an age without "ago", for "silent for …". */
+export function formatAge(seconds: number, locale: AppLocale): string {
+  const zh = locale === "zh-CN";
+  if (seconds < 60)
+    return zh ? `${Math.max(1, Math.round(seconds))} 秒` : `${Math.max(1, Math.round(seconds))}s`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 120) return zh ? `${minutes} 分钟` : `${minutes} min`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 48) return zh ? `${hours} 小时` : `${hours} h`;
+  const days = Math.floor(hours / 24);
+  return zh ? `${days} 天` : `${days} d`;
 }

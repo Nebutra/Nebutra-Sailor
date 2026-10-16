@@ -14,14 +14,15 @@
     "operationalBody": "我们没有发现影响系统的问题。",
     "degradedBody": "性能下降：{names}。",
     "outageBody": "不可用：{names}。",
-    "noFresh": "{count} 个组件暂无最新读数"
+    "noFresh": "{count} 个组件等待新读数。",
+    "handling": "我们正在处理 {count} 个事件。"
   },
   "state": {
     "operational": "正常",
     "degraded": "性能下降",
     "outage": "中断",
     "maintenance": "维护中",
-    "unknown": "暂无最新读数",
+    "unknown": "等待新读数",
     "no_data": "无数据",
     "no_source": "未接入证据来源"
   },
@@ -107,7 +108,9 @@
     "staleHours": "{hours} 小时没有新读数",
     "staleAlso": "有一个来源 {minutes} 分钟没有新读数",
     "staleAlsoHours": "有一个来源 {hours} 小时没有新读数",
-    "explain": "这个颜色的依据：最新的一条证据，以及它有多新。"
+    "explain": "这个颜色的依据：最新的一条证据，以及它有多新。",
+    "awaiting": "等待新读数",
+    "silentFor": "{source} {age}未上报"
   },
   "history": {
     "title": "历史记录",
@@ -120,11 +123,13 @@
     "legend": "图例"
   },
   "footer": {
-    "powered": "由 {product} 提供",
+    "powered": "由",
     "subscribe": "订阅",
     "atom": "Atom 订阅源",
     "rss": "RSS 订阅源",
-    "language": "语言"
+    "language": "语言",
+    "poweredLabel": "由 Nebutra Status 提供",
+    "poweredSuffix": "Status 提供"
   },
   "home": {
     "emptyTitle": "这个实例还没有状态页",
@@ -152,14 +157,178 @@
     "manual": "人工确认",
     "ok": "正常",
     "failing": "异常",
-    "quiet": "暂无最新读数",
+    "quiet": "等待新读数",
     "explain": "这个颜色的依据"
   },
   "header": {
-    "subscribe": "订阅",
+    "subscribe": "订阅更新",
     "language": "English",
     "languageLabel": "Switch to English",
     "history": "历史记录",
     "home": "状态页首页"
+  },
+  "subscribe": {
+    "title": "订阅更新",
+    "body": "事件开始、变化或解决时通知你。",
+    "channel": "渠道",
+    "email": "邮件",
+    "webhook": "Webhook",
+    "feishu": "飞书",
+    "dingtalk": "钉钉",
+    "wecom": "企业微信",
+    "slack": "Slack",
+    "targetEmail": "邮箱地址",
+    "targetWebhook": "Webhook 地址",
+    "targetBot": "群机器人 Webhook 地址",
+    "secret": "签名密钥（可选）",
+    "secretHint": "机器人开启了签名校验时需要填写。",
+    "components": "只关注这些组件",
+    "componentsHint": "都不选表示关注全部组件。",
+    "submit": "订阅",
+    "pending": "请查收 {target}：点击邮件中的链接完成订阅。",
+    "active": "已订阅。我们已向这个地址发送一条欢迎消息。",
+    "keepLink": "请保存这个链接，以后可用它退订：",
+    "emailDisabled": "这个实例没有配置邮件发送。请改用群机器人或 Webhook。",
+    "error": "订阅没有成功：{detail}",
+    "rateLimited": "尝试次数过多，请一分钟后再试。",
+    "feeds": "也可以使用订阅源：",
+    "atom": "Atom",
+    "rss": "RSS",
+    "again": "再订阅一个地址"
+  },
+  "subscription": {
+    "confirmTitle": "订阅已确认",
+    "confirmBody": "之后的事件与维护通知会发送给你。",
+    "invalidTitle": "这个链接已失效",
+    "invalidBody": "它可能已过期，或者已经用于退订。",
+    "unsubscribeTitle": "退订",
+    "unsubscribeBody": "确定不再向这个地址发送状态通知吗？",
+    "unsubscribeButton": "退订",
+    "unsubscribedTitle": "已退订",
+    "unsubscribedBody": "这个地址不会再收到任何通知。",
+    "back": "前往状态页"
+  },
+  "admin": {
+    "title": "Nebutra Status 管理后台",
+    "nav": {
+      "incidents": "事件",
+      "keys": "API 密钥",
+      "components": "组件",
+      "viewPage": "查看公开页",
+      "signOut": "退出登录",
+      "page": "状态页"
+    },
+    "setup": {
+      "title": "创建所有者账号",
+      "body": "这个实例还没有成员。输入部署时设置的 STATUS_SETUP_TOKEN，创建第一个所有者。",
+      "token": "安装令牌",
+      "email": "邮箱",
+      "password": "密码",
+      "passwordHint": "至少 12 个字符。",
+      "name": "名字（可选）",
+      "workspace": "工作区标识",
+      "workspaceHint": "小写字母、数字、- 和 _。如果已有 status.config.json，请与其中一致。",
+      "submit": "创建并登录",
+      "closedTitle": "安装入口已关闭",
+      "closedBody": "这个实例已经有成员，或者没有设置 STATUS_SETUP_TOKEN。请直接登录。",
+      "toSignIn": "前往登录"
+    },
+    "signIn": {
+      "title": "登录",
+      "body": "管理事件、维护和 API 密钥。",
+      "submit": "登录",
+      "setupLink": "首次部署？创建所有者账号"
+    },
+    "errors": {
+      "invalid_credentials": "邮箱或密码不正确。",
+      "setup_token_invalid": "安装令牌不正确。",
+      "already_set_up": "这个实例已经有所有者，请直接登录。",
+      "setup_disabled": "安装入口已关闭：没有设置 STATUS_SETUP_TOKEN。",
+      "invalid_input": "请检查填写的内容：{detail}",
+      "forbidden": "你的角色不能执行这个操作。",
+      "not_found": "这一项已经不存在。",
+      "generic": "操作没有完成：{detail}",
+      "rate_limited": "尝试次数过多，请在 {detail} 秒后重试。"
+    },
+    "incidents": {
+      "title": "事件",
+      "new": "新建事件",
+      "open": "进行中与计划中",
+      "closed": "已结束",
+      "quietOpen": "当前没有进行中的事件。",
+      "quietClosed": "结束的事件会出现在这里。",
+      "updated": "更新于",
+      "started": "开始于",
+      "components": "{count, plural, =0 {未关联组件} other {# 个组件}}"
+    },
+    "form": {
+      "kind": "类型",
+      "kindIncident": "事件",
+      "kindMaintenance": "计划维护",
+      "title": "标题",
+      "titlePlaceholder": "用平实的话说明受影响的内容",
+      "impact": "影响程度",
+      "status": "状态",
+      "components": "受影响组件",
+      "componentsHint": "不涉及具体组件时可以都不选。",
+      "message": "更新内容（{locale}）",
+      "messageHint": "会发布到状态页、订阅源和订阅者。",
+      "messageOptional": "可选。不填时这种语言的读者看到默认语言的内容。",
+      "windowStart": "开始时间",
+      "windowEnd": "结束时间",
+      "windowHint": "按你所在的时区填写。",
+      "submit": "发布",
+      "cancel": "取消"
+    },
+    "update": {
+      "title": "发布更新",
+      "submit": "发布更新",
+      "resolve": "标记为已解决",
+      "resolveHint": "用标准的结束语将事件标记为已解决。",
+      "resolvedMessage": "此问题已解决。",
+      "maintenanceDone": "本次维护已完成。",
+      "closed": "这个事件已结束。发布新的更新会重新打开它。"
+    },
+    "detail": {
+      "back": "全部事件",
+      "timeline": "更新记录",
+      "public": "在状态页查看"
+    },
+    "keys": {
+      "title": "API 密钥",
+      "body": "机器凭据：推送证据、自动化事件、部署闸门。",
+      "create": "创建密钥",
+      "name": "名称",
+      "namePlaceholder": "例如 ci-deploy-gate",
+      "scopes": "权限范围",
+      "scope_status:read": "读取状态",
+      "scope_evidence:write": "推送证据",
+      "scope_incidents:write": "写入事件",
+      "created": "密钥已创建。完整密钥只显示这一次，请立即保存。",
+      "copy": "复制",
+      "prefix": "前缀",
+      "lastUsed": "最近使用",
+      "never": "从未使用",
+      "createdAt": "创建于",
+      "revoke": "吊销",
+      "revokeConfirm": "确认吊销",
+      "revoked": "已吊销",
+      "quiet": "创建的密钥会出现在这里。",
+      "forbidden": "只有所有者和管理员可以管理密钥。"
+    },
+    "components": {
+      "title": "组件",
+      "body": "组件、分组和监控来自 status.config.json（配置即代码）。修改文件并重启实例后生效，这里只读。",
+      "key": "标识",
+      "name": "名称",
+      "group": "分组",
+      "state": "状态",
+      "evidence": "证据",
+      "visibility": "可见性",
+      "public": "公开",
+      "internal": "内部",
+      "sources": "{count, plural, =0 {没有来源} other {# 个来源}}"
+    },
+    "lang": "语言"
   }
 }

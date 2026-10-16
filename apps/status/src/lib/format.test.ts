@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  formatAge,
   formatDayKey,
   formatDuration,
   formatLatency,
@@ -43,7 +44,9 @@ describe("formatLatency", () => {
 describe("formatRelative", () => {
   const now = new Date("2026-10-16T08:00:00Z");
   it("reads the largest whole unit", () => {
-    expect(formatRelative(new Date("2026-10-16T07:59:50Z"), now, "en")).toBe("now");
+    expect(formatRelative(new Date("2026-10-16T07:59:58Z"), now, "en")).toBe("now");
+    expect(formatRelative(new Date("2026-10-16T07:59:30Z"), now, "en")).toBe("30 seconds ago");
+    expect(formatRelative(new Date("2026-10-16T07:59:30Z"), now, "zh-CN")).toBe("30秒钟前");
     expect(formatRelative(new Date("2026-10-16T07:58:00Z"), now, "en")).toBe("2 minutes ago");
     expect(formatRelative(new Date("2026-10-16T07:58:00Z"), now, "zh-CN")).toBe("2分钟前");
     expect(formatRelative(new Date("2026-10-16T05:00:00Z"), now, "en")).toBe("3 hours ago");
@@ -54,5 +57,14 @@ describe("dates", () => {
   it("formats day keys without shifting across time zones", () => {
     expect(formatDayKey("2026-10-01", "en")).toBe("Oct 1, 2026");
     expect(formatUtc(new Date("2026-10-16T08:05:30Z"))).toBe("2026-10-16 08:05 UTC");
+  });
+});
+
+describe("formatAge", () => {
+  it("reads the largest sensible unit without a suffix", () => {
+    expect(formatAge(23 * 60, "zh-CN")).toBe("23 分钟");
+    expect(formatAge(23 * 60, "en")).toBe("23 min");
+    expect(formatAge(3 * 3600, "en")).toBe("3 h");
+    expect(formatAge(20, "en")).toBe("20s");
   });
 });

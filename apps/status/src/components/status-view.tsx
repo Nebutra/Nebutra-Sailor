@@ -20,8 +20,8 @@ import { verdictBorder, verdictTint } from "./state-style";
 const RECENT_LIMIT = 5;
 
 /**
- * The public page in incident.io's order: verdict (or the incidents that
- * replace it) → maintenance → system status → recent incidents → history.
+ * The public page in incident.io's order: the overall verdict, always first →
+ * open incidents → maintenance → system status → recent incidents → history.
  */
 export async function StatusView({
   snapshot,
@@ -61,6 +61,41 @@ export async function StatusView({
 
   return (
     <div className="space-y-6">
+      <section
+        aria-labelledby="verdict"
+        className={cn("overflow-hidden rounded-lg border bg-card", verdictBorder[overall])}
+      >
+        <div className={cn("flex items-center gap-2.5 px-4 py-3", verdictTint[overall])}>
+          <StateIcon state={overall} force className="size-4.5" />
+          <h1 id="verdict" className="text-base font-medium text-foreground">
+            {t(`verdict.${overall}`)}
+          </h1>
+          {latest ? (
+            <span className="ml-auto hidden text-xs text-muted-foreground sm:inline">
+              {t("verdict.latestReading")}{" "}
+              <LocalTime
+                iso={latest.toISOString()}
+                nowIso={nowIso}
+                locale={locale}
+                timeZone={timeZone}
+                mode="relative"
+              />
+            </span>
+          ) : null}
+        </div>
+        <p className="px-4 py-3.5 text-sm text-foreground">
+          {snapshot.activeIncidents.length > 0
+            ? t("verdict.handling", { count: snapshot.activeIncidents.length })
+            : body}
+          {noFresh ? <span className="text-muted-foreground"> {noFresh}</span> : null}
+          {inMaintenance.length > 0 ? (
+            <span className="text-muted-foreground">
+              {" "}
+              {t("verdict.maintenanceNote", { names: names(inMaintenance.map((c) => c.key)) })}
+            </span>
+          ) : null}
+        </p>
+      </section>
       {snapshot.activeIncidents.length > 0 ? (
         <section aria-label={t("sections.active")} className="space-y-4">
           {snapshot.activeIncidents.map((incident) => (
@@ -75,41 +110,7 @@ export async function StatusView({
             />
           ))}
         </section>
-      ) : (
-        <section
-          aria-labelledby="verdict"
-          className={cn("overflow-hidden rounded-lg border bg-card", verdictBorder[overall])}
-        >
-          <div className={cn("flex items-center gap-2.5 px-4 py-3", verdictTint[overall])}>
-            <StateIcon state={overall} force className="size-4.5" />
-            <h1 id="verdict" className="text-base font-medium text-foreground">
-              {t(`verdict.${overall}`)}
-            </h1>
-            {latest ? (
-              <span className="ml-auto hidden text-xs text-muted-foreground sm:inline">
-                {t("verdict.latestReading")}{" "}
-                <LocalTime
-                  iso={latest.toISOString()}
-                  nowIso={nowIso}
-                  locale={locale}
-                  timeZone={timeZone}
-                  mode="relative"
-                />
-              </span>
-            ) : null}
-          </div>
-          <p className="px-4 py-3.5 text-sm text-foreground">
-            {body}
-            {noFresh ? <span className="text-muted-foreground"> · {noFresh}</span> : null}
-            {inMaintenance.length > 0 ? (
-              <span className="text-muted-foreground">
-                {" "}
-                {t("verdict.maintenanceNote", { names: names(inMaintenance.map((c) => c.key)) })}
-              </span>
-            ) : null}
-          </p>
-        </section>
-      )}
+      ) : null}
 
       {snapshot.maintenance.length > 0 ? (
         <section aria-label={t("sections.maintenance")} className="space-y-4">
@@ -131,7 +132,7 @@ export async function StatusView({
           id="system-status"
           title={t("status.title")}
           aside={<span className="tabular-nums">{range}</span>}
-          note={snapshot.activeIncidents.length > 0 ? noFresh : null}
+          note={null}
         />
         <div className="divide-y divide-border px-4">
           {groups.map((group) => {

@@ -19,6 +19,7 @@
     "test": "prisma generate && vitest run"
   },
   "dependencies": {
+    "@nebutra/brand": "workspace:*",
     "@nebutra/fonts": "workspace:*",
     "@nebutra/icons": "workspace:*",
     "@nebutra/status": "workspace:*",
