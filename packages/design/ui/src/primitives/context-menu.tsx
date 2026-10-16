@@ -5,6 +5,7 @@ import { Check, ChevronRight } from "@nebutra/icons";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { resolveLazyChild } from "../utils/lazy-child";
 import { overlayPrimitiveClassNames } from "./overlay";
 
 type ContextMenuItemVariant = "default" | "destructive";
@@ -125,13 +126,14 @@ export const ContextMenuRoot = BaseContextMenu.Root;
 
 export const ContextMenuTrigger = ({
   asChild,
-  children,
+  children: rawChildren,
   render,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Trigger> & { asChild?: boolean } & {
   ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.Trigger>> | undefined;
 }) => {
+  const children = resolveLazyChild(rawChildren);
   const renderElement: BaseContextMenu.Trigger.Props["render"] =
     asChild && React.isValidElement(children) ? children : render;
   return (

@@ -3,6 +3,7 @@
 import * as React from "react";
 import { AnimatePresence, motion, useReducedMotion } from "../shared/animation/motion";
 import { cn } from "../utils/cn";
+import { resolveLazyChild } from "../utils/lazy-child";
 
 const CollapsibleContext = React.createContext<{
   open?: boolean;
@@ -58,12 +59,13 @@ Collapsible.displayName = "Collapsible";
 const CollapsibleTrigger = ({
   className,
   asChild,
-  children,
+  children: rawChildren,
   ref,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean } & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
+  const children = resolveLazyChild(rawChildren);
   const { open, onOpenChange, disabled } = React.use(CollapsibleContext);
 
   const handleClick = React.useCallback(

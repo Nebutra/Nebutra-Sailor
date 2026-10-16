@@ -28,6 +28,7 @@ import * as React from "react";
 
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { resolveLazyChild } from "../utils/lazy-child";
 import { navigationMenuTriggerStyle } from "./navigation-menu-variants";
 
 type BaseRootProps = React.ComponentProps<typeof BaseNavigationMenu.Root>;
@@ -170,7 +171,7 @@ NavigationMenuContent.displayName = "NavigationMenuContent";
 
 const NavigationMenuLink = ({
   asChild,
-  children,
+  children: rawChildren,
   render,
   ref,
   ...props
@@ -178,6 +179,7 @@ const NavigationMenuLink = ({
   /** Render the child element (e.g. a router Link) as the link. */
   asChild?: boolean;
 } & { ref?: React.Ref<HTMLAnchorElement> | undefined }) => {
+  const children = resolveLazyChild(rawChildren);
   const childElement =
     asChild && React.isValidElement(children) ? (children as React.ReactElement) : undefined;
   return (
