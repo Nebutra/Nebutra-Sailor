@@ -12,9 +12,13 @@ test.describe("Changelog Page", () => {
 
   test("displays release entries with versions", async ({ page }) => {
     await gotoMarketingPage(page, "/changelog");
-    // Should have at least one version heading (static fallback has v0.4.0 through v0.10.0)
-    const versionHeading = page.getByRole("heading", { name: /^v\d+\.\d+/ }).first();
-    await expect(versionHeading).toBeVisible();
+    // Each release is an <li> in the "Releases" list: the release title is its
+    // heading, and the version is a label beside the date (Linear's changelog
+    // shape, 7ab853059). The static fallback carries v0.4.0 through v1.7.
+    const releases = page.getByRole("list", { name: "Releases" });
+    const firstRelease = releases.getByRole("listitem").first();
+    await expect(firstRelease.getByText(/^v\d+\.\d+/).first()).toBeVisible();
+    await expect(firstRelease.getByRole("heading", { level: 2 })).toBeVisible();
   });
 
   test("timeline has multiple entries", async ({ page }) => {
