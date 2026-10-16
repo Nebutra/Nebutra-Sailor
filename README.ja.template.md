@@ -21,7 +21,8 @@
     <a href="https://nebutra.com/ja/sailor"><strong>Web サイト</strong></a> ·
     <a href="https://nebutra.com/docs"><strong>ドキュメント</strong></a> ·
     <a href="https://nebutra.com/ja/sailor/compare"><strong>比較</strong></a> ·
-    <a href="https://github.com/{{repo.full}}/discussions"><strong>Discussions</strong></a>
+    <a href="https://github.com/{{repo.full}}/discussions"><strong>Discussions</strong></a> ·
+    <a href="https://linux.do"><strong>LINUX DO</strong></a>
   </p>
 </div>
 

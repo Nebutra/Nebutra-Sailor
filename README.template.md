@@ -22,7 +22,8 @@
     <a href="https://nebutra.com/sailor"><strong>Website</strong></a> ·
     <a href="https://nebutra.com/docs"><strong>Docs</strong></a> ·
     <a href="https://nebutra.com/sailor/compare"><strong>Compare</strong></a> ·
-    <a href="https://github.com/{{repo.full}}/discussions"><strong>Discussions</strong></a>
+    <a href="https://github.com/{{repo.full}}/discussions"><strong>Discussions</strong></a> ·
+    <a href="https://linux.do"><strong>LINUX DO</strong></a>
   </p>
 </div>
 

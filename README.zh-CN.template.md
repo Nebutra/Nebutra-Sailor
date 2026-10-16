@@ -23,7 +23,8 @@
     <a href="https://nebutra.com/zh-Hans/sailor"><strong>官网</strong></a> ·
     <a href="https://nebutra.com/docs"><strong>文档</strong></a> ·
     <a href="https://nebutra.com/zh-Hans/sailor/compare"><strong>横向对比</strong></a> ·
-    <a href="https://github.com/{{repo.full}}/discussions"><strong>讨论区</strong></a>
+    <a href="https://github.com/{{repo.full}}/discussions"><strong>讨论区</strong></a> ·
+    <a href="https://linux.do"><strong>LINUX DO</strong></a>
   </p>
 </div>
 

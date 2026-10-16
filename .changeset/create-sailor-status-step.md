@@ -1,5 +1,5 @@
 ---
-"create-sailor": patch
+"create-sailor": minor
 ---
 
 The finish screen and `.sailor/next-steps.md` now list `pnpm nebutra status` (with `--json` for agents) right after `pnpm dev`. A freshly scaffolded project answers it without a separate build step.
