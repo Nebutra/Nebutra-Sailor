@@ -1,7 +1,14 @@
 import { z } from "zod";
 import { getStatusKv } from "./store";
 
-const INCIDENTS_KEY = "status:incidents:v1";
+/**
+ * One hash field per incident, so a write touches only its own incident.
+ * v1 kept every incident in one JSON blob: two concurrent writes lost one of
+ * them, and a blob that failed validation read as [] — after which the next
+ * write replaced the whole history with a single incident.
+ */
+const INCIDENTS_KEY = "status:incidents:v2";
+const LEGACY_INCIDENTS_KEY = "status:incidents:v1";
 
 export const incidentImpactSchema = z.enum(["none", "minor", "major", "critical"]);
 export const incidentStatusSchema = z.enum([
@@ -64,20 +71,56 @@ export const updateIncidentInputSchema = z.object({
   affectedServiceIds: z.array(z.string()).optional(),
 });
 
-async function readAll(): Promise<StatusIncident[]> {
-  const raw = await getStatusKv().get(INCIDENTS_KEY);
-  if (!raw) return [];
+function parseIncident(raw: string): StatusIncident | null {
   try {
-    const parsed = JSON.parse(raw) as unknown;
-    const result = z.array(statusIncidentSchema).safeParse(parsed);
-    return result.success ? result.data : [];
+    const result = statusIncidentSchema.safeParse(JSON.parse(raw));
+    return result.success ? result.data : null;
   } catch {
-    return [];
+    return null;
   }
 }
 
-async function writeAll(incidents: StatusIncident[]): Promise<void> {
-  await getStatusKv().set(INCIDENTS_KEY, JSON.stringify(incidents));
+/** Copy v1 blob entries into the per-incident hash. The v1 key is left in place. */
+async function migrateLegacy(): Promise<StatusIncident[]> {
+  const kv = getStatusKv();
+  const raw = await kv.get(LEGACY_INCIDENTS_KEY);
+  if (!raw) return [];
+  let entries: unknown[];
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    entries = Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+  const incidents: StatusIncident[] = [];
+  for (const entry of entries) {
+    const result = statusIncidentSchema.safeParse(entry);
+    if (!result.success) continue;
+    incidents.push(result.data);
+    await kv.hset(INCIDENTS_KEY, result.data.id, JSON.stringify(result.data));
+  }
+  return incidents;
+}
+
+async function readAll(): Promise<StatusIncident[]> {
+  const fields = await getStatusKv().hgetall(INCIDENTS_KEY);
+  const raws = Object.values(fields);
+  if (raws.length === 0) return migrateLegacy();
+  // An unreadable entry is skipped on its own; it never hides the rest.
+  return raws.map(parseIncident).filter((i): i is StatusIncident => i !== null);
+}
+
+async function writeOne(incident: StatusIncident): Promise<void> {
+  await getStatusKv().hset(INCIDENTS_KEY, incident.id, JSON.stringify(incident));
+}
+
+async function readOne(id: string): Promise<StatusIncident | null> {
+  const fields = await getStatusKv().hgetall(INCIDENTS_KEY);
+  if (Object.keys(fields).length === 0) {
+    return (await migrateLegacy()).find((i) => i.id === id) ?? null;
+  }
+  const raw = fields[id];
+  return raw ? parseIncident(raw) : null;
 }
 
 export async function listIncidents(): Promise<StatusIncident[]> {
@@ -86,7 +129,7 @@ export async function listIncidents(): Promise<StatusIncident[]> {
 }
 
 export async function getIncident(id: string): Promise<StatusIncident | null> {
-  return (await readAll()).find((i) => i.id === id) ?? null;
+  return readOne(id);
 }
 
 /** Open incidents only — maintenance is listed by `listMaintenance`. */
@@ -137,9 +180,7 @@ export async function createIncident(
     updatedAt: at,
     ...(parsed.status === "resolved" ? { resolvedAt: at } : {}),
   };
-  const all = await readAll();
-  all.unshift(incident);
-  await writeAll(all);
+  await writeOne(incident);
   return incident;
 }
 
@@ -148,11 +189,9 @@ export async function updateIncident(
   now: Date = new Date(),
 ): Promise<StatusIncident | null> {
   const parsed = updateIncidentInputSchema.parse(input);
-  const all = await readAll();
-  const index = all.findIndex((i) => i.id === parsed.id);
-  if (index < 0) return null;
+  const current = await readOne(parsed.id);
+  if (!current) return null;
 
-  const current = all[index] as StatusIncident;
   const at = now.toISOString();
   const nextStatus = parsed.status ?? current.status;
   const nextMessage = parsed.message ?? current.message;
@@ -172,8 +211,7 @@ export async function updateIncident(
     resolvedAt: nextStatus === "resolved" ? (current.resolvedAt ?? at) : current.resolvedAt,
   };
 
-  all[index] = updated;
-  await writeAll(all);
+  await writeOne(updated);
   return updated;
 }
 

@@ -1,9 +1,11 @@
 /**
  * Edge-friendly key/value for status history + incidents.
  *
- * Prefer Upstash Redis REST (independent of the app origin) so a status page
- * can still read history when the app stack is degraded. Falls back to an
- * in-process map for local/dev/test when Redis env is absent.
+ * Speaks the Upstash Redis REST protocol. Nebutra's deploy points it at the
+ * self-hosted Redis behind serverless-redis-http on Fly — the same org and
+ * region as the services the page reports on, so this store is not
+ * independent of them (docs/proposals/2026-10-16-status-product.md moves the
+ * page off that path). Falls back to an in-process map for local/dev/test.
  */
 
 export interface StatusKv {

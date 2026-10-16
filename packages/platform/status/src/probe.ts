@@ -58,10 +58,14 @@ export interface ServiceTarget {
 const TIMEOUT_MS = 4500;
 const STATUS_PROBE_CONCURRENCY = 2;
 
-function classifyHttpStatus(statusCode: number): ServiceState {
+/**
+ * A 5xx is the service failing; a 4xx is the service answering a request it
+ * will not serve (a moved path, a rate limit) — reachable, but not healthy.
+ */
+export function classifyHttpStatus(statusCode: number): ServiceState {
   if (statusCode >= 200 && statusCode < 400) return "operational";
-  if (statusCode >= 400 && statusCode < 500) return "outage";
-  if (statusCode >= 500) return "degraded";
+  if (statusCode >= 500) return "outage";
+  if (statusCode >= 400) return "degraded";
   return "unknown";
 }
 
@@ -233,23 +237,50 @@ function historyStates(history: ServiceHistory): Record<string, ServiceState> {
   ]);
 }
 
-/**
- * Probe every target, record one sample per window, and assemble the page
- * snapshot: live readings, 90-day history, incidents and maintenance.
- */
-export async function buildStatusSnapshot(
+const PROBE_CACHE_KEY = "status:probe-cache:v1";
+
+interface CachedProbes {
+  at: number;
+  services: ServiceProbe[];
+}
+
+async function readCachedProbes(
   targets: ServiceTarget[],
-  options: {
-    userAgent?: string;
-    concurrency?: number;
-    /** Called when a recorded sample changes a service's state. */
-    onStateChange?: (changes: StateChange[]) => Promise<void>;
-  } = {},
-): Promise<StatusSnapshot> {
+  maxAgeMs: number,
+): Promise<ServiceProbe[] | null> {
+  if (maxAgeMs <= 0) return null;
+  try {
+    const raw = await getStatusKv().get(PROBE_CACHE_KEY);
+    if (!raw) return null;
+    const cached = JSON.parse(raw) as CachedProbes;
+    if (!Number.isFinite(cached.at) || Date.now() - cached.at > maxAgeMs) return null;
+    // A changed target list invalidates the cache rather than serving a stale row set.
+    const ids = targets.map((t) => t.id).join(",");
+    if (cached.services.map((s) => s.id).join(",") !== ids) return null;
+    return cached.services;
+  } catch {
+    return null;
+  }
+}
+
+/** One probe run per process at a time: concurrent viewers share it. */
+let inflight: Promise<ServiceProbe[]> | null = null;
+
+async function probeAndRecord(
+  targets: ServiceTarget[],
+  options: SnapshotOptions,
+): Promise<ServiceProbe[]> {
   const limit = pLimit(options.concurrency ?? STATUS_PROBE_CONCURRENCY);
   const probed = await Promise.all(
     targets.map((target) => limit(() => probeService(target, options.userAgent))),
   );
+
+  try {
+    const entry: CachedProbes = { at: Date.now(), services: probed };
+    await getStatusKv().set(PROBE_CACHE_KEY, JSON.stringify(entry));
+  } catch {
+    // The cache only saves work; a failed write costs the next viewer a probe.
+  }
 
   // One recorded run per sample window: the cron guarantees the floor, page
   // views can only fill gaps, never weight the day toward whoever was looking.
@@ -261,6 +292,40 @@ export async function buildStatusSnapshot(
     }
   } catch {
     // History is best-effort — page still serves live probes.
+  }
+  return probed;
+}
+
+export interface SnapshotOptions {
+  userAgent?: string;
+  concurrency?: number;
+  /**
+   * Serve probe readings up to this old instead of probing again. Page views
+   * pass a window so a burst of visitors — which is exactly what an outage
+   * brings — costs one probe run, not one per view. 0 always probes.
+   */
+  maxAgeMs?: number;
+  /** Called when a recorded sample changes a service's state. */
+  onStateChange?: (changes: StateChange[]) => Promise<void>;
+}
+
+/**
+ * Probe every target (or reuse a fresh enough run), record one sample per
+ * window, and assemble the page snapshot: readings, 90-day history,
+ * incidents and maintenance.
+ */
+export async function buildStatusSnapshot(
+  targets: ServiceTarget[],
+  options: SnapshotOptions = {},
+): Promise<StatusSnapshot> {
+  let probed = await readCachedProbes(targets, options.maxAgeMs ?? 0);
+  if (!probed) {
+    if (!inflight) {
+      inflight = probeAndRecord(targets, options).finally(() => {
+        inflight = null;
+      });
+    }
+    probed = await inflight;
   }
 
   let historyByService: Record<string, ServiceHistory> = {};
