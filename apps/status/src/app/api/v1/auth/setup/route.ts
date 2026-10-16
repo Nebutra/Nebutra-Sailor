@@ -5,6 +5,7 @@
 import { AuthError, sessionCookie, setupAvailable, setupOwner } from "@/server/auth";
 import { getDb } from "@/server/db";
 import { json, problem, readJson } from "@/server/http";
+import { clientIp, LIMITS, limiter, tooManyRequests } from "@/server/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -13,6 +14,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const wait = limiter.take(`setup:ip:${clientIp(request)}`, LIMITS.setupPerIp);
+  if (wait > 0) return tooManyRequests(wait);
   const parsed = await readJson(request);
   if (!parsed.ok) return problem(400, "invalid_json");
   try {
