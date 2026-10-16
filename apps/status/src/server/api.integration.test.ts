@@ -87,7 +87,8 @@ describe("GET status", () => {
     expect(body).toMatchObject({
       version: 1,
       page: { slug: "acme", title: "Acme Status", url: `${BASE}/p/acme` },
-      overall: "degraded",
+      overall: "operational",
+      noFreshData: 2,
       groups: [{ key: "product", components: ["sign-in", "api"] }],
     });
     expect(body.components.map((c: { key: string }) => c.key)).toEqual(["sign-in", "api"]);

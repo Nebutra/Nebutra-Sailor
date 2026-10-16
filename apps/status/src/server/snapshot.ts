@@ -12,7 +12,7 @@ import {
   dayState,
   dayUptime,
   evaluateComponent,
-  overallState,
+  pageVerdict,
 } from "./evaluate";
 import { maintenancePhase } from "./incidents";
 
@@ -72,6 +72,8 @@ export interface PageSnapshot {
   };
   generatedAt: Date;
   overall: "operational" | "degraded" | "outage";
+  /** Public components with no fresh reading — shown as a note, never as red. */
+  noFreshData: number;
   groups: Array<{
     key: string;
     name: string;
@@ -247,7 +249,7 @@ export async function buildPageSnapshot(
       compatProfile: page.compatProfile,
     },
     generatedAt: now,
-    overall: overallState(components.map((c) => c.verdict.state)),
+    ...pageVerdict(components.map((c) => c.verdict)),
     groups: page.groups.map((g) => ({
       key: g.key,
       name: g.name,

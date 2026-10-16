@@ -119,11 +119,13 @@ describe("evidence and snapshot", () => {
       state: "operational",
       avgLatencyMs: 210,
     });
-    // learning-content has no evidence yet, so the page is not green.
-    expect(snapshot?.overall).toBe("degraded");
+    // learning-content has no evidence yet: a monitoring gap, reported as such
+    // rather than as a failure.
+    expect(snapshot?.overall).toBe("operational");
+    expect(snapshot?.noFreshData).toBe(1);
   });
 
-  it("goes red when evidence stops arriving", async () => {
+  it("goes unknown, not red, when evidence stops arriving — and records nothing for the silence", async () => {
     const { page } = await applyConfig(t.db, config);
     await pushEvidence(
       t.db,
@@ -137,9 +139,20 @@ describe("evidence and snapshot", () => {
       },
       now,
     );
+    const statsBefore = await t.db.dailyStat.findMany();
     const later = new Date(now.getTime() + 11 * 60_000);
     const snapshot = await buildPageSnapshot(t.db, { slug: "acme" }, { now: later });
-    expect(snapshot?.components[0]?.verdict).toMatchObject({ state: "outage", verified: false });
+    expect(snapshot?.components[0]?.verdict).toMatchObject({
+      state: "unknown",
+      verified: false,
+      hasFreshData: false,
+      note: "No fresh reading from journey.login",
+    });
+    expect(snapshot?.overall).toBe("operational");
+    expect(snapshot?.noFreshData).toBe(2);
+    // A stale tick is not a reading: the day keeps its one good check.
+    expect(await t.db.dailyStat.findMany()).toEqual(statsBefore);
+    expect(snapshot?.components[0]?.days.at(-1)).toMatchObject({ total: 1, state: "operational" });
   });
 
   it("ignores a reading older than the stored one", async () => {

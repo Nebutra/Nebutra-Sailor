@@ -2,10 +2,16 @@
  * How a component's state is decided. Pure, so every rule here is tested
  * without a database.
  *
- * The rule borrowed from 小芽's hand-built status: a component is only as
- * green as its freshest proof. Evidence that stops arriving does not keep its
- * last colour — past its freshness window it reads degraded, past twice the
- * window outage. A monitor that silently died cannot leave a page green.
+ * A component is only as green as its fresh proof. Evidence that stops
+ * arriving does not keep its last colour: past its freshness window it reads
+ * `unknown`. A silent source is a gap in our monitoring, not the customer's
+ * outage, so it never paints a component red on its own — outage and
+ * degraded come only from fresh evidence or declared incidents. It does
+ * withdraw the green: a component whose every source is silent is unknown,
+ * and stale synthetic evidence never verifies a deploy.
+ *
+ * (Compat profiles that promised the stricter rule — 小芽's Go escalates
+ * stale probes to degraded, then outage — apply it themselves.)
  */
 
 export type ComponentState = "operational" | "degraded" | "outage" | "maintenance" | "unknown";
@@ -24,9 +30,12 @@ export interface EvidenceReading {
 }
 
 export interface JudgedEvidence extends EvidenceReading {
-  /** The state after freshness is applied. */
+  /** The state after freshness is applied: the reading's own state while fresh, `unknown` once stale. */
   effectiveState: ComponentState;
+  /** What the source last reported, fresh or not. */
+  lastState: ComponentState;
   stale: boolean;
+  ageSeconds: number;
 }
 
 export interface ActiveIncidentRef {
@@ -41,6 +50,8 @@ export interface ComponentVerdict {
   evidence: JudgedEvidence[];
   /** Fresh, non-failing synthetic evidence exists — a user journey was proven. */
   verified: boolean;
+  /** At least one source has a reading inside its freshness window. */
+  hasFreshData: boolean;
   coverage: EvidenceCoverage[];
   checkedAt: Date | null;
   lastSuccessAt: Date | null;
@@ -64,18 +75,15 @@ export function worst(states: ComponentState[]): ComponentState {
 }
 
 export function judgeEvidence(reading: EvidenceReading, now: Date): JudgedEvidence {
-  const ageSeconds = (now.getTime() - reading.checkedAt.getTime()) / 1000;
-  const window = Math.max(1, reading.freshnessSeconds);
-  let effectiveState = reading.state;
-  let stale = false;
-  if (ageSeconds > 2 * window) {
-    effectiveState = "outage";
-    stale = true;
-  } else if (ageSeconds > window) {
-    effectiveState = worst([reading.state, "degraded"]);
-    stale = true;
-  }
-  return { ...reading, effectiveState, stale };
+  const ageSeconds = Math.max(0, (now.getTime() - reading.checkedAt.getTime()) / 1000);
+  const stale = ageSeconds > Math.max(1, reading.freshnessSeconds);
+  return {
+    ...reading,
+    effectiveState: stale ? "unknown" : reading.state,
+    lastState: reading.state,
+    stale,
+    ageSeconds,
+  };
 }
 
 function incidentFloor(incident: ActiveIncidentRef): ComponentState {
@@ -96,8 +104,10 @@ export function evaluateComponent(
   now: Date,
 ): ComponentVerdict {
   const evidence = readings.map((r) => judgeEvidence(r, now));
+  const fresh = evidence.filter((e) => !e.stale);
+  // Judge by the sources that are still talking; with none, we do not know.
   const fromEvidence: ComponentState =
-    evidence.length === 0 ? "unknown" : worst(evidence.map((e) => e.effectiveState));
+    fresh.length === 0 ? "unknown" : worst(fresh.map((e) => e.effectiveState));
 
   const declared = incidents.filter((i) => i.kind === "incident").map(incidentFloor);
   let state = worst([fromEvidence, ...declared]);
@@ -113,7 +123,8 @@ export function evaluateComponent(
     (acc, e) => (e.lastSuccessAt && (!acc || e.lastSuccessAt > acc) ? e.lastSuccessAt : acc),
     null,
   );
-  const failing = evidence.find((e) => e.effectiveState !== "operational");
+  const failing = fresh.find((e) => e.effectiveState !== "operational");
+  const silent = evidence.find((e) => e.stale);
 
   return {
     state,
@@ -121,23 +132,42 @@ export function evaluateComponent(
     verified: evidence.some(
       (e) => e.coverage === "synthetic" && !e.stale && e.effectiveState === "operational",
     ),
+    hasFreshData: fresh.length > 0,
     coverage: [...new Set(evidence.map((e) => e.coverage))],
     checkedAt: newest?.checkedAt ?? null,
     lastSuccessAt,
     latencyMs: newest?.latencyMs ?? null,
     note: failing
-      ? failing.stale
-        ? `No fresh reading from ${failing.source}`
-        : failing.note
-      : (newest?.note ?? null),
+      ? failing.note
+      : silent
+        ? `No fresh reading from ${silent.source}`
+        : (newest?.note ?? null),
   };
 }
 
-/** Page verdict: maintenance counts as fine, unknown as degraded. */
+/**
+ * Page verdict: outage or degraded only from components that are actually
+ * failing; maintenance and unknown (no fresh data) count as fine here — the
+ * page reports how many components it has no fresh reading for instead of
+ * painting itself red over a monitoring gap.
+ */
 export function overallState(states: ComponentState[]): "operational" | "degraded" | "outage" {
   if (states.includes("outage")) return "outage";
-  if (states.some((s) => s === "degraded" || s === "unknown")) return "degraded";
+  if (states.includes("degraded")) return "degraded";
   return "operational";
+}
+
+export interface PageVerdict {
+  overall: "operational" | "degraded" | "outage";
+  /** Components with no reading inside its freshness window, including none at all. */
+  noFreshData: number;
+}
+
+export function pageVerdict(verdicts: ComponentVerdict[]): PageVerdict {
+  return {
+    overall: overallState(verdicts.map((v) => v.state)),
+    noFreshData: verdicts.filter((v) => !v.hasFreshData).length,
+  };
 }
 
 /** Readings per day weigh degraded at 0.3 of an outage, as @nebutra/status does. */

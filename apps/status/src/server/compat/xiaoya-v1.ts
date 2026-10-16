@@ -79,6 +79,20 @@ function worstLevel(levels: XiaoyaLevel[]): XiaoyaLevel {
 }
 
 /**
+ * 小芽's freshness rule, kept here because its release gate depends on it and
+ * the public rule is gentler (a stale source reads `unknown` there). From
+ * ApplyBusinessProbeEvidence: older than twice the window is an outage; older
+ * than the window turns an operational reading degraded.
+ */
+export function goLevel(e: JudgedEvidence): XiaoyaLevel {
+  const window = Math.max(1, e.freshnessSeconds);
+  const reported = toXiaoyaLevel(e.lastState);
+  if (e.ageSeconds > 2 * window) return "outage";
+  if (e.ageSeconds > window) return worstLevel([reported, "degraded"]);
+  return reported;
+}
+
+/**
  * Several synthetic sources on one component are judged together: the
  * oldest check and oldest success stand for all of them, so a gate on
  * `checked_at` passes only once every journey has run again.
@@ -86,7 +100,7 @@ function worstLevel(levels: XiaoyaLevel[]): XiaoyaLevel {
 function syntheticVerification(evidence: JudgedEvidence[]): XiaoyaVerification | null {
   const synthetic = evidence.filter((e) => e.coverage === "synthetic");
   if (synthetic.length === 0) return null;
-  const status = worstLevel(synthetic.map((e) => toXiaoyaLevel(e.effectiveState)));
+  const status = worstLevel(synthetic.map(goLevel));
   const checkedAt = synthetic.reduce(
     (a, e) => (e.checkedAt < a ? e.checkedAt : a),
     synthetic[0]!.checkedAt,
@@ -121,7 +135,9 @@ function component(c: SnapshotComponent, now: Date): XiaoyaComponent {
     id: c.key,
     name: c.name,
     description: c.description ?? "",
-    status: toXiaoyaLevel(c.verdict.state),
+    // The public verdict (incidents, maintenance, fresh evidence) combined
+    // with Go's stricter reading of every source, as combineStatus does.
+    status: worstLevel([toXiaoyaLevel(c.verdict.state), ...c.verdict.evidence.map(goLevel)]),
     ...(latency && latency > 0 ? { latency_ms: latency } : {}),
     updated_at: updated,
     verification,

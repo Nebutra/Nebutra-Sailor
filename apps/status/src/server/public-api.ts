@@ -43,6 +43,7 @@ function componentJson(c: SnapshotComponent) {
     group: c.groupKey,
     state: v.state,
     verified: v.verified,
+    hasFreshData: v.hasFreshData,
     coverage: v.coverage,
     checkedAt: iso(v.checkedAt),
     lastSuccessAt: iso(v.lastSuccessAt),
@@ -71,6 +72,7 @@ export function statusJson(snapshot: PageSnapshot, pageUrl: string) {
     },
     generatedAt: iso(snapshot.generatedAt),
     overall: snapshot.overall,
+    noFreshData: publicComponents.filter((c) => !c.verdict.hasFreshData).length,
     groups: snapshot.groups.map((g) => ({
       key: g.key,
       name: g.name,

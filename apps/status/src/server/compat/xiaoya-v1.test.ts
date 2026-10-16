@@ -170,6 +170,27 @@ describe("xiaoya-v1 release gate", () => {
     expect((await read(1900))?.status).toBe("outage");
   });
 
+  it("keeps Go's stricter rule where the public page has moved on", async () => {
+    const { page } = await applyConfig(t.db, example);
+    const at = new Date("2026-10-16T08:00:00Z");
+    await journey(page.id, "identity-access", at);
+    const snap = await buildPageSnapshot(
+      t.db,
+      { slug: "xiaoya" },
+      { now: new Date(at.getTime() + 1900_000) },
+    );
+    const publicView = snap!.components.find((c) => c.key === "identity-access");
+    const compat = buildXiaoyaStatus(snap!, "u").components.find((c) => c.id === "identity-access");
+    // Public: a silent probe is our monitoring gap — unknown, page not red.
+    expect(publicView?.verdict.state).toBe("unknown");
+    expect(snap!.overall).toBe("operational");
+    // Compat: exactly what 小芽's Go would have said — outage, gate closed.
+    expect(compat).toMatchObject({
+      status: "outage",
+      verification: { status: "outage", verified: false },
+    });
+  });
+
   it("shapes the document like PublicStatusResp", async () => {
     await applyConfig(t.db, example);
     const now = new Date("2026-10-16T08:00:00.123Z");

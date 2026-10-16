@@ -6,6 +6,7 @@ import {
   evaluateComponent,
   judgeEvidence,
   overallState,
+  pageVerdict,
 } from "./evaluate";
 
 const now = new Date("2026-10-16T12:00:00.000Z");
@@ -33,21 +34,21 @@ describe("judgeEvidence", () => {
     });
   });
 
-  it("reads a reading past its window as degraded, past twice the window as outage", () => {
+  it("reads a silent source as unknown, keeping what it last said", () => {
     expect(judgeEvidence(reading({ checkedAt: ago(200) }), now)).toMatchObject({
-      effectiveState: "degraded",
+      effectiveState: "unknown",
+      lastState: "operational",
       stale: true,
+      ageSeconds: 200,
     });
-    expect(judgeEvidence(reading({ checkedAt: ago(241) }), now)).toMatchObject({
-      effectiveState: "outage",
-      stale: true,
-    });
+    expect(judgeEvidence(reading({ checkedAt: ago(1000) }), now).effectiveState).toBe("unknown");
   });
 
-  it("never improves a failing reading because it is stale", () => {
-    expect(
-      judgeEvidence(reading({ state: "outage", checkedAt: ago(200) }), now).effectiveState,
-    ).toBe("outage");
+  it("does not turn a silent failing source into a fresh failure either", () => {
+    expect(judgeEvidence(reading({ state: "outage", checkedAt: ago(200) }), now)).toMatchObject({
+      effectiveState: "unknown",
+      lastState: "outage",
+    });
   });
 });
 
@@ -66,14 +67,38 @@ describe("evaluateComponent", () => {
     expect(verdict.note).toBe("slow login");
   });
 
-  it("names the silent source when evidence goes stale", () => {
+  it("is unknown, not red, when every source is silent", () => {
     const verdict = evaluateComponent(
       [reading({ source: "push:journey", checkedAt: ago(500) })],
       [],
       now,
     );
-    expect(verdict.state).toBe("outage");
+    expect(verdict).toMatchObject({ state: "unknown", hasFreshData: false, verified: false });
     expect(verdict.note).toBe("No fresh reading from push:journey");
+  });
+
+  it("judges by the fresh sources and names the silent one", () => {
+    const verdict = evaluateComponent(
+      [reading(), reading({ source: "push:journey", state: "outage", checkedAt: ago(500) })],
+      [],
+      now,
+    );
+    expect(verdict).toMatchObject({ state: "operational", hasFreshData: true });
+    expect(verdict.evidence).toHaveLength(2);
+    expect(verdict.note).toBe("No fresh reading from push:journey");
+  });
+
+  it("lets a fresh failure win over a silent source", () => {
+    const verdict = evaluateComponent(
+      [
+        reading({ state: "outage", note: "502 from origin" }),
+        reading({ source: "push:journey", checkedAt: ago(500) }),
+      ],
+      [],
+      now,
+    );
+    expect(verdict.state).toBe("outage");
+    expect(verdict.note).toBe("502 from origin");
   });
 
   it("lets a declared incident make things worse, never better", () => {
@@ -123,10 +148,24 @@ describe("evaluateComponent", () => {
 });
 
 describe("page and day rollups", () => {
-  it("counts unknown as degraded and maintenance as fine", () => {
+  it("counts unknown and maintenance as fine, and reports components without fresh data", () => {
     expect(overallState(["operational", "maintenance"])).toBe("operational");
-    expect(overallState(["operational", "unknown"])).toBe("degraded");
+    expect(overallState(["operational", "unknown"])).toBe("operational");
+    expect(overallState(["unknown", "degraded"])).toBe("degraded");
     expect(overallState(["degraded", "outage"])).toBe("outage");
+    const stale = evaluateComponent([reading({ checkedAt: ago(500) })], [], now);
+    const none = evaluateComponent([], [], now);
+    const fresh = evaluateComponent([reading()], [], now);
+    expect(pageVerdict([stale, none, fresh])).toEqual({ overall: "operational", noFreshData: 2 });
+  });
+
+  it("lets a declared incident redden a silent component", () => {
+    const stale = evaluateComponent(
+      [reading({ checkedAt: ago(500) })],
+      [{ kind: "incident", impact: "critical", inProgress: true }],
+      now,
+    );
+    expect(stale.state).toBe("outage");
   });
 
   it("colours a day from its ratio, not its worst reading", () => {
