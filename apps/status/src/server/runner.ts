@@ -12,6 +12,12 @@ import { applyConfig, ConfigError } from "./config";
 import type { StatusDb } from "./db";
 import { log } from "./log";
 import { claimLease, runDueMonitors } from "./monitors";
+import {
+  componentNotificationsEnabled,
+  enqueueComponentChanges,
+  enqueueMaintenanceStarts,
+  processDeliveries,
+} from "./notify/outbox";
 
 export const TICK_MS = 10_000;
 export const LEASE_TTL_SECONDS = 30;
@@ -56,17 +62,38 @@ export interface RunnerOptions {
   tick?: (db: StatusDb) => Promise<unknown>;
 }
 
-/** One tick: hold the lease, then run what is due. Returns whether this process ran monitors. */
+/**
+ * One tick: hold the lease, then run what is due — monitors, maintenance
+ * reminders, component-change notices (when on), and the delivery outbox.
+ * Each step is isolated so one failing does not starve the others. Returns
+ * whether this process held the lease.
+ */
 export async function runTick(
   db: StatusDb,
   holder: string,
   leaseTtlSeconds = LEASE_TTL_SECONDS,
 ): Promise<boolean> {
   if (!(await claimLease(db, holder, leaseTtlSeconds))) return false;
-  const changes = await runDueMonitors(db);
-  for (const change of changes) {
-    log.info("component evidence changed", { ...change });
+  const step = async (name: string, fn: () => Promise<unknown>) => {
+    try {
+      await fn();
+    } catch (error) {
+      log.error("runner step failed", { step: name, holder, err: error });
+    }
+  };
+  await step("monitors", async () => {
+    for (const change of await runDueMonitors(db)) {
+      log.info("component evidence changed", { ...change });
+    }
+  });
+  await step("maintenance", () => enqueueMaintenanceStarts(db));
+  if (componentNotificationsEnabled()) {
+    await step("component-changes", () => enqueueComponentChanges(db));
   }
+  await step("deliveries", async () => {
+    const run = await processDeliveries(db);
+    if (run.sent + run.retried + run.dead > 0) log.info("deliveries processed", { ...run });
+  });
   return true;
 }
 

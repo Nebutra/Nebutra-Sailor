@@ -42,6 +42,11 @@ services:
       STATUS_DEFAULT_PAGE: ${STATUS_DEFAULT_PAGE:-}
       # Set to xiaoya-v1 to serve that legacy shape at /api/v1/status.
       STATUS_COMPAT_ROOT: ${STATUS_COMPAT_ROOT:-}
+      # Email subscriptions: both must be set, e.g. smtps://user:pass@smtp.example.com:465
+      STATUS_SMTP_URL: ${STATUS_SMTP_URL:-}
+      STATUS_MAIL_FROM: ${STATUS_MAIL_FROM:-}
+      # "on" also notifies subscribers when a component changes state.
+      STATUS_NOTIFY_COMPONENT_CHANGES: ${STATUS_NOTIFY_COMPONENT_CHANGES:-off}
       # "off" disables the in-process monitor runner.
       STATUS_RUNNER: ${STATUS_RUNNER:-on}
     volumes:

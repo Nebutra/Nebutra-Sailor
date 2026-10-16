@@ -54,6 +54,29 @@ async function componentIds(db: StatusDb, pageId: string, keys: string[]): Promi
 
 export class IncidentError extends Error {}
 
+type IncidentWithDetail = Awaited<ReturnType<StatusDb["incident"]["findUniqueOrThrow"]>> & {
+  updates: Array<{ status: string; message: string; messageI18n: unknown; createdAt: Date }>;
+  components: Array<{ component: { key: string } }>;
+};
+
+/**
+ * Queue notifications for an incident write. Imported lazily: the outbox
+ * reads snapshots, which read this module. Enqueueing only inserts rows and
+ * never throws, so the write itself cannot fail on it.
+ */
+async function notifySubscribers(
+  db: StatusDb,
+  incident: IncidentWithDetail,
+  event: "incident.created" | "incident.updated",
+  now: Date,
+): Promise<void> {
+  const [{ enqueueIncident }, { toSnapshotIncident }] = await Promise.all([
+    import("./notify/outbox"),
+    import("./snapshot"),
+  ]);
+  await enqueueIncident(db, toSnapshotIncident(incident, now), event, now);
+}
+
 const withDetail = {
   updates: { orderBy: { createdAt: "asc" as const } },
   components: { include: { component: { select: { key: true, name: true } } } },
@@ -67,7 +90,7 @@ export async function createIncident(
 ) {
   const input = createIncidentSchema.parse(raw);
   const ids = await componentIds(db, page.id, input.components);
-  return db.incident.create({
+  const created = await db.incident.create({
     data: {
       workspaceId: page.workspaceId,
       pageId: page.id,
@@ -92,6 +115,8 @@ export async function createIncident(
     },
     include: withDetail,
   });
+  await notifySubscribers(db, created, "incident.created", now);
+  return created;
 }
 
 /**
@@ -107,7 +132,7 @@ export async function updateIncident(
   now: Date = new Date(),
 ) {
   const input = updateIncidentSchema.parse(raw);
-  return db.$transaction(async (tx) => {
+  const updated = await db.$transaction(async (tx) => {
     const current = await tx.incident.findFirst({ where: { id: incidentId, pageId } });
     if (!current) return null;
     const nextStatus = input.status ?? current.status;
@@ -145,6 +170,11 @@ export async function updateIncident(
       include: withDetail,
     });
   });
+  // Only what appended to the public timeline is news to subscribers.
+  if (updated && (input.status || input.message)) {
+    await notifySubscribers(db, updated, "incident.updated", now);
+  }
+  return updated;
 }
 
 export type MaintenancePhase = "scheduled" | "in_progress" | "completed";

@@ -133,6 +133,34 @@ curl -fsS "https://status.example.com/api/v1/pages/acme/gate?components=sign-in,
 `unknown_component` / `no_evidence` / `stale` / `failing` / `before_since`。公开组件可匿名查询；
 带 `status:read` key 时也能查内部组件。
 
+### 订阅与通知
+
+访客在公开页订阅，或直接调用：
+
+```bash
+curl -X POST https://status.example.com/api/v1/pages/acme/subscribe -H 'content-type: application/json' \
+  -d '{"channel":"feishu","target":"https://open.feishu.cn/open-apis/bot/v2/hook/…","secret":"签名密钥（可选）",
+       "components":["api"],"locale":"zh-CN"}'
+```
+
+| 渠道 | `target` | 说明 |
+|---|---|---|
+| `email` | 邮箱地址 | 双重确认：先发确认邮件，点链接后才生效。需要 `STATUS_SMTP_URL` 与 `STATUS_MAIL_FROM`，否则返回 409 `email_disabled` |
+| `feishu` | 飞书群机器人 webhook | 交互卡片；`secret` 为机器人签名校验密钥 |
+| `dingtalk` | 钉钉群机器人 webhook | Markdown；`secret` 为加签密钥 |
+| `wecom` | 企业微信群机器人 webhook | Markdown |
+| `slack` | Slack incoming webhook | Blocks |
+| `webhook` | 任意 https URL | JSON（`version`、`event`、`page`、`incident`/`component`）；有 `secret` 时带 `x-nebutra-signature: t=<秒>,v1=<HMAC-SHA256("<t>.<body>")>` |
+
+`GET …/subscribe` 返回本实例可用的渠道。`components` 为空表示全部组件；没有关联组件的事故通知所有人。
+`locale` 决定中文或英文，缺省用页面默认语言。机器人与 webhook 立即生效并收到一条欢迎消息，响应里带
+退订链接；邮件里的退订链接支持 RFC 8058 一键退订。机器人只能指向各自官方域名；通用 webhook 必须是 https
+且不能解析到内网地址（自部署内网集成可设 `STATUS_WEBHOOK_ALLOW_PRIVATE=on`）。
+
+**触发**：事故/维护创建、每次时间线更新（状态或消息变化）、维护窗口开始时提醒一次；
+`STATUS_NOTIFY_COMPONENT_CHANGES=on` 时组件状态变化也通知（默认关闭）。所有通知先写入
+`deliveries` 发件箱，由进程内 runner 发送，失败按 30 秒起指数退避重试，最多 8 次；API 请求从不等待发送。
+
 ### 其他接口
 
 | 路径 | 说明 |
@@ -217,6 +245,11 @@ RFC 3339 时间、Go 默认的 HTML 安全转义都一致。小芽 `scripts/depl
 | `STATUS_PUBLIC_URL` | 公网 origin；默认页链接为 `<origin>/status`，其他页为 `<origin>/p/<slug>` |
 | `STATUS_DEFAULT_PAGE` | `/` 与 `/status` 展示的页面 slug |
 | `STATUS_COMPAT_ROOT` | `xiaoya-v1`：在 `/api/v1/status` 输出该兼容形状（需配合 `STATUS_DEFAULT_PAGE`） |
+| `STATUS_SMTP_URL` | 例如 `smtps://user:pass@smtp.example.com:465`；与 `STATUS_MAIL_FROM` 都设置时才开放邮件订阅 |
+| `STATUS_MAIL_FROM` | 发件人，例如 `Acme Status <status@acme.example>` |
+| `STATUS_NOTIFY_COMPONENT_CHANGES` | `on`：组件状态变化也通知订阅者 |
+| `STATUS_WEBHOOK_ALLOW_PRIVATE` | `on`：允许通用 webhook 使用 http 与内网地址 |
+| `STATUS_TRUST_PROXY` | 默认读取反代的 `X-Real-IP` / `X-Forwarded-For` 做限流；直接暴露公网时设为 `off` |
 | `STATUS_DEBUG` | 输出 debug 日志 |
 | `PORT` | 默认 3140 |
 
@@ -307,4 +340,15 @@ Writes authenticated by the session cookie must carry a matching `Origin` header
   when `STATUS_COMPAT_ROOT=xiaoya-v1` and `STATUS_DEFAULT_PAGE` are set. Byte-compatible with
   小芽's Go `PublicStatusResp`. 小芽 serves the page on its own subdomain; its main domain proxies only
   `/api/v1/status` and 302-redirects `/status` there. Full steps are in the Chinese section.
+- **Subscriptions** — `POST /api/v1/pages/:slug/subscribe` with `channel` (`email`, `feishu`,
+  `dingtalk`, `wecom`, `slack`, `webhook`), `target`, optional `secret` (Feishu/DingTalk signing,
+  or the HMAC key for webhooks), `components` (empty = all) and `locale` (zh or en). Email is
+  double opt-in and needs `STATUS_SMTP_URL` + `STATUS_MAIL_FROM` (409 `email_disabled` otherwise).
+  Bot URLs must be their vendor's hosts; webhooks must be https to a public address. Incident and
+  maintenance writes, every timeline update and each maintenance start are queued in a
+  `deliveries` outbox and sent by the runner with exponential backoff (8 attempts); component
+  state changes notify only with `STATUS_NOTIFY_COMPONENT_CHANGES=on`.
+- **Rate limits** — sign-in: 30 attempts per address and 10 failures per email per 15 min;
+  setup: 10 per address; subscribe: 20 per address per hour and 3 confirmation emails per
+  address. Client addresses come from the proxy's headers unless `STATUS_TRUST_PROXY=off`.
 - **Environment** — see the table in the Chinese section.
