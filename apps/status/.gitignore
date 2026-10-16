@@ -1,3 +1,5 @@
 src/generated/
 .next/
 .preview/
+# The operator's own config, mounted by docker-compose.yml.
+/status.config.json
