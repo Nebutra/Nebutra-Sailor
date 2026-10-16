@@ -3,7 +3,8 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { StatusDb } from "./db";
-import { applyConfigFile, boot, runTick, startRunner } from "./runner";
+import { publicBase } from "./notify/outbox";
+import { applyConfigFile, boot, bootConfigProblems, runTick, startRunner } from "./runner";
 import { createTestDb, type TestDb } from "./testing";
 
 let t: TestDb;
@@ -101,6 +102,22 @@ describe("runner", () => {
     await runner.stop();
     expect(calls).toBeGreaterThan(1);
     expect(logged().some((l) => l.msg === "monitor tick failed" && l.error === "boom")).toBe(true);
+  });
+
+  it("requires STATUS_PUBLIC_URL in production only", () => {
+    const env = (e: Record<string, string>) => e as unknown as NodeJS.ProcessEnv;
+    expect(bootConfigProblems(env({ NODE_ENV: "production" }))[0]).toMatch(
+      /STATUS_PUBLIC_URL is required/,
+    );
+    expect(
+      bootConfigProblems(env({ NODE_ENV: "production", STATUS_PUBLIC_URL: "https://s.test" })),
+    ).toEqual([]);
+    expect(bootConfigProblems(env({ NODE_ENV: "development" }))).toEqual([]);
+    expect(publicBase(env({ NODE_ENV: "test" }))).toBe("http://localhost:3140");
+    expect(() => publicBase(env({ NODE_ENV: "production" }))).toThrow(/STATUS_PUBLIC_URL/);
+    expect(publicBase(env({ NODE_ENV: "production", STATUS_PUBLIC_URL: "https://s.test/" }))).toBe(
+      "https://s.test",
+    );
   });
 
   it("boot honours STATUS_RUNNER=off", async () => {

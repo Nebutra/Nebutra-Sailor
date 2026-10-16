@@ -130,6 +130,21 @@ export function startRunner(db: StatusDb, options: RunnerOptions = {}): Runner {
   };
 }
 
+/**
+ * Settings the instance cannot run correctly without. In production, links in
+ * notifications, feeds and compat payloads must name the public origin; a
+ * localhost fallback there would mail customers dead links.
+ */
+export function bootConfigProblems(env: NodeJS.ProcessEnv = process.env): string[] {
+  const problems: string[] = [];
+  if (env.NODE_ENV === "production" && !env.STATUS_PUBLIC_URL?.trim()) {
+    problems.push(
+      "STATUS_PUBLIC_URL is required in production (the public origin, e.g. https://status.example.com)",
+    );
+  }
+  return problems;
+}
+
 /** Boot sequence, called once from instrumentation.ts in the Node runtime. */
 export async function boot(
   db: StatusDb,

@@ -242,7 +242,7 @@ RFC 3339 时间、Go 默认的 HTML 安全转义都一致。小芽 `scripts/depl
 | `STATUS_SETUP_TOKEN` | 创建第一个 owner 的一次性口令；不设置则关闭初始化 |
 | `STATUS_CONFIG_FILE` | 启动时应用的配置文件路径；出错只记日志，不阻止启动 |
 | `STATUS_RUNNER` | `off` 关闭进程内监控（例如只做只读副本） |
-| `STATUS_PUBLIC_URL` | 公网 origin；默认页链接为 `<origin>/status`，其他页为 `<origin>/p/<slug>` |
+| `STATUS_PUBLIC_URL` | 公网 origin（生产环境必填，缺失则启动时报错退出；通知、订阅源、兼容输出的链接都以它为准）；默认页链接为 `<origin>/status`，其他页为 `<origin>/p/<slug>` |
 | `STATUS_DEFAULT_PAGE` | `/` 与 `/status` 展示的页面 slug |
 | `STATUS_COMPAT_ROOT` | `xiaoya-v1`：在 `/api/v1/status` 输出该兼容形状（需配合 `STATUS_DEFAULT_PAGE`） |
 | `STATUS_SMTP_URL` | 例如 `smtps://user:pass@smtp.example.com:465`；与 `STATUS_MAIL_FROM` 都设置时才开放邮件订阅 |

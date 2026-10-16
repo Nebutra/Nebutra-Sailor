@@ -40,9 +40,12 @@ export function backoffMs(attempts: number): number {
 
 // ── Links ───────────────────────────────────────────────────────────────────
 
+/** The public origin. The localhost fallback exists for dev and tests only; production refuses to boot without it. */
 export function publicBase(env: NodeJS.ProcessEnv = process.env): string {
   const configured = env.STATUS_PUBLIC_URL?.trim().replace(/\/+$/, "");
-  return configured || `http://localhost:${env.PORT ?? "3140"}`;
+  if (configured) return configured;
+  if (env.NODE_ENV === "production") throw new Error("STATUS_PUBLIC_URL is not set");
+  return `http://localhost:${env.PORT ?? "3140"}`;
 }
 
 function pageUrl(slug: string): string {

@@ -36,8 +36,9 @@ services:
       # Required once, to create the first owner; unset it afterwards.
       STATUS_SETUP_TOKEN: ${STATUS_SETUP_TOKEN:-}
       STATUS_CONFIG_FILE: /config/status.config.json
-      # The public origin, e.g. https://status.example.com (feeds and compat payloads link to it).
-      STATUS_PUBLIC_URL: ${STATUS_PUBLIC_URL:-}
+      # The public origin, e.g. https://status.example.com. Required: notifications,
+      # feeds and compat payloads link to it. Set it for anything but a local trial.
+      STATUS_PUBLIC_URL: ${STATUS_PUBLIC_URL:-http://localhost:3140}
       # The page served at / and /status.
       STATUS_DEFAULT_PAGE: ${STATUS_DEFAULT_PAGE:-}
       # Set to xiaoya-v1 to serve that legacy shape at /api/v1/status.
