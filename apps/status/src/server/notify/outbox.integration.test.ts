@@ -41,10 +41,10 @@ const now = new Date("2026-10-16T08:00:00.000Z");
 
 function fakeTransport(fail?: (target: string) => Error | null): Transport & {
   posts: Array<{ url: string; body: Record<string, unknown> }>;
-  mails: Array<{ to: string; subject: string; text: string }>;
+  mails: Array<{ to: string; subject: string; text: string; listUnsubscribe: string }>;
 } {
   const posts: Array<{ url: string; body: Record<string, unknown> }> = [];
-  const mails: Array<{ to: string; subject: string; text: string }> = [];
+  const mails: Array<{ to: string; subject: string; text: string; listUnsubscribe: string }> = [];
   return {
     posts,
     mails,
@@ -60,10 +60,10 @@ function fakeTransport(fail?: (target: string) => Error | null): Transport & {
       posts.push({ url, body: JSON.parse(String(init?.body)) });
       return new Response(url.includes("slack") ? "ok" : '{"code":0}');
     }) as typeof fetch,
-    sendMail: async (to, message) => {
+    sendMail: async (to, message, listUnsubscribe) => {
       const error = fail?.(to);
       if (error) throw error;
-      mails.push({ to, subject: message.subject, text: message.text });
+      mails.push({ to, subject: message.subject, text: message.text, listUnsubscribe });
     },
   };
 }
@@ -127,7 +127,14 @@ describe("subscribe", () => {
     expect(transport.mails[0]?.to).toBe("a@acme.test");
     const token = /token=([\w-]+)/.exec(transport.mails[0]?.text ?? "")?.[1] ?? "";
     expect(transport.mails[0]?.text).toContain(
-      "https://status.acme.test/api/v1/subscriptions/confirm?token=",
+      "https://status.acme.test/subscriptions/confirm?token=",
+    );
+    // People click through to the styled page; mail clients one-click POST to the API.
+    expect(transport.mails[0]?.text).toContain(
+      "https://status.acme.test/subscriptions/unsubscribe?token=",
+    );
+    expect(transport.mails[0]?.listUnsubscribe).toMatch(
+      /^https:\/\/status\.acme\.test\/api\/v1\/subscriptions\/unsubscribe\?token=/,
     );
 
     await createIncident(t.db, page, { title: "Down", message: "Looking." }, now);
@@ -147,7 +154,7 @@ describe("subscribe", () => {
     );
     expect(first.status).toBe("active");
     expect(first.unsubscribeUrl).toMatch(
-      /^https:\/\/status\.acme\.test\/api\/v1\/subscriptions\/unsubscribe\?token=/,
+      /^https:\/\/status\.acme\.test\/subscriptions\/unsubscribe\?token=/,
     );
     await subscribe(t.db, page, { channel: "feishu", target: FEISHU }, now);
     expect(await t.db.subscriber.count()).toBe(1);
@@ -346,18 +353,21 @@ describe("routes", () => {
     expect(await email.json()).not.toHaveProperty("unsubscribeUrl");
 
     const subscriber = await t.db.subscriber.findFirstOrThrow({ where: { channel: "email" } });
+    // Old API links redirect to the styled pages, token carried over.
     const confirm = await confirmRoute(
-      new Request(`https://s/api/v1/subscriptions/confirm?token=${subscriber.token}`, {
-        headers: { "accept-language": "zh-CN" },
-      }),
+      new Request(`https://s/api/v1/subscriptions/confirm?token=${subscriber.token}`),
     );
-    expect(confirm.status).toBe(200);
-    expect(await confirm.text()).toContain("订阅已确认");
-    expect((await confirmRoute(new Request("https://s/c?token=nope"))).status).toBe(404);
+    expect(confirm.status).toBe(303);
+    expect(confirm.headers.get("location")).toBe(
+      `/subscriptions/confirm?token=${subscriber.token}`,
+    );
 
     const url = `https://s/api/v1/subscriptions/unsubscribe?token=${subscriber.token}`;
     const form = await unsubForm(new Request(url));
-    expect(await form.text()).toContain('method="post"');
+    expect(form.status).toBe(303);
+    expect(form.headers.get("location")).toBe(
+      `/subscriptions/unsubscribe?token=${subscriber.token}`,
+    );
     expect(
       (await t.db.subscriber.findUniqueOrThrow({ where: { id: subscriber.id } })).unsubscribedAt,
     ).toBeNull();
@@ -371,6 +381,7 @@ describe("routes", () => {
       }),
     );
     expect(oneClick.status).toBe(200);
+    expect(await oneClick.text()).toContain("unsubscribed");
     expect(
       (await t.db.subscriber.findUniqueOrThrow({ where: { id: subscriber.id } })).unsubscribedAt,
     ).not.toBeNull();

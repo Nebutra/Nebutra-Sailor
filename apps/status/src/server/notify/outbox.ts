@@ -58,12 +58,23 @@ function incidentUrl(slug: string, id: string): string {
   return `${publicBase()}/p/${encodeURIComponent(slug)}/incidents/${encodeURIComponent(id)}`;
 }
 
+/** The styled unsubscribe page; people land here from every notice. */
 function unsubscribeUrl(token: string): string {
+  return `${publicBase()}/subscriptions/unsubscribe?token=${token}`;
+}
+
+/** RFC 8058 one-click target: mail clients POST here without a page. */
+function oneClickUrl(token: string): string {
   return `${publicBase()}/api/v1/subscriptions/unsubscribe?token=${token}`;
 }
 
+/** The styled confirmation page, which confirms on open. */
 function confirmUrl(token: string): string {
-  return `${publicBase()}/api/v1/subscriptions/confirm?token=${token}`;
+  return `${publicBase()}/subscriptions/confirm?token=${token}`;
+}
+
+function unsubscribeLinks(token: string) {
+  return { unsubscribeUrl: unsubscribeUrl(token), oneClickUrl: oneClickUrl(token) };
 }
 
 // ── Subscribing ─────────────────────────────────────────────────────────────
@@ -180,7 +191,7 @@ export async function subscribe(
     const notice: Notice = {
       event,
       page: { slug: pageRow.slug, title: pageRow.title, url: pageUrl(pageRow.slug) },
-      unsubscribeUrl: unsubscribeUrl(subscriber.token),
+      ...unsubscribeLinks(subscriber.token),
       ...(email ? { confirmUrl: confirmUrl(subscriber.token) } : {}),
     };
     await db.delivery.create({
@@ -337,7 +348,7 @@ export async function enqueueIncident(
           event,
           page: { slug: page.slug, title: page.title, url: pageUrl(page.slug) },
           incident: incidentNotice(page, incident, locale),
-          unsubscribeUrl: unsubscribeUrl(s.token),
+          ...unsubscribeLinks(s.token),
         };
         return {
           workspaceId: page.workspaceId,
@@ -437,7 +448,7 @@ export async function enqueueComponentChanges(
             to: state,
             checkedAt: c.verdict.checkedAt?.toISOString() ?? null,
           },
-          unsubscribeUrl: unsubscribeUrl(token),
+          ...unsubscribeLinks(token),
         }),
         null,
         now,

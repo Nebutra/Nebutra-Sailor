@@ -1,35 +1,25 @@
 /**
- * The two tiny HTML pages a subscriber sees from an email link: the result of
- * confirming or unsubscribing, and the unsubscribe button. Self-contained, in
- * the browser's language, no app chrome.
+ * API-side responses for subscription links: the result of a one-click
+ * unsubscribe POST, and redirects from old API links to the styled pages at
+ * /subscriptions/confirm and /subscriptions/unsubscribe.
  */
 import { langOf } from "./messages";
 
-type Result = "confirmed" | "unsubscribed" | "invalid";
+type Result = "unsubscribed" | "invalid";
 
 const COPY = {
   zh: {
-    confirmed: "订阅已确认。之后的事故与维护通知会发到你的邮箱。",
     unsubscribed: "已退订，不会再收到通知。",
     invalid: "链接无效或已过期。",
-    ask: "确定退订这些状态通知吗？",
-    button: "退订",
   },
   en: {
-    confirmed: "Subscription confirmed. Incident and maintenance notices will reach your inbox.",
     unsubscribed: "You are unsubscribed and will receive no more notices.",
     invalid: "This link is invalid or has expired.",
-    ask: "Unsubscribe from these status notifications?",
-    button: "Unsubscribe",
   },
 };
 
 function lang(request: Request) {
   return langOf(request.headers.get("accept-language"));
-}
-
-function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 }
 
 function html(lang: "zh" | "en", body: string, status: number): Response {
@@ -45,12 +35,12 @@ export function resultPage(request: Request, result: Result, status: number): Re
   return html(l, `<p>${COPY[l][result]}</p>`, status);
 }
 
-export function unsubscribeForm(request: Request, token: string): Response {
-  const l = lang(request);
-  if (!token) return resultPage(request, "invalid", 404);
-  return html(
-    l,
-    `<p>${COPY[l].ask}</p><form method="post"><input data-allow-native type="hidden" name="token" value="${escapeHtml(token)}"><button type="submit">${COPY[l].button}</button></form>`,
-    200,
-  );
+/** 303 to a styled page on this instance, carrying the token over. */
+export function pageRedirect(request: Request, path: string): Response {
+  const token = new URL(request.url).searchParams.get("token") ?? "";
+  const location = `${path}?token=${encodeURIComponent(token)}`;
+  return new Response(null, {
+    status: 303,
+    headers: { location, "cache-control": "no-store" },
+  });
 }

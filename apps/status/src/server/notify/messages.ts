@@ -39,7 +39,10 @@ export interface Notice {
   component?: { key: string; name: string; from: string; to: string; checkedAt: string | null };
   /** Email confirmation. */
   confirmUrl?: string;
+  /** The unsubscribe page people click through to. */
   unsubscribeUrl: string;
+  /** RFC 8058 one-click target for mail clients (List-Unsubscribe); defaults to unsubscribeUrl. */
+  oneClickUrl?: string;
 }
 
 export interface EmailMessage {
@@ -373,7 +376,11 @@ export function render(n: Notice, channel: Channel, locale: string | null): Rend
   const p = parts(n, lang);
   switch (channel) {
     case "email":
-      return { channel, email: email(p, n, lang), unsubscribeUrl: n.unsubscribeUrl };
+      return {
+        channel,
+        email: email(p, n, lang),
+        unsubscribeUrl: n.oneClickUrl ?? n.unsubscribeUrl,
+      };
     case "feishu":
       return { channel, body: feishu(p, n, lang) };
     case "dingtalk":

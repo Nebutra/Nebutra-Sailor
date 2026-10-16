@@ -1,11 +1,11 @@
 /**
- * Unsubscribe by token. GET shows a button rather than acting, because mail
- * scanners follow links; POST acts — including RFC 8058 one-click
- * (`List-Unsubscribe=One-Click`) from mail clients.
+ * Unsubscribe by token. POST acts: it is the RFC 8058 one-click target
+ * (`List-Unsubscribe=One-Click`) mail clients use. GET redirects to the styled
+ * page, which asks before acting because mail scanners follow links.
  */
 import { getDb } from "@/server/db";
 import { unsubscribe } from "@/server/notify/outbox";
-import { resultPage, unsubscribeForm } from "@/server/notify/pages";
+import { pageRedirect, resultPage } from "@/server/notify/pages";
 
 export const runtime = "nodejs";
 
@@ -19,7 +19,7 @@ function tokenOf(request: Request, form?: FormData | null): string {
 }
 
 export async function GET(request: Request) {
-  return unsubscribeForm(request, tokenOf(request));
+  return pageRedirect(request, "/subscriptions/unsubscribe");
 }
 
 export async function POST(request: Request) {
