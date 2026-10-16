@@ -4,31 +4,39 @@
  * The 90-day strip. One cell per UTC day; a day with no readings is muted and
  * named as such — history is never invented.
  *
- * - Every cell is a button with its own accessible name (date, state, uptime).
- * - Roving focus: Tab enters on today, arrows move, Home/End jump, Escape closes.
- * - Hover, focus and tap all open the same day card; its links stay reachable
- *   by Tab because focus moving into the card keeps it open.
+ * The day card is a portaled, collision-aware floating card (Base UI's
+ * tooltip positioner — the layer @nebutra/ui is built on — with no focus
+ * management of its own, so it cannot fight the strip's roving focus),
+ * anchored to the day it describes: it flips below
+ * when there is no room above, shifts to stay inside the viewport, and points
+ * at its day with an arrow. It never sits in the page flow, so the rows after
+ * it cannot paint over it.
+ *
+ * - Pointer: hover or focus opens; leaving the strip and the card closes.
+ * - Touch: tap opens, tap elsewhere, Escape or scrolling closes.
+ * - One card is open on the whole page at a time.
+ * - Keyboard: Tab enters on today, arrows move, Home/End jump, Escape closes;
+ *   Tab from a day with incidents moves into the card's links, and leaving
+ *   the card returns focus to the day.
+ * - Every cell is a button with its own accessible name.
  * - Below 640px the strip shows the last 30 days so each cell stays tappable.
- * - Geometry follows incident.io: 16px cells, 2px gaps, no per-row axis captions
- *   (the range is stated once, in the card header).
  */
+import { Tooltip } from "@base-ui/react/tooltip";
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
-import {
-  type CSSProperties,
-  type KeyboardEvent,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
+import { type KeyboardEvent, useCallback, useEffect, useId, useRef, useState } from "react";
 import { formatDayKey, formatLatency, formatUptime } from "@/lib/format";
 import type { AppLocale } from "@/lib/locale";
 import type { BarDay } from "@/lib/view";
 import { impactFill, stateFill } from "./state-style";
 
 const MOBILE_DAYS = 30;
+const HOVER_CLOSE_MS = 120;
+
+type OpenedBy = "hover" | "focus" | "tap";
+
+/** The page-wide "one card open" rule: opening a card closes the previous one. */
+let closeOpenCard: (() => void) | null = null;
 
 export function UptimeBar({
   days,
@@ -47,9 +55,75 @@ export function UptimeBar({
   const ts = useTranslations("state");
   const id = useId();
   const [active, setActive] = useState<number | null>(null);
+  const openedBy = useRef<OpenedBy | null>(null);
+  /** Focus coming back from a closed card must not reopen it. */
+  const returningFocus = useRef(false);
+  const lastPointer = useRef<string>("mouse");
+  /** Between pointerdown and click: the click decides, focus must not. */
+  const pressing = useRef(false);
+  /** When a non-mouse pointer last arrived on a cell: focus right after it is a tap. */
+  const touchedAt = useRef(0);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cells = useRef<Array<HTMLButtonElement | null>>([]);
-  const wrapper = useRef<HTMLDivElement | null>(null);
+  const popup = useRef<HTMLDivElement | null>(null);
+  const strip = useRef<HTMLFieldSetElement | null>(null);
   const mobileStart = Math.max(0, days.length - MOBILE_DAYS);
+
+  const cancelClose = useCallback(() => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = null;
+  }, []);
+
+  const close = useCallback(() => {
+    cancelClose();
+    openedBy.current = null;
+    setActive(null);
+  }, [cancelClose]);
+
+  const open = useCallback(
+    (index: number, by: OpenedBy) => {
+      cancelClose();
+      if (closeOpenCard && closeOpenCard !== close) closeOpenCard();
+      closeOpenCard = close;
+      openedBy.current = by;
+      setActive(index);
+    },
+    [close, cancelClose],
+  );
+
+  useEffect(
+    () => () => {
+      cancelClose();
+      if (closeOpenCard === close) closeOpenCard = null;
+    },
+    [close, cancelClose],
+  );
+
+  // A card opened by touch closes when the page scrolls under it.
+  useEffect(() => {
+    if (active === null || openedBy.current !== "tap") return;
+    const onScroll = () => close();
+    window.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    return () => window.removeEventListener("scroll", onScroll, { capture: true });
+  }, [active, close]);
+
+  // A tap anywhere outside the strip and its card closes a tapped card.
+  useEffect(() => {
+    if (active === null || openedBy.current !== "tap") return;
+    const onDown = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (strip.current?.contains(target) || popup.current?.contains(target)) return;
+      close();
+    };
+    document.addEventListener("pointerdown", onDown, true);
+    return () => document.removeEventListener("pointerdown", onDown, true);
+  }, [active, close]);
+
+  const scheduleClose = () => {
+    if (openedBy.current !== "hover") return;
+    cancelClose();
+    closeTimer.current = setTimeout(close, HOVER_CLOSE_MS);
+  };
 
   const focusCell = useCallback(
     (index: number) => {
@@ -57,10 +131,12 @@ export function UptimeBar({
       const min = wide ? 0 : mobileStart;
       const next = Math.max(min, Math.min(days.length - 1, index));
       cells.current[next]?.focus();
-      setActive(next);
+      open(next, "focus");
     },
-    [days.length, mobileStart],
+    [days.length, mobileStart, open],
   );
+
+  const firstLink = () => popup.current?.querySelector<HTMLAnchorElement>("a[href]") ?? null;
 
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     const moves: Record<string, number> = {
@@ -75,25 +151,38 @@ export function UptimeBar({
       event.preventDefault();
       focusCell(moves[event.key] as number);
     } else if (event.key === "Escape") {
-      setActive(null);
+      close();
+    } else if (event.key === "Tab" && !event.shiftKey && active === index) {
+      const link = firstLink();
+      if (link) {
+        event.preventDefault();
+        link.focus();
+      }
     }
   };
 
-  // Leaving the strip and its card — by pointer or by focus — closes the card.
-  useEffect(() => {
-    const el = wrapper.current;
-    if (!el) return;
-    const leave = () => setActive(null);
-    const blur = (event: FocusEvent) => {
-      if (!el.contains(event.relatedTarget as Node | null)) setActive(null);
-    };
-    el.addEventListener("mouseleave", leave);
-    el.addEventListener("focusout", blur);
-    return () => {
-      el.removeEventListener("mouseleave", leave);
-      el.removeEventListener("focusout", blur);
-    };
-  }, []);
+  // Tabbing out of the card, either end, hands focus back to its day.
+  const onPopupKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (active === null) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      const cell = cells.current[active];
+      close();
+      returningFocus.current = true;
+      cell?.focus();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const links = Array.from(popup.current?.querySelectorAll<HTMLAnchorElement>("a[href]") ?? []);
+    const edge = event.shiftKey ? links[0] : links.at(-1);
+    if (document.activeElement === edge) {
+      event.preventDefault();
+      const cell = cells.current[active];
+      close();
+      returningFocus.current = true;
+      cell?.focus();
+    }
+  };
 
   const cellLabel = (day: BarDay) => {
     const date = formatDayKey(day.date, locale);
@@ -109,10 +198,18 @@ export function UptimeBar({
 
   const known = days.filter((d) => d.state !== "no_data").length;
   const current = active === null ? null : (days[active] ?? null);
+  const anchor = active === null ? null : (cells.current[active] ?? null);
 
   return (
-    <div ref={wrapper} className="relative">
-      <fieldset className="m-0 min-w-0 border-0 p-0">
+    <Tooltip.Root
+      open={current !== null}
+      // Opening and closing are this component's own decisions (hover, focus,
+      // tap, Escape, outside press, scroll); the primitive only positions.
+      onOpenChange={(next, details) => {
+        if (!next && details.reason === "escape-key") close();
+      }}
+    >
+      <fieldset ref={strip} className="m-0 min-w-0 border-0 p-0" onPointerLeave={scheduleClose}>
         <legend className="sr-only">
           {label}. {t("summary", { days: days.length, known })}
         </legend>
@@ -132,9 +229,44 @@ export function UptimeBar({
                 "relative min-w-0 flex-1 rounded-[1px] focus-visible:z-10",
                 index < mobileStart && "max-sm:hidden",
               )}
-              onMouseEnter={() => setActive(index)}
-              onFocus={() => setActive(index)}
-              onClick={() => setActive((a) => (a === index ? null : index))}
+              onPointerDown={(event) => {
+                lastPointer.current = event.pointerType;
+                pressing.current = true;
+              }}
+              onPointerUp={() => {
+                // The click (if any) runs first; a press that never clicks is forgotten.
+                setTimeout(() => {
+                  pressing.current = false;
+                }, 0);
+              }}
+              onPointerCancel={() => {
+                pressing.current = false;
+              }}
+              onPointerEnter={(event) => {
+                lastPointer.current = event.pointerType;
+                if (event.pointerType === "mouse") open(index, "hover");
+                else touchedAt.current = Date.now();
+              }}
+              onFocus={() => {
+                if (returningFocus.current) {
+                  returningFocus.current = false;
+                  return;
+                }
+                if (pressing.current) return;
+                // A touch focuses the cell just before its click; the click decides.
+                if (Date.now() - touchedAt.current < 600) return;
+                if (active !== index) open(index, "focus");
+              }}
+              onBlur={(event) => {
+                const to = event.relatedTarget as Node | null;
+                if (openedBy.current === "focus" && !popup.current?.contains(to)) close();
+              }}
+              onClick={() => {
+                pressing.current = false;
+                if (lastPointer.current === "mouse") return;
+                if (active === index && openedBy.current === "tap") close();
+                else open(index, "tap");
+              }}
               onKeyDown={(event) => onKeyDown(event, index)}
             >
               <span
@@ -149,58 +281,47 @@ export function UptimeBar({
           ))}
         </div>
       </fieldset>
-      {current && active !== null ? (
-        <DayCard
-          id={`${id}-card`}
-          day={current}
-          index={active}
-          count={days.length}
-          mobileStart={mobileStart}
-          locale={locale}
-          incidentHref={incidentHref}
-        />
+      {current && anchor ? (
+        <Tooltip.Portal>
+          <Tooltip.Positioner
+            anchor={anchor}
+            side="top"
+            align="center"
+            sideOffset={8}
+            collisionPadding={12}
+            className="z-50"
+          >
+            <Tooltip.Popup
+              ref={popup}
+              id={`${id}-card`}
+              onPointerEnter={cancelClose}
+              onPointerLeave={scheduleClose}
+              onKeyDown={onPopupKeyDown}
+              className="w-64 max-w-[calc(100vw-1.5rem)] rounded-lg border border-border bg-popover p-3 text-left text-popover-foreground shadow-ambient-lg outline-none motion-safe:transition-opacity motion-safe:duration-100 data-[ending-style]:opacity-0 data-[starting-style]:opacity-0"
+            >
+              <Tooltip.Arrow className="size-2.5 rotate-45 border-border bg-popover data-[side=bottom]:-top-[5px] data-[side=bottom]:border-l data-[side=bottom]:border-t data-[side=top]:-bottom-[5px] data-[side=top]:border-b data-[side=top]:border-r" />
+              <DayCardBody day={current} locale={locale} incidentHref={incidentHref} />
+            </Tooltip.Popup>
+          </Tooltip.Positioner>
+        </Tooltip.Portal>
       ) : null}
-    </div>
+    </Tooltip.Root>
   );
 }
 
-function DayCard({
-  id,
+function DayCardBody({
   day,
-  index,
-  count,
-  mobileStart,
   locale,
   incidentHref,
 }: {
-  id: string;
   day: BarDay;
-  index: number;
-  count: number;
-  mobileStart: number;
   locale: AppLocale;
   incidentHref: string;
 }) {
   const t = useTranslations("bar");
   const ts = useTranslations("state");
-  const wide = ((index + 0.5) / count) * 100;
-  const narrow = ((index - mobileStart + 0.5) / (count - mobileStart)) * 100;
   return (
-    <div
-      id={id}
-      role="tooltip"
-      style={
-        {
-          "--card-x": `${wide}%`,
-          "--card-x-sm": `${Math.max(0, narrow)}%`,
-        } as CSSProperties
-      }
-      className={cn(
-        "absolute bottom-full z-20 mb-2 w-64 max-w-[calc(100vw-2rem)] rounded-lg border border-border bg-background p-3 text-left shadow-ambient-lg",
-        "left-[clamp(0%,calc(var(--card-x-sm)-8rem),calc(100%-16rem))]",
-        "sm:left-[clamp(0%,calc(var(--card-x)-8rem),calc(100%-16rem))]",
-      )}
-    >
+    <>
       <div className="flex items-baseline justify-between gap-2">
         <p className="text-xs font-medium text-foreground">{formatDayKey(day.date, locale)}</p>
         {day.uptime !== null ? (
@@ -247,6 +368,6 @@ function DayCard({
           )}
         </>
       )}
-    </div>
+    </>
   );
 }

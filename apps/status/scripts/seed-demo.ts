@@ -50,8 +50,20 @@ async function main() {
     ],
     components: [
       { key: "website", name: "官网", nameI18n: { en: "Website" } },
-      { key: "login", name: "登录与注册", nameI18n: { en: "Sign-in" }, group: "app" },
-      { key: "api", name: "开放 API", nameI18n: { en: "Public API" }, group: "app" },
+      {
+        key: "login",
+        name: "登录与注册",
+        nameI18n: { en: "Sign-in" },
+        description: "账号登录、注册与短信验证码。由每 5 分钟一次的合成用户旅程验证。",
+        group: "app",
+      },
+      {
+        key: "api",
+        name: "开放 API",
+        nameI18n: { en: "Public API" },
+        description: "REST 与流式接口，含鉴权与限流。",
+        group: "app",
+      },
       { key: "console", name: "控制台", nameI18n: { en: "Console" }, group: "app" },
       { key: "chat", name: "对话模型", nameI18n: { en: "Chat models" }, group: "ai" },
       { key: "images", name: "图像生成", nameI18n: { en: "Image generation" }, group: "ai" },
