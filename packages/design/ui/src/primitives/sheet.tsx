@@ -7,6 +7,7 @@ import * as React from "react";
 import { overlayClassNames, overlayTokens, overlayZIndex } from "../tokens/components/overlay";
 import { sheetTokens } from "../tokens/components/sheet";
 import { cn } from "../utils/cn";
+import { resolveLazyChild } from "../utils/lazy-child";
 import { rendersNativeButton } from "../utils/native-button";
 import { asPlainStyle } from "../utils/primitive-props";
 
@@ -80,10 +81,11 @@ export type SheetTriggerProps = React.ComponentPropsWithoutRef<typeof BaseDialog
 
 const SheetTrigger = ({
   asChild,
-  children,
+  children: rawChildren,
   ref,
   ...props
 }: SheetTriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const children = resolveLazyChild(rawChildren);
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseDialog.Trigger
@@ -109,10 +111,11 @@ export type SheetCloseProps = React.ComponentPropsWithoutRef<typeof BaseDialog.C
 
 const SheetClose = ({
   asChild,
-  children,
+  children: rawChildren,
   ref,
   ...props
 }: SheetCloseProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const children = resolveLazyChild(rawChildren);
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseDialog.Close

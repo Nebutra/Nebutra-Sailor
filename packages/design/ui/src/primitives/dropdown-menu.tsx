@@ -5,6 +5,7 @@ import { Check, ChevronRight, Status as Circle } from "@nebutra/icons";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { resolveLazyChild } from "../utils/lazy-child";
 import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
 
@@ -67,11 +68,12 @@ type DropdownMenuTriggerProps = React.ComponentProps<typeof BaseMenu.Trigger> & 
 
 const DropdownMenuTrigger = ({
   asChild,
-  children,
+  children: rawChildren,
   render,
   ref,
   ...props
 }: DropdownMenuTriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const children = resolveLazyChild(rawChildren);
   const context = React.use(DropdownMenuContext);
   function openFromTrigger() {
     context?.setOpen(true);

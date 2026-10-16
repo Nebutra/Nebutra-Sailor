@@ -6,6 +6,7 @@ import * as React from "react";
 import { interaction } from "../tokens/components/interaction";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { resolveLazyChild } from "../utils/lazy-child";
 
 /* -------------------------------------------------------------------------- *\
  *  Tooltip — Base UI tooltip wrapper, used across the design system.
@@ -125,12 +126,13 @@ const Tooltip = ({
 
 const TooltipTrigger = ({
   asChild,
-  children,
+  children: rawChildren,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseTooltip.Trigger> & { asChild?: boolean } & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
+  const children = resolveLazyChild(rawChildren);
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseTooltip.Trigger

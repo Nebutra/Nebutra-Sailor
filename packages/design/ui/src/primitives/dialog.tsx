@@ -5,6 +5,7 @@ import { Cross as X } from "@nebutra/icons";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { resolveLazyChild } from "../utils/lazy-child";
 import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
 import { UiLabelText } from "./ui-labels";
@@ -15,12 +16,13 @@ const DialogPortal = BaseDialog.Portal;
 
 const DialogTrigger = ({
   asChild,
-  children,
+  children: rawChildren,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseDialog.Trigger> & { asChild?: boolean } & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
+  const children = resolveLazyChild(rawChildren);
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseDialog.Trigger
@@ -41,12 +43,13 @@ DialogTrigger.displayName = "DialogTrigger";
 
 const DialogClose = ({
   asChild,
-  children,
+  children: rawChildren,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseDialog.Close> & { asChild?: boolean } & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
+  const children = resolveLazyChild(rawChildren);
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseDialog.Close

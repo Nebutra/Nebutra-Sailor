@@ -4,6 +4,7 @@ import { AlertDialog as BaseAlertDialog } from "@base-ui/react/alert-dialog";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { resolveLazyChild } from "../utils/lazy-child";
 import { rendersNativeButton } from "../utils/native-button";
 import { buttonVariants } from "./button-variants";
 
@@ -12,12 +13,13 @@ const AlertDialogPortal = BaseAlertDialog.Portal;
 
 const AlertDialogTrigger = ({
   asChild,
-  children,
+  children: rawChildren,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & { asChild?: boolean } & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
+  const children = resolveLazyChild(rawChildren);
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseAlertDialog.Trigger
@@ -119,12 +121,13 @@ AlertDialogDescription.displayName = "AlertDialogDescription";
 const AlertDialogAction = ({
   className,
   asChild,
-  children,
+  children: rawChildren,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { asChild?: boolean } & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
+  const children = resolveLazyChild(rawChildren);
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseAlertDialog.Close
@@ -148,12 +151,13 @@ AlertDialogAction.displayName = "AlertDialogAction";
 const AlertDialogCancel = ({
   className,
   asChild,
-  children,
+  children: rawChildren,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { asChild?: boolean } & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
+  const children = resolveLazyChild(rawChildren);
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseAlertDialog.Close

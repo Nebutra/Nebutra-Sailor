@@ -74,10 +74,11 @@ const NEBUTRA_ROUTES = [
   },
   {
     path: "/sailor",
-    h1: "Sailor",
-    text: ["Run your startup on Sailor.", "npx create-sailor"],
+    // The hero leads with the positioning line (42651daa9), not the name.
+    h1: "Skip to production",
+    text: ["Skip to production.", "Sailor", "npx create-sailor"],
   },
-  { path: "/ja/sailor", h1: "Sailor", text: ["npx create-sailor"] },
+  { path: "/ja/sailor", h1: "Skip to production", text: ["Sailor", "npx create-sailor"] },
   { path: "/about", text: [] },
   { path: "/building", text: [] },
   { path: "/licensing", text: [] },

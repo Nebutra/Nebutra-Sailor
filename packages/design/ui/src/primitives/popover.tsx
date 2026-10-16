@@ -2,6 +2,7 @@ import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { resolveLazyChild } from "../utils/lazy-child";
 import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
 
@@ -13,7 +14,8 @@ type PopoverTriggerProps = React.ComponentProps<typeof PopoverPrimitive.Trigger>
   asChild?: boolean;
 };
 
-function PopoverTrigger({ asChild, children, render, ...props }: PopoverTriggerProps) {
+function PopoverTrigger({ asChild, children: rawChildren, render, ...props }: PopoverTriggerProps) {
+  const children = resolveLazyChild(rawChildren);
   const renderElement: PopoverPrimitive.Trigger.Props["render"] =
     asChild && React.isValidElement(children) ? children : render;
   return (

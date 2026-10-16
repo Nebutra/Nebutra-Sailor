@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { resolveLazyChild } from "./lazy-child";
 
 export interface SlotProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
@@ -16,7 +17,7 @@ export const Slot = React.forwardRef<HTMLElement, SlotProps>(
     // when children is a single-element array, fragment, or a string. Prerender
     // pipelines sometimes wrap JSX children in arrays of length 1, which passes
     // React.Children.count(=== 1) but trips React.Children.only.
-    const childArray = React.Children.toArray(children);
+    const childArray = React.Children.toArray(resolveLazyChild(children));
     const child = childArray.length === 1 ? childArray[0] : null;
 
     if (child == null || !React.isValidElement(child)) {
