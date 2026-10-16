@@ -32,7 +32,9 @@ afterEach(() => {
   process.env = { ...ORIGINAL_ENV };
 });
 
-describe("createAuth({ provider: 'better-auth' })", () => {
+// The first init imports every real plugin module cold; on a CI runner that
+// takes longer than vitest's 5 s default.
+describe("createAuth({ provider: 'better-auth' })", { timeout: 60_000 }, () => {
   it("resolves with capabilities probed from the mounted plugins", async () => {
     const { createAuth } = await import("../../server");
     const auth = await createAuth({ provider: "better-auth", options: { prisma: {} } });
