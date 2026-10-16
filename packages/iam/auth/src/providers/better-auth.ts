@@ -157,7 +157,9 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
   // ── Lazy auth instance ──
   // We defer creation until first use so that import-time errors are avoided
   // when the database is not yet available (e.g. during build).
-  let authInstance: Awaited<ReturnType<typeof initAuth>> | null = null;
+  // One in-flight init shared by every caller: two concurrent first calls
+  // used to build two Better Auth instances.
+  let authPromise: ReturnType<typeof initAuth> | null = null;
 
   async function initAuth() {
     if (!secret) {
@@ -432,32 +434,39 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
     }
   }
 
-  async function getAuth() {
-    if (!authInstance) {
-      authInstance = await initAuth();
-    }
-    return authInstance;
-  }
-
-  // Capabilities are cached after the first successful initAuth() so reads are
-  // synchronous. Before init runs we return the all-false default — apps must
-  // tolerate that and re-read after the first server-side call. Storybook /
-  // build-time imports therefore never trip lazy DB resolution just to read
-  // capabilities.
+  // Capabilities are probed from the live instance, so reads stay synchronous.
+  // Until init resolves they are the all-false default. `createAuth()` awaits
+  // the probe below before handing the provider out, so a caller that checks
+  // `capabilities.organizations` right after `await createAuth()` sees the
+  // real answer — the gateway's /organizations/active answered 501 on every
+  // request because it read the default before the fire-and-forget probe
+  // landed.
   let cachedCapabilities: AuthCapabilities = ALL_FALSE_CAPABILITIES;
 
-  // Best-effort eager probe: fire-and-forget so the first network call
-  // doesn't pay the latency cost of init. Failures are intentionally
-  // swallowed — capabilities stays at the safe default and we'll try again
-  // on the next read path that calls getAuth().
-  void (async () => {
-    try {
-      const auth = await getAuth();
-      cachedCapabilities = Object.freeze(probeBetterAuthCapabilities(auth));
-    } catch {
-      // Build/test environments without a DB hit this path — that's fine.
+  function getAuth(): ReturnType<typeof initAuth> {
+    if (!authPromise) {
+      authPromise = initAuth().then(
+        (auth) => {
+          cachedCapabilities = Object.freeze(probeBetterAuthCapabilities(auth));
+          return auth;
+        },
+        (error: unknown) => {
+          // Let the next call retry (e.g. the database came up later).
+          authPromise = null;
+          throw error;
+        },
+      );
     }
-  })();
+    return authPromise;
+  }
+
+  // Eager probe. Failures are swallowed: build/test environments and relying
+  // parties without BETTER_AUTH_SECRET keep the all-false default, and the
+  // next call through getAuth() tries again.
+  const capabilitiesProbed = getAuth().then(
+    () => undefined,
+    () => undefined,
+  );
 
   // Helper used by capability builders to reach the BA api surface.
   async function getApi(): Promise<BetterAuthApi> {
@@ -472,7 +481,7 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
   let twoFactorShape: TwoFactorCapability | undefined;
   let magicLinkShape: MagicLinkCapability | undefined;
 
-  return {
+  const provider: AuthProvider = {
     provider: "better-auth",
 
     get capabilities(): Readonly<AuthCapabilities> {
@@ -857,4 +866,20 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
       );
     },
   };
+  CAPABILITY_PROBES.set(provider, capabilitiesProbed);
+  return provider;
+}
+
+const CAPABILITY_PROBES = new WeakMap<AuthProvider, Promise<void>>();
+
+/**
+ * Create a Better Auth provider whose `capabilities` already reflect the
+ * plugins that mounted. This is what `createAuth()` returns: the documented
+ * `if (auth.capabilities.organizations && auth.organizations)` check is only
+ * truthful once the probe has run.
+ */
+export async function createReadyBetterAuthProvider(config: AuthConfig): Promise<AuthProvider> {
+  const provider = createBetterAuthProvider(config);
+  await CAPABILITY_PROBES.get(provider);
+  return provider;
 }
