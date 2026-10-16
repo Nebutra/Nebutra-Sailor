@@ -135,16 +135,13 @@ function localizedTagHref(lang: string, tag: string): string {
   return `${localizedBlogHref(lang)}/tag/${getBlogUrlSegment(tag)}`;
 }
 
-function getFallbackTopics(isZh: boolean): string[] {
-  return isZh
-    ? ["AI SaaS", "平台工程", "设计系统", "治理"]
-    : ["AI SaaS", "Platform Engineering", "Design System", "Governance"];
-}
-
-function toBlogHeroTopics(tags: string[], lang: string, isZh: boolean): BlogHeroTopic[] {
-  const topics = tags.length > 0 ? tags : getFallbackTopics(isZh);
-
-  return topics.map((topic) => ({
+/**
+ * Topics come only from the tags real posts carry. A tag page answers 404 when
+ * no post has the tag (d3ac1a0e7), so a stand-in topic list would link a new
+ * scaffold's empty blog to four 404s.
+ */
+function toBlogHeroTopics(tags: string[], lang: string): BlogHeroTopic[] {
+  return tags.map((topic) => ({
     href: localizedTagHref(lang, topic),
     label: topic,
   }));
@@ -202,7 +199,7 @@ async function BlogPageLoader({ params }: { params: Promise<{ lang: string }> })
   const blogLanguage = toBlogLanguage(lang);
   const posts = await getCachedAllPosts(blogLanguage);
   const topTags = getTopTags(posts);
-  const heroTopics = toBlogHeroTopics(topTags, lang, isZh);
+  const heroTopics = toBlogHeroTopics(topTags, lang);
   const latestRailPosts = posts.map((post) => toBlogRailPost(post, lang, isZh));
 
   return (
