@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/collab",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Multi-tenant, transport-agnostic real-time collaborative sync layer: tenant-partitioned CRDT rooms (Yjs) with pluggable snapshot store + transport seams",
   "private": false,
   "license": "Apache-2.0",

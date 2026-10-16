@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/ui",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Nebutra design-system UI primitives, patterns, layouts, and token-integrated components",
   "private": false,
   "nebutra": {

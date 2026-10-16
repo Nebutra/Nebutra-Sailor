@@ -1,5 +1,15 @@
 # @nebutra/contracts
 
+## 5.0.0
+
+### Minor Changes
+
+- [`9ced744`](https://github.com/Nebutra/Nebutra-Sailor/commit/9ced744cb57245abd70267a46d93d3347e166e84) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - `NEBUTRA_LOCALE=cn` is now a real runtime switch. `@nebutra/contracts/market` reads it (and `NEXT_PUBLIC_NEBUTRA_LOCALE` on the client, with `NEBUTRA_REGION` / `NEXT_PUBLIC_REGION` kept as aliases). Checkout detection is Creem-first and puts WeChat Pay / Alipay first under `cn`; the legacy Stripe adapter is no longer auto-detected from `STRIPE_SECRET_KEY` and runs only with `BILLING_PROVIDER=stripe`. Every scaffold now ships the mainland compliance pieces (ICP / 公安备案 footer, AIGC disclaimer), switched on at runtime.
+
+### Patch Changes
+
+- [`8c77238`](https://github.com/Nebutra/Nebutra-Sailor/commit/8c772384caec2c5a7cb7f259d397dc73e2df57e3) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Relicense to Apache-2.0. Every package now declares `"license": "Apache-2.0"` and ships the Apache-2.0 LICENSE text (previously MIT). `create-sailor` writes an Apache-2.0 LICENSE and a NOTICE into each generated project and prints `Skip to production.` in its banner. See ADR 2026-10-16 apache-2-relicense.
+
 ## 4.0.1
 
 ## 4.0.0

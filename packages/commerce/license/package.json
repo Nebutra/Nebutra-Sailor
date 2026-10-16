@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/license",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "License domain logic — issuance, validation, and lifecycle events",
   "private": false,
   "license": "Apache-2.0",

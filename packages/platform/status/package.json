@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/status",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "description": "Status and incident core: probes, uptime history, incidents, maintenance, chat notifications",
   "type": "module",

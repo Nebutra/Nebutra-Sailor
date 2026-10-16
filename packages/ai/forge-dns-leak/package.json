@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/forge-dns-leak",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Authoritative DNS leak zone + session API for Nebutra Forge (dnsleaktest-style recursive resolver capture)",
   "private": false,
   "license": "Apache-2.0",
@@ -14,7 +14,7 @@
     "category": "ai",
     "summary": "UDP/TCP53 authority that logs recursive resolvers for unique leak probes; localhost control API for Forge",
     "gaps": [
-      "Requires a delegated authoritative zone \u2014 NS records at the registrar, DNS-only at Cloudflare \u2014 before any probe resolves",
+      "Requires a delegated authoritative zone — NS records at the registrar, DNS-only at Cloudflare — before any probe resolves",
       "Six FORGE_DNS_LEAK_* variables configure the DNS and API listeners; there are no defaults that work off a clean checkout",
       "Sessions are held in an in-process Map, so probe results do not survive a restart or span replicas"
     ]

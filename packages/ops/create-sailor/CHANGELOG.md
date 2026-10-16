@@ -1,5 +1,19 @@
 # create-sailor
 
+## 2.1.0
+
+### Minor Changes
+
+- [`4f7a4df`](https://github.com/Nebutra/Nebutra-Sailor/commit/4f7a4dfbbbf2abf190ad8b6d12bb5255c970393b) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - The finish screen and `.sailor/next-steps.md` now list `pnpm nebutra status` (with `--json` for agents) right after `pnpm dev`. A freshly scaffolded project answers it without a separate build step.
+
+  `npx create-sailor` now installs with pnpm by default. It used to pick npm from the `npx` user agent, and npm cannot resolve the workspace's `catalog:` specifiers (`EUNSUPPORTEDPROTOCOL`); the finish screen then printed `npm install` / `npm dev`. `--pm` still overrides.
+
+### Patch Changes
+
+- [`8c77238`](https://github.com/Nebutra/Nebutra-Sailor/commit/8c772384caec2c5a7cb7f259d397dc73e2df57e3) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Relicense to Apache-2.0. Every package now declares `"license": "Apache-2.0"` and ships the Apache-2.0 LICENSE text (previously MIT). `create-sailor` writes an Apache-2.0 LICENSE and a NOTICE into each generated project and prints `Skip to production.` in its banner. See ADR 2026-10-16 apache-2-relicense.
+
+- [`9ced744`](https://github.com/Nebutra/Nebutra-Sailor/commit/9ced744cb57245abd70267a46d93d3347e166e84) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - `NEBUTRA_LOCALE=cn` is now a real runtime switch. `@nebutra/contracts/market` reads it (and `NEXT_PUBLIC_NEBUTRA_LOCALE` on the client, with `NEBUTRA_REGION` / `NEXT_PUBLIC_REGION` kept as aliases). Checkout detection is Creem-first and puts WeChat Pay / Alipay first under `cn`; the legacy Stripe adapter is no longer auto-detected from `STRIPE_SECRET_KEY` and runs only with `BILLING_PROVIDER=stripe`. Every scaffold now ships the mainland compliance pieces (ICP / 公安备案 footer, AIGC disclaimer), switched on at runtime.
+
 ## 2.0.2
 
 ### Patch Changes

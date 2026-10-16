@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/design-sync",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Provider-agnostic design-tool sync. git-only | design-md | memory.",
   "private": false,
   "license": "Apache-2.0",

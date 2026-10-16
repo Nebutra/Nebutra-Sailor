@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/brand-genesis",
-  "version": "0.2.7",
+  "version": "0.3.0",
   "description": "BrandContext-first play for creating a brand kit from one idea",
   "private": false,
   "license": "Apache-2.0",

@@ -1,5 +1,13 @@
 # @nebutra/admin-tooling
 
+## 4.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`8c77238`](https://github.com/Nebutra/Nebutra-Sailor/commit/8c772384caec2c5a7cb7f259d397dc73e2df57e3)]:
+  - @nebutra/audit@5.0.0
+  - @nebutra/logger@5.0.0
+
 ## 3.0.1
 
 ### Patch Changes

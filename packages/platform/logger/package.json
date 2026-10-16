@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/logger",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Structured logging and OpenTelemetry instrumentation for Nebutra services",
   "private": false,
   "nebutra": {

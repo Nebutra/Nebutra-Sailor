@@ -1,5 +1,18 @@
 # @nebutra/gateway-core
 
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [[`8c77238`](https://github.com/Nebutra/Nebutra-Sailor/commit/8c772384caec2c5a7cb7f259d397dc73e2df57e3), [`b6b494f`](https://github.com/Nebutra/Nebutra-Sailor/commit/b6b494f280a96982f96c8a1d4dce6b7405b154bf), [`9ced744`](https://github.com/Nebutra/Nebutra-Sailor/commit/9ced744cb57245abd70267a46d93d3347e166e84)]:
+  - @nebutra/billing@5.0.0
+  - @nebutra/cache@5.0.0
+  - @nebutra/errors@5.0.0
+  - @nebutra/logger@5.0.0
+  - @nebutra/metering@5.0.0
+  - @nebutra/queue@5.0.0
+  - @nebutra/db@0.1.7
+
 ## 0.1.7
 
 ### Patch Changes
