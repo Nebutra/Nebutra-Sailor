@@ -1406,6 +1406,17 @@
       "emptyDescription": "创建一个工作空间，开始你的旅程。"
     }
   },
+  "navigation": {
+    "orgSwitcher": {
+      "ariaLabel": "切换组织",
+      "current": "当前",
+      "empty": "没有组织",
+      "selectOrg": "选择组织",
+      "create": "创建组织",
+      "switching": "正在切换…",
+      "error": "组织切换失败，请重试。"
+    }
+  },
   "copy": {
     "usagePage": {
       "remainingThisPeriod": "本周期剩余 {value0} {unit}",
@@ -1580,6 +1591,8 @@
       "level": "等级 {id} · {title}",
       "active": "已生效",
       "moreToUnlock": "再邀请 {remaining} 人即可解锁",
+      "claimedInvites": "已领取的邀请",
+      "level2": "等级",
       "levels": {
         "l0": {
           "title": "创作者",
@@ -1597,8 +1610,6 @@
           "description": "有五十位好友通过你的邀请码加入后达成。"
         }
       },
-      "claimedInvites": "已领取的邀请",
-      "level2": "等级",
       "failedToLoadReferrals": "邀请信息加载失败。",
       "redeeming": "兑换中",
       "redeem": "兑换"
@@ -1826,22 +1837,37 @@
       "arenas": {
         "devInfra": {
           "label": "开发者基础设施",
-          "theses": ["一个按用量计费的 AI 应用 API 网关", "一个可自托管、一键上云的向量数据库"]
+          "theses": [
+            "一个按用量计费的 AI 应用 API 网关",
+            "一个可自托管、一键上云的向量数据库"
+          ]
         },
         "aiSaas": {
-          "theses": ["一个能起草会后跟进邮件的 AI 会议纪要工具", "一个面向 B2B SaaS 的客服分流助手"]
+          "theses": [
+            "一个能起草会后跟进邮件的 AI 会议纪要工具",
+            "一个面向 B2B SaaS 的客服分流助手"
+          ]
         },
         "consumer": {
           "label": "消费级产品",
-          "theses": ["一个和朋友比拼连续打卡的习惯追踪应用", "一个本地优先、每周 AI 回顾的日记应用"]
+          "theses": [
+            "一个和朋友比拼连续打卡的习惯追踪应用",
+            "一个本地优先、每周 AI 回顾的日记应用"
+          ]
         },
         "b2bOps": {
           "label": "B2B 运营",
-          "theses": ["一个面向财务团队的审批与审计工作区", "一个带合规检查的供应商入驻门户"]
+          "theses": [
+            "一个面向财务团队的审批与审计工作区",
+            "一个带合规检查的供应商入驻门户"
+          ]
         },
         "creative": {
           "label": "创意工具",
-          "theses": ["一个面向营销人员的分镜转视频生成器", "一个从单个标志生成整套品牌物料的工具"]
+          "theses": [
+            "一个面向营销人员的分镜转视频生成器",
+            "一个从单个标志生成整套品牌物料的工具"
+          ]
         }
       }
     },
@@ -2001,7 +2027,12 @@
       "leaveOrganization2": "离开组织",
       "leave": "离开",
       "remove": "移除",
-      "roles": { "owner": "所有者", "admin": "管理员", "member": "成员", "viewer": "只读成员" },
+      "roles": {
+        "owner": "所有者",
+        "admin": "管理员",
+        "member": "成员",
+        "viewer": "只读成员"
+      },
       "unknownDate": "未知",
       "roleChanged": "{name} 现在是{role}。",
       "memberCount": "{count} 名成员",
@@ -2404,7 +2435,6 @@
       "console": "控制台",
       "shipsInBatch": "第 2 批上线"
     },
-    "brandBrandAssets": {},
     "cofounderMatchCofounderCard": {
       "compiledCompany": "已编译的公司",
       "complementarity": "互补度",
@@ -2593,26 +2623,44 @@
         "name": "免费版",
         "description": "适合评估工作区和早期产品探索。",
         "cadence": "永久",
-        "features": ["1 个项目", "1 名团队成员", "基础 AI 与内容工具"]
+        "features": [
+          "1 个项目",
+          "1 名团队成员",
+          "基础 AI 与内容工具"
+        ]
       },
       "pro_monthly": {
         "name": "专业版",
         "description": "适合每天都在这里工作的团队。",
         "cadence": "每月",
-        "features": ["10 个项目", "10 名团队成员", "高级分析", "优先支持"]
+        "features": [
+          "10 个项目",
+          "10 名团队成员",
+          "高级分析",
+          "优先支持"
+        ]
       },
       "pro_yearly": {
         "name": "专业版（年付）",
         "description": "同样的专业版工作区，按年规划，折算月费更低。",
         "cadence": "每年",
-        "features": ["包含专业版全部功能", "按年开票", "更低的月均费用"]
+        "features": [
+          "包含专业版全部功能",
+          "按年开票",
+          "更低的月均费用"
+        ]
       },
       "enterprise": {
         "name": "企业版",
         "description": "适合需要 SSO、审计合规和合同支持的受监管团队。",
         "cadence": "合同",
         "price": "定制",
-        "features": ["不限量使用策略", "SSO/SAML", "审计日志", "专属支持"]
+        "features": [
+          "不限量使用策略",
+          "SSO/SAML",
+          "审计日志",
+          "专属支持"
+        ]
       },
       "manageBilling": "管理账单",
       "portalHint": "发票、付款方式和取消订阅都在账单门户中处理。",
@@ -2656,26 +2704,6 @@
       "twoFactorNeedsPassword": "开启双因素认证前，需要先设置邮箱密码登录。",
       "notAvailable": "不可用",
       "needsPassword": "需要密码"
-    },
-    "selectOrgJourney": {
-      "invitation": {
-        "title": "邀请已接受",
-        "description": "选择你受邀加入的工作区；如果还没列出，可以新建一个。",
-        "emptyActionLabel": "改为创建工作区",
-        "createActionLabel": "再创建一个工作区"
-      },
-      "billing": {
-        "title": "选择要管理账单的工作区",
-        "description": "账单变更以工作区为单位。选择一个工作区继续管理订阅。",
-        "emptyActionLabel": "创建工作区",
-        "createActionLabel": "新建工作区"
-      },
-      "default": {
-        "title": "选择工作区",
-        "description": "选择一个工作区继续，或新建一个。",
-        "emptyActionLabel": "创建工作区",
-        "createActionLabel": "新建工作区"
-      }
     },
     "adminImpersonateButton": {
       "youWillSeeThe": "在你停止之前，你会以该用户的身份查看应用。",
@@ -2727,19 +2755,28 @@
       "weCouldnTLoad": "无法加载你的 API 密钥",
       "tryAgain": "重试"
     },
+    "selectOrgJourney": {
+      "invitation": {
+        "title": "邀请已接受",
+        "description": "选择你受邀加入的工作区；如果还没列出，可以新建一个。",
+        "emptyActionLabel": "改为创建工作区",
+        "createActionLabel": "再创建一个工作区"
+      },
+      "billing": {
+        "title": "选择要管理账单的工作区",
+        "description": "账单变更以工作区为单位。选择一个工作区继续管理订阅。",
+        "emptyActionLabel": "创建工作区",
+        "createActionLabel": "新建工作区"
+      },
+      "default": {
+        "title": "选择工作区",
+        "description": "选择一个工作区继续，或新建一个。",
+        "emptyActionLabel": "创建工作区",
+        "createActionLabel": "新建工作区"
+      }
+    },
     "securityActiveSessionsBlock": {
       "unknownTime": "未知时间"
-    }
-  },
-  "navigation": {
-    "orgSwitcher": {
-      "ariaLabel": "切换组织",
-      "current": "当前",
-      "empty": "没有组织",
-      "selectOrg": "选择组织",
-      "create": "创建组织",
-      "switching": "正在切换…",
-      "error": "组织切换失败，请重试。"
     }
   }
 }
