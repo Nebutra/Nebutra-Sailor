@@ -72,7 +72,12 @@ export interface PageSnapshot {
   };
   generatedAt: Date;
   overall: "operational" | "degraded" | "outage";
-  groups: Array<{ key: string; name: string; nameI18n: Record<string, string> | null }>;
+  groups: Array<{
+    key: string;
+    name: string;
+    nameI18n: Record<string, string> | null;
+    description: string | null;
+  }>;
   components: SnapshotComponent[];
   activeIncidents: SnapshotIncident[];
   maintenance: SnapshotIncident[];
@@ -88,6 +93,45 @@ function windowDates(now: Date): string[] {
   return Array.from({ length: HISTORY_DAYS }, (_, i) =>
     new Date(today - (HISTORY_DAYS - 1 - i) * 86_400_000).toISOString().slice(0, 10),
   );
+}
+
+/** The row shape `toSnapshotIncident` reads: an incident with its updates and component keys. */
+export interface IncidentRow {
+  id: string;
+  kind: "incident" | "maintenance";
+  title: string;
+  impact: "none" | "minor" | "major" | "critical";
+  status: "investigating" | "identified" | "monitoring" | "resolved";
+  scheduledStart: Date | null;
+  scheduledEnd: Date | null;
+  resolvedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+  updates: Array<{ status: string; message: string; messageI18n: unknown; createdAt: Date }>;
+  components: Array<{ component: { key: string } }>;
+}
+
+export function toSnapshotIncident(i: IncidentRow, now: Date): SnapshotIncident {
+  return {
+    id: i.id,
+    kind: i.kind,
+    title: i.title,
+    impact: i.impact,
+    status: i.status,
+    phase: i.kind === "maintenance" ? maintenancePhase(i, now) : null,
+    scheduledStart: i.scheduledStart,
+    scheduledEnd: i.scheduledEnd,
+    resolvedAt: i.resolvedAt,
+    createdAt: i.createdAt,
+    updatedAt: i.updatedAt,
+    componentKeys: i.components.map((c) => c.component.key),
+    updates: i.updates.map((u) => ({
+      status: u.status,
+      message: u.message,
+      messageI18n: (u.messageI18n as Record<string, string> | null) ?? null,
+      createdAt: u.createdAt,
+    })),
+  };
 }
 
 export async function buildPageSnapshot(
@@ -126,26 +170,7 @@ export async function buildPageSnapshot(
   });
   if (!page) return null;
 
-  const incidents: SnapshotIncident[] = page.incidents.map((i) => ({
-    id: i.id,
-    kind: i.kind,
-    title: i.title,
-    impact: i.impact,
-    status: i.status,
-    phase: i.kind === "maintenance" ? maintenancePhase(i, now) : null,
-    scheduledStart: i.scheduledStart,
-    scheduledEnd: i.scheduledEnd,
-    resolvedAt: i.resolvedAt,
-    createdAt: i.createdAt,
-    updatedAt: i.updatedAt,
-    componentKeys: i.components.map((c) => c.component.key),
-    updates: i.updates.map((u) => ({
-      status: u.status,
-      message: u.message,
-      messageI18n: (u.messageI18n as Record<string, string> | null) ?? null,
-      createdAt: u.createdAt,
-    })),
-  }));
+  const incidents = page.incidents.map((i) => toSnapshotIncident(i, now));
 
   const activeIncidents = incidents.filter((i) => i.kind === "incident" && i.status !== "resolved");
   const maintenance = incidents
@@ -227,6 +252,7 @@ export async function buildPageSnapshot(
       key: g.key,
       name: g.name,
       nameI18n: (g.nameI18n as Record<string, string> | null) ?? null,
+      description: g.description,
     })),
     components,
     activeIncidents,

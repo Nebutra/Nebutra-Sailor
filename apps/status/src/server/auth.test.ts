@@ -20,7 +20,7 @@ import {
 import { createTestDb, type TestDb } from "./testing";
 
 let t: TestDb;
-const env = { STATUS_SETUP_TOKEN: "setup-secret" } as NodeJS.ProcessEnv;
+const env = { STATUS_SETUP_TOKEN: "setup-secret" } as unknown as NodeJS.ProcessEnv;
 const owner = {
   setupToken: "setup-secret",
   email: "Owner@Example.com",
@@ -51,8 +51,10 @@ describe("passwords", () => {
 
 describe("setupOwner", () => {
   it("is disabled without STATUS_SETUP_TOKEN", async () => {
-    expect(await setupAvailable(t.db, {} as NodeJS.ProcessEnv)).toBe(false);
-    await expect(setupOwner(t.db, owner, { env: {} as NodeJS.ProcessEnv })).rejects.toMatchObject({
+    expect(await setupAvailable(t.db, {} as unknown as NodeJS.ProcessEnv)).toBe(false);
+    await expect(
+      setupOwner(t.db, owner, { env: {} as unknown as NodeJS.ProcessEnv }),
+    ).rejects.toMatchObject({
       code: "setup_disabled",
     });
   });

@@ -3,6 +3,7 @@
  * two people updating different incidents never touch each other's data.
  */
 import { z } from "zod";
+import { Prisma } from "@/generated/prisma/client";
 import type { StatusDb } from "./db";
 
 const impact = z.enum(["none", "minor", "major", "critical"]);
@@ -78,11 +79,12 @@ export async function createIncident(
       scheduledEnd: input.scheduledEnd ? new Date(input.scheduledEnd) : null,
       resolvedAt: input.status === "resolved" ? now : null,
       createdAt: now,
+      updatedAt: now,
       updates: {
         create: {
           status: input.status,
           message: input.message,
-          messageI18n: input.messageI18n,
+          messageI18n: input.messageI18n ?? Prisma.DbNull,
           createdAt: now,
         },
       },
@@ -126,7 +128,7 @@ export async function updateIncident(
           incidentId,
           status: nextStatus,
           message: input.message ?? last?.message ?? current.title,
-          messageI18n: input.messageI18n,
+          messageI18n: input.messageI18n ?? Prisma.DbNull,
           createdAt: now,
         },
       });

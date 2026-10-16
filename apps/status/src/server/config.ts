@@ -10,6 +10,7 @@
  * the file is removed with its history — the file is the source of truth.
  */
 import { z } from "zod";
+import { Prisma } from "@/generated/prisma/client";
 import type { StatusDb } from "./db";
 
 const key = z
@@ -102,7 +103,7 @@ export async function applyConfig(db: StatusDb, raw: StatusConfig) {
     for (const [position, g] of config.groups.entries()) {
       const data = {
         name: g.name,
-        nameI18n: g.nameI18n,
+        nameI18n: g.nameI18n ?? Prisma.DbNull,
         description: g.description ?? null,
         position,
       };
@@ -117,7 +118,7 @@ export async function applyConfig(db: StatusDb, raw: StatusConfig) {
     for (const [position, c] of config.components.entries()) {
       const data = {
         name: c.name,
-        nameI18n: c.nameI18n,
+        nameI18n: c.nameI18n ?? Prisma.DbNull,
         description: c.description ?? null,
         groupId: c.group ? (groupIds.get(c.group) ?? null) : null,
         isPublic: c.public,
