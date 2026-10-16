@@ -1,0 +1,57 @@
+# Nebutra Status, self-hosted: one app container and one Postgres.
+#
+#   cp examples/status.config.json ./status.config.json   # then edit it
+#   STATUS_SETUP_TOKEN=$(openssl rand -hex 24) docker compose up -d
+#
+# Build the image first from the repository root if you are not pulling one:
+#   docker build -f apps/status/Dockerfile -t nebutra-status .
+name: nebutra-status
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: status
+      POSTGRES_USER: status
+      POSTGRES_PASSWORD: ${STATUS_DB_PASSWORD:-change-me}
+    volumes:
+      - status-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U status -d status"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  status:
+    image: ${STATUS_IMAGE:-nebutra-status}
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "${STATUS_PORT:-3140}:3140"
+    environment:
+      STATUS_DATABASE_URL: postgresql://status:${STATUS_DB_PASSWORD:-change-me}@postgres:5432/status
+      # Required once, to create the first owner; unset it afterwards.
+      STATUS_SETUP_TOKEN: ${STATUS_SETUP_TOKEN:-}
+      STATUS_CONFIG_FILE: /config/status.config.json
+      # The public origin, e.g. https://status.example.com (feeds and compat payloads link to it).
+      STATUS_PUBLIC_URL: ${STATUS_PUBLIC_URL:-}
+      # The page served at / and /status.
+      STATUS_DEFAULT_PAGE: ${STATUS_DEFAULT_PAGE:-}
+      # Set to xiaoya-v1 to serve that legacy shape at /api/v1/status.
+      STATUS_COMPAT_ROOT: ${STATUS_COMPAT_ROOT:-}
+      # "off" disables the in-process monitor runner.
+      STATUS_RUNNER: ${STATUS_RUNNER:-on}
+    volumes:
+      - ./status.config.json:/config/status.config.json:ro
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3140/api/readyz >/dev/null || exit 1"]
+      interval: 15s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  status-db:
