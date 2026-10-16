@@ -202,6 +202,14 @@ export const SITE_MAP: readonly SitePage[] = [
     chrome: "bare",
   },
   {
+    // Sailor beside the starters it is weighed against; facts only, dated.
+    path: "/sailor/compare",
+    section: "sailor",
+    key: "sailor.compare",
+    status: "live",
+    template: false,
+  },
+  {
     path: "/features",
     rail: true,
     section: "sailor",

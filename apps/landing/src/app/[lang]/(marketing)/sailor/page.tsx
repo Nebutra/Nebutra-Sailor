@@ -59,6 +59,13 @@ export default async function SailorPage({ params }: { params: Promise<{ lang: s
               className="text-secondary-foreground underline-offset-4 hover:text-foreground hover:underline"
             >
               {t("links.licensing")}
+            </Link>{" "}
+            ·{" "}
+            <Link
+              href="/sailor/compare"
+              className="text-secondary-foreground underline-offset-4 hover:text-foreground hover:underline"
+            >
+              {t("links.compare")}
             </Link>
           </p>
         </div>

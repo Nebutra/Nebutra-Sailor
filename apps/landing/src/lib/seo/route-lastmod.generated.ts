@@ -44,6 +44,7 @@ export const ROUTE_LASTMOD: Record<string, string> = {
   "/refund": "2026-09-28T15:52:52+08:00",
   "/roadmap": "2026-10-10T17:01:39+08:00",
   "/sailor": "2026-10-15T23:54:21+08:00",
+  "/sailor/compare": "2026-10-16T09:39:10+08:00",
   "/sailor/studio": "2026-10-02T11:31:29+08:00",
   "/sailor/studio/frame": "2026-09-28T10:41:35+08:00",
   "/security": "2026-10-15T21:51:58+08:00",

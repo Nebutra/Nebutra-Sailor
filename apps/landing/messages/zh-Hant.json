@@ -1910,8 +1910,8 @@
     },
     "sailor": {
       "hero": {
-        "lead": "從一個能跑的模板開始：登入和組織、全球信用卡與國內微信支付寶收款、Postgres 租戶隔離，還有在 Sailor Studio 裡定好的設計系統。把公司編譯成九層上下文的公司規劃器還在開發中。",
-        "title": "把你的公司跑在 <signature>Sailor</signature> 上。"
+        "lead": "給 agent 寫出來的軟體用的生產層。一條命令拿到登入和組織、全球銀行卡與國內微信支付寶收款、Postgres 租戶隔離、API 閘道器，以及在 Sailor Studio 裡定好的設計系統。零金鑰本地就能跑，程式碼歸你。",
+        "title": "直達<signature>上線。</signature>"
       },
       "install": {
         "copyLabel": "複製",
@@ -1920,7 +1920,116 @@
       "links": {
         "source": "GitHub 原始碼",
         "seeSite": "看看生成的網站",
-        "licensing": "團隊授權"
+        "licensing": "團隊授權",
+        "compare": "Sailor 怎麼比"
+      }
+    },
+    "sailorCompare": {
+      "hero": {
+        "title": "Sailor 怎麼比",
+        "lead": "五種啟動 TypeScript 產品的方式，並排放在一起。每一格都來自專案自己的 README、定價頁或原始碼。專案沒寫的，表裡就寫“未說明”。"
+      },
+      "table": {
+        "title": "並排對照",
+        "lead": "事實核對於 2026-10-16。價格是各網站當天展示的價格，含促銷。",
+        "caption": "Sailor 與 vibestart、ShipFast、Supastarter、create-t3-app 的對照",
+        "aspect": "方面",
+        "rows": {
+          "license": "許可證",
+          "price": "價格",
+          "framework": "框架",
+          "auth": "認證",
+          "payments": "支付",
+          "tenancy": "多租戶",
+          "api": "API 層",
+          "i18n": "國際化與國內上線",
+          "agents": "Agent 整合",
+          "start": "怎麼開始",
+          "bestFor": "最適合"
+        },
+        "cells": {
+          "sailor": {
+            "license": "Apache-2.0：monorepo、npm 包和生成的專案都是",
+            "price": "免費。付費檔賣的是支援和 SLA，不是使用許可。",
+            "framework": "Next.js 16 加 Hono 閘道器，同一個 pnpm monorepo",
+            "auth": "Better Auth，帶組織",
+            "payments": "Creem 收全球銀行卡（記錄商戶），加上微信支付和支付寶",
+            "tenancy": "組織，加上從 Prisma schema 生成的 Postgres 行級安全",
+            "api": "Hono 閘道器（oRPC），可嵌進 Next，也可獨立部署",
+            "i18n": "next-intl。設 NEBUTRA_LOCALE=cn 後結帳優先走微信支付與支付寶、簡訊優先走阿里雲，並附 ICP 備案頁尾。手機號登入尚未接通。",
+            "agents": "每個專案帶 AGENTS.md、CLAUDE.md、DESIGN.md，一個 Agent Skill，以及會讓 CI 失敗的 lint 棘輪",
+            "bestFor": "要在全球和國內收錢、租戶在資料庫層隔離的產品"
+          },
+          "vibestart": {
+            "price": "免費",
+            "framework": "React SPA（TanStack Router）、TanStack Start 或 Next.js；可選 Electron 和 Expo",
+            "payments": "不在它的技術棧列表裡",
+            "tenancy": "不在它的技術棧列表裡",
+            "api": "Hono 或框架自帶服務端，配 oRPC、OpenAPI 或不用",
+            "i18n": "不在它的技術棧列表裡",
+            "agents": "每個專案帶 AGENTS.md，一個 Agent Skill，一條命令跑完所有檢查",
+            "bestFor": "為編碼 agent 自己組合 TypeScript 技術棧，從網頁到桌面和移動端"
+          },
+          "shipfast": {
+            "license": "商業許可；購買後獲得私有 GitHub 倉庫",
+            "price": "一次性付費，$199 起",
+            "framework": "Next.js，App Router 或 Pages Router，JavaScript 或 TypeScript",
+            "auth": "NextAuth，帶 Google OAuth 和魔法連結",
+            "payments": "Stripe 或 Lemon Squeezy",
+            "tenancy": "未說明",
+            "api": "Next.js API 路由",
+            "i18n": "未說明",
+            "agents": "稱程式碼庫能給 AI 編輯器提供上下文；未列出 AGENTS.md 或 skill",
+            "start": "克隆私有倉庫",
+            "bestFor": "獨立創始人儘快上線第一個付費產品"
+          },
+          "supastarter": {
+            "license": "商業許可；購買後獲得 GitHub 訪問",
+            "price": "一次性付費，單人 $349 起",
+            "framework": "Next.js、Nuxt 或 TanStack Start",
+            "auth": "Better Auth，帶通行金鑰和兩步驗證",
+            "payments": "Stripe、Lemon Squeezy、Polar、Creem 或 Dodo Payments",
+            "tenancy": "組織、邀請和成員角色；未說明資料庫行級安全",
+            "api": "Hono 和 oRPC，帶 OpenAPI 規範",
+            "i18n": "多語言、語言切換器和可翻譯的郵件模板",
+            "agents": "基於 AGENTS.md 和 Agent Skills 規範構建",
+            "start": "購買後克隆倉庫",
+            "bestFor": "想要付費套件、可選多家支付和技術支援的團隊與外包公司"
+          },
+          "t3": {
+            "price": "免費",
+            "auth": "NextAuth.js 或 Better Auth，可選",
+            "payments": "不包含",
+            "tenancy": "不包含",
+            "api": "tRPC，可選",
+            "i18n": "不包含",
+            "agents": "模板裡沒有 agent 檔案",
+            "bestFor": "一個小而型別安全的 Next.js 應用，其餘自己挑庫擴充套件"
+          }
+        }
+      },
+      "pick": {
+        "title": "什麼時候該選別的",
+        "lead": "Sailor 替你做完選擇，把生產層整套交給你。對有些專案來說，這個取捨不對。",
+        "items": {
+          "vibestart": "想自己挑每一層，包括 MySQL、MongoDB、Electron 或 Expo，並且從幾十個檔案起步，選 vibestart。",
+          "t3": "想要最小的型別安全 Next.js 起點、用 tRPC、其餘自己定，選 create-t3-app。它是這五個裡社群最大的。",
+          "shipfast": "一個人用 Stripe 或 Lemon Squeezy、MongoDB 或 Supabase 上線，並且用得上它附帶的課程，選 ShipFast。",
+          "supastarter": "需要 Nuxt 或 TanStack Start、想在五家支付裡選、或者要帶支援的付費席位，選 Supastarter。",
+          "sailor": "要在國內和全球收錢、需要由 Postgres 強制的租戶隔離、想從第一次提交就有閘道器、審計和計量，選 Sailor。"
+        }
+      },
+      "sources": {
+        "title": "來源",
+        "lead": "每一列都連結到事實所在的頁面。如果有變化，告訴我們，我們來改。",
+        "items": {
+          "sailor": "Sailor：本倉庫的 README、packages/commerce/billing 和生成的 RLS 策略",
+          "vibestart": "vibestart：GitHub 上的 README 和原始碼（VinkyDev/vibestart）",
+          "shipfast": "ShipFast：shipfa.st 首頁和條款",
+          "supastarter": "Supastarter：supastarter.dev 首頁和定價",
+          "t3": "create-t3-app：GitHub 上的 README 和 CLI 安裝器（t3-oss/create-t3-app）"
+        },
+        "report": "報告更正"
       }
     },
     "sleptons": {
@@ -2258,7 +2367,7 @@
         "is": "創辦人的文章：我們對如今怎麼造東西的看法。"
       },
       "sailor": {
-        "is": "做 AI 產品的創業作業系統，原始碼公開，今天就能用。"
+        "is": "直達上線：給 agent 寫出來的軟體用的生產層，原始碼公開，今天就能用。"
       },
       "sleptons": {
         "title": "生態",
@@ -2301,6 +2410,9 @@
           "frame": {
             "title": "Sailor Studio 畫框"
           }
+        },
+        "compare": {
+          "title": "Sailor 對照"
         }
       },
       "features": {

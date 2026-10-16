@@ -151,6 +151,12 @@ const ALL_SEO_ROUTES: ReadonlyArray<SeoRouteEntry> = [
   // English with a Chinese line, not in the message catalogs.
   { pattern: "/sailor", changeFrequency: "weekly", priority: 0.8, localization: "content" },
   { pattern: "/sailor/studio", changeFrequency: "weekly", priority: 0.7, localization: "content" },
+  {
+    pattern: "/sailor/compare",
+    changeFrequency: "monthly",
+    priority: 0.6,
+    localization: "content",
+  },
   { pattern: "/sleptons", changeFrequency: "weekly", priority: 0.6, localization: "content" },
   { pattern: "/building", changeFrequency: "weekly", priority: 0.6, localization: "content" },
   { pattern: "/careers", changeFrequency: "weekly", priority: 0.6, localization: "ui" },

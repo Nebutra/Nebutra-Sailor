@@ -1988,9 +1988,9 @@
     },
     "sailor": {
       "hero": {
-        "lead": "Start from a working template with sign-in and organizations, billing by card worldwide or WeChat Pay and Alipay in China, Postgres tenant isolation, and a design system you set up in Sailor Studio. The company planner, which compiles your company into nine layers of context, is in development.",
-        "cn": "把你的公司跑在 Sailor 上。",
-        "title": "Run your startup on <signature>Sailor.</signature>"
+        "lead": "The production layer for agent-built software. One command gives you sign-in and organizations, billing by card worldwide or WeChat Pay and Alipay in China, Postgres tenant isolation, an API gateway and a design system you set up in Sailor Studio. It runs locally with zero keys, and you own the code.",
+        "cn": "给 AI 写出来的产品铺好上线的路。",
+        "title": "Skip to <signature>production.</signature>"
       },
       "install": {
         "copyLabel": "Copy",
@@ -1999,7 +1999,124 @@
       "links": {
         "source": "Source on GitHub",
         "seeSite": "See the site you get",
-        "licensing": "Licensing for teams"
+        "licensing": "Licensing for teams",
+        "compare": "How Sailor compares"
+      }
+    },
+    "sailorCompare": {
+      "hero": {
+        "title": "How Sailor compares",
+        "lead": "Five ways to start a TypeScript product, side by side. Every cell is a fact from the project's own README, pricing page or source code. Where a project does not say, the table says so.",
+        "cn": "Sailor 与其他起步方案的对照，只写能查证的事实。"
+      },
+      "table": {
+        "title": "Side by side",
+        "lead": "Facts checked on 2026-10-16. Prices are what each site showed that day, including any promotion.",
+        "caption": "Sailor compared with vibestart, ShipFast, Supastarter and create-t3-app",
+        "aspect": "Aspect",
+        "rows": {
+          "license": "License",
+          "price": "Price",
+          "framework": "Framework",
+          "auth": "Auth",
+          "payments": "Payments",
+          "tenancy": "Multi-tenancy",
+          "api": "API layer",
+          "i18n": "i18n and China launch",
+          "agents": "Agent integration",
+          "start": "How you start",
+          "bestFor": "Best for"
+        },
+        "cells": {
+          "sailor": {
+            "license": "Apache-2.0: the monorepo, the npm packages and every scaffolded project",
+            "price": "Free. Paid tiers sell support and SLAs, not permission.",
+            "framework": "Next.js 16 and a Hono gateway in one pnpm monorepo",
+            "auth": "Better Auth, with organizations",
+            "payments": "Creem for cards worldwide (merchant of record), plus WeChat Pay and Alipay",
+            "tenancy": "Organizations, with Postgres row-level security generated from the Prisma schema",
+            "api": "Hono gateway with oRPC, mounted inside Next or deployed on its own",
+            "i18n": "next-intl. NEBUTRA_LOCALE=cn puts WeChat Pay and Alipay first at checkout and Aliyun first for SMS; an ICP footer ships. Phone sign-in is not wired yet.",
+            "agents": "AGENTS.md, CLAUDE.md and DESIGN.md in every project, an Agent Skill, and lint ratchets that fail CI",
+            "start": "npx create-sailor@latest my-app",
+            "bestFor": "Products that must take money worldwide and in China, with tenants isolated in the database"
+          },
+          "vibestart": {
+            "license": "MIT",
+            "price": "Free",
+            "framework": "React SPA (TanStack Router), TanStack Start or Next.js; Electron and Expo optional",
+            "auth": "Better Auth",
+            "payments": "Not in its stack list",
+            "tenancy": "Not in its stack list",
+            "api": "Hono or the framework's own server, with oRPC, OpenAPI or none",
+            "i18n": "Not in its stack list",
+            "agents": "AGENTS.md in every project, an Agent Skill, and one command that runs every check",
+            "start": "npx vibestart-cli my-app",
+            "bestFor": "Composing your own TypeScript stack, web to desktop and mobile, for a coding agent"
+          },
+          "shipfast": {
+            "license": "Commercial licence; private GitHub repository after purchase",
+            "price": "One-time, from $199",
+            "framework": "Next.js, App Router or Pages Router, JavaScript or TypeScript",
+            "auth": "NextAuth, with Google OAuth and magic links",
+            "payments": "Stripe or Lemon Squeezy",
+            "tenancy": "Not stated",
+            "api": "Next.js API routes",
+            "i18n": "Not stated",
+            "agents": "Says the codebase gives AI editors context; no AGENTS.md or skill listed",
+            "start": "Clone the private repository",
+            "bestFor": "A solo founder shipping a first paid product fast"
+          },
+          "supastarter": {
+            "license": "Commercial licence; GitHub access after purchase",
+            "price": "One-time, from $349 for one developer",
+            "framework": "Next.js, Nuxt or TanStack Start",
+            "auth": "Better Auth, with passkeys and two-factor",
+            "payments": "Stripe, Lemon Squeezy, Polar, Creem or Dodo Payments",
+            "tenancy": "Organizations, invites and member roles; database row-level security not stated",
+            "api": "Hono and oRPC, with an OpenAPI spec",
+            "i18n": "Locales, a language switcher and translatable email templates",
+            "agents": "Built on the AGENTS.md and Agent Skills specifications",
+            "start": "Clone the repository after purchase",
+            "bestFor": "Teams and agencies who want a paid kit, a choice of payment providers and support"
+          },
+          "t3": {
+            "license": "MIT",
+            "price": "Free",
+            "framework": "Next.js",
+            "auth": "NextAuth.js or Better Auth, optional",
+            "payments": "Not included",
+            "tenancy": "Not included",
+            "api": "tRPC, optional",
+            "i18n": "Not included",
+            "agents": "No agent files in the template",
+            "start": "npm create t3-app@latest",
+            "bestFor": "A small, typesafe Next.js app that you extend with your own libraries"
+          }
+        }
+      },
+      "pick": {
+        "title": "When to pick something else",
+        "lead": "Sailor makes the choices for you and ships the production layer whole. That is the wrong trade for some projects.",
+        "items": {
+          "vibestart": "Pick vibestart when you want to choose each layer yourself, including MySQL, MongoDB, Electron or Expo, and start from a few dozen files.",
+          "t3": "Pick create-t3-app when you want the smallest typesafe Next.js start with tRPC, and you will choose the rest. It has the largest community of the five.",
+          "shipfast": "Pick ShipFast when you are one founder launching on Stripe or Lemon Squeezy with MongoDB or Supabase, and the course that comes with it helps you.",
+          "supastarter": "Pick Supastarter when you need Nuxt or TanStack Start, want to choose among five payment providers, or want paid seats with support.",
+          "sailor": "Pick Sailor when you charge in China and worldwide, need tenant isolation enforced by Postgres, and want a gateway, audit and metering from the first commit."
+        }
+      },
+      "sources": {
+        "title": "Sources",
+        "lead": "Each column links to the page its facts came from. Tell us if one has changed and we will correct it.",
+        "items": {
+          "sailor": "Sailor: this repository's README, packages/commerce/billing and the generated RLS policies",
+          "vibestart": "vibestart: README and source on GitHub (VinkyDev/vibestart)",
+          "shipfast": "ShipFast: shipfa.st home page and terms",
+          "supastarter": "Supastarter: supastarter.dev home and pricing",
+          "t3": "create-t3-app: README and CLI installers on GitHub (t3-oss/create-t3-app)"
+        },
+        "report": "Report a correction"
       }
     },
     "sleptons": {
@@ -2343,7 +2460,7 @@
       },
       "sailor": {
         "title": "Sailor",
-        "is": "The Startup OS for AI products, source-available and usable today."
+        "is": "Skip to production: the production layer for agent-built software, source-available and usable today."
       },
       "sleptons": {
         "title": "Sleptons",
@@ -2388,6 +2505,9 @@
           "frame": {
             "title": "Sailor Studio frame"
           }
+        },
+        "compare": {
+          "title": "Sailor compared"
         }
       },
       "features": {
