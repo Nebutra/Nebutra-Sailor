@@ -13,6 +13,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./locales": "./src/locales.ts",
+    "./locales/en.json": "./locales/en.json",
     "./languages": "./src/languages.ts",
     "./markets": "./src/markets.ts",
     "./market-locale": "./src/market-locale.ts",

@@ -42,6 +42,24 @@ function formatKey(namespace: string | undefined, key: string, values?: Translat
   );
 }
 
+/**
+ * next-intl's translator is a function with methods. The mock carries the same
+ * methods (backed by the real English catalog), so a component that calls
+ * `t.raw()` or `t.rich()` is exercised here instead of crashing only at runtime.
+ */
+function mockTranslator(namespace?: string) {
+  const path = (key: string) => (namespace ? `${namespace}.${key}` : key);
+  const t = (key: string, values?: TranslationValues) => formatKey(namespace, key, values);
+  return Object.assign(t, {
+    raw: (key: string) => translateEnglish.raw(path(key) as never),
+    rich: (key: string, values?: Record<string, unknown>) =>
+      translateEnglish.rich(path(key) as never, values as never),
+    markup: (key: string, values?: Record<string, unknown>) =>
+      translateEnglish.markup(path(key) as never, values as never),
+    has: (key: string) => translateEnglish.has(path(key) as never),
+  });
+}
+
 vi.mock("next-intl", () => ({
   NextIntlClientProvider: ({ children }: { children: ReactNode }) => children,
   useFormatter: () => ({
@@ -52,8 +70,7 @@ vi.mock("next-intl", () => ({
       new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(value, unit),
   }),
   useLocale: () => "en",
-  useTranslations: (namespace?: string) => (key: string, values?: TranslationValues) =>
-    formatKey(namespace, key, values),
+  useTranslations: (namespace?: string) => mockTranslator(namespace),
 }));
 
 vi.mock("next/navigation", () => ({
