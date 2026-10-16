@@ -1,3 +1,5 @@
+import { isMainlandMarket } from "@nebutra/contracts/market";
+import { isCreemConfigured } from "../creem/index";
 import type { CheckoutConfig, CheckoutProvider, CheckoutProviderType } from "./types";
 
 // =============================================================================
@@ -6,23 +8,37 @@ import type { CheckoutConfig, CheckoutProvider, CheckoutProviderType } from "./t
 // Mirrors the `@nebutra/queue` pattern. Resolution order:
 //   1. Explicit config passed to `getCheckout(config)`
 //   2. `BILLING_PROVIDER` environment variable
-//   3. Auto-detection based on which provider's credentials are configured
+//   3. Auto-detection from the keys that are present (ADR 2026-09-26):
+//      Creem is the card rail, WeChat Pay / Alipay ("chinapay") the mainland
+//      rail, and `NEBUTRA_LOCALE=cn` puts the mainland rail first
 //   4. Fallback to "manual" (no real payment, dev/admin flows only)
+//
+// Stripe is a legacy adapter (ADR 2026-09-26: "retired from new work"). It is
+// never auto-detected — a STRIPE_SECRET_KEY left in an env no longer routes
+// checkouts to it. Only `BILLING_PROVIDER=stripe` selects it.
 // =============================================================================
 
 /**
  * Detect which checkout provider to use based on environment variables.
  *
- * Precedence when multiple are set: stripe → chinapay.
- * Set `BILLING_PROVIDER` to override.
+ * - `BILLING_PROVIDER` wins when set.
+ * - Mainland market (`NEBUTRA_LOCALE=cn`): chinapay when a wallet is
+ *   configured, else Creem.
+ * - Otherwise: Creem when configured, else chinapay.
+ * - Nothing configured: "manual".
  */
-export function detectProvider(): CheckoutProviderType {
-  const explicit = process.env.BILLING_PROVIDER;
+export function detectProvider(
+  env: Record<string, string | undefined> = process.env,
+): CheckoutProviderType {
+  const explicit = env.BILLING_PROVIDER?.trim();
   if (explicit) {
     return explicit as CheckoutProviderType;
   }
-  if (process.env.STRIPE_SECRET_KEY) return "stripe";
-  if (isChinaPayConfigured()) return "chinapay";
+  const creem = isCreemConfigured(env);
+  const chinapay = isChinaPayConfigured(undefined, env);
+  if (isMainlandMarket(env) && chinapay) return "chinapay";
+  if (creem) return "creem";
+  if (chinapay) return "chinapay";
   return "manual";
 }
 
@@ -31,9 +47,12 @@ export function detectProvider(): CheckoutProviderType {
  * chinapay/client.ts reads — detection used to look at a CHINAPAY_APP_ID
  * nothing else set, so a fully configured merchant still fell to "manual".
  */
-export function isChinaPayConfigured(method?: "alipay" | "wechat"): boolean {
-  const alipay = Boolean(process.env.ALIPAY_APP_ID);
-  const wechat = Boolean(process.env.WECHATPAY_MCHID);
+export function isChinaPayConfigured(
+  method?: "alipay" | "wechat",
+  env: Record<string, string | undefined> = process.env,
+): boolean {
+  const alipay = Boolean(env.ALIPAY_APP_ID);
+  const wechat = Boolean(env.WECHATPAY_MCHID);
   if (method === "alipay") return alipay;
   if (method === "wechat") return wechat;
   return alipay || wechat;

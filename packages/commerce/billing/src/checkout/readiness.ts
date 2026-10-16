@@ -19,31 +19,6 @@ export interface BillingProviderReadiness {
   description: string;
 }
 
-function detectProviderFromEnv(env: Record<string, string | undefined>): CheckoutProviderType {
-  const previous = {
-    BILLING_PROVIDER: process.env.BILLING_PROVIDER,
-    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
-    ALIPAY_APP_ID: process.env.ALIPAY_APP_ID,
-    WECHATPAY_MCHID: process.env.WECHATPAY_MCHID,
-  };
-
-  try {
-    process.env.BILLING_PROVIDER = env.BILLING_PROVIDER ?? "";
-    process.env.STRIPE_SECRET_KEY = env.STRIPE_SECRET_KEY ?? "";
-    process.env.ALIPAY_APP_ID = env.ALIPAY_APP_ID ?? "";
-    process.env.WECHATPAY_MCHID = env.WECHATPAY_MCHID ?? "";
-    return detectProvider();
-  } finally {
-    for (const [key, value] of Object.entries(previous)) {
-      if (value === undefined) {
-        delete process.env[key];
-      } else {
-        process.env[key] = value;
-      }
-    }
-  }
-}
-
 function isPresent(value: string | undefined): boolean {
   return typeof value === "string" && value.trim().length > 0;
 }
@@ -53,7 +28,7 @@ export function resolveBillingProviderReadiness({
   selfServiceEnabled = true,
   requiredPriceEnvVars = [],
 }: BillingProviderReadinessInput = {}): BillingProviderReadiness {
-  const provider = detectProviderFromEnv(env);
+  const provider = detectProvider(env);
 
   if (!selfServiceEnabled) {
     return {
@@ -75,9 +50,9 @@ export function resolveBillingProviderReadiness({
       checkoutReady: false,
       portalReady: false,
       missing: provider === "manual" ? ["BILLING_PROVIDER"] : [],
-      title: "Subscription self-service needs Stripe",
+      title: "Subscription self-service is not available",
       description:
-        "A non-Stripe or manual provider is detected. Checkout and hosted billing portal actions stay disabled until a supported subscription route is configured.",
+        "Plan subscriptions still run on the legacy Stripe adapter (ADR 2026-09-26), selected only with BILLING_PROVIDER=stripe. One-time payments through Creem, WeChat Pay and Alipay are not affected.",
     };
   }
 

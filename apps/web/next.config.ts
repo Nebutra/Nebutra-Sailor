@@ -39,6 +39,14 @@ const nextConfig: NextConfig = {
   // Produces a minimal standalone server bundle under .next/standalone.
   output: "standalone",
 
+  // The one mainland-China switch is NEBUTRA_LOCALE=cn (server). Client
+  // components read its public mirror, which this inlines at build time —
+  // see @nebutra/contracts/market for the precedence and the aliases.
+  env: {
+    NEXT_PUBLIC_NEBUTRA_LOCALE:
+      process.env.NEXT_PUBLIC_NEBUTRA_LOCALE ?? process.env.NEBUTRA_LOCALE ?? "",
+  },
+
   // Next.js 16 cross-origin protection — without this, accessing dev server
   // from a non-localhost origin (LAN IP, ngrok, codespaces) silently blocks
   // HMR client + Server Action calls, leaving React event handlers unbound

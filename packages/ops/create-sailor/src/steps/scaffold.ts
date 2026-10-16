@@ -185,10 +185,11 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   });
 
   // -- compliance boilerplate --
-  // Footer, cookie banner, privacy policy and terms. Mainland-China surfaces
-  // (ICP, AIGC disclosure) live in @nebutra/china-compliance and switch on at
-  // runtime with NEBUTRA_LOCALE=cn — they are not a scaffold decision.
-  await applyComplianceTemplates(resolvedTarget, "global");
+  // Footer, cookie banner, privacy policy and terms, plus the mainland-China
+  // pieces (ICP / 公安备案 footer, AIGC disclaimer and notices). Every scaffold
+  // gets both; the China ones switch on at runtime with NEBUTRA_LOCALE=cn
+  // (@nebutra/china-compliance) — region is not a scaffold decision.
+  await applyComplianceTemplates(resolvedTarget, "hybrid");
   emitJson(useJson, { event: "step", step: "compliance", status: "ok" });
 
   await generateEnvSecrets(resolvedTarget);

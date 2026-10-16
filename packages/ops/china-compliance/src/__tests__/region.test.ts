@@ -1,7 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { detectChinaRegion, getCDNHints, isChinaRegion } from "../region";
 
-const ENV_KEYS = ["NEBUTRA_REGION", "NEXT_PUBLIC_REGION"] as const;
+const ENV_KEYS = [
+  "NEBUTRA_LOCALE",
+  "NEXT_PUBLIC_NEBUTRA_LOCALE",
+  "NEBUTRA_REGION",
+  "NEXT_PUBLIC_REGION",
+] as const;
 
 function snapshotEnv() {
   return Object.fromEntries(ENV_KEYS.map((k) => [k, process.env[k]]));
@@ -31,6 +36,23 @@ describe("detectChinaRegion", () => {
 
   it("returns 'unknown' when no env is set", () => {
     expect(detectChinaRegion()).toBe("unknown");
+  });
+
+  it("switches on with NEBUTRA_LOCALE=cn, the documented switch", () => {
+    process.env.NEBUTRA_LOCALE = "cn";
+    expect(detectChinaRegion()).toBe("cn-mainland");
+    expect(isChinaRegion()).toBe(true);
+  });
+
+  it("reads NEXT_PUBLIC_NEBUTRA_LOCALE, the client mirror", () => {
+    process.env.NEXT_PUBLIC_NEBUTRA_LOCALE = "cn";
+    expect(isChinaRegion()).toBe(true);
+  });
+
+  it("lets NEBUTRA_LOCALE win over the NEBUTRA_REGION alias", () => {
+    process.env.NEBUTRA_LOCALE = "global";
+    process.env.NEBUTRA_REGION = "cn";
+    expect(detectChinaRegion()).toBe("overseas");
   });
 
   it("prefers NEBUTRA_REGION over NEXT_PUBLIC_REGION", () => {

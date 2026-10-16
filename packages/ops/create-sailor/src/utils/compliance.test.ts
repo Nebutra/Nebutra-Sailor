@@ -41,4 +41,27 @@ describe("applyComplianceTemplates", () => {
     expect(source).not.toContain("CategoryRow");
     expect(source).not.toContain("grid gap-3 md:grid-cols-2");
   });
+
+  it("ships the mainland pieces in every scaffold, switched at runtime by NEBUTRA_LOCALE", async () => {
+    targetDir = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-compliance-"));
+    fs.mkdirSync(path.join(targetDir, "apps", "web"), { recursive: true });
+    fs.writeFileSync(path.join(targetDir, ".env.example"), "# example\n");
+
+    await applyComplianceTemplates(targetDir, "hybrid");
+
+    const dir = path.join(targetDir, "apps", "web", "src", "components", "compliance");
+    const footer = fs.readFileSync(path.join(dir, "Footer.tsx"), "utf8");
+    expect(footer).toContain('import { isChinaRegion } from "@nebutra/china-compliance"');
+    expect(footer).toContain(": isChinaRegion()");
+
+    const aigc = fs.readFileSync(path.join(dir, "AigcDisclaimer.tsx"), "utf8");
+    expect(aigc).toContain("if (!always && !isChinaRegion()) return null;");
+
+    const icp = fs.readFileSync(path.join(dir, "IcpFooter.tsx"), "utf8");
+    expect(icp).toContain("process.env.NEXT_PUBLIC_ICP_NUMBER");
+
+    const envExample = fs.readFileSync(path.join(targetDir, ".env.example"), "utf8");
+    expect(envExample).toContain("NEXT_PUBLIC_ICP_NUMBER=");
+    expect(envExample).not.toContain("NEXT_PUBLIC_ICP_BEIAN=");
+  });
 });

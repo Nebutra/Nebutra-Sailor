@@ -5,6 +5,13 @@ export type {
   TwilioVerifyProvider,
 } from "./providers/twilio-verify";
 export { createTwilioVerifyProvider } from "./providers/twilio-verify";
+export {
+  createSmsProvider,
+  isAliyunSmsConfigured,
+  isTwilioVerifyConfigured,
+  resolveSmsProviderId,
+  type SmsProviderId,
+} from "./select";
 export type { SmsConfig, SmsProvider } from "./types";
 export {
   initSmsVerification,

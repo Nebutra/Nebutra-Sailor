@@ -84,10 +84,16 @@ ALIPAY_PRIVATE_KEY=
 ALIPAY_PUBLIC_KEY=
 ```
 
+`getCheckout()` with no config detects the rail from these keys: Creem when it
+is configured, WeChat Pay / Alipay otherwise — and WeChat Pay / Alipay first
+when the deployment serves mainland China (`NEBUTRA_LOCALE=cn`, read through
+`@nebutra/contracts/market`). `BILLING_PROVIDER` overrides detection.
+
 Legacy Stripe env vars (`STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`,
-`STRIPE_PRICE_ID_*`) are still read by the old subscription/credit-purchase
-code paths under `src/stripe`, but are not part of the current setup — see
-the ADR for what still depends on them.
+`STRIPE_PRICE_ID_*`) are still read by the old subscription / customer-portal
+code paths under `src/stripe`, but are not part of the current setup and are
+never auto-detected: only `BILLING_PROVIDER=stripe` selects the Stripe
+adapter. See the ADR for what still depends on them.
 
 ## Modules
 

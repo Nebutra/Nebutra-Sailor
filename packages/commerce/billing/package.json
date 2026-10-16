@@ -15,7 +15,7 @@
       "Host-injected getTenantDb via configureBillingTenantDb for credits/usage ledger"
     ],
     "gaps": [
-      "Provider adapters need credentials before they do anything: STRIPE_SECRET_KEY + STRIPE_WEBHOOK_SECRET, CHINAPAY_APP_SECRET",
+      "Provider adapters need credentials before they do anything: CREEM_API_KEY + CREEM_PRODUCT_ID (cards), WECHATPAY_* / ALIPAY_* (mainland); the legacy Stripe adapter only runs under BILLING_PROVIDER=stripe",
       "Persistence is host-owned — the package ships no prisma/ schema and reads the client through @nebutra/db",
       "No UI surface: checkout, portal and invoice screens are the consuming app's"
     ]

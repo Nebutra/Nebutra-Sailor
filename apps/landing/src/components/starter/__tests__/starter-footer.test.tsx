@@ -71,4 +71,17 @@ describe("StarterFooter", () => {
     ).toBeInTheDocument();
     vi.useRealTimers();
   });
+
+  it("shows the ICP record only once NEXT_PUBLIC_ICP_NUMBER is set", () => {
+    useMountMock.mockReturnValue(false);
+    vi.stubEnv("NEXT_PUBLIC_ICP_NUMBER", "");
+    const { unmount } = render(<StarterFooter />);
+    expect(screen.queryByTestId("icp-record")).toBeNull();
+    unmount();
+
+    vi.stubEnv("NEXT_PUBLIC_ICP_NUMBER", "苏ICP备2026000000号-1");
+    render(<StarterFooter />);
+    expect(screen.getByTestId("icp-record")).toHaveTextContent("苏ICP备2026000000号-1");
+    vi.unstubAllEnvs();
+  });
 });

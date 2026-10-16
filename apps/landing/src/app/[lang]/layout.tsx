@@ -173,7 +173,7 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     // form, which gets its own provider in (legal)/contact/page.tsx.
     "monorepoTree",
     "microLanding",
-    // landing / blogShowcase / stats / features / compliance are NOT here: no
+    // landing / blogShowcase / stats / features are NOT here: no
     // client component reads them (they render on the server), and they were
     // ~10 KB of every page's HTML in every locale.
     "designSystem",
@@ -188,6 +188,9 @@ export default async function LangLayout({ children, params }: LangLayoutProps) 
     // The template's own starter site — StarterFooter/StarterNav/StarterPricing
     // ("use client") read messages/en.json -> site.* via useTranslations().
     "site",
+    // compliance.icp: two labels for the ICP record StarterFooter renders when
+    // NEXT_PUBLIC_ICP_NUMBER is set.
+    "compliance",
   ] as const;
 
   const clientMessages = pickMessages(messages, CLIENT_NAMESPACES);

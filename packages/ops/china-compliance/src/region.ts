@@ -7,53 +7,19 @@
  * to call from server, client, or test code.
  */
 
-export type ChinaRegion = "cn-mainland" | "cn-hk-mo-tw" | "overseas" | "unknown";
+import { detectMarket, type MarketRegion } from "@nebutra/contracts/market";
 
-const VALID_REGIONS: readonly ChinaRegion[] = ["cn-mainland", "cn-hk-mo-tw", "overseas", "unknown"];
-
-function readEnv(name: string): string | undefined {
-  // Guard: in some bundler contexts `process` is undefined.
-  if (typeof process === "undefined" || process.env === undefined) {
-    return undefined;
-  }
-  const v = process.env[name];
-  return typeof v === "string" && v.length > 0 ? v : undefined;
-}
-
-function normalize(value: string | undefined): ChinaRegion | undefined {
-  if (!value) return undefined;
-  const lower = value.toLowerCase().trim();
-  if (VALID_REGIONS.includes(lower as ChinaRegion)) {
-    return lower as ChinaRegion;
-  }
-  // Tolerate common synonyms.
-  if (lower === "cn" || lower === "china" || lower === "mainland") {
-    return "cn-mainland";
-  }
-  if (lower === "hk" || lower === "mo" || lower === "tw" || lower === "hkt" || lower === "hkmotw") {
-    return "cn-hk-mo-tw";
-  }
-  if (lower === "global" || lower === "us" || lower === "eu" || lower === "world") {
-    return "overseas";
-  }
-  return undefined;
-}
+export type ChinaRegion = MarketRegion;
 
 /**
- * Detect the deployment region from env. Order of precedence:
- *
- *   1. `NEBUTRA_REGION`  (server-side override)
- *   2. `NEXT_PUBLIC_REGION` (build-time / public override)
- *   3. fallback: `"unknown"`
+ * Detect the deployment region from env — the one switch is
+ * `NEBUTRA_LOCALE=cn` (server) / `NEXT_PUBLIC_NEBUTRA_LOCALE=cn` (client
+ * mirror). `NEBUTRA_REGION` and `NEXT_PUBLIC_REGION` are kept as aliases.
+ * The precedence and parsing live in `@nebutra/contracts/market`, shared with
+ * billing, SMS and the compliance UI.
  */
 export function detectChinaRegion(): ChinaRegion {
-  const fromServer = normalize(readEnv("NEBUTRA_REGION"));
-  if (fromServer) return fromServer;
-
-  const fromPublic = normalize(readEnv("NEXT_PUBLIC_REGION"));
-  if (fromPublic) return fromPublic;
-
-  return "unknown";
+  return detectMarket();
 }
 
 /**

@@ -17,7 +17,7 @@ This package keeps "going-to-market in China" concerns isolated from the rest of
 
 | Variable | Purpose |
 |---|---|
-| `NEBUTRA_REGION` / `NEXT_PUBLIC_REGION` | Force region: `cn-mainland`, `cn-hk-mo-tw`, `overseas` |
+| `NEBUTRA_LOCALE` (`NEXT_PUBLIC_NEBUTRA_LOCALE` on the client) | The one switch: `cn` turns on the mainland surfaces (WeChat Pay / Alipay first, Aliyun SMS, the CN compliance footer). `NEBUTRA_REGION` / `NEXT_PUBLIC_REGION` are kept as aliases and also accept `cn-mainland`, `cn-hk-mo-tw`, `overseas` |
 | `NEXT_PUBLIC_ICP_NUMBER` | ICP record number rendered in landing footer |
 | `NEXT_PUBLIC_PUBLIC_SECURITY_RECORD` | Optional 公安备案 number |
 | `NEXT_PUBLIC_WECHAT_APP_ID` | WeChat Open Platform AppID |

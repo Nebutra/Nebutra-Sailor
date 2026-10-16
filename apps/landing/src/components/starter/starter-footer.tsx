@@ -3,6 +3,7 @@
 import { BrandMark, BrandWordmark } from "@nebutra/brand";
 import { brand } from "@nebutra/brand/metadata";
 import { useTranslations } from "next-intl";
+import { IcpRecord } from "@/components/icp-record";
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { SITE, type SiteTranslator } from "@/content/site";
 import { useMount } from "@/hooks/useMount";
@@ -66,6 +67,8 @@ export function StarterFooter({ variant = "default" }: { variant?: "default" | "
       <div className="mx-auto flex max-w-wide flex-wrap items-center justify-between gap-4 border-t border-border px-4 py-6 first:border-t-0 md:px-6">
         <p className="text-sm text-muted-foreground">
           © {year ?? ""} {brand.nameFull || brand.name}. {t("rights")}
+          {/* Mainland filing (NEXT_PUBLIC_ICP_NUMBER); renders nothing until it is set. */}
+          <IcpRecord className="ml-3 text-sm text-muted-foreground" />
         </p>
         <ThemeSwitcher />
       </div>

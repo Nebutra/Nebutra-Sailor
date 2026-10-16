@@ -58,4 +58,13 @@ describe("resolveBillingProviderReadiness", () => {
       missing: [],
     });
   });
+
+  it("does not pick the legacy Stripe adapter from a stray STRIPE_SECRET_KEY", () => {
+    expect(
+      resolveBillingProviderReadiness({
+        env: { STRIPE_SECRET_KEY: "sk_test_123", CREEM_API_KEY: "k", CREEM_PRODUCT_ID: "p" },
+        selfServiceEnabled: true,
+      }),
+    ).toMatchObject({ provider: "creem", status: "degraded", checkoutReady: false });
+  });
 });

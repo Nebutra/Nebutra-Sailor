@@ -40,6 +40,10 @@
     "./sleptons": {
       "import": "./dist/sleptons.js",
       "types": "./dist/sleptons.d.ts"
+    },
+    "./market": {
+      "import": "./dist/market.js",
+      "types": "./dist/market.d.ts"
     }
   },
   "scripts": {

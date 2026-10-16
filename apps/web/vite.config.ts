@@ -6,6 +6,13 @@ import react, { reactCompilerPreset } from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
+  // The Vite preview has no `process` in the browser: inline the public mirror
+  // of NEBUTRA_LOCALE (the mainland-China switch) the way next.config.ts does.
+  define: {
+    "process.env.NEXT_PUBLIC_NEBUTRA_LOCALE": JSON.stringify(
+      process.env.NEXT_PUBLIC_NEBUTRA_LOCALE ?? process.env.NEBUTRA_LOCALE ?? "",
+    ),
+  },
   plugins: [
     tanstackRouter({
       target: "react",

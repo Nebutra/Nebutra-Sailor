@@ -9,6 +9,7 @@ export default defineConfig({
     "src/notifications.ts",
     "src/admin.ts",
     "src/sleptons.ts",
+    "src/market.ts",
   ],
   format: ["esm"],
   dts: true,

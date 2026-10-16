@@ -2040,6 +2040,9 @@ importers:
       streamdown:
         specifier: ^2.5.0
         version: 2.5.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(supports-color@10.2.2)
+      use-intl:
+        specifier: ^4.12.0
+        version: 4.12.0(react@19.2.4)
       usehooks-ts:
         specifier: ^3.1.1
         version: 3.1.1(react@19.2.4)
@@ -4860,6 +4863,9 @@ importers:
       '@nebutra/cache':
         specifier: workspace:*
         version: link:../cache
+      '@nebutra/contracts':
+        specifier: workspace:*
+        version: link:../../commerce/contracts
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../platform/logger
@@ -4976,6 +4982,10 @@ importers:
         version: 4.1.11(@opentelemetry/api@1.9.1)(@types/node@25.9.1)(@vitest/coverage-v8@4.1.11)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.0.16(@types/node@25.9.1)(esbuild@0.28.1)(jiti@2.7.0)(terser@5.50.0)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/ops/china-compliance:
+    dependencies:
+      '@nebutra/contracts':
+        specifier: workspace:*
+        version: link:../../commerce/contracts
     devDependencies:
       '@types/node':
         specifier: ^22.19.15
