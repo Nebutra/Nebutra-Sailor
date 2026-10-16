@@ -1,0 +1,351 @@
+// Nebutra Status — its own database, self-hosted or cloud.
+//
+// Every business row carries `workspace_id` from day one. A self-hosted
+// install has exactly one workspace; the cloud runs many in the same tables,
+// so going multi-tenant is a routing change, not a migration.
+//
+// Migrations: edit this file, then `pnpm --filter @nebutra/status-app db:migration <name>`.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ComponentState {
+  operational
+  degraded
+  outage
+  maintenance
+  unknown
+}
+
+/// What a piece of evidence proves. A green component says which of these it
+/// has fresh — "the endpoint answered" and "a user could log in" are different
+/// claims.
+enum EvidenceCoverage {
+  dependency
+  synthetic
+  device
+  upstream
+  manual
+}
+
+enum MonitorKind {
+  http
+  keyword
+  json_status
+  statuspage
+  heartbeat
+}
+
+enum IncidentKind {
+  incident
+  maintenance
+}
+
+enum IncidentImpact {
+  none
+  minor
+  major
+  critical
+}
+
+enum IncidentStatus {
+  investigating
+  identified
+  monitoring
+  resolved
+}
+
+enum MemberRole {
+  owner
+  admin
+  editor
+}
+
+enum SubscriberChannel {
+  email
+  webhook
+  feishu
+  dingtalk
+  wecom
+  slack
+}
+
+model Workspace {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  members Member[]
+  apiKeys ApiKey[]
+  pages   Page[]
+
+  @@map("workspaces")
+}
+
+model Member {
+  id           String     @id @default(cuid())
+  workspaceId  String     @map("workspace_id")
+  email        String
+  name         String?
+  /// scrypt, `salt:hash` hex. Null for members who only sign in through OIDC.
+  passwordHash String?    @map("password_hash")
+  role         MemberRole @default(editor)
+  createdAt    DateTime   @default(now()) @map("created_at")
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  sessions  Session[]
+
+  @@unique([workspaceId, email])
+  @@map("members")
+}
+
+model Session {
+  /// sha256 of the cookie value; the value itself is never stored.
+  id        String   @id
+  memberId  String   @map("member_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@index([memberId])
+  @@map("sessions")
+}
+
+/// Machine credentials: evidence push, incident automation, CI deploy gates.
+model ApiKey {
+  id          String    @id @default(cuid())
+  workspaceId String    @map("workspace_id")
+  name        String
+  /// First characters of the key, shown so a person can tell keys apart.
+  prefix      String
+  /// sha256 of the full key.
+  hash        String    @unique
+  scopes      String[]
+  lastUsedAt  DateTime? @map("last_used_at")
+  revokedAt   DateTime? @map("revoked_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@map("api_keys")
+}
+
+model Page {
+  id            String   @id @default(cuid())
+  workspaceId   String   @map("workspace_id")
+  slug          String   @unique
+  title         String
+  description   String?
+  /// BCP 47 tags the page is published in; the first is the default.
+  locales       String[] @default(["en"])
+  customDomain  String?  @unique @map("custom_domain")
+  /// A legacy JSON shape this page also serves, e.g. "xiaoya-v1".
+  compatProfile String?  @map("compat_profile")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  groups      ComponentGroup[]
+  components  Component[]
+  incidents   Incident[]
+  subscribers Subscriber[]
+
+  @@index([workspaceId])
+  @@map("pages")
+}
+
+model ComponentGroup {
+  id          String  @id @default(cuid())
+  workspaceId String  @map("workspace_id")
+  pageId      String  @map("page_id")
+  key         String
+  name        String
+  /// Locale → name, for locales other than the page default.
+  nameI18n    Json?   @map("name_i18n")
+  description String?
+  position    Int     @default(0)
+
+  page       Page        @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  components Component[]
+
+  @@unique([pageId, key])
+  @@map("component_groups")
+}
+
+model Component {
+  id          String   @id @default(cuid())
+  workspaceId String   @map("workspace_id")
+  pageId      String   @map("page_id")
+  groupId     String?  @map("group_id")
+  /// Stable public id. Compat profiles and API clients address components by it.
+  key         String
+  name        String
+  nameI18n    Json?    @map("name_i18n")
+  description String?
+  position    Int      @default(0)
+  /// Internal components are evaluated and alerted on but never published.
+  isPublic    Boolean  @default(true) @map("is_public")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  page      Page                @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  group     ComponentGroup?     @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  monitors  Monitor[]
+  evidence  Evidence[]
+  days      DailyStat[]
+  incidents IncidentComponent[]
+
+  @@unique([pageId, key])
+  @@index([groupId])
+  @@map("components")
+}
+
+/// A check this instance runs itself. Results land as Evidence with source `monitor:<id>`.
+model Monitor {
+  id              String           @id @default(cuid())
+  workspaceId     String           @map("workspace_id")
+  componentId     String           @map("component_id")
+  kind            MonitorKind
+  coverage        EvidenceCoverage @default(dependency)
+  url             String
+  method          String           @default("GET")
+  expectStatusMin Int              @default(200) @map("expect_status_min")
+  expectStatusMax Int              @default(399) @map("expect_status_max")
+  keyword         String?
+  timeoutMs       Int              @default(5000) @map("timeout_ms")
+  intervalSeconds Int              @default(60) @map("interval_seconds")
+  enabled         Boolean          @default(true)
+  nextRunAt       DateTime         @default(now()) @map("next_run_at")
+  createdAt       DateTime         @default(now()) @map("created_at")
+
+  component Component @relation(fields: [componentId], references: [id], onDelete: Cascade)
+
+  @@index([enabled, nextRunAt])
+  @@map("monitors")
+}
+
+/// The latest reading from one source about one component. A component's state
+/// is derived from all its evidence, each judged by its own freshness.
+model Evidence {
+  id               String           @id @default(cuid())
+  workspaceId      String           @map("workspace_id")
+  componentId      String           @map("component_id")
+  /// `monitor:<id>` for built-in monitors, any caller-chosen name for pushed evidence.
+  source           String
+  coverage         EvidenceCoverage
+  state            ComponentState
+  checkedAt        DateTime         @map("checked_at")
+  lastSuccessAt    DateTime?        @map("last_success_at")
+  latencyMs        Int?             @map("latency_ms")
+  note             String?
+  /// Older than this counts as degraded; older than twice this, as outage.
+  freshnessSeconds Int              @map("freshness_seconds")
+
+  component Component @relation(fields: [componentId], references: [id], onDelete: Cascade)
+
+  @@unique([componentId, source])
+  @@map("evidence")
+}
+
+/// Per component per UTC day: how many readings, how many were bad, latency sum.
+model DailyStat {
+  componentId  String   @map("component_id")
+  day          DateTime @db.Date
+  total        Int      @default(0)
+  degraded     Int      @default(0)
+  outage       Int      @default(0)
+  latencySum   BigInt   @default(0) @map("latency_sum")
+  latencyCount Int      @default(0) @map("latency_count")
+
+  component Component @relation(fields: [componentId], references: [id], onDelete: Cascade)
+
+  @@id([componentId, day])
+  @@map("daily_stats")
+}
+
+model Incident {
+  id             String         @id @default(cuid())
+  workspaceId    String         @map("workspace_id")
+  pageId         String         @map("page_id")
+  kind           IncidentKind   @default(incident)
+  title          String
+  impact         IncidentImpact @default(minor)
+  status         IncidentStatus @default(investigating)
+  scheduledStart DateTime?      @map("scheduled_start")
+  scheduledEnd   DateTime?      @map("scheduled_end")
+  resolvedAt     DateTime?      @map("resolved_at")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  page       Page                @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  updates    IncidentUpdate[]
+  components IncidentComponent[]
+
+  @@index([pageId, createdAt])
+  @@map("incidents")
+}
+
+model IncidentUpdate {
+  id          String         @id @default(cuid())
+  incidentId  String         @map("incident_id")
+  status      IncidentStatus
+  message     String
+  /// Locale → message, for locales other than the page default.
+  messageI18n Json?          @map("message_i18n")
+  createdAt   DateTime       @default(now()) @map("created_at")
+
+  incident Incident @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+
+  @@index([incidentId, createdAt])
+  @@map("incident_updates")
+}
+
+model IncidentComponent {
+  incidentId  String @map("incident_id")
+  componentId String @map("component_id")
+
+  incident  Incident  @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  component Component @relation(fields: [componentId], references: [id], onDelete: Cascade)
+
+  @@id([incidentId, componentId])
+  @@map("incident_components")
+}
+
+model Subscriber {
+  id             String            @id @default(cuid())
+  workspaceId    String            @map("workspace_id")
+  pageId         String            @map("page_id")
+  channel        SubscriberChannel
+  /// Email address or webhook / bot URL.
+  target         String
+  /// Confirms and unsubscribes without an account.
+  token          String            @unique
+  /// Empty means every component.
+  componentKeys  String[]          @map("component_keys")
+  locale         String?
+  confirmedAt    DateTime?         @map("confirmed_at")
+  unsubscribedAt DateTime?         @map("unsubscribed_at")
+  createdAt      DateTime          @default(now()) @map("created_at")
+
+  page Page @relation(fields: [pageId], references: [id], onDelete: Cascade)
+
+  @@unique([pageId, channel, target])
+  @@map("subscribers")
+}
+
+/// Single-runner lease, so only one replica probes at a time.
+model RunnerLease {
+  name      String   @id
+  holder    String
+  expiresAt DateTime @map("expires_at")
+
+  @@map("runner_leases")
+}

@@ -1,0 +1,41 @@
+{
+  "name": "@nebutra/status-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Nebutra Status — self-hostable status pages: evidence-based components, incidents, maintenance, subscribers",
+  "nebutra": {
+    "status": "wip",
+    "graph": "labs",
+    "productionReady": false
+  },
+  "scripts": {
+    "dev": "next dev --port 3140",
+    "build": "prisma generate && next build",
+    "start": "next start --port 3140",
+    "db:generate": "prisma generate",
+    "db:migration": "node scripts/write-migration.mjs",
+    "db:deploy": "prisma migrate deploy",
+    "typecheck": "prisma generate && tsc --noEmit",
+    "test": "prisma generate && vitest run"
+  },
+  "dependencies": {
+    "@nebutra/status": "workspace:*",
+    "@prisma/adapter-pg": "^7.4.2",
+    "@prisma/client": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.15",
+    "@electric-sql/pglite-socket": "^0.0.20",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "prisma": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "license": "FSL-1.1-ALv2"
+}
