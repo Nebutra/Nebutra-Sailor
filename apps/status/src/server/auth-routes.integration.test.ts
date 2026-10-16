@@ -19,7 +19,11 @@ function req(
   init: { method?: string; body?: unknown; cookie?: string; headers?: Record<string, string> } = {},
 ) {
   const headers = new Headers(init.headers);
-  if (init.cookie) headers.set("cookie", init.cookie);
+  if (init.cookie) {
+    headers.set("cookie", init.cookie);
+    headers.set("host", "status.acme.test");
+    if ((init.method ?? "GET") !== "GET" && !headers.has("origin")) headers.set("origin", BASE);
+  }
   if (init.body !== undefined) headers.set("content-type", "application/json");
   return new Request(`${BASE}${path}`, {
     method: init.method ?? "GET",
@@ -119,6 +123,11 @@ describe("auth and key routes", () => {
       { params: Promise.resolve({ id: apiKey.id }) },
     );
     expect(cross.status).toBe(403);
+    // A cookie write with no Origin at all is refused too.
+    const bare = new Request(`${BASE}/k/${apiKey.id}`, { method: "DELETE", headers: { cookie } });
+    expect((await revokeKey(bare, { params: Promise.resolve({ id: apiKey.id }) })).status).toBe(
+      403,
+    );
     const revoked = await revokeKey(req(`/k/${apiKey.id}`, { method: "DELETE", cookie }), {
       params: Promise.resolve({ id: apiKey.id }),
     });

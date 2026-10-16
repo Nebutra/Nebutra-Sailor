@@ -52,10 +52,12 @@ curl -c jar -X POST http://localhost:3140/api/v1/auth/setup -H 'content-type: ap
   -d '{"setupToken":"'$STATUS_SETUP_TOKEN'","email":"you@example.com","password":"至少 12 位的密码","workspaceSlug":"acme"}'
 
 curl -b jar -X POST http://localhost:3140/api/v1/keys -H 'content-type: application/json' \
+  -H 'origin: http://localhost:3140' \
   -d '{"name":"probes","scopes":["evidence:write","status:read"]}'
 # → {"key":"ns_…"}  明文只出现这一次，数据库里只存 sha256
 ```
 
+带会话 cookie 的写请求必须带与实例一致的 `Origin` 头（浏览器会自动带上；curl 需手写），用 API key 的请求不需要。
 `workspaceSlug` 要与 `status.config.json` 里的 `workspace.slug` 一致。完成后可以去掉
 `STATUS_SETUP_TOKEN`。API key 的 scope：`status:read`、`evidence:write`、`incidents:write`。
 角色：owner/admin 管理 key，editor 可写事故。
@@ -156,18 +158,26 @@ RFC 3339 时间、Go 默认的 HTML 安全转义都一致。小芽 `scripts/depl
 **小芽接入步骤**
 
 1. 在小芽的服务器上跑容器，配置用 `examples/xiaoya.status.config.json`（17 个服务、4 个分组，
-   `notification-delivery` 不公开），环境变量：
+   `notification-delivery` 不公开）。状态页放在**独立子域**（例如 `status.<小芽域名>`，在父域名的
+   ICP 备案范围内），环境变量：
    ```
    STATUS_DEFAULT_PAGE=xiaoya
    STATUS_COMPAT_ROOT=xiaoya-v1
-   STATUS_PUBLIC_URL=https://zk.mox.ktvsky.com
+   STATUS_PUBLIC_URL=https://status.<小芽域名>
    ```
-2. nginx 把状态页与状态 API 转给它（页面的静态资源在 `/_next/`，也要转发，或者把状态页放在独立子域）：
+2. 子域整站反代到实例；小芽主域名只转发 JSON 接口（没有静态资源），`/status` 302 到子域：
    ```nginx
-   location = /status          { proxy_pass http://127.0.0.1:3140; }
-   location = /api/v1/status   { proxy_pass http://127.0.0.1:3140; }
-   location /_next/            { proxy_pass http://127.0.0.1:3140; }
+   # status.<小芽域名>
+   server {
+     server_name status.<小芽域名>;
+     location / { proxy_pass http://127.0.0.1:3140; proxy_set_header Host $host;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; }
+   }
+   # 小芽主域名
+   location = /api/v1/status { proxy_pass http://127.0.0.1:3140; }
+   location = /status        { return 302 https://status.<小芽域名>/; }
    ```
+   `deploy.sh` 继续读 `$PUBLIC_BASE_URL/api/v1/status`，一行不改。
 3. Go 的业务旅程（`business_probe.go`）每跑完一次推一条 synthetic 证据，`source` 用探针 id，
    `freshnessSeconds` 用小芽的 `BusinessProbeFreshness`（默认 15 分钟 = 900）：
    ```go
@@ -270,10 +280,11 @@ Create the first owner (only while the instance has no members, and only with
 curl -c jar -X POST http://localhost:3140/api/v1/auth/setup -H 'content-type: application/json' \
   -d '{"setupToken":"'$STATUS_SETUP_TOKEN'","email":"you@example.com","password":"at least 12 chars","workspaceSlug":"acme"}'
 curl -b jar -X POST http://localhost:3140/api/v1/keys -H 'content-type: application/json' \
+  -H 'origin: http://localhost:3140' \
   -d '{"name":"probes","scopes":["evidence:write","status:read"]}'
 ```
 
-The plaintext `ns_…` key is returned once; only its sha256 is stored. Scopes: `status:read`,
+Writes authenticated by the session cookie must carry a matching `Origin` header (browsers send it; add it by hand in curl); API-key writes need none. The plaintext `ns_…` key is returned once; only its sha256 is stored. Scopes: `status:read`,
 `evidence:write`, `incidents:write`. Owners and admins manage keys; editors write incidents.
 
 ### Reference
@@ -294,5 +305,6 @@ The plaintext `ns_…` key is returned once; only its sha256 is stored. Scopes: 
 - **Feeds** — `feed.atom` and `feed.rss` under the page.
 - **Compat `xiaoya-v1`** — `GET /compat/xiaoya-v1/:slug/status.json`, and `GET /api/v1/status`
   when `STATUS_COMPAT_ROOT=xiaoya-v1` and `STATUS_DEFAULT_PAGE` are set. Byte-compatible with
-  小芽's Go `PublicStatusResp`; the migration steps for 小芽 are in the Chinese section.
+  小芽's Go `PublicStatusResp`. 小芽 serves the page on its own subdomain; its main domain proxies only
+  `/api/v1/status` and 302-redirects `/status` there. Full steps are in the Chinese section.
 - **Environment** — see the table in the Chinese section.

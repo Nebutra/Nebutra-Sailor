@@ -68,21 +68,25 @@ export type Caller =
   | { kind: "member"; member: SessionMember };
 
 /**
- * A cookie-authenticated write must come from this origin. SameSite=Lax
- * already withholds the cookie from cross-site POSTs; this closes the
- * remaining same-site-but-different-origin gap. Browsers send Origin on every
- * cross-origin write, so a request without one is a non-browser client (curl),
- * which no other site can make carry the cookie.
+ * A cookie-authenticated write must name this origin. SameSite=Lax already
+ * withholds the cookie from cross-site POSTs; requiring a matching Origin
+ * closes the same-site-but-different-origin gap and refuses any request that
+ * carries the session cookie without saying where it came from. API-key
+ * writes carry no cookie and need no Origin.
  */
 export function sameOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
-  if (!origin) return true;
+  if (!origin) return false;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
   try {
     return new URL(origin).host === (host ?? new URL(request.url).host);
   } catch {
     return false;
   }
+}
+
+function isWrite(request: Request): boolean {
+  return request.method !== "GET" && request.method !== "HEAD";
 }
 
 /**
@@ -110,7 +114,7 @@ export async function authorize(
   const member = await getSessionMember(db, request.headers.get("cookie"));
   if (!member) return problem(401, "unauthorized");
   if (member.workspaceId !== workspaceId || !memberCheck(member)) return problem(403, "forbidden");
-  if (!sameOrigin(request)) return problem(403, "cross_origin");
+  if (isWrite(request) && !sameOrigin(request)) return problem(403, "cross_origin");
   return { kind: "member", member };
 }
 
@@ -128,6 +132,6 @@ export async function requireMember(
   const member = await getSessionMember(db, request.headers.get("cookie"));
   if (!member) return problem(401, "unauthorized");
   if (!check(member)) return problem(403, "forbidden");
-  if (request.method !== "GET" && !sameOrigin(request)) return problem(403, "cross_origin");
+  if (isWrite(request) && !sameOrigin(request)) return problem(403, "cross_origin");
   return member;
 }
