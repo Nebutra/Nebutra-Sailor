@@ -67,6 +67,13 @@ enum MemberRole {
   editor
 }
 
+enum DeliveryStatus {
+  pending
+  sent
+  dead
+  cancelled
+}
+
 enum SubscriberChannel {
   email
   webhook
@@ -158,6 +165,7 @@ model Page {
   components  Component[]
   incidents   Incident[]
   subscribers Subscriber[]
+  deliveries  Delivery[]
 
   @@index([workspaceId])
   @@map("pages")
@@ -182,19 +190,22 @@ model ComponentGroup {
 }
 
 model Component {
-  id          String   @id @default(cuid())
-  workspaceId String   @map("workspace_id")
-  pageId      String   @map("page_id")
-  groupId     String?  @map("group_id")
+  id            String          @id @default(cuid())
+  workspaceId   String          @map("workspace_id")
+  pageId        String          @map("page_id")
+  groupId       String?         @map("group_id")
   /// Stable public id. Compat profiles and API clients address components by it.
-  key         String
-  name        String
-  nameI18n    Json?    @map("name_i18n")
-  description String?
-  position    Int      @default(0)
+  key           String
+  name          String
+  nameI18n      Json?           @map("name_i18n")
+  description   String?
+  position      Int             @default(0)
   /// Internal components are evaluated and alerted on but never published.
-  isPublic    Boolean  @default(true) @map("is_public")
-  createdAt   DateTime @default(now()) @map("created_at")
+  isPublic      Boolean         @default(true) @map("is_public")
+  /// The state subscribers were last told about, when component-change
+  /// notifications are on. Null until the first evaluation.
+  notifiedState ComponentState? @map("notified_state")
+  createdAt     DateTime        @default(now()) @map("created_at")
 
   page      Page                @relation(fields: [pageId], references: [id], onDelete: Cascade)
   group     ComponentGroup?     @relation(fields: [groupId], references: [id], onDelete: SetNull)
@@ -272,18 +283,20 @@ model DailyStat {
 }
 
 model Incident {
-  id             String         @id @default(cuid())
-  workspaceId    String         @map("workspace_id")
-  pageId         String         @map("page_id")
-  kind           IncidentKind   @default(incident)
-  title          String
-  impact         IncidentImpact @default(minor)
-  status         IncidentStatus @default(investigating)
-  scheduledStart DateTime?      @map("scheduled_start")
-  scheduledEnd   DateTime?      @map("scheduled_end")
-  resolvedAt     DateTime?      @map("resolved_at")
-  createdAt      DateTime       @default(now()) @map("created_at")
-  updatedAt      DateTime       @updatedAt @map("updated_at")
+  id              String         @id @default(cuid())
+  workspaceId     String         @map("workspace_id")
+  pageId          String         @map("page_id")
+  kind            IncidentKind   @default(incident)
+  title           String
+  impact          IncidentImpact @default(minor)
+  status          IncidentStatus @default(investigating)
+  scheduledStart  DateTime?      @map("scheduled_start")
+  scheduledEnd    DateTime?      @map("scheduled_end")
+  resolvedAt      DateTime?      @map("resolved_at")
+  /// Maintenance only: when subscribers were told the window opened.
+  startNotifiedAt DateTime?      @map("start_notified_at")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
 
   page       Page                @relation(fields: [pageId], references: [id], onDelete: Cascade)
   updates    IncidentUpdate[]
@@ -326,6 +339,8 @@ model Subscriber {
   channel        SubscriberChannel
   /// Email address or webhook / bot URL.
   target         String
+  /// Feishu / DingTalk bot signing secret, or the HMAC key for a generic webhook.
+  secret         String?
   /// Confirms and unsubscribes without an account.
   token          String            @unique
   /// Empty means every component.
@@ -335,10 +350,40 @@ model Subscriber {
   unsubscribedAt DateTime?         @map("unsubscribed_at")
   createdAt      DateTime          @default(now()) @map("created_at")
 
-  page Page @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  page       Page       @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  deliveries Delivery[]
 
   @@unique([pageId, channel, target])
   @@map("subscribers")
+}
+
+/// The notification outbox. Writes enqueue rows; the runner sends them with
+/// retries and backoff, so no API request ever waits on a webhook or SMTP.
+model Delivery {
+  id            String         @id @default(cuid())
+  workspaceId   String         @map("workspace_id")
+  pageId        String         @map("page_id")
+  subscriberId  String         @map("subscriber_id")
+  /// incident.created | incident.updated | maintenance.started | component.changed
+  /// | subscription.confirm | subscription.welcome
+  event         String
+  incidentId    String?        @map("incident_id")
+  /// The rendered message for the subscriber's channel and locale. Bot
+  /// signatures are added at send time.
+  payload       Json
+  status        DeliveryStatus @default(pending)
+  attempts      Int            @default(0)
+  nextAttemptAt DateTime       @default(now()) @map("next_attempt_at")
+  lastError     String?        @map("last_error")
+  sentAt        DateTime?      @map("sent_at")
+  createdAt     DateTime       @default(now()) @map("created_at")
+
+  page       Page       @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  subscriber Subscriber @relation(fields: [subscriberId], references: [id], onDelete: Cascade)
+
+  @@index([status, nextAttemptAt])
+  @@index([subscriberId])
+  @@map("deliveries")
 }
 
 /// Single-runner lease, so only one replica probes at a time.

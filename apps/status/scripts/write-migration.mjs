@@ -10,11 +10,12 @@
  *
  *   pnpm --filter @nebutra/status-app db:migration add_subscribers
  */
-import { execFileSync } from "node:child_process";
+import { execFile } from "node:child_process";
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 import { PGlite } from "@electric-sql/pglite";
 import { PGLiteSocketServer } from "@electric-sql/pglite-socket";
 
@@ -47,7 +48,9 @@ await socket.start();
 
 try {
   const from = hasMigrations ? ["--from-migrations", migrationsDir] : ["--from-empty"];
-  const sql = execFileSync(
+  // Asynchronous on purpose: the PGlite socket server lives in this process,
+  // and a synchronous child would block the event loop it answers on.
+  const { stdout: sql } = await promisify(execFile)(
     "npx",
     ["prisma", "migrate", "diff", ...from, "--to-schema", "prisma/schema.prisma", "--script"],
     {
@@ -55,8 +58,8 @@ try {
       encoding: "utf8",
       env: {
         ...process.env,
-        STATUS_DATABASE_URL: `postgresql://postgres:postgres@127.0.0.1:${port}/template1`,
-        STATUS_SHADOW_DATABASE_URL: `postgresql://postgres:postgres@127.0.0.1:${port}/template1`,
+        STATUS_DATABASE_URL: `postgresql://postgres:postgres@127.0.0.1:${port}/template1?sslmode=disable`,
+        STATUS_SHADOW_DATABASE_URL: `postgresql://postgres:postgres@127.0.0.1:${port}/template1?sslmode=disable`,
       },
     },
   );
