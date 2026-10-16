@@ -51,6 +51,7 @@ vi.mock("next-intl", () => ({
     copyNs?.startsWith("copy.") || copyNs === "Sidebar.nav"
       ? catalogT(copyNs)
       : (key: string) => key,
+  useFormatter: () => ({ dateTime: (d: Date) => d.toISOString() }),
 }));
 
 // dashboard-nav.ts imports `routing.locales` from this module; the real module
@@ -97,6 +98,10 @@ interface MockSidebarSection {
   actions?: { id: string; label: string; onClick?: () => void }[];
 }
 
+vi.mock("@nebutra/ui/components", () => ({
+  AnimateIn: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+}));
+
 vi.mock("@nebutra/ui/layout", () => ({
   AppShell: ({ sidebar, children }: { sidebar: React.ReactNode; children: React.ReactNode }) => (
     <div>
@@ -130,7 +135,16 @@ vi.mock("@nebutra/ui/patterns", () => ({
       ))}
     </nav>
   ),
-  WorkspaceSwitcher: () => null,
+  // Rail chrome: drawn as plain stand-ins; the plate and meter content are not
+  // what these react-query tests assert on.
+  SidebarWorkspacePlate: ({ name }: { name: string }) => <span>{name}</span>,
+  SidebarLogoPlate: () => null,
+  SidebarSearchButton: () => null,
+  SidebarUsageMeter: () => null,
+}));
+
+vi.mock("@/components/command-palette/command-palette-provider", () => ({
+  useCommandPalette: () => ({ toggle: vi.fn() }),
 }));
 
 // Partial mock: the dropdown family is flattened (its popup needs a pointer

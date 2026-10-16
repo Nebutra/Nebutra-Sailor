@@ -1,15 +1,15 @@
-import { PageHeader } from "@nebutra/ui/layout";
-import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { SettingsNav } from "./settings-nav";
 
+/**
+ * Settings: the section rail and the section. Each page renders its own
+ * section-sized header (`SettingsPageHeader` or `PageHeader size="section"`),
+ * so the parent's title is not repeated at page size above every child.
+ */
 export default function SettingsLayout({ children }: { children: ReactNode }) {
-  const tc = useTranslations("copy.settingsLayout");
   return (
-    <div className="mx-auto max-w-4xl">
-      <PageHeader title={tc("settings")} description={tc("manageYourOrganizationAnd")} />
-
-      <div className="mt-6 flex flex-col gap-6 md:mt-8 md:flex-row md:gap-8">
+    <div className="mx-auto max-w-content">
+      <div className="flex flex-col gap-6 md:flex-row md:gap-12">
         <SettingsNav />
 
         {/* Page content */}

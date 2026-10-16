@@ -219,6 +219,13 @@ export interface EmptyStateProps {
    * icon. Pass a kind, or your own decorative node.
    */
   preview?: GhostPreviewKind | React.ReactNode;
+  /**
+   * Where the preview sits. `behind` (default) fades it under a centred
+   * message. `beside` gives it its own column, unmasked, with the message and
+   * its one action to the right — for a product glimpse that should be seen,
+   * not just hinted at (ElevenLabs' create cards). Stacks on a phone.
+   */
+  previewPlacement?: "behind" | "beside";
   className?: string;
 }
 
@@ -239,6 +246,7 @@ function EmptyStateSimple({
   tone = "default",
   size = "md",
   preview,
+  previewPlacement = "behind",
   className,
 }: EmptyStateProps) {
   if (preview) {
@@ -248,6 +256,30 @@ function EmptyStateSimple({
       ) : (
         <div aria-hidden="true">{preview}</div>
       );
+    if (previewPlacement === "beside") {
+      return (
+        <section
+          className={cn(
+            "grid w-full items-center gap-8 overflow-hidden rounded-xl border border-border bg-card p-6 sm:p-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]",
+            className,
+          )}
+        >
+          <div className="pointer-events-none select-none">{ghost}</div>
+          <div className="flex flex-col items-start gap-1.5 text-left">
+            <h3 className="text-base text-foreground">{title}</h3>
+            {description ? (
+              <p className="max-w-sm text-pretty text-sm text-muted-foreground">{description}</p>
+            ) : null}
+            {action || secondaryAction ? (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {action}
+                {secondaryAction}
+              </div>
+            ) : null}
+          </div>
+        </section>
+      );
+    }
     return (
       <section
         className={cn(

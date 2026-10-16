@@ -1,5 +1,6 @@
 "use client";
 
+import { PageHeader } from "@nebutra/ui/layout";
 import { Table } from "@nebutra/ui/primitives";
 import { useTranslations } from "next-intl";
 import { useMemo } from "react";
@@ -70,23 +71,22 @@ export default function ShortcutsPage() {
 
   return (
     <section className="space-y-8">
-      <header>
-        <h1 className="text-base font-semibold text-neutral-12">{tc("keyboardShortcuts")}</h1>
-        <p className="mt-1 text-sm text-neutral-11">
-          {tc.rich("intro", {
-            kbd: (chunks) => (
-              <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs">
-                {chunks}
-              </kbd>
-            ),
-          })}
-        </p>
-      </header>
+      <PageHeader
+        size="section"
+        title={tc("keyboardShortcuts")}
+        description={tc.rich("intro", {
+          kbd: (chunks) => (
+            <kbd className="rounded border border-neutral-7 bg-neutral-1 px-1.5 py-0.5 font-mono text-xs">
+              {chunks}
+            </kbd>
+          ),
+        })}
+      />
 
       {/* Global shortcuts */}
 
       <div>
-        <h2 className="mb-3 text-xs font-semibold text-neutral-10">{tc("global")}</h2>
+        <h2 className="mb-3 text-xs text-neutral-10">{tc("global")}</h2>
         <Table
           bare
           wrapperClassName="overflow-hidden rounded-xl border border-border"
@@ -126,9 +126,7 @@ export default function ShortcutsPage() {
           if (items.length === 0) return null;
           return (
             <div key={section}>
-              <h2 className="mb-3 text-xs font-semibold text-neutral-10">
-                {t(`sections.${section}`)}
-              </h2>
+              <h2 className="mb-3 text-xs text-neutral-10">{t(`sections.${section}`)}</h2>
               <Table
                 bare
                 wrapperClassName="overflow-hidden rounded-xl border border-border"

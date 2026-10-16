@@ -473,6 +473,43 @@ function OptionsListboxSelect({
   );
 }
 
+/**
+ * Value → label for the compound form, read from its `SelectItem` children.
+ *
+ * Base UI's `Select.Value` renders the raw value unless the root is given
+ * `items`, so a bare `<SelectValue />` showed `org:member`, `owner` or
+ * `zh-Hans-CN` in the trigger — English identifiers in every locale. The
+ * compound root now collects the labels its items already carry, and
+ * `SelectValue`'s default renderer reads them.
+ */
+const SelectLabelsContext = React.createContext<Record<string, React.ReactNode> | null>(null);
+
+function collectItemLabels(
+  node: React.ReactNode,
+  into: Record<string, React.ReactNode> = {},
+): Record<string, React.ReactNode> {
+  React.Children.forEach(node, (child) => {
+    if (!React.isValidElement(child)) return;
+    const props = child.props as { value?: unknown; children?: React.ReactNode };
+    if (child.type === SelectItem && props.value !== undefined && props.value !== null) {
+      into[String(props.value)] = props.children;
+      return;
+    }
+    if (props.children !== undefined) collectItemLabels(props.children, into);
+  });
+  return into;
+}
+
+function CompoundSelectRoot(props: Omit<CompoundSelectProps, "native">) {
+  const { children } = props;
+  const labels = React.useMemo(() => collectItemLabels(children), [children]);
+  return (
+    <SelectLabelsContext.Provider value={labels}>
+      <BaseSelect.Root {...props} />
+    </SelectLabelsContext.Provider>
+  );
+}
+
 function Select(props: OptionsSelectProps): React.JSX.Element;
 function Select(props: CompoundSelectProps): React.JSX.Element;
 function Select(props: SelectProps): React.JSX.Element {
@@ -485,7 +522,7 @@ function Select(props: SelectProps): React.JSX.Element {
   }
 
   const { native: _native, ...rootProps } = props as CompoundSelectProps;
-  return <BaseSelect.Root {...rootProps} />;
+  return <CompoundSelectRoot {...rootProps} />;
 }
 
 Select.displayName = "Select";
@@ -508,12 +545,17 @@ const SelectValue = ({
 }: React.ComponentPropsWithoutRef<typeof BaseSelect.Value> & { placeholder?: React.ReactNode } & {
   ref?: React.Ref<HTMLSpanElement> | undefined;
 }) => {
+  const labels = React.use(SelectLabelsContext);
+  const labelOf = (value: string) => labels?.[value] ?? value;
   return (
     <BaseSelect.Value ref={ref} className={cn("truncate", className)} {...props}>
       {children ||
         ((value: string | string[] | null) => {
-          if (Array.isArray(value)) return value.length ? value.join(", ") : placeholder;
-          return value || placeholder;
+          if (Array.isArray(value))
+            return value.length
+              ? value.map((v) => textOf(labelOf(v)) || v).join(", ")
+              : placeholder;
+          return value ? labelOf(value) : placeholder;
         })}
     </BaseSelect.Value>
   );

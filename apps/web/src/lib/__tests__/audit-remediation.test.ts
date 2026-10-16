@@ -272,11 +272,9 @@ describe("UI/UX audit remediation invariants", () => {
       'const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto"',
     );
     expect(workspaceSwitcher).toContain("px-2 py-1 text-left");
-    // High-density brand logo: size-7 collapsed, h-6 w-[8.5rem] expanded. The
-    // collapse-toggle refactor (fb42789f) split the single conditional className
-    // into separate collapsed/expanded branches — assert both governed sizes.
-    expect(shell).toContain('className="size-7"');
-    expect(shell).toContain('className="h-6 w-[8.5rem]"');
+    // The brand mark sits on the workspace plate at 16px (2026-10-16 craft
+    // pass), in every rail state; the full wordmark no longer heads the rail.
+    expect(shell).toContain('<BrandLogo variant="mark" className="size-4"');
     expect(shell).not.toContain("Workspace: {currentWorkspaceLabel}");
   });
 
@@ -306,14 +304,14 @@ describe("UI/UX audit remediation invariants", () => {
     const shell = readFromRepo("apps/web/src/app/providers/design-system-shell.tsx");
     const navModel = readFromRepo("apps/web/src/app/providers/dashboard-nav.ts");
 
-    // The aria-label="Workspace switcher" inline JSX was replaced by the
-    // WorkspaceSwitcher primitive from @nebutra/ui/patterns (refactor:
-    // a778b48a) — which renders its own aria-label="Switch workspace"
-    // trigger. Asserting on the import ensures the switcher is mounted.
-    expect(shell).toMatch(/WorkspaceSwitcher/);
+    // The workspace plate (@nebutra/ui/patterns) heads the rail; its menu
+    // carries the switcher when there is more than one organization.
+    expect(shell).toMatch(/SidebarWorkspacePlate/);
+    expect(shell).toContain('tSidebar("switchWorkspace")');
     expect(shell).toMatch(/from "@nebutra\/ui\/patterns"/);
     expect(shell).toContain("./dashboard-nav");
-    expect(navModel).toContain("Product");
+    expect(navModel).toContain('"Build"');
+    expect(navModel).toContain('"Developer tools"');
     expect(navModel).toContain("Admin");
   });
 

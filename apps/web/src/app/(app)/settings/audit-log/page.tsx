@@ -1,5 +1,6 @@
 "use client";
 
+import { PageHeader } from "@nebutra/ui/layout";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -72,10 +73,7 @@ export default function AuditLogPage() {
       }
     >
       <div className="space-y-6">
-        <div>
-          <h2 className="text-lg font-semibold text-foreground">{t("title")}</h2>
-          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{t("description")}</p>
-        </div>
+        <PageHeader size="section" title={t("title")} description={t("description")} />
 
         <AuditLogFilters onChange={setFilters} />
 

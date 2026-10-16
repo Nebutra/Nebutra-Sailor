@@ -1304,8 +1304,21 @@
       "room": "Room",
       "platform": "Platform",
       "fleet": "Fleet",
-      "supply": "Supply"
-    }
+      "supply": "Supply",
+      "build": "Build",
+      "developers": "Developers"
+    },
+    "search": "Search or jump to…",
+    "workspaceMenu": "Workspace menu",
+    "workspaceSettings": "Workspace settings",
+    "inviteMembers": "Invite members",
+    "billingAndPlan": "Billing and plan",
+    "switchWorkspace": "Switch workspace",
+    "planName": "{plan} plan",
+    "creditsLeft": "Credits left",
+    "creditsOf": "{balance} / {limit}",
+    "upgrade": "Upgrade",
+    "viewUsage": "Usage"
   },
   "startupOs": {
     "milestone": {
@@ -1413,11 +1426,11 @@
       "remainingThisPeriod": "{value0} {unit} remaining this period",
       "quotaNearlyExhaustedUpgrade": "Quota nearly exhausted. Upgrade your plan to avoid service interruption.",
       "approachingQuotaLimitConsider": "Approaching quota limit. Consider upgrading to avoid disruptions.",
-      "creditBalance": "Credit Balance",
+      "creditBalance": "Credit balance",
       "creditBalanceIsUnavailable": "Credit balance is unavailable right now. Usage metering below is still loaded from the gateway.",
       "dailyRefresh": "Daily refresh",
       "planAllowance": "Plan allowance",
-      "creditActivity": "Credit Activity",
+      "creditActivity": "Credit activity",
       "recentCreditGrantsAnd": "Recent credit grants and consumption events.",
       "balance": "Balance {value0}",
       "loadingUsageBreakdown": "Loading usage breakdown",
@@ -1427,13 +1440,13 @@
       "thisPeriodHasNo": "This period has no metered usage",
       "modelCallsAndAPI": "Model calls and API requests are grouped here as soon as the first usage event lands in this billing period.",
       "windowTo": "{period} window · {value1} to {value2}",
-      "usageMetering": "Usage & Metering",
+      "usageMetering": "Usage",
       "monitorCreditsAPICalls": "Monitor credits, API calls, AI token consumption, and quota status across your organization.",
       "usageMetricsWillAppear": "Create an API key and send a request — calls, tokens and quota show up here within a minute.",
-      "aPICalls": "API Calls",
-      "aITokensUsed": "AI Tokens Used",
+      "aPICalls": "API calls",
+      "aITokensUsed": "AI tokens used",
       "billingPeriod": "Billing Period",
-      "usageBreakdown": "Usage Breakdown",
+      "usageBreakdown": "Usage breakdown",
       "thisPeriodSMetered": "This period’s metered usage, grouped by the dimensions recorded on each event.",
       "managePlanAndLimits": "Manage plan and limits",
       "credits": "Credits",
@@ -1717,7 +1730,7 @@
       "connect": "Connect",
       "docs": "Docs",
       "integrationConnectorsWillBe": "Integration connectors will be added in future updates.",
-      "connectAnIntegration": "Connect an Integration",
+      "connectAnIntegration": "Connect an integration",
       "active": "Active",
       "paused": "Paused",
       "available": "Available",
@@ -1727,7 +1740,9 @@
         "STRIPE": "Synchronize payment data, invoices, and subscription events.",
         "CUSTOM": "Send and receive events via custom HTTP webhooks."
       },
-      "customWebhook": "Custom Webhook"
+      "customWebhook": "Custom Webhook",
+      "notConnected": "Not connected",
+      "lastSync": "Last sync {date, date, medium}"
     },
     "agentRuntimePage": {
       "agentRuntimeDisabled": "Agent Runtime — disabled",
@@ -1893,7 +1908,8 @@
           "title": "Form the team",
           "body": "Mutual interest opens a Cofounder Room; form the team and the company carries over."
         }
-      }
+      },
+      "artifactsCompiled": "{count, plural, one {# artifact compiled} other {# artifacts compiled}}"
     },
     "canvasPage": {
       "canvasDisabled": "Canvas — disabled",
@@ -2032,7 +2048,12 @@
       "roleChangesAndMember": "Role changes and member removal require an organization admin.",
       "leaveOrganization2": "Leave organization",
       "leave": "Leave",
-      "remove": "Remove"
+      "remove": "Remove",
+      "roles": { "owner": "Owner", "admin": "Admin", "member": "Member", "viewer": "Viewer" },
+      "unknownDate": "Unknown",
+      "roleChanged": "{name} is now {role}.",
+      "memberCount": "{count, plural, one {# member} other {# members}}",
+      "roleFor": "Role for {name}"
     },
     "connectorsConnectorsHub": {
       "connectSailorWithYour": "Connect Sailor with your everyday apps, APIs, and MCPs",
@@ -2384,8 +2405,13 @@
       "youDoNotHave": "You do not have permission to view API keys."
     },
     "settingsLayout": {
-      "settings": "Settings",
-      "manageYourOrganizationAnd": "Manage your organization and account settings"
+      "sections": {
+        "general": "Your profile, your avatar and the organization this workspace belongs to.",
+        "account": "Your sign-in email and a copy of your data.",
+        "appearance": "Theme, motion and type size for this browser.",
+        "security": "Password, linked accounts, two-step verification and the sessions signed in as you.",
+        "team": "The organization profile, invitations and who has access."
+      }
     },
     "providerKeysPage": {
       "providerKeys": "Provider Keys",
@@ -2440,7 +2466,8 @@
     "cofounderMatchCofounderCard": {
       "compiledCompany": "Compiled company",
       "complementarity": "Complementarity",
-      "computedAgainstEachViewer": "Computed against each viewer once you join the cofounder pool."
+      "computedAgainstEachViewer": "Computed against each viewer once you join the cofounder pool.",
+      "founder": "Founder"
     },
     "growthRedemptionCodeInput": {
       "haveARedemptionCode": "Have a redemption code?",

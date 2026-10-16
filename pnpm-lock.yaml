@@ -4425,6 +4425,9 @@ importers:
       '@nebutra/feature-flags':
         specifier: workspace:*
         version: link:../../platform/feature-flags
+      '@nebutra/i18n':
+        specifier: workspace:*
+        version: link:../../platform/i18n
       '@nebutra/logger':
         specifier: workspace:*
         version: link:../../platform/logger

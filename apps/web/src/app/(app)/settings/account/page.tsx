@@ -1,6 +1,7 @@
 import { DataExportCard } from "@/components/account/data-export-card";
 import { EmailChangeForm } from "@/components/account/email-change-form";
 import { requireOrg } from "@/lib/auth";
+import { SettingsPageHeader } from "../settings-page-header";
 
 /**
  * Personal account settings, as distinct from `/settings` (General), which
@@ -26,6 +27,7 @@ export default async function AccountSettingsPage() {
 
   return (
     <div className="space-y-8">
+      <SettingsPageHeader section="account" />
       <EmailChangeForm />
       <DataExportCard />
     </div>

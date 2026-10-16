@@ -18,6 +18,10 @@ vi.mock("next-intl", () => ({
           };
           return messages[key] ?? key;
         },
+  useFormatter: () => ({
+    dateTime: (date: Date, options?: Intl.DateTimeFormatOptions) =>
+      new Intl.DateTimeFormat("en", options).format(date),
+  }),
 }));
 
 const ORG_ID = "org_123";

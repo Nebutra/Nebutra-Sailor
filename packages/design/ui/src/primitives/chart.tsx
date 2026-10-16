@@ -195,7 +195,7 @@ export const ChartTooltipContent = ({
     <div
       ref={ref}
       className={cn(
-        "grid min-w-[8rem] items-start gap-1.5 rounded-[var(--radius-lg)] border border-border/50 bg-background px-2.5 py-1.5 text-xs shadow-xl",
+        "grid min-w-[8rem] items-start gap-1.5 rounded-[var(--radius-lg)] border border-border/70 bg-popover px-3 py-2 text-xs text-popover-foreground shadow-glass-sm",
         className,
       )}
     >

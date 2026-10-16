@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { PageHeader } from "@nebutra/ui/layout";
 import { getTranslations } from "next-intl/server";
 import { ReferralPanel } from "@/components/growth/referral-panel";
 import { requireOrg } from "@/lib/auth";
@@ -11,12 +12,11 @@ export default async function ReferralsPage() {
 
   return (
     <div className="space-y-6">
-      <header>
-        <h1 className="text-xl font-semibold text-foreground">{tc("referrals")}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {tc("shareYourCodeTrack", { name: String(brand.name) })}
-        </p>
-      </header>
+      <PageHeader
+        size="section"
+        title={tc("referrals")}
+        description={tc("shareYourCodeTrack", { name: String(brand.name) })}
+      />
 
       <ReferralPanel />
     </div>

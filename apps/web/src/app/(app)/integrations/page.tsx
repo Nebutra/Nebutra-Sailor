@@ -11,7 +11,7 @@ import {
 } from "@nebutra/icons";
 import { EmptyState, PageHeader } from "@nebutra/ui/layout";
 import { DashboardPanel } from "@nebutra/ui/patterns";
-import { Card } from "@nebutra/ui/primitives";
+import { Button, Card } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { DocumentTaskUploader } from "@/components/documents/document-task-uploader";
@@ -76,6 +76,7 @@ export default function IntegrationsPage() {
   const tCopy = useTranslations("copy.integrationsPage");
   const tc = useTranslations("copy.integrationsPage");
   const tSos = useTranslations("startupOs");
+  const tNav = useTranslations("Sidebar.nav");
   const queryClient = useQueryClient();
   const integrationsQuery = useQuery(integrationsQueryOptions());
   const integrations: IntegrationRecord[] = integrationsQuery.data ?? [];
@@ -123,7 +124,8 @@ export default function IntegrationsPage() {
 
   return (
     <section className="mx-auto w-full max-w-wide" aria-label={tc("integrations")}>
-      <PageHeader title={tc("integrations")} description={tc("connectYourFavoriteTools")} />
+      {/* Named as the sidebar names it, so the destination and its title agree. */}
+      <PageHeader title={tNav("connectors")} description={tc("connectYourFavoriteTools")} />
 
       {/* Document pipeline — rehomed from the converged dashboard Home */}
 
@@ -134,7 +136,7 @@ export default function IntegrationsPage() {
       {/* Connected Integrations */}
       {integrations.length > 0 && (
         <>
-          <h2 className="mt-8 text-lg font-semibold text-neutral-12">{tc("connected")}</h2>
+          <h2 className="mt-8 text-lg text-neutral-12">{tc("connected")}</h2>
 
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {integrations.map((integration) => {
@@ -153,31 +155,26 @@ export default function IntegrationsPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] ${catalog?.bgColor ?? "bg-neutral-3"}`}
-                    >
-                      <Icon className={`h-5 w-5 ${catalog?.color ?? "text-neutral-11"}`} />
+                    <div className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] border border-border bg-neutral-2 shadow-xs">
+                      <Icon className={`size-5 ${catalog?.color ?? "text-neutral-11"}`} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-sm font-semibold text-neutral-12">{integration.name}</h3>
+                      <h3 className="text-sm text-neutral-12">{integration.name}</h3>
                       <p className="mt-0.5 text-xs text-neutral-10">
                         {integration.isActive ? tCopy("active") : tCopy("paused")}
                         {integration.lastSyncAt &&
-                          ` · Last sync ${new Date(integration.lastSyncAt).toLocaleDateString()}`}
+                          ` · ${tc("lastSync", { date: new Date(integration.lastSyncAt) })}`}
                       </p>
                     </div>
                   </div>
 
                   {/* Actions */}
                   <div className="mt-4 flex items-center gap-2">
-                    <button
+                    <Button
                       type="button"
+                      size="sm"
+                      variant="outline"
                       onClick={() => handleToggle(integration.id, integration.isActive)}
-                      className={`flex items-center gap-1 rounded-[var(--radius-md)] px-2.5 py-1.5 text-xs font-medium transition-colors ${
-                        integration.isActive
-                          ? "bg-warning/10 text-warning-strong hover:bg-warning/10/70"
-                          : "bg-success/10 text-success-strong hover:bg-success/10/70"
-                      }`}
                     >
                       {integration.isActive ? (
                         <>
@@ -188,14 +185,16 @@ export default function IntegrationsPage() {
                           <Check className="h-3 w-3" /> {tc("resume")}
                         </>
                       )}
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
+                      size="sm"
+                      variant="ghost"
                       onClick={() => handleDisconnect(integration.id)}
-                      className="flex items-center gap-1 rounded-[var(--radius-md)] bg-destructive/10 px-2.5 py-1.5 text-xs font-medium text-destructive-strong transition-colors hover:bg-destructive/10/70"
+                      className="text-destructive-strong"
                     >
                       <X className="h-3 w-3" /> {tc("disconnect")}
-                    </button>
+                    </Button>
                   </div>
                 </Card>
               );
@@ -206,7 +205,7 @@ export default function IntegrationsPage() {
 
       {/* Available Integrations */}
 
-      <h2 className="mt-10 text-lg font-semibold text-neutral-12">
+      <h2 className="mt-10 text-lg text-neutral-12">
         {integrations.length > 0 ? tCopy("available") : tCopy("connectAnIntegration")}
       </h2>
       {integrations.length === 0 && !loading && (
@@ -237,20 +236,24 @@ export default function IntegrationsPage() {
               <Card
                 padding="sm"
                 key={item.type}
-                className={`group flex flex-col p-4 transition-[border-color,box-shadow,opacity] duration-flow ease-out sm:p-5 ${
-                  isConnected ? "border-success/40 opacity-60" : "hover:ring-neutral-8"
-                }`}
+                className="group flex flex-col p-4 shadow-xs sm:p-5"
               >
-                <div className="flex items-start gap-3">
-                  <div
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] ${item.bgColor}`}
-                  >
-                    <Icon className={`h-5 w-5 ${item.color}`} />
+                <div className="flex items-center gap-3">
+                  {/* One neutral logo plate per service; the mark keeps its colour. */}
+                  <div className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] border border-border bg-neutral-2 shadow-xs">
+                    <Icon className={`size-5 ${item.color}`} />
                   </div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-neutral-12">
+                  <div className="min-w-0">
+                    <h3 className="truncate text-sm text-neutral-12">
                       {item.type === "CUSTOM" ? tCopy("customWebhook") : item.name}
                     </h3>
+                    <p className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
+                      <span
+                        aria-hidden="true"
+                        className={`size-1.5 rounded-full ${isConnected ? "bg-success" : "bg-neutral-7"}`}
+                      />
+                      {isConnected ? tc("connected") : tc("notConnected")}
+                    </p>
                   </div>
                 </div>
 
@@ -264,11 +267,12 @@ export default function IntegrationsPage() {
                       <Check className="h-3.5 w-3.5" /> {tc("connected")}
                     </span>
                   ) : (
-                    <button
+                    <Button
                       type="button"
+                      size="sm"
+                      variant="outline"
                       disabled={isConnecting_}
                       onClick={() => handleConnect(item.type, item.name)}
-                      className="flex items-center gap-1 rounded-[var(--radius-md)] bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
                     >
                       {isConnecting_ ? (
                         <Loader2 className="h-3 w-3 animate-spin" />
@@ -276,7 +280,7 @@ export default function IntegrationsPage() {
                         <Plus className="h-3 w-3" />
                       )}
                       {tc("connect")}
-                    </button>
+                    </Button>
                   )}
                   <a
                     href={item.docUrl}

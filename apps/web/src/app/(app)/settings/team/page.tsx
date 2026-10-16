@@ -4,6 +4,7 @@ import { ChangeOrganizationNameForm } from "@/components/organizations/change-or
 import { PermissionGate } from "@/components/PermissionGate";
 import { requireOrg } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { SettingsPageHeader } from "../settings-page-header";
 import { InviteMemberForm } from "./InviteMemberForm";
 import { OrganizationLogoFormWithInvalidation } from "./OrganizationLogoFormWithInvalidation";
 import { TeamMemberList } from "./TeamMemberList";
@@ -24,6 +25,7 @@ export default async function TeamPage() {
 
   return (
     <div>
+      <SettingsPageHeader section="team" />
       {/* Organization profile — admins only */}
       <PermissionGate require="team:manage">
         <OrganizationLogoFormWithInvalidation

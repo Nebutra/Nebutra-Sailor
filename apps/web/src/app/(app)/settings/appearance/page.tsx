@@ -8,6 +8,7 @@ import {
   PointerCursorToggle,
   ThemeModeSegmented,
 } from "@/components/appearance";
+import { SettingsPageHeader } from "../settings-page-header";
 
 export const metadata = { title: "Appearance" };
 
@@ -16,6 +17,7 @@ export default async function AppearancePage() {
 
   return (
     <div className="space-y-6">
+      <SettingsPageHeader section="appearance" />
       <AppearanceSection
         title={t("theme.title")}
         description={t("theme.description")}

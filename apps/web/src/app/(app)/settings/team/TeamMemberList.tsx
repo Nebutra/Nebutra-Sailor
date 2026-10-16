@@ -12,7 +12,7 @@ import {
 } from "@nebutra/ui/primitives";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { useState } from "react";
 import { dicebearAvatarUrl } from "@/lib/avatar";
 import { queryKeys } from "@/lib/query-keys";
@@ -47,28 +47,18 @@ interface Props {
   orgId: string;
 }
 
-const roleLabels: Record<TeamRole, string> = {
-  owner: "Owner",
-  admin: "Admin",
-  member: "Member",
-  viewer: "Viewer",
+/** Role → `copy.teamTeamMemberList.roles.*` (they used to be English constants, read in zh too). */
+const ROLE_KEYS: Record<TeamRole, string> = {
+  owner: "roles.owner",
+  admin: "roles.admin",
+  member: "roles.member",
+  viewer: "roles.viewer",
 };
 
 const editableRoles: Exclude<TeamRole, "owner">[] = ["admin", "member", "viewer"];
 
 function memberDisplayName(member: TeamMember) {
   return member.user.name || member.user.email;
-}
-
-function formatJoinedAt(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Unknown";
-
-  return new Intl.DateTimeFormat("en", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
 }
 
 async function fetchMembers(orgId: string, signal?: AbortSignal): Promise<MembersPayload> {
@@ -110,6 +100,14 @@ export function TeamMemberList({ orgId }: Props) {
   const tCopy = useTranslations("copy.teamTeamMemberList");
   const tc = useTranslations("copy.teamTeamMemberList");
   const t = useTranslations("startupOs");
+  const format = useFormatter();
+  const roleLabel = (role: TeamRole) => tc(ROLE_KEYS[role]);
+  // Joined dates in the reader's locale (this was pinned to "en").
+  const formatJoinedAt = (value: string) => {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return tc("unknownDate");
+    return format.dateTime(date, { month: "short", day: "numeric", year: "numeric" });
+  };
   const queryClient = useQueryClient();
   const listKey = queryKeys.teamMembers.list(orgId);
   const [confirm, confirmDialog] = useConfirm();
@@ -159,7 +157,7 @@ export function TeamMemberList({ orgId }: Props) {
             }
           : current,
       );
-      setNotice(`${memberDisplayName(member)} is now ${roleLabels[nextRole]}.`);
+      setNotice(tc("roleChanged", { name: memberDisplayName(member), role: roleLabel(nextRole) }));
     },
     onError: (err, _input, context) => {
       // Roll back to the snapshot taken in onMutate (strictly safer than the
@@ -260,7 +258,7 @@ export function TeamMemberList({ orgId }: Props) {
   };
 
   const memberCount = payload.members.length;
-  const memberCountLabel = `${memberCount} ${memberCount === 1 ? "member" : "members"}`;
+  const memberCountLabel = tc("memberCount", { count: memberCount });
 
   return (
     <div className="space-y-4">
@@ -348,14 +346,14 @@ export function TeamMemberList({ orgId }: Props) {
                     disabled={!canChangeRole}
                     onValueChange={(value) => handleRoleChange(member, value as TeamRole)}
                   >
-                    <SelectTrigger aria-label={`Role for ${memberDisplayName(member)}`}>
-                      <SelectValue />
+                    <SelectTrigger aria-label={tc("roleFor", { name: memberDisplayName(member) })}>
+                      <SelectValue>{roleLabel(member.role)}</SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {isOwner && <SelectItem value="owner">{tc("owner")}</SelectItem>}
                       {editableRoles.map((role) => (
                         <SelectItem key={role} value={role}>
-                          {roleLabels[role]}
+                          {roleLabel(role)}
                         </SelectItem>
                       ))}
                     </SelectContent>

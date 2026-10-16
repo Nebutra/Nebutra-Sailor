@@ -3,7 +3,7 @@
 // Merge authored boot-log entries into the archive.
 //
 // The archive lives in two places on purpose — structure in
-// apps/auth/src/content/boot-log.ts, prose in the `boot-log` message catalog —
+// packages/iam/auth/src/sign-in/boot-log.ts, prose in the `boot-log` message catalog —
 // so adding an entry means writing to both, plus seeding the 33 locales the
 // translator has not reached yet. Doing that by hand is how an entry ends up in
 // one half and not the other, which renders as a silently shorter rotation.
@@ -25,7 +25,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const REPO_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const STRUCTURE = join(REPO_ROOT, "apps/auth/src/content/boot-log.ts");
+const STRUCTURE = join(REPO_ROOT, "packages/iam/auth/src/sign-in/boot-log.ts");
 const CATALOG_DIR = join(REPO_ROOT, "packages/platform/i18n/boot-log");
 
 /** Authored languages. Everything else is seeded from `en` for the pipeline. */

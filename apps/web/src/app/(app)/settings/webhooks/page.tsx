@@ -1,6 +1,6 @@
 "use client";
 
-import { SettingsSection } from "@nebutra/ui/layout";
+import { PageHeader, SettingsSection } from "@nebutra/ui/layout";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
@@ -65,10 +65,11 @@ export default function WebhooksSettingsPage() {
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-xl font-semibold text-foreground">{tc("webhooks")}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">{tc("subscribeToEventsEmitted")}</p>
-      </header>
+      <PageHeader
+        size="section"
+        title={tc("webhooks")}
+        description={tc("subscribeToEventsEmitted")}
+      />
 
       <SettingsSection title={tc("newEndpoint")}>
         <CreateWebhookDialog onCreated={handleCreated} />

@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { cn } from "../utils/cn";
 
 /**
@@ -13,27 +14,63 @@ const AREA =
 const LINE = "M0 70 C 40 66, 60 52, 100 56 S 170 40, 210 44 S 280 22, 320 30 S 390 14, 440 18";
 
 function GhostChart() {
+  const gradientId = useId();
   return (
     <div className="flex h-full w-full flex-col justify-end gap-3 p-5">
       <div className="flex items-baseline gap-3">
         <span className="h-2 w-16 rounded-full bg-foreground/[0.10]" />
         <span className="h-2 w-10 rounded-full bg-foreground/[0.08]" />
       </div>
-      <svg viewBox="0 0 440 100" preserveAspectRatio="none" className="h-44 w-full">
-        {[25, 50, 75].map((y) => (
-          <line
-            key={y}
-            x1="0"
-            x2="440"
-            y1={y}
-            y2={y}
-            className="stroke-foreground/[0.09]"
-            strokeDasharray="2 4"
+      <div className="relative">
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 440 100"
+          preserveAspectRatio="none"
+          className="h-44 w-full"
+        >
+          <defs>
+            <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="currentColor" stopOpacity="0.09" />
+              <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          {[25, 50, 75].map((y) => (
+            <line
+              key={y}
+              x1="0"
+              x2="440"
+              y1={y}
+              y2={y}
+              className="stroke-foreground/[0.09]"
+              strokeDasharray="2 4"
+              vectorEffect="non-scaling-stroke"
+            />
+          ))}
+          <path d={AREA} fill={`url(#${gradientId})`} />
+          <path
+            d={LINE}
+            className="fill-none stroke-foreground/[0.28]"
+            strokeWidth="1.5"
+            vectorEffect="non-scaling-stroke"
           />
-        ))}
-        <path d={AREA} className="fill-foreground/[0.06]" />
-        <path d={LINE} className="fill-none stroke-foreground/[0.28]" strokeWidth="1.5" />
-      </svg>
+          {/* Crosshair at the hovered point — the chart's interaction, at rest. */}
+          <line
+            x1="320"
+            x2="320"
+            y1="0"
+            y2="100"
+            className="stroke-foreground/[0.16]"
+            strokeDasharray="3 3"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+        <span className="absolute top-[30%] left-[72.7%] size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-card bg-foreground/30" />
+        {/* The tooltip card the crosshair would open. */}
+        <span className="absolute top-1 left-[74.5%] hidden w-28 flex-col gap-1.5 rounded-[var(--radius-lg)] border border-foreground/[0.08] bg-card/80 p-2.5 shadow-xs sm:flex">
+          <span className="h-1.5 w-12 rounded-full bg-foreground/[0.12]" />
+          <span className="h-2 w-16 rounded-full bg-foreground/[0.09]" />
+        </span>
+      </div>
       <div className="flex justify-between">
         {["", "", "", "", ""].map((_, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: static decorative ticks

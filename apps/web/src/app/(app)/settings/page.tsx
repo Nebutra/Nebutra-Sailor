@@ -4,6 +4,7 @@ import { DeleteOrganizationForm } from "@/components/organizations/delete-organi
 import { PermissionGate } from "@/components/PermissionGate";
 import { getUser, requireOrg } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { SettingsPageHeader } from "./settings-page-header";
 
 export const metadata = { title: "Settings" };
 
@@ -16,6 +17,7 @@ export default async function SettingsPage() {
 
   return (
     <div>
+      <SettingsPageHeader section="general" />
       <ProfileForm />
 
       <AvatarUploadForm

@@ -80,11 +80,6 @@ const ARENA_KEYS: Record<StartupArena, string> = {
   "Creative tooling": "creative",
 };
 
-/** Elevation stands in for the stroke this card deliberately does not have. */
-const PROMPT_CARD_SHADOW = {
-  boxShadow: "0 4px 24px -4px color-mix(in srgb, var(--neutral-12) 6%, transparent)",
-} as const;
-
 export interface StartupBuilderHomeProps {
   readonly arena: StartupArena;
   readonly canCompile: boolean;
@@ -132,38 +127,34 @@ export function StartupBuilderHome({
 
   return (
     <div className="h-full min-h-0">
-      <section className="relative flex h-full min-h-0 flex-col justify-center overflow-y-auto overflow-x-hidden bg-neutral-1 text-neutral-12">
-        {/* Ambient brand wash — subtle (governed/enterprise), not a loud aurora. */}
+      <section className="relative isolate flex h-full min-h-0 flex-col overflow-y-auto overflow-x-hidden bg-card text-neutral-12">
+        {/* Light from above: a faint House-blue wash and a hairline horizon,
+            the canvas the composer sits under — not an ink cloud. */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-[380px] w-full max-w-3xl opacity-10 blur-3xl"
-          style={{ background: "hsl(var(--primary))" }}
+          className="pointer-events-none absolute inset-x-0 top-0 h-[420px]"
+          style={{
+            background:
+              "radial-gradient(60% 100% at 50% 0%, hsl(var(--ring) / 0.09), transparent 72%)",
+          }}
         />
-        <div className="relative mx-auto flex w-full max-w-4xl flex-col px-5 py-16 sm:px-8">
+        {/* my-auto, not justify-center: centred when it fits, scrolls from the
+            top when it does not (justify-center cut the heading off on phones). */}
+        <div className="relative mx-auto my-auto flex w-full max-w-4xl flex-col px-5 py-16 sm:px-8">
           <div className="mx-auto w-full max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full bg-neutral-2 px-3 py-1.5 text-xs font-semibold text-neutral-11">
-              <Lightning className="size-3.5 text-primary" aria-hidden="true" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-3 py-1 text-xs font-medium text-neutral-11 shadow-xs backdrop-blur">
+              <Lightning className="size-3.5 text-ring" aria-hidden="true" />
               {tc("startupAgentOS")}
             </span>
-            <h2
-              className="mt-6 text-4xl font-semibold tracking-tight sm:text-6xl"
-              style={{
-                background: "hsl(var(--primary))",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
+            <h2 className="mt-6 text-balance text-4xl tracking-tight text-neutral-12 sm:text-6xl">
               {tc("whatAreWeBuilding")}
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-neutral-11">
               {tc("oneSentenceCompilesInto")}
             </p>
 
-            <div
-              className="mx-auto mt-8 overflow-hidden rounded-3xl bg-neutral-2 text-left"
-              style={PROMPT_CARD_SHADOW}
-            >
+            {/* The composer: one lit card — hairline, lit top edge, one ambient step. */}
+            <div className="mx-auto mt-8 overflow-hidden rounded-2xl border border-border bg-card text-left shadow-glass-md transition-[border-color] duration-flow focus-within:border-ring/50">
               {/* Chromeless native textarea: the @nebutra/ui Textarea primitive is a
  bordered "field" (own border/shadow + inline radius) that leaves a
  seam inside this unified box. data-allow-native is the sanctioned
@@ -210,7 +201,7 @@ export function StartupBuilderHome({
                   >
                     <SelectTrigger
                       aria-label={tc("startupArena")}
-                      className="h-auto w-fit rounded-full bg-neutral-1 px-3.5 py-2 text-xs font-semibold text-neutral-11 transition-colors hover:bg-neutral-3 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="h-auto w-fit rounded-full border border-border bg-card px-3.5 py-2 text-xs font-medium text-neutral-11 transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       <SelectValue>{tc(`arenas.${ARENA_KEYS[arena]}.label`)}</SelectValue>
                     </SelectTrigger>
@@ -250,7 +241,7 @@ export function StartupBuilderHome({
                     size="sm"
                     disabled={disabled || isLoading}
                     onClick={() => onThesisChange(example)}
-                    className="hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
+                    className="bg-card/70 text-neutral-11"
                   >
                     {example}
                   </Button>
@@ -259,15 +250,17 @@ export function StartupBuilderHome({
             ) : null}
 
             {/* What one sentence compiles into: one hairline strip, not five tinted tiles. */}
-            <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-xl border border-border text-left sm:grid-cols-2 lg:grid-cols-5 [&>*]:border-border max-lg:[&>*:not(:last-child)]:border-b lg:divide-x lg:divide-border">
+            <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border bg-border text-left shadow-xs sm:grid-cols-2 lg:grid-cols-5 [&>*]:bg-card">
               {COMPILE_OUTPUTS.map((output) => {
                 const OutputIcon = output.icon;
                 return (
                   <div key={output.key} className="flex h-full flex-col gap-1.5 p-4">
-                    <OutputIcon
-                      className={`size-4 ${output.highlight ? "text-primary" : "text-neutral-10"}`}
-                      aria-hidden="true"
-                    />
+                    <span className="inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] border border-border bg-neutral-2">
+                      <OutputIcon
+                        className={`size-3.5 ${output.highlight ? "text-ring" : "text-neutral-11"}`}
+                        aria-hidden="true"
+                      />
+                    </span>
                     <span className="mt-1 text-sm font-semibold text-neutral-12">
                       {tc(`outputs.${output.key}.title`)}
                     </span>
@@ -333,10 +326,10 @@ function StartupRecentProjects({
           variant="ghost"
           disabled={disabled}
           onClick={() => onProjectSelect(project)}
-          className={`h-auto w-full flex-col items-start gap-1 rounded-2xl p-3 text-left ${
+          className={`h-auto w-full flex-col items-start gap-1 rounded-xl border p-3 text-left shadow-xs ${
             project.id === selectedProjectId
-              ? "bg-primary/10 text-primary dark:bg-primary/15"
-              : "bg-neutral-2 text-neutral-11 hover:bg-neutral-3"
+              ? "border-ring/50 bg-card text-neutral-12"
+              : "border-border bg-card text-neutral-11 hover:bg-accent"
           }`}
         >
           <span className="block w-full truncate text-sm font-semibold">

@@ -131,29 +131,36 @@ export function ConnectedAccountsBlock({
       )}
 
       {loading ? (
-        <div className="space-y-3">
+        <div className="divide-y divide-border overflow-hidden rounded-xl border border-border">
           {PROVIDERS.map((providerId) => (
-            <div
-              key={providerId}
-              className="h-14 animate-pulse rounded-[var(--radius-lg)] border border-border bg-muted"
-            />
+            <div key={providerId} className="flex items-center gap-3 px-4 py-3">
+              <span className="size-8 animate-pulse rounded-[var(--radius-md)] bg-muted" />
+              <span className="h-3 w-28 animate-pulse rounded bg-muted" />
+            </div>
           ))}
         </div>
       ) : (
-        <div className="space-y-3">
+        <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-card shadow-xs">
           {PROVIDERS.map((providerId) => {
             const isLinked = linkedSet.has(providerId);
             const isPending = pendingProvider === providerId;
             return (
-              <div
-                key={providerId}
-                className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-border p-4 md:flex-row md:items-center md:justify-between"
-              >
-                <div>
+              <li key={providerId} className="flex items-center gap-3 px-4 py-3">
+                <span
+                  aria-hidden="true"
+                  className="inline-flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-neutral-2 text-xs font-semibold text-neutral-11"
+                >
+                  {PROVIDER_LABELS[providerId].charAt(0)}
+                </span>
+                <div className="min-w-0 flex-1">
                   <p className="text-sm font-medium text-foreground">
                     {PROVIDER_LABELS[providerId]}
                   </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
+                  <p className="mt-0.5 flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <span
+                      aria-hidden="true"
+                      className={`size-1.5 rounded-full ${isLinked ? "bg-success" : "bg-neutral-7"}`}
+                    />
                     {isLinked ? t("connected") : t("notLinked")}
                   </p>
                 </div>
@@ -161,20 +168,27 @@ export function ConnectedAccountsBlock({
                   <Button
                     disabled={isPending}
                     type="button"
+                    size="sm"
                     onClick={() => handleUnlink(providerId)}
-                    variant="outline"
+                    variant="ghost"
                   >
                     {t("unlink")}
                   </Button>
                 ) : (
-                  <Button disabled={isPending} type="button" onClick={() => handleLink(providerId)}>
+                  <Button
+                    disabled={isPending}
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleLink(providerId)}
+                  >
                     {t("connect")}
                   </Button>
                 )}
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       )}
 
       <p className="mt-4 text-xs leading-5 text-muted-foreground">

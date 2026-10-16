@@ -319,7 +319,7 @@ export function BillingProviderNotice({ model }: { model: BillingSelfServiceMode
       <div className="flex gap-3">
         <Icon className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
         <div>
-          <h2 className="font-semibold">{model.provider.title}</h2>
+          <h2 className="">{model.provider.title}</h2>
           <p className="mt-1 text-sm opacity-80">{model.provider.description}</p>
         </div>
       </div>
@@ -334,30 +334,39 @@ export function ActivePlanCard({ model }: { model: BillingSelfServiceModel }) {
   const features = tp.raw(`${plan.id}.features`) as string[];
   return (
     <SettingsSection title={tc("activePlan")}>
-      <div className="flex flex-wrap items-start justify-between gap-6">
-        <div className="min-w-0">
-          <p className="flex items-center gap-2 text-2xl font-semibold tracking-tight text-neutral-12">
-            <Sparkles className="size-5 text-primary" aria-hidden="true" />
-            {tp(`${plan.id}.name`)}
-          </p>
-          <p className="mt-2 max-w-2xl text-sm text-neutral-11">{tp(`${plan.id}.description`)}</p>
+      {/* The plan is the one object on this page: a lit card, not a paragraph. */}
+      <div className="overflow-hidden rounded-xl border border-border bg-card shadow-glass-sm">
+        <div className="flex flex-wrap items-start justify-between gap-6 p-5 sm:p-6">
+          <div className="flex min-w-0 items-start gap-3">
+            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-[var(--radius-lg)] border border-border bg-neutral-2 shadow-xs">
+              <Sparkles className="size-4 text-ring" aria-hidden="true" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-2xl font-semibold tracking-tight text-neutral-12">
+                {tp(`${plan.id}.name`)}
+              </p>
+              <p className="mt-1 max-w-2xl text-sm text-neutral-11">
+                {tp(`${plan.id}.description`)}
+              </p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-3xl font-semibold tracking-tight tabular-nums text-neutral-12">
+              {plan.id === "enterprise" ? tp("enterprise.price") : plan.priceLabel}
+            </p>
+            <p className="text-sm text-neutral-10">{tp(`${plan.id}.cadence`)}</p>
+          </div>
         </div>
-        <div className="text-right">
-          <p className="text-2xl font-semibold tracking-tight tabular-nums text-neutral-12">
-            {plan.id === "enterprise" ? tp("enterprise.price") : plan.priceLabel}
-          </p>
-          <p className="text-sm text-neutral-10">{tp(`${plan.id}.cadence`)}</p>
-        </div>
-      </div>
 
-      <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-        {features.map((feature) => (
-          <li key={feature} className="flex items-center gap-2 text-sm text-neutral-11">
-            <CheckCircle2 className="size-4 text-success-strong" aria-hidden="true" />
-            {feature}
-          </li>
-        ))}
-      </ul>
+        <ul className="flex flex-wrap gap-x-8 gap-y-2 border-t border-border bg-neutral-2/50 px-5 py-4 sm:px-6">
+          {features.map((feature) => (
+            <li key={feature} className="flex items-center gap-2 text-sm text-neutral-11">
+              <CheckCircle2 className="size-4 shrink-0 text-success-strong" aria-hidden="true" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {model.portal.enabled ? (
         <form action="/api/billing/portal" method="post">
@@ -396,7 +405,7 @@ export function PlanChoiceGrid({ plans }: { plans: BillingPlanOption[] }) {
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <h3 className="text-lg font-semibold text-neutral-12">{plan.name}</h3>
+                <h3 className="text-lg text-neutral-12">{plan.name}</h3>
                 <p className="mt-1 text-sm text-neutral-11">{plan.description}</p>
               </div>
               {plan.badge && (

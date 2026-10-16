@@ -1,6 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { Bell, Envelope as Mail, DevicePhone as Smartphone } from "@nebutra/icons";
 import { loadNotificationSettingsSnapshot } from "@nebutra/notifications";
+import { PageHeader } from "@nebutra/ui/layout";
 import { getTranslations } from "next-intl/server";
 import { NotificationPreferencesSection } from "@/components/settings/notifications/notification-preferences-section";
 import { requireOrg } from "@/lib/auth";
@@ -21,12 +22,11 @@ export default async function NotificationSettingsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-lg font-semibold text-foreground">{tc("notifications")}</h2>
-        <p className="mt-1 max-w-2xl text-sm text-neutral-11">
-          {tc("tuneHowReachesYou", { name: String(brand.name) })}
-        </p>
-      </div>
+      <PageHeader
+        size="section"
+        title={tc("notifications")}
+        description={tc("tuneHowReachesYou", { name: String(brand.name) })}
+      />
 
       {/* One honest line about where preferences live, instead of an operator
           diagnostics panel (provider internals, missing integrations). */}

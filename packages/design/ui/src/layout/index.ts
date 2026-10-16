@@ -20,6 +20,15 @@ export {
   type FullPageStatusProps,
 } from "./FullPageStatus";
 export { LoadingState, type LoadingStateProps } from "./LoadingState";
+export {
+  Metric,
+  type MetricDeltaTone,
+  type MetricProps,
+  MetricStrip,
+  type MetricStripProps,
+  Sparkline,
+  type SparklineProps,
+} from "./metric-strip";
 export { PageHeader, type PageHeaderProps } from "./PageHeader";
 export { Section, type SectionProps } from "./Section";
 export {

@@ -93,6 +93,16 @@ export {
   type DataTableProps,
   DEFAULT_DATA_TABLE_LABELS,
 } from "./data-table";
+// Sidebar chrome — workspace plate, command-bar button, plan usage meter
+export {
+  SidebarLogoPlate,
+  SidebarSearchButton,
+  type SidebarSearchButtonProps,
+  SidebarUsageMeter,
+  type SidebarUsageMeterProps,
+  SidebarWorkspacePlate,
+  type SidebarWorkspacePlateProps,
+} from "./sidebar-chrome";
 // SidebarNav — grouped app sidebar with badges, nested children, collapsed mode
 export {
   SidebarNav,

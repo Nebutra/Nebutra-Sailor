@@ -1,4 +1,5 @@
 import { brand } from "@nebutra/brand/metadata";
+import { PageHeader } from "@nebutra/ui/layout";
 import { getTranslations } from "next-intl/server";
 import { PermissionGate } from "@/components/PermissionGate";
 import { requireOrg } from "@/lib/auth";
@@ -12,12 +13,11 @@ export default async function ProviderKeysPage() {
 
   return (
     <div className="space-y-6">
-      <header>
-        <h1 className="text-xl font-semibold text-foreground">{tc("providerKeys")}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {tc("bringYourOwnAI", { name: String(brand.name) })}
-        </p>
-      </header>
+      <PageHeader
+        size="section"
+        title={tc("providerKeys")}
+        description={tc("bringYourOwnAI", { name: String(brand.name) })}
+      />
 
       <PermissionGate
         require={["provider_key:read"]}

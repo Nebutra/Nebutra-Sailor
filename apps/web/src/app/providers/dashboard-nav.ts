@@ -2,12 +2,15 @@ import { routing } from "@nebutra/i18n/routing";
 import {
   ChartActivity,
   CreditCard,
+  Key,
   Lightning,
   type Icon as LucideIcon,
   Connection as Plug,
+  Servers,
   SettingsGear,
   Shield,
   Users,
+  Webhook,
 } from "@nebutra/icons";
 
 export interface DashboardNavBadge {
@@ -19,10 +22,17 @@ export interface DashboardNavItem {
   href: string;
   label: string;
   icon: LucideIcon;
-  group: "Product" | "Workspace" | "Admin";
+  group: DashboardNavGroupTitle;
   badge?: DashboardNavBadge;
   children?: DashboardNavItem[];
 }
+
+/**
+ * Build = what the product makes; Developers = the integration surface (keys,
+ * webhooks, model providers), promoted out of Settings so the rail reads as an
+ * app; Workspace = metering, money and configuration; Admin = owner-only.
+ */
+export type DashboardNavGroupTitle = "Build" | "Developer tools" | "Workspace" | "Admin";
 
 export interface DashboardNavCapabilities {
   readonly startupAgentOS?: boolean;
@@ -32,14 +42,22 @@ const STARTUP_OS_NAV_ITEM: DashboardNavItem = {
   href: "/startup-os",
   label: "Startup OS",
   icon: Lightning,
-  group: "Product",
+  group: "Build",
   badge: { label: "Alpha", tone: "beta" },
 };
 
 export const DASHBOARD_NAV_ITEMS: readonly DashboardNavItem[] = [
   STARTUP_OS_NAV_ITEM,
-  { href: "/integrations", label: "Connectors", icon: Plug, group: "Product" },
-  { href: "/cofounder", label: "Match your cofounder", icon: Users, group: "Product" },
+  { href: "/integrations", label: "Connectors", icon: Plug, group: "Build" },
+  { href: "/cofounder", label: "Match your cofounder", icon: Users, group: "Build" },
+  { href: "/settings/api-keys", label: "Api Keys", icon: Key, group: "Developer tools" },
+  { href: "/settings/webhooks", label: "Webhooks", icon: Webhook, group: "Developer tools" },
+  {
+    href: "/settings/provider-keys",
+    label: "Provider Keys",
+    icon: Servers,
+    group: "Developer tools",
+  },
   { href: "/usage", label: "Usage", icon: ChartActivity, group: "Workspace" },
   { href: "/billing", label: "Billing", icon: CreditCard, group: "Workspace" },
   { href: "/settings", label: "Settings", icon: SettingsGear, group: "Workspace" },
@@ -60,20 +78,11 @@ export function getDashboardNavItems(capabilities?: DashboardNavCapabilities) {
 
 export function getDashboardNavGroups(capabilities?: DashboardNavCapabilities) {
   const items = getDashboardNavItems(capabilities);
-  return [
-    {
-      title: "Product",
-      items: items.filter((item) => item.group === "Product"),
-    },
-    {
-      title: "Workspace",
-      items: items.filter((item) => item.group === "Workspace"),
-    },
-    {
-      title: "Admin",
-      items: items.filter((item) => item.group === "Admin"),
-    },
-  ];
+  const titles: DashboardNavGroupTitle[] = ["Build", "Developer tools", "Workspace", "Admin"];
+  return titles.map((title) => ({
+    title,
+    items: items.filter((item) => item.group === title),
+  }));
 }
 
 export const DASHBOARD_NAV_GROUPS = getDashboardNavGroups();
@@ -95,6 +104,21 @@ export function isActiveRoute(pathname: string, href: string) {
   const normalizedPathname = stripLocalePrefix(pathname);
   if (href === "/") return normalizedPathname === "/";
   return normalizedPathname === href || normalizedPathname.startsWith(`${href}/`);
+}
+
+/**
+ * The one nav href that owns `pathname`: the longest matching prefix, so
+ * `/settings/api-keys` lights "API keys" and not "Settings" as well (two
+ * active rows would also fight over the travelling selection surface).
+ */
+export function resolveActiveHref(pathname: string, hrefs: readonly string[]): string | null {
+  let best: string | null = null;
+  for (const href of hrefs) {
+    if (isActiveRoute(pathname, href) && (best === null || href.length > best.length)) {
+      best = href;
+    }
+  }
+  return best;
 }
 
 function formatSegment(segment: string) {

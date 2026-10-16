@@ -37,9 +37,20 @@ export interface AppShellProps {
    * sidebar — the flat, edge-ruled layout of current product dashboards, where
    * sections sit on one surface instead of boxed cards on a tinted canvas.
    */
-  surface?: "canvas" | "card";
+  surface?: "canvas" | "card" | "inset";
+  /**
+   * A faint wash of the House blue from the top edge of the working area —
+   * the "lit from above" canvas of Linear and Vercel, not a colour block.
+   * Off by default; product shells opt in.
+   */
+  ambientLight?: boolean;
   /** Extra classes for the outer wrapper. */
   className?: string;
+  /**
+   * Content beside the hamburger in the phone-width bar shown when there is no
+   * `header` — usually the workspace or brand mark, so the bar is not empty.
+   */
+  mobileBar?: React.ReactNode;
   /** Accessible name for the primary sidebar landmark. Pass a translated string. */
   primaryNavLabel?: string;
   /** Accessible name for the overlay-collapse button. Pass a translated string. */
@@ -92,7 +103,14 @@ export function AppShell({
   collapseNavigationLabel = "Collapse navigation",
   openNavigationMenuLabel = "Open navigation menu",
   surface = "canvas",
+  ambientLight = false,
+  mobileBar,
 }: AppShellProps) {
+  // `inset`: the working area is a raised panel inside the canvas, with a
+  // hairline, a lit top edge and one soft shadow step — the layered shell of
+  // Linear and Vercel. Below md it is a plain card surface (no gutter).
+  const isInset = surface === "inset";
+  const isCardLike = surface === "card" || isInset;
   const isControlled = collapsed !== undefined;
   const [internalCollapsed] = React.useState(defaultCollapsed);
   const isCollapsed = isControlled ? collapsed : internalCollapsed;
@@ -118,7 +136,7 @@ export function AppShell({
           "hidden h-dvh overflow-hidden bg-sidebar text-sidebar-foreground md:block",
           "transition-[width] duration-flow ease-out",
           overlay ? "absolute inset-y-0 left-0 z-40" : "shrink-0",
-          railWidth > 0 && "border-r border-sidebar-border",
+          railWidth > 0 && !isInset && "border-r border-sidebar-border",
           overlay && railWidth > 0 && "shadow-2xl",
         )}
         style={{ width: railWidth }}
@@ -150,12 +168,27 @@ export function AppShell({
       </Sheet>
 
       {/* Right column — header + main */}
-      <div className={cn("flex min-h-0 min-w-0 flex-1 flex-col", surface === "card" && "bg-card")}>
+      <div
+        data-surface={surface}
+        className={cn(
+          "relative isolate flex min-h-0 min-w-0 flex-1 flex-col",
+          isCardLike && "bg-card",
+          isInset &&
+            "md:my-2 md:mr-2 md:overflow-hidden md:rounded-xl md:border md:border-border/80 md:shadow-glass-sm",
+        )}
+      >
+        {ambientLight ? (
+          <div
+            aria-hidden="true"
+            data-slot="ambient-light"
+            className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-80 bg-[radial-gradient(70%_100%_at_50%_0%,hsl(var(--ring)/0.07),transparent_70%)]"
+          />
+        ) : null}
         {header !== undefined && (
           <header
             className={cn(
               "sticky top-0 z-30 flex shrink-0 items-center gap-2 border-b border-border",
-              surface === "card"
+              isCardLike
                 ? "bg-card/90 px-3 backdrop-blur-xl supports-[backdrop-filter]:bg-card/80 sm:px-4"
                 : "bg-background/90 px-3 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80 sm:px-4",
             )}
@@ -178,7 +211,12 @@ export function AppShell({
 
         {/* Header is optional — still show a mobile-only hamburger row when header is omitted */}
         {header === undefined && (
-          <div className="flex shrink-0 items-center border-b border-border bg-background px-4 py-2 md:hidden">
+          <div
+            className={cn(
+              "flex shrink-0 items-center border-b border-border px-4 py-2 md:hidden",
+              isCardLike ? "bg-card" : "bg-background",
+            )}
+          >
             <button
               type="button"
               aria-label={openNavigationMenuLabel}
@@ -190,6 +228,9 @@ export function AppShell({
             >
               <Menu className="size-4" aria-hidden="true" />
             </button>
+            {mobileBar ? (
+              <div className="ml-2 flex min-w-0 flex-1 items-center">{mobileBar}</div>
+            ) : null}
           </div>
         )}
 

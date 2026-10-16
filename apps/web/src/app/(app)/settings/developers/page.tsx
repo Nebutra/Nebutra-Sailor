@@ -1,6 +1,7 @@
 import { brand } from "@nebutra/brand/metadata";
 import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 import { ArrowRight } from "@nebutra/icons";
+import { PageHeader } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { requireOrg } from "@/lib/auth";
@@ -14,23 +15,22 @@ export default async function DeveloperConsolePage() {
 
   return (
     <div className="space-y-8">
-      <header>
-        <h1 className="text-xl font-semibold text-foreground">{tc("openPlatform")}</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {tc.rich("intro", {
-            name: brand.name,
-            domain: brand.domains.open,
-            link: (chunks) => (
-              <a
-                href={getBrandOrigin("open")}
-                className="text-foreground underline-offset-4 hover:underline"
-              >
-                {chunks}
-              </a>
-            ),
-          })}
-        </p>
-      </header>
+      <PageHeader
+        size="section"
+        title={tc("openPlatform")}
+        description={tc.rich("intro", {
+          name: brand.name,
+          domain: brand.domains.open,
+          link: (chunks) => (
+            <a
+              href={getBrandOrigin("open")}
+              className="text-foreground underline-offset-4 hover:underline"
+            >
+              {chunks}
+            </a>
+          ),
+        })}
+      />
 
       <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border">
         {DEVELOPER_CONSOLE_LINKS.map((link) => (

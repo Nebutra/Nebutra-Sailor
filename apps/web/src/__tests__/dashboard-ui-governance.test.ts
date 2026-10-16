@@ -46,14 +46,13 @@ describe("@nebutra/web dashboard UI governance", () => {
     const shellSource = readFileSync(SHELL, "utf8");
 
     expect(shellSource).toContain("dashboard-app-content");
-    // Brand-header wrapper stays high-density (px-2, items-center) and centers
-    // the mark when collapsed. The collapse-toggle refactor (fb42789f) split the
-    // wrapper into a conditional justify, so assert the governed parts rather
-    // than the old single concatenated string.
-    expect(shellSource).toContain("flex items-center px-2");
-    expect(shellSource).toContain('collapsed ? "justify-center"');
-    expect(shellSource).toContain("border-0 bg-transparent shadow-none");
-    expect(shellSource).not.toContain('collapsed ? "justify-center" : "justify-start');
+    // The rail head is library chrome, not page-local markup: the workspace
+    // plate (a menu trigger) and the ⌘K search field, centred when collapsed;
+    // the working area is the inset panel with its top light.
+    expect(shellSource).toContain("<SidebarWorkspacePlate");
+    expect(shellSource).toContain("<SidebarSearchButton");
+    expect(shellSource).toContain('collapsed ? "items-center gap-2" : "gap-3"');
+    expect(shellSource).toContain('surface="inset"');
     expect(shellSource).not.toContain(EXTERNAL_TASTE_PREFIX);
   });
 

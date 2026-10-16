@@ -1301,8 +1301,20 @@
       "room": "房间",
       "platform": "平台",
       "fleet": "服务集群",
-      "supply": "供给"
-    }
+      "supply": "供给",
+      "build": "构建",
+      "developers": "开发者"
+    },
+    "search": "搜索或跳转…",
+    "workspaceMenu": "工作区菜单",
+    "workspaceSettings": "工作区设置",
+    "inviteMembers": "邀请成员",
+    "billingAndPlan": "账单与套餐",
+    "switchWorkspace": "切换工作区",
+    "planName": "{plan}",
+    "creditsLeft": "剩余额度",
+    "upgrade": "升级",
+    "viewUsage": "用量"
   },
   "startupOs": {
     "milestone": {
@@ -1413,7 +1425,7 @@
       "thisPeriodHasNo": "本周期还没有计量用量",
       "modelCallsAndAPI": "本计费周期出现第一条用量事件后，模型调用和 API 请求会在这里分组显示。",
       "windowTo": "{period} 窗口 · {value1} 至 {value2}",
-      "usageMetering": "用量与计量",
+      "usageMetering": "用量",
       "monitorCreditsAPICalls": "查看整个组织的积分、API 调用、AI token 消耗和额度状态。",
       "usageMetricsWillAppear": "创建 API 密钥并发送一次请求，调用量、Token 和额度会在一分钟内显示在这里。",
       "aPICalls": "API 调用",
@@ -1712,7 +1724,9 @@
         "STRIPE": "同步付款数据、发票和订阅事件。",
         "CUSTOM": "通过自定义 HTTP Webhook 收发事件。"
       },
-      "customWebhook": "自定义 Webhook"
+      "customWebhook": "自定义 Webhook",
+      "notConnected": "未连接",
+      "lastSync": "上次同步 {date, date, medium}"
     },
     "agentRuntimePage": {
       "agentRuntimeDisabled": "Agent Runtime——已停用",
@@ -1854,7 +1868,8 @@
           "title": "组成团队",
           "body": "双向感兴趣即开启合伙人房间；组队后公司完整保留。"
         }
-      }
+      },
+      "artifactsCompiled": "已编译 {count} 个产物"
     },
     "canvasPage": {
       "canvasDisabled": "Canvas——已停用",
@@ -1985,7 +2000,12 @@
       "roleChangesAndMember": "更改角色和移除成员需要组织管理员权限。",
       "leaveOrganization2": "离开组织",
       "leave": "离开",
-      "remove": "移除"
+      "remove": "移除",
+      "roles": { "owner": "所有者", "admin": "管理员", "member": "成员", "viewer": "只读成员" },
+      "unknownDate": "未知",
+      "roleChanged": "{name} 现在是{role}。",
+      "memberCount": "{count} 名成员",
+      "roleFor": "{name} 的角色"
     },
     "connectorsConnectorsHub": {
       "connectSailorWithYour": "把 Sailor 接入你日常用的应用、API 和 MCP",
@@ -2329,8 +2349,13 @@
       "youDoNotHave": "你没有查看 API 密钥的权限。"
     },
     "settingsLayout": {
-      "settings": "设置",
-      "manageYourOrganizationAnd": "管理组织和账号设置"
+      "sections": {
+        "general": "你的个人资料、头像，以及此工作区所属的组织。",
+        "account": "你的登录邮箱，以及导出你的数据。",
+        "appearance": "此浏览器的主题、动效与字号。",
+        "security": "密码、关联账户、两步验证，以及以你身份登录的会话。",
+        "team": "组织资料、邀请，以及谁有访问权限。"
+      }
     },
     "providerKeysPage": {
       "providerKeys": "服务商密钥",
@@ -2383,7 +2408,8 @@
     "cofounderMatchCofounderCard": {
       "compiledCompany": "已编译的公司",
       "complementarity": "互补度",
-      "computedAgainstEachViewer": "加入合伙人池后，会针对每位查看者计算。"
+      "computedAgainstEachViewer": "加入合伙人池后，会针对每位查看者计算。",
+      "founder": "创始人"
     },
     "growthRedemptionCodeInput": {
       "haveARedemptionCode": "有兑换码？",

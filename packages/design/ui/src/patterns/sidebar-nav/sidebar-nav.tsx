@@ -102,18 +102,17 @@ export interface SidebarNavProps {
 // it; the state treatment is pinned by
 // patterns/__tests__/dashboard-surfaces-governance.test.ts.
 //
-// The current page is a soft surface with a hairline edge and an accent-tinted
-// icon — the pattern Linear, Raycast and the 2026 app shells converged on. It
-// used to be a saturated --sidebar-primary fill with near-black ink, which made
-// the one item you are on the loudest thing on screen and read as a toy. The
-// accent now appears only on the icon, where it costs no contrast and still
-// carries the brand hue.
+// The current page is a raised chip: the card surface, a hairline edge and
+// the smallest shadow step, so the row you are on sits one layer above the
+// canvas rail (Linear, Resend, ElevenLabs). It used to be a saturated
+// --sidebar-primary fill, which made the current row the loudest thing on
+// screen; position is carried by surface and the ink icon, not by colour.
 const ITEM_BASE_CLASSES =
   "group relative flex min-h-8 items-center gap-2 rounded-[var(--radius-md)] px-2.5 py-1.5 text-[13px] leading-5 transition-[background-color,color,box-shadow,transform] duration-micro ease-brand";
 // Hover is a whisper of the selected surface, so the ladder reads
 // none -> hover -> current instead of hover == current.
 const ITEM_DEFAULT_CLASSES =
-  "text-sidebar-foreground/72 hover:bg-sidebar-accent/55 hover:text-sidebar-foreground";
+  "text-sidebar-foreground/72 hover:bg-sidebar-accent/55 hover:text-sidebar-foreground [&>svg]:text-sidebar-foreground/55 hover:[&>svg]:text-sidebar-foreground/80";
 // The current item's surface is not a class on the item: it is one element
 // (ActiveSurface) that glides from the old item to the new one, so moving
 // between pages reads as the selection travelling, not a cut.
@@ -126,7 +125,7 @@ function ActiveSurface(): React.ReactElement {
     <motion.span
       layoutId="sidebar-nav-active"
       aria-hidden="true"
-      className="absolute inset-0 -z-10 rounded-[var(--radius-md)] bg-sidebar-accent shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))]"
+      className="absolute inset-0 -z-10 rounded-[var(--radius-md)] bg-card shadow-xs ring-1 ring-inset ring-sidebar-border"
       transition={animationSprings.layout}
     />
   );
@@ -364,7 +363,8 @@ function ParentItem({
         <ItemContent item={item} collapsed={false} showChevron chevronOpen={open} />
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <ul className="mt-1 flex flex-col gap-0.5">
+        {/* A 1px guide joins nested rows to their parent (Linear's tree). */}
+        <ul className="relative mt-0.5 flex flex-col gap-0.5 before:absolute before:inset-y-1 before:left-[1.0625rem] before:w-px before:bg-sidebar-border">
           {item.children?.map((child) => (
             <li key={child.id}>
               <InteractiveItem
@@ -418,7 +418,7 @@ export function SidebarNav({
               <div className={cn("shrink-0", collapsed && "flex justify-center")}>{header}</div>
             ) : null}
 
-            <div className="flex-1 space-y-4 overflow-y-auto">
+            <div className="flex-1 space-y-5 overflow-y-auto">
               {sections.map((section) => {
                 const visibleActions =
                   !collapsed && section.actions && section.actions.length > 0
@@ -427,8 +427,8 @@ export function SidebarNav({
                 return (
                   <section key={section.id} className="group/section">
                     {section.label && !collapsed ? (
-                      <div className="mb-1.5 flex items-center justify-between px-2.5">
-                        <span className="text-xs font-medium text-sidebar-foreground/70">
+                      <div className="mb-1 flex h-6 items-center justify-between px-2.5">
+                        <span className="text-xs font-medium text-sidebar-foreground/55">
                           {section.label}
                         </span>
                         {visibleActions ? (

@@ -1,4 +1,11 @@
-import { EmptyState, ErrorState, LoadingState, PageHeader } from "@nebutra/ui/layout";
+import {
+  EmptyState,
+  ErrorState,
+  LoadingState,
+  Metric,
+  MetricStrip,
+  PageHeader,
+} from "@nebutra/ui/layout";
 import { Button, Card } from "@nebutra/ui/primitives";
 import { headers } from "next/headers";
 import { useLocale, useTranslations } from "next-intl";
@@ -123,21 +130,20 @@ function UsageGauge({
       : "text-success-strong";
 
   return (
-    <MetricCell>
-      <div className="flex items-center justify-between">
-        <h3 className="text-sm text-neutral-11">{label}</h3>
+    <Metric
+      label={label}
+      value={used.toLocaleString()}
+      unit={`/ ${limit.toLocaleString()} ${unit}`}
+      aside={
         <span className={`font-mono text-xs tabular-nums ${statusColor}`}>
           {percent.toFixed(1)}%
         </span>
-      </div>
-
-      <p className="mt-3 text-3xl font-semibold tracking-tight tabular-nums text-neutral-12">
-        {used.toLocaleString()}
-        <span className="ml-1.5 text-sm font-normal text-neutral-10">
-          / {limit.toLocaleString()} {unit}
-        </span>
-      </p>
-
+      }
+      footnote={tc("remainingThisPeriod", {
+        value0: Math.max(limit - used, 0).toLocaleString(),
+        unit,
+      })}
+    >
       <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-neutral-3">
         <div
           className={`h-full rounded-full transition-[width] duration-500 motion-reduce:transition-none ${barColor}`}
@@ -145,12 +151,6 @@ function UsageGauge({
         />
       </div>
 
-      {/* Remaining */}
-      <p className="mt-2 text-xs text-neutral-10">
-        {tc("remainingThisPeriod", { value0: Math.max(limit - used, 0).toLocaleString(), unit })}
-      </p>
-
-      {/* Warning */}
       {isCritical && (
         <div className="mt-3 rounded-[var(--radius-lg)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-xs text-destructive-strong">
           {tc("quotaNearlyExhaustedUpgrade")}
@@ -161,35 +161,26 @@ function UsageGauge({
           {tc("approachingQuotaLimitConsider")}
         </div>
       )}
-    </MetricCell>
+    </Metric>
   );
 }
 
-/**
- * Metrics share one hairline panel, divided into cells — the way current
- * dashboards present a row of numbers — instead of a card per number.
- */
-function MetricStrip({ children }: { children: ReactNode }) {
+/** A credit figure in the shared metric cell (`@nebutra/ui/layout` Metric). */
+function StatCard({
+  label,
+  value,
+  subLabel,
+  children,
+}: {
+  label: string;
+  value: string;
+  subLabel?: string;
+  children?: ReactNode;
+}) {
   return (
-    <div className="grid overflow-hidden rounded-xl border border-border sm:grid-cols-3 sm:divide-x sm:divide-border max-sm:divide-y max-sm:divide-border">
+    <Metric label={label} value={value} footnote={subLabel}>
       {children}
-    </div>
-  );
-}
-
-function MetricCell({ children }: { children: ReactNode }) {
-  return <div className="p-5 sm:p-6">{children}</div>;
-}
-
-function StatCard({ label, value, subLabel }: { label: string; value: string; subLabel?: string }) {
-  return (
-    <MetricCell>
-      <h3 className="text-sm text-neutral-11">{label}</h3>
-      <p className="mt-3 text-3xl font-semibold tracking-tight tabular-nums text-neutral-12">
-        {value}
-      </p>
-      {subLabel && <p className="mt-1.5 text-xs text-neutral-10">{subLabel}</p>}
-    </MetricCell>
+    </Metric>
   );
 }
 
@@ -205,7 +196,7 @@ function SectionHeading({
   return (
     <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <h2 className="text-base font-semibold text-neutral-12">{title}</h2>
+        <h2 className="text-base text-neutral-12">{title}</h2>
         {description ? <p className="mt-1 text-sm text-neutral-11">{description}</p> : null}
       </div>
       {action}
@@ -289,7 +280,18 @@ function CreditSummarySection({
           label={tc("creditBalance")}
           value={creditSummary.balance.amount.toLocaleString()}
           subLabel={tc("available", { amount: creditSummary.balance.formatted })}
-        />
+        >
+          {creditSummary.allowance.includedMonthly > 0 ? (
+            <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-neutral-3">
+              <div
+                className="h-full rounded-full bg-primary"
+                style={{
+                  width: `${Math.min((creditSummary.balance.amount / creditSummary.allowance.includedMonthly) * 100, 100)}%`,
+                }}
+              />
+            </div>
+          ) : null}
+        </StatCard>
 
         <StatCard
           label={tc("dailyRefresh")}
@@ -390,7 +392,7 @@ function BreakdownGroupCard({ group }: { group: UsageBreakdownGroup }) {
   return (
     <Card className="p-4 sm:p-6">
       <div className="flex items-baseline justify-between gap-3">
-        <h3 className="text-sm font-semibold text-neutral-12">{group.dimensionLabel}</h3>
+        <h3 className="text-sm text-neutral-12">{group.dimensionLabel}</h3>
         <span className="shrink-0 text-xs text-neutral-10">{group.meterName}</span>
       </div>
 
@@ -518,7 +520,15 @@ async function UsageContent() {
 
   return (
     <>
-      <PageHeader title={tc("usageMetering")} description={tc("monitorCreditsAPICalls")} />
+      <PageHeader
+        title={tc("usageMetering")}
+        description={tc("monitorCreditsAPICalls")}
+        actions={
+          <Button asChild size="sm" variant="outline">
+            <ViewTransitionLink href="/billing">{tc("managePlanAndLimits")}</ViewTransitionLink>
+          </Button>
+        }
+      />
 
       <CreditSummarySection
         creditSummary={creditSummary}
@@ -533,7 +543,7 @@ async function UsageContent() {
             title={t("emptyState.usageData")}
             description={tc("usageMetricsWillAppear")}
             action={
-              <Button asChild size="sm" variant="outline">
+              <Button asChild size="sm">
                 <ViewTransitionLink href="/settings/api-keys">
                   {tc("createAnAPIKey")}
                 </ViewTransitionLink>
@@ -567,18 +577,7 @@ async function UsageContent() {
       {/* Usage Breakdown — read straight from @nebutra/metering, so it renders
           independently of the gateway usage endpoint above. */}
       <section className="mt-12">
-        <SectionHeading
-          title={tc("usageBreakdown")}
-          description={tc("thisPeriodSMetered")}
-          action={
-            <ViewTransitionLink
-              href="/billing"
-              className="shrink-0 text-sm font-medium text-neutral-11 underline-offset-4 transition-colors hover:text-neutral-12 hover:underline"
-            >
-              {tc("managePlanAndLimits")}
-            </ViewTransitionLink>
-          }
-        />
+        <SectionHeading title={tc("usageBreakdown")} description={tc("thisPeriodSMetered")} />
         <Suspense fallback={<BreakdownSkeleton />}>
           <UsageBreakdownSection result={breakdown} />
         </Suspense>

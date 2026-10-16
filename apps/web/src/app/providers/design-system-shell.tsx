@@ -4,27 +4,39 @@
 import { getConfiguredAuthProvider, useAuth } from "@nebutra/auth/client";
 import {
   Warning as AlertTriangle,
+  ChartActivity,
+  Check,
   ChevronDoubleDown,
   ChevronDoubleUp,
   ChevronRight,
+  CreditCard,
   FolderClosed,
   FolderPlus,
   MoreHorizontal,
+  SettingsGear,
   SidebarLeft,
+  Users,
 } from "@nebutra/icons";
+import { AnimateIn } from "@nebutra/ui/components";
 import { AppShell } from "@nebutra/ui/layout";
 import type {
   SidebarNavRenderLinkProps,
   SidebarNavSection,
   SidebarNavSectionAction,
-  Workspace,
 } from "@nebutra/ui/patterns";
-import { SidebarNav, WorkspaceSwitcher } from "@nebutra/ui/patterns";
+import {
+  SidebarLogoPlate,
+  SidebarNav,
+  SidebarSearchButton,
+  SidebarUsageMeter,
+  SidebarWorkspacePlate,
+} from "@nebutra/ui/patterns";
 import {
   Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
@@ -36,11 +48,12 @@ import {
 import { cn } from "@nebutra/ui/utils";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { BrandLogo, webBrandLabels } from "@/components/brand/brand-assets";
+import { useCommandPalette } from "@/components/command-palette/command-palette-provider";
 import { SidebarProvider, useSidebar } from "@/components/navigation/sidebar-context";
 import {
   useSidebarExpansion,
@@ -56,7 +69,12 @@ import type { WebProductCapabilities } from "@/lib/product-capabilities";
 import { organizationListQueryOptions } from "@/lib/queries/organizations";
 import { queryKeys } from "@/lib/query-keys";
 import { resolvePreferredWorkspaceId } from "@/lib/workspace-selection";
-import { buildBreadcrumbs, getDashboardNavGroups, isActiveRoute } from "./dashboard-nav";
+import {
+  buildBreadcrumbs,
+  getDashboardNavGroups,
+  resolveActiveHref,
+  stripLocalePrefix,
+} from "./dashboard-nav";
 
 // ─── Server reads (replaces manual useEffect + AbortController/`cancelled`) ───
 // The queryFn `signal` cancels the fetch on unmount / key change, exactly as
@@ -88,6 +106,34 @@ async function fetchThreads(workspaceId: string, signal?: AbortSignal): Promise<
   return Array.isArray(payload?.threads) ? payload.threads : [];
 }
 
+interface CreditSummary {
+  balance: { amount: number };
+  allowance: { plan: string; includedMonthly: number };
+}
+
+/** The platform wallet the sidebar meter reads; null when billing is not reachable. */
+async function fetchCreditSummary(signal?: AbortSignal): Promise<CreditSummary | null> {
+  const response = await fetch("/api/billing/credits/summary", {
+    credentials: "include",
+    signal,
+  });
+  if (!response.ok) return null;
+  const payload = (await response.json().catch(() => null)) as Partial<CreditSummary> | null;
+  // Draw the meter only from a well-formed summary; anything else is "no meter".
+  return payload &&
+    typeof payload.balance?.amount === "number" &&
+    typeof payload.allowance?.plan === "string" &&
+    typeof payload.allowance?.includedMonthly === "number"
+    ? (payload as CreditSummary)
+    : null;
+}
+
+/** Ledger plan code (FREE / PRO / ENTERPRISE) → `copy.billingPlans` id. */
+function planCatalogId(plan: string): string {
+  const code = plan.toUpperCase();
+  return code === "PRO" ? "pro_monthly" : code === "ENTERPRISE" ? "enterprise" : "free";
+}
+
 interface Props {
   children: React.ReactNode;
   productCapabilities?: WebProductCapabilities;
@@ -107,6 +153,8 @@ interface ThreadSummary {
 /** English nav label → `Sidebar.nav.*` key (dashboard-nav groups, items, badges, settings sections). */
 const NAV_LABEL_KEYS: Record<string, string> = {
   Product: "product",
+  Build: "build",
+  "Developer tools": "developers",
   Workspace: "workspace",
   Admin: "admin",
   "Startup OS": "startupOs",
@@ -179,6 +227,7 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   const tCopy = useTranslations("copy.providersDesignSystemShell");
   const tc = useTranslations("copy.providersDesignSystemShell");
   const pathname = usePathname();
+  const router = useRouter();
   const { isSignedIn, session } = useAuth();
   const { collapsed, toggle } = useSidebar();
   const { can } = usePermission();
@@ -203,13 +252,23 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
   // session preference) — kept local, never in React Query cache.
   const [workspace, setWorkspace] = useState<string>("");
   const tSidebar = useTranslations("Sidebar");
+  const tPlans = useTranslations("copy.billingPlans");
+  const { toggle: toggleCommandPalette } = useCommandPalette();
+  const creditQuery = useQuery({
+    queryKey: ["sidebar", "credit-summary"],
+    queryFn: ({ signal }) => fetchCreditSummary(signal),
+    enabled: isSignedIn,
+    staleTime: 60_000,
+  });
   const tCommon = useTranslations("Common");
   const [prompt, promptDialog] = usePrompt();
 
   // ─── Server read: organization list (replaces loadWorkspaces useEffect) ────
+  // Read in every workspace mode: the sidebar plate names the active
+  // organization even where switching is off.
   const organizationsQuery = useQuery({
     ...organizationListQueryOptions(),
-    enabled: isSignedIn && supportsWorkspaceSwitching,
+    enabled: isSignedIn,
   });
 
   // Sidebar workspaces are ALWAYS backed by real organizations — no mock/seed
@@ -488,41 +547,48 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         }
       : null;
 
-  const sidebarSections: SidebarNavSection[] = getDashboardNavGroups(navCapabilities).flatMap(
-    (group) => {
-      if (group.title === "Admin" && !isAdmin) {
-        return [];
-      }
-
-      const groupSection: SidebarNavSection = {
-        id: group.title,
-        label: navLabel(group.title),
-        items: group.items.map((item) => ({
-          id: item.href,
-          label: navLabel(item.label),
-          href: item.href,
-          icon: item.icon,
-          badge: item.badge ? { ...item.badge, label: navLabel(item.badge.label) } : undefined,
-          isActive: isActiveRoute(pathname, item.href),
-          children: item.children?.map((child) => ({
-            id: child.href,
-            label: navLabel(child.label),
-            href: child.href,
-            icon: child.icon,
-            badge: child.badge ? { ...child.badge, label: navLabel(child.badge.label) } : undefined,
-            isActive: isActiveRoute(pathname, child.href),
-          })),
-        })),
-      };
-
-      // Insert Projects between Product and Admin.
-      if (group.title === "Product" && projectsSection) {
-        return [groupSection, projectsSection];
-      }
-
-      return [groupSection];
-    },
+  const navGroups = getDashboardNavGroups(navCapabilities);
+  const activeNavHref = resolveActiveHref(
+    pathname,
+    navGroups.flatMap((group) =>
+      group.items.flatMap((item) => [item.href, ...(item.children ?? []).map((c) => c.href)]),
+    ),
   );
+
+  const sidebarSections: SidebarNavSection[] = navGroups.flatMap((group) => {
+    if (group.items.length === 0) return [];
+    if (group.title === "Admin" && !isAdmin) {
+      return [];
+    }
+
+    const groupSection: SidebarNavSection = {
+      id: group.title,
+      label: navLabel(group.title),
+      items: group.items.map((item) => ({
+        id: item.href,
+        label: navLabel(item.label),
+        href: item.href,
+        icon: item.icon,
+        badge: item.badge ? { ...item.badge, label: navLabel(item.badge.label) } : undefined,
+        isActive: item.href === activeNavHref,
+        children: item.children?.map((child) => ({
+          id: child.href,
+          label: navLabel(child.label),
+          href: child.href,
+          icon: child.icon,
+          badge: child.badge ? { ...child.badge, label: navLabel(child.badge.label) } : undefined,
+          isActive: child.href === activeNavHref,
+        })),
+      })),
+    };
+
+    // Projects sit right under what the product builds.
+    if (group.title === "Build" && projectsSection) {
+      return [groupSection, projectsSection];
+    }
+
+    return [groupSection];
+  });
 
   // Lean builder nav for the Startup OS workspace overlay — keep only the
   // builder-relevant destinations (drop Theme Playground / Match cofounder /
@@ -536,82 +602,164 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
     }))
     .filter((section) => section.items.length > 0);
 
-  // ─── Workspaces mapped to WorkspaceSwitcher shape ────────────────────────
-  const workspacesForSwitcher: Workspace[] = workspaceOptions.map((option) => ({
-    id: option.id,
-    name: option.label,
-  }));
+  // ─── Sidebar header — workspace plate (a menu) and the command bar ─────────
+  // The plate names the workspace on a lit logo plate with its plan, like the
+  // Linear / Resend / ElevenLabs rails; the Nebutra mark stands in until the
+  // tenant uploads a logo. Its menu holds workspace destinations and, where
+  // there is more than one organization, the switcher.
+  const activeOrganization =
+    workspaceOptions.find((option) => option.id === workspace) ??
+    workspaceOptions.find((option) => option.id === session?.organizationId) ??
+    workspaceOptions[0];
+  const plateName = activeOrganization?.label ?? webBrandLabels.homeLink;
+  const credit = creditQuery.data ?? null;
+  const planLabel = credit ? tPlans(`${planCatalogId(credit.allowance.plan)}.name`) : undefined;
+  const plateLogo = <BrandLogo variant="mark" className="size-4" tenantLogoUrl={tenantLogoUrl} />;
+  const canSwitch = supportsWorkspaceSwitching && workspaceOptions.length > 1;
 
-  // ─── Sidebar header slot — logo + workspace switcher ─────────────────────
+  const workspaceMenu = (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <SidebarWorkspacePlate
+          name={plateName}
+          plan={planLabel}
+          logo={plateLogo}
+          collapsed={collapsed}
+          aria-label={tSidebar("workspaceMenu")}
+        />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" sideOffset={6} className="w-64">
+        <div className="flex items-center gap-2.5 px-2 py-2">
+          <SidebarLogoPlate logo={plateLogo} name={plateName} />
+          <div className="min-w-0">
+            <p className="truncate text-sm font-medium text-foreground">{plateName}</p>
+            {planLabel ? (
+              <p className="truncate text-xs text-muted-foreground">
+                {tSidebar("planName", { plan: planLabel })}
+              </p>
+            ) : null}
+          </div>
+        </div>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => router.push("/settings")}>
+          <SettingsGear className="mr-2 size-4 shrink-0" aria-hidden="true" />
+          <span>{tSidebar("workspaceSettings")}</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/settings/team")}>
+          <Users className="mr-2 size-4 shrink-0" aria-hidden="true" />
+          <span>{tSidebar("inviteMembers")}</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push("/billing")}>
+          <CreditCard className="mr-2 size-4 shrink-0" aria-hidden="true" />
+          <span>{tSidebar("billingAndPlan")}</span>
+        </DropdownMenuItem>
+        {canSwitch ? (
+          <>
+            <DropdownMenuSeparator />
+            <DropdownMenuLabel className="text-xs font-medium text-muted-foreground">
+              {tSidebar("switchWorkspace")}
+            </DropdownMenuLabel>
+            {workspaceOptions.map((option) => (
+              <DropdownMenuItem
+                key={option.id}
+                onSelect={() => void handleWorkspaceChange(option.id)}
+              >
+                <SidebarLogoPlate name={option.label} size="sm" />
+                <span className="min-w-0 flex-1 truncate">{option.label}</span>
+                {option.id === workspace ? (
+                  <Check className="size-4 shrink-0" aria-hidden="true" />
+                ) : null}
+              </DropdownMenuItem>
+            ))}
+          </>
+        ) : null}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
   const sidebarHeader = (
-    <div className="flex flex-col gap-2">
-      <div
-        className={cn("flex items-center px-2", collapsed ? "justify-center" : "justify-between")}
-      >
-        {collapsed ? (
-          // Collapsed rail: the brand mark morphs into the expand icon on
-          // sidebar hover — no room for a separate button.
+    <div className={cn("flex flex-col", collapsed ? "items-center gap-2" : "gap-3")}>
+      {collapsed ? (
+        <>
+          {workspaceMenu}
           <button
             type="button"
             onClick={toggle}
             aria-label={webBrandLabels.expandSidebar}
             title={webBrandLabels.expandSidebar}
-            className="relative inline-flex size-7 items-center justify-center rounded-[var(--radius-md)] outline-none"
+            className="inline-flex size-8 items-center justify-center rounded-[var(--radius-md)] text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
           >
-            <span className="flex items-center justify-center transition-opacity duration-150 group-hover/sidebar:opacity-0">
-              <BrandLogo variant="mark" className="size-7" tenantLogoUrl={tenantLogoUrl} />
-            </span>
-            <span className="absolute inset-0 flex items-center justify-center text-sidebar-foreground/70 opacity-0 transition-opacity duration-150 group-hover/sidebar:opacity-100">
-              <SidebarLeft className="size-5" aria-hidden="true" />
-            </span>
+            <SidebarLeft className="size-4" aria-hidden="true" />
           </button>
-        ) : (
-          // Expanded: logo (home link) on the left, a collapse button on the
-          // right that reveals on sidebar hover.
-          <>
-            <ViewTransitionLink
-              href="/workspace"
-              aria-label={webBrandLabels.homeLink}
-              className="inline-flex min-w-0 items-center rounded-none border-0 bg-transparent shadow-none outline-none ring-0 hover:bg-transparent focus-visible:rounded-[var(--radius-sm)]"
-            >
-              <BrandLogo
-                variant="horizontal"
-                className="h-6 w-[8.5rem]"
-                tenantLogoUrl={tenantLogoUrl}
-              />
-            </ViewTransitionLink>
-            <Button
-              type="button"
-              variant="ghost"
-              shape="square"
-              iconSize="sm"
-              onClick={toggle}
-              aria-label={webBrandLabels.collapseSidebar}
-              title={webBrandLabels.collapseSidebar}
-              className="shrink-0 text-sidebar-foreground/60 opacity-0 transition-opacity duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:opacity-100 group-hover/sidebar:opacity-100"
-            >
-              <SidebarLeft className="size-4" aria-hidden="true" />
-            </Button>
-          </>
-        )}
-      </div>
-      {supportsWorkspaceSwitching && workspacesForSwitcher.length > 0 && (
-        <div className={collapsed ? "flex justify-center" : "px-2"}>
-          <WorkspaceSwitcher
-            workspaces={workspacesForSwitcher}
-            activeWorkspaceId={workspace}
-            onSwitch={handleWorkspaceChange}
-            variant={collapsed ? "compact" : "expanded"}
-            showRoleBadge={false}
-          />
+        </>
+      ) : (
+        // The collapse toggle floats over the plate's right end and appears on
+        // rail hover, so the workspace name keeps the full row at rest.
+        <div className="relative">
+          {workspaceMenu}
+          <Button
+            type="button"
+            variant="ghost"
+            shape="square"
+            iconSize="sm"
+            onClick={toggle}
+            aria-label={webBrandLabels.collapseSidebar}
+            title={webBrandLabels.collapseSidebar}
+            className="absolute top-0 right-0 bg-sidebar text-sidebar-foreground/60 opacity-0 transition-opacity duration-150 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:opacity-100 group-hover/sidebar:opacity-100"
+          >
+            <SidebarLeft className="size-4" aria-hidden="true" />
+          </Button>
         </div>
       )}
+      <SidebarSearchButton
+        label={tSidebar("search")}
+        collapsed={collapsed}
+        onClick={toggleCommandPalette}
+      />
     </div>
   );
 
   // ─── Sidebar footer slot — user row + notification bell.
   // The user menu absorbs Feedback / Language / Theme; every route gets the
   // same global issue-report affordance without duplicating header chrome.
+  // ─── Sidebar footer — plan meter above the account row ────────────────────
+  // The meter reads the platform wallet (credits left of the plan's monthly
+  // allowance). With billing unreachable it is not drawn — no invented numbers.
+  const usageMeter =
+    credit && !collapsed ? (
+      <SidebarUsageMeter
+        className="mb-3"
+        plan={tSidebar("planName", { plan: planLabel ?? "" })}
+        label={tSidebar("creditsLeft")}
+        measure="remaining"
+        used={credit.balance.amount}
+        limit={credit.allowance.includedMonthly}
+        valueLabel={
+          credit.allowance.includedMonthly > 0
+            ? tSidebar("creditsOf", {
+                balance: credit.balance.amount.toLocaleString(),
+                limit: credit.allowance.includedMonthly.toLocaleString(),
+              })
+            : credit.balance.amount.toLocaleString()
+        }
+        action={
+          <Link
+            href={planCatalogId(credit.allowance.plan) === "free" ? "/billing" : "/usage"}
+            className="inline-flex items-center gap-1 font-medium text-sidebar-foreground/80 transition-colors hover:text-sidebar-foreground"
+          >
+            {planCatalogId(credit.allowance.plan) === "free" ? (
+              tSidebar("upgrade")
+            ) : (
+              <>
+                <ChartActivity className="size-3.5" aria-hidden="true" />
+                {tSidebar("viewUsage")}
+              </>
+            )}
+          </Link>
+        }
+      />
+    ) : null;
+
   const sidebarFooter = isSignedIn ? (
     collapsed ? (
       <div className="flex flex-col items-center gap-1">
@@ -619,11 +767,14 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         <UserMenu />
       </div>
     ) : (
-      <div className="flex items-center gap-1">
-        <div className="min-w-0 flex-1">
-          <UserMenu variant="row" />
+      <div>
+        {usageMeter}
+        <div className="flex items-center gap-1">
+          <div className="min-w-0 flex-1">
+            <UserMenu variant="row" />
+          </div>
+          <NotificationsDialog />
         </div>
-        <NotificationsDialog />
       </div>
     )
   ) : null;
@@ -680,7 +831,15 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
 
   return (
     <AppShell
-      surface="card"
+      surface="inset"
+      sidebarWidth={240}
+      mobileBar={
+        <span className="flex min-w-0 items-center gap-2">
+          <SidebarLogoPlate logo={plateLogo} name={plateName} />
+          <span className="truncate text-sm font-medium text-foreground">{plateName}</span>
+        </span>
+      }
+      ambientLight={!isWorkspaceHomeRoute && !isStartupOSRoute}
       sidebar={sidebar}
       collapsed={collapsed}
       // NOTE: startup-os sidebar chrome (hide/overlay on the WORKSPACE only, full
@@ -746,8 +905,19 @@ function DesignSystemShellInner({ children, productCapabilities }: Props) {
         // would clip edge-to-edge canvases and add an unnecessary route shell.
         children
       ) : (
-        <section id="main-content" aria-label={tc("mainContent")} className="content-area">
-          {children}
+        // `content-area` paints with `contain: paint` (for the route view
+        // transition), which clips anything drawn outside its box — a Card's
+        // ring, a hover shadow. A 4px gutter, cancelled by the negative margin,
+        // keeps those edges inside the paint box.
+        <section
+          id="main-content"
+          aria-label={tc("mainContent")}
+          className="content-area -mx-1 px-1"
+        >
+          {/* One quiet entrance per destination; keyed so it replays on navigation. */}
+          <AnimateIn key={stripLocalePrefix(pathname)} preset="fadeUp">
+            {children}
+          </AnimateIn>
         </section>
       )}
       {promptDialog}

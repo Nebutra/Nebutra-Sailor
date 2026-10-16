@@ -18,7 +18,7 @@ import {
  * sources one: an entry written from memory has no citation, so an empty
  * `sources` array is the shape a fabricated entry takes.
  */
-const CATALOG_DIR = join(import.meta.dirname, "../../../../packages/platform/i18n/boot-log");
+const CATALOG_DIR = join(import.meta.dirname, "../../../../platform/i18n/boot-log");
 
 const catalog = (locale: string): BootLogCatalog =>
   JSON.parse(readFileSync(join(CATALOG_DIR, `${locale}.json`), "utf8"));

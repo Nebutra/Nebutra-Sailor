@@ -5,6 +5,10 @@
  * One implementation; both apps import it.
  */
 
+export { AuthBrandPanel, type AuthBrandPanelProps } from "./auth-brand-panel";
+// The archive story lives at `@nebutra/auth/sign-in/boot-log` (structure and
+// rotation, server-safe) and `@nebutra/auth/sign-in/boot-log-card` (the client
+// card), kept off this barrel so client imports of OAuthButtons stay small.
 export { AuthSplitShell, type AuthSplitShellProps } from "./auth-split-shell";
 export {
   OAuthButtons,

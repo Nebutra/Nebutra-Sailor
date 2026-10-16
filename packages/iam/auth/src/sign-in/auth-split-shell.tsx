@@ -36,7 +36,7 @@ export function AuthSplitShell({
   return (
     <div
       className={cn(
-        "grid min-h-dvh bg-background lg:grid-cols-[minmax(360px,36vw)_1fr]",
+        "grid min-h-dvh bg-background lg:grid-cols-[minmax(400px,42vw)_1fr]",
         className,
       )}
     >

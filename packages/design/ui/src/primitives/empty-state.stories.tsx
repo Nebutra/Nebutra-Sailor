@@ -204,3 +204,22 @@ export const Accessibility: Story = {
     await expect(canvas.getByRole("button", { name: "Clear Filter" })).toBeVisible();
   },
 };
+
+/** A product glimpse beside the message: the thing the user will make, seen before it exists. */
+export const PreviewBeside: Story = {
+  render: () => (
+    <EmptyState
+      preview={
+        <div className="mx-auto w-full max-w-xs rounded-xl border border-border bg-card p-5 shadow-glass-sm">
+          <div className="h-2.5 w-24 rounded-full bg-foreground/10" />
+          <div className="mt-3 h-2 w-40 rounded-full bg-foreground/[0.07]" />
+          <div className="mt-6 h-16 rounded-lg border border-border bg-muted" />
+        </div>
+      }
+      previewPlacement="beside"
+      title="Compile your company first"
+      description="Your cofounder card is built from your Startup OS company."
+      action={<Button size="sm">Compile your company</Button>}
+    />
+  ),
+};

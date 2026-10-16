@@ -325,7 +325,6 @@
       "apps/web/src/app/api/blog/reactions/route.ts",
       "apps/web/src/app/api/organizations/[orgId]/members/route.ts",
       "apps/web/src/components/api-keys/create-api-key-dialog.tsx",
-      "apps/web/src/components/auth/auth-banner.tsx",
       "apps/web/src/components/auth/desktop-auth-complete-handoff.tsx",
       "apps/web/src/components/settings/security/security-capabilities.ts",
       "backends/gateway/src/agents/default-agents.ts",
@@ -483,10 +482,6 @@
       {
         "file": "packages/design/ui/src/patterns/kinetic-marketing.tsx",
         "count": 11
-      },
-      {
-        "file": "apps/auth/src/components/boot-log-card.tsx",
-        "count": 10
       },
       {
         "file": "apps/landing/src/components/landing/capability-cards/MultiTenantCard.tsx",
@@ -805,10 +800,6 @@
         "count": 5
       },
       {
-        "file": "apps/auth/src/components/auth-banner.tsx",
-        "count": 4
-      },
-      {
         "file": "apps/design/src/app/(patterns)/patterns/[slug]/page.tsx",
         "count": 4
       },
@@ -973,10 +964,6 @@
         "count": 4
       },
       {
-        "file": "apps/web/src/components/auth/auth-banner.tsx",
-        "count": 4
-      },
-      {
         "file": "packages/design/theme/src/language-switcher.tsx",
         "count": 4
       },
@@ -1110,10 +1097,6 @@
       },
       {
         "file": "apps/web/src/app/providers/design-system-shell.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/web/src/components/cofounder-match/cofounder-card.tsx",
         "count": 3
       },
       {
@@ -1663,10 +1646,6 @@
       },
       {
         "file": "apps/landing/src/components/landing/solutions/vc/VcDirectory.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/web/src/app/(app)/integrations/page.tsx",
         "count": 3
       },
       {
@@ -3016,10 +2995,6 @@
     "description": "Shrink-only. scripts/lint-hover-motion.mjs, contract in docs/design-system/hover-motion.md. Measured baseline on origin/main 2026-10-10: 191 violations in 107 files; this list is what remained after the root fixes.",
     "allowlist": [
       {
-        "file": "apps/auth/src/components/boot-log-card.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/forge/src/components/dns-leak-runner.tsx",
         "count": 1
       },
@@ -3173,7 +3148,7 @@
       },
       {
         "file": "apps/web/src/app/providers/design-system-shell.tsx",
-        "count": 3
+        "count": 1
       },
       {
         "file": "apps/web/src/components/command-palette/command-surface-button.tsx",
@@ -3368,13 +3343,13 @@
       "apps/web/src/app/(app)/integrations/page.tsx": 3,
       "apps/web/src/app/(app)/settings/shortcuts/page.tsx": 5,
       "apps/web/src/app/(app)/tenants/page.tsx": 5,
-      "apps/web/src/app/(app)/usage/page.tsx": 9,
+      "apps/web/src/app/(app)/usage/page.tsx": 6,
       "apps/web/src/app/(public)/page.tsx": 4,
       "apps/web/src/app/select-org/select-org-client.tsx": 1,
       "apps/web/src/components/billing/billing-self-service.tsx": 3,
       "apps/web/src/components/billing/order-history.tsx": 1,
       "apps/web/src/components/billing/plan-badge.tsx": 3,
-      "apps/web/src/components/cofounder-match/cofounder-card.tsx": 5,
+      "apps/web/src/components/cofounder-match/cofounder-card.tsx": 1,
       "apps/web/src/components/cofounder-match/discover-deck.tsx": 2,
       "apps/web/src/components/cofounder-match/room-view.tsx": 2,
       "apps/web/src/components/command-palette/command-surface-button.tsx": 2,
@@ -3387,14 +3362,14 @@
       "apps/web/src/components/personalization/communication-preferences.tsx": 2,
       "apps/web/src/components/personalization/personalization-panel.tsx": 4,
       "apps/web/src/components/personalization/personalization-tab.tsx": 1,
-      "apps/web/src/components/settings/security/active-sessions-block.tsx": 6,
+      "apps/web/src/components/settings/security/active-sessions-block.tsx": 4,
       "apps/web/src/components/skills/skills-grid.tsx": 8,
       "apps/web/src/components/startup-os/company-tower/brand-kit-floor.tsx": 1,
       "apps/web/src/components/startup-os/company-tower/company-tower.tsx": 2,
       "apps/web/src/components/startup-os/company-tower/control-deck.tsx": 5,
       "apps/web/src/components/startup-os/company-tower/field-card.tsx": 7,
       "apps/web/src/components/startup-os/company-tower/tower-floor.tsx": 3,
-      "apps/web/src/components/startup-os/startup-builder-home.tsx": 3,
+      "apps/web/src/components/startup-os/startup-builder-home.tsx": 2,
       "apps/web/src/components/startup-os/startup-canvas-panel.tsx": 1,
       "apps/web/src/components/startup-os/startup-chat-panel.tsx": 13,
       "apps/web/src/components/startup-os/startup-connectors-menu.tsx": 2,
@@ -3446,52 +3421,12 @@
         "count": 1
       },
       {
-        "file": "apps/web/src/app/(app)/integrations/page.tsx",
-        "count": 4
-      },
-      {
         "file": "apps/web/src/app/(app)/notifications/page.tsx",
         "count": 1
       },
       {
         "file": "apps/web/src/app/(app)/organization-invitation/[invitationId]/page.tsx",
         "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/settings/api-keys/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/settings/audit-log/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/settings/developers/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/settings/notifications/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/settings/provider-keys/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/settings/referrals/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/settings/shortcuts/page.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/web/src/app/(app)/settings/webhooks/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/app/(app)/usage/page.tsx",
-        "count": 2
       },
       {
         "file": "apps/web/src/app/(auth)/desktop-auth/complete/page.tsx",
@@ -3574,10 +3509,6 @@
         "count": 1
       },
       {
-        "file": "apps/web/src/components/auth/auth-banner.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/web/src/components/auth/desktop-auth-complete-handoff.tsx",
         "count": 1
       },
@@ -3622,15 +3553,7 @@
         "count": 2
       },
       {
-        "file": "apps/web/src/components/billing/billing-self-service.tsx",
-        "count": 2
-      },
-      {
         "file": "apps/web/src/components/billing/pricing-plan-grid.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/cofounder-match/cofounder-card.tsx",
         "count": 1
       },
       {
@@ -3707,10 +3630,6 @@
       },
       {
         "file": "apps/web/src/components/startup-os/company-tower/company-tower.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/web/src/components/startup-os/startup-builder-home.tsx",
         "count": 1
       },
       {

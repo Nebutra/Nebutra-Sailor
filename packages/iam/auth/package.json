@@ -67,6 +67,16 @@
       "import": "./dist/sign-in/index.js",
       "default": "./dist/sign-in/index.js"
     },
+    "./sign-in/boot-log": {
+      "types": "./dist/sign-in/boot-log.d.ts",
+      "import": "./dist/sign-in/boot-log.js",
+      "default": "./dist/sign-in/boot-log.js"
+    },
+    "./sign-in/boot-log-card": {
+      "types": "./dist/sign-in/boot-log-card.d.ts",
+      "import": "./dist/sign-in/boot-log-card.js",
+      "default": "./dist/sign-in/boot-log-card.js"
+    },
     "./sign-in/providers": {
       "types": "./dist/sign-in/oauth-providers.d.ts",
       "import": "./dist/sign-in/oauth-providers.js",
@@ -93,6 +103,7 @@
     "@better-auth/core": "^1.6.13",
     "@nebutra/audit": "workspace:*",
     "@nebutra/email": "workspace:*",
+    "@nebutra/i18n": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/repositories": "workspace:*",
     "@simplewebauthn/server": "^13.3.0",

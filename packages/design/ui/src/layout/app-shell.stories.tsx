@@ -100,3 +100,13 @@ export const NoHeader: Story = {
     children: mainPlaceholder,
   },
 };
+
+/** The product shell: canvas sidebar, raised working panel, House-blue light from the top. */
+export const InsetWithAmbientLight: Story = {
+  args: {
+    sidebar: sidebarPlaceholder,
+    children: mainPlaceholder,
+    surface: "inset",
+    ambientLight: true,
+  },
+};

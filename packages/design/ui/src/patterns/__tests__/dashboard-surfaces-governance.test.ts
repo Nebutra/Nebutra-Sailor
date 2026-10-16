@@ -48,7 +48,8 @@ describe("@nebutra/ui dashboard surface governance", () => {
     expect(source).toContain('data-ui="nebutra-sidebar-nav"');
     expect(source).toContain("border-sidebar-border");
 
-    // Current page = a soft surface, a hairline edge and an accent-tinted icon.
+    // Current page = a raised chip (card surface, hairline edge, xs shadow) and
+    // an ink icon.
     // The 2026 shells (Linear, Raycast) all mark position with surface and use
     // the accent surgically; a saturated fill made the active row the loudest
     // thing on screen. This replaces the older `bg-sidebar-primary` fill
@@ -56,14 +57,8 @@ describe("@nebutra/ui dashboard surface governance", () => {
     // The surface is one element that glides between rows (layoutId), not a
     // class per row, so changing page reads as the selection travelling.
     expect(source).toContain('layoutId="sidebar-nav-active"');
-    expect(source).toContain(
-      "bg-sidebar-accent shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))]",
-    );
+    expect(source).toContain("bg-card shadow-xs ring-1 ring-inset ring-sidebar-border");
     expect(source).toContain('reducedMotion="user"');
-    // `--sidebar-border` is a bare channel triple, so the shadow colour must
-    // wrap it in hsl() — unwrapped, the whole declaration is invalid and the
-    // hairline silently never paints (lint-ui-contracts bare-channel rule).
-    expect(source).toContain("shadow-[inset_0_0_0_1px_hsl(var(--sidebar-border))]");
     expect(source).toContain('item.isActive && "text-sidebar-primary"');
     // Hover stays a step below the selected surface.
     expect(source).toContain("hover:bg-sidebar-accent/55");

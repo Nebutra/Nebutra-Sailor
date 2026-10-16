@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { type BootLogRecord, type BootLogSpan, bootLogBucket } from "@/content/boot-log";
+import { type BootLogRecord, type BootLogSpan, bootLogBucket } from "./boot-log";
 
 const HOLD_MS = 13_000;
 const FADE_MS = 500;

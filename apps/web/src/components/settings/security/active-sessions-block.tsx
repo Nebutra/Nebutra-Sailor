@@ -1,5 +1,6 @@
 "use client";
 
+import { DeviceAlternate, Globe } from "@nebutra/icons";
 import { SettingsSection } from "@nebutra/ui/layout";
 import { Button } from "@nebutra/ui/primitives";
 import { useFormatter, useTranslations } from "next-intl";
@@ -276,57 +277,79 @@ export function ActiveSessionsBlock({
       ) : showEmpty ? (
         <p className="text-sm text-neutral-11">{ts("empty")}</p>
       ) : (
-        <div className="space-y-3">
+        // One hairline panel, one row per session (Linear / Vercel device lists):
+        // a device plate, the device and its state, quiet metadata, the action.
+        <ul className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-card shadow-xs">
           {sessions.map((session) => {
             const isCurrent = isCurrentSession(session);
             const lastActiveAt = session.lastActiveAt || session.updatedAt;
+            const DeviceIcon = session.kind === "desktop" ? DeviceAlternate : Globe;
+            // Loopback / unspecified addresses (`::`, `0000:…`) say nothing; skip them.
+            const showIp = Boolean(session.ipAddress && !/^[0:.]+$/.test(session.ipAddress));
             return (
-              <div
+              <li
                 key={session.id}
-                className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-neutral-7 p-4 md:flex-row md:items-start md:justify-between"
+                className="flex flex-col gap-3 px-4 py-3.5 md:flex-row md:items-center md:gap-4"
               >
+                <span
+                  aria-hidden="true"
+                  className="hidden size-9 shrink-0 items-center justify-center rounded-[var(--radius-md)] border border-border bg-neutral-2 text-neutral-11 md:inline-flex"
+                >
+                  <DeviceIcon className="size-4" />
+                </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-medium text-neutral-12">
+                  <p className="flex flex-wrap items-center gap-2 text-sm font-medium text-neutral-12">
                     {(session.label || session.ipAddress || ts("unknownIp"))
                       .replace("Web browser", ts("webBrowser"))
                       .replace("Unknown platform", ts("unknownPlatform"))}
                     {isCurrent && (
-                      <span className="ml-2 text-xs font-normal text-neutral-10">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-2 py-0.5 text-xs font-normal text-neutral-11">
+                        <span aria-hidden="true" className="size-1.5 rounded-full bg-success" />
                         {ts("currentSession")}
                       </span>
                     )}
                   </p>
-                  <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-neutral-10">
-                    <span className="rounded-full border border-neutral-7 px-2 py-0.5">
-                      {session.kind === "desktop" ? ts("desktopKind") : ts("webKind")}
-                    </span>
-                    {session.ipAddress && <span>{session.ipAddress}</span>}
-                    {session.platform && (
-                      <span>
-                        {session.platform === "Unknown platform"
-                          ? ts("unknownPlatform")
-                          : session.platform}
-                      </span>
+                  <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-neutral-10">
+                    <span>{session.kind === "desktop" ? ts("desktopKind") : ts("webKind")}</span>
+                    {showIp && (
+                      <>
+                        <span aria-hidden="true">·</span>
+                        <span className="tabular-nums">{session.ipAddress}</span>
+                      </>
                     )}
+                    {session.platform && (
+                      <>
+                        <span aria-hidden="true">·</span>
+                        <span>
+                          {session.platform === "Unknown platform"
+                            ? ts("unknownPlatform")
+                            : session.platform}
+                        </span>
+                      </>
+                    )}
+                    <span aria-hidden="true">·</span>
+                    <span>
+                      {ts("lastActiveLabel")}:{" "}
+                      {parseSessionDate(lastActiveAt)
+                        ? format.relativeTime(parseSessionDate(lastActiveAt) as Date)
+                        : tc("unknownTime")}
+                    </span>
+                    <span aria-hidden="true">·</span>
+                    <span>
+                      {ts("expiresLabel")}:{" "}
+                      {parseSessionDate(session.expiresAt)
+                        ? format.dateTime(parseSessionDate(session.expiresAt) as Date, {
+                            dateStyle: "medium",
+                            timeStyle: "short",
+                          })
+                        : tc("unknownTime")}
+                    </span>
                   </div>
-                  <p className="mt-1 text-xs text-neutral-10">
-                    {ts("lastActiveLabel")}:{" "}
-                    {parseSessionDate(lastActiveAt)
-                      ? format.relativeTime(parseSessionDate(lastActiveAt) as Date)
-                      : tc("unknownTime")}
-                  </p>
                   {session.userAgent && (
-                    <p className="mt-2 break-words text-xs text-neutral-11">{session.userAgent}</p>
+                    <p className="mt-1 truncate font-mono text-xs text-neutral-10">
+                      {session.userAgent}
+                    </p>
                   )}
-                  <p className="mt-2 text-xs text-neutral-10">
-                    {ts("expiresLabel")}:{" "}
-                    {parseSessionDate(session.expiresAt)
-                      ? format.dateTime(parseSessionDate(session.expiresAt) as Date, {
-                          dateStyle: "medium",
-                          timeStyle: "short",
-                        })
-                      : tc("unknownTime")}
-                  </p>
                 </div>
 
                 <Button
@@ -336,15 +359,17 @@ export function ActiveSessionsBlock({
                     state.pendingSessionId === session.id
                   }
                   type="button"
+                  size="sm"
                   onClick={() => handleRevoke(session)}
                   variant="outline"
+                  className="self-start md:self-center"
                 >
                   {state.pendingSessionId === session.id ? ts("revoking") : ts("revoke")}
                 </Button>
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       )}
 
       <p className="mt-4 text-xs leading-5 text-neutral-10">
