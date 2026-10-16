@@ -14,6 +14,7 @@ import {
 } from "./incidents";
 import type { StateChange } from "./mail";
 import { type DayStats, dayState, type ServiceState, utcDateKey } from "./math";
+import { classifyHttpStatus } from "./probe-http";
 import { getStatusKv, isStatusHistoryDurable } from "./store";
 
 export interface ServiceProbe {
@@ -58,16 +59,7 @@ export interface ServiceTarget {
 const TIMEOUT_MS = 4500;
 const STATUS_PROBE_CONCURRENCY = 2;
 
-/**
- * A 5xx is the service failing; a 4xx is the service answering a request it
- * will not serve (a moved path, a rate limit) — reachable, but not healthy.
- */
-export function classifyHttpStatus(statusCode: number): ServiceState {
-  if (statusCode >= 200 && statusCode < 400) return "operational";
-  if (statusCode >= 500) return "outage";
-  if (statusCode >= 400) return "degraded";
-  return "unknown";
-}
+export { classifyHttpStatus } from "./probe-http";
 
 interface ApiReading {
   state: ServiceState;

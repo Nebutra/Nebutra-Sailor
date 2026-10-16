@@ -15,7 +15,8 @@
   "main": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./math": "./src/math.ts"
+    "./math": "./src/math.ts",
+    "./probe-http": "./src/probe-http.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
