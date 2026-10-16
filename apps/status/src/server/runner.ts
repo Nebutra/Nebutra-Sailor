@@ -1,0 +1,118 @@
+/**
+ * What the server process does on boot: apply `status.config.json`, then run
+ * the monitor loop.
+ *
+ * The loop ticks every 10 s. A tick claims the runner lease first, so with
+ * several replicas only the holder probes; ticks never overlap, because the
+ * next one is scheduled only after the current one finishes.
+ */
+import { readFile } from "node:fs/promises";
+import { hostname } from "node:os";
+import { applyConfig, ConfigError } from "./config";
+import type { StatusDb } from "./db";
+import { log } from "./log";
+import { claimLease, runDueMonitors } from "./monitors";
+
+export const TICK_MS = 10_000;
+export const LEASE_TTL_SECONDS = 30;
+
+/** Read and apply the config file. Errors are logged, never thrown: a bad file must not keep pages down. */
+export async function applyConfigFile(db: StatusDb, file: string): Promise<boolean> {
+  try {
+    const raw = JSON.parse(await readFile(file, "utf8"));
+    const { page } = await applyConfig(db, raw);
+    log.info("config applied", { file, page: page.slug });
+    return true;
+  } catch (error) {
+    const issues =
+      error && typeof error === "object" && "issues" in error
+        ? (error as { issues: unknown }).issues
+        : undefined;
+    log.error("config not applied", {
+      file,
+      err: error,
+      ...(issues ? { issues } : {}),
+      kind:
+        error instanceof ConfigError ? "config" : error instanceof SyntaxError ? "json" : "other",
+    });
+    return false;
+  }
+}
+
+export interface Runner {
+  stop(): Promise<void>;
+  /** Resolves when the in-flight tick (if any) has finished. */
+  idle(): Promise<void>;
+}
+
+export function defaultHolder(): string {
+  return `${hostname()}:${process.pid}`;
+}
+
+export interface RunnerOptions {
+  holder?: string;
+  tickMs?: number;
+  leaseTtlSeconds?: number;
+  tick?: (db: StatusDb) => Promise<unknown>;
+}
+
+/** One tick: hold the lease, then run what is due. Returns whether this process ran monitors. */
+export async function runTick(
+  db: StatusDb,
+  holder: string,
+  leaseTtlSeconds = LEASE_TTL_SECONDS,
+): Promise<boolean> {
+  if (!(await claimLease(db, holder, leaseTtlSeconds))) return false;
+  const changes = await runDueMonitors(db);
+  for (const change of changes) {
+    log.info("component evidence changed", { ...change });
+  }
+  return true;
+}
+
+export function startRunner(db: StatusDb, options: RunnerOptions = {}): Runner {
+  const holder = options.holder ?? defaultHolder();
+  const tickMs = options.tickMs ?? TICK_MS;
+  const tick = options.tick ?? ((d: StatusDb) => runTick(d, holder, options.leaseTtlSeconds));
+  let stopped = false;
+  let timer: NodeJS.Timeout | null = null;
+  let inFlight: Promise<void> = Promise.resolve();
+
+  const loop = () => {
+    if (stopped) return;
+    inFlight = tick(db)
+      .then(() => undefined)
+      .catch((error: unknown) => log.error("monitor tick failed", { holder, err: error }))
+      .finally(() => {
+        if (!stopped) {
+          timer = setTimeout(loop, tickMs);
+          timer.unref?.();
+        }
+      });
+  };
+  loop();
+  log.info("monitor runner started", { holder, tickMs });
+
+  return {
+    async stop() {
+      stopped = true;
+      if (timer) clearTimeout(timer);
+      await inFlight;
+    },
+    idle: () => inFlight,
+  };
+}
+
+/** Boot sequence, called once from instrumentation.ts in the Node runtime. */
+export async function boot(
+  db: StatusDb,
+  env: NodeJS.ProcessEnv = process.env,
+): Promise<Runner | null> {
+  const file = env.STATUS_CONFIG_FILE?.trim();
+  if (file) await applyConfigFile(db, file);
+  if (env.STATUS_RUNNER?.trim().toLowerCase() === "off") {
+    log.info("monitor runner disabled", { reason: "STATUS_RUNNER=off" });
+    return null;
+  }
+  return startRunner(db);
+}
