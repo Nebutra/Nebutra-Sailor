@@ -19,10 +19,15 @@
     "test": "prisma generate && vitest run"
   },
   "dependencies": {
+    "@nebutra/fonts": "workspace:*",
+    "@nebutra/icons": "workspace:*",
     "@nebutra/status": "workspace:*",
+    "@nebutra/tokens": "workspace:*",
+    "@nebutra/ui": "workspace:*",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "catalog:",
     "next": "catalog:",
+    "next-intl": "^4.12.0",
     "react": "catalog:",
     "react-dom": "catalog:",
     "zod": "catalog:"
@@ -30,10 +35,12 @@
   "devDependencies": {
     "@electric-sql/pglite": "^0.3.15",
     "@electric-sql/pglite-socket": "^0.0.20",
+    "@tailwindcss/postcss": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "prisma": "catalog:",
+    "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
