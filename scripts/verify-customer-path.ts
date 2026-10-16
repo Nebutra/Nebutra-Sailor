@@ -59,6 +59,9 @@ const STEP_TIMEOUT_MS = 20 * 60_000;
 const ALLOWED_NEBUTRA = [
   /@nebutra\/[\w./-]+/gi,
   /\b(?:npx |pnpm (?:exec )?)?nebutra (?:status|apply|init|login|doctor|rls-audit|[a-z-]+)\b/gi,
+  // The framework's own env vars (NEBUTRA_LOCALE, NEBUTRA_TOKEN …): config
+  // names a developer types, like @nebutra/* packages — not the brand.
+  /\bNEBUTRA_[A-Z0-9_]+\b/g,
 ];
 
 /**
