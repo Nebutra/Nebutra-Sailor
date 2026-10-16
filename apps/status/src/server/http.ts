@@ -70,11 +70,13 @@ export type Caller =
 /**
  * A cookie-authenticated write must come from this origin. SameSite=Lax
  * already withholds the cookie from cross-site POSTs; this closes the
- * remaining same-site-but-different-origin gap.
+ * remaining same-site-but-different-origin gap. Browsers send Origin on every
+ * cross-origin write, so a request without one is a non-browser client (curl),
+ * which no other site can make carry the cookie.
  */
-function sameOrigin(request: Request): boolean {
+export function sameOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
-  if (!origin) return request.method === "GET" || request.method === "HEAD";
+  if (!origin) return true;
   const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
   try {
     return new URL(origin).host === (host ?? new URL(request.url).host);
@@ -115,4 +117,17 @@ export async function authorize(
 /** ISO 8601 with milliseconds, or null. */
 export function iso(date: Date | null | undefined): string | null {
   return date ? date.toISOString() : null;
+}
+
+/** A signed-in member passing `check`, from this origin — or the Response refusing them. */
+export async function requireMember(
+  db: StatusDb,
+  request: Request,
+  check: (member: SessionMember) => boolean,
+): Promise<SessionMember | Response> {
+  const member = await getSessionMember(db, request.headers.get("cookie"));
+  if (!member) return problem(401, "unauthorized");
+  if (!check(member)) return problem(403, "forbidden");
+  if (request.method !== "GET" && !sameOrigin(request)) return problem(403, "cross_origin");
+  return member;
 }
