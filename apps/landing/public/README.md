@@ -2,7 +2,7 @@
 
 The visual assets contained in this directory (including but not limited to logos, illustrations, icons, and marketing graphics) are the intellectual property and trademarks of Wuxi Nebutra Intelligence Technology Co., Ltd. ("Nebutra").
 
-**These assets are NOT covered by the project's open-source FSL-1.1-ALv2 license.**
+**These assets are NOT covered by the project's open-source Apache-2.0 license.**
 
 ## Usage Rules
 
@@ -13,4 +13,4 @@ You may NOT:
 - Use these illustrations to market your derivative products.
 - Distribute these images as part of a commercial standard theme or template.
 
-For full details, see the [Brand Guidelines](../../../BRAND_GUIDELINES.md) at the root of this repository.
+For full details, see the [Brand Guidelines](../../../BRAND_GUIDELINES.md) and [TRADEMARK.md](../../../TRADEMARK.md) at the root of this repository.

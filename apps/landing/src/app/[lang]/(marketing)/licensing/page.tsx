@@ -11,7 +11,7 @@ import { type Locale, routing } from "@/i18n/routing";
 import { getExchangeRate } from "@/lib/pricing/exchange-rates";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
-/** Team support subscription, USD/year. Mirrors LICENSE-COMMERCIAL.md §2. */
+/** Team support subscription, USD/year. Mirrors docs/legal/commercial-support.md §2. */
 const COMMERCIAL_BASE_PRICE_USD = 2000;
 
 /**
@@ -112,9 +112,9 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
   const commercialBadgeLabel = (price: string) => t("plans.team.badge", { price });
 
   const faqItems = [
-    { q: t("faq.items.whyFsl.q"), a: t("faq.items.whyFsl.a") },
+    { q: t("faq.items.whyApache.q"), a: t("faq.items.whyApache.a") },
     { q: t("faq.items.reallyFree.q"), a: t("faq.items.reallyFree.a") },
-    { q: t("faq.items.competingUse.q"), a: t("faq.items.competingUse.a") },
+    { q: t("faq.items.hostedUse.q"), a: t("faq.items.hostedUse.a") },
     { q: t("faq.items.upgrade.q"), a: t("faq.items.upgrade.a") },
     { q: t("faq.items.contributions.q"), a: t("faq.items.contributions.a") },
   ];
@@ -158,7 +158,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
         </AnimateIn>
       </section>
 
-      {/* License Comparison Cards */}
+      {/* Plan cards: Community, Team support, Enterprise — all under Apache-2.0 */}
       <section className="relative z-10 mx-auto max-w-wide px-4 pb-24 sm:px-6 lg:px-8">
         <AnimateInGroup
           stagger="normal"
@@ -233,7 +233,7 @@ export default async function LicensingPage({ params }: { params: Promise<{ lang
             </Card>
           </AnimateIn>
 
-          {/* Card 2: Free Commercial Exception (Highlighted) */}
+          {/* Card 2: Team support (highlighted) */}
           <AnimateIn preset="fadeUp" inView>
             <Card
               className="p-8 relative flex flex-col overflow-hidden rounded-[var(--radius-panel)] transition-[background-color,border-color,box-shadow] border-primary/50 bg-background/80 h-full"

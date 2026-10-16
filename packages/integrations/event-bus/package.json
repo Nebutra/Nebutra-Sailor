@@ -46,7 +46,7 @@
     "typescript": "catalog:",
     "vitest": "catalog:"
   },
-  "license": "FSL-1.1-ALv2",
+  "license": "Apache-2.0",
   "files": [
     "dist"
   ]

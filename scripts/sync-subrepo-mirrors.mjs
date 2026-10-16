@@ -11,6 +11,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { dirname, join, resolve, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   getCurrentGitSha,
   getGithubToken,
@@ -29,28 +30,10 @@ const HARD_SKIP = new Set([
   "test-results",
 ]);
 
-const MIT_LICENSE = `MIT License
-
-Copyright (c) 2026 Nebutra
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-`;
+// Mirrors carry the monorepo's own terms: Apache-2.0 LICENSE + NOTICE
+// (ADR 2026-10-16 apache-2-relicense). Read from the repo root, not inlined,
+// so a mirror can never state a licence the source does not.
+const SCRIPT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 function parseArgs(argv) {
   const args = {
@@ -350,7 +333,7 @@ function vendorWorkspaceDependencies(
       name: packageName,
       version: sourceManifest.version,
       description: sourceManifest.description,
-      license: sourceManifest.license ?? "MIT",
+      license: sourceManifest.license ?? "Apache-2.0",
       type: sourceManifest.type ?? "module",
       // Source-only leaf modules — no runtime deps (callers tsup-inline them).
       main: exportsMap["."] ?? Object.values(exportsMap)[0],
@@ -467,7 +450,7 @@ function vendorWorkspaceDependencies(
       name: packageName,
       version: sourceManifest.version,
       description: sourceManifest.description,
-      license: sourceManifest.license ?? "MIT",
+      license: sourceManifest.license ?? "Apache-2.0",
       type: sourceManifest.type ?? "module",
       main: sourceManifest.main ?? defaultMain,
       types: sourceManifest.types ?? sourceManifest.typings ?? defaultTypes,
@@ -727,7 +710,8 @@ function prependReadmeBanner(targetDir, mirror) {
 }
 
 function writeMirrorMetadata(targetDir, mirror) {
-  writeFileSync(join(targetDir, "LICENSE"), MIT_LICENSE);
+  copyFileSync(join(SCRIPT_ROOT, "LICENSE"), join(targetDir, "LICENSE"));
+  copyFileSync(join(SCRIPT_ROOT, "NOTICE"), join(targetDir, "NOTICE"));
   writeFileSync(
     join(targetDir, "NEBUTRA_SUBREPO.md"),
     [

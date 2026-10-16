@@ -2,7 +2,7 @@
   "name": "@nebutra/code-index",
   "version": "0.2.3",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

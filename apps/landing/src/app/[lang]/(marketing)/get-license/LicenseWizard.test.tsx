@@ -10,13 +10,24 @@ vi.mock("@/lib/analytics/emit", () => ({
   emitBrowserEvent: vi.fn(),
 }));
 
-vi.mock("next-intl", () => ({
-  useTranslations: () => (key: string) =>
-    ({
-      "tiers.startupCommercial": "Startup Commercial License",
-      "referralSource.selectPlaceholder": "Select a source",
-    })[key] ?? key,
-}));
+// The real English catalog, so the test reads the copy a visitor reads.
+vi.mock("next-intl", async () => {
+  const en = (await import("../../../../../messages/en.json")).default as {
+    licenseWizard: Record<string, unknown>;
+  };
+  return {
+    useTranslations: () => (key: string, values?: Record<string, string | number>) => {
+      const message = key
+        .split(".")
+        .reduce<unknown>(
+          (node, part) => (node as Record<string, unknown> | undefined)?.[part],
+          en.licenseWizard,
+        );
+      if (typeof message !== "string") return key;
+      return message.replace(/\{(\w+)\}/g, (_, name: string) => String(values?.[name] ?? ""));
+    },
+  };
+});
 
 vi.mock("@nebutra/icons", () => {
   const Icon = (props: { className?: string }) => <svg aria-hidden="true" {...props} />;
@@ -71,7 +82,7 @@ describe("LicenseWizard", () => {
     cleanup();
   });
 
-  it("redirects STARTUP teams to Stripe checkout and records checkout.started", async () => {
+  it("redirects Team support (STARTUP) to checkout and records checkout.started", async () => {
     fetchMock.mockResolvedValue({
       ok: true,
       json: async () => ({
@@ -93,14 +104,14 @@ describe("LicenseWizard", () => {
     fireEvent.click(screen.getByRole("button", { name: /next/i }));
 
     fireEvent.change(screen.getByRole("combobox"), { target: { value: "github" } });
-    fireEvent.click(screen.getByRole("button", { name: /get license/i }));
+    fireEvent.click(screen.getByRole("button", { name: /continue/i }));
 
     await waitFor(() => {
       expect(redirectToCheckout).toHaveBeenCalledWith("https://checkout.stripe.test/cs_startup");
     });
 
     expect(
-      screen.getByRole("progressbar", { name: /license wizard progress/i }).getAttribute("value"),
+      screen.getByRole("progressbar", { name: /plan wizard progress/i }).getAttribute("value"),
     ).toBe("3");
     expect(fetchMock).toHaveBeenCalledWith(
       "/api/license",

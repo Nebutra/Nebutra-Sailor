@@ -14,7 +14,6 @@ import { getBrandOrigin } from "@nebutra/brand/metadata-helpers";
 // =============================================================================
 
 export const heroContent = {
-  badge: "FSL Licensed · Production-Ready",
   preHeadline: "The SaaS framework for",
   headlineWords: ["builders who ship", "teams who scale", "founders who win"],
   command: "npx create-sailor@latest",

@@ -24,7 +24,7 @@ const OUTPUT: { text: string; tone?: "muted" | "strong" }[] = [
   { text: "  Writing project files…", tone: "muted" },
   { text: "  ✓ Template ready (68.6 MB from Nebutra/Sailor-Template@main)", tone: "strong" },
   {
-    text: "  License: MIT — commercial use, closed source, no fee, no attribution.",
+    text: "  License: Apache-2.0 — commercial use, closed source, no fee.",
     tone: "muted",
   },
   { text: "   - Done in 17s · ./acme/", tone: "strong" },

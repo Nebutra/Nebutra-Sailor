@@ -1,0 +1,12 @@
+Nebutra Sailor
+Copyright 2025-2026 无锡云毓智能科技有限公司 (Wuxi Nebutra Intelligence Technology Co., Ltd.)
+
+This product includes software developed by Nebutra.
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+"Nebutra" and "Sailor" are trademarks of 无锡云毓智能科技有限公司. The Apache
+License does not grant permission to use them (section 6); the trademark
+policy is TRADEMARK.md in the Nebutra Sailor source repository.
+
+Third-party components keep their own licences. Vendored font files and their
+licences are listed in packages/design/fonts/NOTICE-FONTS.md.

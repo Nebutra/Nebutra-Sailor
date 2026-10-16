@@ -9,7 +9,7 @@
   },
   "type": "module",
   "description": "Shared browser helpers: safe storage, fetch with timeout",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {

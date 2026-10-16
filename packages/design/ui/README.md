@@ -128,7 +128,7 @@ discovery, standalone cloning, and contribution intake.
 
 ## License
 
-MIT
+Apache-2.0 — see [LICENSE](./LICENSE).
 
 AI provider and third-party icons may be subject to their respective trademark
 guidelines.

@@ -10,7 +10,7 @@ AI coding agent onboarding guide for Cursor, Claude Code, Codex, Windsurf, and G
 
 ## Project Overview
 
-**Nebutra-Sailor** is an enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms.
+**Nebutra-Sailor** — Skip to production. The open-source (Apache-2.0) production layer for agent-built software: auth, global + China billing, multi-tenancy and an AI gateway in one command.
 
 - **Runtime**: Node.js >= 22, pnpm 11.28.5+
 - **Framework**: Next.js 16 (App Router, React 19, Turbopack)
@@ -19,7 +19,7 @@ AI coding agent onboarding guide for Cursor, Claude Code, Codex, Windsurf, and G
 - **Linting**: Biome (not ESLint)
 - **Testing**: Vitest (unit) + Playwright (E2E)
 - **Monorepo**: Turborepo with pnpm workspaces
-- **License**: FSL-1.1-ALv2 (repository, converts to Apache-2.0 after two years) · MIT (published npm packages)
+- **License**: Apache-2.0 — repository, every npm package and every scaffolded project (root `NOTICE`; trademarks not granted, see `TRADEMARK.md`)
 
 ---
 

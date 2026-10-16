@@ -3,7 +3,7 @@
   "version": "0.1.3",
   "description": "Zero-dependency AI primitive owner for deterministic hashing, numeric math, scoped keys, and token estimates",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

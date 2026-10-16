@@ -3,7 +3,7 @@
   "version": "0.1.8",
   "description": "Company closing, postmortem, lesson extraction, and memorial publication surface",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

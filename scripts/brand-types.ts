@@ -566,7 +566,7 @@ export const DEFAULT_BRAND: BrandConfig = {
   },
   packageScope: "@nebutra",
   license: {
-    type: "FSL-1.1-ALv2",
+    type: "Apache-2.0",
     commercialExempt: ["Wuxi Nebutra Intelligence Technology Co., Ltd.", "Nebutra Co., Ltd"],
   },
 };

@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Interogare tehnică și comercială — Inteligență {brandName}",
-      "description": "Canalul de comunicare dedicat pentru licențiere comercială, self-hosting enterprise și suport tehnic avansat.",
       "heading": "Stabilește conexiunea de suport",
       "subheading": "Vom desemna un specialist tehnic sau arhitect dedicat pentru a evalua cerințele tale explicite.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Discuții preliminare privind parteneriatele strategice ecologice și evoluția arhitecturală generală."
         },
         "sales": {
-          "title": "Implementare Comercială",
-          "description": "Negociere privind licențierea sursă închisă și detaliile legate de implementările în medii private de cluster."
+          "title": "Implementare Comercială"
         },
         "support": {
           "title": "Suport de Nivel Expert",
@@ -285,7 +283,6 @@
         "category": "Domeniu de Cerință",
         "categories": {
           "general": "Consultanță Corporate",
-          "sales": "Licențiere și Arhitectură",
           "support": "Asistență pentru Dezvoltatori",
           "legal": "Limitări Juridice și de Conformitate",
           "privacy": "Politici de Procesare a Datelor",
@@ -518,10 +515,6 @@
               "q": "Care este scopul operațional explicit al {productName}?",
               "a": "{productName} este un framework AI SaaS Next.js, foarte structurat și gata de producție. Include facturare corporativă, autentificare cu mai mulți factori și izolare multi-tenant într-o bază de platformă guvernată, permițând echipelor să se concentreze pe implementarea AI specifică produsului."
             },
-            "1": {
-              "q": "Cum este structurată licențierea repository-ului?",
-              "a": "Codul sursă este disponibil sub Functional Source License (FSL-1.1-ALv2): este gratuit pentru a construi propriile produse, fără taxe și fără obligații de tip copyleft. Singurul lucru care nu este permis este oferirea Sailor însuși ca produs sau serviciu comercial concurent. Fiecare versiune trece automat la Apache-2.0 la doi ani după lansare."
-            },
             "2": {
               "q": "Care este viteza evaluării comerciale inițiale?",
               "a": "Extrem de mare. Folosind lanțul nostru de instrumente Node CLI personalizat împreună cu specificația tehnică precisă, un inginer junior poate pune în funcțiune o instanță locală autonomă de Minimum Viable Product (MVP) în câteva minute."
@@ -583,8 +576,7 @@
           "name": "Directive de Asistență Tehnică",
           "questions": {
             "0": {
-              "q": "Cum se rezolvă depanarea gâtuirilor operaționale?",
-              "a": "Vectorii de triaj inițial vizează matricea de documentație riguros întreținută și revizuită de colegi și interacțiunile verificate ale comunității. Achiziționarea unei licențe standard sau la nivel enterprise deblochează accesul la cozi private de escaladare care se rezolvă prin noduri interne de inginerie directe."
+              "q": "Cum se rezolvă depanarea gâtuirilor operaționale?"
             },
             "1": {
               "q": "Extindeți operațiuni de integrare fizică sau în medii specializate?",
@@ -1155,12 +1147,10 @@
     "pricing": {
       "title": "Gratuit de construit. Plătești doar dacă ai nevoie să răspundem noi.",
       "description": "Construirea unui produs comercial pe {brandName} nu costă nimic — fără taxă, fără cheie de licență, fără înregistrare, fără copyleft. Nivelurile plătite vând suport, SLA-uri, despăgubire și drepturi de marcă, niciodată permisiunea de utilizare.",
-      "socialProofText": "MIT pe npm · FSL-1.1-ALv2 în repository, trece la Apache-2.0 după doi ani · utilizare comercială gratuită la orice scară.",
       "community": {
         "badge": "COMUNITATE",
         "price": "Gratuit",
         "period": "pentru totdeauna",
-        "desc": "Pentru toată lumea. Orice dimensiune a echipei, orice cifră de afaceri. Utilizarea comercială cu sursă închisă este inclusă, fără înregistrare și fără obligația de atribuire.",
         "cta": "npx create-sailor",
         "f1": "Nucleu SaaS Next.js 16 complet, toate pachetele incluse",
         "f2": "Utilizare comercială cu sursă închisă la orice dimensiune sau cifră de afaceri",
@@ -1173,7 +1163,6 @@
         "price": "2.000 $",
         "period": "an",
         "cta": "Obține suport {brandName}",
-        "f1": "Canal privat de suport (email + Slack sau Discord partajat)",
         "f2": "Primul răspuns garantat în două zile lucrătoare",
         "f3": "Triaj prioritar al erorilor, înaintea issue-urilor comunității",
         "f4": "Asistență la actualizare și notificare prealabilă a modificărilor incompatibile",
@@ -1188,33 +1177,27 @@
         "f1": "SLA de răspuns — 4 ore lucrătoare standard, 1 oră la oprirea producției",
         "f2": "Despăgubire și angajament contractual privind patch-urile de securitate",
         "f3": "DPA semnat, pachet de conformitate și angajament de continuitate",
-        "f4": "Drepturi de marcă și white label, plus derogare pentru utilizarea concurentă",
         "f5": "Ramură de suport pe termen lung și inginerie pentru implementare privată",
         "f6": "Tot ce este în Echipă"
       }
     },
     "faq": {
       "title": "Întrebări frecvente despre prețuri și licențiere",
-      "description": "Întrebări despre nivelurile de licență, rambursări și drepturi de utilizare comercială.",
       "q1": {
-        "q": "Sailor este un abonament SaaS lunar?",
-        "a": "Nu. Această tarifare este pentru licențele de cod sursă Sailor: Independent este gratuit, Startup se facturează anual, iar Enterprise este personalizată."
+        "q": "Sailor este un abonament SaaS lunar?"
       },
       "q2": {
-        "q": "Oferiți rambursări?",
-        "a": "Licențele comerciale Startup includ o perioadă de rambursare de 14 zile pentru achizițiile inițiale. Termenii Enterprise sunt stabiliți în contractul semnat."
+        "q": "Oferiți rambursări?"
       },
       "q3": {
-        "q": "Pot folosi Sailor pentru proiecte clienți?",
-        "a": "Da. O licență comercială permite echipei tale să lanseze produse închise pentru clienți sau interne în cadrul licenței; drepturile white-label necesită aprobarea Enterprise."
+        "q": "Pot folosi Sailor pentru proiecte clienți?"
       },
       "contactNudge": "Ai încă întrebări? Vorbește cu echipa {brandName} →"
     },
     "cta": {
       "eyebrow": "Începe",
       "title": "Oprește-te din configurat. Începe să construiești.",
-      "description": "Inițializează o arhitectură SaaS scalabilă local cu CLI-ul {brandName}.",
-      "license": "Open source sub licența FSL-1.1-ALv2. Nu este necesar un card de credit."
+      "description": "Inițializează o arhitectură SaaS scalabilă local cu CLI-ul {brandName}."
     },
     "capability": {
       "badge": "Capabilități Enterprise",
@@ -1500,8 +1483,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Gratuit pentru a <hl>Construi Pe</hl>",
-      "description": "{brandName}-Sailor nu costă nimic pentru utilizare comercială — MIT pe npm, FSL-1.1-ALv2 pe repository, convertit în Apache-2.0 după doi ani. Nivelurile plătite vând suport și angajamente contractuale, niciodată permisiunea."
+      "title": "Gratuit pentru a <hl>Construi Pe</hl>"
     },
     "plans": {
       "community": {
@@ -1512,7 +1494,6 @@
         "features": {
           "fullSource": "Cod sursă complet, toate pachetele",
           "closedSourceOk": "Utilizare comercială cu sursă închisă — fără copyleft",
-          "noAttribution": "Fără înregistrare, fără atribuire necesară",
           "communitySupport": "Suport comunitate — după posibilități"
         },
         "cta": "Vezi pe GitHub"
@@ -1537,8 +1518,7 @@
         "features": {
           "sla": "SLA de răspuns — 4 ore lucrătoare, 1 oră în caz de întrerupere a producției",
           "indemnity": "Indemnizare și angajament privind patch-urile de securitate",
-          "compliance": "DPA semnat, pachet de conformitate, angajament de continuitate",
-          "trademark": "Drepturi de marcă și white-label"
+          "compliance": "DPA semnat, pachet de conformitate, angajament de continuitate"
         },
         "cta": "Contactează vânzările"
       }
@@ -1547,39 +1527,23 @@
       "title": "Întrebări frecvente",
       "description": "Versiunea scurtă: utilizarea este gratuită. Plata este pentru când ai nevoie de noi contractual răspunzători.",
       "items": {
-        "whyFsl": {
-          "q": "De ce FSL în loc de MIT sau AGPL?"
-        },
         "reallyFree": {
-          "q": "Este utilizarea comercială cu adevărat gratuită?",
-          "a": "Da. Fără taxă, fără cheie de licență, fără înregistrare, fără prag de venit sau număr de angajați, fără atribuire. Construiește un produs cu sursă închisă și vinde-l."
-        },
-        "competingUse": {
-          "q": "Ce se consideră utilizare concurențială?",
-          "a": "Oferirea lui Sailor însuși — un serviciu Sailor găzduit sau o platformă concurențială repachetată. Construirea unui SaaS vertical, a unui instrument intern sau a proiectelor pentru clienți pe Sailor nu este utilizare concurențială. Dacă modelul tău o necesită, un acord Enterprise poate include o renunțare scrisă."
+          "q": "Este utilizarea comercială cu adevărat gratuită?"
         },
         "upgrade": {
           "q": "Ce cumpără de fapt nivelurile plătite?",
           "a": "Angajamente de suport, SLA-uri de răspuns, indemnizare, documentație de conformitate și drepturi de marcă. Niciodată permisiunea de a utiliza software-ul — aceea este deja a ta."
         },
         "contributions": {
-          "q": "Ce se întâmplă cu contribuțiile open source?",
-          "a": "Toate contribuțiile necesită un CLA. Vezi CONTRIBUTING.md."
+          "q": "Ce se întâmplă cu contribuțiile open source?"
         }
       }
     },
     "meta": {
-      "title": "Licențiere — {brandName}",
-      "description": "Gratuit pentru uz comercial. MIT pe npm, FSL-1.1-ALv2 pe repository, conversie la Apache-2.0."
+      "title": "Licențiere — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Licență gratuită individuală",
-      "opcFree": "Licență pentru companie cu un singur proprietar",
-      "startupCommercial": "Licență comercială Startup",
-      "enterprise": "Licență Enterprise"
-    },
     "referralSource": {
       "selectPlaceholder": "Selectează o opțiune...",
       "productHunt": "Product Hunt"
@@ -1597,10 +1561,6 @@
   "blogMeta": {
     "description": "Insight-uri de inginerie, actualizări de produs și cele mai bune practici SaaS de la echipa {brandName}."
   },
-  "getLicenseMeta": {
-    "title": "Obține Licența Ta — {brandName}",
-    "description": "Obține licența {brandName} și accesul la platformă în 2 minute."
-  },
   "landing": {
     "faq": {
       "badge": "Întrebări frecvente",
@@ -1616,8 +1576,7 @@
           "answer": "Pentru fondatori și ingineri de produs care vor să își petreacă timpul pe diferențiator — nu pe reconstruirea aceleiași infrastructuri de auth/billing/tenancy pentru a cincea oară."
         },
         "free-or-paid": {
-          "question": "Este gratuit sau plătit?",
-          "answer": "Codul sursă complet este distribuit sub FSL-1.1-ALv2 — gratuit pentru a construi propriile produse, fără taxe și fără obligație de copyleft. Singurul lucru care nu este permis este oferirea Sailor însuși ca produs sau serviciu comercial concurent. Fiecare versiune trece automat la Apache-2.0 la doi ani după lansare. Planurile comerciale plătite nu deblochează funcționalități suplimentare — fiecare plan are setul complet de funcționalități; ele vând angajament de suport și SLA, despăgubire, documentație de conformitate și drepturi asupra mărcii."
+          "question": "Este gratuit sau plătit?"
         },
         "china-friendly": {
           "question": "Funcționează în China?",
@@ -1644,12 +1603,10 @@
           "answer": "Next.js 16 (App Router) pe React 19, TypeScript 5.9, Tailwind v4, Prisma 7 peste Postgres (cu pgvector + RLS), Hono pentru gateway-ul BFF, FastAPI pentru servicii ML/grele și o bibliotecă de componente curată pe Radix, primitivele {brandName} UI și stratul Motion comun. Funcționalitățile AI trec prin Vercel AI SDK cu portabilitate între provideri (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
         },
         "license": {
-          "question": "Care este licența?",
-          "answer": "FSL-1.1-ALv2 (Functional Source License). Gratuită pentru a construi produse — fără taxe, fără copyleft. Singura restricție este oferirea Sailor însuși ca produs sau serviciu comercial concurent. Fiecare versiune trece automat la Apache-2.0 la doi ani după lansare. Planurile comerciale plătite nu vând funcționalități suplimentare, ci angajament de suport/SLA, despăgubire, documentație de conformitate și drepturi asupra mărcii."
+          "question": "Care este licența?"
         },
         "paid-updates": {
-          "question": "Trebuie să plătesc pentru actualizări?",
-          "answer": "Nu. Actualizările surselor sunt incluse în fiecare licență comercială — poți face pull din main oricând și să rebase-zi fork-ul tău. Nivelul plătit este dreptul de a folosi Sailor în producție comercială, nu dreptul de a primi cod. Fiecare versiune minoră include un CHANGELOG și un ghid de upgrade pentru orice modificare breaking."
+          "question": "Trebuie să plătesc pentru actualizări?"
         },
         "why-turborepo": {
           "question": "De ce Turborepo în loc de o aplicație Next.js standard?",
@@ -1710,9 +1667,7 @@
       "value": {
         "included": "Inclus",
         "notIncluded": "Neinclus",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Nu este necesară",
-        "whiteLabelRights": "Drepturi white label",
         "unlimited": "Nelimitate",
         "unlimitedPlusNotice": "Nelimitate + notificare prealabilă a modificărilor incompatibile",
         "unlimitedPlusLts": "Nelimitate + ramură de suport pe termen lung",

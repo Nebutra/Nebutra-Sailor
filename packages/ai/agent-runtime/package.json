@@ -2,7 +2,7 @@
   "name": "@nebutra/agent-runtime",
   "version": "4.0.1",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "runtime",

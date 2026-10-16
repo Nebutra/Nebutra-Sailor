@@ -94,5 +94,5 @@
     "typescript": "catalog:",
     "vitest": "^4.0.18"
   },
-  "license": "SEE LICENSE IN ../../LICENSE"
+  "license": "Apache-2.0"
 }

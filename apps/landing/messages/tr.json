@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Teknik & Ticari Soruşturma — {brandName}",
-      "description": "Ticari lisanslama, kurumsal kendi barındırma ve gelişmiş teknik destek için özel iletişim kanalı.",
       "heading": "Destek Bağlantısı Kur",
       "subheading": "Belirgin gereksinimlerinizi değerlendirmek için özel bir teknik uzman veya mimar göndereceğiz.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Ekolojik stratejik ortaklıklar ve genel mimari evrim ile ilgili ön görüşmeler."
         },
         "sales": {
-          "title": "Ticari Dağıtım",
-          "description": "Kapalı kaynak lisanslama ve özel küme ortamı dağıtımları ile ilgili müzakereler."
+          "title": "Ticari Dağıtım"
         },
         "support": {
           "title": "Uzman Düzeyi Destek",
@@ -285,7 +283,6 @@
         "category": "İhtiyaç Alanı",
         "categories": {
           "general": "Kurumsal Danışmanlık",
-          "sales": "Lisanslama ve Mimari",
           "support": "Geliştirici Desteği",
           "legal": "Yasal ve Uyum Sınırları",
           "privacy": "Veri İşleme Politikaları",
@@ -518,10 +515,6 @@
               "q": "{productName}'in açık işlevsel amacı nedir?",
               "a": "{productName}, son derece yapılandırılmış ve üretim ortamına hazır bir Next.js AI SaaS çerçevesidir. Kurumsal faturalandırma, çok faktörlü kimlik doğrulama ve çok kiracılı yalıtımı yönetilen bir platform temelinde birleştirerek ekiplerin ürün özelinde AI uygulamasına odaklanmasını sağlar."
             },
-            "1": {
-              "q": "Depo lisanslaması nasıl yapılandırılmış?",
-              "a": "Kaynak kod, Functional Source License (FSL-1.1-ALv2) altında sunulur: kendi ürünlerinizi oluşturmak için ücretsiz kullanabilirsiniz, ücret veya copyleft yükümlülüğü olmadan. İzin verilmeyen tek şey, Sailor'ın kendisini rakip bir ticari ürün veya hizmet olarak sunmaktır. Her sürüm, yayınlanmasından iki yıl sonra otomatik olarak Apache-2.0 lisansına dönüşür."
-            },
             "2": {
               "q": "İlk ticari değerlendirme hızı nedir?",
               "a": "Son derece yüksek hızda. Özelleştirilmiş Node CLI araç zincirimizi ve kesin teknik spesifikasyonu kullanarak, bir junior mühendis tek basamaklı dakikalar içinde otonom yerel Minimum Uygulanabilir Ürün (MVP) örneğini ayakta tutabilir."
@@ -583,8 +576,7 @@
           "name": "Teknik Destek Yönergeleri",
           "questions": {
             "0": {
-              "q": "İşletimsel darboğaz sorun giderme nasıl çözülür?",
-              "a": "İlk triaj vektörleri, titizlikle bakımı yapılan ve akranlar tarafından gözden geçirilen dokümantasyon matrisini ve doğrulanmış topluluk etkileşimlerini hedefler. Standart veya kurumsal düzeyde bir lisans satın almak, doğrudan iç mühendislik düğümleri aracılığıyla çözülen özel yükseltme kuyruklarına erişimi açar."
+              "q": "İşletimsel darboğaz sorun giderme nasıl çözülür?"
             },
             "1": {
               "q": "Fiziksel veya özel çevresel entegrasyon operasyonları sağlıyor musunuz?",
@@ -1155,12 +1147,10 @@
     "pricing": {
       "title": "Üzerine inşa etmek ücretsiz. Yalnızca sorumluluk almamızı istiyorsanız ödeyin.",
       "description": "{brandName} üzerinde ticari bir ürün geliştirmek hiçbir şeye mal olmaz — ücret yok, lisans anahtarı yok, kayıt yok, copyleft yok. Ücretli katmanlar destek, SLA, tazminat ve marka hakları satar; asla kullanım izni satmaz.",
-      "socialProofText": "npm'de MIT · depoda FSL-1.1-ALv2, iki yıl sonra Apache-2.0'a dönüşür · her ölçekte ticari kullanım ücretsiz.",
       "community": {
         "badge": "TOPLULUK",
         "price": "Ücretsiz",
         "period": "sonsuza dek",
-        "desc": "Herkes için. Her ekip büyüklüğü, her ciro. Kapalı kaynak ticari kullanım dahildir; kayıt ve atıf zorunluluğu yoktur.",
         "cta": "npx create-sailor",
         "f1": "Eksiksiz Next.js 16 SaaS çekirdeği, tüm paketler dahil",
         "f2": "Her ekip büyüklüğü ve ciroda kapalı kaynak ticari kullanım",
@@ -1174,7 +1164,6 @@
         "period": "yıl",
         "desc": "Toplum yanıt sürelerini kritik yol olarak göremeyen ekipler için.",
         "cta": "{brandName} desteği alın",
-        "f1": "Özel destek kanalı (e-posta + paylaşılan Slack veya Discord)",
         "f2": "İki iş günü içinde garantili ilk yanıt",
         "f3": "Topluluk issue'larının önünde öncelikli hata triyajı",
         "f4": "Yükseltme desteği ve kırıcı değişiklikler için önceden bildirim",
@@ -1189,33 +1178,27 @@
         "f1": "Yanıt SLA'sı — standartta 4 iş saati, üretim durduğunda 1 saat",
         "f2": "Tazminat ve sözleşmeye bağlı güvenlik yaması taahhüdü",
         "f3": "İmzalı veri işleme sözleşmesi, uyumluluk paketi ve süreklilik taahhüdü",
-        "f4": "Marka ve white label hakları, ayrıca rakip kullanım muafiyeti",
         "f5": "Uzun vadeli destek dalı ve özel dağıtım mühendisliği",
         "f6": "Ekip'teki her şey"
       }
     },
     "faq": {
       "title": "Fiyatlandırma ve lisanslama SSS",
-      "description": "Lisans katmanları, iade ve ticari kullanım hakları hakkında sorular.",
       "q1": {
-        "q": "Sailor aylık bir SaaS aboneliği mi?",
-        "a": "Hayır. Bu fiyatlandırma Sailor kaynak kodu lisansları içindir: Independent ücretsizdir, Startup yıllık faturalandırılır ve Enterprise özeldir."
+        "q": "Sailor aylık bir SaaS aboneliği mi?"
       },
       "q2": {
-        "q": "İade yapıyor musunuz?",
-        "a": "Startup ticari lisansları, ilk satın alımlar için 14 günlük bir iade süresi içerir. Enterprise koşulları imzalanan sözleşmede ele alınır."
+        "q": "İade yapıyor musunuz?"
       },
       "q3": {
-        "q": "Sailor'u müşteri işleri için kullanabilir miyim?",
-        "a": "Evet. Ticari bir lisans, ekibinizin lisans kapsamı içinde kapalı kaynaklı müşteri veya iç ürünleri yayınlamasına olanak tanır; beyaz etiket hakları Enterprise onayı gerektirir."
+        "q": "Sailor'u müşteri işleri için kullanabilir miyim?"
       },
       "contactNudge": "Hala sorularınız mı var? {brandName} ekibiyle konuşun →"
     },
     "cta": {
       "eyebrow": "Başlayın",
       "title": "Yapılandırmayı bırakın. İnşa etmeye başlayın.",
-      "description": "{brandName} CLI ile ölçeklenebilir bir SaaS mimarisini yerel olarak başlatın.",
-      "license": "FSL-1.1-ALv2 lisansı altında açık kaynak. Kredi kartı gerekmez."
+      "description": "{brandName} CLI ile ölçeklenebilir bir SaaS mimarisini yerel olarak başlatın."
     },
     "capability": {
       "badge": "Kurumsal Yetenekler",
@@ -1501,8 +1484,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "<hl>Üzerinde İnşa Etmek</hl> İçin Ücretsiz",
-      "description": "{brandName}-Sailor ticari olarak kullanmak için ücretsizdir — npm'de MIT, depoda FSL-1.1-ALv2, iki yıl sonra Apache-2.0'a dönüşür. Ücretli katmanlar destek ve sözleşme taahhütleri satar, asla izin değil."
+      "title": "<hl>Üzerinde İnşa Etmek</hl> İçin Ücretsiz"
     },
     "plans": {
       "community": {
@@ -1513,7 +1495,6 @@
         "features": {
           "fullSource": "Tam kaynak kodu, tüm paketler",
           "closedSourceOk": "Kapalı kaynak ticari kullanım — copyleft yok",
-          "noAttribution": "Kayıt yok, atıf gerekmez",
           "communitySupport": "Topluluk desteği — en iyi çaba"
         },
         "cta": "GitHub'da Görüntüle"
@@ -1539,8 +1520,7 @@
         "features": {
           "sla": "Yanıt SLA'sı — 4 iş saati, 1 saat üretim kesintisi",
           "indemnity": "Tazminat ve güvenlik yaması taahhüdü",
-          "compliance": "İmzalı DPA, uyumluluk paketi, süreklilik taahhüdü",
-          "trademark": "Marka ve beyaz etiket hakları"
+          "compliance": "İmzalı DPA, uyumluluk paketi, süreklilik taahhüdü"
         },
         "cta": "Satış ekibiyle iletişime geç"
       }
@@ -1549,40 +1529,23 @@
       "title": "Sıkça Sorulan Sorular",
       "description": "Kısa versiyon: kullanımı ücretsiz. Ödeme, bizi sözleşmeyle bağlaymanız gerektiğinde yapılır.",
       "items": {
-        "whyFsl": {
-          "q": "MIT veya AGPL yerine neden FSL?",
-          "a": "FSL, Sailor'un kendisinin bir ikamesini satmak dışında her türlü kullanıma izin verir ve her sürüm, yayımlanmasından iki yıl sonra Apache-2.0 lisansına geçer — bu, önceden geri alınamaz şekilde verilen bir izin. AGPL'ye kıyasla kurumsal hukuki incelemeyi daha kolay geçmenizi sağlar."
-        },
         "reallyFree": {
-          "q": "Ticari kullanım gerçekten ücretsiz mi?",
-          "a": "Evet. Ücret yok, lisans anahtarı yok, kayıt yok, gelir veya personel sayısı eşiği yok, atıf yok. Kapalı kaynaklı bir ürün geliştirin ve satın."
-        },
-        "competingUse": {
-          "q": "Rakip kullanım ne sayılır?",
-          "a": "Sailor'un kendisini sunmak — barındırılan bir Sailor hizmeti veya yeniden paketlenmiş bir rakip platform temel seti. Sailor üzerine dikey bir SaaS, dahili bir araç veya müşteri projeleri geliştirmek rakip kullanım değildir. Modeliniz buna ihtiyaç duyarsa, Kurumsal bir anlaşma yazılı bir muafiyet içerebilir."
+          "q": "Ticari kullanım gerçekten ücretsiz mi?"
         },
         "upgrade": {
           "q": "Ücretli katmanlar aslında ne satın alıyor?",
           "a": "Destek taahhütleri, yanıt SLA'ları, tazminat, uyumluluk evrakları ve marka hakları. Yazılımı kullanma izni asla dahil değildir — bu zaten size ait."
         },
         "contributions": {
-          "q": "Açık kaynak katkılar ne olacak?",
-          "a": "Tüm katkılar için bir CLA gerekir. CONTRIBUTING.md dosyasına bakın."
+          "q": "Açık kaynak katkılar ne olacak?"
         }
       }
     },
     "meta": {
-      "title": "Lisanslama — {brandName}",
-      "description": "Ticari kullanım için ücretsiz. npm'de MIT, depoda FSL-1.1-ALv2, Apache-2.0'a dönüştürülüyor."
+      "title": "Lisanslama — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Bireysel Ücretsiz Lisans",
-      "opcFree": "Tek Sahipli Şirket Lisansı",
-      "startupCommercial": "Startup Ticari Lisansı",
-      "enterprise": "Kurumsal Lisans"
-    },
     "referralSource": {
       "selectPlaceholder": "Bir seçenek seçin...",
       "productHunt": "Product Hunt"
@@ -1601,10 +1564,6 @@
     "title": "Blog — {brandName}",
     "description": "{brandName} ekibinden mühendislik içgörileri, ürün güncellemeleri ve SaaS en iyi uygulamaları."
   },
-  "getLicenseMeta": {
-    "title": "Lisansınızı Edinin — {brandName}",
-    "description": "{brandName} lisansınızı ve platform erişiminizi 2 dakikada alın."
-  },
   "landing": {
     "faq": {
       "badge": "SSS",
@@ -1620,8 +1579,7 @@
           "answer": "Zamanlarını farklılaştırıcı unsurlara ayırmak isteyen girişimciler ve ürün mühendisleri için; aynı kimlik doğrulama/faturalandırma/kiracılık altyapısını beşinci kez yeniden kurmak için değil."
         },
         "free-or-paid": {
-          "question": "Ücretsiz mi yoksa ücretli mi?",
-          "answer": "Tüm kaynak kodu FSL-1.1-ALv2 altında dağıtılır — kendi ürünlerinizi oluşturmak için ücretsizdir, ücret veya copyleft yükümlülüğü yoktur. İzin verilmeyen tek şey Sailor'ın kendisini rakip bir ticari ürün veya hizmet olarak sunmaktır. Her sürüm, yayınlanmasından iki yıl sonra otomatik olarak Apache-2.0'a dönüşür. Ücretli ticari planlar ekstra özellik açmaz — her plan tam özellik setine sahiptir; sattıkları şey destek taahhüdü ve SLA, tazminat, uyumluluk belgeleri ve ticari marka haklarıdır."
+          "question": "Ücretsiz mi yoksa ücretli mi?"
         },
         "china-friendly": {
           "question": "Çin'de çalışıyor mu?",
@@ -1648,12 +1606,10 @@
           "answer": "React 19 üzerinde Next.js 16 (App Router), TypeScript 5.9, Tailwind v4, pgvector + RLS ile Postgres üzerinde Prisma 7, BFF ağ geçidi için Hono, ML/ağır hizmetler için FastAPI ve Radix, {brandName} UI ilkeleri ile ortak Motion katmanı üzerinde özenle seçilmiş bir bileşen kütüphanesi. Yapay zeka özellikleri, sağlayıcı taşınabilirliği (OpenAI / OpenRouter / SiliconFlow / Azure / yerel) ile Vercel AI SDK üzerinden geçer."
         },
         "license": {
-          "question": "Lisans nedir?",
-          "answer": "FSL-1.1-ALv2 (Functional Source License). Ürün oluşturmak için ücretsizdir — ücret yok, copyleft yok. Tek kısıtlama, Sailor'ın kendisini rakip bir ticari ürün veya hizmet olarak sunmaktır. Her sürüm, yayınlanmasından iki yıl sonra otomatik olarak Apache-2.0'a dönüşür. Ücretli ticari planlar ekstra özellik satmaz, yalnızca destek/SLA taahhüdü, tazminat, uyumluluk belgeleri ve ticari marka hakları sunar."
+          "question": "Lisans nedir?"
         },
         "paid-updates": {
-          "question": "Güncellemeler için ödeme yapmam gerekiyor mu?",
-          "answer": "Hayır. Kaynak güncellemeleri her ticari lisansla birlikte gelir — istediğiniz zaman ana dallan çekin ve fork'unuzu yeniden tabanlayın. Ücretli katman, Sailor'ı ticari üretimde kullanma hakkıdır; kod alma hakkı değildir. Her küçük sürüm, kırıcı değişiklikler için bir DEĞİŞİKLİK GÜNLÜĞÜ ve yükseltme kılavuzu ile birlikte çıkar."
+          "question": "Güncellemeler için ödeme yapmam gerekiyor mu?"
         },
         "why-turborepo": {
           "question": "Standart bir Next.js uygulaması yerine neden Turborepo?",
@@ -1714,9 +1670,7 @@
       "value": {
         "included": "Dahil",
         "notIncluded": "Dahil değil",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Gerekmez",
-        "whiteLabelRights": "White label hakları",
         "unlimited": "Sınırsız",
         "unlimitedPlusNotice": "Sınırsız + kırıcı değişiklik ön bildirimi",
         "unlimitedPlusLts": "Sınırsız + uzun vadeli destek dalı",

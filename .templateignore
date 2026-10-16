@@ -115,10 +115,8 @@ apps/para/
 WHITELABEL.md
 BRAND_GUIDELINES.md
 TRADEMARK.md
-# NOTE: LICENSE-COMMERCIAL.md MUST NOT be stripped — the dual-license
-# model is the core of the template's distribution. Keep it in the mirror.
-# create-sailor removes it from each scaffold (license-emit.ts): a scaffolded
-# project is plain MIT.
+# NOTE: LICENSE and NOTICE MUST NOT be stripped — the mirror is Apache-2.0
+# like the source repo, and template-build refuses to push without them.
 README.ja.md
 README.zh-CN.md
 brand.config.example.ts

@@ -44,12 +44,12 @@ const AI_NATIVE_ITEMS = [
   { key: "aiGateway", icon: Route },
 ] as const satisfies ReadonlyArray<{ key: string; icon: typeof Code }>;
 
-// `ossStats.<key>.label`; the values are figures.
+// `ossStats.<key>.label`; the values are figures. Only figures the repository
+// itself shows: workspace packages under packages/ (111 on 2026-10-16) and the
+// licence. No star or contributor counts.
 const OSS_STATS = [
-  { key: "stars", value: "1,500+" },
-  { key: "contributors", value: "300+" },
-  { key: "packages", value: "42" },
-  { key: "license", value: "MIT" },
+  { key: "packages", value: "100+" },
+  { key: "license", value: "Apache-2.0" },
 ] as const;
 
 // Pillar 2C — Engineering principles: `practices.<key>.name|desc`.

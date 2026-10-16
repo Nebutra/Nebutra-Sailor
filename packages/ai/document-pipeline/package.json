@@ -3,7 +3,7 @@
   "version": "0.1.7",
   "description": "Document parse, chunk, embed-port, and content-store ingestion pipeline",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

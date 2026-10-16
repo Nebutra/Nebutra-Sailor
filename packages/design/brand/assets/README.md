@@ -2,7 +2,7 @@
 
 The assets contained in this directory (including logos, icons, and specific brand visuals) are the intellectual property and protected trademarks of Wuxi Nebutra Intelligence Technology Co., Ltd. ("Nebutra").
 
-**These assets are exclusively reserved for the official Nebutra products and are NOT covered by the project's open-source AGPLv3 license.**
+**These assets are exclusively reserved for the official Nebutra products and are NOT covered by the project's open-source Apache-2.0 license.**
 
 ## Usage Rules
 
@@ -13,4 +13,4 @@ You may NOT:
 - Use the project name "Nebutra" or "Nebutra Sailor" to brand your product or in your domain name.
 - Claim association with or endorsement by Nebutra.
 
-For full details, see the [Brand Guidelines](../../../BRAND_GUIDELINES.md) and [Trademark Policy](../../../TRADEMARK.md) at the root of this repository.
+For full details, see the [Brand Guidelines](../../../../BRAND_GUIDELINES.md) and [Trademark Policy](../../../../TRADEMARK.md) at the root of this repository.

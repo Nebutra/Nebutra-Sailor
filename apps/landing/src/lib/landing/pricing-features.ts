@@ -1,19 +1,19 @@
 /**
  * Pricing comparison matrix for the marketing landing page.
  *
- * Columns map to Sailor's **commercial tiers**, NOT end-user SaaS billing
- * plans. Every tier ships the full source code, and every tier may use it
- * commercially at no cost — the differences are support, contractual
- * commitments, and trademark rights, never features or permission.
+ * Columns map to Sailor's **support plans**, NOT end-user SaaS billing
+ * plans. Everything is Apache-2.0, so every plan ships the full source code
+ * and may use it commercially at no cost — the differences are support,
+ * contractual commitments, and trademark rights, never features or permission.
  *
- * Tier model (matches LICENSE-COMMERCIAL.md):
- *   community  — free, no registration. MIT on npm, FSL-1.1-ALv2 on the repo
- *                (converts to Apache-2.0 after two years). Closed-source
- *                commercial use included at any team size or revenue.
+ * Plan model (matches docs/legal/commercial-support.md):
+ *   community  — free, no registration. Apache-2.0 on the repository, every
+ *                npm package and every generated project. Closed-source,
+ *                hosted and competing use included at any size.
  *   team       — $2,000/year. A support commitment: private channel,
  *                guaranteed 2-business-day first response, priority triage.
  *   enterprise — from $30,000/year. SLA, indemnification, compliance pack,
- *                continuity undertaking, trademark / white-label rights.
+ *                continuity undertaking, Nebutra / Sailor trademark licence.
  *
  * The billing system's FREE/PRO/ENTERPRISE plans are a configurable demo
  * for products built with Sailor and are intentionally not shown here.
@@ -67,7 +67,7 @@ export const COMPARISON_GROUPS: readonly ComparisonGroup[] = [
       },
       {
         id: "trademark",
-        values: { community: false, team: false, enterprise: "whiteLabelRights" },
+        values: { community: false, team: false, enterprise: "trademarkLicence" },
       },
     ],
   },

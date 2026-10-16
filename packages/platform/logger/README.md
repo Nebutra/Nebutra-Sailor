@@ -28,4 +28,4 @@ log.warn("Quota approaching", { used: 950, limit: 1000 });
 
 ## License
 
-MIT
+Apache-2.0 — see [LICENSE](./LICENSE).

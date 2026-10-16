@@ -3,7 +3,7 @@
   "version": "0.1.7",
   "description": "Browser task execution, recording, and deterministic replay ports",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

@@ -184,7 +184,7 @@ This product uses the **MiSans** typeface by Xiaomi.
 MiSans is free for commercial use under the MiSans Font Intellectual Property
 License Agreement, which requires this attribution
 (`vendor/misans/LICENSE.txt`). DM Sans is SIL OFL 1.1 (`vendor/dm-sans/OFL.txt`).
-Both licences are separate from this package's MIT licence. See
+Both licences are separate from this package's Apache-2.0 licence. See
 `NOTICE-FONTS.md`.
 
 ## Registered Families
@@ -217,6 +217,6 @@ element uses the corresponding CSS variable.
 
 ## License
 
-MIT for first-party code. DM Sans and every registry face are SIL OFL 1.1
+Apache-2.0 for first-party code (see [LICENSE](./LICENSE)). DM Sans and every registry face are SIL OFL 1.1
 (see `NOTICE-FONTS.md`). MiSans binaries are never
 committed or published to npm; they are served from the deployment's asset CDN.

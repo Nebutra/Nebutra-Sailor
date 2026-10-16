@@ -3,7 +3,7 @@
   "version": "0.1.7",
   "description": "Shared public-disclosure safety primitives for ecosystem publishing surfaces",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

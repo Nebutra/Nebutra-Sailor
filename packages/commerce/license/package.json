@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "description": "License domain logic — issuance, validation, and lifecycle events",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "core",

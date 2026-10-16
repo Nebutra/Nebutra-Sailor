@@ -202,7 +202,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
                 {PRODUCTS.find((p) => p.id === id)?.name}
               </a>
             ))}
-            <a href="#sailor-licences" className="hover:text-foreground">
+            <a href="#sailor-plans" className="hover:text-foreground">
               {paid("jumpSailor")}
             </a>
             <a href="#faq" className="hover:text-foreground">
@@ -254,7 +254,7 @@ export default async function PricingPage({ params }: { params: Promise<{ lang: 
         </div>
       </Band>
 
-      <Band id="sailor-licences" className="scroll-mt-20">
+      <Band id="sailor-plans" className="scroll-mt-20">
         <div className="mx-auto max-w-wide">
           <p className={eyebrow}>Sailor</p>
           <h2 className="mt-4 max-w-3xl font-heading text-4xl tracking-tight text-foreground text-balance">

@@ -217,9 +217,8 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
   });
 
   // -- license --
-  // MIT LICENSE + scaffold marker. Replaces the upstream repository LICENSE
-  // inside the scaffolded project; the upstream text is preserved as
-  // LICENSE-UPSTREAM-REFERENCE.md so the monorepo's own terms stay visible.
+  // Apache-2.0 LICENSE + NOTICE + scaffold marker. The project carries the
+  // same terms as the Sailor source (ADR 2026-10-16 apache-2-relicense).
   emitJson(useJson, { event: "step", step: "license", status: "start" });
   try {
     const licenseEmit = emitScaffoldLicense(resolvedTarget, {
@@ -230,14 +229,14 @@ export async function runScaffold(ctx: ScaffoldContext): Promise<void> {
       event: "step",
       step: "license",
       status: "ok",
-      tier: "mit-scaffold",
+      tier: "apache-2.0",
       wrote: licenseEmit.wrote,
     });
     if (!useJson) {
       process.stdout.write(
         pc.dim(
-          `  License: MIT — commercial use, closed source, no fee, no attribution.\n` +
-            `           Upstream terms preserved as LICENSE-UPSTREAM-REFERENCE.md.\n`,
+          `  License: Apache-2.0 — commercial use, closed source, no fee.\n` +
+            `           Keep LICENSE and NOTICE when you redistribute the source.\n`,
         ),
       );
     }

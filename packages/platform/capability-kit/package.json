@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "description": "Neutral capability primitives shared by every Nebutra capability package: CapabilityError, DoctorReport, doctor/debug CLI runner, and debug JSONL storage.",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "status": "foundation",

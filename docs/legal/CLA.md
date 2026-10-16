@@ -12,8 +12,8 @@
 > Google CLA template. **Not** counsel-reviewed. Before enabling the CLA bot
 > for external contributions, a qualified IP lawyer must review:
 >
-> 1. Multi-license grant (§4) — FSL-1.1-ALv2 (repository) + MIT (published
->    packages) + the irrevocable Apache-2.0 future-license grant, simultaneously.
+> 1. Licensing grant (§4) — Apache-2.0 (repository, packages and scaffold
+>    output since 2026-10-16) + historical licences + any future licence.
 > 2. Jurisdiction / governing law (`[JURISDICTION]` placeholder below).
 > 3. Corporate CLA (CCLA) need vs employer-binding representation in §8.
 > 4. Moral-rights waiver language (EU/PRC fit).
@@ -72,31 +72,32 @@ licenses granted to that entity under this Agreement for that
 Contribution or Work shall terminate as of the date such litigation is
 filed.
 
-## 4. Dual-Licensing Grant (Nebutra-specific)
+## 4. Licensing Grant (Nebutra-specific)
 
-You explicitly acknowledge and agree that Nebutra Technologies may
-license Your Contributions under MULTIPLE licenses simultaneously,
-including but not limited to:
+Your Contributions are licensed inbound under the same terms they are
+distributed outbound: the **Apache License, Version 2.0** (section 5 of that
+licence), under which this repository, the `@nebutra/*` packages, `nebutra`,
+`create-sailor`, and CLI-scaffolded projects are distributed since
+2026-10-16.
 
-(a) the **Functional Source License, Version 1.1, ALv2 Future License**
-    (FSL-1.1-ALv2 — the repository's current license), including its
-    irrevocable grant of the **Apache License 2.0** effective on the second
-    anniversary of each release;
+In addition, You explicitly acknowledge and agree that Nebutra Technologies
+may license Your Contributions under other licenses, including but not
+limited to:
 
-(b) the **MIT License**, under which the `@nebutra/*` packages, `nebutra`,
-    `create-sailor`, and CLI-scaffolded projects are distributed;
+(a) any **future license** the project adopts;
 
-(c) any **future license** the project adopts, and any **commercial
-    agreement** Wuxi Nebutra Intelligence Technology Co., Ltd. may offer to
-    enterprise customers, including proprietary redistributions;
+(b) any **commercial agreement** Wuxi Nebutra Intelligence Technology Co.,
+    Ltd. may offer to enterprise customers, including proprietary
+    redistributions;
 
-(d) the **GNU Affero General Public License version 3**, the repository's
-    license until 2026-07-26, for versions released under it.
+(c) the licences under which earlier versions were released — FSL-1.1-ALv2
+    (repository, 2026-07-26 to 2026-10-16), MIT (npm packages before
+    2026-10-16), and the GNU Affero General Public License version 3
+    (repository, until 2026-07-26) — for those versions.
 
-This multi-licensing grant is irrevocable and survives termination of
-this Agreement. You retain Your copyright in Your Contributions; You are
-granting Nebutra Technologies the right to *relicense*, not transferring
-ownership.
+This grant is irrevocable and survives termination of this Agreement. You
+retain Your copyright in Your Contributions; You are granting Nebutra
+Technologies the right to *relicense*, not transferring ownership.
 
 ## 5. Original Work
 

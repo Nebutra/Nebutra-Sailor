@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Technische & kommerzielle Anfrage — {brandName}",
-      "description": "Der dedizierte Kommunikationskanal für kommerzielle Lizenzierung, Enterprise-Self-Hosting und erweiterten technischen Support.",
       "heading": "Support-Verbindung herstellen",
       "subheading": "Wir entsenden eine:n dedizierte:n technische:n Spezialist:in oder Architekt:in, um Ihre konkreten Anforderungen zu bewerten.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Vorgespräche zu strategischen Ökosystem-Partnerschaften und übergreifender architektonischer Weiterentwicklung."
         },
         "sales": {
-          "title": "Kommerzielles Deployment",
-          "description": "Verhandlungen zu Closed-Source-Lizenzierung und Details zu Bereitstellungen in privaten Cluster-Umgebungen."
+          "title": "Kommerzielles Deployment"
         },
         "support": {
           "title": "Expert:innen-Support",
@@ -285,7 +283,6 @@
         "category": "Anforderungsbereich",
         "categories": {
           "general": "Unternehmensberatung",
-          "sales": "Lizenzierung & Architektur",
           "support": "Entwicklerunterstützung",
           "legal": "Rechtliche & Compliance-Grenzen",
           "privacy": "Datenverarbeitungsrichtlinien",
@@ -518,10 +515,6 @@
               "q": "Was ist der ausdrückliche operative Zweck von {productName}?",
               "a": "{productName} ist ein hochstrukturiertes, produktionsreifes Next.js-AI-SaaS-Framework. Es bündelt Unternehmensabrechnung, Mehrfaktor-Authentifizierung und Mandantenisolation in einer geregelten Plattformbasis und ermöglicht Teams, sich auf die produktspezifische KI-Implementierung zu konzentrieren."
             },
-            "1": {
-              "q": "Wie ist die Lizenzierung des Repositories strukturiert?",
-              "a": "Die aktuelle Lizenz ist die Functional Source License, Version 1.1, ALv2 (FSL-1.1-ALv2). Sie ist kostenlos für den Aufbau von Produkten nutzbar – keine Gebühr, keine Copyleft-Verpflichtung. Das Einzige, was sie nicht erlaubt, ist, Sailor selbst als konkurrierendes kommerzielles Produkt oder Dienst anzubieten. Jede Version wechselt zwei Jahre nach ihrer Veröffentlichung automatisch zu Apache-2.0."
-            },
             "2": {
               "q": "Wie schnell ist die initiale kommerzielle Bewertung möglich?",
               "a": "Extrem schnell. Mit unserer angepassten Node-CLI-Toolchain und der präzisen technischen Spezifikation kann eine Junior-Engineer:in innerhalb weniger Minuten eine autonome lokale Minimum-Viable-Product-(MVP-)Instanz aufsetzen."
@@ -583,8 +576,7 @@
           "name": "Direktiven für technische Unterstützung",
           "questions": {
             "0": {
-              "q": "Wie wird das Troubleshooting operativer Engpässe gelöst?",
-              "a": "Die initiale Triage zielt auf die sorgfältig gepflegte und peer-reviewte Dokumentations-Matrix sowie verifizierte Community-Interaktionen ab. Der Erwerb einer Standard- oder Enterprise-Lizenz schaltet den Zugang zu privaten Eskalations-Queues frei, die über interne Engineering-Knoten direkt gelöst werden."
+              "q": "Wie wird das Troubleshooting operativer Engpässe gelöst?"
             },
             "1": {
               "q": "Bieten Sie auch physische oder spezialisierte Umgebungsintegrationen an?",
@@ -1155,12 +1147,10 @@
     "pricing": {
       "title": "Kostenlos nutzbar. Zahlen nur, wenn wir haften sollen.",
       "description": "Ein kommerzielles Produkt auf {brandName} zu bauen kostet nichts — keine Gebühr, kein Lizenzschlüssel, keine Registrierung, kein Copyleft. Bezahlte Tarife verkaufen Support, SLAs, Freistellung und Markenrechte, niemals eine Nutzungserlaubnis.",
-      "socialProofText": "MIT auf npm · FSL-1.1-ALv2 im Repository, nach zwei Jahren Apache-2.0 · kommerzielle Nutzung in jeder Größe kostenlos.",
       "community": {
         "badge": "COMMUNITY",
         "price": "Kostenlos",
         "period": "für immer",
-        "desc": "Für alle. Jede Teamgröße, jeder Umsatz. Kommerzielle Closed-Source-Nutzung inklusive, ohne Registrierung und ohne Namensnennung.",
         "cta": "npx create-sailor",
         "f1": "Vollständiger Next.js-16-SaaS-Kern, alle Pakete inklusive",
         "f2": "Closed-Source-Nutzung bei jeder Teamgröße und jedem Umsatz",
@@ -1174,7 +1164,6 @@
         "period": "Jahr",
         "desc": "Für Teams, die kritische Abläufe nicht von Community-Antwortzeiten abhängig machen können.",
         "cta": "{brandName}-Support holen",
-        "f1": "Privater Support-Kanal (E-Mail + gemeinsamer Slack- oder Discord-Kanal)",
         "f2": "Erste Antwort garantiert innerhalb von zwei Werktagen",
         "f3": "Priorisierte Fehler-Triage vor Community-Issues",
         "f4": "Upgrade-Unterstützung und Vorabinformation zu Breaking Changes",
@@ -1189,33 +1178,27 @@
         "f1": "Reaktions-SLA — 4 Arbeitsstunden im Standard, 1 Stunde bei Produktionsausfall",
         "f2": "Freistellung und vertraglich zugesicherte Security-Patches",
         "f3": "Unterzeichneter AVV, Compliance-Paket und Fortführungszusage",
-        "f4": "Marken- und White-Label-Rechte sowie Verzicht auf die Wettbewerbsklausel",
         "f5": "Long-Term-Support-Branch und Engineering für private Deployments",
         "f6": "Alles aus Team"
       }
     },
     "faq": {
       "title": "FAQ zu Preisen & Lizenzen",
-      "description": "Fragen zu Lizenzstufen, Rückerstattungen und kommerziellen Nutzungsrechten.",
       "q1": {
-        "q": "Ist Sailor ein monatliches SaaS-Abonnement?",
-        "a": "Nein. Diese Preise gelten für Sailor-Quellcodelizenzen: Independent ist kostenlos, Startup wird jährlich abgerechnet und Enterprise ist individuell."
+        "q": "Ist Sailor ein monatliches SaaS-Abonnement?"
       },
       "q2": {
-        "q": "Bieten Sie Erstattungen an?",
-        "a": "Startup-Kommerzlizenzen enthalten für Erstkäufe ein 14-tägiges Rückerstattungsfenster. Enterprise-Bedingungen werden im unterzeichneten Vertrag geregelt."
+        "q": "Bieten Sie Erstattungen an?"
       },
       "q3": {
-        "q": "Kann ich Sailor für Kundenprojekte nutzen?",
-        "a": "Ja. Eine kommerzielle Lizenz erlaubt Ihrem Team, geschlossene Kunden- oder interne Produkte im lizenzierten Umfang auszuliefern; White-Label-Rechte erfordern Enterprise-Freigabe."
+        "q": "Kann ich Sailor für Kundenprojekte nutzen?"
       },
       "contactNudge": "Noch Fragen? Sprechen Sie mit dem {brandName}-Team →"
     },
     "cta": {
       "eyebrow": "Loslegen",
       "title": "Schluss mit Konfigurieren. Anfangen zu bauen.",
-      "description": "Initialisieren Sie eine skalierbare SaaS-Architektur lokal mit der {brandName} CLI.",
-      "license": "Open Source unter FSL-1.1-ALv2. Keine Kreditkarte erforderlich."
+      "description": "Initialisieren Sie eine skalierbare SaaS-Architektur lokal mit der {brandName} CLI."
     },
     "capability": {
       "badge": "Enterprise-Fähigkeiten",
@@ -1499,8 +1482,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Kostenlos <hl>Build On</hl>",
-      "description": "{brandName}-Sailor ist für die kommerzielle Nutzung kostenlos — MIT auf npm, FSL-1.1-ALv2 im Repository, nach zwei Jahren Umstellung auf Apache-2.0. Bezahlte Tarife verkaufen Support und vertragliche Zusagen, niemals Erlaubnis."
+      "title": "Kostenlos <hl>Build On</hl>"
     },
     "plans": {
       "community": {
@@ -1511,7 +1493,6 @@
         "features": {
           "fullSource": "Vollständiger Quellcode, alle Pakete",
           "closedSourceOk": "Closed-Source-Kommerzialnutzung — kein Copyleft",
-          "noAttribution": "Keine Registrierung, keine Namensnennung erforderlich",
           "communitySupport": "Community-Support — Best-Effort"
         },
         "cta": "Auf GitHub ansehen"
@@ -1537,8 +1518,7 @@
         "features": {
           "sla": "Reaktions-SLA — 4 Geschäftsstunden, 1 Stunde bei Produktionsausfall",
           "indemnity": "Freistellung und Verpflichtung zu Sicherheitsupdates",
-          "compliance": "Unterzeichnetes DPA, Compliance-Paket, Fortführungszusage",
-          "trademark": "Marken- und White-Label-Rechte"
+          "compliance": "Unterzeichnetes DPA, Compliance-Paket, Fortführungszusage"
         },
         "cta": "Vertrieb kontaktieren"
       }
@@ -1547,40 +1527,23 @@
       "title": "Häufig gestellte Fragen",
       "description": "Kurzfassung: Die Nutzung ist kostenlos. Bezahlen ist für den Fall, dass Sie uns vertraglich in die Pflicht nehmen müssen.",
       "items": {
-        "whyFsl": {
-          "q": "Warum FSL statt MIT oder AGPL?",
-          "a": "FSL erlaubt jede Nutzung außer dem Verkauf eines Ersatzes für Sailor selbst, und jede Version wird zwei Jahre nach Veröffentlichung Apache-2.0 — eine unwiderruflich im Voraus erteilte Lizenz. Sie wird von der Unternehmensjuridischen Abteilung leichter genehmigt als AGPL."
-        },
         "reallyFree": {
-          "q": "Ist die kommerzielle Nutzung wirklich kostenlos?",
-          "a": "Ja. Keine Gebühr, kein Lizenzschlüssel, keine Registrierung, keine Umsatz- oder Mitarbeiterzahlschwelle, keine Namensnennung. Bauen Sie ein Closed-Source-Produkt und verkaufen Sie es."
-        },
-        "competingUse": {
-          "q": "Was gilt als konkurrierende Nutzung?",
-          "a": "Das Anbieten von Sailor selbst – ein gehosteter Sailor-Dienst oder eine neu verpackte konkurrierende Basisplattform. Der Bau einer vertikalen SaaS, eines internen Tools oder von Kundenprojekten auf Sailor ist keine konkurrierende Nutzung. Falls Ihr Modell dies erfordert, kann ein Enterprise-Vertrag einen schriftlichen Verzicht enthalten."
+          "q": "Ist die kommerzielle Nutzung wirklich kostenlos?"
         },
         "upgrade": {
           "q": "Was kaufen die kostenpflichtigen Stufen eigentlich?",
           "a": "Support-Zusagen, Reaktions-SLAs, Freistellung, Compliance-Dokumente und Markenrechte. Niemals die Erlaubnis, die Software zu nutzen – die gehört Ihnen bereits."
         },
         "contributions": {
-          "q": "Was ist mit Open-Source-Beiträgen?",
-          "a": "Alle Beiträge erfordern eine CLA. Siehe CONTRIBUTING.md."
+          "q": "Was ist mit Open-Source-Beiträgen?"
         }
       }
     },
     "meta": {
-      "title": "Lizenzierung — {brandName}",
-      "description": "Kostenlos für kommerzielle Nutzung. MIT auf npm, FSL-1.1-ALv2 im Repository, Umstellung auf Apache-2.0."
+      "title": "Lizenzierung — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Kostenlose Einzellizenz",
-      "opcFree": "Kostenlose OPC-Lizenz",
-      "startupCommercial": "Startup-Kommerzlizenz",
-      "enterprise": "Enterprise-Lizenz"
-    },
     "referralSource": {
       "selectPlaceholder": "Bitte wählen...",
       "productHunt": "Product Hunt"
@@ -1599,10 +1562,6 @@
     "title": "Blog — {brandName}",
     "description": "Engineering-Insights, Produkt-Updates und SaaS-Best-Practices vom {brandName}-Team."
   },
-  "getLicenseMeta": {
-    "title": "Hol dir deine Lizenz — {brandName}",
-    "description": "Holen Sie sich Ihre {brandName}-Lizenz und Plattformzugang in 2 Minuten."
-  },
   "landing": {
     "faq": {
       "badge": "FAQ",
@@ -1618,8 +1577,7 @@
           "answer": "Für Gründer und Produktentwickler, die ihre Zeit mit dem Differenzierungsmerkmal verbringen möchten — nicht damit, dieselbe Auth/Billing/Tenancy-Infrastruktur zum fünften Mal aufzubauen."
         },
         "free-or-paid": {
-          "question": "Ist es kostenlos oder kostenpflichtig?",
-          "answer": "Ja, Sailor ist kostenlos für den Aufbau von Produkten – keine Gebühr, keine Copyleft-Verpflichtung. Die kostenpflichtigen kommerziellen Stufen verkaufen keine zusätzliche Erlaubnis, sondern eine Support-Zusage mit SLA, Haftungsfreistellung, Compliance-Unterlagen und Markenrechte. Jeder Plan enthält den vollständigen Funktionsumfang (Auth, Billing, Multi-Tenancy, KI, Audit); die Stufen unterscheiden sich nur in Support und Lizenzbedingungen, nicht in den Funktionen."
+          "question": "Ist es kostenlos oder kostenpflichtig?"
         },
         "china-friendly": {
           "question": "Funktioniert es in China?",
@@ -1646,12 +1604,10 @@
           "answer": "Next.js 16 (App Router) mit React 19, TypeScript 5.9, Tailwind v4, Prisma 7 über Postgres (mit pgvector + RLS), Hono für das BFF-Gateway, FastAPI für ML/schwere Dienste und eine kuratierte Komponentenbibliothek auf Radix, {brandName} UI-Primitiven und der gemeinsamen Motion-Schicht. KI-Features laufen über das Vercel AI SDK mit Anbieter-Portabilität (OpenAI / OpenRouter / SiliconFlow / Azure / lokal)."
         },
         "license": {
-          "question": "Was ist die Lizenz?",
-          "answer": "Functional Source License, Version 1.1, ALv2 (FSL-1.1-ALv2). Das Einzige, was sie nicht erlaubt, ist, Sailor selbst als konkurrierendes kommerzielles Produkt oder Dienst anzubieten; ansonsten ist die Nutzung kostenlos und ohne Copyleft-Verpflichtung. Jede Version wechselt zwei Jahre nach ihrer Veröffentlichung automatisch zu Apache-2.0."
+          "question": "Was ist die Lizenz?"
         },
         "paid-updates": {
-          "question": "Muss ich für Updates bezahlen?",
-          "answer": "Nein. Quellcode-Updates sind in jeder kommerziellen Lizenz enthalten — pullen Sie von main, wann immer Sie möchten, und rebasen Sie Ihren Fork. Die kostenpflichtige Stufe ist das Recht, Sailor in der kommerziellen Produktion zu nutzen, nicht das Recht, Code zu empfangen. Jede Minor-Version liefert ein CHANGELOG und einen Upgrade-Leitfaden für Breaking Changes."
+          "question": "Muss ich für Updates bezahlen?"
         },
         "why-turborepo": {
           "question": "Warum Turborepo statt einer Standard-Next.js-App?",
@@ -1712,9 +1668,7 @@
       "value": {
         "included": "Enthalten",
         "notIncluded": "Nicht enthalten",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Nicht erforderlich",
-        "whiteLabelRights": "White-Label-Rechte",
         "unlimited": "Unbegrenzt",
         "unlimitedPlusNotice": "Unbegrenzt + Vorabinfo zu Breaking Changes",
         "unlimitedPlusLts": "Unbegrenzt + Long-Term-Support-Branch",

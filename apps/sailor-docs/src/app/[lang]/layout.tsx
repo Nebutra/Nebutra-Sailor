@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     template: "%s | Nebutra Sailor Docs",
   },
   description:
-    "Product documentation for Nebutra Sailor, the governed AI-native SaaS platform baseline.",
+    "Product documentation for Nebutra Sailor. Skip to production: the open-source (Apache-2.0) production layer for agent-built software.",
 };
 
 // ----------------------------------------------------------------------

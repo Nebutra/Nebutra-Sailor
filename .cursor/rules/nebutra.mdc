@@ -206,7 +206,7 @@ CRUD, webhooks, billing, content management, blockchain reads, third-party API p
 
 | Package | Providers |
 |---|---|
-| `@nebutra/auth` | Clerk \| Better Auth \| NextAuth |
+| `@nebutra/auth` | Better Auth (one provider, ADR 2026-09-24) |
 | `@nebutra/billing` | Creem (cards, merchant of record) \| WeChat Pay/Alipay \| Manual |
 | `@nebutra/queue` | QStash \| BullMQ \| memory |
 | `@nebutra/search` | Meilisearch \| Typesense \| Algolia |

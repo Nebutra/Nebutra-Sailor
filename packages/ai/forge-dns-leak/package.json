@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Authoritative DNS leak zone + session API for Nebutra Forge (dnsleaktest-style recursive resolver capture)",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

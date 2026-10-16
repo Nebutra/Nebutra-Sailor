@@ -3,7 +3,7 @@
   "version": "0.1.8",
   "description": "Confidence-gated customer support Play package for founder-owned support automation",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

@@ -10,7 +10,7 @@ const TIERS = [
   { key: "enterprise", features: ["f1", "f2", "f3", "f4", "f5", "f6"] },
 ] as const;
 
-/** The three Sailor licence tiers, read from the same strings as LICENSE-COMMERCIAL.md §2. */
+/** The three Sailor support plans, matching docs/legal/commercial-support.md. The code is Apache-2.0 on every plan. */
 export async function SailorTiers({ lang }: { lang: string }) {
   const t = await getTranslations({ locale: lang, namespace: "microLanding.pricing" });
   type Key = Parameters<typeof t>[0];

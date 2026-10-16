@@ -98,7 +98,7 @@ describe("buildFaqPageSchema", () => {
   it("creates Question entries for each FAQ", () => {
     const schema = buildFaqPageSchema([
       { question: "Is it free?", answer: "Yes" },
-      { question: "Is it open source?", answer: "Yes, MIT" },
+      { question: "Is it open source?", answer: "Yes, Apache-2.0" },
     ]);
 
     expect(schema["@type"]).toBe("FAQPage");

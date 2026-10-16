@@ -124,8 +124,8 @@ const config: BrandConfig = {
    * License
    */
   license: {
-    type: "FSL-1.1-ALv2",
-    commercialExempt: ["My Company Inc."], // Companies exempt from commons clause
+    type: "Apache-2.0",
+    commercialExempt: ["My Company Inc."], // Legacy field — grants nothing; the code is Apache-2.0 for everyone
   },
 };
 

@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Technische & commerciële aanvraag — {brandName}",
-      "description": "Het speciale communicatiekanaal voor commerciële licenties, enterprise self-hosting en geavanceerde technische ondersteuning.",
       "heading": "Ondersteuningsverbinding tot stand brengen",
       "subheading": "Wij sturen een toegewijde technische specialist of architect om uw expliciete vereisten te evalueren.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Vooroverleg over ecologische strategische partnerschappen en de algehele architecturale ontwikkeling."
         },
         "sales": {
-          "title": "Commerciële Implementatie",
-          "description": "Onderhandelingen over licenties voor gesloten broncode en bijzonderheden met betrekking tot implementaties in privé-clusteromgevingen."
+          "title": "Commerciële Implementatie"
         },
         "support": {
           "title": "Ondersteuning op Expertniveau",
@@ -285,7 +283,6 @@
         "category": "Domein van de Vraag",
         "categories": {
           "general": "Zakelijke Raadpleging",
-          "sales": "Licenties & Architectuur",
           "support": "Ontwikkelaarsondersteuning",
           "legal": "Juridische & Compliance Kaders",
           "privacy": "Gegevensverwerkingsbeleid",
@@ -518,10 +515,6 @@
               "q": "Wat is het expliciete operationele doel van {productName}?",
               "a": "{productName} is een zeer gestructureerd, productie-klaar Next.js AI SaaS-framework. Het bundelt bedrijfsfacturering, multifactorauthenticatie en multi-tenant isolatie in een beheerd platformbaseline, zodat teams zich kunnen richten op product-specifieke AI-implementatie."
             },
-            "1": {
-              "q": "Hoe is de licentie van de repository gestructureerd?",
-              "a": "De kern is gelicentieerd onder FSL-1.1-ALv2 (Functional Source License), vrij te gebruiken om producten te bouwen — geen kosten, geen copyleft-verplichting. De enige beperking is het aanbieden van Sailor zelf als concurrerend commercieel product of dienst. Elke versie zet automatisch en onherroepelijk om naar Apache-2.0 twee jaar na de release."
-            },
             "2": {
               "q": "Wat is de snelheid van de initiële commerciële evaluatie?",
               "a": "Extreem hoge snelheid. Met behulp van onze aangepaste Node CLI-toolchain en de nauwkeurige technische specificatie kan een junior engineer binnen enkele minuten een autonome lokale Minimum Viable Product (MVP)-instantie opzetten."
@@ -583,8 +576,7 @@
           "name": "Technische Assistentie Richtlijnen",
           "questions": {
             "0": {
-              "q": "Hoe wordt operationeel bottleneck-onderzoek opgelost?",
-              "a": "Initiële triagevectoren richten zich op de zorgvuldig onderhouden en door collega's beoordeelde documentatiematrix en geverifieerde community-interacties. Het verwerven van een standaard- of enterprise-licentie ontgrendelt toegang tot private escalatiequeues die worden opgelost via directe interne engineeringknooppunten."
+              "q": "Hoe wordt operationeel bottleneck-onderzoek opgelost?"
             },
             "1": {
               "q": "Bieden jullie fysieke of gespecialiseerde omgevingsintegratieoperaties aan?",
@@ -1155,12 +1147,10 @@
     "pricing": {
       "title": "Gratis om op te bouwen. Betaal alleen als wij moeten instaan.",
       "description": "Een commercieel product bouwen op {brandName} kost niets — geen kosten, geen licentiesleutel, geen registratie, geen copyleft. Betaalde niveaus verkopen support, SLA's, vrijwaring en merkrechten, nooit toestemming.",
-      "socialProofText": "MIT op npm · FSL-1.1-ALv2 op de repository, na twee jaar Apache-2.0 · commercieel gebruik gratis op elke schaal.",
       "community": {
         "badge": "COMMUNITY",
         "price": "Gratis",
         "period": "voor altijd",
-        "desc": "Voor iedereen. Elke teamgrootte, elke omzet. Closed-source commercieel gebruik inbegrepen, zonder registratie en zonder naamsvermelding.",
         "cta": "npx create-sailor",
         "f1": "Volledige Next.js 16 SaaS-kern, alle pakketten inbegrepen",
         "f2": "Closed-source commercieel gebruik bij elke teamgrootte of omzet",
@@ -1174,7 +1164,6 @@
         "period": "jaar",
         "desc": "Voor teams die geen kritieke pad kunnen leggen op community-reactietijden.",
         "cta": "{brandName}-support afnemen",
-        "f1": "Privé supportkanaal (e-mail + gedeelde Slack of Discord)",
         "f2": "Eerste reactie gegarandeerd binnen twee werkdagen",
         "f3": "Prioritaire bugtriage, vóór community-issues",
         "f4": "Upgradehulp en vooraankondiging van breaking changes",
@@ -1189,33 +1178,27 @@
         "f1": "Reactie-SLA — 4 werkuren standaard, 1 uur bij productiestoring",
         "f2": "Vrijwaring en contractuele toezegging voor securitypatches",
         "f3": "Ondertekende verwerkersovereenkomst, compliancepakket en continuïteitstoezegging",
-        "f4": "Merk- en white-labelrechten, plus ontheffing van de concurrentieclausule",
         "f5": "Long-term-supportbranch en engineering voor privé-implementaties",
         "f6": "Alles uit Team"
       }
     },
     "faq": {
       "title": "Prijzen & licenties FAQ",
-      "description": "Vragen over licentietiers, terugbetalingen en commerciële gebruiksrechten.",
       "q1": {
-        "q": "Is Sailor een maandelijkse SaaS-abonnement?",
-        "a": "Nee. Deze prijzen zijn voor Sailor-broncode-licenties: Independent is gratis, Startup wordt jaarlijks gefactureerd en Enterprise is op maat."
+        "q": "Is Sailor een maandelijkse SaaS-abonnement?"
       },
       "q2": {
-        "q": "Bieden jullie terugbetalingen aan?",
-        "a": "Startup-commerciële licenties bevatten een terugbetalingsvenster van 14 dagen voor eerste aankopen. Enterprise-voorwaarden worden afgehandeld in het ondertekende contract."
+        "q": "Bieden jullie terugbetalingen aan?"
       },
       "q3": {
-        "q": "Kan ik Sailor gebruiken voor klantwerk?",
-        "a": "Ja. Met een commerciële licentie kan je team closed-source klant- of interne producten uitbrengen binnen het gelicentieerde bereik; white-label-rechten vereisen Enterprise-goedkeuring."
+        "q": "Kan ik Sailor gebruiken voor klantwerk?"
       },
       "contactNudge": "Nog vragen? Neem contact op met het {brandName}-team →"
     },
     "cta": {
       "eyebrow": "Aan de slag",
       "title": "Stop met configureren. Begin met bouwen.",
-      "description": "Initialiseer een schaalbare SaaS-architectuur lokaal met de {brandName}-CLI.",
-      "license": "Open source onder FSL-1.1-ALv2-licentie. Geen creditcard vereist."
+      "description": "Initialiseer een schaalbare SaaS-architectuur lokaal met de {brandName}-CLI."
     },
     "capability": {
       "badge": "Enterprise-mogelijkheden",
@@ -1500,8 +1483,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Gratis om <hl>op te bouwen</hl>",
-      "description": "{brandName}-Sailor is gratis voor commercieel gebruik — MIT op npm, FSL-1.1-ALv2 in de repository, met overstap naar Apache-2.0 na twee jaar. Betaalde niveaus bieden ondersteuning en contractuele afspraken, nooit toestemming."
+      "title": "Gratis om <hl>op te bouwen</hl>"
     },
     "plans": {
       "community": {
@@ -1512,7 +1494,6 @@
         "features": {
           "fullSource": "Volledige broncode, alle pakketten",
           "closedSourceOk": "Gesloten-bron commercieel gebruik — geen copyleft",
-          "noAttribution": "Geen registratie, geen vermelding vereist",
           "communitySupport": "Community-ondersteuning — besteffort"
         },
         "cta": "Bekijk op GitHub"
@@ -1538,8 +1519,7 @@
         "features": {
           "sla": "Response-SLA — 4 werkbare uren, 1 uur bij productie-down",
           "indemnity": "Schadevergoeding en verbintenis tot beveiligingspatches",
-          "compliance": "Ondertekende DPA, compliancepakket, continuïteitsverklaring",
-          "trademark": "Handelsmerk- en white-labelrechten"
+          "compliance": "Ondertekende DPA, compliancepakket, continuïteitsverklaring"
         },
         "cta": "Neem contact op met sales"
       }
@@ -1548,40 +1528,23 @@
       "title": "Veelgestelde vragen",
       "description": "Kort gezegd: gebruiken is gratis. Betalen is voor wanneer je ons contractueel aanspreekbaar wilt hebben.",
       "items": {
-        "whyFsl": {
-          "q": "Waarom FSL in plaats van MIT of AGPL?",
-          "a": "FSL staat elk gebruik toe, behalve het verkopen van een vervanging voor Sailor zelf, en elke versie wordt Apache-2.0 twee jaar na release — een onherroepelijke voorafgaande toestemming. Het gaat sneller door de juridische keuring bij bedrijven dan AGPL."
-        },
         "reallyFree": {
-          "q": "Is commercieel gebruik echt gratis?",
-          "a": "Ja. Geen kosten, geen licentiekey, geen registratie, geen inkomsten- of personeelsgrens, geen attributie. Bouw een closed-source product en verkoop het."
-        },
-        "competingUse": {
-          "q": "Wat telt als concurrerend gebruik?",
-          "a": "Sailor zelf aanbieden — een gehoste Sailor-service of een herpakt concurrerend platform als basis. Een verticale SaaS, een intern hulpmiddel of klantprojecten bouwen op Sailor is geen concurrerend gebruik. Als je model het nodig heeft, kan een Enterprise-overeenkomst een schriftelijke vrijstelling bevatten."
+          "q": "Is commercieel gebruik echt gratis?"
         },
         "upgrade": {
           "q": "Wat kopen de betaalde niveaus eigenlijk?",
           "a": "Ondersteuningsverplichtingen, response-SLA's, schadevergoeding, compliance-documentatie en handelsmerkrechten. Nooit toestemming om de software te gebruiken — dat is al van jou."
         },
         "contributions": {
-          "q": "En open source-bijdragen?",
-          "a": "Alle bijdragen vereisen een CLA. Zie CONTRIBUTING.md."
+          "q": "En open source-bijdragen?"
         }
       }
     },
     "meta": {
-      "title": "Licenties — {brandName}",
-      "description": "Gratis voor commercieel gebruik. MIT op npm, FSL-1.1-ALv2 in de repository, conversie naar Apache-2.0."
+      "title": "Licenties — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Individuele gratis licentie",
-      "opcFree": "Single-Owner Company-licentie",
-      "startupCommercial": "Startup commerciële licentie",
-      "enterprise": "Enterprise-licentie"
-    },
     "referralSource": {
       "selectPlaceholder": "Selecteer een optie...",
       "productHunt": "Product Hunt"
@@ -1600,10 +1563,6 @@
     "title": "Blog — {brandName}",
     "description": "Engineering-inzichten, productupdates en SaaS-best practices van het {brandName}-team."
   },
-  "getLicenseMeta": {
-    "title": "Krijg je licentie — {brandName}",
-    "description": "Krijg je {brandName}-licentie en platformtoegang in 2 minuten."
-  },
   "landing": {
     "faq": {
       "badge": "FAQ",
@@ -1619,8 +1578,7 @@
           "answer": "Oprichters en productengineers die hun tijd willen besteden aan het onderscheidende element — niet aan het voor de vijfde keer opnieuw bouwen van dezelfde auth/facturering/tenancy-infrastructuur."
         },
         "free-or-paid": {
-          "question": "Is het gratis of betaald?",
-          "answer": "De volledige broncode wordt uitgegeven onder FSL-1.1-ALv2 — gratis voor persoonlijke projecten, interne tooling en het bouwen van je eigen product, zonder kosten of copyleft-verplichting. De enige beperking is het aanbieden van Sailor zelf als concurrerend commercieel product of dienst. Elk plan bevat de volledige functieset (authenticatie, facturering, multi-tenancy, AI, audit); de niveaus verschillen in support-SLA, vrijwaring, compliance-documentatie en merkrechten, niet in functies."
+          "question": "Is het gratis of betaald?"
         },
         "china-friendly": {
           "question": "Werkt het in China?",
@@ -1647,12 +1605,10 @@
           "answer": "Next.js 16 (App Router) op React 19, TypeScript 5.9, Tailwind v4, Prisma 7 over Postgres (met pgvector + RLS), Hono voor de BFF-gateway, FastAPI voor ML/zware services en een gecureerde componentbibliotheek op Radix, {brandName} UI-primitieven en de gedeelde Motion-laag. AI-functies gaan via de Vercel AI SDK met provider-portabiliteit (OpenAI / OpenRouter / SiliconFlow / Azure / lokaal)."
         },
         "license": {
-          "question": "Wat is de licentie?",
-          "answer": "FSL-1.1-ALv2, dat twee jaar na elke release overgaat naar Apache-2.0. Gratis voor persoonlijk gebruik, interne tooling en het bouwen van je eigen product, zonder kosten of copyleft-verplichting. Het enige wat niet is toegestaan, is Sailor zelf aanbieden als concurrerend product of dienst. Volledige broncode is inbegrepen in elk plan."
+          "question": "Wat is de licentie?"
         },
         "paid-updates": {
-          "question": "Moet ik betalen voor updates?",
-          "answer": "Nee. Broncode-updates zijn inbegrepen bij elk commercieel licentiepakket — haal op elk moment op uit main en rebased je fork. Het betaalde tarief is het recht om Sailor in commerciële productie te gebruiken, niet het recht om code te ontvangen. Elke minor-release wordt geleverd met een CHANGELOG en een upgradehandleiding voor eventuele breaking changes."
+          "question": "Moet ik betalen voor updates?"
         },
         "why-turborepo": {
           "question": "Waarom Turborepo in plaats van een standaard Next.js-app?",
@@ -1713,9 +1669,7 @@
       "value": {
         "included": "Inbegrepen",
         "notIncluded": "Niet inbegrepen",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Niet vereist",
-        "whiteLabelRights": "White-labelrechten",
         "unlimited": "Onbeperkt",
         "unlimitedPlusNotice": "Onbeperkt + vooraankondiging breaking changes",
         "unlimitedPlusLts": "Onbeperkt + long-term-supportbranch",

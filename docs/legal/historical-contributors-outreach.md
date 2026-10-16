@@ -10,7 +10,7 @@
 >
 > Email template below is **not** counsel-reviewed. Before sending to a
 > real contributor, have IP counsel review (a) relicensing-permission
-> language, (b) the "remove your commits" fallback (AGPL §13 phrasing),
+> language, (b) the "remove your commits" fallback,
 > (c) jurisdiction reference in `CLA.md`.
 
 ---
@@ -23,13 +23,18 @@ before the bot went live still belongs — copyright-wise — to its author.
 
 Two consequences:
 
-1. **The dual-license model is legally fragile.** We ship the Independent
-   Developer License to end-users who scaffold via `create-sailor`, but
-   that license relicenses code we may not have the right to relicense
-   (because external contributors never agreed to it).
-2. **A future Commercial License is even more fragile.** Commercial
-   redistribution of code held under exclusive copyright by an external
-   contributor is a clear infringement.
+1. **Relicensing is legally fragile.** The project has relicensed twice
+   (AGPL-3.0 → FSL-1.1-ALv2 on 2026-07-26, → Apache-2.0 on 2026-10-16).
+   Code held under exclusive copyright by an external contributor who never
+   agreed to a later licence can only be distributed under the licence it
+   was contributed under.
+2. **Enterprise agreements are even more fragile.** Indemnifying, or
+   licensing trademarks over, code held under exclusive copyright by an
+   external contributor is promising rights we do not hold.
+
+> As of 2026-10-16 [`historical-contributors.md`](./historical-contributors.md)
+> lists zero external contributors, so no outreach is pending. This page is
+> kept as the procedure for if that changes.
 
 The fix is **retroactive CLA signature**. We ask each historical
 external contributor — see
@@ -38,7 +43,7 @@ external contributor — see
 - (a) sign the same CLA the bot now enforces, retroactively covering
       their past commits, **or**
 - (b) decline, in which case we remove or rewrite the affected commits
-      and continue under the AGPL-only fallback.
+      and continue without them.
 
 This is the same pattern the Chromium, MongoDB, and OpenSSL projects
 have used during license-model migrations.
@@ -77,10 +82,9 @@ Thanks again for contributing to Nebutra-Sailor — you've landed
 {{COMMIT_COUNT}} commit(s) since {{FIRST_COMMIT_DATE}} and we appreciate
 the help.
 
-We're tightening up the project's licensing as we expand the
-dual-license model (AGPL upstream + a permissive Independent Developer
-License for individual SaaS builders + a Commercial License for
-enterprise customers). To keep your past contributions covered cleanly,
+Nebutra-Sailor is now open source under the Apache License 2.0, and we
+offer enterprise support agreements on top of it. To keep your past
+contributions covered cleanly,
 we'd like to ask you to sign our Contributor License Agreement, which
 applies retroactively to the commits you've already landed:
 
@@ -101,9 +105,9 @@ Alternatively, open any new PR to the repo — our CLA bot will ask you
 to sign there, and signing once covers both past and future commits.
 
 If you'd rather not sign, that's completely fine. Just reply "no" and
-we'll work with you to either rewrite or remove the affected commits
-under the upstream AGPL-3.0 grant — your contributions would stay in
-git history but not be redistributed under the new permissive tiers.
+we'll work with you to either rewrite or remove the affected commits —
+your contributions would stay in git history under the licence you
+contributed them under, but not be redistributed under later terms.
 
 Either way, thanks for the contribution. Happy to answer any questions.
 

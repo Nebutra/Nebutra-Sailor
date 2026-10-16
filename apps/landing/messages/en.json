@@ -22,7 +22,7 @@
     "contact": "Billing questions",
     "eyebrow": "Pricing",
     "heroTitle": "Pay for what you <signature>use</signature>.",
-    "jumpSailor": "Sailor licences",
+    "jumpSailor": "Sailor support plans",
     "jumpFaq": "Questions",
     "altRouter": "Router's API market: a shelf of models by vendor and category, with input and output prices per million tokens.",
     "altKcq": "The KCQ workbench: a daily candlestick chart of a Shanghai-listed stock, with an AI analyst panel on the right.",
@@ -64,7 +64,7 @@
     "billWalletBody": "Credits and balances belong to the product you bought them for.",
     "privacy": "Privacy policy",
     "billingEmail": "Billing support",
-    "sailorTitle": "{brandName} Sailor licences",
+    "sailorTitle": "{brandName} Sailor support plans",
     "faqTitle": "Questions",
     "faqLead": "What people ask before they buy.",
     "faq": {
@@ -336,7 +336,7 @@
     },
     "contact": {
       "title": "Technical & Commercial Inquiry — {brandName}",
-      "description": "The dedicated communication channel for commercial licensing, enterprise self-hosting, and advanced technical support.",
+      "description": "The dedicated communication channel for Sailor support plans, enterprise self-hosting, and advanced technical support.",
       "heading": "Establish Support Connection",
       "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
       "contacts": {
@@ -350,7 +350,7 @@
         },
         "sales": {
           "title": "Commercial Deployment",
-          "description": "Negotiation regarding closed-source licensing and specifics pertaining to private cluster-environment deployments."
+          "description": "Support plans, {brandName} and Sailor trademark licences, and private cluster-environment deployments."
         },
         "support": {
           "title": "Expert-Level Support",
@@ -377,7 +377,7 @@
         "category": "Domain of Requirement",
         "categories": {
           "general": "Corporate Consultation",
-          "sales": "Licensing & Architecture",
+          "sales": "Support plans & architecture",
           "support": "Developer Assistance",
           "legal": "Legal & Compliance Boundaries",
           "privacy": "Data Processing Policies",
@@ -612,8 +612,8 @@
               "a": "{productName} is a highly structured, production-ready Next.js AI SaaS framework. It bundles corporate billing, multi-factor authentication, and multi-tenant isolation into a governed platform baseline, letting teams focus on product-specific AI implementation."
             },
             "1": {
-              "q": "How is the repository licensing structured?",
-              "a": "The repository ships under the Functional Source License (FSL-1.1-ALv2): free to use, with no copyleft obligation, for building products — it converts irrevocably to Apache-2.0 two years after each release. Organizations needing support SLAs, indemnification, or trademark rights can use the paid commercial tiers instead."
+              "q": "How is the code licensed?",
+              "a": "Everything is open source under Apache-2.0: the repository, every npm package, and every project create-sailor generates. Commercial, closed-source, and hosted use are all free, with no copyleft obligation. Organizations needing support SLAs, indemnification, or trademark rights can buy a paid support plan."
             },
             "2": {
               "q": "What is the speed of initial commercial evaluation?",
@@ -677,7 +677,7 @@
           "questions": {
             "0": {
               "q": "How is operational bottleneck troubleshooting resolved?",
-              "a": "Initial triage vectors target the rigorously maintained and peer-reviewed documentation matrix and verified community interactions. Procuring a standard or enterprise-level license decrypts access to private escalation queues resolving through direct internal engineering nodes."
+              "a": "Start with the documentation and the public issue tracker; community support is best-effort. A Team or Enterprise support plan adds a private channel with a guaranteed first response, and Enterprise adds a production-down SLA."
             },
             "1": {
               "q": "Do you extend physical or specialized environmental integration operations?",
@@ -1095,6 +1095,13 @@
       "intro2": "By accessing or using our Services, you agree to be bound by these Terms and our",
       "intro2PrivacyLink": "Privacy Policy",
       "intro2End": ". If you do not agree to these Terms, do not use our Services.",
+      "scope": {
+        "title": "Scope of These Terms",
+        "hosted": "These Terms govern your use of the <strong>{brandName} hosted SaaS services</strong> (the marketing site, dashboard at <code>{appDomain}</code>, and related APIs). They do <strong>not</strong> govern your use of the {brandName}-Sailor codebase.",
+        "license": "Source-code use is governed by the <strong>Apache License 2.0</strong> (see <code>LICENSE</code> and <code>NOTICE</code> in the repository). It covers the repository, every published npm package, and every project scaffolded with <code>create-sailor</code>. It is free and requires no registration.",
+        "paid": "Paid plans sell support, SLAs, indemnification, compliance documentation, and trademark rights — not permission to use the software. See <support>Commercial Support</support> and <plans>{plansDomain}</plans>.",
+        "conflict": "Where these Terms and the source-code license appear to conflict regarding rights to the codebase itself, the source-code license controls. Where they appear to conflict regarding use of the hosted services, these Terms control."
+      },
       "acceptance": {
         "title": "1. Acceptance of Terms",
         "eligibility": {
@@ -1281,12 +1288,12 @@
     "pricing": {
       "title": "Free to build on. Pay only if you need us on the hook.",
       "description": "Building a commercial product on {brandName} costs nothing — no fee, no licence key, no registration, no copyleft. Paid tiers sell support, SLAs, indemnification, and trademark rights, never permission.",
-      "socialProofText": "MIT on npm · FSL-1.1-ALv2 on the repo, converting to Apache-2.0 after two years · commercial use free at any size.",
+      "socialProofText": "Apache-2.0 on everything: the repository, every npm package, and every generated project · commercial use free at any size.",
       "community": {
         "badge": "COMMUNITY",
         "price": "Free",
         "period": "forever",
-        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration and no attribution requirement.",
+        "desc": "Everyone. Any team size, any revenue. Closed-source commercial use included, with no registration.",
         "cta": "npx create-sailor",
         "f1": "Complete Next.js 16 SaaS core, all packages included",
         "f2": "Closed-source commercial use at any team size or revenue",
@@ -1300,7 +1307,7 @@
         "period": "year",
         "desc": "For teams that cannot put a critical path on community response times.",
         "cta": "Get {brandName} support",
-        "f1": "Private support channel (email + shared Slack or Discord)",
+        "f1": "Private support channel (email + shared Slack or Feishu)",
         "f2": "Two business-day first response, guaranteed",
         "f3": "Prioritised bug triage ahead of community issues",
         "f4": "Upgrade assistance and advance notice of breaking changes",
@@ -1315,25 +1322,25 @@
         "f1": "Response SLA — 4 business hours standard, 1 hour production-down",
         "f2": "Indemnification and a contractual security-patch commitment",
         "f3": "Signed DPA, compliance pack, and continuity undertaking",
-        "f4": "Trademark and white-label rights, plus competing-use waiver",
+        "f4": "{brandName} and Sailor trademark licence",
         "f5": "Long-term support branch and private-deployment engineering",
         "f6": "Everything in Team"
       }
     },
     "faq": {
       "title": "Pricing & licensing FAQ",
-      "description": "Questions about license tiers, refunds, and commercial use rights.",
+      "description": "Questions about support plans, refunds, and commercial use.",
       "q1": {
         "q": "Is Sailor a monthly SaaS subscription?",
-        "a": "No. This pricing is for Sailor source-code licenses: Independent is free, Startup is billed annually, and Enterprise is custom."
+        "a": "No. Sailor is open source under Apache-2.0 and free to use. This pricing is for support plans: Community is free, Team support is billed annually, and Enterprise is quoted per engagement."
       },
       "q2": {
         "q": "Do you offer refunds?",
-        "a": "Startup commercial licenses include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
+        "a": "Team support subscriptions include a 14-day refund window for initial purchases. Enterprise terms are handled in the signed contract."
       },
       "q3": {
         "q": "Can I use Sailor for client work?",
-        "a": "Yes. A commercial license lets your team ship closed-source client or internal products within the licensed scope; white-label rights require Enterprise approval."
+        "a": "Yes. Apache-2.0 lets your team ship closed-source client or internal products at no cost. Shipping them under your own brand needs no permission; presenting them under the {brandName} or Sailor names needs an Enterprise trademark licence."
       },
       "contactNudge": "Still have questions? Talk to the {brandName} team →"
     },
@@ -1341,7 +1348,7 @@
       "eyebrow": "Get Started",
       "title": "Stop configuring. Start building.",
       "description": "Initialize a scalable SaaS architecture locally with the {brandName} CLI.",
-      "license": "Open source under the FSL-1.1-ALv2 license. No credit card required."
+      "license": "Open source under the Apache-2.0 license. No credit card required."
     },
     "capability": {
       "badge": "Enterprise Capabilities",
@@ -1638,7 +1645,7 @@
   "licensing": {
     "hero": {
       "title": "Free to <hl>Build On</hl>",
-      "description": "{brandName}-Sailor costs nothing to use commercially — MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0 after two years. Paid tiers sell support and contractual commitments, never permission."
+      "description": "{brandName}-Sailor is open source under Apache-2.0 — the repository, every npm package, and every project create-sailor generates. Using it commercially costs nothing. Paid plans sell support and contractual commitments, never permission."
     },
     "plans": {
       "community": {
@@ -1649,7 +1656,7 @@
         "features": {
           "fullSource": "Full source code, all packages",
           "closedSourceOk": "Closed-source commercial use — no copyleft",
-          "noAttribution": "No registration, no attribution required",
+          "noAttribution": "No registration; redistributing the source only asks you to keep LICENSE and NOTICE",
           "communitySupport": "Community support — best-effort"
         },
         "cta": "View on GitHub"
@@ -1676,7 +1683,7 @@
           "sla": "Response SLA — 4 business hours, 1 hour production-down",
           "indemnity": "Indemnification and security-patch commitment",
           "compliance": "Signed DPA, compliance pack, continuity undertaking",
-          "trademark": "Trademark and white-label rights"
+          "trademark": "{brandName} and Sailor trademark licence"
         },
         "cta": "Contact sales"
       }
@@ -1685,17 +1692,17 @@
       "title": "Frequently Asked Questions",
       "description": "Short version: using it is free. Paying is for when you need us contractually on the hook.",
       "items": {
-        "whyFsl": {
-          "q": "Why FSL instead of MIT or AGPL?",
-          "a": "FSL permits every use except selling a substitute for Sailor itself, and each version becomes Apache-2.0 two years after release — a grant made irrevocably in advance. It clears corporate legal review more readily than AGPL."
+        "whyApache": {
+          "q": "Why Apache-2.0?",
+          "a": "Sailor's goal is adoption. Apache-2.0 is OSI-approved, permissive open source that clears corporate legal review, and it adds an explicit patent grant. One licence now covers the repository, the npm packages, and the projects you generate."
         },
         "reallyFree": {
           "q": "Is commercial use really free?",
-          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold, no attribution. Build a closed-source product and sell it."
+          "a": "Yes. No fee, no licence key, no registration, no revenue or headcount threshold. Build a closed-source product and sell it. If you redistribute Sailor's source, keep the LICENSE, NOTICE, and copyright notices and mark the files you changed."
         },
-        "competingUse": {
-          "q": "What counts as a competing use?",
-          "a": "Offering Sailor itself — a hosted Sailor service, or a repackaged competing platform baseline. Building a vertical SaaS, an internal tool, or client projects on Sailor is not competing use. If your model needs it, an Enterprise agreement can include a written waiver."
+        "hostedUse": {
+          "q": "Can I offer a hosted service or a competing product built on Sailor?",
+          "a": "Yes. Apache-2.0 has no competing-use clause. What it does not grant is the {brandName} and Sailor names and logos: ship under your own brand, which needs no permission, or get a trademark licence with Enterprise."
         },
         "upgrade": {
           "q": "What do the paid tiers actually buy?",
@@ -1703,25 +1710,153 @@
         },
         "contributions": {
           "q": "What about open source contributions?",
-          "a": "All contributions require a CLA. See CONTRIBUTING.md."
+          "a": "Contributions are accepted under Apache-2.0 — inbound equals outbound. Substantial contributions may also be asked to sign the CLA. See CONTRIBUTING.md."
         }
       }
     },
     "meta": {
       "title": "Licensing — {brandName}",
-      "description": "Free for commercial use. MIT on npm, FSL-1.1-ALv2 on the repository, converting to Apache-2.0."
+      "description": "Open source under Apache-2.0 and free for commercial use. Paid plans sell support, SLAs, and indemnification, never permission."
     }
   },
   "licenseWizard": {
     "tiers": {
-      "individualFree": "Individual Free License",
-      "opcFree": "Single-Owner Company License",
-      "startupCommercial": "Startup Commercial License",
-      "enterprise": "Enterprise License"
+      "individualFree": "Community",
+      "startupCommercial": "Team support",
+      "enterprise": "Enterprise"
     },
     "referralSource": {
       "selectPlaceholder": "Select an option...",
-      "productHunt": "Product Hunt"
+      "productHunt": "Product Hunt",
+      "twitter": "Twitter/X",
+      "github": "GitHub",
+      "friend": "A Friend",
+      "search": "Search",
+      "other": "Other"
+    },
+    "progressLabel": "Plan wizard progress",
+    "nav": {
+      "next": "Next",
+      "back": "Back",
+      "submit": "Continue",
+      "submitting": "Saving…"
+    },
+    "step1": {
+      "title": "Tell us about yourself",
+      "lead": "Your role and team size help us suggest a plan. Every plan may use Sailor commercially.",
+      "roleLegend": "What's your role?",
+      "roles": {
+        "soloDeveloper": "Solo Developer",
+        "founder": "Founder/CEO",
+        "cto": "CTO/Tech Lead",
+        "developer": "Developer (at a company)",
+        "other": "Other"
+      },
+      "teamLegend": "How big is your team?",
+      "teamSizes": {
+        "one": "Just me (1)",
+        "range": "{size} people",
+        "large": "50+ people"
+      }
+    },
+    "step2": {
+      "title": "What are you building?",
+      "lead": "Tell us about your project and industry.",
+      "useCaseLegend": "What's your primary use case?",
+      "useCases": {
+        "saas": {
+          "label": "SaaS Product",
+          "description": "Web or mobile software as a service"
+        },
+        "aiTool": {
+          "label": "AI Tool / Copilot",
+          "description": "AI-powered application or assistant"
+        },
+        "marketplace": {
+          "label": "Marketplace",
+          "description": "Multi-vendor or peer-to-peer platform"
+        },
+        "internalTool": {
+          "label": "Internal Tool",
+          "description": "Application for internal use only"
+        },
+        "agency": {
+          "label": "Agency Project",
+          "description": "Freelance or agency deliverable"
+        },
+        "other": {
+          "label": "Other",
+          "description": "Something else"
+        }
+      },
+      "buildingWhatLabel": "Describe what you're building (optional)",
+      "buildingWhatPlaceholder": "e.g. A financial management platform for freelancers…",
+      "charCount": "{count}/500 characters",
+      "industryLabel": "Industry (optional)",
+      "industryPlaceholder": "e.g. Fintech, Healthcare, Dev Tools…"
+    },
+    "step3": {
+      "title": "Choose a plan",
+      "lead": "Based on your team size, we suggest the plan below.",
+      "freeNoteTitle": "Sailor is open source under Apache-2.0: commercial use is free at any team size, with no key.",
+      "freeNoteBody": "Register below only if you want release notes, or if you need a support commitment, an SLA, indemnification, or a trademark licence.",
+      "community": {
+        "price": "Free",
+        "description": "Any team size, any revenue — closed-source commercial use included",
+        "f1": "No fee, no expiry, no key",
+        "f2": "Full source and every published package, Apache-2.0",
+        "f3": "Community support — best-effort, no response guarantee",
+        "f4": "Optional: register for release notes"
+      },
+      "team": {
+        "price": "$2,000/year",
+        "description": "A support commitment — the code is already yours",
+        "f1": "Private support channel (email + shared Slack or Feishu)",
+        "f2": "Two business-day first response, guaranteed",
+        "f3": "Priority bug triage ahead of community issues",
+        "f4": "Upgrade assistance and breaking-change notice"
+      },
+      "enterprise": {
+        "price": "From $30,000/year",
+        "description": "For procurement, legal, and security review",
+        "f1": "Response SLA — 4 business hours, 1 hour production-down",
+        "f2": "Indemnification and security-patch commitment",
+        "f3": "Signed DPA, compliance pack, continuity undertaking",
+        "f4": "{brandName} and Sailor trademark licence",
+        "cta": "Contact {email}"
+      },
+      "lookingForTitle": "What do you need most right now? (optional)",
+      "lookingFor": {
+        "coFounder": "Co-founder",
+        "designer": "Designer",
+        "engineer": "Engineer",
+        "earlyUsers": "Early users",
+        "angelInvestor": "Angel investor",
+        "industryAdvisor": "Industry advisor",
+        "salesOps": "Sales / Ops",
+        "nothingSolo": "Nothing — solo is the plan"
+      },
+      "githubLabel": "GitHub username (optional)",
+      "githubPlaceholder": "your-github-username…",
+      "twitterLabel": "Twitter/X handle (optional)",
+      "twitterPlaceholder": "your-twitter-handle…",
+      "referralLabel": "How did you hear about us? *"
+    },
+    "step4": {
+      "title": "You're registered",
+      "free": "You're on Community. The code was already yours under Apache-2.0 — registering signs you up for release notes and the community.",
+      "paid": "Your support plan is registered. Let's build something remarkable.",
+      "redirecting": "Redirecting you to the {brandName} community…",
+      "keyLabel": "Your registration key",
+      "copy": "Copy",
+      "community": "Explore {brandName} Community →",
+      "console": "Go to Console"
+    },
+    "errors": {
+      "generic": "An error occurred. Please try again.",
+      "failed": "Registration failed. Please try again.",
+      "missingCheckout": "Checkout session URL is missing.",
+      "invalidResponse": "The registration service returned an invalid response."
     }
   },
   "changelogMeta": {
@@ -1738,8 +1873,8 @@
     "description": "Engineering insights, product updates, and SaaS best practices from the {brandName} team."
   },
   "getLicenseMeta": {
-    "title": "Get Your License — {brandName}",
-    "description": "Get your {brandName} license and platform access in 2 minutes."
+    "title": "Choose a support plan — {brandName}",
+    "description": "Sailor is free under Apache-2.0. Register for release notes, or choose a Team or Enterprise support plan."
   },
   "landing": {
     "faq": {
@@ -1757,7 +1892,7 @@
         },
         "free-or-paid": {
           "question": "Is it free or paid?",
-          "answer": "Full source ships under FSL-1.1-ALv2 — free to build and ship any commercial product with it, no copyleft, no fee. The only thing the license doesn't permit is offering Sailor itself as a competing product or service, and that restriction lapses to Apache-2.0 two years after each release. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); paid tiers add support SLAs, indemnification, and trademark rights, not features."
+          "answer": "Free. Sailor is open source under Apache-2.0 — build and ship any commercial product with it, closed-source or hosted, with no copyleft and no fee. Every plan includes the complete feature set (auth, billing, multi-tenancy, AI, audit); paid plans add support SLAs, indemnification, and trademark rights, not features."
         },
         "china-friendly": {
           "question": "Does it work in China?",
@@ -1785,15 +1920,15 @@
         },
         "license": {
           "question": "What is the license?",
-          "answer": "FSL-1.1-ALv2 (Functional Source License), converting irrevocably to Apache-2.0 two years after each release. Free for every use except offering Sailor itself as a competing product or service. Paid commercial tiers add support SLAs, indemnification, and trademark rights — not extra permission. Full source is included on every plan."
+          "answer": "Apache-2.0, for everything: the repository, every npm package, and every project create-sailor generates. Commercial, closed-source, and competing use are all allowed. When you redistribute the source, keep the LICENSE, NOTICE, and copyright notices. Paid plans add support SLAs, indemnification, and trademark rights — not extra permission."
         },
         "paid-updates": {
           "question": "Do I need to pay for updates?",
-          "answer": "No. Source updates are included with every commercial license — pull from main whenever you want and rebase your fork. The paid tier is the right to use Sailor in commercial production, not the right to receive code. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
+          "answer": "No. Updates are free for everyone — pull from main whenever you want and rebase your fork. Paid plans buy support, not the code or the right to use it. Each minor release ships a CHANGELOG and an upgrade guide for any breaking change."
         },
         "why-turborepo": {
           "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 104 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "answer": "Sailor is 10 apps + 111 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
         },
         "multi-tenancy": {
           "question": "How is multi-tenancy handled?",
@@ -1850,9 +1985,9 @@
       "value": {
         "included": "Included",
         "notIncluded": "Not included",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
+        "licenseIds": "Apache-2.0",
         "notRequired": "Not required",
-        "whiteLabelRights": "White-label rights",
+        "trademarkLicence": "Trademark licence",
         "unlimited": "Unlimited",
         "unlimitedPlusNotice": "Unlimited + advance breaking-change notice",
         "unlimitedPlusLts": "Unlimited + long-term support branch",
@@ -1944,11 +2079,11 @@
   },
   "sitePages": {
     "home": {
-      "metaDescription": "{brandName} helps teams build AI products and sell them worldwide, with Sailor, the Startup OS for AI products, and consulting for enterprise AI and going global.",
+      "metaDescription": "{brandName} helps teams build AI products and sell them worldwide, with Sailor, the open-source production layer for agent-built software, and consulting for enterprise AI and going global.",
       "hero": {
         "title": "{brandName} helps teams build AI products and sell them <signature>worldwide.</signature>",
         "titleCn": "{brandName} 帮团队做出 AI 产品，并卖到全球。",
-        "lead": "Sailor, our Startup OS, gives a team sign-in, billing, multi-tenancy and a design system from one command, with source you can read. Our consulting team builds AI products for companies and takes them to markets outside China."
+        "lead": "Sailor, our open-source (Apache-2.0) production layer, gives a team sign-in, billing, multi-tenancy and a design system from one command. Our consulting team builds AI products for companies and takes them to markets outside China."
       },
       "latest": {
         "title": "Latest",
@@ -1962,7 +2097,7 @@
       "offer": {
         "sailor": {
           "alt": "The Sailor template, deployed",
-          "body": "The Startup OS for AI products. Today: a template with sign-in and organizations, billing by card worldwide or WeChat Pay and Alipay in China, Postgres tenant isolation, and a design system you set up in Sailor Studio. Source-available under the FSL, with paid plans for teams.",
+          "body": "Skip to production: the open-source (Apache-2.0) production layer for agent-built software. Today: a template with sign-in and organizations, billing by card worldwide or WeChat Pay and Alipay in China, Postgres tenant isolation, and a design system you set up in Sailor Studio. Free to use for anything, with paid support plans for teams.",
           "cta": "About Sailor"
         },
         "consulting": {
@@ -1988,7 +2123,7 @@
     },
     "sailor": {
       "hero": {
-        "lead": "The production layer for agent-built software. One command gives you sign-in and organizations, billing by card worldwide or WeChat Pay and Alipay in China, Postgres tenant isolation, an API gateway and a design system you set up in Sailor Studio. It runs locally with zero keys, and you own the code.",
+        "lead": "The production layer for agent-built software: auth, billing for global and China rails, multi-tenancy and an AI gateway in one command, running locally with zero keys. You own the code.",
         "cn": "给 AI 写出来的产品铺好上线的路。",
         "title": "Skip to <signature>production.</signature>"
       },
@@ -1999,7 +2134,7 @@
       "links": {
         "source": "Source on GitHub",
         "seeSite": "See the site you get",
-        "licensing": "Licensing for teams",
+        "licensing": "Licence and support plans",
         "compare": "How Sailor compares"
       }
     },
@@ -2163,7 +2298,7 @@
     "about": {
       "hero": {
         "title": "{brandName} is an AI product company.",
-        "lead": "We run two businesses: Sailor, the source-available Startup OS for AI products, and consulting that builds AI products for companies and takes them overseas. KCQ is the first product we incubated on Sailor. The company is registered in Wuxi, China.",
+        "lead": "We run two businesses: Sailor, the open-source (Apache-2.0) production layer for agent-built software, and consulting that builds AI products for companies and takes them overseas. KCQ is the first product we incubated on Sailor. The company is registered in Wuxi, China.",
         "cn": "{brandName} 是一家 AI 产品公司。",
         "cta": "Why we are building {brandName}"
       },
@@ -2276,11 +2411,11 @@
       "cn": "我们对这个时代的判断。"
     },
     "investors": {
-      "metaDescription": "{brandName} runs two businesses, Sailor, the Startup OS for AI products, and AI consulting, and incubates products on Sailor. For investors and strategic partners: what is live today, and how to request the deck.",
+      "metaDescription": "{brandName} runs two businesses, Sailor, the open-source production layer for agent-built software, and AI consulting, and incubates products on Sailor. For investors and strategic partners: what is live today, and how to request the deck.",
       "hero": {
         "kicker": "For investors and partners",
         "title": "We're building the <signature>judgment</signature> AI coding leaves out.",
-        "lead": "{brandName} has two businesses. Sailor is the source-available Startup OS: AI products and agents start on it with tenancy, billing and audit already decided. Our consulting practice builds AI products for companies and takes them to markets worldwide. KCQ is the first product we incubated on Sailor.",
+        "lead": "{brandName} has two businesses. Sailor is the open-source (Apache-2.0) production layer for agent-built software: AI products and agents start on it with tenancy, billing and audit already decided. Our consulting practice builds AI products for companies and takes them to markets worldwide. KCQ is the first product we incubated on Sailor.",
         "stage": "We're raising our angel round and talking with a small number of investors and strategic partners.",
         "primary": "Request the deck",
         "secondary": "Book a call",
@@ -2329,8 +2464,8 @@
         "title": "How the company fits together.",
         "lead": "Two businesses share one platform, one account system and one set of rules. The products we incubate run on the same platform.",
         "sailor": {
-          "role": "The Startup OS",
-          "body": "Source-available under the Functional Source License (FSL): tenancy, auth, billing, audit and a design system, governed in code, with a company planner in development."
+          "role": "The production layer",
+          "body": "Open source under Apache-2.0: tenancy, auth, billing, audit and a design system, governed in code, with a company planner in development."
         },
         "products": {
           "name": "Incubated",
@@ -2460,7 +2595,7 @@
       },
       "sailor": {
         "title": "Sailor",
-        "is": "Skip to production: the production layer for agent-built software, source-available and usable today."
+        "is": "Skip to production. The open-source (Apache-2.0) production layer for agent-built software — auth, global + China billing, multi-tenancy and an AI gateway in one command."
       },
       "sleptons": {
         "title": "Sleptons",
@@ -2523,7 +2658,7 @@
         "title": "Licensing"
       },
       "getLicense": {
-        "title": "Get a license"
+        "title": "Support plans"
       },
       "ai": {
         "models": {
@@ -5279,12 +5414,6 @@
         }
       },
       "ossStats": {
-        "stars": {
-          "label": "GitHub Stars"
-        },
-        "contributors": {
-          "label": "Contributors"
-        },
         "packages": {
           "label": "Core Packages"
         },
@@ -5329,7 +5458,7 @@
         },
         "openSource": {
           "title": "Sailor Open-Source Launch",
-          "desc": "42 core packages open-sourced under MIT."
+          "desc": "Sailor's source goes public on GitHub. Since 2026-10-16 all of it — repository, npm packages, and generated projects — is Apache-2.0."
         },
         "harness": {
           "title": "Harness Deep Integration",

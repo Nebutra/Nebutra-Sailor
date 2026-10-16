@@ -2,7 +2,7 @@
   "name": "nebutra-sailor",
   "version": "1.7.14",
   "private": true,
-  "description": "Enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms",
+  "description": "Skip to production. Nebutra Sailor — the open-source (Apache-2.0) production layer for agent-built software: auth, global + China billing, multi-tenancy and an AI gateway in one command.",
   "scripts": {
     "dev": "tsx scripts/dev/preview.ts",
     "nebutra": "node packages/ops/cli/bin/nebutra.js",
@@ -343,7 +343,7 @@
     "multi-tenant"
   ],
   "author": "Nebutra",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "Apache-2.0",
   "packageManager": "pnpm@11.28.5",
   "engines": {
     "node": ">=22.0.0",

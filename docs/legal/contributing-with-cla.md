@@ -10,10 +10,12 @@
 >
 > Process guide for contributors. Binding terms live in [`CLA.md`](./CLA.md).
 
-Nebutra-Sailor uses a Contributor License Agreement (CLA) to enable our
-dual-license model — AGPL-3.0 for the upstream repo + the Independent
-Developer License for `create-sailor`-scaffolded projects + future
-commercial licenses for enterprise customers.
+Nebutra-Sailor is open source under the Apache License 2.0. Contributions
+are accepted under Apache-2.0 — section 5 of the licence makes inbound equal
+outbound. Substantial contributions may additionally be asked to sign a
+Contributor License Agreement (CLA), so the project can keep offering
+enterprise agreements and relicense in future without tracking down every
+past contributor.
 
 **Read the agreement:** [`CLA.md`](./CLA.md)
 
@@ -86,22 +88,17 @@ for the same tradeoff retroactive contributors face.
 
 ## Why we need this
 
-Without a CLA, every contributor retains exclusive copyright over their
-commits. That would mean:
+Apache-2.0 §5 already licenses your contribution to everyone under
+Apache-2.0. The CLA adds what that section cannot. Without it:
 
-- We **cannot** publish the packages to npm under MIT while the repository
-  is FSL-1.1-ALv2 (because we'd be relicensing code we don't own the right
-  to relicense).
-- We **cannot** honour the irrevocable Apache-2.0 future-license grant on
-  your behalf.
 - We **cannot** relicense when it is in users' interest — as happened on
-  2026-07-26, when the project moved off AGPL-3.0 — without obtaining
-  individual consent from every past contributor.
+  2026-07-26 (AGPL-3.0 → FSL-1.1-ALv2) and on 2026-10-16 (→ Apache-2.0) —
+  without obtaining individual consent from every past contributor.
 - We **cannot** sign an enterprise agreement carrying indemnification
   without owning the rights we are indemnifying.
 
 The CLA grants Nebutra Technologies the right to **relicense** your
-contributions under multiple licenses simultaneously — you keep your
+contributions — you keep your
 copyright; we get the right to distribute. It is the same legal pattern
 used by Apache Software Foundation, Linux Foundation, Google, Meta,
 MongoDB, and Elastic.
@@ -114,4 +111,5 @@ MongoDB, and Elastic.
   `legal@nebutra.com`.
 - **About the bot mechanics**: see
   [`.github/workflows/cla.yml`](../../.github/workflows/cla.yml).
-- **About the upstream AGPL**: see [`LICENSE`](../../LICENSE).
+- **About the project licence (Apache-2.0)**: see [`LICENSE`](../../LICENSE)
+  and [`NOTICE`](../../NOTICE).

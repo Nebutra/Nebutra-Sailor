@@ -3,7 +3,7 @@
   "version": "0.2.7",
   "description": "BrandContext-first play for creating a brand kit from one idea",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Technikai és kereskedelmi érdeklődés — {brandName}",
-      "description": "A kereskedelmi licencelés, vállalati önálló üzemeltetés és fejlett technikai támogatás dedikált kommunikációs csatornája.",
       "heading": "Támogatási kapcsolat létrehozása",
       "subheading": "Dedikált technikai szakértőt vagy architektust küldünk az Ön explicit igényeinek értékelésére.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Előzetes egyeztetések az ökológiai stratégiai partnerségekről és a teljes architektúra evolúciójáról."
         },
         "sales": {
-          "title": "Kereskedelmi telepítés",
-          "description": "Zárt forráskódú licencelés és a privát klaszter-környezeti telepítések részletei tárgyában folytatott tárgyalások."
+          "title": "Kereskedelmi telepítés"
         },
         "support": {
           "title": "Szakértői szintű támogatás",
@@ -285,7 +283,6 @@
         "category": "Szükséglet területe",
         "categories": {
           "general": "Vállalati konzultáció",
-          "sales": "Licencelés és architektúra",
           "support": "Fejlesztői támogatás",
           "legal": "Jogi és megfelelőségi keretek",
           "privacy": "Adatfeldolgozási irányelvek",
@@ -518,10 +515,6 @@
               "q": "Mi a {productName} kifejezett üzemeltetési célja?",
               "a": "A {productName} egy erősen strukturált, élesüzemre kész Next.js AI SaaS keretrendszer. Csomagolja a vállalati számlázást, a többtényezős hitelesítést és a többbérletű elszigetelést egy irányított platformalapba, lehetővé téve a csapatok számára, hogy a termék-specifikus AI-megvalósításra összpontosítsanak."
             },
-            "1": {
-              "q": "Hogyan működik a tároló licencelése?",
-              "a": "Az alap az FSL-1.1-ALv2 (Functional Source License) licenc alatt áll, amely ingyenesen felhasználható termékek építésére — nincs díj, nincs copyleft kötelezettség. Az egyetlen megkötés, hogy a Sailort magát nem lehet versengő kereskedelmi termékként vagy szolgáltatásként kínálni. Minden verzió a kiadásától számított két év után visszavonhatatlanul Apache-2.0 licencre vált."
-            },
             "2": {
               "q": "Mennyire gyors az első kereskedelmi értékelés?",
               "a": "Nagyon nagy sebességű. A testreszabott Node CLI eszközlánc és a pontos műszaki specifikáció segítségével egy kezdő mérnök egyszámjegyű perc alatt felépíthet egy önálló helyi Minimum Viable Product (MVP) példányt."
@@ -583,8 +576,7 @@
           "name": "Műszaki támogatási irányelvek",
           "questions": {
             "0": {
-              "q": "Hogyan oldják meg az üzemeltetési palacknyak hibaelhárítását?",
-              "a": "Az első triázs a szigorúan karbantartott és szakmai ellenőrzésen átment dokumentációs mátrixra, valamint a hitelesített közösségi interakciókra irányul. Egy szabványos vagy vállalati szintű licenc beszerzése feloldja a hozzáférést a privát eszkalációs sorokhoz, amelyeket közvetlen belső mérnöki csomópontok oldanak meg."
+              "q": "Hogyan oldják meg az üzemeltetési palacknyak hibaelhárítását?"
             },
             "1": {
               "q": "Nyújtanak-e fizikai vagy speciális környezeti integrációs műveleteket?",
@@ -1155,12 +1147,10 @@
     "pricing": {
       "title": "Ingyenes az építéshez. Csak akkor fizess, ha helytállást vársz tőlünk.",
       "description": "Kereskedelmi termék építése {brandName} alapon semmibe sem kerül — nincs díj, nincs licenckulcs, nincs regisztráció, nincs copyleft. A fizetős csomagok támogatást, SLA-t, kártalanítást és védjegyjogokat adnak, sosem használati engedélyt.",
-      "socialProofText": "MIT az npm-en · FSL-1.1-ALv2 a repóban, két év után Apache-2.0-ra vált · a kereskedelmi használat bármilyen méretben ingyenes.",
       "community": {
         "badge": "KÖZÖSSÉG",
         "price": "Ingyenes",
         "period": "örökre",
-        "desc": "Mindenkinek. Bármilyen csapatméret, bármilyen árbevétel. A zárt forráskódú kereskedelmi használat benne van, regisztráció és feltüntetési kötelezettség nélkül.",
         "cta": "npx create-sailor",
         "f1": "Teljes Next.js 16 SaaS-mag, minden csomaggal",
         "f2": "Zárt forráskódú kereskedelmi használat bármilyen csapatméret és árbevétel mellett",
@@ -1173,7 +1163,6 @@
         "price": "2 000 $",
         "period": "év",
         "cta": "{brandName} támogatás igénylése",
-        "f1": "Privát támogatási csatorna (e-mail + közös Slack vagy Discord)",
         "f2": "Első válasz garantáltan két munkanapon belül",
         "f3": "Elsőbbségi hibabesorolás a közösségi issue-k előtt",
         "f4": "Frissítési segítség és előzetes értesítés a törő változásokról",
@@ -1188,33 +1177,27 @@
         "f1": "Válasz-SLA — 4 munkaóra alapesetben, 1 óra éles leállásnál",
         "f2": "Kártalanítás és szerződéses vállalás a biztonsági javításokra",
         "f3": "Aláírt adatfeldolgozói szerződés, megfelelőségi csomag és folytonossági vállalás",
-        "f4": "Védjegy- és white label-jogok, valamint a versenytárs-használati kikötés alóli felmentés",
         "f5": "Hosszú távú támogatási ág és privát telepítési mérnöki támogatás",
         "f6": "Minden, ami a Csapatban"
       }
     },
     "faq": {
       "title": "Árazás és licencelés GYIK",
-      "description": "Kérdések a licencszintekkel, visszatérítésekkel és kereskedelmi használati jogokkal kapcsolatban.",
       "q1": {
-        "q": "A Sailor havi SaaS előfizetés?",
-        "a": "Nem. Ez az árazás a Sailor forráskód-licencekre vonatkozik: az Independent ingyenes, a Startup éves számlázású, az Enterprise pedig egyedi."
+        "q": "A Sailor havi SaaS előfizetés?"
       },
       "q2": {
-        "q": "Visszatérítést kínáltok?",
-        "a": "A Startup kereskedelmi licencek tartalmaznak egy 14 napos visszatérítési ablakot az első vásárlásokra. Az Enterprise feltételeket az aláírt szerződésben rögzítjük."
+        "q": "Visszatérítést kínáltok?"
       },
       "q3": {
-        "q": "Használhatom a Sailort ügyfélmunkához?",
-        "a": "Igen. Egy kereskedelmi licenc lehetővé teszi, hogy a csapatod zárt forráskódú ügyfél- vagy belső termékeket adjon ki a licenc hatályán belül; a white-label jogokhoz Enterprise jóváhagyás szükséges."
+        "q": "Használhatom a Sailort ügyfélmunkához?"
       },
       "contactNudge": "Még mindig vannak kérdéseid? Beszélj a {brandName} csapattal →"
     },
     "cta": {
       "eyebrow": "Kezdés",
       "title": "Állj le a konfigurálással. Kezdj el építeni.",
-      "description": "Inicializálj egy skálázható SaaS architektúrát helyileg a {brandName} CLI segítségével.",
-      "license": "Nyílt forráskódú FSL-1.1-ALv2 licenc alatt. Nincs szükség bankkártyára."
+      "description": "Inicializálj egy skálázható SaaS architektúrát helyileg a {brandName} CLI segítségével."
     },
     "capability": {
       "badge": "Enterprise képességek",
@@ -1500,8 +1483,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Ingyenesen <hl>építhetsz</hl>",
-      "description": "A {brandName}-Sailor használata kereskedelmi célokra semmi extra költséggel jár — MIT az npm-en, FSL-1.1-ALv2 a tárolóban, két év után Apache-2.0-ra vált. A fizetős csomagok támogatást és szerződéses elköteleződést adnak, sosem engedélyt."
+      "title": "Ingyenesen <hl>építhetsz</hl>"
     },
     "plans": {
       "community": {
@@ -1512,7 +1494,6 @@
         "features": {
           "fullSource": "Teljes forráskód, minden csomag",
           "closedSourceOk": "Zárt forráskódú kereskedelmi használat — nincs copyleft",
-          "noAttribution": "Nincs regisztráció, nincs attribúció kötelező",
           "communitySupport": "Közösségi támogatás — legjobb erőfeszítés"
         },
         "cta": "Megtekintés a GitHubon"
@@ -1537,8 +1518,7 @@
         "features": {
           "sla": "Válaszadási SLA — 4 üzleti óra, 1 óra üzemzavar esetén",
           "indemnity": "Felelősségvállalás és biztonsági javításokra vonatkozó kötelezettség",
-          "compliance": "Aláírt DPA, megfelelőségi csomag, folytonossági ígéret",
-          "trademark": "Védjegy- és fehér címkézési jogok"
+          "compliance": "Aláírt DPA, megfelelőségi csomag, folytonossági ígéret"
         },
         "cta": "Értékesítéssel való kapcsolatfelvétel"
       }
@@ -1547,39 +1527,23 @@
       "title": "Gyakran Ismételt Kérdések",
       "description": "Röviden: használni ingyenes. Fizetni akkor kell, ha szerződéses szinten is számíthatsz ránk.",
       "items": {
-        "whyFsl": {
-          "q": "Miért FSL, nem MIT vagy AGPL?"
-        },
         "reallyFree": {
-          "q": "Valóban ingyenes a kereskedelmi felhasználás?",
-          "a": "Igen. Nincs díj, nincs licenckulcs, nincs regisztráció, nincs bevételi vagy létszámi küszöb, nincs hivatkozási kötelezettség. Építs zárt forráskódú terméket és add el."
-        },
-        "competingUse": {
-          "q": "Mi számít versenytárs felhasználásnak?",
-          "a": "A Sailor saját maga kínálása — egy hosztolt Sailor szolgáltatás, vagy egy újracsomagolt versenytárs platform alapja. Egy vertikális SaaS, egy belső eszköz vagy ügyfélprojektek építése Sailor-on nem versenytárs felhasználás. Ha az Ön modellje igényli, egy Enterprise megállapodás tartalmazhat írásos felmentést."
+          "q": "Valóban ingyenes a kereskedelmi felhasználás?"
         },
         "upgrade": {
           "q": "Mit is vásárolnak valójában a fizetős szintek?",
           "a": "Támogatási kötelezettségeket, válaszadási SLA-kat, felelősségvállalást, megfelelőségi dokumentumokat és védjegy jogokat. Soha nem a szoftver használatának engedélyét — az már az Öné."
         },
         "contributions": {
-          "q": "Mi a helyzet a nyílt forráskódú hozzájárulásokkal?",
-          "a": "Minden hozzájáruláshoz CLA szükséges. Lásd a CONTRIBUTING.md fájlt."
+          "q": "Mi a helyzet a nyílt forráskódú hozzájárulásokkal?"
         }
       }
     },
     "meta": {
-      "title": "Licenc — {brandName}",
-      "description": "Ingyenesen használható kereskedelmi célokra. MIT az npm-en, FSL-1.1-ALv2 a tárolóban, Apache-2.0-ra váltva."
+      "title": "Licenc — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Egyéni ingyenes licenc",
-      "opcFree": "Egytulajdonos céges licenc",
-      "startupCommercial": "Startup kereskedelmi licenc",
-      "enterprise": "Vállalati licenc"
-    },
     "referralSource": {
       "selectPlaceholder": "Válassz egy lehetőséget...",
       "productHunt": "Product Hunt"
@@ -1597,10 +1561,6 @@
   "blogMeta": {
     "description": "Mérnöki betekintések, termékinformációk és SaaS legjobb gyakorlatok a {brandName} csapatától."
   },
-  "getLicenseMeta": {
-    "title": "Szerezd meg a licencedet — {brandName}",
-    "description": "Szerezd meg a {brandName} licencedet és a platform hozzáférést 2 perc alatt."
-  },
   "landing": {
     "faq": {
       "badge": "GYIK",
@@ -1616,8 +1576,7 @@
           "answer": "Alapítók és termék mérnökök számára, akik a saját idejüket a megkülönböztető tényezőre akarják fordítani – nem arra, hogy ötödik alkalommal építsék újra ugyanazt az auth/számlázás/bérlés csövezést."
         },
         "free-or-paid": {
-          "question": "Ingyenes vagy fizetős?",
-          "answer": "A teljes forráskód FSL-1.1-ALv2 alatt érhető el — ingyenes személyes projektekhez, belső eszközökhöz és saját termékek építéséhez, díj és copyleft kötelezettség nélkül. Az egyetlen megkötés, hogy a Sailort magát nem lehet versengő kereskedelmi termékként vagy szolgáltatásként kínálni. Minden csomag tartalmazza a teljes funkciókészletet (hitelesítés, számlázás, több bérlőség, AI, audit); a szintek a support SLA-ban, kártalanításban, megfelelőségi dokumentációban és védjegyjogokban térnek el, nem a funkciókban."
+          "question": "Ingyenes vagy fizetős?"
         },
         "china-friendly": {
           "question": "Működik Kínában?",
@@ -1644,12 +1603,10 @@
           "answer": "Next.js 16 (App Router) React 19-en, TypeScript 5.9, Tailwind v4, Prisma 7 Postgres felett (pgvector + RLS-szel), Hono a BFF gateway-hez, FastAPI ML/nagy terhelésű szolgáltatásokhoz, és kurírozott komponenskönyvtár Radix-en, {brandName} UI primitíveken és a megosztott Motion rétegen. Az AI funkciók a Vercel AI SDK-n keresztül futnak szolgáltató-portabilitással (OpenAI / OpenRouter / SiliconFlow / Azure / helyi)."
         },
         "license": {
-          "question": "Mi a licenc?",
-          "answer": "FSL-1.1-ALv2, amely minden verzió kiadásától számított két év után Apache-2.0 licencre vált. Ingyenes személyes használatra, belső eszközökhöz és saját termékek építéséhez, díj és copyleft kötelezettség nélkül. Az egyetlen dolog, amit nem enged, hogy a Sailort magát versengő termékként vagy szolgáltatásként kínálják. A teljes forráskód minden csomagban benne van."
+          "question": "Mi a licenc?"
         },
         "paid-updates": {
-          "question": "Fizetnem kell a frissítésekért?",
-          "answer": "Nem. A forráskód-frissítések minden kereskedelmi licenc része – húzd le a main ágat bármikor, és rebázold a forkodat. A fizetős csomag a Sailor kereskedelmi éles környezetben történő használatának joga, nem pedig a kód fogadásának joga. Minden kisebb verzióhoz CHANGELOG és upgrade útmutató tartozik a töréses változások esetén."
+          "question": "Fizetnem kell a frissítésekért?"
         },
         "why-turborepo": {
           "question": "Miért Turborepo egy szabványos Next.js alkalmazás helyett?",
@@ -1710,9 +1667,7 @@
       "value": {
         "included": "Tartalmazza",
         "notIncluded": "Nem tartalmazza",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Nem szükséges",
-        "whiteLabelRights": "White label-jogok",
         "unlimited": "Korlátlan",
         "unlimitedPlusNotice": "Korlátlan + előzetes értesítés a törő változásokról",
         "unlimitedPlusLts": "Korlátlan + hosszú távú támogatási ág",

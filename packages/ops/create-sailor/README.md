@@ -1,10 +1,9 @@
 # create-sailor
 
-> Governed scaffolding for AI-native SaaS. One converged stack, zero questions: Next.js + Hono + Postgres + Better Auth + Creem, with every capability live the moment you add its key.
+> **Skip to production.** The production layer for agent-built software: auth, billing for global and China rails, multi-tenancy and an AI gateway in one command, running locally with zero keys. You own the code.
 
 [![npm version](https://img.shields.io/npm/v/create-sailor.svg?color=0033FE)](https://www.npmjs.com/package/create-sailor)
-[![License: MIT](https://img.shields.io/badge/License-MIT-0033FE.svg)](https://opensource.org/licenses/MIT)
-[![Licensing](https://img.shields.io/badge/Licensing-MIT%20%2B%20optional%20support-0BF1C3.svg)](https://nebutra.com/licensing)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-0033FE.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## Quick Start
 
@@ -95,12 +94,12 @@ single monorepo you can extend instead of re-assembling from scratch.
 
 ## License
 
-MIT. This package and the projects it scaffolds are MIT — commercial use is
-free, with no registration, licence key, or attribution requirement.
-
-The upstream [Nebutra-Sailor](https://github.com/Nebutra/Nebutra-Sailor)
-monorepo is FSL-1.1-ALv2. Optional paid support tiers do not gate the
-software. See [nebutra.com/licensing](https://nebutra.com/licensing).
+Apache-2.0 — this package, the Sailor monorepo it scaffolds from, and every
+project it generates. Each project gets the Apache-2.0 `LICENSE` and a
+`NOTICE`: commercial use and closed source are free, with no registration or
+licence key. Keep `LICENSE` and `NOTICE` when you redistribute the source.
+Optional paid support plans never gate the software — see
+[nebutra.com/licensing](https://nebutra.com/licensing).
 
 ---
 

@@ -8,8 +8,8 @@
 
 ## Why this exists
 
-Neither the FSL-1.1-ALv2 nor the MIT licence carries any indemnity — both
-disclaim all warranties and liability. That is normal for freely licensed
+The Apache License 2.0 carries no indemnity — it disclaims all warranties and
+liability (sections 7 and 8). That is normal for freely licensed
 software, and it is also the single most common reason an enterprise legal
 review blocks adoption: nobody is on the hook if a third party claims the code
 infringes their rights.

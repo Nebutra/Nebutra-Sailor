@@ -8,7 +8,7 @@
     "graph": "core",
     "productionReady": false
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "./build/ts/index.js",
   "types": "./build/ts/index.d.ts",

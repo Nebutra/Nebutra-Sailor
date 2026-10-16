@@ -208,7 +208,7 @@ export const nebultraCommand: CommandMeta = {
     {
       name: "license",
       description:
-        "Record a Nebutra support/billing license key locally (Sailor scaffolds are MIT — nothing in the CLI is gated by this)",
+        "Record a Nebutra support/billing license key locally (Sailor scaffolds are Apache-2.0 — nothing in the CLI is gated by this)",
       usage: "nebutra license [subcommand]",
       arguments: [],
       options: [],

@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "TypeLens — works, pairings, and agent extract packs for designers and design agents",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

@@ -8,7 +8,7 @@
     "productionReady": false
   },
   "description": "Marketing infrastructure for Nebutra - Product Hunt integration, testimonials, social proof, and attribution tracking",
-  "license": "FSL-1.1-ALv2",
+  "license": "Apache-2.0",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",

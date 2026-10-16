@@ -312,4 +312,4 @@ pnpm --filter @nebutra/uploads build
 
 ## License
 
-Proprietary — Nebutra
+Apache-2.0 — see [LICENSE](./LICENSE).

@@ -266,7 +266,6 @@
     },
     "contact": {
       "title": "技术与商务联络 — {brandName}",
-      "description": "针对商务授权、企业私有化部署以及疑难技术支持的联系通道。",
       "heading": "建立支持联结",
       "subheading": "我们将指派对应的技术专员或架构师跟进您的具体需求。",
       "contacts": {
@@ -279,8 +278,7 @@
           "description": "针对生态战略合作及产品整体演进规划的初步探讨。"
         },
         "sales": {
-          "title": "商业部署方案",
-          "description": "深入沟通商业闭源授权方案与特定私有化集群环境的部署细节。"
+          "title": "商业部署方案"
         },
         "support": {
           "title": "专家级支持",
@@ -307,7 +305,6 @@
         "category": "需求归属领域",
         "categories": {
           "general": "企业综合咨询",
-          "sales": "商业授权与架构方案",
           "support": "开发者技术支持",
           "legal": "法务边界与合规",
           "privacy": "数据与隐私处理",
@@ -540,10 +537,6 @@
               "q": "{productName} 准确的业务作用是什么？",
               "a": "{productName} 是一套高度结构化的生产级 Next.js AI SaaS 基础建设框架。它内置整合了包括企业计费、鉴权认证以及多端隔离在内的微服务能力，让研发团队得以摆脱边缘业务开发负担，直达核心 AI 功能变现环节。"
             },
-            "1": {
-              "q": "项目本身的授权许可费用如何界定？",
-              "a": "本倉庫採用 Functional Source License（FSL-1.1-ALv2）：可免費用於構建產品，無著佐權（copyleft）義務，且每個版本發布兩年後會不可撤銷地轉為 Apache-2.0。需要支持 SLA、賠償保障或商標授權的組織，可選擇付費的商業方案。"
-            },
             "2": {
               "q": "团队能够多快地验证本产品的商业适用性？",
               "a": "极其迅捷。借助提供的标准化 CLI 构建工具及严谨的开发规范文档摘要，一名初级网络开发工程师只需数分钟即可构建起本地端的系统最小化运行实例（MVP）。"
@@ -605,8 +598,7 @@
           "name": "技术支援指引",
           "questions": {
             "0": {
-              "q": "面对使用瓶颈时如何定位资源？",
-              "a": "首推阅读随版本高度覆盖并经过严格同行校验的基础文档库和社区问答库。购买标准授权及更高等级的企业用户激活优先技术工单队列获取内部支持团队的点对点支援响应。"
+              "q": "面对使用瓶颈时如何定位资源？"
             },
             "1": {
               "q": "有额外提供的个性化环境配置服务计划吗？",
@@ -1210,12 +1202,10 @@
     "pricing": {
       "title": "免費使用。只有需要我們擔責時才付費。",
       "description": "用 {brandName} 建構商業產品不花一分錢——無費用、無授權金鑰、無需註冊、無 Copyleft。付費方案賣的是支援、SLA、賠償和商標授權，從不是使用許可。",
-      "socialProofText": "npm 套件 MIT · 儲存庫 FSL-1.1-ALv2，兩年後轉 Apache-2.0 · 任何規模商用皆免費。",
       "community": {
         "badge": "社群版",
         "price": "免費",
         "period": "永久",
-        "desc": "面向所有人。不限團隊規模、不限營收。含閉源商用，無需註冊，無需署名。",
         "cta": "npx create-sailor",
         "f1": "完整 Next.js 16 SaaS 核心，全部套件都在內",
         "f2": "任意團隊規模與營收下的閉源商業使用",
@@ -1229,7 +1219,6 @@
         "period": "年",
         "desc": "適用於無法將關鍵路徑依賴於社群回應速度的團隊。",
         "cta": "取得 {brandName} 支援",
-        "f1": "私有支援管道（郵件 + 專屬 Slack 或 Discord）",
         "f2": "兩個工作日內首次回應，有保證",
         "f3": "缺陷優先分診，排在社群 issue 之前",
         "f4": "升級協助，破壞性變更提前通知",
@@ -1244,33 +1233,27 @@
         "f1": "回應 SLA——標準 4 個工作小時，生產環境故障 1 小時",
         "f2": "賠償條款，以及具備合約約束力的安全修補承諾",
         "f3": "已簽署 DPA、合規資料包、業務持續性承諾",
-        "f4": "商標與白牌授權，含競品使用豁免",
         "f5": "長期支援分支，私有化部署工程支援",
         "f6": "包含團隊版全部內容"
       }
     },
     "faq": {
       "title": "定价与授权常见问题",
-      "description": "关于授权层级、退款与商用使用权的常见问题。",
       "q1": {
-        "q": "Sailor 是按月订阅制吗？",
-        "a": "不是。本页定价面向 Sailor 源代码授权：Independent 免费，Startup 按年授权，Enterprise 走定制合同。"
+        "q": "Sailor 是按月订阅制吗？"
       },
       "q2": {
-        "q": "可以退款吗？",
-        "a": "Startup 商业授权的首次购买提供 14 天退款窗口；Enterprise 退款与验收条款以签署合同为准。"
+        "q": "可以退款吗？"
       },
       "q3": {
-        "q": "可以用于客户项目交付吗？",
-        "a": "可以。商业授权允许团队在授权范围内交付闭源客户项目或内部产品；白标权益需通过 Enterprise 书面确认。"
+        "q": "可以用于客户项目交付吗？"
       },
       "contactNudge": "还有疑问？与 {brandName} 团队沟通 →"
     },
     "cta": {
       "eyebrow": "立即开始",
       "title": "停止折腾配置，立即开始构建",
-      "description": "使用 {brandName} CLI 即可在本地初始化您的高可用可扩展 SaaS 架构。",
-      "license": "基於 FSL-1.1-ALv2 開源協議。無需信用卡。"
+      "description": "使用 {brandName} CLI 即可在本地初始化您的高可用可扩展 SaaS 架构。"
     },
     "capability": {
       "badge": "企业级能力",
@@ -1566,8 +1549,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "免費<hl>拿去用</hl>",
-      "description": "{brandName}-Sailor 商用不收一分錢——npm 套件 MIT，儲存庫 FSL-1.1-ALv2，兩年後轉 Apache-2.0。付費方案賣的是支援和合約承諾，從不是使用許可。"
+      "title": "免費<hl>拿去用</hl>"
     },
     "plans": {
       "community": {
@@ -1578,7 +1560,6 @@
         "features": {
           "fullSource": "完整原始碼，全部套件",
           "closedSourceOk": "閉源商業使用——無 Copyleft",
-          "noAttribution": "無需註冊，無需署名",
           "communitySupport": "社群支援——盡力而為"
         },
         "cta": "在 GitHub 檢視"
@@ -1604,8 +1585,7 @@
         "features": {
           "sla": "回應 SLA——4 個工作小時，生產環境故障 1 小時",
           "indemnity": "賠償條款與安全修補承諾",
-          "compliance": "已簽署 DPA、合規資料包、持續性承諾",
-          "trademark": "商標與白牌授權"
+          "compliance": "已簽署 DPA、合規資料包、持續性承諾"
         },
         "cta": "聯絡銷售"
       }
@@ -1614,40 +1594,23 @@
       "title": "常見問題",
       "description": "一句話：用它是免費的。付費是為了在你需要時，讓我們負合約責任。",
       "items": {
-        "whyFsl": {
-          "q": "為什麼選 FSL 而不是 MIT 或 AGPL？",
-          "a": "FSL 允許所有用途，僅禁止銷售 Sailor 的替代品；且每個版本在發布兩年後即轉為 Apache-2.0，此授權事先不可撤銷。相較於 AGPL，FSL 更容易通過企業法律審查。"
-        },
         "reallyFree": {
-          "q": "商業使用真的免費嗎？",
-          "a": "是。無費用、無授權金鑰、無需註冊、無營收或人數門檻、無需署名。做個閉源產品拿去賣就行。"
-        },
-        "competingUse": {
-          "q": "什麼算「競品使用」？",
-          "a": "把 Sailor 本身提供出去——託管版 Sailor 服務，或重新包裝的競爭性平台基座。用 Sailor 做垂直 SaaS、內部工具或客戶專案都不算。如果你的模式確實需要，企業合約裡可以寫入書面豁免。"
+          "q": "商業使用真的免費嗎？"
         },
         "upgrade": {
           "q": "付費方案到底買到了什麼？",
           "a": "支援承諾、回應 SLA、賠償、合規文件和商標授權。從來不是軟體使用權——那個本來就是你的。"
         },
         "contributions": {
-          "q": "開源貢獻怎麼辦？",
-          "a": "所有貢獻都需要簽署 CLA，詳見 CONTRIBUTING.md。"
+          "q": "開源貢獻怎麼辦？"
         }
       }
     },
     "meta": {
-      "title": "授權 — {brandName}",
-      "description": "商業使用免費。npm 套件 MIT，儲存庫 FSL-1.1-ALv2，後續轉為 Apache-2.0。"
+      "title": "授權 — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "个人免费授权",
-      "opcFree": "单人公司授权",
-      "startupCommercial": "Startup 商业授权",
-      "enterprise": "企业授权"
-    },
     "referralSource": {
       "selectPlaceholder": "请选择...",
       "productHunt": "Product Hunt"
@@ -1666,10 +1629,6 @@
     "title": "博客 — {brandName}",
     "description": "{brandName} 团队的工程洞察、产品更新与 SaaS 最佳实践。"
   },
-  "getLicenseMeta": {
-    "title": "获取授权 — {brandName}",
-    "description": "2 分钟获取 {brandName} 授权与平台访问权限。"
-  },
   "landing": {
     "faq": {
       "badge": "常见问题",
@@ -1685,8 +1644,7 @@
           "answer": "适合希望把精力放在产品差异化、不愿第五次重写同一套 auth / 计费 / 租户底座的创业者和产品工程师。"
         },
         "free-or-paid": {
-          "question": "免费还是付费？",
-          "answer": "完整源碼以 FSL-1.1-ALv2 發布 —— 可免費用它構建並交付任何商業產品，無著佐權、無需付費。該許可唯一不允許的，是把 Sailor 本身作為競爭性產品或服務對外提供；這項限制會在每個版本發布兩年後失效並轉為 Apache-2.0。所有套餐均提供完整功能（認證、計費、多租戶、AI、審計日誌）；付費套餐增加的是支持 SLA、賠償保障與商標授權，而非功能。"
+          "question": "免费还是付费？"
         },
         "china-friendly": {
           "question": "在中国大陆能用吗？",
@@ -1713,12 +1671,10 @@
           "answer": "Next.js 16 (App Router) + React 19、TypeScript 5.9、Tailwind v4、Prisma 7 + Postgres（含 pgvector + RLS）、Hono 作为 BFF 网关、FastAPI 承载 ML 与重型服务，组件库基于 Radix、{brandName} UI 原语与共享 Motion 层。AI 能力通过 Vercel AI SDK 接入，可在 OpenAI / OpenRouter / SiliconFlow / Azure / 本地模型间自由切换。"
         },
         "license": {
-          "question": "授权方式是什么？",
-          "answer": "FSL-1.1-ALv2（Functional Source License），每個版本發布兩年後會不可撤銷地轉為 Apache-2.0。除了把 Sailor 本身作為競爭性產品或服務對外提供之外，其餘用途一律免費。付費商業套餐增加的是支持 SLA、賠償保障與商標授權，而非額外許可。所有套餐都包含完整源碼。"
+          "question": "授权方式是什么？"
         },
         "paid-updates": {
-          "question": "升级是否需要再付费？",
-          "answer": "不需要。每份商业授权都包含源码更新——随时从 main 拉取并 rebase 你的 fork 即可。付费购买的是在商业生产环境中使用 Sailor 的权利，而不是获取代码的权利。每个 minor 版本都附带 CHANGELOG 与升级指南，破坏性变更会专门提示。"
+          "question": "升级是否需要再付费？"
         },
         "why-turborepo": {
           "question": "为什么用 Turborepo 而不是单一 Next.js 项目？",
@@ -1779,9 +1735,7 @@
       "value": {
         "included": "包含",
         "notIncluded": "不包含",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "無需註冊",
-        "whiteLabelRights": "白牌授權",
         "unlimited": "不限",
         "unlimitedPlusNotice": "不限 + 破壞性變更預告",
         "unlimitedPlusLts": "不限 + 長期支援分支",
@@ -1868,10 +1822,8 @@
   },
   "sitePages": {
     "home": {
-      "metaDescription": "{brandName} 幫團隊做出 AI 產品，並賣到全球：Sailor 是做 AI 產品的創業作業系統（Startup OS），諮詢業務幫企業做 AI 產品、帶產品出海。",
       "hero": {
-        "title": "{brandName} 幫團隊做出 AI 產品，並<signature>賣到全球。</signature>",
-        "lead": "我們的創業作業系統 Sailor，一條命令給團隊裝好登入、計費、多租戶和設計系統，原始碼公開可讀。我們的諮詢團隊為企業做 AI 產品，並幫產品進入海外市場。"
+        "title": "{brandName} 幫團隊做出 AI 產品，並<signature>賣到全球。</signature>"
       },
       "latest": {
         "title": "最新文章",
@@ -1884,7 +1836,6 @@
       "offer": {
         "sailor": {
           "alt": "部署後的 Sailor 模板",
-          "body": "做 AI 產品的創業作業系統。現在能用的：帶登入和組織的模板、全球信用卡與國內微信支付寶收款、Postgres 租戶隔離，以及在 Sailor Studio 裡定好的設計系統。以 FSL 公開原始碼，團隊按方案付費。",
           "cta": "了解 Sailor"
         },
         "consulting": {
@@ -1909,10 +1860,6 @@
       }
     },
     "sailor": {
-      "hero": {
-        "lead": "給 agent 寫出來的軟體用的生產層。一條命令拿到登入和組織、全球銀行卡與國內微信支付寶收款、Postgres 租戶隔離、API 閘道器，以及在 Sailor Studio 裡定好的設計系統。零金鑰本地就能跑，程式碼歸你。",
-        "title": "直達<signature>上線。</signature>"
-      },
       "install": {
         "copyLabel": "複製",
         "copiedLabel": "已複製"
@@ -1920,7 +1867,6 @@
       "links": {
         "source": "GitHub 原始碼",
         "seeSite": "看看生成的網站",
-        "licensing": "團隊授權",
         "compare": "Sailor 怎麼比"
       }
     },
@@ -2073,7 +2019,6 @@
     "about": {
       "hero": {
         "title": "{brandName} 是一家 AI 產品公司。",
-        "lead": "我們有兩項業務：Sailor，原始碼公開的 AI 產品創業作業系統（Startup OS）；以及諮詢，為企業做 AI 產品、帶產品出海。KCQ 是我們在 Sailor 上孵化的第一個產品。公司註冊在中國無錫。",
         "cta": "我們為什麼打造 {brandName}"
       },
       "name": {
@@ -2184,11 +2129,9 @@
       "cn": "我們對這個時代的判斷。"
     },
     "investors": {
-      "metaDescription": "{brandName} 有兩項業務：AI 產品的創業作業系統 Sailor，以及 AI 諮詢，並在 Sailor 上孵化產品。寫給投資人與策略夥伴：今天已經上線的東西，以及如何索取簡報。",
       "hero": {
         "kicker": "面向投資人與夥伴",
         "title": "我們在打造 AI 寫程式時缺少的那份<signature>判斷力</signature>。",
-        "lead": "{brandName} 有兩項業務。Sailor 是原始碼公開的創業作業系統（Startup OS），AI 產品和智能體在它上面起步，多租戶、計費與稽核都已定好。諮詢團隊為企業做 AI 產品，並把它們帶向全球市場。KCQ 是我們在 Sailor 上孵化的第一個產品。",
         "stage": "我們正在募資天使輪，並與少數投資人及策略夥伴進行對話。",
         "primary": "索取簡報",
         "secondary": "預約會議",
@@ -2236,10 +2179,6 @@
       "built": {
         "title": "公司是怎麼搭起來的。",
         "lead": "兩項業務共用同一個平台、同一套帳戶系統和同一套規則。我們孵化的產品也跑在這個平台上。",
-        "sailor": {
-          "role": "創業作業系統",
-          "body": "以 Functional Source License（FSL）公開原始碼：多租戶、身分認證、計費、稽核與設計系統，全部以程式碼治理；公司規劃器在開發中。"
-        },
         "products": {
           "name": "孵化產品",
           "role": "在 Sailor 上孵化",
@@ -2366,9 +2305,6 @@
         "title": "日誌",
         "is": "創辦人的文章：我們對如今怎麼造東西的看法。"
       },
-      "sailor": {
-        "is": "直達上線：給 agent 寫出來的軟體用的生產層，原始碼公開，今天就能用。"
-      },
       "sleptons": {
         "title": "生態",
         "is": "人、想法、需求與資本彼此找到的地方——包括創意與需求牆。"
@@ -2426,9 +2362,6 @@
       },
       "licensing": {
         "title": "授權"
-      },
-      "getLicense": {
-        "title": "取得授權"
       },
       "ai": {
         "models": {

@@ -1,6 +1,6 @@
 # Contributing to Nebutra-Sailor
 
-We're building the world's most advanced AI-native SaaS template and OPC ecosystem. We'd love your help.
+Sailor is the open-source (Apache-2.0) production layer for agent-built software. We'd love your help.
 
 Whether you're fixing bugs, building new integrations, improving documentation, or contributing design work—your contributions make Nebutra-Sailor better for everyone.
 
@@ -12,11 +12,10 @@ Whether you're fixing bugs, building new integrations, improving documentation, 
 
 ### Why we need a CLA
 
-Nebutra-Sailor is distributed under two licences at once: the repository is **FSL-1.1-ALv2** (converting to Apache-2.0 two years after each release) and the published npm packages are **MIT**. Holding a broad licence to contributions is what makes that possible, and it also lets us:
+Nebutra-Sailor — the repository, every npm package, and every project `create-sailor` generates — is licensed under **Apache-2.0**. Contributions are accepted under Apache-2.0 too: section 5 of the licence makes inbound equal outbound. Substantial contributions may additionally be asked to sign the CLA, which lets us:
 
-- publish your contribution to npm under MIT while the repo is FSL;
-- honour the irrevocable Apache-2.0 future-licence grant on your behalf;
-- relicense when it is in users' interest — as happened on 2026-07-26, when we moved off AGPL-3.0 precisely because it was blocking adoption.
+- relicense when it is in users' interest — as happened on 2026-07-26 (off AGPL-3.0) and on 2026-10-16 (to Apache-2.0), both to remove obstacles to adoption — without tracking down every past contributor;
+- offer enterprise agreements with indemnification, which requires holding the rights we indemnify.
 
 To keep that flexibility, we ask all contributors to grant Wuxi Nebutra Intelligence Technology Co., Ltd. a broad licence to their contributions.
 
@@ -28,11 +27,11 @@ By contributing code, documentation, translations, or other creative work to Neb
 - **Irrevocable** license (cannot be taken back)
 - **Worldwide** license (applies globally)
 - **Royalty-free** license (no fees)
-- License to use, reproduce, modify, sublicense, and distribute your contributions under **any license** (including FSL-1.1-ALv2, MIT, Apache-2.0, or future licenses)
+- License to use, reproduce, modify, sublicense, and distribute your contributions under **any license** (including Apache-2.0 or future licenses)
 
 ### You retain copyright
 
-We're not asking you to transfer copyright—**you keep it**. We're simply asking for permission to use your work in the ways described above. This is a common practice in dual-licensed open-source projects (MongoDB, Elastic, Qt, Nextcloud, etc.).
+We're not asking you to transfer copyright—**you keep it**. We're simply asking for permission to use your work in the ways described above. This is common practice in company-led open-source projects (Apache Software Foundation, Google, Qt, Nextcloud, etc.).
 
 ### How it works
 
@@ -200,7 +199,7 @@ Start a discussion in [Discord](https://nebutra.com/discord) before investing ti
 - Usually deferred to major version releases
 
 ### Copyleft Dependencies
-- We can't take GPL-2.0/3.0, AGPL, SSPL, or EUPL dependencies — they are incompatible with an FSL/Apache-2.0 distribution
+- We can't take GPL-2.0/3.0, AGPL, SSPL, or EUPL dependencies — they are incompatible with an Apache-2.0 distribution
 - This is **stricter** than under the old AGPL licence, which could absorb GPL-3.0 code
 - The machine-enforced allow/deny list is [`license-policy.json`](./license-policy.json); `pnpm license:check` runs it
 - Ask in Discord if unsure
@@ -309,10 +308,10 @@ We're building an inclusive community. Be respectful, kind, and constructive in 
 By contributing to Nebutra-Sailor, you agree to:
 
 1. The **Contributor License Agreement** (CLA) outlined in this file
-2. License your contributions under the project licences (FSL-1.1-ALv2 for the repository, MIT for published packages)
+2. License your contributions under the project licence, Apache-2.0 (section 5)
 3. Grant Wuxi Nebutra Intelligence Technology Co., Ltd. the rights described above
 
-See [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) for the commercial licensing model.
+Paid plans sell support, never permission: see [Commercial Support](./docs/legal/commercial-support.md).
 
 ---
 

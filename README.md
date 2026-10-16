@@ -11,7 +11,7 @@
     </picture>
   </a>
   <h1>Sailor — Skip to production.</h1>
-  <p>The open-source SaaS starter for agent-built software: auth, card and WeChat Pay / Alipay billing, multi-tenant Postgres with generated row-level security, and a Hono API gateway — one command, running locally with an empty <code>.env</code>.</p>
+  <p>The production layer for agent-built software: auth, billing for global and China rails, multi-tenancy and an AI gateway in one command, running locally with zero keys. You own the code. Open source under Apache-2.0.</p>
   <p>
     <a href="https://github.com/Nebutra/Nebutra-Sailor/actions/workflows/scaffold-nightly.yml"><img src="https://github.com/Nebutra/Nebutra-Sailor/actions/workflows/scaffold-nightly.yml/badge.svg" alt="Nightly: scaffold from zero" /></a>
     <a href="https://www.npmjs.com/package/create-sailor"><img src="https://img.shields.io/npm/v/create-sailor?label=create-sailor&color=18191c" alt="npm: create-sailor" /></a>
@@ -344,37 +344,31 @@ treat the surface as "production-ready in shape, evolving in detail."
 
 ## License
 
-**Building a commercial product on Nebutra-Sailor is free.** No fee, no
-licence key, no registration, no revenue or headcount threshold, no copyleft.
+**Nebutra Sailor is open source under the [Apache License 2.0](./LICENSE).**
+That covers this repository, every published npm package (`@nebutra/*`,
+`nebutra`, `create-sailor`), the Sailor-Template mirror, and every project
+`create-sailor` generates (it ships the Apache-2.0 `LICENSE` and a `NOTICE`).
 
-| Path | License | Copyleft? | Cost |
-| --- | --- | --- | --- |
-| Install published npm packages | **MIT** (`@nebutra/*`, `nebutra`, `create-sailor`) | No | Free |
-| Scaffold with `create-sailor` | **MIT** | No | Free |
-| Clone or fork this repo | **FSL-1.1-ALv2** ([LICENSE](./LICENSE)) → Apache-2.0 after 2 years | No | Free |
+Build a commercial product on it, keep your source closed, run it as a hosted
+service, fork it — all free, with no fee, licence key, registration or
+copyleft. When you redistribute the source, keep `LICENSE` and `NOTICE`, keep
+existing copyright notices, and mark the files you changed (Apache-2.0 §4).
 
-The only thing the code licence does not permit is making Nebutra Sailor
-available to others in a commercial product or service that substitutes for it.
-**Build products with it, don't sell it.** That restriction expires: every
-version becomes Apache-2.0 on its second anniversary, and the grant is made
-irrevocably in advance.
+Trademarks are separate: Apache-2.0 does not grant them (§6). Naming your own
+product something unrelated needs no permission; using the Nebutra or
+Sailor names needs a trademark licence ([TRADEMARK.md](./TRADEMARK.md)).
 
-Trademarks are separate — neither FSL nor Apache-2.0 grants them. Naming your
-own product something unrelated needs no permission; using the Nebutra
-name or white-labelling the platform needs a trademark licence
-([TRADEMARK.md](./TRADEMARK.md)).
-
-**Paid tiers do not sell permission.** They sell what a code licence cannot
+**Paid plans do not sell permission.** They sell what a code licence cannot
 give you: a support commitment, response SLAs, indemnification, compliance
 paperwork (DPA, security pack, continuity undertaking), and trademark rights.
 Community $0 · Team $2,000/yr · Enterprise from $30,000/yr — see
-[LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md).
+[docs/legal/commercial-support.md](docs/legal/commercial-support.md).
 
-Copyright is held by Wuxi Nebutra Intelligence Technology Co., Ltd.
+Copyright 2025–2026 Wuxi Nebutra Intelligence Technology Co., Ltd..
 
-> Previously AGPL-3.0-only with an Independent Developer tier and a $799/yr
-> Startup tier. Both retired on 2026-07-26; pre-existing grants are
-> irrevocable and unaffected. See
+> Relicensed to Apache-2.0 on 2026-10-16 (previously FSL-1.1-ALv2 for the
+> repository and MIT for npm packages; AGPL-3.0-only before 2026-07-26).
+> Versions released earlier keep the licence they shipped with. See
 > [docs/legal/license-history.md](docs/legal/license-history.md).
 
 Licensing questions: **legal@nebutra.com** ·

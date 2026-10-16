@@ -11,7 +11,7 @@
     </picture>
   </a>
   <h1>Sailor — Skip to production.</h1>
-  <p><strong>给 AI 写出来的产品铺好上线的路。</strong></p>
+  <p>给 AI 写出来的产品铺好上线的路：认证、全球 + 中国支付、多租户、AI 网关，一条命令，零密钥本地就能跑。代码归你。以 Apache-2.0 开源。</p>
   <p>面向 AI 编码智能体的开源 SaaS 底座（Apache-2.0）：认证、银行卡与微信支付 / 支付宝收款、由 schema 生成行级安全（RLS）的多租户 Postgres、Hono API 网关——一条命令生成，空 <code>.env</code> 就能在本地跑起来。</p>
   <p>
     <a href="https://github.com/Nebutra/Nebutra-Sailor/actions/workflows/scaffold-nightly.yml"><img src="https://github.com/Nebutra/Nebutra-Sailor/actions/workflows/scaffold-nightly.yml/badge.svg" alt="每晚从零生成并启动" /></a>
@@ -341,32 +341,27 @@ pnpm brand:apply
 
 ## 许可证
 
-**用 Nebutra-Sailor 做商业产品完全免费**：无费用、无授权密钥、无需注册、
-无营收或人数门槛、无 Copyleft。
+**Nebutra Sailor 以 [Apache License 2.0](./LICENSE) 开源。** 范围包括本仓库、
+所有 npm 发布包（`@nebutra/*`、`nebutra`、`create-sailor`）、Sailor-Template 镜像，
+以及 `create-sailor` 生成的每个项目（自带 Apache-2.0 `LICENSE` 和 `NOTICE`）。
 
-| 获取方式 | 许可证 | Copyleft | 费用 |
-| --- | --- | --- | --- |
-| 安装 npm 发布包 | **MIT**（`@nebutra/*`、`nebutra`、`create-sailor`） | 无 | 免费 |
-| 用 `create-sailor` 脚手架 | **MIT** | 无 | 免费 |
-| clone / fork 本仓库 | **FSL-1.1-ALv2**（[LICENSE](./LICENSE)），两年后转 Apache-2.0 | 无 | 免费 |
+用它做商业产品、闭源、作为托管服务运行、fork——全部免费，无费用、无授权密钥、
+无需注册、无 Copyleft。再分发源码时，保留 `LICENSE` 和 `NOTICE`、保留原有版权
+声明，并标注你改过的文件（Apache-2.0 第 4 条）。
 
-代码许可证唯一不允许的事：把它本身作为商业产品或服务提供给他人充当替代品。
-**用它造产品可以，卖它不行。** 这条限制会过期——每个版本在发布满两年时
-自动转为 Apache-2.0，且该授权是提前不可撤销地做出的。
-
-商标是独立的——FSL 和 Apache-2.0 都不授予商标权。给自己的产品起一个无关的
-名字不需要任何许可；使用 Nebutra 名称或白牌化平台则需要商标授权
+商标是独立的：Apache-2.0 不授予商标权（第 6 条）。给自己的产品起一个无关的
+名字不需要任何许可；使用 Nebutra 或 Sailor 名称需要商标授权
 （见 [TRADEMARK.md](./TRADEMARK.md)）。
 
 **付费档卖的不是使用权**，而是代码许可证给不了的东西：支持承诺、响应 SLA、
 赔偿、合规文件（DPA、安全材料、业务连续性承诺）以及商标授权。
 Community $0 · Team $2,000/年 · Enterprise $30,000/年起——详见
-[LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md)。
+[docs/legal/commercial-support.md](docs/legal/commercial-support.md)。
 
-版权归 无锡云毓智能科技有限公司 所有。
+版权所有 2025–2026 无锡云毓智能科技有限公司。
 
-> 此前为 AGPL-3.0-only，并设有 Independent Developer 档和 $799/年 Startup 档。
-> 两档已于 2026-07-26 撤销；此前已作出的授权不可撤销，不受影响。详见
+> 2026-10-16 起改为 Apache-2.0（此前本仓库为 FSL-1.1-ALv2、npm 包为 MIT；
+> 2026-07-26 之前为 AGPL-3.0-only）。更早发布的版本保留其发布时的许可证。详见
 > [docs/legal/license-history.md](docs/legal/license-history.md)。
 
 授权问题请联系 **legal@nebutra.com** ·

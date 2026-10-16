@@ -79,7 +79,7 @@ So I built Nebutra Sailor — an open-source SaaS platform that handles all that
 **Tech stack:**
 Next.js 17 · React 19 · TypeScript · Prisma 7 · Supabase · Vercel AI SDK
 
-We're fully open source (AGPLv3), so you can inspect every line of code.
+We're fully open source (Apache-2.0), so you can inspect every line of code.
 
 I'd love to hear:
 - What features would make this more useful for your next project?
@@ -140,7 +140,7 @@ Great question! [Answer]. We also have detailed docs at nebutra.com/docs/[topic]
 **Pricing/licensing:**
 
 ```
-We're AGPLv3 — free for personal/internal use, open source required for commercial. Happy to discuss specific use cases!
+We're Apache-2.0 — free for any use, commercial and closed-source included. Paid plans are support only. Happy to discuss specific use cases!
 ```
 
 ### For Feature Requests
@@ -223,7 +223,7 @@ All production-tested and documented.
 **Tweet 5**
 
 ```
-Fully open source (AGPLv3)
+Fully open source (Apache-2.0)
 
 → Inspect every line of code
 → Fork for your project
@@ -314,7 +314,7 @@ Thank you! 🙏
 **Q: Is this really free?**
 
 ```
-Yes! AGPLv3 license. Free for personal projects, learning, and internal tools. Commercial use requires keeping it open source. Enterprise licensing available for closed-source commercial use.
+Yes! Apache-2.0 license. Free for any use — personal, internal, commercial and closed-source. No key, no registration, no copyleft. Paid plans sell support and SLAs, not permission.
 ```
 
 **Q: How is this different from [Next.js SaaS Starter / Shipfast / etc]?**
@@ -326,7 +326,7 @@ Most starters give you auth + billing basics. Nebutra is a complete enterprise a
 **Q: Can I use this for my startup?**
 
 ```
-Absolutely! That's exactly what it's built for. Fork it, customize it, and ship. If you want to keep your code proprietary, we offer enterprise licensing.
+Absolutely! That's exactly what it's built for. Fork it, customize it, and ship. Keeping your code proprietary is fine — Apache-2.0 allows it at no cost.
 ```
 
 **Q: What's the learning curve?**

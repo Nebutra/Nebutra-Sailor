@@ -28,6 +28,13 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ lang: locale }));
 }
 
+/**
+ * Paid plans sell support, never permission; the plain-language summary lives
+ * in the upstream repository. Not imported from @/nebutra: this page ships in
+ * the template, which drops that folder.
+ */
+const COMMERCIAL_SUPPORT_URL = `${brand.social.github}/${brand.name}-Sailor/blob/main/docs/legal/commercial-support.md`;
+
 /** Indices for iterating next-intl indexed objects */
 const ELIGIBILITY_ITEMS = [0, 1, 2] as const;
 const SERVICES_ITEMS = [0, 1, 2, 3, 4, 5] as const;
@@ -66,47 +73,32 @@ export default async function TermsOfServicePage({
       {SITE_ID === "nebutra" ? (
         <>
           {/* Scope clarifier — TODO LEGAL: review wording with counsel.
-          Hardcoded English: split SaaS-subscription Terms (this document) from
-          source-code licensing (LICENSE / LICENSE-COMMERCIAL.md). Without this
-          clarifier, customers conflate the two when conflicts arise. */}
-          <h2>Scope of These Terms</h2>
+          Splits the SaaS-subscription Terms (this document) from source-code
+          licensing (LICENSE / NOTICE, Apache-2.0). Without this clarifier,
+          customers conflate the two when conflicts arise. */}
+          <h2>{t("scope.title")}</h2>
           <p>
-            These Terms govern your use of the <strong>{brand.name} hosted SaaS services</strong>{" "}
-            (the marketing site, dashboard at <code>{brand.domains.app}</code>, and related APIs).
-            They do <strong>not</strong> govern your use of the {brand.name}-Sailor codebase.
+            {t.rich("scope.hosted", {
+              brandName: brand.name,
+              appDomain: brand.domains.app,
+              strong: (chunks) => <strong>{chunks}</strong>,
+              code: (chunks) => <code>{chunks}</code>,
+            })}
           </p>
           <p>
-            Source-code use is governed by a separate license, whichever applies to you. Both are
-            free and neither requires registration:
-          </p>
-          <ul>
-            <li>
-              <strong>Published npm packages</strong> — MIT.
-            </li>
-            <li>
-              <strong>Clone or fork from GitHub</strong> — FSL-1.1-ALv2 (see <code>LICENSE</code> in
-              the repository), converting to Apache-2.0 two years after each release.
-            </li>
-            <li>
-              <strong>
-                Project scaffolded with <code>create-sailor</code>
-              </strong>{" "}
-              — MIT.
-            </li>
-          </ul>
-          <p>
-            Paid tiers sell support, SLAs, indemnification, compliance documentation, and trademark
-            rights — not permission to use the software. See <code>LICENSE-COMMERCIAL.md</code> and{" "}
-            <a
-              href={`${getBrandOrigin("landing")}/get-license`}
-            >{`${brand.domains.landing}/get-license`}</a>
-            .
+            {t.rich("scope.license", {
+              strong: (chunks) => <strong>{chunks}</strong>,
+              code: (chunks) => <code>{chunks}</code>,
+            })}
           </p>
           <p>
-            Where these Terms and a source-code license appear to conflict regarding rights to the
-            codebase itself, the source-code license controls. Where they appear to conflict
-            regarding use of the hosted services, these Terms control.
+            {t.rich("scope.paid", {
+              plansDomain: `${brand.domains.landing}/get-license`,
+              support: (chunks) => <a href={COMMERCIAL_SUPPORT_URL}>{chunks}</a>,
+              plans: (chunks) => <a href={`${getBrandOrigin("landing")}/get-license`}>{chunks}</a>,
+            })}
           </p>
+          <p>{t("scope.conflict")}</p>
         </>
       ) : null}
       {/* 1. Acceptance of Terms */}

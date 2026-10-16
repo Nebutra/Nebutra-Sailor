@@ -3,7 +3,7 @@
   "version": "0.1.8",
   "description": "BrandContext-first landing page Play package for generating deployable launch sites",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

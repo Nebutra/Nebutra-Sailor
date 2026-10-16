@@ -16,7 +16,7 @@
       "First intentional public publish not yet cut — workspace-only until release surface includes fonts"
     ]
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nebutra/Nebutra-Sailor.git",

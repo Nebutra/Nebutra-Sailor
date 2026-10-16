@@ -40,15 +40,16 @@ interface WizardStep3 {
   lookingFor: string[];
 }
 
+// Values are API payload and stay as they are; labels live in en.json.
 const LOOKING_FOR_OPTIONS = [
-  { value: "co-founder", label: "Co-founder" },
-  { value: "designer", label: "Designer" },
-  { value: "engineer", label: "Engineer" },
-  { value: "early-users", label: "Early users" },
-  { value: "angel-investor", label: "Angel investor" },
-  { value: "industry-advisor", label: "Industry advisor" },
-  { value: "sales-ops", label: "Sales / Ops" },
-  { value: "nothing-solo", label: "Nothing — solo is the plan" },
+  { value: "co-founder", labelKey: "step3.lookingFor.coFounder" },
+  { value: "designer", labelKey: "step3.lookingFor.designer" },
+  { value: "engineer", labelKey: "step3.lookingFor.engineer" },
+  { value: "early-users", labelKey: "step3.lookingFor.earlyUsers" },
+  { value: "angel-investor", labelKey: "step3.lookingFor.angelInvestor" },
+  { value: "industry-advisor", labelKey: "step3.lookingFor.industryAdvisor" },
+  { value: "sales-ops", labelKey: "step3.lookingFor.salesOps" },
+  { value: "nothing-solo", labelKey: "step3.lookingFor.nothingSolo" },
 ] as const;
 
 interface WizardStep4 {
@@ -78,18 +79,35 @@ const TEAM_SIZE_OPTIONS = [
   "21-50",
   "50+",
 ] as const satisfies readonly TeamSize[];
-const REFERRAL_SOURCE_OPTIONS: readonly {
-  value: ReferralSource;
-  label?: string;
-  labelKey?: "referralSource.productHunt";
-}[] = [
-  { value: "twitter", label: "Twitter/X" },
-  { value: "github", label: "GitHub" },
+const REFERRAL_SOURCE_OPTIONS = [
+  { value: "twitter", labelKey: "referralSource.twitter" },
+  { value: "github", labelKey: "referralSource.github" },
   { value: "product_hunt", labelKey: "referralSource.productHunt" },
-  { value: "friend", label: "A Friend" },
-  { value: "search", label: "Search" },
-  { value: "other", label: "Other" },
-];
+  { value: "friend", labelKey: "referralSource.friend" },
+  { value: "search", labelKey: "referralSource.search" },
+  { value: "other", labelKey: "referralSource.other" },
+] as const satisfies readonly { value: ReferralSource; labelKey: string }[];
+
+const ROLE_OPTIONS = [
+  { value: "solo_developer", emoji: "👨‍💻", labelKey: "step1.roles.soloDeveloper" },
+  { value: "founder", emoji: "🚀", labelKey: "step1.roles.founder" },
+  { value: "cto", emoji: "🏢", labelKey: "step1.roles.cto" },
+  { value: "developer", emoji: "👥", labelKey: "step1.roles.developer" },
+  { value: "other", emoji: "❓", labelKey: "step1.roles.other" },
+] as const satisfies readonly {
+  value: NonNullable<WizardStep1["role"]>;
+  emoji: string;
+  labelKey: string;
+}[];
+
+const USE_CASE_OPTIONS = [
+  { value: "saas", key: "saas" },
+  { value: "ai_tool", key: "aiTool" },
+  { value: "marketplace", key: "marketplace" },
+  { value: "internal_tool", key: "internalTool" },
+  { value: "agency", key: "agency" },
+  { value: "other", key: "other" },
+] as const satisfies readonly { value: NonNullable<WizardStep2["useCase"]>; key: string }[];
 
 const WIZARD_STEP_MARKERS = [
   { id: "step-1", value: 1 },
@@ -107,12 +125,14 @@ function defaultRedirectToCheckout(url: string): void {
 }
 
 /**
- * Pre-select a sensible default tier from team size.
+ * Pre-select a sensible default plan from team size.
  *
- * Team size does NOT gate anything: commercial use is free at every size under
- * MIT + FSL-1.1-ALv2. Paid tiers sell support, SLAs, indemnity, and trademark
- * rights, so larger orgs are merely *more likely* to want them. Every tier
- * stays selectable regardless of what this returns.
+ * Team size does NOT gate anything: everything is Apache-2.0, so commercial use
+ * is free at every size. The tier values are API enums kept from the retired
+ * licence tiers; they now mean Community (INDIVIDUAL / OPC), Team support
+ * (STARTUP) and Enterprise. Paid plans sell support, SLAs, indemnity, and a
+ * trademark licence, so larger orgs are merely *more likely* to want them.
+ * Every plan stays selectable regardless of what this returns.
  */
 function determineLicenseTier(
   teamSize: TeamSize | null,
@@ -124,6 +144,9 @@ function determineLicenseTier(
 }
 
 // Role card component
+/** Enterprise plans are negotiated by the founder (docs/legal/commercial-support.md). */
+const ENTERPRISE_CONTACT = "tseka@nebutra.com";
+
 const RoleCard = ({
   icon: Icon,
   label,
@@ -173,7 +196,7 @@ const UseCaseCard = ({
   </button>
 );
 
-// License tier card component
+// Plan card component
 const LicenseTierCard = ({
   title,
   price,
@@ -221,14 +244,17 @@ const LicenseTierCard = ({
 );
 
 // Progress bar component
-const ProgressBar = ({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) => (
+const ProgressBar = ({
+  currentStep,
+  totalSteps,
+  label,
+}: {
+  currentStep: number;
+  totalSteps: number;
+  label: string;
+}) => (
   <div>
-    <progress
-      aria-label="License wizard progress"
-      className="sr-only"
-      max={totalSteps}
-      value={currentStep}
-    />
+    <progress aria-label={label} className="sr-only" max={totalSteps} value={currentStep} />
     <div aria-hidden="true" className="flex gap-2">
       {WIZARD_STEP_MARKERS.slice(0, totalSteps).map((step) => (
         <div
@@ -357,8 +383,7 @@ export function LicenseWizard({
         body: requestBody,
       });
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "An error occurred. Please try again.";
+      const errorMessage = error instanceof Error ? error.message : t("errors.generic");
       failSubmission(errorMessage);
       return;
     }
@@ -366,13 +391,13 @@ export function LicenseWizard({
     const data = (await response.json()) as LicenseApiResponse;
 
     if (!response.ok) {
-      failSubmission(data.error ? data.error : "Failed to create license");
+      failSubmission(data.error ? data.error : t("errors.failed"));
       return;
     }
 
     if (data.requireCheckout) {
       if (!data.url) {
-        failSubmission("Checkout session URL is missing.");
+        failSubmission(t("errors.missingCheckout"));
         return;
       }
 
@@ -397,7 +422,7 @@ export function LicenseWizard({
 
     const licenseKey = data.license?.licenseKey;
     if (!licenseKey) {
-      failSubmission("License API returned an invalid response.");
+      failSubmission(t("errors.invalidResponse"));
       return;
     }
 
@@ -429,7 +454,7 @@ export function LicenseWizard({
       <AnimateIn preset="emerge">
         {/* Progress bar */}
         <div className="mb-12">
-          <ProgressBar currentStep={currentStep} totalSteps={4} />
+          <ProgressBar currentStep={currentStep} totalSteps={4} label={t("progressLabel")} />
         </div>
 
         {/* Step 1: Tell us about yourself */}
@@ -437,55 +462,32 @@ export function LicenseWizard({
           <AnimateIn preset="fadeUp">
             <div className="space-y-8">
               <div>
-                <h1 className="mb-2 text-3xl text-foreground">Tell us about yourself</h1>
-                <p className="text-muted-foreground">
-                  Help us understand your role and team size to find the perfect license for you.
-                </p>
+                <h1 className="mb-2 text-3xl text-foreground">{t("step1.title")}</h1>
+                <p className="text-muted-foreground">{t("step1.lead")}</p>
               </div>
 
               {/* Role field */}
               <fieldset>
                 <legend className="mb-4 block text-sm font-semibold text-foreground">
-                  What's your role?
+                  {t("step1.roleLegend")}
                 </legend>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  <RoleCard
-                    icon={() => <span className="text-lg">👨‍💻</span>}
-                    label="Solo Developer"
-                    selected={step1.role === "solo_developer"}
-                    onClick={() => setStep1((prev) => ({ ...prev, role: "solo_developer" }))}
-                  />
-                  <RoleCard
-                    icon={() => <span className="text-lg">🚀</span>}
-                    label="Founder/CEO"
-                    selected={step1.role === "founder"}
-                    onClick={() => setStep1((prev) => ({ ...prev, role: "founder" }))}
-                  />
-                  <RoleCard
-                    icon={() => <span className="text-lg">🏢</span>}
-                    label="CTO/Tech Lead"
-                    selected={step1.role === "cto"}
-                    onClick={() => setStep1((prev) => ({ ...prev, role: "cto" }))}
-                  />
-                  <RoleCard
-                    icon={() => <span className="text-lg">👥</span>}
-                    label="Developer (at a company)"
-                    selected={step1.role === "developer"}
-                    onClick={() => setStep1((prev) => ({ ...prev, role: "developer" }))}
-                  />
-                  <RoleCard
-                    icon={() => <span className="text-lg">❓</span>}
-                    label="Other"
-                    selected={step1.role === "other"}
-                    onClick={() => setStep1((prev) => ({ ...prev, role: "other" }))}
-                  />
+                  {ROLE_OPTIONS.map((role) => (
+                    <RoleCard
+                      key={role.value}
+                      icon={() => <span className="text-lg">{role.emoji}</span>}
+                      label={t(role.labelKey)}
+                      selected={step1.role === role.value}
+                      onClick={() => setStep1((prev) => ({ ...prev, role: role.value }))}
+                    />
+                  ))}
                 </div>
               </fieldset>
 
               {/* Team size field */}
               <fieldset>
                 <legend className="mb-4 block text-sm font-semibold text-foreground">
-                  How big is your team?
+                  {t("step1.teamLegend")}
                 </legend>
                 <div className="space-y-3">
                   {TEAM_SIZE_OPTIONS.map((size) => (
@@ -501,10 +503,10 @@ export function LicenseWizard({
                       />
                       <span className="text-foreground">
                         {size === "1"
-                          ? "Just me (1)"
+                          ? t("step1.teamSizes.one")
                           : size === "50+"
-                            ? "50+ people"
-                            : `${size} people`}
+                            ? t("step1.teamSizes.large")
+                            : t("step1.teamSizes.range", { size })}
                       </span>
                     </label>
                   ))}
@@ -522,7 +524,7 @@ export function LicenseWizard({
                   }`}
                   style={{ background: isStep1Valid ? "hsl(var(--primary))" : undefined }}
                 >
-                  Next
+                  {t("nav.next")}
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
@@ -535,52 +537,25 @@ export function LicenseWizard({
           <AnimateIn preset="fadeUp">
             <div className="space-y-8">
               <div>
-                <h1 className="mb-2 text-3xl text-foreground">What are you building?</h1>
-                <p className="text-muted-foreground">Tell us about your project and industry.</p>
+                <h1 className="mb-2 text-3xl text-foreground">{t("step2.title")}</h1>
+                <p className="text-muted-foreground">{t("step2.lead")}</p>
               </div>
 
               {/* Use case field */}
               <fieldset>
                 <legend className="mb-4 block text-sm font-semibold text-foreground">
-                  What's your primary use case?
+                  {t("step2.useCaseLegend")}
                 </legend>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <UseCaseCard
-                    label="SaaS Product"
-                    description="Web or mobile software as a service"
-                    selected={step2.useCase === "saas"}
-                    onClick={() => setStep2((prev) => ({ ...prev, useCase: "saas" }))}
-                  />
-                  <UseCaseCard
-                    label="AI Tool / Copilot"
-                    description="AI-powered application or assistant"
-                    selected={step2.useCase === "ai_tool"}
-                    onClick={() => setStep2((prev) => ({ ...prev, useCase: "ai_tool" }))}
-                  />
-                  <UseCaseCard
-                    label="Marketplace"
-                    description="Multi-vendor or peer-to-peer platform"
-                    selected={step2.useCase === "marketplace"}
-                    onClick={() => setStep2((prev) => ({ ...prev, useCase: "marketplace" }))}
-                  />
-                  <UseCaseCard
-                    label="Internal Tool"
-                    description="Application for internal use only"
-                    selected={step2.useCase === "internal_tool"}
-                    onClick={() => setStep2((prev) => ({ ...prev, useCase: "internal_tool" }))}
-                  />
-                  <UseCaseCard
-                    label="Agency Project"
-                    description="Freelance or agency deliverable"
-                    selected={step2.useCase === "agency"}
-                    onClick={() => setStep2((prev) => ({ ...prev, useCase: "agency" }))}
-                  />
-                  <UseCaseCard
-                    label="Other"
-                    description="Something else"
-                    selected={step2.useCase === "other"}
-                    onClick={() => setStep2((prev) => ({ ...prev, useCase: "other" }))}
-                  />
+                  {USE_CASE_OPTIONS.map((useCase) => (
+                    <UseCaseCard
+                      key={useCase.value}
+                      label={t(`step2.useCases.${useCase.key}.label`)}
+                      description={t(`step2.useCases.${useCase.key}.description`)}
+                      selected={step2.useCase === useCase.value}
+                      onClick={() => setStep2((prev) => ({ ...prev, useCase: useCase.value }))}
+                    />
+                  ))}
                 </div>
               </fieldset>
 
@@ -590,7 +565,7 @@ export function LicenseWizard({
                   htmlFor="license-building-what"
                   className="mb-2 block text-sm font-semibold text-foreground"
                 >
-                  Describe what you're building (optional)
+                  {t("step2.buildingWhatLabel")}
                 </label>
                 <Textarea
                   id="license-building-what"
@@ -603,11 +578,11 @@ export function LicenseWizard({
                       buildingWhat: e.target.value.slice(0, 500),
                     }))
                   }
-                  placeholder="e.g. A financial management platform for freelancers…"
+                  placeholder={t("step2.buildingWhatPlaceholder")}
                   rows={4}
                 />
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {step2.buildingWhat.length}/500 characters
+                  {t("step2.charCount", { count: step2.buildingWhat.length })}
                 </p>
               </div>
 
@@ -617,7 +592,7 @@ export function LicenseWizard({
                   htmlFor="license-industry"
                   className="mb-2 block text-sm font-semibold text-foreground"
                 >
-                  Industry (optional)
+                  {t("step2.industryLabel")}
                 </label>
                 <Input
                   id="license-industry"
@@ -626,7 +601,7 @@ export function LicenseWizard({
                   autoComplete="off"
                   value={step2.industry}
                   onChange={(e) => setStep2((prev) => ({ ...prev, industry: e.target.value }))}
-                  placeholder="e.g. Fintech, Healthcare, Dev Tools…"
+                  placeholder={t("step2.industryPlaceholder")}
                 />
               </div>
 
@@ -638,7 +613,7 @@ export function LicenseWizard({
                   className={`flex items-center gap-2 rounded-[var(--radius-lg)] border border-border px-6 py-3 font-semibold text-foreground transition-colors hover:bg-muted `}
                 >
                   <ChevronLeft className="h-4 w-4" />
-                  Back
+                  {t("nav.back")}
                 </button>
                 <button
                   type="button"
@@ -649,7 +624,7 @@ export function LicenseWizard({
                   }`}
                   style={{ background: isStep2Valid ? "hsl(var(--primary))" : undefined }}
                 >
-                  Next
+                  {t("nav.next")}
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
@@ -657,39 +632,32 @@ export function LicenseWizard({
           </AnimateIn>
         )}
 
-        {/* Step 3: License selection */}
+        {/* Step 3: Plan selection */}
         {currentStep === 3 && (
           <AnimateIn preset="fadeUp">
             <div className="space-y-8">
               <div>
-                <h1 className="mb-2 text-3xl text-foreground">Choose your license</h1>
-                <p className="text-muted-foreground">
-                  Based on your team size, we recommend the license below.
-                </p>
+                <h1 className="mb-2 text-3xl text-foreground">{t("step3.title")}</h1>
+                <p className="text-muted-foreground">{t("step3.lead")}</p>
               </div>
 
-              {/* License tier selection — never gated by team size. */}
+              {/* Plan selection — never gated by team size. */}
               <div className="space-y-4">
                 <div className="rounded-[var(--radius-lg)] bg-muted p-4">
-                  <p className="text-sm text-foreground font-medium">
-                    Commercial use is already free at any team size — no licence key required.
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Register below only if you want release notes, or if you need a support
-                    commitment, an SLA, indemnification, or trademark rights.
-                  </p>
+                  <p className="text-sm text-foreground font-medium">{t("step3.freeNoteTitle")}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{t("step3.freeNoteBody")}</p>
                 </div>
 
                 <div className="grid gap-4">
                   <LicenseTierCard
                     title={t("tiers.individualFree")}
-                    price="Free"
-                    description="Any team size, any revenue — closed-source commercial use included"
+                    price={t("step3.community.price")}
+                    description={t("step3.community.description")}
                     features={[
-                      "No fee, no expiry, no attribution required",
-                      "Full source and every published package",
-                      "Community support — best-effort, no response guarantee",
-                      "Optional: register for release notes",
+                      t("step3.community.f1"),
+                      t("step3.community.f2"),
+                      t("step3.community.f3"),
+                      t("step3.community.f4"),
                     ]}
                     highlighted={step3.tier === "INDIVIDUAL" || step3.tier === "OPC"}
                     selected={step3.tier === "INDIVIDUAL"}
@@ -697,13 +665,13 @@ export function LicenseWizard({
                   />
                   <LicenseTierCard
                     title={t("tiers.startupCommercial")}
-                    price="$2,000/year"
-                    description="A support commitment — the code is already yours"
+                    price={t("step3.team.price")}
+                    description={t("step3.team.description")}
                     features={[
-                      "Private support channel (email + Slack or Discord)",
-                      "Two business-day first response, guaranteed",
-                      "Priority bug triage ahead of community issues",
-                      "Upgrade assistance and breaking-change notice",
+                      t("step3.team.f1"),
+                      t("step3.team.f2"),
+                      t("step3.team.f3"),
+                      t("step3.team.f4"),
                     ]}
                     highlighted={step3.tier === "STARTUP"}
                     selected={step3.tier === "STARTUP"}
@@ -711,18 +679,18 @@ export function LicenseWizard({
                   />
                   <LicenseTierCard
                     title={t("tiers.enterprise")}
-                    price="From $30,000/year"
-                    description="For procurement, legal, and security review"
+                    price={t("step3.enterprise.price")}
+                    description={t("step3.enterprise.description")}
                     features={[
-                      "Response SLA — 4 business hours, 1 hour production-down",
-                      "Indemnification and security-patch commitment",
-                      "Signed DPA, compliance pack, continuity undertaking",
-                      "Trademark and white-label rights",
+                      t("step3.enterprise.f1"),
+                      t("step3.enterprise.f2"),
+                      t("step3.enterprise.f3"),
+                      t("step3.enterprise.f4"),
                     ]}
                     highlighted={step3.tier === "ENTERPRISE"}
                     selected={step3.tier === "ENTERPRISE"}
                     onClick={() => setStep3((prev) => ({ ...prev, tier: "ENTERPRISE" }))}
-                    cta="Contact sales@nebutra.com"
+                    cta={t("step3.enterprise.cta", { email: ENTERPRISE_CONTACT })}
                   />
                 </div>
               </div>
@@ -733,7 +701,7 @@ export function LicenseWizard({
                   {/* Looking for — seeds community matching */}
                   <div>
                     <p className="mb-3 text-sm font-semibold text-foreground">
-                      What do you need most right now? (optional)
+                      {t("step3.lookingForTitle")}
                     </p>
                     <div className="grid grid-cols-2 gap-2">
                       {LOOKING_FOR_OPTIONS.map((opt) => (
@@ -757,7 +725,7 @@ export function LicenseWizard({
                             }}
                             className="h-4 w-4 rounded-[var(--radius-sm)]"
                           />
-                          <span className="text-sm text-foreground">{opt.label}</span>
+                          <span className="text-sm text-foreground">{t(opt.labelKey)}</span>
                         </label>
                       ))}
                     </div>
@@ -768,7 +736,7 @@ export function LicenseWizard({
                       htmlFor="license-github-handle"
                       className="mb-2 block text-sm font-semibold text-foreground"
                     >
-                      GitHub username (optional)
+                      {t("step3.githubLabel")}
                     </label>
                     <Input
                       id="license-github-handle"
@@ -780,7 +748,7 @@ export function LicenseWizard({
                       onChange={(e) =>
                         setStep3((prev) => ({ ...prev, githubHandle: e.target.value }))
                       }
-                      placeholder="your-github-username…"
+                      placeholder={t("step3.githubPlaceholder")}
                     />
                   </div>
 
@@ -789,7 +757,7 @@ export function LicenseWizard({
                       htmlFor="license-twitter-handle"
                       className="mb-2 block text-sm font-semibold text-foreground"
                     >
-                      Twitter/X handle (optional)
+                      {t("step3.twitterLabel")}
                     </label>
                     <Input
                       id="license-twitter-handle"
@@ -801,7 +769,7 @@ export function LicenseWizard({
                       onChange={(e) =>
                         setStep3((prev) => ({ ...prev, twitterHandle: e.target.value }))
                       }
-                      placeholder="your-twitter-handle…"
+                      placeholder={t("step3.twitterPlaceholder")}
                     />
                   </div>
 
@@ -810,7 +778,7 @@ export function LicenseWizard({
                       htmlFor="license-referral-source"
                       className="mb-3 block text-sm font-semibold text-foreground"
                     >
-                      How did you hear about us? *
+                      {t("step3.referralLabel")}
                     </label>
                     <Select
                       name="referralSource"
@@ -828,7 +796,7 @@ export function LicenseWizard({
                       <SelectContent>
                         {REFERRAL_SOURCE_OPTIONS.map((option) => (
                           <SelectItem key={option.value} value={option.value}>
-                            {option.labelKey ? t(option.labelKey) : option.label}
+                            {t(option.labelKey)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -855,7 +823,7 @@ export function LicenseWizard({
                   className={`flex items-center gap-2 rounded-[var(--radius-lg)] border border-border px-6 py-3 font-semibold text-foreground transition-colors hover:bg-muted `}
                 >
                   <ChevronLeft className="h-4 w-4" />
-                  Back
+                  {t("nav.back")}
                 </button>
                 <button
                   type="button"
@@ -870,7 +838,7 @@ export function LicenseWizard({
                     background: isStep3Valid && !isSubmitting ? "hsl(var(--primary))" : undefined,
                   }}
                 >
-                  {isSubmitting ? "Creating…" : "Get License"}
+                  {isSubmitting ? t("nav.submitting") : t("nav.submit")}
                   {!isSubmitting && <ChevronRight className="h-4 w-4" />}
                 </button>
               </div>
@@ -887,20 +855,18 @@ export function LicenseWizard({
               </div>
 
               <div>
-                <h1 className="mb-3 text-3xl text-foreground">License activated</h1>
+                <h1 className="mb-3 text-3xl text-foreground">{t("step4.title")}</h1>
                 <p className="text-lg text-muted-foreground">
                   {step3.tier === "INDIVIDUAL" || step3.tier === "OPC"
-                    ? "Your free license is active."
-                    : "Your commercial license is ready. Let's build something remarkable."}
+                    ? t("step4.free")
+                    : t("step4.paid")}
                 </p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Redirecting you to the Nebutra community…
-                </p>
+                <p className="mt-2 text-sm text-muted-foreground">{t("step4.redirecting")}</p>
               </div>
 
-              {/* License key */}
+              {/* Registration key — the API still calls it a licence key; it grants nothing. */}
               <div className="w-full max-w-md">
-                <p className="mb-3 text-sm font-semibold text-foreground">Your License Key</p>
+                <p className="mb-3 text-sm font-semibold text-foreground">{t("step4.keyLabel")}</p>
                 <div className="relative flex items-center rounded-[var(--radius-lg)] bg-muted px-4 py-3">
                   <code className="flex-1 font-mono text-sm text-foreground">
                     {step4.licenseKey}
@@ -912,7 +878,7 @@ export function LicenseWizard({
                     }}
                     className="ml-2 text-xs font-medium text-primary hover:underline"
                   >
-                    Copy
+                    {t("step4.copy")}
                   </button>
                 </div>
               </div>
@@ -923,13 +889,13 @@ export function LicenseWizard({
                   href={`${process.env.NEXT_PUBLIC_COMMUNITY_URL ?? "http://localhost:3002"}?welcome=true`}
                   className="rounded-[var(--radius-lg)] bg-primary px-6 py-3 text-center font-semibold text-primary-foreground transition-[background-color] hover:bg-primary/90"
                 >
-                  Explore Nebutra Community →
+                  {t("step4.community")}
                 </a>
                 <a
                   href="https://app.nebutra.com/workspace"
                   className="rounded-[var(--radius-lg)] border border-border px-6 py-3 text-center font-semibold text-foreground transition-colors hover:bg-muted"
                 >
-                  Go to Console
+                  {t("step4.console")}
                 </a>
               </div>
             </div>

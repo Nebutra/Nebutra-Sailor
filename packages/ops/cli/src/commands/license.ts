@@ -105,7 +105,7 @@ export async function activateLicenseCommand(key: string, options: Record<string
       p.log.success(pc.green(`${tier} license activated and saved to ${licensePath}`));
       p.outro(
         pc.cyan(
-          "Recorded locally. Sailor scaffolds are MIT-licensed — this doesn't unlock CLI features; " +
+          "Recorded locally. Sailor scaffolds are Apache-2.0 — this doesn't unlock CLI features; " +
             "paid tiers are support and hosting, see nebutra.com/pricing.",
         ),
       );
@@ -147,7 +147,7 @@ export async function statusLicenseCommand(options: Record<string, unknown>) {
         p.log.info(`Activated: ${new Date(data.activatedAt as string).toLocaleString()}`);
         p.log.message(
           pc.dim(
-            "Note: this record is informational. Sailor scaffolds are MIT-licensed and the " +
+            "Note: this record is informational. Sailor scaffolds are Apache-2.0 and the " +
               "CLI has no premium features gated behind a license key.",
           ),
         );
@@ -161,7 +161,7 @@ export async function statusLicenseCommand(options: Record<string, unknown>) {
       p.log.warn(pc.yellow("No active license found locally."));
       p.log.message(
         pc.dim(
-          "This is expected — Sailor scaffolds are MIT-licensed and nothing in the CLI is " +
+          "This is expected — Sailor scaffolds are Apache-2.0 and nothing in the CLI is " +
             "gated behind a license. `nebutra license activate <key>` only records a key for " +
             "support/billing purposes.",
         ),
@@ -176,7 +176,7 @@ export function registerLicenseCommand(program: Command): void {
   const licenseCmd = program
     .command("license")
     .description(
-      "Record a Nebutra support/billing license key locally (Sailor scaffolds are MIT — nothing in the CLI is gated by this)",
+      "Record a Nebutra support/billing license key locally (Sailor scaffolds are Apache-2.0 — nothing in the CLI is gated by this)",
     );
 
   licenseCmd

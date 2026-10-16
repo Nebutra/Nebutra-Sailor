@@ -48,7 +48,7 @@
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0"
   },
-  "license": "FSL-1.1-ALv2",
+  "license": "Apache-2.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [

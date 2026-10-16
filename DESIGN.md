@@ -10,7 +10,7 @@
 | **Project** | Nebutra-Sailor (`@nebutra/*`) |
 | **Status** | Stable — mature tokens, expanding component surface |
 | **Source of truth** | `packages/design/tokens/styles.css` (CSS variables) + `packages/design/brand/src/` (TS primitives) |
-| **License** | Published `@nebutra/*` packages are **MIT**. This repository is **FSL-1.1-ALv2** (converts to Apache-2.0 two years after each release). Paid support/enterprise tiers: see [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md). |
+| **License** | **Apache-2.0** — this repository and every published `@nebutra/*` package. Paid support/enterprise plans: see [Commercial Support](./docs/legal/commercial-support.md). |
 
 Layered package map:
 

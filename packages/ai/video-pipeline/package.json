@@ -3,7 +3,7 @@
   "version": "0.1.7",
   "description": "Storyboard-first video planning, rendering manifests, and cost previews",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

@@ -32,8 +32,10 @@ jobs:
         with:
           # Block on High/Critical — warn on Medium/Low
           fail-on-severity: high
-          # Allow GPL-licensed packages (monorepo template, not shipping a product)
-          allow-licenses: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, CC0-1.0, Unlicense, LGPL-2.1, LGPL-3.0, GPL-2.0, GPL-3.0, MPL-2.0, AGPL-3.0
+          # Apache-2.0 project: permissive and weak-copyleft only. GPL / AGPL are
+          # forbidden by license-policy.json — an Apache-2.0 distribution cannot
+          # absorb them.
+          allow-licenses: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC, CC0-1.0, Unlicense, LGPL-2.1, LGPL-3.0, MPL-2.0
           # Comment a summary on the PR
           comment-summary-in-pr: always
           # Warn about packages not in the license allowlist

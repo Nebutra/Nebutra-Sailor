@@ -75,4 +75,4 @@ back to `local_mac` when it is configured.
 
 ## License
 
-MIT
+Apache-2.0 — see [LICENSE](./LICENSE).

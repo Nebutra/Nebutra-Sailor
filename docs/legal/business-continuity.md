@@ -19,14 +19,16 @@ disappearance entirely.
 
 ### 1. The licence grants are irrevocable
 
-- Every published npm package (`@nebutra/*`, `nebutra`, `create-sailor`) is
-  **MIT**. An MIT grant, once made for a given version, cannot be withdrawn —
-  not by us, not by an acquirer, not by a bankruptcy trustee.
-- The repository is **FSL-1.1-ALv2**, which contains an *irrevocable* grant of
-  Apache-2.0 effective two years after each version's release. That grant is
-  made in advance and survives us. Nobody can claw it back.
-- Versions released before 2026-07-26 remain available under AGPL-3.0-only,
-  which is likewise irrevocable.
+- Since 2026-10-16 everything — the repository, every published npm package
+  (`@nebutra/*`, `nebutra`, `create-sailor`), the Sailor-Template mirror and
+  every project `create-sailor` generates — is **Apache-2.0**. An Apache-2.0
+  grant, once made for a given version, is perpetual and irrevocable — it
+  cannot be withdrawn by us, by an acquirer, or by a bankruptcy trustee.
+- Earlier versions keep the licences they shipped with, which are likewise
+  irrevocable: MIT for npm packages, FSL-1.1-ALv2 for the repository from
+  2026-07-26 (with its advance grant of Apache-2.0 two years after each
+  release), and AGPL-3.0-only before 2026-07-26. See
+  [License History](./license-history.md).
 
 The practical consequence: **a change of ownership, a licence change, or a
 company failure cannot reach backwards into the version you deployed.**
@@ -68,10 +70,10 @@ maintain this?", and because they are checkable without trusting us.
 ### 4. Fork rights are unconditional
 
 If maintenance stalls, you may fork. You do not need our permission, a
-notification period, or a triggering event. The only limits are the FSL
-Competing Use clause — which restricts selling a Sailor substitute, not
-maintaining your own deployment — and trademarks, which simply means your fork
-uses your name.
+notification period, or a triggering event. Apache-2.0 has no competing-use
+clause. The only limits are its redistribution conditions (keep the licence,
+`NOTICE` and copyright notices, mark changed files) and trademarks, which
+simply means your fork uses your name.
 
 ## What is *not* guaranteed
 
@@ -101,7 +103,7 @@ ones above:
 4. **Key-person and assignment terms** — negotiated per agreement, including
    what happens to your rights on a change of control.
 
-Contact [sales@nebutra.com](mailto:sales@nebutra.com).
+Contact [tseka@nebutra.com](mailto:tseka@nebutra.com).
 
 ## Current maintenance status
 
@@ -122,4 +124,4 @@ after deployment.
 
 ---
 
-*Last updated: 2026-07-26 · Questions: [legal@nebutra.com](mailto:legal@nebutra.com)*
+*Last updated: 2026-10-16 · Questions: [legal@nebutra.com](mailto:legal@nebutra.com)*

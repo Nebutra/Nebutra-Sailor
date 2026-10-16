@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Yêu cầu kỹ thuật & thương mại — {brandName}",
-      "description": "Kênh giao tiếp chuyên dụng cho cấp phép thương mại, tự lưu trữ doanh nghiệp và hỗ trợ kỹ thuật nâng cao.",
       "heading": "Thiết lập kết nối hỗ trợ",
       "subheading": "Chúng tôi sẽ điều động một chuyên gia kỹ thuật hoặc kiến trúc sư chuyên dụng để đánh giá các yêu cầu cụ thể của bạn.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Thảo luận sơ bộ về các đối tác chiến lược sinh thái và sự phát triển kiến trúc tổng thể."
         },
         "sales": {
-          "title": "Triển khai thương mại",
-          "description": "Đàm phán về cấp phép mã nguồn đóng và các chi tiết liên quan đến triển khai trong môi trường cụm riêng."
+          "title": "Triển khai thương mại"
         },
         "support": {
           "title": "Hỗ trợ chuyên gia",
@@ -285,7 +283,6 @@
         "category": "Lĩnh vực Yêu cầu",
         "categories": {
           "general": "Tư vấn Doanh nghiệp",
-          "sales": "Giấy phép & Kiến trúc",
           "support": "Hỗ trợ Nhà phát triển",
           "legal": "Ranh giới Pháp lý & Tuân thủ",
           "privacy": "Chính sách Xử lý Dữ liệu",
@@ -518,10 +515,6 @@
               "q": "Mục đích vận hành rõ ràng của {productName} là gì?",
               "a": "{productName} là một framework AI SaaS Next.js có cấu trúc chặt chẽ, sẵn sàng cho sản xuất. Nó gói gọn hóa đơn doanh nghiệp, xác thực đa yếu tố và cách ly đa thuê bao vào một nền tảng cơ bản được quản trị, giúp các đội tập trung vào triển khai AI cụ thể cho sản phẩm."
             },
-            "1": {
-              "q": "Cấu trúc cấp phép của kho lưu trữ là như thế nào?",
-              "a": "Giấy phép hiện tại là Functional Source License, phiên bản 1.1, ALv2 (FSL-1.1-ALv2). Hoàn toàn miễn phí để xây dựng sản phẩm — không phí, không nghĩa vụ copyleft. Điều duy nhất không được phép là chào bán chính Sailor như một sản phẩm hoặc dịch vụ thương mại cạnh tranh. Mỗi phiên bản tự động chuyển sang Apache-2.0 hai năm sau khi phát hành."
-            },
             "2": {
               "q": "Tốc độ đánh giá thương mại ban đầu là bao nhiêu?",
               "a": "Cực kỳ nhanh. Sử dụng bộ công cụ Node CLI tùy chỉnh cùng với đặc tả kỹ thuật chính xác, một kỹ sư cấp dưới có thể triển khai một phiên bản MVP (Sản phẩm khả thi tối thiểu) cục bộ tự động trong vài phút."
@@ -583,8 +576,7 @@
           "name": "Hướng dẫn Hỗ trợ Kỹ thuật",
           "questions": {
             "0": {
-              "q": "Làm thế nào để giải quyết sự cố nghẽn vận hành?",
-              "a": "Các vector phân loại ban đầu hướng đến ma trận tài liệu được duy trì nghiêm ngặt và đã được đồng nghiệp xem xét, cùng các tương tác cộng đồng đã xác minh. Mua giấy phép tiêu chuẩn hoặc cấp doanh nghiệp sẽ mở khóa truy cập vào hàng đợi leo thang riêng tư, được giải quyết thông qua các nút kỹ thuật nội bộ trực tiếp."
+              "q": "Làm thế nào để giải quyết sự cố nghẽn vận hành?"
             },
             "1": {
               "q": "Các bạn có cung cấp các hoạt động tích hợp môi trường vật lý hoặc chuyên biệt không?",
@@ -1155,12 +1147,10 @@
     "pricing": {
       "title": "Xây dựng miễn phí. Chỉ trả tiền khi bạn cần chúng tôi chịu trách nhiệm.",
       "description": "Xây dựng sản phẩm thương mại trên {brandName} không tốn gì — không phí, không khóa giấy phép, không đăng ký, không copyleft. Các gói trả phí bán hỗ trợ, SLA, bồi thường và quyền thương hiệu, chứ không bao giờ bán quyền sử dụng.",
-      "socialProofText": "MIT trên npm · FSL-1.1-ALv2 trên kho mã, chuyển sang Apache-2.0 sau hai năm · sử dụng thương mại miễn phí ở mọi quy mô.",
       "community": {
         "badge": "CỘNG ĐỒNG",
         "price": "Miễn phí",
         "period": "vĩnh viễn",
-        "desc": "Dành cho tất cả. Mọi quy mô đội ngũ, mọi mức doanh thu. Bao gồm sử dụng thương mại mã nguồn đóng, không cần đăng ký và không bắt buộc ghi công.",
         "cta": "npx create-sailor",
         "f1": "Lõi SaaS Next.js 16 đầy đủ, kèm tất cả gói",
         "f2": "Sử dụng thương mại mã nguồn đóng ở mọi quy mô và doanh thu",
@@ -1174,7 +1164,6 @@
         "period": "năm",
         "desc": "Dành cho các đội nhóm không thể để thời gian phản hồi cộng đồng ảnh hưởng đến tiến độ quan trọng.",
         "cta": "Nhận hỗ trợ {brandName}",
-        "f1": "Kênh hỗ trợ riêng (email + Slack hoặc Discord dùng chung)",
         "f2": "Đảm bảo phản hồi đầu tiên trong hai ngày làm việc",
         "f3": "Ưu tiên phân loại lỗi, trước các issue của cộng đồng",
         "f4": "Hỗ trợ nâng cấp và báo trước về thay đổi phá vỡ tương thích",
@@ -1189,33 +1178,27 @@
         "f1": "SLA phản hồi — 4 giờ làm việc tiêu chuẩn, 1 giờ khi ngừng sản xuất",
         "f2": "Bồi thường và cam kết hợp đồng về bản vá bảo mật",
         "f3": "DPA đã ký, gói tuân thủ và cam kết duy trì hoạt động",
-        "f4": "Quyền thương hiệu và white-label, kèm miễn trừ điều khoản sử dụng cạnh tranh",
         "f5": "Nhánh hỗ trợ dài hạn và kỹ thuật triển khai riêng",
         "f6": "Mọi thứ trong gói Nhóm"
       }
     },
     "faq": {
       "title": "Câu hỏi thường gặp về giá & giấy phép",
-      "description": "Các câu hỏi về cấp độ giấy phép, hoàn tiền và quyền sử dụng thương mại.",
       "q1": {
-        "q": "Sailor có phải là gói đăng ký SaaS hàng tháng không?",
-        "a": "Không. Giá này dành cho giấy phép mã nguồn Sailor: Independent miễn phí, Startup tính phí hàng năm, và Enterprise tùy chỉnh."
+        "q": "Sailor có phải là gói đăng ký SaaS hàng tháng không?"
       },
       "q2": {
-        "q": "Bạn có hỗ trợ hoàn tiền không?",
-        "a": "Giấy phép thương mại Startup bao gồm cửa sổ hoàn tiền 14 ngày cho lần mua đầu tiên. Điều khoản Enterprise được xử lý trong hợp đồng đã ký."
+        "q": "Bạn có hỗ trợ hoàn tiền không?"
       },
       "q3": {
-        "q": "Tôi có thể dùng Sailor cho công việc khách hàng không?",
-        "a": "Có. Giấy phép thương mại cho phép đội ngũ bạn phát hành sản phẩm mã nguồn đóng cho khách hàng hoặc nội bộ trong phạm vi giấy phép; quyền white-label cần phê duyệt Enterprise."
+        "q": "Tôi có thể dùng Sailor cho công việc khách hàng không?"
       },
       "contactNudge": "Vẫn còn thắc mắc? Hãy liên hệ đội ngũ {brandName} →"
     },
     "cta": {
       "eyebrow": "Bắt đầu ngay",
       "title": "Dừng cấu hình. Bắt đầu xây dựng.",
-      "description": "Khởi tạo kiến trúc SaaS có thể mở rộng cục bộ với CLI {brandName}.",
-      "license": "Mã nguồn mở theo giấy phép FSL-1.1-ALv2. Không yêu cầu thẻ tín dụng."
+      "description": "Khởi tạo kiến trúc SaaS có thể mở rộng cục bộ với CLI {brandName}."
     },
     "capability": {
       "badge": "Khả năng doanh nghiệp",
@@ -1501,8 +1484,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Miễn phí để <hl>Xây Dựng Trên</hl>",
-      "description": "{brandName}-Sailor hoàn toàn miễn phí để sử dụng thương mại — MIT trên npm, FSL-1.1-ALv2 trên kho mã nguồn, chuyển sang Apache-2.0 sau hai năm. Các gói trả phí bán hỗ trợ và cam kết hợp đồng, không bao giờ bán quyền sử dụng."
+      "title": "Miễn phí để <hl>Xây Dựng Trên</hl>"
     },
     "plans": {
       "community": {
@@ -1513,7 +1495,6 @@
         "features": {
           "fullSource": "Toàn bộ mã nguồn, mọi gói",
           "closedSourceOk": "Sử dụng thương mại mã nguồn đóng — không copyleft",
-          "noAttribution": "Không cần đăng ký, không cần ghi công",
           "communitySupport": "Hỗ trợ cộng đồng — nỗ lực tốt nhất"
         },
         "cta": "Xem trên GitHub"
@@ -1539,8 +1520,7 @@
         "features": {
           "sla": "SLA phản hồi — 4 giờ làm việc, 1 giờ khi sản xuất ngừng",
           "indemnity": "Cam kết bồi thường và vá lỗi bảo mật",
-          "compliance": "DPA đã ký, bộ tài liệu tuân thủ, cam kết duy trì hoạt động",
-          "trademark": "Quyền nhãn hiệu và white-label"
+          "compliance": "DPA đã ký, bộ tài liệu tuân thủ, cam kết duy trì hoạt động"
         },
         "cta": "Liên hệ bộ phận kinh doanh"
       }
@@ -1549,40 +1529,23 @@
       "title": "Câu hỏi thường gặp",
       "description": "Phiên bản ngắn: sử dụng miễn phí. Trả phí khi bạn cần chúng tôi chịu trách nhiệm hợp đồng.",
       "items": {
-        "whyFsl": {
-          "q": "Tại sao là FSL thay vì MIT hoặc AGPL?",
-          "a": "FSL cho phép mọi mục đích sử dụng trừ việc bán sản phẩm thay thế cho chính Sailor, và mỗi phiên bản sẽ chuyển sang Apache-2.0 sau hai năm phát hành — một quyền được cấp trước và không thể thu hồi. FSL dễ dàng vượt qua kiểm duyệt pháp lý doanh nghiệp hơn so với AGPL."
-        },
         "reallyFree": {
-          "q": "Sử dụng thương mại có thực sự miễn phí không?",
-          "a": "Có. Không phí, không khóa giấy phép, không đăng ký, không ngưỡng doanh thu hay số lượng nhân sự, không yêu cầu ghi công. Xây dựng sản phẩm mã nguồn đóng và bán nó."
-        },
-        "competingUse": {
-          "q": "Điều gì được coi là sử dụng cạnh tranh?",
-          "a": "Cung cấp chính Sailor — một dịch vụ Sailor được lưu trữ, hoặc một nền tảng cạnh tranh đóng gói lại. Xây dựng SaaS dọc, công cụ nội bộ, hoặc dự án khách hàng trên Sailor không phải là sử dụng cạnh tranh. Nếu mô hình của bạn cần, hợp đồng Enterprise có thể bao gồm một bản miễn trừ bằng văn bản."
+          "q": "Sử dụng thương mại có thực sự miễn phí không?"
         },
         "upgrade": {
           "q": "Các gói trả phí thực sự mua được gì?",
           "a": "Cam kết hỗ trợ, SLA phản hồi, bồi thường, giấy tờ tuân thủ, và quyền nhãn hiệu. Không bao giờ là quyền sử dụng phần mềm — điều đó đã thuộc về bạn."
         },
         "contributions": {
-          "q": "Còn đóng góp mã nguồn mở thì sao?",
-          "a": "Tất cả các đóng góp đều yêu cầu CLA. Xem CONTRIBUTING.md."
+          "q": "Còn đóng góp mã nguồn mở thì sao?"
         }
       }
     },
     "meta": {
-      "title": "Giấy phép — {brandName}",
-      "description": "Miễn phí sử dụng thương mại. MIT trên npm, FSL-1.1-ALv2 trên kho lưu trữ, chuyển đổi sang Apache-2.0."
+      "title": "Giấy phép — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Giấy phép cá nhân miễn phí",
-      "opcFree": "Giấy phép công ty một chủ sở hữu",
-      "startupCommercial": "Giấy phép thương mại cho startup",
-      "enterprise": "Giấy phép doanh nghiệp"
-    },
     "referralSource": {
       "selectPlaceholder": "Chọn một tùy chọn...",
       "productHunt": "Product Hunt"
@@ -1600,10 +1563,6 @@
   "blogMeta": {
     "description": "Nhìn nhận kỹ thuật, cập nhật sản phẩm và thực hành tốt nhất về SaaS từ đội ngũ {brandName}."
   },
-  "getLicenseMeta": {
-    "title": "Nhận Giấy Phép Của Bạn — {brandName}",
-    "description": "Nhận giấy phép {brandName} và quyền truy cập nền tảng trong 2 phút."
-  },
   "landing": {
     "faq": {
       "badge": "Câu hỏi thường gặp",
@@ -1619,8 +1578,7 @@
           "answer": "Dành cho founder và kỹ sư sản phẩm muốn dành thời gian cho yếu tố khác biệt — thay vì phải xây dựng lại hệ thống xác thực/thanh toán/đa thuê bao lần thứ năm."
         },
         "free-or-paid": {
-          "question": "Có miễn phí hay phải trả phí?",
-          "answer": "Có, Sailor miễn phí để xây dựng sản phẩm — không phí, không nghĩa vụ copyleft. Các gói thương mại trả phí không bán thêm quyền sử dụng — chúng cung cấp cam kết hỗ trợ với SLA, bồi thường, giấy tờ tuân thủ và quyền sử dụng thương hiệu. Mọi gói đều bao gồm đầy đủ tính năng (xác thực, thanh toán, đa thuê bao, AI, kiểm toán); các gói chỉ khác nhau về điều khoản hỗ trợ và cấp phép, không phải về tính năng."
+          "question": "Có miễn phí hay phải trả phí?"
         },
         "china-friendly": {
           "question": "Có hoạt động được ở Trung Quốc không?",
@@ -1647,12 +1605,10 @@
           "answer": "Next.js 16 (App Router) trên React 19, TypeScript 5.9, Tailwind v4, Prisma 7 trên Postgres (với pgvector + RLS), Hono cho gateway BFF, FastAPI cho dịch vụ ML/nặng, và thư viện component được tuyển chọn trên Radix, nguyên tố UI {brandName}, cùng lớp Motion chung. Tính năng AI chạy qua Vercel AI SDK với khả năng di chuyển nhà cung cấp (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
         },
         "license": {
-          "question": "Giấy phép là gì?",
-          "answer": "Functional Source License, phiên bản 1.1, ALv2 (FSL-1.1-ALv2). Điều duy nhất không được phép là chào bán chính Sailor như một sản phẩm hoặc dịch vụ thương mại cạnh tranh; ngoài ra việc sử dụng hoàn toàn miễn phí, không có nghĩa vụ copyleft. Mỗi phiên bản tự động chuyển sang Apache-2.0 hai năm sau khi phát hành."
+          "question": "Giấy phép là gì?"
         },
         "paid-updates": {
-          "question": "Tôi có cần trả phí cho bản cập nhật không?",
-          "answer": "Không. Cập nhật mã nguồn được bao gồm trong mọi giấy phép thương mại — kéo từ nhánh main bất cứ khi nào bạn muốn và rebase fork của mình. Gói trả phí là quyền sử dụng Sailor trong sản xuất thương mại, không phải quyền nhận mã. Mỗi bản phát hành phụ đều kèm CHANGELOG và hướng dẫn nâng cấp cho bất kỳ thay đổi nào làm hỏng tương thích."
+          "question": "Tôi có cần trả phí cho bản cập nhật không?"
         },
         "why-turborepo": {
           "question": "Tại sao dùng Turborepo thay vì ứng dụng Next.js tiêu chuẩn?",
@@ -1713,9 +1669,7 @@
       "value": {
         "included": "Có",
         "notIncluded": "Không",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Không cần",
-        "whiteLabelRights": "Quyền white-label",
         "unlimited": "Không giới hạn",
         "unlimitedPlusNotice": "Không giới hạn + báo trước thay đổi phá vỡ tương thích",
         "unlimitedPlusLts": "Không giới hạn + nhánh hỗ trợ dài hạn",

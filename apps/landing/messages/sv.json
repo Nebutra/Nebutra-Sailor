@@ -243,7 +243,6 @@
     },
     "contact": {
       "title": "Teknisk och kommersiell förfrågan — {brandName}",
-      "description": "Den dedikerade kommunikationskanalen för kommersiell licensiering, företagsintern självhostning och avancerad teknisk support.",
       "heading": "Upprätta supportkontakt",
       "subheading": "Vi skickar en dedikerad teknisk specialist eller arkitekt för att utvärdera dina specifika krav.",
       "contacts": {
@@ -256,8 +255,7 @@
           "description": "Preliminära diskussioner om ekologiska strategiska partnerskap och övergripande arkitekturevolution."
         },
         "sales": {
-          "title": "Kommersiell implementering",
-          "description": "Förhandlingar om licensiering av källkodsstängd mjukvara och detaljer rörande privata klystermiljöer."
+          "title": "Kommersiell implementering"
         },
         "support": {
           "title": "Expertstöd",
@@ -284,7 +282,6 @@
         "category": "Område för behov",
         "categories": {
           "general": "Företagsrådgivning",
-          "sales": "Licensiering & Arkitektur",
           "support": "Utvecklarstöd",
           "legal": "Juridiska & Efterlevnadsgränser",
           "privacy": "Dataprocesseringspolicyer",
@@ -517,10 +514,6 @@
               "q": "Vad är {productName} explicita operativa syfte?",
               "a": "{productName} är ett högt strukturerat, produktionsklart Next.js AI SaaS-ramverk. Det sammanställer företagsfakturering, multifaktorautentisering och multi-tenant-isolering i en styrbar plattformsbaslinje, vilket låter team fokusera på produktspecifik AI-implementering."
             },
-            "1": {
-              "q": "Hur är licensieringen av arkivet strukturerad?",
-              "a": "Källkoden görs tillgänglig under Functional Source License (FSL-1.1-ALv2): du får bygga dina egna produkter med den helt gratis och utan copyleft-krav. Det enda som inte är tillåtet är att erbjuda själva Sailor som en konkurrerande kommersiell produkt eller tjänst. Varje version övergår automatiskt till Apache-2.0 två år efter att den släpptes."
-            },
             "2": {
               "q": "Hur snabb är den initiala kommersiella utvärderingen?",
               "a": "Extremt hög hastighet. Med hjälp av vårt anpassade Node CLI-verktyg och den exakta tekniska specifikationen kan en junior ingenjör sätta upp en autonom lokal MVP-instans (Minimum Viable Product) på några få minuter."
@@ -582,8 +575,7 @@
           "name": "Tekniska assistansdirektiv",
           "questions": {
             "0": {
-              "q": "Hur löses felsökning av driftshalsningar?",
-              "a": "Initiala triagevektorer riktar in sig på det noggrant underhållna och peer-reviewade dokumentationsmatrisen samt verifierade communityinteraktioner. Att skaffa en standard- eller företagslicens avkodar åtkomst till privata eskaleringsköer som löses via direkta interna ingenjörsknutor."
+              "q": "Hur löses felsökning av driftshalsningar?"
             },
             "1": {
               "q": "Erbjuder ni fysiska eller specialiserade miljöintegrationsoperationer?",
@@ -1152,12 +1144,10 @@
     "pricing": {
       "title": "Gratis att bygga på. Betala bara om du behöver att vi ansvarar.",
       "description": "Att bygga en kommersiell produkt på {brandName} kostar ingenting — ingen avgift, ingen licensnyckel, ingen registrering, ingen copyleft. Betalda nivåer säljer support, SLA:er, skadeslöshet och varumärkesrättigheter, aldrig tillstånd.",
-      "socialProofText": "MIT på npm · FSL-1.1-ALv2 i repot, övergår till Apache-2.0 efter två år · kommersiell användning gratis i alla storlekar.",
       "community": {
         "badge": "COMMUNITY",
         "price": "Gratis",
         "period": "för alltid",
-        "desc": "För alla. Oavsett teamstorlek och omsättning. Kommersiell användning med sluten källkod ingår, utan registrering och utan krav på attribution.",
         "cta": "npx create-sailor",
         "f1": "Komplett Next.js 16-SaaS-kärna, alla paket inkluderade",
         "f2": "Kommersiell användning med sluten källkod oavsett storlek eller omsättning",
@@ -1171,7 +1161,6 @@
         "period": "år",
         "desc": "För team som inte kan ha kritiska arbetsflöden beroende av communitys svarstider.",
         "cta": "Skaffa {brandName}-support",
-        "f1": "Privat supportkanal (e-post + delad Slack eller Discord)",
         "f2": "Första svar garanterat inom två arbetsdagar",
         "f3": "Prioriterad buggtriage före community-issues",
         "f4": "Uppgraderingshjälp och förvarning om brytande ändringar",
@@ -1186,33 +1175,27 @@
         "f1": "Svars-SLA — 4 arbetstimmar som standard, 1 timme vid produktionsstopp",
         "f2": "Skadeslöshet och avtalat åtagande om säkerhetspatchar",
         "f3": "Undertecknat personuppgiftsbiträdesavtal, efterlevnadspaket och kontinuitetsåtagande",
-        "f4": "Varumärkes- och white label-rättigheter samt undantag från konkurrensklausulen",
         "f5": "Long term support-gren och teknikstöd för privat driftsättning",
         "f6": "Allt i Team"
       }
     },
     "faq": {
       "title": "Pris- och licensierings-FAQ",
-      "description": "Frågor om licensnivåer, återbetalningar och kommersiella användningsrättigheter.",
       "q1": {
-        "q": "Är Sailor ett månadsvis SaaS-abonnemang?",
-        "a": "Nej. Denna prissättning gäller Sailor-källkodslicenser: Independent är gratis, Startup faktureras årligen och Enterprise är skräddarsytt."
+        "q": "Är Sailor ett månadsvis SaaS-abonnemang?"
       },
       "q2": {
-        "q": "Erbjuder ni återbetalningar?",
-        "a": "Startup-kommersiella licenser inkluderar ett 14-dagars återbetalningsfönster för initiala köp. Enterprise-villkor hanteras i det undertecknade avtalet."
+        "q": "Erbjuder ni återbetalningar?"
       },
       "q3": {
-        "q": "Kan jag använda Sailor för kunduppdrag?",
-        "a": "Ja. En kommersiell licens låter ditt team leverera källkodsstängda kund- eller interna produkter inom det licensierade omfånget; white-label-rättigheter kräver Enterprise-godkännande."
+        "q": "Kan jag använda Sailor för kunduppdrag?"
       },
       "contactNudge": "Har du fortfarande frågor? Prata med {brandName}-teamet →"
     },
     "cta": {
       "eyebrow": "Kom igång",
       "title": "Sluta konfigurera. Börja bygga.",
-      "description": "Initialisera en skalbar SaaS-arkitektur lokalt med {brandName} CLI.",
-      "license": "Öppen källkod under FSL-1.1-ALv2-licens. Inget kreditkort krävs."
+      "description": "Initialisera en skalbar SaaS-arkitektur lokalt med {brandName} CLI."
     },
     "capability": {
       "badge": "Enterprise-funktioner",
@@ -1498,8 +1481,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Gratis att <hl>bygga på</hl>",
-      "description": "{brandName}-Sailor kostar ingenting att använda kommersiellt — MIT på npm, FSL-1.1-ALv2 i arkivet, och övergår till Apache-2.0 efter två år. Betalplaner säljer support och avtalsmässiga åtaganden, aldrig tillstånd."
+      "title": "Gratis att <hl>bygga på</hl>"
     },
     "plans": {
       "community": {
@@ -1510,7 +1492,6 @@
         "features": {
           "fullSource": "Fullständig källkod, alla paket",
           "closedSourceOk": "Kommersiell användning med stängd källkod — inget copyleft",
-          "noAttribution": "Ingen registrering, inget krav på källhänvisning",
           "communitySupport": "Community-support — bästa möjliga ansträngning"
         },
         "cta": "Visa på GitHub"
@@ -1536,8 +1517,7 @@
         "features": {
           "sla": "Svarssla — 4 arbetstimmar, 1 timme vid driftstopp",
           "indemnity": "Skadeståndsansvar och åtagande för säkerhetspatchar",
-          "compliance": "Undertecknat DPA, compliance-paket, kontinuitetsåtagande",
-          "trademark": "Varumärkes- och white-label-rättigheter"
+          "compliance": "Undertecknat DPA, compliance-paket, kontinuitetsåtagande"
         },
         "cta": "Kontakta försäljning"
       }
@@ -1546,40 +1526,23 @@
       "title": "Vanliga frågor",
       "description": "Kort version: att använda det är gratis. Betalning gäller när du behöver oss kontraktually ansvariga.",
       "items": {
-        "whyFsl": {
-          "q": "Varför FSL istället för MIT eller AGPL?",
-          "a": "FSL tillåter alla användningsområden utom att sälja en ersättning för Sailor i sig, och varje version blir Apache-2.0 två år efter lansering — en tillåtelse som är oåterkallelig i förväg. Den klarar företagets juridiska granskning lättare än AGPL."
-        },
         "reallyFree": {
-          "q": "Är kommersiell användning verkligen gratis?",
-          "a": "Ja. Ingen avgift, inget licensnyckel, ingen registrering, ingen tröskel för intäkter eller antal anställda, ingen attribution. Bygg en closed-source-produkt och sälj den."
-        },
-        "competingUse": {
-          "q": "Vad räknas som konkurrerande användning?",
-          "a": "Att erbjuda Sailor i sig — en hosted Sailor-tjänst eller en ompackagerad konkurrerande plattformsbas. Att bygga en vertikal SaaS, ett internt verktyg eller kundprojekt på Sailor är inte konkurrerande användning. Om din modell kräver det kan ett Enterprise-avtal inkludera ett skriftligt undantag."
+          "q": "Är kommersiell användning verkligen gratis?"
         },
         "upgrade": {
           "q": "Vad köper de betalande nivåerna egentligen?",
           "a": "Supportåtaganden, svarssla, skadeståndsansvar, compliance-dokumentation och varumärkesrättigheter. Aldrig tillstånd att använda mjukvaran — det är redan ditt."
         },
         "contributions": {
-          "q": "Vad gäller open source-bidrag?",
-          "a": "Alla bidrag kräver ett CLA. Se CONTRIBUTING.md."
+          "q": "Vad gäller open source-bidrag?"
         }
       }
     },
     "meta": {
-      "title": "Licensiering — {brandName}",
-      "description": "Gratis för kommersiell användning. MIT på npm, FSL-1.1-ALv2 i arkivet, med övergång till Apache-2.0."
+      "title": "Licensiering — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Individuell gratislicens",
-      "opcFree": "En ägare företagslicens",
-      "startupCommercial": "Startup kommersiell licens",
-      "enterprise": "Enterprise-licens"
-    },
     "referralSource": {
       "selectPlaceholder": "Välj ett alternativ...",
       "productHunt": "Product Hunt"
@@ -1598,10 +1561,6 @@
     "title": "Blogg — {brandName}",
     "description": "Ingenjörsperspektiv, produktuppdateringar och SaaS-bästa-praktiker från {brandName}-teamet."
   },
-  "getLicenseMeta": {
-    "title": "Hämta din licens — {brandName}",
-    "description": "Hämta din {brandName}-licens och plattformsåtkomst på 2 minuter."
-  },
   "landing": {
     "faq": {
       "badge": "FAQ",
@@ -1617,8 +1576,7 @@
           "answer": "Grundare och produktutvecklare som vill lägga sin tid på det som skiljer sig åt — inte på att bygga om samma auth/fakturering/tenancy-rörledning för femte gången."
         },
         "free-or-paid": {
-          "question": "Är det gratis eller betalt?",
-          "answer": "Hela källkoden distribueras under FSL-1.1-ALv2 — gratis för att bygga dina egna produkter, utan avgift och utan copyleft-krav. Det enda som inte är tillåtet är att erbjuda själva Sailor som en konkurrerande kommersiell produkt eller tjänst. Varje version övergår automatiskt till Apache-2.0 två år efter releasen. Betalda kommersiella planer låser inte upp extra funktioner — alla planer har hela funktionsuppsättningen; de säljer ett support- och SLA-åtagande, gottgörelse, efterlevnadsdokumentation och varumärkesrättigheter."
+          "question": "Är det gratis eller betalt?"
         },
         "china-friendly": {
           "question": "Fungerar det i Kina?",
@@ -1645,12 +1603,10 @@
           "answer": "Next.js 16 (App Router) på React 19, TypeScript 5.9, Tailwind v4, Prisma 7 över Postgres (med pgvector + RLS), Hono för BFF-gateway, FastAPI för ML/tunga tjänster och en kuraterad komponentbibliotek baserat på Radix, {brandName} UI-primitiver och den delade Motion-lagret. AI-funktioner går via Vercel AI SDK med leverantörsportabilitet (OpenAI / OpenRouter / SiliconFlow / Azure / lokal)."
         },
         "license": {
-          "question": "Vad är licensen?",
-          "answer": "FSL-1.1-ALv2 (Functional Source License). Gratis för att bygga produkter — utan avgift, utan copyleft. Den enda begränsningen är att erbjuda själva Sailor som en konkurrerande kommersiell produkt eller tjänst. Varje version övergår automatiskt till Apache-2.0 två år efter releasen. Betalda kommersiella planer säljer inte extra funktioner, utan ett support-/SLA-åtagande, gottgörelse, efterlevnadsdokumentation och varumärkesrättigheter."
+          "question": "Vad är licensen?"
         },
         "paid-updates": {
-          "question": "Måste jag betala för uppdateringar?",
-          "answer": "Nej. Källuppdateringar ingår i varje kommersiell licens — hämta från main när du vill och rebasa din fork. Den betalda nivån är rätten att använda Sailor i kommersiell produktion, inte rätten att ta emot kod. Varje mindre version släpps med en CHANGELOG och en uppgraderingsguide för eventuella brytande ändringar."
+          "question": "Måste jag betala för uppdateringar?"
         },
         "why-turborepo": {
           "question": "Varför Turborepo framför en vanlig Next.js-app?",
@@ -1711,9 +1667,7 @@
       "value": {
         "included": "Ingår",
         "notIncluded": "Ingår inte",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Krävs inte",
-        "whiteLabelRights": "White label-rättigheter",
         "unlimited": "Obegränsat",
         "unlimitedPlusNotice": "Obegränsat + förvarning om brytande ändringar",
         "unlimitedPlusLts": "Obegränsat + long term support-gren",

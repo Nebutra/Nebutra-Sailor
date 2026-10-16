@@ -1,6 +1,6 @@
 # Font redistribution notice
 
-This package's MIT licence covers **first-party code only**.
+This package's Apache-2.0 licence covers **first-party code only**.
 
 ## MiSans
 

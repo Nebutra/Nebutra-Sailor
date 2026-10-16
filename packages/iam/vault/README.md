@@ -373,4 +373,4 @@ pnpm --filter @nebutra/vault typecheck
 
 ## License
 
-Proprietary — Nebutra Inc.
+Apache-2.0 — see [LICENSE](./LICENSE).

@@ -11,7 +11,7 @@
     </picture>
   </a>
   <h1>Sailor — Skip to production.</h1>
-  <p>AI コーディングエージェントが作るソフトウェアのためのオープンソース（Apache-2.0）SaaS スターター。認証、カード決済と WeChat Pay / Alipay、スキーマから生成される行レベルセキュリティ（RLS）付きのマルチテナント Postgres、Hono API ゲートウェイを、コマンドひとつで。空の <code>.env</code> のままローカルで動きます。</p>
+  <p>AI が書いたソフトウェアを本番に載せるための土台：認証、グローバルと中国の決済、マルチテナント、AI ゲートウェイをコマンド一つで。キー無しでローカル実行でき、コードはあなたのものです。Apache-2.0 のオープンソースです。</p>
   <p>
     <a href="https://github.com/{{repo.full}}/actions/workflows/scaffold-nightly.yml"><img src="https://github.com/{{repo.full}}/actions/workflows/scaffold-nightly.yml/badge.svg" alt="毎晩ゼロから生成して起動" /></a>
     <a href="https://www.npmjs.com/package/create-sailor"><img src="https://img.shields.io/npm/v/create-sailor?label=create-sailor&color=18191c" alt="npm: create-sailor" /></a>
@@ -261,33 +261,29 @@ pnpm db:generate && pnpm dev
 
 ## ライセンス
 
-**Nebutra-Sailor で商用製品を作るのは無料です。** 料金・ライセンスキー・
-登録・売上や人数の条件・Copyleft はいずれもありません。
+**{{brand.name}} Sailor は [Apache License 2.0](./LICENSE) のオープンソースです。**
+対象は本リポジトリ、すべての npm 公開パッケージ（`@nebutra/*`、`nebutra`、
+`create-sailor`）、Sailor-Template ミラー、そして `create-sailor` が生成する
+すべてのプロジェクト（Apache-2.0 の `LICENSE` と `NOTICE` を同梱）です。
 
-| 入手方法 | ライセンス | Copyleft | 費用 |
-| --- | --- | --- | --- |
-| npm 公開パッケージ | **MIT**（`@nebutra/*`、`nebutra`、`create-sailor`） | なし | 無料 |
-| `create-sailor` でスキャフォールド | **MIT** | なし | 無料 |
-| 本リポジトリを clone / fork | **FSL-1.1-ALv2**（[LICENSE](./LICENSE)）、2年後に Apache-2.0 へ移行 | なし | 無料 |
+商用製品の構築、クローズドソース化、ホスティングサービスとしての運用、fork —
+すべて無料で、料金・ライセンスキー・登録・Copyleft は不要です。ソースを再配布
+する場合は `LICENSE` と `NOTICE`、既存の著作権表示を保持し、変更したファイルを
+明示してください（Apache-2.0 第4条）。
 
-コードライセンスが唯一許可しないのは、Sailor 自体の代替となる商用製品・
-サービスとして他者に提供することです。**Sailor で製品を作るのは可、
-Sailor を売るのは不可。** この制限には期限があり、各バージョンはリリースから
-2年後に Apache-2.0 となります。この付与は事前に取消不能な形で行われています。
-
-商標は別です — FSL も Apache-2.0 も商標権を付与しません。自社製品に無関係な
-名前を付ける分には許可は不要ですが、Nebutra の名称使用やプラットフォームの
-ホワイトラベル化には商標ライセンスが必要です（[TRADEMARK.md](./TRADEMARK.md)）。
+商標は別です：Apache-2.0 は商標権を付与しません（第6条）。自社製品に無関係な
+名前を付ける分には許可は不要ですが、{{brand.name}} や Sailor の名称使用には
+商標ライセンスが必要です（[TRADEMARK.md](./TRADEMARK.md)）。
 
 **有償プランが販売するのは使用許可ではありません。** コードライセンスでは
 得られないもの — サポート確約、応答 SLA、補償、コンプライアンス文書
 （DPA、セキュリティ資料、事業継続の確約）、商標権 — を販売します。
 Community $0 · Team $2,000/年 · Enterprise $30,000/年〜 — 詳細は
-[LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md)。
+[docs/legal/commercial-support.md](docs/legal/commercial-support.md)。
 
-> 以前は AGPL-3.0-only で、Independent Developer 枠と $799/年 の Startup 枠が
-> ありました。両者は 2026-07-26 に廃止されました。既に付与されたライセンスは
-> 取消不能で影響を受けません。詳細は
+> 2026-10-16 に Apache-2.0 へ移行しました（以前は本リポジトリが FSL-1.1-ALv2、
+> npm パッケージが MIT、2026-07-26 以前は AGPL-3.0-only）。それ以前にリリース
+> されたバージョンは当時のライセンスのままです。詳細は
 > [docs/legal/license-history.md](docs/legal/license-history.md)。
 
 ライセンスに関するお問い合わせ: **legal@nebutra.com** ·

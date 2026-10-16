@@ -79,4 +79,4 @@ billing and metering integration (see `@nebutra/billing/credits`).
 
 ## License
 
-MIT
+Apache-2.0 — see [LICENSE](./LICENSE).

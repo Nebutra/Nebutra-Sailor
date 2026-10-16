@@ -258,7 +258,8 @@ jobs:
 
   # ── License compliance ───────────────────────────────────────────────────
   # Ensures no production dependency uses a copyleft license incompatible
-  # with the project's AGPL-3.0 license.  Runs on every push/PR.
+  # with the project's Apache-2.0 license (license-policy.json).  Runs on
+  # every push/PR.
   license-check:
     name: License Compliance
     runs-on: ubuntu-latest
@@ -279,7 +280,7 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
 
       - name: Check production dependency licenses
-        run: npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0' --excludePackages '@nebutra/*' --summary
+        run: npx license-checker --production --failOn 'GPL-2.0;GPL-3.0;SSPL-1.0;EUPL-1.1;EUPL-1.2;AGPL-1.0;AGPL-3.0' --excludePackages '@nebutra/*' --summary
 
   # ── Full-graph typecheck (post-merge canary) ────────────────────────────
   # Every other typecheck in this repo — CI and the pre-push hook alike — runs

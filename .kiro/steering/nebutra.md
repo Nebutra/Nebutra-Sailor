@@ -4,7 +4,7 @@ This document is always included in Kiro's context window. It provides the found
 
 ## Project Overview
 
-**Nebutra-Sailor** is an enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms.
+**Nebutra-Sailor** — Skip to production. The open-source (Apache-2.0) production layer for agent-built software: auth, global + China billing, multi-tenancy and an AI gateway in one command.
 
 | Property | Value |
 |----------|-------|
@@ -14,7 +14,7 @@ This document is always included in Kiro's context window. It provides the found
 | Styling | Tailwind CSS v4 + `@nebutra/tokens` |
 | Linter | Biome (NOT ESLint) |
 | Testing | Vitest + Playwright |
-| Auth | `@nebutra/auth` — Clerk \| Better Auth \| NextAuth \| Supabase (env-swappable) |
+| Auth | `@nebutra/auth` — Better Auth (one provider, ADR 2026-09-24) |
 | Database | Prisma v7 + PostgreSQL (pgvector, RLS) |
 | Monorepo | Turborepo + pnpm workspaces |
 
@@ -47,7 +47,7 @@ This document is always included in Kiro's context window. It provides the found
 | `@nebutra/icons` | 541 Geist icons as TSX components |
 | `@nebutra/db` | Prisma v7 + PostgreSQL client |
 | `@nebutra/billing` | Multi-provider billing (Creem, merchant of record \| WeChat Pay/Alipay \| Manual) |
-| `@nebutra/auth` | Auth abstraction — Clerk \| Better Auth \| NextAuth \| Supabase (`packages/iam/auth/`) |
+| `@nebutra/auth` | Auth — Better Auth (`packages/iam/auth/`) |
 | `@nebutra/email` | Resend transactional email |
 | `@nebutra/agents` | AI runtime: Vercel AI SDK helpers + multi-agent orchestration |
 | `@nebutra/ai-providers` | Provider registry metadata (meta-only) |
@@ -158,7 +158,7 @@ import { logger } from "@nebutra/logger";
 
 // Never use console.log in production code
 logger.info("User signed in", { userId, orgId, tenantId });
-logger.error("Stripe webhook failed", { error, eventId });
+logger.error("Creem webhook failed", { error, eventId });
 ```
 
 ## Permission System

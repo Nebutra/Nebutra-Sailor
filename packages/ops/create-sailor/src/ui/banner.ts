@@ -8,7 +8,7 @@ export function showBanner(): void {
     process.stdout.write(
       [
         `Sailor v${VERSION}`,
-        `The open-source platform for AI-native companies`,
+        `Skip to production.`,
         `by Nebutra · https://nebutra.com`,
         "",
         "",
@@ -25,7 +25,5 @@ export function showBanner(): void {
     transitionGradient: true,
     space: false,
   });
-  process.stdout.write(
-    pc.dim(`  The open-source platform for AI-native companies · v${VERSION} · nebutra.com\n\n`),
-  );
+  process.stdout.write(pc.dim(`  Skip to production. · v${VERSION} · nebutra.com\n\n`));
 }

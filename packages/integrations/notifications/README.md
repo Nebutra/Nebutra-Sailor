@@ -353,4 +353,4 @@ await notifier.send(createNotification(
 
 ## License
 
-Proprietary — Nebutra platform
+Apache-2.0 — see [LICENSE](./LICENSE).

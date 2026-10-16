@@ -57,38 +57,60 @@ describe("release surface governance", () => {
     expect(diagnostics.manifestRuntimeFilesExcludedByFiles).toEqual([]);
   });
 
-  it("publishes registry packages under MIT", () => {
-    const nonMitPackages = diagnostics.publishable
-      .filter((entry) => entry.manifest.license !== "MIT")
+  it("publishes registry packages under Apache-2.0", () => {
+    const offenders = diagnostics.publishable
+      .filter((entry) => entry.manifest.license !== "Apache-2.0")
       .map((entry) => `${entry.manifest.name} (${entry.manifest.license ?? "missing"})`);
 
-    expect(nonMitPackages).toEqual([]);
+    expect(offenders).toEqual([]);
   });
 
   /**
-   * The `license` field is a label; the LICENSE file is the grant. MIT itself
-   * requires its notice to travel with "all copies or substantial portions",
+   * The `license` field is a label; the LICENSE file is the grant. Apache-2.0
+   * §4(a) requires a copy of the licence to travel with every redistribution,
    * and npm always includes a LICENSE file in the tarball regardless of the
    * `files` field — so every publishable package must carry one.
    *
-   * This caught create-sailor shipping the full AGPL-3.0 text while declaring
-   * MIT, and 78 packages shipping no licence text at all.
+   * History: this caught create-sailor shipping the full AGPL-3.0 text while
+   * declaring MIT, and 78 packages shipping no licence text at all. Everything
+   * moved to Apache-2.0 on 2026-10-16 (ADR 2026-10-16 apache-2-relicense).
    */
-  it("ships an MIT LICENSE file alongside the MIT license field", () => {
+  it("ships an Apache-2.0 LICENSE file alongside the Apache-2.0 license field", () => {
     const offenders = diagnostics.publishable
       .map((entry) => {
         const licensePath = join(entry.packageDir, "LICENSE");
         if (!existsSync(licensePath)) return `${entry.manifest.name} (no LICENSE file)`;
-        const head = readFileSync(licensePath, "utf-8").slice(0, 200);
-        if (!head.includes("MIT License")) {
+        const head = readFileSync(licensePath, "utf-8").slice(0, 300);
+        if (!/Apache License\s+Version 2\.0/.test(head)) {
           const firstLine = head.split("\n").find((line) => line.trim().length > 0) ?? "";
-          return `${entry.manifest.name} (LICENSE is not MIT: "${firstLine.trim()}")`;
+          return `${entry.manifest.name} (LICENSE is not Apache-2.0: "${firstLine.trim()}")`;
         }
         return null;
       })
       .filter((offender): offender is string => offender !== null);
 
     expect(offenders).toEqual([]);
+  });
+
+  /**
+   * Private apps and packages are not published, but they are distributed in
+   * this repository and the Sailor-Template mirror under the root LICENSE. A
+   * stale `MIT` / `FSL-1.1-ALv2` label on any of them is a false statement, so
+   * every workspace manifest carries the same SPDX id as the root.
+   */
+  it("labels every workspace manifest, published or private, Apache-2.0", () => {
+    const offenders = diagnostics.packages
+      .filter((entry) => entry.manifest.license !== "Apache-2.0")
+      .map((entry) => `${entry.manifest.name} (${entry.manifest.license ?? "missing"})`);
+    const root = JSON.parse(readFileSync(join(process.cwd(), "package.json"), "utf-8"));
+
+    expect(offenders).toEqual([]);
+    expect(root.license).toBe("Apache-2.0");
+    expect(readFileSync(join(process.cwd(), "LICENSE"), "utf-8")).toMatch(
+      /Apache License\s+Version 2\.0, January 2004/,
+    );
+    expect(existsSync(join(process.cwd(), "NOTICE"))).toBe(true);
+    expect(existsSync(join(process.cwd(), "LICENSE-COMMERCIAL.md"))).toBe(false);
   });
 
   it("gates tags, attestation and the mirror on the combined publish state", () => {

@@ -264,69 +264,25 @@ function clearChangesetFixedGroup(targetDir: string): void {
 }
 
 /**
- * Inject the license model into the mirror repo so consumers cloning
- * directly (without create-sailor) still see the same legal guardrails.
+ * Check the licence files the mirror ships and drop the template marker.
+ * Since 2026-10-16 the mirror carries the same terms as the source repo —
+ * Apache-2.0 `LICENSE` plus `NOTICE` — so nothing is synthesised; the build
+ * only refuses to push a mirror that lost them (ADR 2026-10-16
+ * apache-2-relicense).
  */
 function injectLicenseAndMarker(targetDir: string): void {
-  // 1. Ensure LICENSE (AGPL-3.0) exists — source repo should already ship it.
+  // 1. LICENSE (Apache-2.0) and NOTICE come from the source tree.
   const licensePath = path.join(targetDir, "LICENSE");
   if (!fs.existsSync(licensePath)) {
     // Fail loud rather than silently shipping a template without a license.
     throw new Error("LICENSE missing from template output. Refusing to push.");
   }
-
-  // 2. Ensure LICENSE-COMMERCIAL.md is present.
-  const commercialPath = path.join(targetDir, "LICENSE-COMMERCIAL.md");
-  if (!fs.existsSync(commercialPath)) {
-    throw new Error("LICENSE-COMMERCIAL.md missing. Refusing to push.");
+  if (!/Apache License\s+Version 2\.0/.test(fs.readFileSync(licensePath, "utf-8").slice(0, 300))) {
+    throw new Error("LICENSE in template output is not Apache-2.0. Refusing to push.");
   }
-
-  // 3. Inject NOTICE.md summarizing the dual-license model.
-  const notice = [
-    "# NOTICE · Sailor Template Licensing",
-    "",
-    "This template is distributed under a **dual-license** model:",
-    "",
-    "## 1. Open-source license — AGPL-3.0",
-    "See [LICENSE](./LICENSE). If you deploy the software as a network",
-    "service, AGPL requires you to make your source code available to users.",
-    "",
-    "## 2. Commercial Tiers",
-    "Commercial use is free at every size. See",
-    "[LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) — paid tiers sell support",
-    "and contractual commitments, never permission:",
-    "",
-    "| Tier | What it buys | Cost |",
-    "|------|--------------|------|",
-    "| Community | Everything, commercial use included | **Free** — no registration |",
-    "| Team | Private support channel, 2-business-day first response | $2,000/year — [buy here](https://nebutra.com/licensing) |",
-    "| Enterprise | SLA, indemnity, DPA, trademark / white-label | From $30,000/year — contact sales |",
-    "",
-    "## Why FSL?",
-    "Keeping the codebase source-available lets the community learn, audit, and",
-    "contribute, and every version becomes Apache-2.0 after two years. The only",
-    "restricted use is selling a substitute for the platform itself, so businesses ship products",
-    "without opening their source — sustaining full-time engineering on",
-    "the template + ecosystem.",
-    "",
-    "**Self-attest your tier when you scaffold:**",
-    "```bash",
-    "npm create sailor@latest",
-    "# CLI will ask which tier applies. Individual/OPC is free.",
-    "```",
-    "",
-    "## Questions",
-    "- Website: https://nebutra.com",
-    "- Licensing: https://nebutra.com/licensing",
-    "- Email: licensing@nebutra.com",
-    "",
-    "---",
-    "",
-    "_This NOTICE is injected automatically by the sync-template workflow_",
-    "_and represents the licensing model at the time of the last sync._",
-    "",
-  ].join("\n");
-  fs.writeFileSync(path.join(targetDir, "NOTICE.md"), notice);
+  if (!fs.existsSync(path.join(targetDir, "NOTICE"))) {
+    throw new Error("NOTICE missing from template output. Refusing to push.");
+  }
 
   // 4. Marker file — lets tools detect "this is a pre-stripped mirror".
   //    sailorVersion is what sync-template.yml tags the mirror with (v<x>),
@@ -338,10 +294,7 @@ function injectLicenseAndMarker(targetDir: string): void {
     sailorVersion: sailor.version,
     sailorVersionConverged: sailor.converged,
     syncedAt: new Date().toISOString(),
-    license: {
-      open: "AGPL-3.0",
-      commercialException: "LICENSE-COMMERCIAL.md",
-    },
+    license: "Apache-2.0",
     readonly: true,
     note: "PRs to this repo are closed. Open PRs against Nebutra/Nebutra-Sailor.",
   };
@@ -404,9 +357,9 @@ function main(): void {
   // migration, not a text edit.
   process.stdout.write("Step 3/5: schema.prisma ships whole (it must match its migrations)\n");
 
-  process.stdout.write("Step 4/5: injecting license & template marker…\n");
+  process.stdout.write("Step 4/5: checking license & writing template marker…\n");
   injectLicenseAndMarker(out);
-  process.stdout.write("  injected LICENSE, LICENSE-COMMERCIAL.md, NOTICE.md, .sailor-template\n");
+  process.stdout.write("  checked LICENSE + NOTICE (Apache-2.0), wrote .sailor-template\n");
   clearChangesetFixedGroup(out);
   process.stdout.write(
     "  emptied .changeset/config.json fixed group (the mirror never publishes)\n",

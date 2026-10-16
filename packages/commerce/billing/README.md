@@ -365,4 +365,4 @@ uvicorn app.main:app --reload --port 8005
 
 ## License
 
-Private - Nebutra SaaS Platform
+Apache-2.0 — see [LICENSE](./LICENSE).

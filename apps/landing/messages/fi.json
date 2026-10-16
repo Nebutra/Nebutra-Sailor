@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Tekninen ja kaupallinen kysely — {brandName}",
-      "description": "Omistettu viestintäkanava kaupallisille lisensseille, yrityksen omalle isännöidylle ja edistyneelle tekniselle tuelle.",
       "heading": "Ota tukiyhteys",
       "subheading": "Lähetämme omistautuneen teknisen asiantuntijan tai arkkitehdin arvioimaan nimenomaisia vaatimuksiasi.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Ennakkokeskustelut ekologisista strategioista ja yleisestä arkkitehtuurin kehityksestä."
         },
         "sales": {
-          "title": "Kaupallinen käyttöönotto",
-          "description": "Neuvottelut suljettuja lähdekoodilisen lisenssin ja yksityisten klusteriympäristöjen käyttöönottoon liittyvistä yksityiskohdista."
+          "title": "Kaupallinen käyttöönotto"
         },
         "support": {
           "title": "Asiantuntijatason tuki",
@@ -285,7 +283,6 @@
         "category": "Tarpeen alue",
         "categories": {
           "general": "Yritysneuvonta",
-          "sales": "Lisenssit ja arkkitehtuuri",
           "support": "Kehittäjän tuki",
           "legal": "Oikeudelliset ja sääntelyraamat",
           "privacy": "Tietojenkäsittelykäytännöt",
@@ -517,10 +514,6 @@
             "0": {
               "a": "{productName} on erittäin rakenteellinen, tuotantovalmis Next.js-pohjainen tekoäly-SaaS-kehys. Se yhdistää yrityslaskutuksen, monivaiheisen todennuksen ja monivuokraisen eristämisen hallittuun alustaperustan, jolloin tiimit voivat keskittyä tuotekohtaiseen tekoälytoteutukseen."
             },
-            "1": {
-              "q": "Miten varaston lisenssien rakenne on järjestetty?",
-              "a": "Perustavanlaatuinen infrastruktuuri on nyt lisensoitu Functional Source License -lisenssillä, versio 1.1, ALv2 (FSL-1.1-ALv2) — täysin maksuton tuotteiden rakentamiseen, ilman maksuja tai copyleft-velvoitteita. Ainoa asia, joka ei ole sallittua, on tarjota Sailoria itseään kilpailevana kaupallisena tuotteena tai palveluna. Jokainen versio muuttuu peruuttamattomasti Apache-2.0-lisenssiksi kaksi vuotta julkaisun jälkeen."
-            },
             "2": {
               "q": "Mikä on alkuperäisen kaupallisen arvioinnin nopeus?",
               "a": "Erittäin korkea. Käyttämällä räätälöityä Node CLI-työkaluketjua ja tarkkaa teknistä spesifikaatiota, juniorikehittäjä pystyy pystyttämään itsenäisen paikallisen MVP-instanssin (Minimum Viable Product) yksinumeroisissa minuuteissa."
@@ -582,8 +575,7 @@
           "name": "Teknisen avun ohjeet",
           "questions": {
             "0": {
-              "q": "Miten toiminnalliset pullonkaulat ratkaistaan?",
-              "a": "Alustavat ensiarviointivektorit kohdistuvat huolellisesti ylläpidettyyn ja vertaisarvioituun dokumentaatiomatriisiin sekä vahvistettuihin yhteisövuorovaikutuksiin. Vakiolisen tai yritystason lisenssin hankkiminen avaa pääsyn yksityisiin eskalaatioriveihin, jotka ratkaistaan suoraan sisäisten insinöörisolmujen kautta."
+              "q": "Miten toiminnalliset pullonkaulat ratkaistaan?"
             },
             "1": {
               "q": "Tarjoatteko fyysisiä tai erikoistuneita ympäristöintegraatiotoimintoja?",
@@ -1154,12 +1146,10 @@
     "pricing": {
       "title": "Rakentaminen on ilmaista. Maksa vain, jos tarvitset meiltä sitoumuksen.",
       "description": "Kaupallisen tuotteen rakentaminen {brandName}-pohjalle ei maksa mitään — ei maksuja, ei lisenssiavainta, ei rekisteröitymistä, ei copyleftiä. Maksulliset tasot myyvät tukea, SLA-tasoja, vastuunkantoa ja tavaramerkkioikeuksia, eivät koskaan käyttölupaa.",
-      "socialProofText": "MIT npm:ssä · FSL-1.1-ALv2 repositoriossa, muuttuu Apache-2.0:ksi kahden vuoden kuluttua · kaupallinen käyttö ilmaista kaikissa kokoluokissa.",
       "community": {
         "badge": "YHTEISÖ",
         "price": "Ilmainen",
         "period": "ikuisesti",
-        "desc": "Kaikille. Mikä tahansa tiimin koko, mikä tahansa liikevaihto. Suljetun lähdekoodin kaupallinen käyttö sisältyy, ilman rekisteröitymistä ja ilman mainintavelvoitetta.",
         "cta": "npx create-sailor",
         "f1": "Täysi Next.js 16 -SaaS-ydin, kaikki paketit mukana",
         "f2": "Suljetun lähdekoodin kaupallinen käyttö tiimin koosta ja liikevaihdosta riippumatta",
@@ -1173,7 +1163,6 @@
         "period": "vuosi",
         "desc": "Tiimeille, jotka eivät voi sallia kriittisen toimintaketjun riippuvuutta yhteisön vasteajoista.",
         "cta": "Hanki {brandName}-tuki",
-        "f1": "Yksityinen tukikanava (sähköposti + jaettu Slack tai Discord)",
         "f2": "Ensimmäinen vastaus taatusti kahden arkipäivän kuluessa",
         "f3": "Priorisoitu vikojen käsittely yhteisön issueiden edellä",
         "f4": "Päivitysapu ja ennakkoilmoitus rikkovista muutoksista",
@@ -1188,33 +1177,27 @@
         "f1": "Vastaus-SLA — 4 työtuntia vakiona, 1 tunti tuotantokatkossa",
         "f2": "Vastuunkanto ja sopimusperusteinen sitoumus tietoturvapäivityksiin",
         "f3": "Allekirjoitettu tietojenkäsittelysopimus, vaatimustenmukaisuuspaketti ja jatkuvuussitoumus",
-        "f4": "Tavaramerkki- ja white label -oikeudet sekä vapautus kilpailevan käytön rajoituksesta",
         "f5": "Pitkän tuen haara ja yksityisen käyttöönoton tekninen tuki",
         "f6": "Kaikki Tiimi-tasolta"
       }
     },
     "faq": {
       "title": "Hinnoittelu ja lisenssityyppien yleisimmät kysymykset",
-      "description": "Kysymyksiä lisenssitasoista, palautuksista ja kaupallisista käyttöoikeuksista.",
       "q1": {
-        "q": "Onko Sailor kuukausittainen SaaS-tilaus?",
-        "a": "Ei. Tämä hinnoittelu koskee Sailorin lähdekoodilisenssejä: Independent on ilmainen, Startup laskutetaan vuosittain ja Enterprise räätälöidään."
+        "q": "Onko Sailor kuukausittainen SaaS-tilaus?"
       },
       "q2": {
-        "q": "Tarjoatteko palautuksia?",
-        "a": "Startup-kaupallisissa lisensseissä on 14 päivän palautusaika alkuperäisille ostoksille. Enterprise-sopimusehdot käsitellään allekirjoitetussa sopimuksessa."
+        "q": "Tarjoatteko palautuksia?"
       },
       "q3": {
-        "q": "Voinko käyttää Sailoria asiakastyössä?",
-        "a": "Kyllä. Kaupallinen lisenssi mahdollistaa tiimillesi suljettua lähdekoodia olevien asiakas- tai sisäisten tuotteiden julkaisun lisenssin piirissä; white-label-oikeudet vaativat Enterprise-hyväksynnän."
+        "q": "Voinko käyttää Sailoria asiakastyössä?"
       },
       "contactNudge": "Kysymyksiä vielä? Ota yhteyttä {brandName}-tiimiin →"
     },
     "cta": {
       "eyebrow": "Aloita",
       "title": "Lopeta konfigurointi. Aloita rakentaminen.",
-      "description": "Alusta skaalautuva SaaS-arkkitehtuuri paikallisesti {brandName}-CLI:n avulla.",
-      "license": "Avoin lähdekoodi FSL-1.1-ALv2-lisenssillä. Luottokorttia ei tarvita."
+      "description": "Alusta skaalautuva SaaS-arkkitehtuuri paikallisesti {brandName}-CLI:n avulla."
     },
     "capability": {
       "badge": "Enterprise-ominaisuudet",
@@ -1500,8 +1483,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Ilmainen <hl>kehitettäväksi</hl>",
-      "description": "{brandName}-Sailor on kaupalliseen käyttöön ilmainen — MIT npm:ssä, FSL-1.1-ALv2 varastossa, muuttuu Apache-2.0:ksi kahden vuoden jälkeen. Maksulliset tasot myyvät tukea ja sopimusvelvoitteita, ei käyttöoikeutta."
+      "title": "Ilmainen <hl>kehitettäväksi</hl>"
     },
     "plans": {
       "community": {
@@ -1512,7 +1494,6 @@
         "features": {
           "fullSource": "Koko lähdekoodi, kaikki paketit",
           "closedSourceOk": "Suljettu lähdekoodi kaupallisessa käytössä — ei copyleftiä",
-          "noAttribution": "Ei rekisteröitymistä, ei lähdeviittausta",
           "communitySupport": "Yhteisötuki — parhaan mahdollisen ponnistuksen mukainen"
         },
         "cta": "Näytä GitHubissa"
@@ -1538,8 +1519,7 @@
         "features": {
           "sla": "Vastaus-SLA — 4 liiketoimintatuntia, 1 tunti tuotannon pysähtyessä",
           "indemnity": "Vastuunotto ja tietoturvakorjausvelvoite",
-          "compliance": "Allekirjoitettu DPA, compliance-paketti, jatkuvuuspakottaminen",
-          "trademark": "Tavaramerkki- ja valkoleimaoikeudet"
+          "compliance": "Allekirjoitettu DPA, compliance-paketti, jatkuvuuspakottaminen"
         },
         "cta": "Ota yhteyttä myyntiin"
       }
@@ -1548,40 +1528,23 @@
       "title": "Usein kysytyt kysymykset",
       "description": "Lyhyesti: käyttö on ilmaista. Maksaminen on silloin, kun tarvitset meidät sopimuksellisesti vastuussa.",
       "items": {
-        "whyFsl": {
-          "q": "Miksi FSL eikä MIT tai AGPL?",
-          "a": "FSL sallii kaiken käytön paitsi Sailorin korvikkeen myymisen, ja jokainen versio siirtyy Apache-2.0 -lisenssiin kaksi vuotta julkaisun jälkeen — lupaus, joka tehdään peruuttamattomasti etukäteen. Se läpäisee yritysten oikeudellisen tarkastuksen helpommin kuin AGPL."
-        },
         "reallyFree": {
-          "q": "Onko kaupallinen käyttö todella ilmaista?",
-          "a": "Kyllä. Ei maksua, ei lisenssivälikeyttä, ei rekisteröitymistä, ei tulo- tai henkilömääräraja-arvoa, ei viittausta. Rakenna suljettu lähdekoodituote ja myy sitä."
-        },
-        "competingUse": {
-          "q": "Mitä pidetään kilpailevana käytönä?",
-          "a": "Sailorin itsensä tarjoaminen — isännöity Sailor-palvelu tai uudelleenpaketoitu kilpaileva alustapohja. Vertikaalisen SaaS:n, sisäisen työkalun tai asiakasprojektit Sailorin päälle rakentaminen ei ole kilpailevaa käyttöä. Jos mallisi tarvitsee sen, Enterprise-sopimus voi sisältää kirjallisen vapautuksen."
+          "q": "Onko kaupallinen käyttö todella ilmaista?"
         },
         "upgrade": {
           "q": "Mitä maksulliset tasot oikeasti ostavat?",
           "a": "Tukivelvoitteet, vastaus-SLAt, vastuunotto, compliance-dokumentit ja tavaramerkkioikeudet. Ei koskaan lupaa käyttää ohjelmistoa — se on jo sinulla."
         },
         "contributions": {
-          "q": "Mitä mieltä olemme avoimen lähdekoodin panostuksista?",
-          "a": "Kaikki panokset vaativat CLAn. Katso CONTRIBUTING.md."
+          "q": "Mitä mieltä olemme avoimen lähdekoodin panostuksista?"
         }
       }
     },
     "meta": {
-      "title": "Lisenssit — {brandName}",
-      "description": "Ilmainen kaupalliseen käyttöön. MIT npm:ssä, FSL-1.1-ALv2 varastossa, siirtyy Apache-2.0:aan."
+      "title": "Lisenssit — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Yksittäisen käyttäjän ilmainen lisenssi",
-      "opcFree": "Yksittäisen omistajan yrityksen lisenssi",
-      "startupCommercial": "Startup-yrityksen kaupallinen lisenssi",
-      "enterprise": "Enterprise-lisenssi"
-    },
     "referralSource": {
       "selectPlaceholder": "Valitse vaihtoehto...",
       "productHunt": "Product Hunt"
@@ -1600,10 +1563,6 @@
     "title": "Blogi — {brandName}",
     "description": "Insinööritiivistelmiä, tuotepäivityksiä ja SaaS-parhaita käytäntöjä {brandName}-tiimiltä."
   },
-  "getLicenseMeta": {
-    "title": "Hanki lisenssisi — {brandName}",
-    "description": "Hanki {brandName}-lisenssisi ja alustapääsy 2 minuutissa."
-  },
   "landing": {
     "faq": {
       "badge": "UKK",
@@ -1619,8 +1578,7 @@
           "answer": "Perustajille ja tuoteinsinööreille, jotka haluavat käyttää aikansa erottaviin tekijöihin — ei saman todennus-/laskutus-/vuokrausputkiston uudelleenrakentamiseen viidettä kertaa."
         },
         "free-or-paid": {
-          "question": "Onko se ilmainen vai maksullinen?",
-          "answer": "Koko lähdekoodi julkaistaan FSL-1.1-ALv2-lisenssillä — täysin maksuton tuotteiden rakentamiseen, ilman maksuja tai copyleft-velvoitteita. Ainoa rajoitus on, ettei Sailoria itseään voi tarjota kilpailevana kaupallisena tuotteena tai palveluna, ja jokainen versio muuttuu automaattisesti Apache-2.0-lisenssiksi kahden vuoden kuluttua. Jokainen suunnitelma sisältää täyden ominaisuusvalikoiman (autentikointi, laskutus, monivuokraisuus, tekoäly, tarkastus); maksulliset suunnitelmat eivät myy lisäominaisuuksia — ne myyvät tukisitoumuksen ja SLA:n, vahingonkorvausvastuun, compliance-dokumentaation ja tavaramerkkioikeudet."
+          "question": "Onko se ilmainen vai maksullinen?"
         },
         "china-friendly": {
           "question": "Toimiiko se Kiinassa?",
@@ -1647,12 +1605,10 @@
           "answer": "Next.js 16 (App Router) React 19:n päällä, TypeScript 5.9, Tailwind v4, Prisma 7 Postgresin päällä (pgvector + RLS), Hono BFF-gatewaylle, FastAPI ML/raskaalle palveluille ja huolella valittu komponenttikirjasto Radixin, {brandName} UI-primitiivien ja yhteisen Motion-kerroksen päällä. Tekoälyominaisuudet kulkevat Vercel AI SDK:n kautta palveluntarjoajan portabiliteetilla (OpenAI / OpenRouter / SiliconFlow / Azure / paikallinen)."
         },
         "license": {
-          "question": "Mikä on lisenssi?",
-          "answer": "FSL-1.1-ALv2 (Functional Source License, versio 1.1, ALv2). Täysin maksuton tuotteiden rakentamiseen, ilman copyleft-velvoitteita. Ainoa asia, joka ei ole sallittua, on tarjota Sailoria itseään kilpailevana kaupallisena tuotteena tai palveluna. Jokainen versio muuttuu peruuttamattomasti Apache-2.0-lisenssiksi kaksi vuotta julkaisun jälkeen. Maksulliset suunnitelmat myyvät tukisitoumuksen, SLA:n, vahingonkorvausvastuun, compliance-dokumentaation ja tavaramerkkioikeudet, eivät lisäominaisuuksia."
+          "question": "Mikä on lisenssi?"
         },
         "paid-updates": {
-          "question": "Pitäisikö minun maksaa päivityksistä?",
-          "answer": "Ei. Lähdekoodipäivitykset sisältyvät jokaiseen kaupalliseen lisenssiin — vedä main-haarasta milloin haluat ja rebasaa oma haaraasi. Maksullinen taso on oikeus käyttää Sailoria kaupallisessa tuotannossa, ei oikeus vastaanottaa koodia. Jokainen pienjulkaisu sisältää CHANGELOGin ja päivitysoppaan mahdollisista breaking change -muutoksista."
+          "question": "Pitäisikö minun maksaa päivityksistä?"
         },
         "why-turborepo": {
           "question": "Miksi Turborepo sen sijaan kuin tavallinen Next.js-sovellus?",
@@ -1713,9 +1669,7 @@
       "value": {
         "included": "Sisältyy",
         "notIncluded": "Ei sisälly",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Ei vaadita",
-        "whiteLabelRights": "White label -oikeudet",
         "unlimited": "Rajoittamaton",
         "unlimitedPlusNotice": "Rajoittamaton + ennakkoilmoitus rikkovista muutoksista",
         "unlimitedPlusLts": "Rajoittamaton + pitkän tuen haara",

@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "description": "Append-only event log with content-addressed snapshots",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "status": "wip",

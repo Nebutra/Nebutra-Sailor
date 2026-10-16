@@ -60,7 +60,7 @@ function printDryRunPlan(
     "copy backends/gateway, infra, e2e, tests, deploy (Dockerfile.web + docker-compose)",
     "generate secrets, seed script and welcome page",
     "write .env.local (generated secrets, localhost origins — no keys needed)",
-    "write MIT scaffold license",
+    "write Apache-2.0 LICENSE + NOTICE",
     `set the brand to ${brandNameFromProject(path.basename(path.resolve(resolvedTarget)))} (brand:init --yes, brand:apply)`,
     ...(opts.preset
       ? [`write the look: preset ${opts.preset} → packages/design/tokens/project/preset`]

@@ -59,7 +59,7 @@ No commitment level changes how we handle a report from a security
 researcher — disclosure is triaged on severity, never on who is paying. The
 tiers govern what we owe *deployers*, not what we do for *reporters*.
 
-See [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) and
+See [Commercial Support](./docs/legal/commercial-support.md) and
 [Security & Compliance](./docs/legal/security-compliance.md).
 
 ## Security Measures

@@ -62,11 +62,10 @@ Happy to help you evaluate which fits your needs!
 ### Pricing / Licensing
 
 ```
-We're AGPLv3 license:
-- ✅ Free for personal projects and learning
-- ✅ Free for internal tools
-- ✅ Free if you keep it open source
-- 💼 Enterprise licensing for closed-source commercial use
+We're open source under Apache-2.0:
+- ✅ Free for any use — commercial, closed-source, client work, internal
+- ✅ No licence key, no registration, no copyleft
+- 💼 Paid plans sell support (SLA, indemnification, DPA), never permission
 
 What's your use case? Happy to clarify!
 ```

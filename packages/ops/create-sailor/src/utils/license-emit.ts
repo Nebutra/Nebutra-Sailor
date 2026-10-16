@@ -1,4 +1,3 @@
-import { createHmac } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,7 +12,7 @@ export interface LicenseEmitOptions {
   projectName: string;
   cliVersion: string;
   /**
-   * Where to look for the LICENSE-SCAFFOLD.md template. Defaults to the
+   * Where to look for the LICENSE-APACHE-2.0.txt template. Defaults to the
    * template that ships inside create-sailor.
    */
   templatesRoot?: string;
@@ -31,15 +30,17 @@ function resolveTemplatesRoot(explicit?: string): string {
   return candidates[0];
 }
 
+/** The verbatim Apache-2.0 text bundled with create-sailor. */
+export const LICENSE_TEMPLATE_FILENAME = "LICENSE-APACHE-2.0.txt";
+
 /**
  * `.nebutra/scaffold-meta.json` — an unsigned provenance breadcrumb.
  *
  * Until 2026-07-26 this file was HMAC-signed, because its presence and a valid
  * signature were what conferred the Independent Developer License instead of
- * AGPL copyleft. Scaffolded projects are now MIT unconditionally, so the
- * marker grants nothing, gates nothing, and is worthless to forge. The
- * signature, nonce and key registry were removed along with the tier they
- * protected.
+ * AGPL copyleft. The marker has granted nothing since then: scaffolded
+ * projects were MIT unconditionally from 2026-07-26 and are Apache-2.0
+ * unconditionally from 2026-10-16 (ADR 2026-10-16 apache-2-relicense).
  *
  * What is left is useful for support triage — "which CLI version produced
  * this project, and when" — and nothing else. Deleting the file costs the
@@ -57,38 +58,49 @@ export interface ScaffoldMeta {
   purpose: string;
   license: {
     /**
-     * `mit-scaffold` since 2026-07-26. `independent` is the legacy value from
-     * create-sailor <= 1.8.2, when scaffolded projects carried the retired
-     * Independent Developer License. Readers should accept both.
+     * `apache-2.0` since 2026-10-16. Legacy values readers should still
+     * accept: `mit-scaffold` (2026-07-26 → 2026-10-16) and `independent`
+     * (create-sailor <= 1.8.2, the retired Independent Developer License).
      */
-    tier: "mit-scaffold" | "independent";
+    tier: "apache-2.0" | "mit-scaffold" | "independent";
     file: "LICENSE";
   };
 }
 
-function computeSignature(
-  payload: {
-    cliVersion: string;
-    scaffoldedAt: string;
-    projectName: string;
-    nonce: string;
-  },
-  signingKey: string,
-): string {
-  const canonical = `${payload.cliVersion}|${payload.scaffoldedAt}|${payload.projectName}|${payload.nonce}`;
-  return createHmac("sha256", signingKey).update(canonical).digest("hex");
+/**
+ * The scaffolded project's `NOTICE`. Apache-2.0 §4(d) asks redistributors of
+ * the source to carry the upstream attribution notices; this file is where
+ * they live, and the project's own copyright line can be added above them.
+ */
+export function scaffoldNotice(projectName: string, cliVersion: string): string {
+  return `${projectName}
+
+This project was scaffolded with create-sailor ${cliVersion} from Nebutra Sailor.
+
+Nebutra Sailor
+Copyright 2025-2026 无锡云毓智能科技有限公司 (Wuxi Nebutra Intelligence Technology Co., Ltd.)
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+"Nebutra" and "Sailor" are trademarks of 无锡云毓智能科技有限公司. The Apache
+License does not grant permission to use them (section 6). Building and
+selling your own product on this code, under your own name, needs no
+permission.
+`;
 }
 
 /**
- * Emit the scaffolded project's MIT LICENSE + the
+ * Emit the scaffolded project's Apache-2.0 LICENSE + NOTICE and the
  * `.nebutra/scaffold-meta.json` marker into the scaffold target.
  *
  * Behaviour:
- *  - Writes `LICENSE` (MIT) — overwrites the upstream repository licence,
- *    because the scaffolded project is MIT, not FSL. Scaffolded output is
- *    distributed as part of the MIT-published `create-sailor` package.
- *  - Preserves the upstream licence text at `LICENSE-UPSTREAM-REFERENCE.md`
- *    so users can read the terms the monorepo itself is under.
+ *  - Writes `LICENSE` — the verbatim Apache-2.0 text, so GitHub and licence
+ *    scanners detect it. Overwrites whatever the template carried: a mirror
+ *    synced before 2026-10-16 still carries FSL text, and the project is
+ *    Apache-2.0 regardless of which mirror it came from.
+ *  - Writes `NOTICE` with the Nebutra Sailor attribution.
+ *  - Removes licence files from earlier models (`LICENSE-COMMERCIAL.md`,
+ *    `NOTICE.md`, `LICENSE-UPSTREAM-REFERENCE.md`) so the project root states
+ *    one set of terms.
  *  - Writes `.nebutra/scaffold-meta.json` with version + timestamp. Unsigned
  *    by design — it grants no rights, so there is nothing to protect.
  *  - Adds a one-line license notice at the top of the project's README.
@@ -100,37 +112,31 @@ export function emitScaffoldLicense(
   const wrote: string[] = [];
   const templatesRoot = resolveTemplatesRoot(options.templatesRoot);
 
-  // 1. Move the upstream repository licence aside (only if it exists). The
-  // scaffolded project is MIT; the upstream terms (FSL today, AGPL for
-  // pre-2026-07-26 checkouts) become a reference document for users who want
-  // to know what the monorepo itself is under.
-  const upstreamLicense = path.join(targetDir, "LICENSE");
-  if (fs.existsSync(upstreamLicense)) {
-    const head = fs.readFileSync(upstreamLicense, "utf-8").slice(0, 256);
-    const looksUpstream =
-      /GNU AFFERO GENERAL PUBLIC LICENSE/i.test(head) || /Functional Source License/i.test(head);
-    if (looksUpstream) {
-      fs.renameSync(upstreamLicense, path.join(targetDir, "LICENSE-UPSTREAM-REFERENCE.md"));
-      wrote.push("LICENSE-UPSTREAM-REFERENCE.md (preserved upstream licence)");
+  // 1. Retire licence files from earlier models. A pre-2026-10-16 mirror
+  // ships LICENSE-COMMERCIAL.md and an injected NOTICE.md; neither describes
+  // terms this project is under.
+  for (const legacy of ["LICENSE-COMMERCIAL.md", "NOTICE.md", "LICENSE-UPSTREAM-REFERENCE.md"]) {
+    const legacyPath = path.join(targetDir, legacy);
+    if (fs.existsSync(legacyPath)) {
+      fs.rmSync(legacyPath);
+      wrote.push(`${legacy} (removed — the project is Apache-2.0)`);
     }
   }
 
-  // 1b. The mirror carries the upstream's commercial exception (template-build
-  // refuses to push without it), but a scaffolded project is plain MIT: a
-  // second licence file at its root would read as terms the project is under.
-  const commercialLicense = path.join(targetDir, "LICENSE-COMMERCIAL.md");
-  if (fs.existsSync(commercialLicense)) {
-    fs.rmSync(commercialLicense);
-    wrote.push("LICENSE-COMMERCIAL.md (removed — the project is MIT)");
+  // 2. Write the Apache-2.0 LICENSE and the NOTICE.
+  const licenseSrc = path.join(templatesRoot, LICENSE_TEMPLATE_FILENAME);
+  if (!fs.existsSync(licenseSrc)) {
+    throw new Error(
+      `${LICENSE_TEMPLATE_FILENAME} template missing at ${licenseSrc}; cannot emit license.`,
+    );
   }
-
-  // 2. Write the scaffolded project's MIT LICENSE.
-  const scaffoldSrc = path.join(templatesRoot, "LICENSE-SCAFFOLD.md");
-  if (!fs.existsSync(scaffoldSrc)) {
-    throw new Error(`LICENSE-SCAFFOLD.md template missing at ${scaffoldSrc}; cannot emit license.`);
-  }
-  fs.copyFileSync(scaffoldSrc, path.join(targetDir, "LICENSE"));
+  fs.copyFileSync(licenseSrc, path.join(targetDir, "LICENSE"));
   wrote.push("LICENSE");
+  fs.writeFileSync(
+    path.join(targetDir, "NOTICE"),
+    scaffoldNotice(options.projectName, options.cliVersion),
+  );
+  wrote.push("NOTICE");
 
   // 3. Write the provenance marker. Unsigned by design — see ScaffoldMeta.
   const meta: ScaffoldMeta = {
@@ -139,9 +145,9 @@ export function emitScaffoldLicense(
     scaffoldedAt: new Date().toISOString(),
     projectName: options.projectName,
     purpose:
-      "Records which `create-sailor` version produced this project, for support triage. Provenance only: the MIT licence in LICENSE applies unconditionally and does not depend on this file. Deleting it costs you nothing.",
+      "Records which `create-sailor` version produced this project, for support triage. Provenance only: the Apache-2.0 licence in LICENSE applies unconditionally and does not depend on this file. Deleting it costs you nothing.",
     license: {
-      tier: "mit-scaffold",
+      tier: "apache-2.0",
       file: "LICENSE",
     },
   };
@@ -173,10 +179,9 @@ export function prependReadmeLicenseNotice(targetDir: string): boolean {
   if (!fs.existsSync(readmePath)) return false;
   const existing = fs.readFileSync(readmePath, "utf-8");
   if (existing.includes("Scaffolded by `create-sailor`")) return false;
-  const notice = `> **License notice:** Scaffolded by \`create-sailor\`. The Nebutra-Sailor
-> code in this project is [MIT licensed](./LICENSE) — commercial use, closed
-> source, no fee, no attribution required. The upstream monorepo is
-> FSL-1.1-ALv2 — see \`LICENSE-UPSTREAM-REFERENCE.md\`.\n\n`;
+  const notice = `> **License notice:** Scaffolded by \`create-sailor\` from Nebutra Sailor, which
+> is [Apache-2.0](./LICENSE) — commercial use, closed source, no fee. Keep
+> \`LICENSE\` and \`NOTICE\` when you redistribute the source.\n\n`;
   fs.writeFileSync(readmePath, notice + existing);
   return true;
 }

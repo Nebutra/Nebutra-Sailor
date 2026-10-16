@@ -47,5 +47,5 @@
     "tsup": "^8.5.1",
     "typescript": "catalog:"
   },
-  "license": "FSL-1.1-ALv2"
+  "license": "Apache-2.0"
 }

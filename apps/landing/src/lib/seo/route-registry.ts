@@ -82,7 +82,7 @@ const ALL_SEO_ROUTES: ReadonlyArray<SeoRouteEntry> = [
     changeFrequency: "weekly",
     priority: 0.9,
     localization: "ui",
-    sitelinkCandidate: { label: "Get License" },
+    sitelinkCandidate: { label: "Support Plans" },
   },
   {
     pattern: "/licensing",

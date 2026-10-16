@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Prepaid wallet, API key product helpers, and dual-ledger usage envelopes for Nebutra Router & Forge",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

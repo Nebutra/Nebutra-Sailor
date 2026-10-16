@@ -6,7 +6,7 @@
     "graph": "core",
     "productionReady": false
   },
-  "description": "Governed AI-native SaaS scaffolder for Nebutra Sailor. One converged Next.js + Hono + Prisma stack, zero questions — providers go live from env keys.",
+  "description": "Skip to production. Scaffold Nebutra Sailor — the open-source (Apache-2.0) production layer for agent-built software: auth, global + China billing, multi-tenancy and an AI gateway in one command, running locally with zero keys.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -76,7 +76,7 @@
     "registry"
   ],
   "author": "Nebutra <contact@nebutra.com> (https://nebutra.com)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "homepage": "https://nebutra.com",
   "repository": {
     "type": "git",

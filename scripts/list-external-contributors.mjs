@@ -193,7 +193,7 @@ pnpm legal:contributors --write
 
 The \`☐\` in the "CLA signed?" column is a TODO marker. Replace with \`☑\`
 once the contributor has signed (or with \`—\` if their contributions
-were removed under the AGPL-fallback path).
+were removed from the codebase).
 
 ## Filters applied
 

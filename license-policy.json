@@ -1,27 +1,27 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "description": "License compliance policy for the Nebutra-Sailor monorepo (FSL-1.1-ALv2, converting to Apache-2.0).",
-  "projectLicense": "FSL-1.1-ALv2",
+  "description": "License compliance policy for the Nebutra-Sailor monorepo (Apache-2.0).",
+  "projectLicense": "Apache-2.0",
   "allowed": [
     {
       "id": "MIT",
-      "reason": "Permissive — compatible with FSL-1.1-ALv2 and its Apache-2.0 future license"
+      "reason": "Permissive — compatible with Apache-2.0 distribution"
     },
     {
       "id": "Apache-2.0",
-      "reason": "Permissive — compatible with FSL-1.1-ALv2 and its Apache-2.0 future license"
+      "reason": "Permissive — compatible with Apache-2.0 distribution"
     },
     {
       "id": "BSD-2-Clause",
-      "reason": "Permissive — compatible with FSL-1.1-ALv2 and its Apache-2.0 future license"
+      "reason": "Permissive — compatible with Apache-2.0 distribution"
     },
     {
       "id": "BSD-3-Clause",
-      "reason": "Permissive — compatible with FSL-1.1-ALv2 and its Apache-2.0 future license"
+      "reason": "Permissive — compatible with Apache-2.0 distribution"
     },
     {
       "id": "ISC",
-      "reason": "Permissive — compatible with FSL-1.1-ALv2 and its Apache-2.0 future license"
+      "reason": "Permissive — compatible with Apache-2.0 distribution"
     },
     {
       "id": "0BSD",
@@ -37,29 +37,29 @@
     },
     {
       "id": "CC-BY-3.0",
-      "reason": "Attribution-only — compatible with FSL-1.1-ALv2"
+      "reason": "Attribution-only — compatible with Apache-2.0 distribution"
     },
     {
       "id": "CC-BY-4.0",
-      "reason": "Attribution-only — compatible with FSL-1.1-ALv2"
+      "reason": "Attribution-only — compatible with Apache-2.0 distribution"
     },
     {
       "id": "BlueOak-1.0.0",
-      "reason": "Permissive — compatible with FSL-1.1-ALv2"
+      "reason": "Permissive — compatible with Apache-2.0 distribution"
     },
     {
       "id": "Python-2.0",
-      "reason": "Permissive — compatible with FSL-1.1-ALv2"
+      "reason": "Permissive — compatible with Apache-2.0 distribution"
     }
   ],
   "forbidden": [
     {
       "id": "GPL-2.0",
-      "reason": "Strong copyleft — cannot be combined with a source-available or Apache-2.0 distribution"
+      "reason": "Strong copyleft — cannot be combined with an Apache-2.0 distribution"
     },
     {
       "id": "GPL-3.0",
-      "reason": "Strong copyleft — cannot be combined with a source-available or Apache-2.0 distribution"
+      "reason": "Strong copyleft — cannot be combined with an Apache-2.0 distribution"
     },
     {
       "id": "AGPL-1.0",
@@ -67,7 +67,7 @@
     },
     {
       "id": "AGPL-3.0",
-      "reason": "Network copyleft — would impose source-disclosure obligations on downstream licensees. Note: this project itself was AGPL-3.0 until 2026-07-26; consuming AGPL dependencies is now forbidden because FSL-1.1-ALv2 converts to Apache-2.0"
+      "reason": "Network copyleft — would impose source-disclosure obligations on downstream licensees. Note: this project itself was AGPL-3.0 until 2026-07-26 and FSL-1.1-ALv2 until 2026-10-16; it is Apache-2.0 now, so AGPL dependencies cannot be absorbed"
     },
     {
       "id": "SSPL-1.0",
@@ -83,5 +83,5 @@
     }
   ],
   "excludedPackages": ["@nebutra/*"],
-  "notes": "The repository is FSL-1.1-ALv2 (converts to Apache-2.0 two years after each release). Our own published @nebutra/* packages are MIT and excluded from the check — see tests/architecture/release-surface.test.ts, which enforces that. Copyleft dependency policy is STRICTER than under the previous AGPL-3.0 license: an AGPL project could absorb GPL-3.0 code, an FSL/Apache-2.0 one cannot, so GPL-3.0 and AGPL-3.0 are now forbidden as dependencies. The CI job and local script both use license-checker-rspack via npx (not installed as a dependency)."
+  "notes": "The repository, every @nebutra/* package, the nebutra and create-sailor CLIs, the Sailor-Template mirror and every scaffolded project are Apache-2.0 (ADR 2026-10-16 apache-2-relicense). Our own @nebutra/* packages are excluded from the dependency check; tests/architecture/release-surface.test.ts enforces their Apache-2.0 license field and LICENSE file. Copyleft dependencies (GPL, AGPL) stay forbidden: an Apache-2.0 distribution cannot absorb them. The CI job and local script both use license-checker-rspack via npx (not installed as a dependency)."
 }

@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Utafuta wa Kiufundi na wa Biashara — {brandName}",
-      "description": "Njia maalum ya mawasiliano kwa leseni za biashara, kujikimu kwa biashara, na msaada wa kiufundi wa hali ya juu.",
       "heading": "Kuanzisha Uunganisho wa Msaada",
       "subheading": "Tutatumia mtaalamu wa kiufundi au mhandisi maalum kufanya tathmini ya mahitaji yako.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Mazungumzo ya awali kuhusu ushirikiano wa kimkakati wa ikolojia na mageuzi ya muundo wa jumla."
         },
         "sales": {
-          "title": "Uwekaji wa Biashara",
-          "description": "Mazungumzo kuhusu leseni za chanzo kilichofungwa na maelezo yanayohusiana na uwekaji wa mazingira ya kundi binafsi."
+          "title": "Uwekaji wa Biashara"
         },
         "support": {
           "title": "Msaada wa Kiufundi",
@@ -285,7 +283,6 @@
         "category": "Eneo la Hitaji",
         "categories": {
           "general": "Ushauri wa Biashara",
-          "sales": "Leseni na Muundo",
           "support": "Msaada wa Mtaalamu",
           "legal": "Mipaka ya Sheria na Utekeleza",
           "privacy": "Sera za Usindikaji wa Data",
@@ -518,10 +515,6 @@
               "q": "Ni nini lengo la utendaji la {productName}?",
               "a": "{productName} ni mfumo wa Next.js AI SaaS ulioandaliwa kwa uzalishaji. Unapakia bili ya kampuni, uthibitisho wa neno siri, na utenganisho wa watumiaji wengi katika msingi wa mfumo, ikiruhusu timu kujitolea kwa utekelezaji wa AI maalum."
             },
-            "1": {
-              "q": "Jinsi gani leseni ya hazina imeundwa?",
-              "a": "Msimbo wa chanzo unatolewa chini ya Functional Source License (FSL-1.1-ALv2): unaweza kuutumia bila malipo kujenga bidhaa zako mwenyewe, bila ada na bila wajibu wa copyleft. Kitu pekee kisichoruhusiwa ni kutoa Sailor yenyewe kama bidhaa au huduma ya kibiashara inayoshindana. Kila toleo hubadilika moja kwa moja kuwa Apache-2.0 miaka miwili baada ya kutolewa kwake."
-            },
             "2": {
               "q": "Je, kasi ya tathmini ya kwanza ya biashara ni ipi?",
               "a": "Kasi kubwa sana. Kwa kutumia zana za Node CLI zilizobinafsishwa pamoja na tafsiri ya kiufundi sahihi, mhandisi mchache anaweza kuanzisha mfano wa Minimum Viable Product (MVP) wa ndani wa kujitegemea ndani ya dakika chache."
@@ -583,8 +576,7 @@
           "name": "Maelekezo ya Msaada wa Kiufundi",
           "questions": {
             "0": {
-              "q": "Je, matatizo ya kizuizi cha utendaji yanatatuliwa vipi?",
-              "a": "Vekta za triaji za awali zinangalia matriksi ya nyaraka zilizohifadhiwa kwa makini na zilizopitishwa na wenzao na mwingiliano wa jamii uliothibitishwa. Kununua leseni ya kawaida au ya kiwango cha biashara hufungua upatikanaji wa mistari ya kasi ya kibinafsi inayatatuliwa kupitia nodi za uhandisi wa ndani moja kwa moja."
+              "q": "Je, matatizo ya kizuizi cha utendaji yanatatuliwa vipi?"
             },
             "1": {
               "q": "Je, unatoa operesheni za muunganisho wa mazingira maalum au ya kimwili?",
@@ -1155,12 +1147,10 @@
     "pricing": {
       "title": "Ni bure kujenga juu yake. Lipa tu ikiwa unahitaji tuwajibike.",
       "description": "Kujenga bidhaa ya kibiashara juu ya {brandName} hakugharimu chochote — hakuna ada, hakuna ufunguo wa leseni, hakuna usajili, hakuna copyleft. Viwango vinavyolipiwa vinauza msaada, SLA, fidia na haki za alama ya biashara, kamwe si ruhusa ya matumizi.",
-      "socialProofText": "MIT kwenye npm · FSL-1.1-ALv2 kwenye hazina, hubadilika kuwa Apache-2.0 baada ya miaka miwili · matumizi ya kibiashara ni bure kwa ukubwa wowote.",
       "community": {
         "badge": "JUMUIYA",
         "price": "Bure",
         "period": "milele",
-        "desc": "Kwa kila mtu. Ukubwa wowote wa timu, mapato yoyote. Matumizi ya kibiashara ya msimbo funge yamejumuishwa, bila usajili na bila sharti la kutaja chanzo.",
         "cta": "npx create-sailor",
         "f1": "Kiini kamili cha SaaS cha Next.js 16, pamoja na vifurushi vyote",
         "f2": "Matumizi ya kibiashara ya msimbo funge kwa ukubwa wowote wa timu au mapato",
@@ -1174,7 +1164,6 @@
         "period": "mwaka",
         "desc": "Kwa timu ambazo haziwezi kuweka njia muhimu kwenye muda wa majibu ya jamii.",
         "cta": "Pata msaada wa {brandName}",
-        "f1": "Njia binafsi ya msaada (barua pepe + Slack au Discord ya pamoja)",
         "f2": "Jibu la kwanza limehakikishwa ndani ya siku mbili za kazi",
         "f3": "Upangaji wa kipaumbele wa hitilafu, mbele ya issue za jumuiya",
         "f4": "Msaada wa kuboresha na taarifa ya mapema kuhusu mabadiliko yanayovunja utangamano",
@@ -1189,33 +1178,27 @@
         "f1": "SLA ya majibu — saa 4 za kazi kwa kawaida, saa 1 wakati uzalishaji umesimama",
         "f2": "Fidia na ahadi ya kimkataba kuhusu viraka vya usalama",
         "f3": "DPA iliyotiwa saini, kifurushi cha uzingatiaji na ahadi ya mwendelezo",
-        "f4": "Haki za alama ya biashara na white label, pamoja na msamaha wa matumizi shindani",
         "f5": "Tawi la msaada wa muda mrefu na uhandisi wa usambazaji binafsi",
         "f6": "Kila kitu kilicho katika Timu"
       }
     },
     "faq": {
       "title": "Maswali Yanayoulizwa Mara kwa Mara kuhusu Bei na Leseni",
-      "description": "Maswali kuhusu viwango vya leseni, kurudishwa kwa pesa, na haki za matumizi ya biashara.",
       "q1": {
-        "q": "Je, Sailor ni usajili wa SaaS wa kila mwezi?",
-        "a": "Hapana. Bei hii ni kwa leseni za chanzo cha Sailor: Independent ni bure, Startup inachukuliwa kwa mwaka, na Enterprise ni ya kipekee."
+        "q": "Je, Sailor ni usajili wa SaaS wa kila mwezi?"
       },
       "q2": {
-        "q": "Je, mnatoa kurudishwa kwa pesa?",
-        "a": "Leseni za biashara za Startup zinajumuisha kipindi cha siku 14 cha kurudishwa kwa pesa kwa ununuzi wa kwanza. Masharti ya Enterprise yanashughulikiwa katika mkataba uliosainiwa."
+        "q": "Je, mnatoa kurudishwa kwa pesa?"
       },
       "q3": {
-        "q": "Je, ninaweza kutumia Sailor kwa kazi za wateja?",
-        "a": "Ndiyo. Leseni ya biashara inaruhusu timu yako kutoa bidhaa za wateja au za ndani zisizo na chanzo wazi ndani ya upeo wa leseni; haki za white-label zinahitaji idhini ya Enterprise."
+        "q": "Je, ninaweza kutumia Sailor kwa kazi za wateja?"
       },
       "contactNudge": "Bado una maswali? Zungumza na timu ya {brandName} →"
     },
     "cta": {
       "eyebrow": "Anza Sasa",
       "title": "Acha kuweka mipangilio. Anza kujenga.",
-      "description": "Anzisha muundo wa SaaS unaoweza kupanuka ndani kwa kutumia {brandName} CLI.",
-      "license": "Chanzo huria chini ya leseni ya FSL-1.1-ALv2. Hakuna kadi ya mkopo inayohitajika."
+      "description": "Anzisha muundo wa SaaS unaoweza kupanuka ndani kwa kutumia {brandName} CLI."
     },
     "capability": {
       "badge": "Uwezo wa Biashara",
@@ -1501,8 +1484,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Bure kwa <hl>Kujenga Juu</hl>",
-      "description": "{brandName}-Sailor hauguste chochote kutumia biashara — MIT kwenye npm, FSL-1.1-ALv2 kwenye hazina, inabadilika kuwa Apache-2.0 baada ya miaka miwili. Viwango vilivyolipwa vinauza usaidizi na ahadi za mkataba, si ruhusa."
+      "title": "Bure kwa <hl>Kujenga Juu</hl>"
     },
     "plans": {
       "community": {
@@ -1513,7 +1495,6 @@
         "features": {
           "fullSource": "Msimbo mzima wa chanzo, paketi zote",
           "closedSourceOk": "Matumizi ya biashara ya chanzo kilichofungwa — hakuna copyleft",
-          "noAttribution": "Hakuna usajili, hakuna uhusiano unaohitajika",
           "communitySupport": "Usaidizi wa jamii — juhudi bora"
         },
         "cta": "Angalia kwenye GitHub"
@@ -1539,8 +1520,7 @@
         "features": {
           "sla": "SLA ya jibu — masaa 4 ya kazi, saa 1 wakati wa kuzima uzalishaji",
           "indemnity": "Ulinzi wa kisheria na ahadi ya patch za usalama",
-          "compliance": "DPA iliyosainiwa, kifurushi cha kufuata sheria, ahadi ya uendelezaji",
-          "trademark": "Haki za alama ya biashara na lebo nyeupe"
+          "compliance": "DPA iliyosainiwa, kifurushi cha kufuata sheria, ahadi ya uendelezaji"
         },
         "cta": "Wasiliana na uuzaji"
       }
@@ -1549,40 +1529,23 @@
       "title": "Maswali Yanayoulizwa Mara kwa Mara",
       "description": "Toleo fupi: kutumia ni bure. Kulipa ni wakati unapotuhitaji kisheria kuhusika.",
       "items": {
-        "whyFsl": {
-          "q": "Kwa nini FSL badala ya MIT au AGPL?",
-          "a": "FSL inaruhusu matumizi yote isipokuwa kuuza badala ya Sailor yenyewe, na kila toleo linakuwa Apache-2.0 miaka miwili baada ya kutolewa — ruhusa inayotolewa bila kufutwa mapema. Inapitisha ukaguzi wa kisheria wa kampuni kwa urahisi zaidi kuliko AGPL."
-        },
         "reallyFree": {
-          "q": "Je, matumizi ya biashara ni bure kweli?",
-          "a": "Ndiyo. Hakuna ada, hakuna ufunguo wa leseni, hakuna usajili, hakuna kizingiti cha mapato au idadi ya wafanyakazi, hakuna kuzitaja. Tengeneza bidhaa ya chanzo kilichofungwa na uiuze."
-        },
-        "competingUse": {
-          "q": "Je, nini huchukuliwa kama matumizi yanayofanana?",
-          "a": "Kutoa Sailor mwenyewe — huduma ya Sailor iliyohifadhiwa, au msingi wa jukwaa linalofanana lililopakuliwa upya. Kutengeneza SaaS ya wima, zana ya ndani, au miradi ya wateja juu ya Sailor si matumizi yanayofanana. Ikiwa mfumo wako unahitaji, mkataba wa Enterprise unaweza kujumuisha msamaha ulioandikwa."
+          "q": "Je, matumizi ya biashara ni bure kweli?"
         },
         "upgrade": {
           "q": "Je, viwango vilivyolipwa vinunua nini kweli?",
           "a": "Ahadi za usaidizi, SLAs za jibu, ulinzi wa kisheria, nyaraka za kufuata sheria, na haki za alama ya biashara. Sio ruhusa ya kutumia programu — hiyo tayari ni yako."
         },
         "contributions": {
-          "q": "Je, na michango ya chanzo huru?",
-          "a": "Michango zote zinahitaji CLA. Angalia CONTRIBUTING.md."
+          "q": "Je, na michango ya chanzo huru?"
         }
       }
     },
     "meta": {
-      "title": "Leseni — {brandName}",
-      "description": "Bure kwa matumizi ya biashara. MIT kwenye npm, FSL-1.1-ALv2 kwenye hazina, ikibadilishwa kuwa Apache-2.0."
+      "title": "Leseni — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Leseni Bure la Binafsi",
-      "opcFree": "Leseni la Kampuni ya Mwenyeji Mmoja",
-      "startupCommercial": "Leseni ya Biashara ya Startup",
-      "enterprise": "Leseni ya Enterprise"
-    },
     "referralSource": {
       "selectPlaceholder": "Chagua chaguo...",
       "productHunt": "Product Hunt"
@@ -1601,10 +1564,6 @@
     "title": "Blogi — {brandName}",
     "description": "Uchambuzi wa uhandisi, masasisho ya bidhaa, na mifano bora ya SaaS kutoka timu ya {brandName}."
   },
-  "getLicenseMeta": {
-    "title": "Pata Leseni Yako — {brandName}",
-    "description": "Pata leseni ya {brandName} na upatikanaji wa jukwaa kwa dakika 2."
-  },
   "landing": {
     "faq": {
       "badge": "Maswali Yanayoulizwa Mara kwa Mara",
@@ -1620,8 +1579,7 @@
           "answer": "Wanaharakati na wahandisi wa bidhaa wanaotaka kutumia muda wao kwenye tofauti — si kujenga tena mifumo ile ile ya uhalalishaji/malipo/tenancy mara ya tano."
         },
         "free-or-paid": {
-          "question": "Je, ni bure au inalipwa?",
-          "answer": "Chanzo kamili kinatolewa chini ya FSL-1.1-ALv2 — bure kwa kujenga bidhaa zako mwenyewe, bila ada na bila wajibu wa copyleft. Kitu pekee kisichoruhusiwa ni kutoa Sailor yenyewe kama bidhaa au huduma ya kibiashara inayoshindana. Kila toleo hubadilika moja kwa moja kuwa Apache-2.0 miaka miwili baada ya kutolewa. Mipango ya kibiashara inayolipwa haifungui vipengele vya ziada — kila mpango una seti kamili ya vipengele; inauza ahadi ya msaada na SLA, fidia, nyaraka za uzingatiaji, na haki za chapa ya biashara."
+          "question": "Je, ni bure au inalipwa?"
         },
         "china-friendly": {
           "question": "Je, inafanya kazi China?",
@@ -1648,12 +1606,10 @@
           "answer": "Next.js 16 (App Router) juu ya React 19, TypeScript 5.9, Tailwind v4, Prisma 7 juu ya Postgres (ikiwa na pgvector + RLS), Hono kwa gateway ya BFF, FastAPI kwa huduma za ML/zevu, na maktaba ya vipengele iliyochaguliwa juu ya Radix, vigezo vya msingi vya UI ya {brandName}, na tabaka la Motion la pamoja. Vipengele vya AI vinapita kupitia Vercel AI SDK kwa uhamishaji wa watoa huduma (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
         },
         "license": {
-          "question": "Ni leseni gani?",
-          "answer": "FSL-1.1-ALv2 (Functional Source License). Bure kwa kujenga bidhaa — bila ada, bila copyleft. Kizuizi pekee ni kutoa Sailor yenyewe kama bidhaa au huduma ya kibiashara inayoshindana. Kila toleo hubadilika moja kwa moja kuwa Apache-2.0 miaka miwili baada ya kutolewa. Mipango ya kibiashara inayolipwa haiuzi vipengele vya ziada, bali ahadi ya msaada/SLA, fidia, nyaraka za uzingatiaji, na haki za chapa ya biashara."
+          "question": "Ni leseni gani?"
         },
         "paid-updates": {
-          "question": "Je, ninahitaji kulipa kwa masasisho?",
-          "answer": "Hapana. Masasisho ya chanzo yanajumuishwa na kila leseni ya biashara — chukua kutoka main wakati wowote unataka na upate tena fork yako. Kipindi kilicholipwa ni haki ya kutumia Sailor katika uzalishaji wa biashara, si haki ya kupokea msimbo. Kila toleo la kichwa hutoa CHANGELOG na mwongozo wa kuboresha kwa mabadiliko yoyote yanayovunja."
+          "question": "Je, ninahitaji kulipa kwa masasisho?"
         },
         "why-turborepo": {
           "question": "Kwa nini Turborepo badala ya programu ya kawaida ya Next.js?",
@@ -1714,9 +1670,7 @@
       "value": {
         "included": "Imejumuishwa",
         "notIncluded": "Haijajumuishwa",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Hauhitajiki",
-        "whiteLabelRights": "Haki za white label",
         "unlimited": "Bila kikomo",
         "unlimitedPlusNotice": "Bila kikomo + taarifa ya mapema ya mabadiliko yanayovunja",
         "unlimitedPlusLts": "Bila kikomo + tawi la msaada wa muda mrefu",

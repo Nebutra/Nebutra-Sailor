@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "description": "Nebutra AI runtime: multi-agent orchestration + Vercel AI SDK helpers (absorbed @nebutra/ai-sdk in 1.0.0)",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "status": "wip",

@@ -2,17 +2,17 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
-import { emitScaffoldLicense } from "./license-emit";
+import { emitScaffoldLicense, LICENSE_TEMPLATE_FILENAME } from "./license-emit";
 
-const TEMPLATE_FIXTURE = `# License
-
-MIT. Free for everyone.
+const TEMPLATE_FIXTURE = `
+                                 Apache License
+                           Version 2.0, January 2004
 `;
 
 function setupTempProject(): { dir: string; templatesRoot: string } {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-license-"));
   const templatesRoot = fs.mkdtempSync(path.join(os.tmpdir(), "create-sailor-templates-"));
-  fs.writeFileSync(path.join(templatesRoot, "LICENSE-SCAFFOLD.md"), TEMPLATE_FIXTURE);
+  fs.writeFileSync(path.join(templatesRoot, LICENSE_TEMPLATE_FILENAME), TEMPLATE_FIXTURE);
   return { dir, templatesRoot };
 }
 
@@ -35,49 +35,48 @@ describe("emitScaffoldLicense", () => {
     expect(fs.readFileSync(path.join(dir, "LICENSE"), "utf-8")).toBe(TEMPLATE_FIXTURE);
   });
 
-  it("preserves an upstream FSL LICENSE as LICENSE-UPSTREAM-REFERENCE.md", () => {
+  it("ships the bundled template as the verbatim Apache-2.0 text", () => {
+    const bundled = fs.readFileSync(
+      path.join(__dirname, "..", "..", "templates", LICENSE_TEMPLATE_FILENAME),
+      "utf-8",
+    );
+    expect(bundled).toMatch(/^\s+Apache License\n\s+Version 2\.0, January 2004/);
+    expect(bundled).toMatch(/END OF TERMS AND CONDITIONS/);
+  });
+
+  it("writes a NOTICE carrying the Nebutra Sailor attribution", () => {
+    emitScaffoldLicense(dir, { projectName: "demo", cliVersion: "2.1.0", templatesRoot });
+    const notice = fs.readFileSync(path.join(dir, "NOTICE"), "utf-8");
+    expect(notice).toMatch(/^demo\n/);
+    expect(notice).toMatch(/create-sailor 2\.1\.0/);
+    expect(notice).toMatch(/Copyright 2025-2026 无锡云毓智能科技有限公司/);
+    expect(notice).toMatch(/Apache License, Version 2\.0/);
+  });
+
+  it("overwrites a pre-relicense FSL LICENSE from a stale mirror without keeping a copy", () => {
     fs.writeFileSync(
       path.join(dir, "LICENSE"),
       "# Functional Source License, Version 1.1, ALv2 Future License\n...",
     );
-    emitScaffoldLicense(dir, {
-      projectName: "demo",
-      cliVersion: "1.9.0",
-      templatesRoot,
-    });
-    expect(fs.existsSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"))).toBe(true);
-    expect(fs.readFileSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"), "utf-8")).toMatch(
-      /Functional Source License/,
-    );
+    emitScaffoldLicense(dir, { projectName: "demo", cliVersion: "2.1.0", templatesRoot });
     expect(fs.readFileSync(path.join(dir, "LICENSE"), "utf-8")).toBe(TEMPLATE_FIXTURE);
-  });
-
-  it("still preserves a legacy upstream AGPL LICENSE (pre-2026-07-26 checkouts)", () => {
-    fs.writeFileSync(
-      path.join(dir, "LICENSE"),
-      "GNU AFFERO GENERAL PUBLIC LICENSE\nVersion 3, ...",
-    );
-    emitScaffoldLicense(dir, {
-      projectName: "demo",
-      cliVersion: "1.9.0",
-      templatesRoot,
-    });
-    expect(fs.existsSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"))).toBe(true);
-    expect(fs.readFileSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"), "utf-8")).toMatch(
-      /GNU AFFERO/,
-    );
-  });
-
-  it("does NOT preserve a LICENSE the user already replaced", () => {
-    fs.writeFileSync(path.join(dir, "LICENSE"), "MIT License\nCopyright (c)...");
-    emitScaffoldLicense(dir, {
-      projectName: "demo",
-      cliVersion: "1.9.0",
-      templatesRoot,
-    });
     expect(fs.existsSync(path.join(dir, "LICENSE-UPSTREAM-REFERENCE.md"))).toBe(false);
-    // LICENSE is overwritten with the scaffold template — that's the point.
-    expect(fs.readFileSync(path.join(dir, "LICENSE"), "utf-8")).toBe(TEMPLATE_FIXTURE);
+  });
+
+  it("removes licence files from earlier models so one set of terms remains", () => {
+    for (const legacy of ["LICENSE-COMMERCIAL.md", "NOTICE.md", "LICENSE-UPSTREAM-REFERENCE.md"]) {
+      fs.writeFileSync(path.join(dir, legacy), "legacy terms\n");
+    }
+    const { wrote } = emitScaffoldLicense(dir, {
+      projectName: "demo",
+      cliVersion: "2.1.0",
+      templatesRoot,
+    });
+    for (const legacy of ["LICENSE-COMMERCIAL.md", "NOTICE.md", "LICENSE-UPSTREAM-REFERENCE.md"]) {
+      expect(fs.existsSync(path.join(dir, legacy))).toBe(false);
+    }
+    expect(wrote).toContain("LICENSE");
+    expect(wrote).toContain("NOTICE");
   });
 
   it("writes an unsigned provenance marker", () => {
@@ -92,7 +91,7 @@ describe("emitScaffoldLicense", () => {
     expect(meta.schemaVersion).toBe(1);
     expect(meta.projectName).toBe("demo");
     expect(meta.cliVersion).toBe("1.9.0");
-    expect(meta.license.tier).toBe("mit-scaffold");
+    expect(meta.license.tier).toBe("apache-2.0");
     expect(meta.license.file).toBe("LICENSE");
   });
 
@@ -138,6 +137,8 @@ describe("emitScaffoldLicense", () => {
     });
     const readme = fs.readFileSync(path.join(dir, "README.md"), "utf-8");
     expect(readme).toMatch(/Scaffolded by `create-sailor`/);
+    expect(readme).toMatch(/\[Apache-2\.0\]\(\.\/LICENSE\)/);
+    expect(readme).not.toMatch(/MIT|FSL/);
     expect(readme).toMatch(/# demo/);
   });
 

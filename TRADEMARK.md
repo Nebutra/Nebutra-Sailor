@@ -4,13 +4,11 @@ The Nebutra™ name, "Nebutra Sailor", and the Nebutra logos, icons, and brand g
 
 ## Open Source vs. Trademarks
 
-We are thrilled to offer the source code of Nebutra Sailor under the FSL-1.1-ALv2 license (converting to Apache-2.0 two years after each release) to help developers build incredible products. However, our code license does **NOT** include the right to use our trademarks — this is stated explicitly in the license's own Trademarks clause.
+Nebutra Sailor is open source under the Apache License 2.0, so developers can build incredible products on it. However, our code license does **NOT** include the right to use our trademarks — Apache-2.0 says so explicitly in section 6 (Trademarks).
 
 Code licenses and trademarks play different roles:
-- The **code license** (FSL-1.1-ALv2, and Apache-2.0 on conversion) allows you to use, modify, and distribute the software itself.
+- The **code license** (Apache-2.0) allows you to use, modify, and distribute the software itself.
 - **Trademarks** protect the brand identity. They indicate the source of a product or service.
-
-Note that the Apache-2.0 future license does not change this: Apache-2.0 §6 likewise grants no trademark rights.
 
 To protect users from confusion, we must control how our brand assets are used. Therefore, you cannot simply take the Nebutra Sailor project, run it, and call it "Nebutra Sailor" or use our logos.
 
@@ -37,12 +35,12 @@ trademark licence is required if you need to:
 - state a formal partnership, certification, or "official" relationship.
 
 Trademark and white-label rights are granted as part of the Enterprise tier.
-See [LICENSE-COMMERCIAL.md](./LICENSE-COMMERCIAL.md) or contact
+See [Commercial Support](./docs/legal/commercial-support.md) or contact
 [legal@nebutra.com](mailto:legal@nebutra.com).
 
 You do **not** need any of the above to build a commercial product on Sailor
-and give it your own unrelated name. That is a normal Permitted Purpose under
-the code license and costs nothing.
+and give it your own unrelated name. Apache-2.0 already permits that, and it
+costs nothing.
 
 ## Reporting Violations
 

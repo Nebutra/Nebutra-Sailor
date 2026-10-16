@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Pertanyaan Teknikal & Komersial — Kebijaksanaan {brandName}",
-      "description": "Saluran komunikasi khusus untuk lesen komersial, self-hosting perusahaan, dan sokongan teknikal lanjutan.",
       "heading": "Mula Sambungan Sokongan",
       "subheading": "Kami akan menghantar pakar teknikal atau arkitek khusus untuk menilai keperluan anda secara terperinci.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Perbincangan awal mengenai rakan strategik ekologi dan evolusi arkitektur menyeluruh."
         },
         "sales": {
-          "title": "Penyebaran Komersial",
-          "description": "Rundingan mengenai lesen sumber tertutup dan spesifikasi penyebaran persekitaran kluster peribadi."
+          "title": "Penyebaran Komersial"
         },
         "support": {
           "title": "Sokongan Tahap Pakar",
@@ -285,7 +283,6 @@
         "category": "Domain Keperluan",
         "categories": {
           "general": "Perundingan Korporat",
-          "sales": "Lesen & Seni Bina",
           "support": "Bantuan Pembangun",
           "legal": "Sempadan Undang-Undang & Pematuhan",
           "privacy": "Dasar Pemprosesan Data",
@@ -518,10 +515,6 @@
               "q": "Apakah tujuan operasi eksplisit {productName}?",
               "a": "{productName} ialah rangka kerja AI SaaS Next.js yang sangat terstruktur dan sedia untuk pengeluaran. Ia membundel bil korporat, pengesahan multi-faktor, dan pengasingan multi-tenant ke dalam garis asas platform yang dikawal, membolehkan pasukan memfokuskan pada pelaksanaan AI khusus produk."
             },
-            "1": {
-              "q": "Bagaimana struktur lesen repositori?",
-              "a": "Teras dilesenkan di bawah FSL-1.1-ALv2 (Functional Source License), yang boleh digunakan secara percuma untuk membina produk — tiada kos, tiada kewajipan copyleft. Satu-satunya sekatan ialah menawarkan Sailor itu sendiri sebagai produk atau perkhidmatan komersial yang bersaing. Setiap versi bertukar secara automatik dan tidak boleh dibatalkan kepada Apache-2.0 dua tahun selepas pelancarannya."
-            },
             "2": {
               "q": "Berapakah kelajuan penilaian komersial awal?",
               "a": "Sangat tinggi. Menggunakan rantau alat CLI Node yang disesuaikan bersama spesifikasi teknikal yang tepat, jurutera junior boleh menubuhkan contoh Minimum Viable Product (MVP) tempatan autonomi dalam masa beberapa minit."
@@ -583,8 +576,7 @@
           "name": "Arahan Bantuan Teknikal",
           "questions": {
             "0": {
-              "q": "Bagaimana penyelesaian masalah kempen operasi diselesaikan?",
-              "a": "Vektor triase awal menargetkan matriks dokumentasi yang dijaga dengan ketat dan ditinjau rakan sebaya serta interaksi komuniti yang disahkan. Mendapatkan lesen standard atau peringkat perusahaan membuka akses kepada barisan eskalasi peribadi yang diselesaikan melalui nod kejuruteraan dalaman secara langsung."
+              "q": "Bagaimana penyelesaian masalah kempen operasi diselesaikan?"
             },
             "1": {
               "q": "Adakah anda menyediakan operasi integrasi persekitaran fizikal atau khusus?",
@@ -1155,12 +1147,10 @@
     "pricing": {
       "title": "Percuma untuk dibina. Bayar hanya jika anda perlukan kami bertanggungjawab.",
       "description": "Membina produk komersial di atas {brandName} tidak berkos — tiada yuran, tiada kunci lesen, tiada pendaftaran, tiada copyleft. Peringkat berbayar menjual sokongan, SLA, tanggung rugi dan hak tanda dagangan, bukan kebenaran penggunaan.",
-      "socialProofText": "MIT di npm · FSL-1.1-ALv2 di repositori, bertukar kepada Apache-2.0 selepas dua tahun · penggunaan komersial percuma pada sebarang skala.",
       "community": {
         "badge": "KOMUNITI",
         "price": "Percuma",
         "period": "selamanya",
-        "desc": "Untuk semua orang. Sebarang saiz pasukan, sebarang hasil. Termasuk penggunaan komersial sumber tertutup, tanpa pendaftaran dan tanpa kewajipan atribusi.",
         "cta": "npx create-sailor",
         "f1": "Teras SaaS Next.js 16 lengkap, semua pakej disertakan",
         "f2": "Penggunaan komersial sumber tertutup pada sebarang saiz pasukan atau hasil",
@@ -1174,7 +1164,6 @@
         "period": "tahun",
         "desc": "Untuk pasukan yang tidak boleh bergantung kepada masa tindak balas komuniti dalam laluan kritikal.",
         "cta": "Dapatkan sokongan {brandName}",
-        "f1": "Saluran sokongan peribadi (e-mel + Slack atau Discord dikongsi)",
         "f2": "Maklum balas pertama dijamin dalam dua hari bekerja",
         "f3": "Triaj pepijat keutamaan, mendahului issue komuniti",
         "f4": "Bantuan naik taraf dan notis awal tentang perubahan yang memecahkan keserasian",
@@ -1189,33 +1178,27 @@
         "f1": "SLA maklum balas — 4 jam bekerja standard, 1 jam apabila produksi terhenti",
         "f2": "Tanggung rugi dan komitmen kontrak bagi tampung keselamatan",
         "f3": "DPA ditandatangani, pakej pematuhan dan akujanji kesinambungan",
-        "f4": "Hak tanda dagangan dan white label, serta pengecualian penggunaan pesaing",
         "f5": "Cabang sokongan jangka panjang dan kejuruteraan penggunaan persendirian",
         "f6": "Semua dalam Pasukan"
       }
     },
     "faq": {
       "title": "Soalan Lazim Harga & Lesen",
-      "description": "Soalan tentang lapisan lesen, bayaran balik, dan hak penggunaan komersial.",
       "q1": {
-        "q": "Adakah Sailor langganan SaaS bulanan?",
-        "a": "Tidak. Harga ini adalah untuk lesen kod sumber Sailor: Independent adalah percuma, Startup dibayar secara tahunan, dan Enterprise adalah tersuai."
+        "q": "Adakah Sailor langganan SaaS bulanan?"
       },
       "q2": {
-        "q": "Adakah anda menawarkan bayaran balik?",
-        "a": "Lesen komersial Startup termasuk tingkap bayaran balik 14 hari untuk pembelian awal. Syarat Enterprise ditangani dalam kontrak yang ditandatangani."
+        "q": "Adakah anda menawarkan bayaran balik?"
       },
       "q3": {
-        "q": "Bolehkah saya menggunakan Sailor untuk kerja klien?",
-        "a": "Ya. Lesen komersial membolehkan pasukan anda melancarkan produk klien atau dalaman sumber tertutup dalam skop yang dilesenkan; hak label putih memerlukan kelulusan Enterprise."
+        "q": "Bolehkah saya menggunakan Sailor untuk kerja klien?"
       },
       "contactNudge": "Masih ada soalan? Bercakap dengan pasukan {brandName} →"
     },
     "cta": {
       "eyebrow": "Mula Sekarang",
       "title": "Berhenti konfigurasi. Mula membina.",
-      "description": "Inisialisasi senibina SaaS berskala secara tempatan dengan CLI {brandName}.",
-      "license": "Sumber terbuka di bawah lesen FSL-1.1-ALv2. Kad kredit tidak diperlukan."
+      "description": "Inisialisasi senibina SaaS berskala secara tempatan dengan CLI {brandName}."
     },
     "capability": {
       "badge": "Keupayaan Perusahaan",
@@ -1501,8 +1484,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Percuma untuk <hl>Membina Atas</hl>",
-      "description": "{brandName}-Sailor percuma untuk digunakan secara komersial — MIT di npm, FSL-1.1-ALv2 di repositori, bertukar kepada Apache-2.0 selepas dua tahun. Lapisan berbayar menjual sokongan dan komitmen kontrak, bukan kebenaran."
+      "title": "Percuma untuk <hl>Membina Atas</hl>"
     },
     "plans": {
       "community": {
@@ -1513,7 +1495,6 @@
         "features": {
           "fullSource": "Kod sumber penuh, semua pakej",
           "closedSourceOk": "Penggunaan komersial sumber tertutup — tiada copyleft",
-          "noAttribution": "Tiada pendaftaran, tiada atribusi diperlukan",
           "communitySupport": "Sokongan komuniti — usaha terbaik"
         },
         "cta": "Lihat di GitHub"
@@ -1539,8 +1520,7 @@
         "features": {
           "sla": "SLA respons — 4 jam perniagaan, 1 jam jika pengeluaran tergendala",
           "indemnity": "Jaminan pampasan dan komitmen tampalan keselamatan",
-          "compliance": "DPA bertandatangan, pakej pematuhan, jaminan kesinambungan",
-          "trademark": "Hak tanda dagangan dan label putih"
+          "compliance": "DPA bertandatangan, pakej pematuhan, jaminan kesinambungan"
         },
         "cta": "Hubungi jualan"
       }
@@ -1549,40 +1529,23 @@
       "title": "Soalan Lazim",
       "description": "Versi ringkas: menggunakannya percuma. Bayaran diperlukan apabila anda memerlukan kami bertanggungjawab secara kontrak.",
       "items": {
-        "whyFsl": {
-          "q": "Mengapa FSL berbanding MIT atau AGPL?",
-          "a": "FSL membenarkan setiap penggunaan kecuali menjual pengganti Sailor itu sendiri, dan setiap versi menjadi Apache-2.0 dua tahun selepas pelancaran — satu pemberian yang dibuat secara tidak boleh ditarik balik terlebih dahulu. Ia lebih mudah lulus semakan undang-undang korporat berbanding AGPL."
-        },
         "reallyFree": {
-          "q": "Adakah penggunaan komersial benar-benar percuma?",
-          "a": "Ya. Tiada yuran, tiada kunci lesen, tiada pendaftaran, tiada ambang pendapatan atau bilangan kakitangan, tiada atribusi. Bina produk sumber tertutup dan jualkannya."
-        },
-        "competingUse": {
-          "q": "Apakah yang dikira sebagai penggunaan bersaing?",
-          "a": "Menawarkan Sailor itu sendiri — perkhidmatan Sailor yang dihoskan, atau platform asas bersaing yang dikemas semula. Membina SaaS menegak, alat dalaman, atau projek klien di atas Sailor bukanlah penggunaan bersaing. Jika model anda memerlukannya, perjanjian Enterprise boleh termasuk pembebasan bertulis."
+          "q": "Adakah penggunaan komersial benar-benar percuma?"
         },
         "upgrade": {
           "q": "Apakah yang sebenarnya dibeli oleh lapisan berbayar?",
           "a": "Komitmen sokongan, SLA respons, pampasan, dokumen pematuhan, dan hak tanda dagangan. Bukan kebenaran untuk menggunakan perisian — itu sudah menjadi milik anda."
         },
         "contributions": {
-          "q": "Bagaimana dengan sumbangan sumber terbuka?",
-          "a": "Semua sumbangan memerlukan CLA. Lihat CONTRIBUTING.md."
+          "q": "Bagaimana dengan sumbangan sumber terbuka?"
         }
       }
     },
     "meta": {
-      "title": "Lesen — {brandName}",
-      "description": "Percuma untuk kegunaan komersial. MIT di npm, FSL-1.1-ALv2 di repositori, bertukar kepada Apache-2.0."
+      "title": "Lesen — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Lesen Percuma Individu",
-      "opcFree": "Lesen Syarikat Pemilik Tunggal",
-      "startupCommercial": "Lesen Komersial Startup",
-      "enterprise": "Lesen Enterprise"
-    },
     "referralSource": {
       "selectPlaceholder": "Pilih satu pilihan...",
       "productHunt": "Product Hunt"
@@ -1601,10 +1564,6 @@
     "title": "Blog — {brandName}",
     "description": "Wawasan kejuruteraan, kemas kini produk, dan amalan terbaik SaaS daripada pasukan {brandName}."
   },
-  "getLicenseMeta": {
-    "title": "Dapatkan Lesen Anda — {brandName}",
-    "description": "Dapatkan lesen {brandName} dan akses platform anda dalam 2 minit."
-  },
   "landing": {
     "faq": {
       "badge": "FAQ",
@@ -1620,8 +1579,7 @@
           "answer": "Pencipta dan jurutera produk yang mahu menghabiskan masa mereka pada pembeza — bukan membina semula paip auth/billing/tenancy yang sama untuk kali kelima."
         },
         "free-or-paid": {
-          "question": "Adakah ia percuma atau berbayar?",
-          "answer": "Sumber penuh dilancarkan di bawah FSL-1.1-ALv2 — percuma untuk projek peribadi, alat dalaman, dan membina produk anda sendiri, tanpa kos dan tanpa kewajipan copyleft. Satu-satunya sekatan ialah menawarkan Sailor itu sendiri sebagai produk atau perkhidmatan komersial yang bersaing. Setiap pelan termasuk set ciri lengkap (auth, billing, multi-tenancy, AI, audit); lapisan berbeza dalam support SLA, indemniti, dokumen pematuhan dan hak tanda dagangan, bukan dalam ciri."
+          "question": "Adakah ia percuma atau berbayar?"
         },
         "china-friendly": {
           "question": "Adakah ia berfungsi di China?",
@@ -1648,12 +1606,10 @@
           "answer": "Next.js 16 (App Router) di atas React 19, TypeScript 5.9, Tailwind v4, Prisma 7 di atas Postgres (dengan pgvector + RLS), Hono untuk gateway BFF, FastAPI untuk perkhidmatan ML/bertanggung, dan perpustakaan komponen terpilih di atas Radix, primitif UI {brandName}, dan lapisan Motion bersama. Ciri AI melalui Vercel AI SDK dengan kebolehpindahan penyedia (OpenAI / OpenRouter / SiliconFlow / Azure / tempatan)."
         },
         "license": {
-          "question": "Apakah lesen?",
-          "answer": "FSL-1.1-ALv2, yang bertukar kepada Apache-2.0 dua tahun selepas setiap versi dilancarkan. Percuma untuk kegunaan peribadi, alat dalaman, dan membina produk anda sendiri, tanpa kos dan tanpa kewajipan copyleft. Satu-satunya perkara yang tidak dibenarkan ialah menawarkan Sailor itu sendiri sebagai produk atau perkhidmatan yang bersaing. Sumber penuh disertakan dalam setiap pelan."
+          "question": "Apakah lesen?"
         },
         "paid-updates": {
-          "question": "Adakah saya perlu membayar untuk kemas kini?",
-          "answer": "Tidak. Kemas kini sumber disertakan dengan setiap lesen komersial — tarik dari main bila-bila masa anda mahu dan rebas fork anda. Lapisan berbayar ialah hak untuk menggunakan Sailor dalam pengeluaran komersial, bukan hak untuk menerima kod. Setiap keluaran kecil menghantar CHANGELOG dan panduan naik taraf untuk sebarang perubahan pemecah."
+          "question": "Adakah saya perlu membayar untuk kemas kini?"
         },
         "why-turborepo": {
           "question": "Mengapa Turborepo berbanding aplikasi Next.js standard?",
@@ -1714,9 +1670,7 @@
       "value": {
         "included": "Termasuk",
         "notIncluded": "Tidak termasuk",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Tidak perlu",
-        "whiteLabelRights": "Hak white label",
         "unlimited": "Tanpa had",
         "unlimitedPlusNotice": "Tanpa had + notis awal perubahan yang memecahkan keserasian",
         "unlimitedPlusLts": "Tanpa had + cabang sokongan jangka panjang",

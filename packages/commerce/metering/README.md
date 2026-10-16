@@ -509,4 +509,4 @@ pnpm --filter @nebutra/metering build
 
 ## License
 
-Proprietary — Nebutra, Inc.
+Apache-2.0 — see [LICENSE](./LICENSE).

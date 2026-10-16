@@ -3,7 +3,7 @@
   "version": "0.1.7",
   "description": "Action and observation execution layer backed by sandbox-runtime",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

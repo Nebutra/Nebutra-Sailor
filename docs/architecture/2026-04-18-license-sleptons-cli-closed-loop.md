@@ -1,6 +1,8 @@
 # ADR: License + Sleptons + CLI Closed-Loop
 
-> **Status**: **Accepted** (approved 2026-04-18 with Q1-Q5 resolved inline)
+> **Superseded 2026-10-16** by [ADR 2026-10-16 Apache-2.0 relicense](./2026-10-16-apache-2-relicense.md) — licence statements below are historical.
+
+> **Status**: Superseded by ADR 2026-10-16 apache-2-relicense (originally Accepted 2026-04-18 with Q1-Q5 resolved inline)
 > **Date**: 2026-04-18
 > **Decision type**: Architectural · long-term strategic
 > **Authors**: Claude + human review

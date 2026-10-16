@@ -21,18 +21,20 @@ export function GET() {
 > AI-native multi-tenant SaaS platform and Agent OS. Production-ready multi-tenancy,
 > billing, auth, and AI from day one.
 
-${brand.name} (${brand.name}-Sailor monorepo) is an enterprise SaaS kit for startups shipping
-multi-tenant products with agent workflows.
+Sailor (the ${brand.name}-Sailor monorepo): Skip to production. The open-source (Apache-2.0)
+production layer for agent-built software — auth, global + China billing, multi-tenancy and an
+AI gateway in one command.
 
 ## Product
 
 - [Home](${base}/): Product overview and Agent OS positioning
+- [Sailor](${base}/sailor): The open-source (Apache-2.0) production layer, \`npx create-sailor@latest\`
 - [Forge](${getBrandOrigin("forge")}/): Online tool station (codecs, text, hashing, documents)
 - [Features](${base}/features): Capability catalog (auth, billing, tenancy, AI, …)
-- [Pricing](${base}/pricing): Plans and commercial license options
+- [Pricing](${base}/pricing): Plans, credits, and Sailor support plans
 - [Blog](${base}/blog): Engineering and product writing
 - [Changelog](${base}/changelog): Release notes
-- [Licensing](${base}/licensing): OSS + commercial license terms
+- [Licensing](${base}/licensing): Apache-2.0 for everything; paid plans sell support, never permission
 - [Status](${base}/status): Service health
 - [Open Platform](${base}/open): Public API catalog and developer console index
 

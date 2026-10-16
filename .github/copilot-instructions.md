@@ -4,7 +4,7 @@ This file provides project-wide context for GitHub Copilot Chat and inline compl
 
 ## Project Identity
 
-**Nebutra-Sailor** is an enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms built on Next.js 16, Hono, Prisma, and Clerk.
+**Nebutra-Sailor** — Skip to production. The open-source (Apache-2.0) production layer for agent-built software: auth, global + China billing, multi-tenancy and an AI gateway in one command. Built on Next.js 16, Hono, Prisma 7 and Better Auth.
 
 - **Runtime**: Node.js 22+, pnpm 11.28.5+
 - **Framework**: Next.js 16 (App Router, React 19, Turbopack)
@@ -12,14 +12,14 @@ This file provides project-wide context for GitHub Copilot Chat and inline compl
 - **Language**: TypeScript 5.9 (strict mode)
 - **Linter**: Biome (NOT ESLint — never suggest ESLint)
 - **Testing**: Vitest (unit) + Playwright (E2E)
-- **Auth**: Clerk (`@clerk/nextjs`)
+- **Auth**: Better Auth (`@nebutra/auth`)
 - **Database**: Prisma v7 + PostgreSQL with pgvector + RLS
 
 ## Monorepo Structure
 
 ```
 apps/landing/  → public marketing site (next-intl, 7 locales)
-apps/web/           → authenticated SaaS dashboard (Clerk auth, RBAC)
+apps/web/           → authenticated SaaS dashboard (Better Auth, RBAC)
 backends/gateway/   → Hono + OpenAPI backend (Zod, 10-layer middleware)
 apps/storybook/     → Storybook 8.x component docs
 apps/studio/        → Sanity Studio v5 CMS
@@ -30,9 +30,9 @@ packages/design/tokens/    → CSS variables — SINGLE SOURCE OF TRUTH for them
 packages/design/icons/     → 541 Geist icons as TSX components
 packages/platform/db/        → Prisma v7 + PostgreSQL schema
 packages/commerce/billing/   → Creem (cards, merchant of record) + WeChat Pay/Alipay + usage metering
-packages/iam/identity/  → Auth abstraction layer (Clerk adapter)
+packages/iam/identity/  → Shared identity primitives
 packages/integrations/email/     → Resend transactional email
-packages/ai-sdk/    → Vercel AI SDK wrapper
+packages/ai/agents/  → AI runtime (Vercel AI SDK helpers, agent orchestration)
 packages/iam/permissions/ → RBAC/ABAC (CASL + OpenFGA)
 packages/integrations/webhooks/  → Outbound webhooks via Svix
 packages/commerce/metering/  → ClickHouse usage metering

@@ -43,4 +43,4 @@ const cnProviders = PROVIDERS.filter((provider) => provider.status === "cn-compa
 
 ## License
 
-AGPL-3.0
+Apache-2.0 — see [LICENSE](./LICENSE).

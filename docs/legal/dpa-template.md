@@ -28,7 +28,7 @@ your behalf, namely:
 | Self-hosted, no support data shared | **Not a processor.** No DPA required. |
 | Support engagement where you share logs, dumps, or grant access to your systems | **Processor**, limited to support data |
 | Any hosted or managed capability we operate for you | **Processor**, per the service description |
-| Marketing site, sales contact, licence purchase | **Controller** of that contact data — see our privacy notice |
+| Marketing site, sales contact, support-plan purchase | **Controller** of that contact data — see our privacy notice |
 
 The rest of this template covers the processor scenarios.
 

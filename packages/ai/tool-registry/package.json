@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "description": "SKILL.md registry with progressive disclosure and content-store backing",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "status": "wip",

@@ -20,7 +20,7 @@ main branch, with .templateignore applied at runtime
    │
    ▼
 Writes nebutra.config.json, governance.config.json, compliance boilerplate,
-secrets, .env.local, MIT LICENSE — the same output every time (ADR 2026-09-24
+secrets, .env.local, Apache-2.0 LICENSE + NOTICE — the same output every time (ADR 2026-09-24
 Sailor convergence: no provider flags, no ORM/i18n/app-type choice, no prune
 step — the full converged stack ships as-is)
    │

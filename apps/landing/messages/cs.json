@@ -244,7 +244,6 @@
     },
     "contact": {
       "title": "Technický a obchodní dotaz — {brandName}",
-      "description": "Věcný komunikační kanál pro obchodní licencování, podnikové self-hosting a pokročilou technickou podporu.",
       "heading": "Navázat spojení podpory",
       "subheading": "Zašleme vám vyhrazeného technického specialistu nebo architekta k posouzení vašich explicitních požadavků.",
       "contacts": {
@@ -257,8 +256,7 @@
           "description": "Předběžná jednání týkající se ekologických strategických partnerství a celkového vývoje architektury."
         },
         "sales": {
-          "title": "Komerční nasazení",
-          "description": "Vyjednávání ohledně licencování uzavřeného zdroje a specifik týkajících se nasazení v soukromém clusterovém prostředí."
+          "title": "Komerční nasazení"
         },
         "support": {
           "title": "Podpora na úrovni experta",
@@ -285,7 +283,6 @@
         "category": "Oblast požadavku",
         "categories": {
           "general": "Firemní konzultace",
-          "sales": "Licencování a architektura",
           "support": "Podpora pro vývojáře",
           "legal": "Právní a compliance hranice",
           "privacy": "Politiky zpracování dat",
@@ -518,10 +515,6 @@
               "q": "Jaký je explicitní provozní účel {productName}?",
               "a": "{productName} je vysoce strukturovaný, produkčně připravený Next.js AI SaaS framework. Kombinuje firemní fakturaci, vícefaktorové ověřování a izolaci více nájemců do řízené platformové základny, což umožňuje týmům soustředit se na implementaci AI specifickou pro produkt."
             },
-            "1": {
-              "q": "Jak je strukturováno licencování repozitáře?",
-              "a": "Základní infrastruktura je nyní licencována pod Functional Source License, verze 1.1, ALv2 (FSL-1.1-ALv2) — zcela zdarma pro stavbu produktů, bez poplatků a bez copyleft povinností. Jediné, co není povoleno, je nabízet samotný Sailor jako konkurenční komerční produkt nebo službu. Každá verze se dva roky po vydání neodvolatelně převádí na Apache-2.0."
-            },
             "2": {
               "q": "Jaká je rychlost počátečního komerčního hodnocení?",
               "a": "Extrémně vysoká. Pomocí naší přizpůsobené Node CLI nástrojové řetězce a přesné technické specifikace může junior inženýr rozchodit autonomní místní instanci MVP (Minimum Viable Product) během několika minut."
@@ -583,8 +576,7 @@
           "name": "Směrnice technické asistence",
           "questions": {
             "0": {
-              "q": "Jak se řeší odstraňování provozních úzkých míst?",
-              "a": "Počáteční vektory triáže cílí na pečlivě udržovanou a recenzovanou matici dokumentace a ověřené interakce komunity. Získání standardní nebo podnikové licence odemkne přístup k soukromým eskalačním frontám řešeným prostřednictvím přímých interních inženýrských uzlů."
+              "q": "Jak se řeší odstraňování provozních úzkých míst?"
             },
             "1": {
               "q": "Poskytujete fyzické nebo specializované operační integrace prostředí?",
@@ -1155,12 +1147,10 @@
     "pricing": {
       "title": "Stavět můžete zdarma. Platíte, jen když potřebujete, abychom ručili.",
       "description": "Postavit komerční produkt na {brandName} nic nestojí — žádný poplatek, žádný licenční klíč, žádná registrace, žádný copyleft. Placené úrovně prodávají podporu, SLA, odškodnění a práva k ochranné známce, nikdy povolení k použití.",
-      "socialProofText": "MIT na npm · FSL-1.1-ALv2 v repozitáři, po dvou letech přechází na Apache-2.0 · komerční použití zdarma v jakémkoli rozsahu.",
       "community": {
         "badge": "KOMUNITA",
         "price": "Zdarma",
         "period": "navždy",
-        "desc": "Pro všechny. Jakákoli velikost týmu, jakékoli tržby. Komerční použití s uzavřeným kódem je zahrnuto, bez registrace a bez povinnosti uvádět autorství.",
         "cta": "npx create-sailor",
         "f1": "Kompletní jádro SaaS Next.js 16, všechny balíčky součástí",
         "f2": "Komerční použití s uzavřeným kódem při jakékoli velikosti týmu či tržbách",
@@ -1173,7 +1163,6 @@
         "price": "2 000 $",
         "period": "rok",
         "cta": "Získat podporu {brandName}",
-        "f1": "Soukromý kanál podpory (e-mail + sdílený Slack nebo Discord)",
         "f2": "První odpověď zaručeně do dvou pracovních dnů",
         "f3": "Přednostní třídění chyb před issues komunity",
         "f4": "Pomoc s upgrady a předběžné upozornění na nekompatibilní změny",
@@ -1188,33 +1177,27 @@
         "f1": "SLA odezvy — 4 pracovní hodiny standardně, 1 hodina při výpadku produkce",
         "f2": "Odškodnění a smluvní závazek k bezpečnostním záplatám",
         "f3": "Podepsaná smlouva o zpracování údajů, balíček shody a závazek kontinuity",
-        "f4": "Práva k ochranné známce a white label plus výjimka z konkurenčního použití",
         "f5": "Větev dlouhodobé podpory a inženýrská podpora privátního nasazení",
         "f6": "Vše z Týmu"
       }
     },
     "faq": {
       "title": "FAQ k cenám a licencování",
-      "description": "Otázky k licenčním úrovním, vrácení peněz a právům k komerčnímu využití.",
       "q1": {
-        "q": "Je Sailor měsíční SaaS předplatné?",
-        "a": "Ne. Tato cenová politika platí pro licenční smlouvy k zdrojovému kódu Sailor: Independent je zdarma, Startup se fakturuje ročně a Enterprise je na míru."
+        "q": "Je Sailor měsíční SaaS předplatné?"
       },
       "q2": {
-        "q": "Nabízíte vrácení peněz?",
-        "a": "Komerční licence Startup zahrnuje 14denní lhůtu na vrácení peněz za počáteční nákupy. Podmínky Enterprise se řeší v podepsané smlouvě."
+        "q": "Nabízíte vrácení peněz?"
       },
       "q3": {
-        "q": "Mohu použít Sailor pro práci pro klienty?",
-        "a": "Ano. Komerční licence umožňuje vašemu týmu vydávat uzavřené zdrojové produkty pro klienty nebo interní produkty v rámci licencovaného rozsahu; práva na bílou značku vyžadují schválení Enterprise."
+        "q": "Mohu použít Sailor pro práci pro klienty?"
       },
       "contactNudge": "Stále máte otázky? Promluvte si s týmem {brandName} →"
     },
     "cta": {
       "eyebrow": "Začněte",
       "title": "Přestaňte konfigurovat. Začněte budovat.",
-      "description": "Inicializujte škálovatelnou SaaS architekturu lokálně pomocí CLI {brandName}.",
-      "license": "Open source pod licencí FSL-1.1-ALv2. Karta není vyžadována."
+      "description": "Inicializujte škálovatelnou SaaS architekturu lokálně pomocí CLI {brandName}."
     },
     "capability": {
       "badge": "Funkce pro enterprise",
@@ -1500,8 +1483,7 @@
   },
   "licensing": {
     "hero": {
-      "title": "Zdarma <hl>vyvíjet na</hl>",
-      "description": "{brandName}-Sailor je zdarma i pro komerční použití — MIT na npm, FSL-1.1-ALv2 v repozitáři, po dvou letech přechází na Apache-2.0. Placené úrovně prodávají podporu a smluvní závazky, nikdy povolení."
+      "title": "Zdarma <hl>vyvíjet na</hl>"
     },
     "plans": {
       "community": {
@@ -1512,7 +1494,6 @@
         "features": {
           "fullSource": "Celý zdrojový kód, všechny balíčky",
           "closedSourceOk": "Uzavřené komerční použití — bez copyleftu",
-          "noAttribution": "Žádná registrace, žádná nutnost uvádět zdroj",
           "communitySupport": "Podpora komunity — co nejlépe"
         },
         "cta": "Zobrazit na GitHubu"
@@ -1537,8 +1518,7 @@
         "features": {
           "sla": "SLA odezvy — 4 pracovní hodiny, 1 hodina při výpadku produkce",
           "indemnity": "Ochrana před škodami a závazek k bezpečnostním záplatám",
-          "compliance": "Podepsaný DPA, balíček pro dodržování předpisů, závazek k kontinuitě",
-          "trademark": "Práva k ochranné známce a white-label"
+          "compliance": "Podepsaný DPA, balíček pro dodržování předpisů, závazek k kontinuitě"
         },
         "cta": "Kontaktujte prodej"
       }
@@ -1547,39 +1527,23 @@
       "title": "Často kladené otázky",
       "description": "Stručná verze: používání je zdarma. Platba je pro případ, kdy nás potřebujete smluvně zavázat.",
       "items": {
-        "whyFsl": {
-          "q": "Proč FSL místo MIT nebo AGPL?"
-        },
         "reallyFree": {
-          "q": "Je komerční použití skutečně zdarma?",
-          "a": "Ano. Žádný poplatek, žádný licenční klíč, žádná registrace, žádný práh příjmu nebo počtu zaměstnanců, žádné připisování. Vytvořte produkt s uzavřeným zdrojovým kódem a prodávejte ho."
-        },
-        "competingUse": {
-          "q": "Co se počítá jako konkurenční použití?",
-          "a": "Nabízení Sailor samotného — hostované služby Sailor nebo pře-balívaná konkurenční základna platformy. Budování vertikálního SaaS, interního nástroje nebo projektů pro klienty na Sailor se nepočítá jako konkurenční použití. Pokud váš model potřebuje, může Enterprise smlouva zahrnovat písemné prominutí."
+          "q": "Je komerční použití skutečně zdarma?"
         },
         "upgrade": {
           "q": "Co vlastně platné úrovně kupují?",
           "a": "Závazky podpory, SLA odezvy, ochrana před škodami, dokumentace pro dodržování předpisů a práva k ochranné známce. Nikdy povolení k používání softwaru — to už máte."
         },
         "contributions": {
-          "q": "Co na to příspěvky do open source?",
-          "a": "Všechny příspěvky vyžadují CLA. Viz CONTRIBUTING.md."
+          "q": "Co na to příspěvky do open source?"
         }
       }
     },
     "meta": {
-      "title": "Licencování — {brandName}",
-      "description": "Zdarma pro komerční použití. MIT na npm, FSL-1.1-ALv2 v repozitáři, převod na Apache-2.0."
+      "title": "Licencování — {brandName}"
     }
   },
   "licenseWizard": {
-    "tiers": {
-      "individualFree": "Bezplatná licence pro jednotlivce",
-      "opcFree": "Licence pro společnost s jedním vlastníkem",
-      "startupCommercial": "Komerční licence Startup",
-      "enterprise": "Licence Enterprise"
-    },
     "referralSource": {
       "selectPlaceholder": "Vyberte možnost...",
       "productHunt": "Product Hunt"
@@ -1597,10 +1561,6 @@
   "blogMeta": {
     "description": "Inženýrské poznatky, aktualizace produktů a osvědčené postupy SaaS od týmu {brandName}."
   },
-  "getLicenseMeta": {
-    "title": "Získejte svou licenci — {brandName}",
-    "description": "Získejte licenci {brandName} a přístup k platformě za 2 minuty."
-  },
   "landing": {
     "faq": {
       "badge": "FAQ",
@@ -1616,8 +1576,7 @@
           "answer": "Pro zakladatele a produktové inženýry, kteří chtějí trávit čas tím, co je odlišuje — ne tím, že znovu staví stejnou infrastrukturu pro auth/billing/tenancy po páté."
         },
         "free-or-paid": {
-          "question": "Je to zdarma nebo placené?",
-          "answer": "Celý zdrojový kód je vydáván pod licencí FSL-1.1-ALv2 — zcela zdarma pro stavbu produktů, bez poplatků a bez copyleft povinností. Jediné omezení je, že nelze nabízet samotný Sailor jako konkurenční komerční produkt nebo službu, a každá verze se po dvou letech automaticky převádí na Apache-2.0. Každý plán zahrnuje kompletní sadu funkcí (auth, billing, multi-tenancy, AI, audit); placené plány neprodávají žádné funkce navíc — prodávají závazek podpory a SLA, odškodnění, compliance dokumentaci a práva k ochranné známce."
+          "question": "Je to zdarma nebo placené?"
         },
         "china-friendly": {
           "question": "Funguje to v Číně?",
@@ -1644,12 +1603,10 @@
           "answer": "Next.js 16 (App Router) na React 19, TypeScript 5.9, Tailwind v4, Prisma 7 nad Postgres (s pgvector + RLS), Hono pro BFF gateway, FastAPI pro ML/těžké služby a kurátorská komponentová knihovna na Radix, {brandName} UI primitivy a sdílené Motion vrstvě. AI funkce procházejí přes Vercel AI SDK s portabilitou poskytovatele (OpenAI / OpenRouter / SiliconFlow / Azure / local)."
         },
         "license": {
-          "question": "Jaká je licence?",
-          "answer": "FSL-1.1-ALv2 (Functional Source License, verze 1.1, ALv2). Zcela zdarma pro stavbu produktů, bez copyleft povinností. Jediné, co není povoleno, je nabízet samotný Sailor jako konkurenční komerční produkt nebo službu. Každá verze se dva roky po vydání neodvolatelně převádí na Apache-2.0. Placené plány prodávají závazek podpory, SLA, odškodnění, compliance dokumentaci a práva k ochranné známce, ne funkce navíc."
+          "question": "Jaká je licence?"
         },
         "paid-updates": {
-          "question": "Musím platit za aktualizace?",
-          "answer": "Ne. Aktualizace zdrojového kódu jsou součástí každé komerční licence — tahat z mainu můžete kdykoliv a rebaseovat svůj fork. Placená úroveň je právem používat Sailor v komerční produkci, ne právem na přijímání kódu. Každá minor verze obsahuje CHANGELOG a návod na upgrade pro případné breaking změny."
+          "question": "Musím platit za aktualizace?"
         },
         "why-turborepo": {
           "question": "Proč Turborepo místo standardní Next.js aplikace?",
@@ -1710,9 +1667,7 @@
       "value": {
         "included": "Zahrnuto",
         "notIncluded": "Nezahrnuto",
-        "licenseIds": "MIT + FSL-1.1-ALv2",
         "notRequired": "Není nutná",
-        "whiteLabelRights": "Práva white label",
         "unlimited": "Neomezené",
         "unlimitedPlusNotice": "Neomezené + předběžné upozornění na nekompatibilní změny",
         "unlimitedPlusLts": "Neomezené + větev dlouhodobé podpory",

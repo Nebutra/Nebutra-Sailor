@@ -725,7 +725,7 @@
       "sourceDir": "packages/ops/create-sailor",
       "cohort": "eighth-wave",
       "category": "ops",
-      "description": "Governed AI-native SaaS scaffolder \u2014 bootstrap a production monorepo with multi-tenant defaults.",
+      "description": "Skip to production. Scaffold Nebutra Sailor \u2014 the open-source (Apache-2.0) production layer for agent-built software.",
       "topics": ["nebutra", "create-sailor", "scaffold", "cli", "typescript"]
     },
     {

@@ -24,7 +24,7 @@
     "test:watch": "vitest"
   },
   "author": "Nebutra <contact@nebutra.com> (https://nebutra.com)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "homepage": "https://nebutra.com",
   "repository": {
     "type": "git",

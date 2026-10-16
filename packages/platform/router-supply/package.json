@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "description": "Nebutra Router supply orchestration: model aliases, engine endpoints, upstream resolution for New-API/Sub2API sidecars",
   "private": false,
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "nebutra": {
     "graph": "labs",

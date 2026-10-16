@@ -75,4 +75,4 @@ Optional fields include `inputs`, `outputs`, and `budget`.
 
 ## License
 
-MIT
+Apache-2.0 — see [LICENSE](./LICENSE).
