@@ -42,10 +42,11 @@ Nebutra runs in production:
 
 Nothing is pruned and nothing is picked at scaffold time. Every capability runs
 locally with an empty `.env`; adding a provider key takes it live.
-`nebutra status` shows what is live and what each capability still needs.
+`pnpm nebutra status` shows what is live and what each capability still needs.
 
-Mainland-China deployments set `NEBUTRA_LOCALE=cn` at runtime (ICP footer, AIGC
-disclosure, phone-first login) — the same code, not a different scaffold.
+Mainland-China deployments set `NEBUTRA_LOCALE=cn` at runtime: checkout prefers
+WeChat Pay / Alipay and SMS prefers Aliyun; `NEXT_PUBLIC_ICP_NUMBER` shows the ICP
+footer — the same code, not a different scaffold.
 
 ## Usage
 
@@ -62,11 +63,13 @@ Options: `--pm`, `--no-install`, `--no-git`, `--yes`, `--dry-run`, `--json`,
 
 ```bash
 cd my-app
-pnpm infra:up      # local Postgres (optional)
-pnpm db:migrate
-pnpm dev
-nebutra status     # what is live, what needs a key
+pnpm dev                  # site :3000 · app :3001/welcome · gateway :3002 — no keys, no Docker
+pnpm nebutra status       # what is live, what needs a key (--json for agents)
 ```
+
+The local database is PGlite (`DATABASE_URL="pglite:"`); the demo sign-in is
+`admin@example.com` / `preview-demo`. Point `DATABASE_URL` at Postgres and run
+`pnpm db:migrate` when you have one.
 
 Deploy anywhere: the project builds Next `standalone` output and ships
 Dockerfiles. The scaffold does not choose a platform for you.

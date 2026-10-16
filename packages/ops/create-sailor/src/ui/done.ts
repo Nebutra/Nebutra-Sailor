@@ -52,6 +52,7 @@ export function showDone(opts: DoneOptions): void {
   lines.push(
     `     ${arrow} ${pm} dev          ${dim("→ http://localhost:3001/welcome — no keys, no Docker")}`,
     `                        ${dim("demo sign-in: admin@example.com / preview-demo")}`,
+    `     ${arrow} pnpm nebutra status  ${dim("→ what is live, what needs a key (--json for agents)")}`,
   );
 
   if (hasDatabase) {

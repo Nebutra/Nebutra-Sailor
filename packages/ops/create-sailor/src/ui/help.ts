@@ -9,11 +9,12 @@ There is nothing to choose. Every project gets the same converged stack:
   PostHog · Turnstile · MCP
 
 Every capability runs locally with an empty .env. Add a provider key to take it
-live; \`nebutra status\` shows what is live and what each capability still needs.
-China deployments: set NEBUTRA_LOCALE=cn (ICP footer, AIGC disclosure, phone login).
+live; \`pnpm nebutra status\` shows what is live and what each capability still needs.
+China deployments: set NEBUTRA_LOCALE=cn (WeChat Pay / Alipay first at checkout,
+Aliyun first for SMS); NEXT_PUBLIC_ICP_NUMBER shows the ICP footer.
 
 Options:
-  -p, --pm <id>             npm | pnpm | yarn | bun (auto-detected)
+  -p, --pm <id>             package manager (default: pnpm — the workspace needs it)
       --no-install          skip package install
       --no-git              skip git init
   -y, --yes                 non-interactive

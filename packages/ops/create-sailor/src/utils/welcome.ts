@@ -19,7 +19,8 @@ function renderWhatYouCanDoNext(): string {
   return `
 ## What you can do next
 
-- See which capabilities are live and which keys they need: \`nebutra status\`
+- See which capabilities are live and which keys they need: \`pnpm nebutra status\`
+  (\`--json\` for agents; the first run builds the CLI once)
 - Write your marketing site's words in \`apps/landing/messages/en.json\` -> \`site\`
   (plus \`zh-Hans.json\` / \`zh-Hant.json\` for Chinese); its structure and config
   — plan ids, prices, links — stay in \`apps/landing/src/content/site.ts\`

@@ -208,7 +208,7 @@ function printCapabilities(reports: CapabilityReport[]): void {
     "local-fallback": "local fallback",
     "missing-key": "needs a key   ",
   };
-  process.stdout.write("\n  Capabilities (details: nebutra status)\n");
+  process.stdout.write("\n  Capabilities (details: pnpm nebutra status)\n");
   for (const r of reports) {
     const detail =
       r.state === "missing-key" && r.missing.length > 0

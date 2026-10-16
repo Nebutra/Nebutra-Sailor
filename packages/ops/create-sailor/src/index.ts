@@ -20,7 +20,7 @@ import type { Preset } from "@nebutra/tokens/preset";
 import pc from "picocolors";
 import { buildProgram } from "./steps/cli-setup";
 import { runScaffold } from "./steps/scaffold";
-import { type CliOptions, detectPm, type JsonEvent } from "./steps/types";
+import type { CliOptions, JsonEvent } from "./steps/types";
 import { showBanner } from "./ui/banner";
 import { showHelp } from "./ui/help";
 import { brandNameFromProject } from "./utils/brand";
@@ -191,7 +191,11 @@ async function run(): Promise<void> {
     }
   }
 
-  const resolvedPm = opts.pm ?? detectPm();
+  // The workspace uses pnpm `catalog:` and `workspace:` specifiers, which npm,
+  // yarn and bun cannot install. The pre-check above proved pnpm is on PATH,
+  // so it is the default however the CLI was launched (`npx` reports npm).
+  // `--pm` still overrides for anyone who knows their setup.
+  const resolvedPm = opts.pm ?? "pnpm";
 
   // ---- Dry run ----
   if (isDry) {

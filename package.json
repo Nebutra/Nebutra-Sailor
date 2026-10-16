@@ -5,6 +5,7 @@
   "description": "Enterprise-grade SaaS monorepo for AI-native, multi-tenant platforms",
   "scripts": {
     "dev": "tsx scripts/dev/preview.ts",
+    "nebutra": "node packages/ops/cli/bin/nebutra.js",
     "dev:all": "turbo run dev --concurrency=64",
     "dev:web": "pnpm --filter @nebutra/web dev",
     "dev:landing": "pnpm --filter @nebutra/landing dev",

@@ -293,7 +293,8 @@ function Capabilities({ rows }: { rows: CapabilityRow[] | null }) {
       ) : (
         <p className="border-y border-neutral-5 py-4 text-sm text-neutral-11">
           Start the preview with <code className="font-mono">pnpm dev</code> from the project root
-          to see each capability here, or run <code className="font-mono">nebutra status</code>.
+          to see each capability here, or run <code className="font-mono">pnpm nebutra status</code>
+          .
         </p>
       )}
     </section>
@@ -309,7 +310,7 @@ const NEXT_STEPS: ReadonlyArray<{ title: string; body: string; command: string }
   {
     title: "Take a capability live",
     body: "Add the keys a capability needs to .env.local, restart the preview, and check what went live.",
-    command: "nebutra status",
+    command: "pnpm nebutra status",
   },
   {
     title: "Bring your own Postgres",
