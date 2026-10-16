@@ -36,8 +36,16 @@ const SELECT_STEP: Record<SelectSize, ControlStep> = {
 /**
  * Trigger size variables, read from the control ladder so a Select sits at the
  * same height and corner as the Input and Button beside it under every
- * language (see tokens/components/control-ladder.ts). No inline `outline`: the
- * class list already owns it, and an inline value outranks every rule.
+ * language (see tokens/components/control-ladder.ts).
+ *
+ * `outline` and `borderRadius` stay inline. The trigger is a <button>, so the
+ * global :focus-visible rule in design-tokens/static/base.css matches it on
+ * keyboard focus. That rule is unlayered and beats the `outline-none` and
+ * `rounded-[var(--select-radius)]` utilities in `@layer utilities`: it drew a
+ * 2px outline and set `border-radius: inherit`, which squared the trigger's
+ * corners. Only an inline value outranks it. The trigger has no nested
+ * buttons, so the inline outline hides no other focus indicator; focus is
+ * drawn by the tokenized ring in formControlFocusClassNames.select.
  */
 function getSelectTriggerStyle(size: SelectSize, style: unknown): SelectTriggerCssVars {
   const token = selectTokens.sizes[size];
@@ -49,6 +57,8 @@ function getSelectTriggerStyle(size: SelectSize, style: unknown): SelectTriggerC
     "--select-font-size": controlFontSize(step, token.fontSize),
     "--select-radius": fieldRadius(token.radius),
     "--select-focus-ring-width": `${selectTokens.focusRingWidth}px`,
+    borderRadius: "var(--select-radius)",
+    outline: "none",
     ...asPlainStyle(style),
   };
 }

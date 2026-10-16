@@ -9,6 +9,7 @@ import { Alert, AlertTitle } from "../alert";
 import { buttonVariants } from "../button-variants";
 import { Input } from "../input";
 import { overlayPrimitiveClassNames } from "../overlay";
+import { Select, SelectTrigger, SelectValue } from "../select";
 import { Textarea } from "../textarea";
 
 describe("control ladder", () => {
@@ -24,6 +25,22 @@ describe("control ladder", () => {
     const { container } = render(<Input aria-label="x" clearable defaultValue="abc" />);
     const button = container.querySelector("button") as HTMLElement;
     expect(button.getAttribute("style") ?? "").not.toMatch(/outline/);
+  });
+
+  it("Select trigger keeps its corner and drops the global outline on keyboard focus", () => {
+    // The trigger is a <button>, so the unlayered :focus-visible rule in
+    // design-tokens/static/base.css matches it and beats `outline-none` and
+    // `rounded-*` utilities; only inline values hold the tokenized contract.
+    const { container } = render(
+      <Select defaultValue="a">
+        <SelectTrigger aria-label="x">
+          <SelectValue />
+        </SelectTrigger>
+      </Select>,
+    );
+    const style = (container.querySelector("button") as HTMLElement).getAttribute("style") ?? "";
+    expect(style).toMatch(/outline:\s*none/);
+    expect(style).toContain("border-radius: var(--select-radius)");
   });
 
   it("Textarea corner stops at the card radius", () => {
