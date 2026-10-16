@@ -374,11 +374,13 @@ if (nebutraCyanScale[500] !== colors.accent[500]) {
     ok("tokens/styles.css: Geist primary, Poppins removed");
   }
 
+  // next/font's variable must come first; a fallback inside the var() (`var(--font-geist-sans, "Geist")`)
+  // is allowed so the face still resolves before next/font's class lands.
   const fontSansDefinitions = cssVariableDefinitions(tokensCss, "font-sans");
   const fontMonoDefinitions = cssVariableDefinitions(tokensCss, "font-mono");
   if (
     !fontSansDefinitions.length ||
-    !fontSansDefinitions.every((value) => value.includes("var(--font-geist-sans)"))
+    !fontSansDefinitions.every((value) => /^\s*var\(--font-geist-sans\s*[,)]/.test(value))
   ) {
     fail(
       "tokens/styles.css --font-sans",
@@ -390,7 +392,7 @@ if (nebutraCyanScale[500] !== colors.accent[500]) {
 
   if (
     !fontMonoDefinitions.length ||
-    !fontMonoDefinitions.every((value) => value.includes("var(--font-geist-mono)"))
+    !fontMonoDefinitions.every((value) => /^\s*var\(--font-geist-mono\s*[,)]/.test(value))
   ) {
     fail(
       "tokens/styles.css --font-mono",

@@ -44,6 +44,10 @@ const FOCUS_GOVERNANCE_ROOTS = ["packages/design/ui/src", "apps/landing/src"] as
 // "outline-none"); consumers prove they use it. Since the control-ladder change
 // (fc46db420) they no longer set an inline `outline: none`, which would beat
 // the global :focus-visible rule on Input's clear and reveal buttons.
+// Select is the exception: its trigger is a <button>, which that unlayered
+// rule matches and beats `outline-none` on, so the trigger keeps an inline
+// `outline: none` and `borderRadius` (the rule's `border-radius: inherit`
+// squared the corners on keyboard focus).
 const FORM_CONTROL_FOCUS_REQUIREMENTS = [
   {
     slot: "input",
@@ -97,6 +101,7 @@ const FORM_CONTROL_FOCUS_REQUIREMENTS = [
       "formControlFocusClassNames.select",
       "formControlInvalidClassNames.select",
       'borderRadius: "var(--select-radius)"',
+      'outline: "none"',
     ],
   },
 ] as const;

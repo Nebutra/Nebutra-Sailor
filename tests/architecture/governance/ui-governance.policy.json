@@ -185,7 +185,7 @@
           "currentBreadcrumb?.label ?? \"Dashboard\"",
           "BrandLogo",
           "webBrandLabels.homeLink",
-          "WorkspaceSwitcher",
+          "SidebarWorkspacePlate",
           "NotificationsDialog",
           "UserMenu",
           "breadcrumbs.length > 1 ?",
