@@ -486,6 +486,11 @@ infra/fly/smoke-kcq-connector.sh
 infra/fly/test_kcq_supervisor.py
 infra/fly/kcq.security-headers.conf
 infra/ops/scripts/*-kcq-edge-cache.sh
+# nebutra.com / acme.nebutra.com edge cache: Nebutra's zone, hosts and deploy wiring. The origin
+# side (apps/landing/src/lib/edge-cache.ts) ships; a project points its own CDN at those headers.
+infra/ops/scripts/*-landing-edge-cache.sh
+infra/iac/cloudflare/edge-cache/
+scripts/perf/edge-cache-proxy.mjs
 docs/architecture/2026-10-09-kcq-product-surface.md
 docs/architecture/2026-10-09-kcq-brand-architecture.md
 .github/workflows/deploy-kcq-fly.yml

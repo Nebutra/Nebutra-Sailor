@@ -23,6 +23,9 @@ export function resetPublicMeCache(): void {
 }
 
 export function loadPublicMe(): Promise<PublicMe | null> {
+  // A demo site (NEXT_PUBLIC_DEMO_CTA_URL) has no product
+  // app behind it: the request could only 404 and log a console error.
+  if (env.NEXT_PUBLIC_DEMO_CTA_URL) return Promise.resolve(null);
   if (!inflight) {
     inflight = fetch(`${APP_URL}/api/me/public`, {
       credentials: "include",

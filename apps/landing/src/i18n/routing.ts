@@ -20,6 +20,10 @@ export const routing = defineRouting({
   // and the page never changed ("clicking EN does nothing"). Deterministic
   // URL-only locales also drop the SEO-hostile auto-redirect on "/".
   localeDetection: false,
+  // With detection off nothing reads NEXT_LOCALE, yet the middleware still
+  // wrote it on every page. A Set-Cookie on public HTML keeps Cloudflare from
+  // caching it at the edge (src/lib/edge-cache.ts), so the cookie is off.
+  localeCookie: false,
 });
 
 export type Locale = (typeof routing.locales)[number];

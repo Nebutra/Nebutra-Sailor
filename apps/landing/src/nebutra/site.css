@@ -104,7 +104,10 @@ html[data-brand="nebutra-site"] .inv-track-fill-y {
       animation-timeline: view();
       animation-range: entry 0% cover 60%;
     }
-    html[data-brand="nebutra-site"] .inv-stop {
+    /* The stop's dot lights up as the rule reaches it. Only the dot: dimming
+       the stop's text left it below 4.5:1 until scrolled to (Lighthouse
+       color-contrast). */
+    html[data-brand="nebutra-site"] .inv-stop > [aria-hidden] {
       animation: inv-stop-in linear both;
       animation-timeline: view();
       animation-range: entry 20% cover 35%;

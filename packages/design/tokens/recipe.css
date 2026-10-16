@@ -471,3 +471,28 @@
     color-mix(in srgb, hsl(var(--brand-mark)) 80%, transparent)
   );
 }
+
+/* ── Display headline fallback (Nebutra site, DM Sans) ───────────────
+ * next/font sizes "dmSans Fallback" from DM Sans' advance widths at its
+ * default optical size. DM Sans has an opsz axis: at 40px and up (every h1
+ * on the site) its letters are ~10% narrower, so the fallback broke a
+ * headline into one more line, and everything under it jumped up when the
+ * font swapped in (the Nebutra site's /investors measured CLS 0.217 on a cold load). This
+ * face measures like DM Sans at display size, so the swap keeps the line
+ * breaks. Line height comes from the type scale, so only widths matter;
+ * ascent/descent are DM Sans' own. "dmSans" is the family next/font gives
+ * @nebutra/fonts' `dmSans` loader (packages/design/fonts/src/next-cjk.ts);
+ * smaller headings keep next/font's fallback, which is right at text size.
+ */
+@font-face {
+  font-family: "Nebutra Display Fallback";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans"), local("Arimo");
+  size-adjust: 95.5%;
+  ascent-override: 103.87%;
+  descent-override: 32.46%;
+  line-gap-override: 0%;
+}
+
+html[data-brand="nebutra-site"] h1.font-heading {
+  font-family: dmSans, "Nebutra Display Fallback", var(--font-heading);
+}

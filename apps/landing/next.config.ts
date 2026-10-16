@@ -1,7 +1,9 @@
 import { getBrandOrigin, publicAssetOrigin } from "@nebutra/brand/metadata-helpers";
+import { ROUTE_LOCALES } from "@nebutra/i18n/locales";
 import createBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { edgeCacheHeaderRules } from "./src/lib/edge-cache";
 import { SELF_FRAMED_SOURCES, SELF_FRAMING_SOURCES } from "./src/lib/security/framing";
 
 const cdnOrigin = getBrandOrigin("cdn");
@@ -12,6 +14,16 @@ const landingHost = new URL(getBrandOrigin("landing")).host;
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const withBundleAnalyzer = createBundleAnalyzer({ enabled: true });
 const isDevelopment = process.env.NODE_ENV !== "production";
+/**
+ * Cloudflare Web Analytics: the zone injects its cookieless beacon into every
+ * HTML response at the edge. The CSP used to block it, which logged a console
+ * error on every page (Lighthouse best-practices). The script loads from
+ * static.cloudflareinsights.com and reports to cloudflareinsights.com.
+ */
+const cloudflareInsights = {
+  connect: "https://cloudflareinsights.com",
+  script: "https://static.cloudflareinsights.com",
+} as const;
 const googleIdentityServices = {
   connect: "https://accounts.google.com/gsi/",
   frame: "https://accounts.google.com/gsi/",
@@ -63,6 +75,7 @@ function buildContentSecurityPolicy(
     "'unsafe-inline'",
     ...(isDevelopment ? ["'unsafe-eval'"] : []),
     googleIdentityServices.script,
+    cloudflareInsights.script,
   ];
 
   return [
@@ -102,6 +115,7 @@ function buildContentSecurityPolicy(
       "'self'",
       ...firstPartyConnectOrigins(),
       googleIdentityServices.connect,
+      cloudflareInsights.connect,
       cdnOrigin,
       ...(framing.framedBySelf ? ["https://react-tweet.vercel.app"] : []),
     ]),
@@ -305,6 +319,9 @@ const nextConfig: NextConfig = {
           },
         ],
       })),
+      // The edge lifetime of the prerendered public pages, for document requests
+      // only (src/lib/edge-cache.ts; the proxy sets the browser header).
+      ...edgeCacheHeaderRules(ROUTE_LOCALES),
       {
         // API answers are per-session/per-request; never let a CDN hold them.
         // Moved from vercel.json when the site left Vercel.
