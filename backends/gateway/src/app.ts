@@ -29,6 +29,8 @@ configurePaymentOrderStore(new PaymentOrderRepository(getSystemDb()));
 // The deployment's price list (Nebutra's lives in ops/nebutra/offers.json);
 // unset keeps the template default.
 configureOffersFromEnv();
+// Paid support plans settle into a license (ADR 2026-09-26: Creem, not Stripe).
+import "./services/license-fulfillment.js";
 
 import {
   calculateCost,

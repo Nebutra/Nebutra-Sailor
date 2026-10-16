@@ -1,11 +1,12 @@
-import { createCheckoutSession, getOrCreateCustomer } from "@nebutra/billing";
+import { createPaymentOrder, isPaymentMethodAvailable } from "@nebutra/billing";
 import { getSystemDb } from "@nebutra/db";
 import { issueLicense } from "@nebutra/license";
 import { logger } from "@nebutra/logger";
+import { PersonalTenantRepository } from "@nebutra/repositories";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getSessionFromRequest, getUserById } from "@/lib/auth";
-import "@/lib/license-bootstrap";
+import { TEAM_LICENSE_OFFER } from "@/lib/license-bootstrap";
 
 // AUDIT(no-tenant): community profiles + licenses are user-scoped and predate
 // any tenant/organization context. The authenticated user's auth id is the
@@ -90,49 +91,33 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Paid tiers redirect to Stripe checkout
+    // The paid tier (Team support) goes to Creem's checkout; the license is
+    // issued when the order settles (gateway `license` fulfillment).
     if (isStartup) {
       if (!email) {
         return NextResponse.json({ error: "User has no email address" }, { status: 400 });
       }
-
-      const priceId = process.env.STRIPE_PRICE_ID_STARTUP_LICENSE;
-      if (!priceId) {
-        logger.error("Missing STRIPE_PRICE_ID_STARTUP_LICENSE");
-        return NextResponse.json({ error: "Stripe configuration missing" }, { status: 500 });
+      if (!isPaymentMethodAvailable("card")) {
+        logger.error("Card checkout is not configured (CREEM_API_KEY / CREEM_PRODUCT_ID)");
+        return NextResponse.json({ error: "Checkout is not configured" }, { status: 503 });
       }
 
-      const customer = await getOrCreateCustomer(userId, email, displayName);
       const origin = req.headers.get("origin") ?? "http://localhost:3000";
-
-      const session = await createCheckoutSession({
-        customerId: customer.id,
-        priceId,
+      const tenantId = await new PersonalTenantRepository(prisma).ensure({ userId, email });
+      const order = await createPaymentOrder({
+        offerId: TEAM_LICENSE_OFFER.id,
+        organizationId: tenantId,
+        method: "card",
         successUrl: `${origin}/en/get-license?success=true`,
         cancelUrl: `${origin}/en/get-license?cancel=true`,
-        metadata: {
-          license_tier: "STARTUP",
-          userId,
-          lookingFor: JSON.stringify(data.lookingFor),
-          githubHandle: data.githubHandle || "",
-          projectName: data.projectName || "",
-          projectUrl: data.projectUrl || "",
-        },
+        customerEmail: email,
       });
-
-      if (!session.url) {
-        logger.error("Stripe checkout session URL is missing", { sessionId: session.id });
-        return NextResponse.json(
-          { error: "Stripe checkout session URL is missing" },
-          { status: 503 },
-        );
-      }
 
       return NextResponse.json({
         success: true,
         requireCheckout: true,
-        url: session.url,
-        sessionId: session.id,
+        url: order.session.url,
+        orderId: order.orderId,
       });
     }
 

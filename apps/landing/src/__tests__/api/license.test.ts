@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const mockCreateCheckoutSession = vi.hoisted(() => vi.fn());
-const mockGetOrCreateCustomer = vi.hoisted(() => vi.fn());
+const mockCreatePaymentOrder = vi.hoisted(() => vi.fn());
+const mockCardAvailable = vi.hoisted(() => vi.fn());
+const mockEnsurePersonalTenant = vi.hoisted(() => vi.fn());
 
 // Mock @nebutra/auth via the landing helper
 vi.mock("@/lib/auth", () => ({
@@ -44,23 +45,35 @@ vi.mock("@nebutra/license", () => ({
   configureLicenseSystemDb: vi.fn(),
 }));
 
-// Mock @nebutra/billing — not exercised by free-tier tests, but imported at load
+// Mock @nebutra/billing — the paid tier places a Creem card order
 vi.mock("@nebutra/billing", () => ({
-  createCheckoutSession: (...args: unknown[]) => mockCreateCheckoutSession(...args),
-  getOrCreateCustomer: (...args: unknown[]) => mockGetOrCreateCustomer(...args),
+  createPaymentOrder: (...args: unknown[]) => mockCreatePaymentOrder(...args),
+  isPaymentMethodAvailable: (...args: unknown[]) => mockCardAvailable(...args),
+  configureOffers: vi.fn(),
+  configurePaymentOrderStore: vi.fn(),
+}));
+
+vi.mock("@nebutra/repositories", () => ({
+  PaymentOrderRepository: class {},
+  PersonalTenantRepository: class {
+    ensure(...args: unknown[]) {
+      return mockEnsurePersonalTenant(...args);
+    }
+  },
 }));
 
 describe("POST /api/license", () => {
   beforeEach((): void => {
     vi.unstubAllEnvs();
     vi.clearAllMocks();
-    mockCreateCheckoutSession.mockResolvedValue({
-      id: "cs_startup_123",
-      url: "https://checkout.stripe.test/cs_startup_123",
+    mockCreatePaymentOrder.mockResolvedValue({
+      orderId: "ord_startup_123",
+      session: { kind: "redirect", url: "https://checkout.creem.test/ch_123", provider: "creem" },
+      amountMinor: 200_000,
+      currency: "USD",
     });
-    mockGetOrCreateCustomer.mockResolvedValue({
-      id: "cus_startup_123",
-    });
+    mockCardAvailable.mockReturnValue(true);
+    mockEnsurePersonalTenant.mockResolvedValue("tenant_personal_123");
     mockIssueLicense.mockResolvedValue({
       id: "lic_1",
       licenseKey: "NEBUTRA-TEST-KEY",
@@ -128,8 +141,7 @@ describe("POST /api/license", () => {
     expect(data.license.type).toBe("FREE");
   });
 
-  it("returns a Stripe checkout redirect for STARTUP without issuing the license early", async () => {
-    vi.stubEnv("STRIPE_PRICE_ID_STARTUP_LICENSE", "price_startup_yearly");
+  it("returns a Creem checkout redirect for STARTUP without issuing the license early", async () => {
     const { POST } = await import("../../app/api/license/route");
 
     const req = new Request("https://nebutra.com/api/license", {
@@ -157,27 +169,44 @@ describe("POST /api/license", () => {
     expect(data).toEqual({
       success: true,
       requireCheckout: true,
-      url: "https://checkout.stripe.test/cs_startup_123",
-      sessionId: "cs_startup_123",
+      url: "https://checkout.creem.test/ch_123",
+      orderId: "ord_startup_123",
     });
     expect(mockIssueLicense).not.toHaveBeenCalled();
-    expect(mockGetOrCreateCustomer).toHaveBeenCalledWith(
-      "user_test_123",
-      "test@example.com",
-      "Test Founder",
-    );
-    expect(mockCreateCheckoutSession).toHaveBeenCalledWith(
-      expect.objectContaining({
-        customerId: "cus_startup_123",
-        priceId: "price_startup_yearly",
-        successUrl: "https://nebutra.com/en/get-license?success=true",
-        cancelUrl: "https://nebutra.com/en/get-license?cancel=true",
-        metadata: expect.objectContaining({
-          githubHandle: "nebutra-builder",
-          license_tier: "STARTUP",
-          userId: "user_test_123",
-        }),
+    expect(mockEnsurePersonalTenant).toHaveBeenCalledWith({
+      userId: "user_test_123",
+      email: "test@example.com",
+    });
+    expect(mockCreatePaymentOrder).toHaveBeenCalledWith({
+      offerId: "license_team_annual",
+      organizationId: "tenant_personal_123",
+      method: "card",
+      successUrl: "https://nebutra.com/en/get-license?success=true",
+      cancelUrl: "https://nebutra.com/en/get-license?cancel=true",
+      customerEmail: "test@example.com",
+    });
+  });
+
+  it("answers 503 for STARTUP when card checkout is not configured", async () => {
+    mockCardAvailable.mockReturnValue(false);
+    const { POST } = await import("../../app/api/license/route");
+
+    const req = new Request("https://nebutra.com/api/license", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", origin: "https://nebutra.com" },
+      body: JSON.stringify({
+        role: "developer",
+        teamSize: "2-5",
+        useCase: "saas",
+        tier: "STARTUP",
+        lookingFor: [],
+        acceptedTerms: true,
       }),
-    );
+    });
+
+    // biome-ignore lint/suspicious/noExplicitAny: NextRequest mirrors Request at runtime
+    const res = await POST(req as any);
+    expect(res.status).toBe(503);
+    expect(mockCreatePaymentOrder).not.toHaveBeenCalled();
   });
 });
