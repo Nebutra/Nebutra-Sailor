@@ -8,17 +8,22 @@
     "degraded": "部分系统性能下降",
     "outage": "部分系统中断",
     "affected": "受影响：{names}",
-    "maintenanceNote": "{names} 正在维护",
+    "maintenanceNote": "{names} 正在维护。",
     "latestReading": "最新读数",
-    "waiting": "等待第一次读数"
+    "waiting": "等待第一次读数",
+    "operationalBody": "我们没有发现影响系统的问题。",
+    "degradedBody": "性能下降：{names}。",
+    "outageBody": "不可用：{names}。",
+    "noFresh": "{count} 个组件暂无最新读数"
   },
   "state": {
     "operational": "正常",
     "degraded": "性能下降",
     "outage": "中断",
     "maintenance": "维护中",
-    "unknown": "状态未知",
-    "no_data": "无数据"
+    "unknown": "暂无最新读数",
+    "no_data": "无数据",
+    "no_source": "未接入证据来源"
   },
   "impact": {
     "none": "无影响",
@@ -54,7 +59,8 @@
     "components": "受影响组件",
     "noComponents": "这次事件没有标记受影响的组件。",
     "openDetails": "查看事件：{title}",
-    "maintenance": "维护"
+    "maintenance": "维护",
+    "latest": "最新进展"
   },
   "maintenance": {
     "scheduled": "计划维护",
@@ -132,5 +138,28 @@
     "title": "找不到这个页面",
     "body": "这个状态页或事件不存在，或者已经不再公开。",
     "home": "前往状态页"
+  },
+  "status": {
+    "title": "系统状态",
+    "other": "其他",
+    "range": "{start} – {end}"
+  },
+  "coverage": {
+    "synthetic": "用户旅程",
+    "dependency": "依赖探测",
+    "device": "设备心跳",
+    "upstream": "上游状态",
+    "manual": "人工确认",
+    "ok": "正常",
+    "failing": "异常",
+    "quiet": "暂无最新读数",
+    "explain": "这个颜色的依据"
+  },
+  "header": {
+    "subscribe": "订阅",
+    "language": "English",
+    "languageLabel": "Switch to English",
+    "history": "历史记录",
+    "home": "状态页首页"
   }
 }

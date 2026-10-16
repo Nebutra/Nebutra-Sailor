@@ -1,3 +1,4 @@
+import { ArrowLeft } from "@nebutra/icons";
 import { cn } from "@nebutra/ui/utils";
 import { getTranslations } from "next-intl/server";
 import { formatDayKey, formatMonth, formatUptime } from "@/lib/format";
@@ -12,7 +13,7 @@ import {
 } from "@/lib/view";
 import type { PageSnapshot } from "@/server/snapshot";
 import { IncidentListItem } from "./incident-card";
-import { stateFill } from "./state-style";
+import { stateRing } from "./state-style";
 
 /**
  * History: one calendar per month of the 90-day window, each day the page's
@@ -22,9 +23,11 @@ import { stateFill } from "./state-style";
 export async function HistoryView({
   snapshot,
   locale,
+  timeZone,
 }: {
   snapshot: PageSnapshot;
   locale: AppLocale;
+  timeZone: string | null;
 }) {
   const t = await getTranslations({ locale });
   const now = snapshot.generatedAt;
@@ -39,24 +42,36 @@ export async function HistoryView({
       new Date(Date.UTC(2024, 0, 1 + i)),
     ),
   );
-  const legend: DayState[] = ["operational", "degraded", "outage", "maintenance", "no_data"];
+  const legend: DayState[] = ["degraded", "outage", "maintenance"];
+  const today = days.at(-1)?.date ?? "";
 
   return (
     <>
-      <header>
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+      <a
+        href={`/p/${slug}`}
+        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <ArrowLeft aria-hidden className="size-4" />
+        {t("incident.back")}
+      </a>
+      <header className="mt-6">
+        <h1 className="text-xl font-semibold tracking-tight text-foreground">
           {t("history.title")}
         </h1>
         <p className="mt-2 text-sm text-muted-foreground">{t("history.subtitle")}</p>
       </header>
 
-      <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2">
         {months.map(([year, month]) => (
-          <section key={`${year}-${month}`} aria-label={formatMonth(year, month, locale)}>
-            <h2 className="text-sm font-medium text-foreground">
+          <section
+            key={`${year}-${month}`}
+            aria-label={formatMonth(year, month, locale)}
+            className="rounded-lg border border-border bg-card p-4"
+          >
+            <h2 className="text-base font-medium text-foreground">
               {formatMonth(year, month, locale)}
             </h2>
-            <table className="mt-3 w-full table-fixed border-separate border-spacing-1">
+            <table className="mt-3 w-full table-fixed border-separate border-spacing-y-1">
               <thead>
                 <tr>
                   {weekdays.map((w, i) => (
@@ -99,18 +114,21 @@ export async function HistoryView({
                       ]
                         .filter(Boolean)
                         .join(" · ");
+                      // Flashduty/incident.io calendar: neutral numbers, a ring only
+                      // on days that were not fine. Colour marks trouble, not every day.
+                      const ring =
+                        cell.inWindow && state !== "operational" && state !== "no_data"
+                          ? stateRing[state]
+                          : null;
                       const body = (
                         <span
                           className={cn(
-                            "flex aspect-square w-full items-center justify-center rounded-[3px] text-[10px] tabular-nums",
-                            cell.inWindow
-                              ? cn(
-                                  stateFill[state],
-                                  state === "no_data"
-                                    ? "text-muted-foreground"
-                                    : "text-transparent",
-                                )
-                              : "border border-dashed border-border text-muted-foreground/60",
+                            "mx-auto flex size-8 items-center justify-center rounded-full text-xs tabular-nums",
+                            !cell.inWindow && "text-muted-foreground/50",
+                            cell.inWindow && state === "no_data" && "text-muted-foreground",
+                            cell.inWindow && state !== "no_data" && "text-foreground",
+                            ring && cn("ring-2 ring-inset", ring),
+                            cell.date === today && !ring && "ring-1 ring-inset ring-border",
                           )}
                         >
                           {Number(cell.date.slice(8))}
@@ -149,7 +167,10 @@ export async function HistoryView({
       >
         {legend.map((s) => (
           <li key={s} className="inline-flex items-center gap-1.5">
-            <span aria-hidden className={cn("size-2.5 rounded-[2px]", stateFill[s])} />
+            <span
+              aria-hidden
+              className={cn("size-3 rounded-full ring-2 ring-inset", stateRing[s])}
+            />
             {t(`state.${s}`)}
           </li>
         ))}
@@ -167,7 +188,7 @@ export async function HistoryView({
                 {formatMonth(year, month, locale)}
               </h3>
               {bucket ? (
-                <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border">
+                <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-card">
                   {bucket.incidents.map((incident) => (
                     <IncidentListItem
                       key={incident.id}
@@ -175,6 +196,7 @@ export async function HistoryView({
                       href={`/p/${slug}/incidents/${incident.id}`}
                       now={now}
                       locale={locale}
+                      timeZone={timeZone}
                     />
                   ))}
                 </ul>

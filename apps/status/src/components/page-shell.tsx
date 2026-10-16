@@ -1,17 +1,16 @@
-import { Calendar } from "@nebutra/icons";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { loadMessages } from "@/i18n/messages";
 import { type AppLocale, htmlLang, pageLocales } from "@/lib/locale";
 import { HtmlLang } from "./html-lang";
-
-const LOCALE_NAMES: Record<AppLocale, string> = { "zh-CN": "中文", en: "English" };
+import { SubscribeMenu } from "./subscribe-menu";
 
 /**
- * The frame of every public page: the page's name, its content column, and a
- * quiet footer with feeds and the language switch. No marketing chrome — a
- * status page is a trust surface.
+ * Frame of every public page, after incident.io: a 672px column, the page
+ * name linking home on the left, Subscribe and the language switch on the
+ * right, a centred "Powered by" footer. The language switch goes through
+ * /lang/<locale>, which saves the choice and returns to this same path.
  */
 export async function PageShell({
   locale,
@@ -21,14 +20,14 @@ export async function PageShell({
 }: {
   locale: AppLocale;
   page: { slug: string; title: string; locales: string[] } | null;
-  /** This page's path, for language links. */
+  /** This page's own path, so the language switch returns here. */
   path: string;
   children: ReactNode;
 }) {
-  const t = await getTranslations({ locale, namespace: "footer" });
-  const th = await getTranslations({ locale, namespace: "history" });
+  const t = await getTranslations({ locale });
   const messages = await loadMessages(locale);
   const languages = page ? pageLocales(page.locales) : (["zh-CN", "en"] as AppLocale[]);
+  const other = languages.find((l) => l !== locale);
   const home = page ? `/p/${page.slug}` : "/";
 
   return (
@@ -38,68 +37,45 @@ export async function PageShell({
         lang={htmlLang(locale)}
         className="flex min-h-dvh flex-col bg-background text-foreground"
       >
-        <header className="px-4 sm:px-6">
-          <div className="mx-auto flex h-16 w-full max-w-text items-center justify-between gap-4">
+        <header className="px-4">
+          <div className="mx-auto flex w-full max-w-2xl items-center justify-between gap-3 pb-6 pt-8">
             <a
               href={home}
-              className="truncate text-base font-semibold tracking-tight text-foreground"
+              aria-label={`${page?.title ?? "Nebutra Status"} · ${t("header.home")}`}
+              className="min-w-0 truncate text-base font-semibold tracking-tight text-foreground"
             >
               {page?.title ?? "Nebutra Status"}
             </a>
-            {page ? (
-              <a
-                href={`/p/${page.slug}/history`}
-                className="inline-flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <Calendar aria-hidden className="size-4" />
-                {th("viewHistory")}
-              </a>
-            ) : null}
+            <nav className="flex shrink-0 items-center gap-2">
+              {other ? (
+                <a
+                  href={`/lang/${other}?next=${encodeURIComponent(path)}`}
+                  hrefLang={htmlLang(other)}
+                  lang={htmlLang(other)}
+                  aria-label={t("header.languageLabel")}
+                  className="rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {t("header.language")}
+                </a>
+              ) : null}
+              {page ? (
+                <SubscribeMenu
+                  label={t("header.subscribe")}
+                  slug={page.slug}
+                  atom={t("footer.atom")}
+                  rss={t("footer.rss")}
+                />
+              ) : null}
+            </nav>
           </div>
         </header>
-        <main id="main-content" className="flex-1 px-4 pb-16 pt-6 sm:px-6 sm:pt-10">
-          <div className="mx-auto w-full max-w-text">{children}</div>
+        <main id="main-content" className="flex-1 px-4 pb-16">
+          <div className="mx-auto w-full max-w-2xl">{children}</div>
         </main>
-        <footer className="border-t border-border px-4 py-8 sm:px-6">
-          <div className="mx-auto flex w-full max-w-text flex-col gap-4 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-            {page ? (
-              <nav
-                aria-label={t("subscribe")}
-                className="flex flex-wrap items-center gap-x-4 gap-y-2"
-              >
-                <span className="text-foreground">{t("subscribe")}</span>
-                <a className="hover:text-foreground" href={`/api/v1/pages/${page.slug}/feed.atom`}>
-                  {t("atom")}
-                </a>
-                <a className="hover:text-foreground" href={`/api/v1/pages/${page.slug}/feed.rss`}>
-                  {t("rss")}
-                </a>
-              </nav>
-            ) : (
-              <span />
-            )}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              {languages.length > 1 ? (
-                <nav aria-label={t("language")} className="flex items-center gap-3">
-                  {languages.map((l) => (
-                    <a
-                      key={l}
-                      href={`${path}?lang=${l}`}
-                      hrefLang={htmlLang(l)}
-                      lang={htmlLang(l)}
-                      aria-current={l === locale ? "true" : undefined}
-                      className={
-                        l === locale ? "text-foreground" : "transition-colors hover:text-foreground"
-                      }
-                    >
-                      {LOCALE_NAMES[l]}
-                    </a>
-                  ))}
-                </nav>
-              ) : null}
-              <span className="text-xs">{t("powered", { product: "Nebutra Status" })}</span>
-            </div>
-          </div>
+        <footer className="px-4 pb-10">
+          <p className="mx-auto max-w-2xl text-center text-sm text-muted-foreground">
+            {t("footer.powered", { product: "Nebutra Status" })}
+          </p>
         </footer>
       </div>
     </NextIntlClientProvider>

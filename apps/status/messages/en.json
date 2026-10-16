@@ -8,17 +8,22 @@
     "degraded": "Some systems are degraded",
     "outage": "Some systems are down",
     "affected": "Affected: {names}",
-    "maintenanceNote": "Maintenance in progress on {names}",
+    "maintenanceNote": "Maintenance in progress on {names}.",
     "latestReading": "Latest reading",
-    "waiting": "Waiting for the first reading"
+    "waiting": "Waiting for the first reading",
+    "operationalBody": "We're not aware of any issues affecting our systems.",
+    "degradedBody": "Degraded: {names}.",
+    "outageBody": "Unavailable: {names}.",
+    "noFresh": "{count, plural, one {# component has} other {# components have}} no recent reading"
   },
   "state": {
     "operational": "Operational",
     "degraded": "Degraded",
     "outage": "Outage",
     "maintenance": "Maintenance",
-    "unknown": "Unknown",
-    "no_data": "No data"
+    "unknown": "No recent reading",
+    "no_data": "No data",
+    "no_source": "No evidence source"
   },
   "impact": {
     "none": "No impact",
@@ -54,7 +59,8 @@
     "components": "Affected components",
     "noComponents": "No component was marked as affected.",
     "openDetails": "Open incident: {title}",
-    "maintenance": "Maintenance"
+    "maintenance": "Maintenance",
+    "latest": "Latest update"
   },
   "maintenance": {
     "scheduled": "Scheduled maintenance",
@@ -132,5 +138,28 @@
     "title": "Page not found",
     "body": "This status page or incident does not exist, or it is no longer published.",
     "home": "Go to the status page"
+  },
+  "status": {
+    "title": "System status",
+    "other": "Other",
+    "range": "{start} – {end}"
+  },
+  "coverage": {
+    "synthetic": "User journey",
+    "dependency": "Dependency check",
+    "device": "Device heartbeat",
+    "upstream": "Upstream",
+    "manual": "Manual",
+    "ok": "passing",
+    "failing": "failing",
+    "quiet": "no recent reading",
+    "explain": "What this colour rests on"
+  },
+  "header": {
+    "subscribe": "Subscribe",
+    "language": "中文",
+    "languageLabel": "切换到中文",
+    "history": "History",
+    "home": "Status home"
   }
 }

@@ -5,9 +5,9 @@ import type { SlugProps } from "@/lib/page-params";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params, searchParams }: SlugProps): Promise<Metadata> {
+export async function generateMetadata({ params }: SlugProps): Promise<Metadata> {
   const { slug } = await params;
-  return pageMetadata(await getSnapshot(slug), (await searchParams).lang);
+  return pageMetadata(await getSnapshot(slug));
 }
 
 export default async function StatusPage({ params, searchParams }: SlugProps) {

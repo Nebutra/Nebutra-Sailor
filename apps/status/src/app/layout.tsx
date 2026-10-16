@@ -1,11 +1,14 @@
 import "@/styles/globals.css";
 import { THEME_STORAGE_KEY, ThemeProvider } from "@nebutra/tokens";
-import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
+import { fontClassName } from "@nebutra/tokens/fonts";
 import type { Metadata, Viewport } from "next";
 import { cookies, headers } from "next/headers";
 import type { ReactNode } from "react";
-import { htmlLang, resolveLocale } from "@/lib/locale";
+import { TimeZoneCookie } from "@/components/time-zone-cookie";
+import { defaultPageLocales } from "@/lib/data";
+import { htmlLang, LOCALE_COOKIE, resolveLocale } from "@/lib/locale";
 import { THEME_BOOT_SCRIPT } from "@/lib/theme-boot";
+import { TIME_ZONE_COOKIE, validTimeZone } from "@/lib/time-zone";
 
 export const metadata: Metadata = {
   title: { default: "Nebutra Status", template: "%s" },
@@ -15,18 +18,25 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: dark)", color: "#0d0e10" },
   ],
 };
 
 /**
- * Root frame. Each page sets its own language from the page's locales; this
- * layout only guesses from the browser so <html lang> is close before paint.
+ * Root frame. `<html lang>` is decided here from the same inputs the pages
+ * use — saved choice, then browser against the default page's languages — so
+ * it is right in the server HTML. Fonts are self-hosted (Geist via next/font);
+ * Chinese falls back to the system face, so a self-hosted instance never
+ * calls out to a Nebutra CDN.
  */
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const [h, jar] = await Promise.all([headers(), cookies()]);
   const lang = htmlLang(
-    resolveLocale({ acceptLanguage: h.get("accept-language"), locales: ["en", "zh-CN"] }),
+    resolveLocale({
+      cookie: jar.get(LOCALE_COOKIE)?.value,
+      acceptLanguage: h.get("accept-language"),
+      locales: await defaultPageLocales(),
+    }),
   );
   const stored = jar.get(THEME_STORAGE_KEY)?.value;
   const themeClass = stored === "dark" || stored === "light" ? stored : "";
@@ -36,7 +46,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
       </head>
       <body className="min-h-dvh bg-background font-sans text-foreground antialiased">
-        <FontFaces />
+        <TimeZoneCookie current={validTimeZone(jar.get(TIME_ZONE_COOKIE)?.value)} />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>

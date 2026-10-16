@@ -4,14 +4,16 @@
  * language without anyone choosing a path.
  *
  *   1. `?lang=` — an explicit override, honoured for any language we ship.
- *   2. The page's own `locales`, in the operator's order, keeping the first
+ *   2. The reader's saved choice (the `ns_lang` cookie the language switch sets).
+ *   3. The page's own `locales`, in the operator's order, keeping the first
  *      one the browser's Accept-Language also lists.
- *   3. The page's default (its first locale we ship), else English.
+ *   4. The page's default (its first locale we ship), else English.
  */
 
 export const SUPPORTED_LOCALES = ["zh-CN", "en"] as const;
 export type AppLocale = (typeof SUPPORTED_LOCALES)[number];
 export const FALLBACK_LOCALE: AppLocale = "en";
+export const LOCALE_COOKIE = "ns_lang";
 
 /** Map any BCP 47 tag onto a locale we ship, or null. All Chinese reads zh-CN. */
 export function normalizeLocale(tag: string | null | undefined): AppLocale | null {
@@ -54,11 +56,14 @@ export function pageLocales(locales: readonly string[] | null | undefined): AppL
 
 export function resolveLocale(input: {
   lang?: string | null | undefined;
+  cookie?: string | null | undefined;
   acceptLanguage?: string | null | undefined;
   locales?: readonly string[] | null | undefined;
 }): AppLocale {
   const override = normalizeLocale(input.lang);
   if (override) return override;
+  const saved = normalizeLocale(input.cookie);
+  if (saved) return saved;
   const candidates = pageLocales(input.locales);
   const accepted = new Set(
     parseAcceptLanguage(input.acceptLanguage)

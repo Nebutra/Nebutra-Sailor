@@ -35,6 +35,16 @@ describe("resolveLocale", () => {
     expect(resolveLocale({ lang: "zh", locales: ["en"], acceptLanguage: "en" })).toBe("zh-CN");
   });
 
+  it("keeps the reader's saved choice over the browser, below ?lang=", () => {
+    expect(resolveLocale({ cookie: "en", locales: ["zh-CN", "en"], acceptLanguage: "zh" })).toBe(
+      "en",
+    );
+    expect(resolveLocale({ lang: "zh", cookie: "en", locales: ["en"] })).toBe("zh-CN");
+    expect(resolveLocale({ cookie: "fr", locales: ["zh-CN", "en"], acceptLanguage: "en" })).toBe(
+      "en",
+    );
+  });
+
   it("ignores an unknown ?lang= and falls through", () => {
     expect(resolveLocale({ lang: "fr", locales: ["en", "zh-CN"], acceptLanguage: "zh" })).toBe(
       "zh-CN",

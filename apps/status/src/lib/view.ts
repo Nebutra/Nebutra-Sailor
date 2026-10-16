@@ -129,9 +129,10 @@ export interface ComponentGroupView {
 }
 
 /**
- * Groups in the operator's order, each with its components; components with
- * no group come first as their own unnamed block. Empty groups are dropped —
- * a heading with nothing under it is noise.
+ * Groups in the operator's order, each with its components. Components with
+ * no group come last as an "other" block (key `null`) — never above the
+ * groups at the same weight. With no groups at all, that block is the page.
+ * Empty groups are dropped: a heading with nothing under it is noise.
  */
 export function groupComponents(
   groups: Array<{ key: string; name: string; nameI18n: Record<string, string> | null }>,
@@ -153,13 +154,18 @@ export function groupComponents(
     days: mergeDays(members.map((c) => c.days)),
   });
   const out: ComponentGroupView[] = [];
-  const loose = components.filter((c) => !c.groupKey || !known.has(c.groupKey));
-  if (loose.length > 0) out.push(view(null, null, null, loose));
   for (const g of groups) {
     const members = components.filter((c) => c.groupKey === g.key);
     if (members.length > 0) out.push(view(g.key, g.name, g.nameI18n, members));
   }
+  const loose = components.filter((c) => !c.groupKey || !known.has(c.groupKey));
+  if (loose.length > 0) out.push(view(null, null, null, loose));
   return out;
+}
+
+/** A group opens by default only for real trouble or planned work — not for a quiet source. */
+export function groupStartsOpen(state: ComponentState): boolean {
+  return state === "degraded" || state === "outage" || state === "maintenance";
 }
 
 /** Strongest claim first: a user journey proves more than a ping. */

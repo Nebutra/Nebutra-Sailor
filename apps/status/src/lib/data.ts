@@ -27,6 +27,38 @@ export async function getSnapshot(slug: string): Promise<PageSnapshot | null> {
   return value;
 }
 
+/** Drop a page's cached snapshot so a change shows on the next view. */
+export function invalidateSnapshot(slug: string): void {
+  cache.delete(slug);
+}
+
+let localesCache: { at: number; value: Promise<string[]> } | null = null;
+
+/**
+ * The languages of the page `/` shows, for the root layout's `<html lang>`.
+ * Cached like snapshots; an instance without a database answers both.
+ */
+export function defaultPageLocales(): Promise<string[]> {
+  const now = Date.now();
+  if (localesCache && now - localesCache.at < TTL_MS) return localesCache.value;
+  const value = (async () => {
+    if (!databaseConfigured()) return ["zh-CN", "en"];
+    try {
+      const target = await homeTarget();
+      if (target.kind !== "page") return ["zh-CN", "en"];
+      const page = await getDb().page.findUnique({
+        where: { slug: target.slug },
+        select: { locales: true },
+      });
+      return page?.locales ?? ["zh-CN", "en"];
+    } catch {
+      return ["zh-CN", "en"];
+    }
+  })();
+  localesCache = { at: now, value };
+  return value;
+}
+
 export type HomeTarget =
   | { kind: "page"; slug: string }
   | { kind: "choose"; pages: Array<{ slug: string; title: string }> }

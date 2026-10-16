@@ -5,43 +5,46 @@ import { formatDateTime, formatRelative, formatUtc } from "@/lib/format";
 import type { AppLocale } from "@/lib/locale";
 
 /**
- * A timestamp in the reader's own time zone, with the UTC instant in the
- * tooltip. The server cannot know the zone, so it renders UTC and the browser
- * replaces it after hydration; relative times keep ticking.
+ * A timestamp in the reader's zone with the UTC instant in its tooltip.
+ *
+ * The server already knows the zone (the `ns_tz` cookie), so server and
+ * browser render the same text and nothing swaps after hydration. On a first
+ * visit, before the cookie exists, it says UTC rather than guessing.
+ * Relative times start from the request's clock and tick once a minute.
  */
 export function LocalTime({
   iso,
   locale,
+  timeZone,
   mode = "datetime",
+  nowIso,
   className,
-  serverNow,
 }: {
   iso: string;
-  /** The render's clock, so relative text is right before hydration too. */
-  serverNow?: string;
   locale: AppLocale;
+  timeZone: string | null;
   mode?: "datetime" | "relative";
+  nowIso?: string;
   className?: string;
 }) {
   const date = new Date(iso);
-  const [now, setNow] = useState<Date | null>(null);
+  const [now, setNow] = useState(() => (nowIso ? new Date(nowIso) : date));
 
   useEffect(() => {
-    setNow(new Date());
     if (mode !== "relative") return;
-    const timer = setInterval(() => setNow(new Date()), 30_000);
+    const timer = setInterval(() => setNow(new Date()), 60_000);
     return () => clearInterval(timer);
   }, [mode]);
 
   const text =
     mode === "relative"
-      ? formatRelative(date, now ?? (serverNow ? new Date(serverNow) : date), locale)
-      : now
-        ? formatDateTime(date, locale)
+      ? formatRelative(date, now, locale)
+      : timeZone
+        ? formatDateTime(date, locale, timeZone)
         : `${formatDateTime(date, locale, "UTC")} UTC`;
 
   return (
-    <time dateTime={iso} title={formatUtc(date)} className={className} suppressHydrationWarning>
+    <time dateTime={iso} title={formatUtc(date)} className={className}>
       {text}
     </time>
   );

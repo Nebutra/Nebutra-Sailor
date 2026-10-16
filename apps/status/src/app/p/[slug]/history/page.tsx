@@ -7,11 +7,11 @@ import { requestLocale } from "@/lib/request-locale";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params, searchParams }: SlugProps): Promise<Metadata> {
+export async function generateMetadata({ params }: SlugProps): Promise<Metadata> {
   const { slug } = await params;
   const snapshot = await getSnapshot(slug);
   if (!snapshot) return {};
-  const locale = await requestLocale((await searchParams).lang, snapshot.page.locales);
+  const locale = await requestLocale(undefined, snapshot.page.locales);
   const t = await getTranslations({ locale, namespace: "history" });
   return { title: `${t("title")} · ${snapshot.page.title}` };
 }

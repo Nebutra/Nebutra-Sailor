@@ -4,6 +4,7 @@ import type { SnapshotComponent, SnapshotDay, SnapshotIncident } from "@/server/
 import {
   evidenceLine,
   groupComponents,
+  groupStartsOpen,
   incidentsByMonth,
   incidentsOnDay,
   mergeDays,
@@ -100,7 +101,7 @@ describe("mergeDays", () => {
 });
 
 describe("groupComponents", () => {
-  it("puts ungrouped components first, keeps group order and drops empty groups", () => {
+  it("keeps group order, drops empty groups and puts ungrouped components last", () => {
     const groups = [
       { key: "edge", name: "Edge", nameI18n: null },
       { key: "empty", name: "Empty", nameI18n: null },
@@ -116,11 +117,20 @@ describe("groupComponents", () => {
         verdict: evaluateComponent([reading({ state: "outage" })], [], now),
       }),
     ]);
-    expect(view.map((g) => g.key)).toEqual([null, "edge", "core"]);
-    const core = view[2];
+    expect(view.map((g) => g.key)).toEqual(["edge", "core", null]);
+    const core = view[1];
     expect(core?.components.map((c) => c.key)).toEqual(["api", "db"]);
     expect(core?.state).toBe("outage");
     expect(core?.uptime90).toBe(0.98);
+  });
+});
+
+describe("groupStartsOpen", () => {
+  it("opens for failures and maintenance, not for silence", () => {
+    expect(groupStartsOpen("outage")).toBe(true);
+    expect(groupStartsOpen("maintenance")).toBe(true);
+    expect(groupStartsOpen("unknown")).toBe(false);
+    expect(groupStartsOpen("operational")).toBe(false);
   });
 });
 

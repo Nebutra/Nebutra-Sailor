@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { IncidentView } from "@/components/incident-view";
 import { PageShell } from "@/components/page-shell";
-import { loadSnapshotOr404 } from "@/components/routes";
+import { adoptLangParam, loadSnapshotOr404 } from "@/components/routes";
 import { getIncident, getSnapshot } from "@/lib/data";
 import type { IncidentProps } from "@/lib/page-params";
-import { requestLocale } from "@/lib/request-locale";
+import { requestLocale, requestTimeZone } from "@/lib/request-locale";
 import type { PageSnapshot, SnapshotIncident } from "@/server/snapshot";
 
 export const dynamic = "force-dynamic";
@@ -29,18 +29,24 @@ export async function generateMetadata({ params }: IncidentProps): Promise<Metad
 
 export default async function IncidentPage({ params, searchParams }: IncidentProps) {
   const { slug, id } = await params;
+  const path = `/p/${slug}/incidents/${id}`;
+  adoptLangParam(await searchParams, path);
   const snapshot = await loadSnapshotOr404(slug);
   const incident = await find(snapshot, id);
   if (!incident) notFound();
-  const locale = await requestLocale((await searchParams).lang, snapshot.page.locales);
+  const [locale, timeZone] = await Promise.all([
+    requestLocale(undefined, snapshot.page.locales),
+    requestTimeZone(),
+  ]);
   return (
-    <PageShell locale={locale} page={snapshot.page} path={`/p/${slug}/incidents/${id}`}>
+    <PageShell locale={locale} page={snapshot.page} path={path}>
       <IncidentView
         incident={incident}
         components={snapshot.components}
         slug={slug}
         now={snapshot.generatedAt}
         locale={locale}
+        timeZone={timeZone}
       />
     </PageShell>
   );

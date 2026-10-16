@@ -9,6 +9,8 @@
  * - Hover, focus and tap all open the same day card; its links stay reachable
  *   by Tab because focus moving into the card keeps it open.
  * - Below 640px the strip shows the last 30 days so each cell stays tappable.
+ * - Geometry follows incident.io: 16px cells, 2px gaps, no per-row axis captions
+ *   (the range is stated once, in the card header).
  */
 import { cn } from "@nebutra/ui/utils";
 import { useTranslations } from "next-intl";
@@ -114,7 +116,7 @@ export function UptimeBar({
         <legend className="sr-only">
           {label}. {t("summary", { days: days.length, known })}
         </legend>
-        <div className="flex h-8 w-full items-stretch gap-px sm:gap-[2px]">
+        <div className="flex h-4 w-full items-stretch gap-px sm:gap-[2px]">
           {days.map((day, index) => (
             <button
               key={day.date}
@@ -127,7 +129,7 @@ export function UptimeBar({
               aria-describedby={active === index ? `${id}-card` : undefined}
               aria-expanded={active === index}
               className={cn(
-                "group/cell relative min-w-0 flex-1 rounded-[2px] focus-visible:z-10",
+                "relative min-w-0 flex-1 rounded-[1px] focus-visible:z-10",
                 index < mobileStart && "max-sm:hidden",
               )}
               onMouseEnter={() => setActive(index)}
@@ -138,7 +140,7 @@ export function UptimeBar({
               <span
                 aria-hidden
                 className={cn(
-                  "block h-full w-full rounded-[2px] motion-safe:transition-opacity motion-safe:duration-150",
+                  "block h-full w-full rounded-[1px] motion-safe:transition-opacity motion-safe:duration-100",
                   stateFill[day.state],
                   active !== null && active !== index && "opacity-50",
                 )}
@@ -147,16 +149,6 @@ export function UptimeBar({
           ))}
         </div>
       </fieldset>
-      <div
-        aria-hidden
-        className="mt-2 flex justify-between text-xs tabular-nums text-muted-foreground"
-      >
-        <span className="max-sm:hidden">{t("start", { days: days.length })}</span>
-        <span className="sm:hidden">
-          {t("start", { days: Math.min(MOBILE_DAYS, days.length) })}
-        </span>
-        <span>{t("today")}</span>
-      </div>
       {current && active !== null ? (
         <DayCard
           id={`${id}-card`}

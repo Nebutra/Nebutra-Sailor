@@ -13,15 +13,16 @@ import { stateInk } from "./state-style";
 import { UptimeBar } from "./uptime-bar";
 
 /**
- * A component group: one header carrying the group's worst state, its
- * component count and its mean uptime. Collapsed, it shows the merged
- * 90-day strip; expanded, every component. A group with anything wrong opens
- * by default — the reader should not have to dig for the failing row.
+ * A group reads as one row — name, component count, merged uptime and one
+ * merged strip — and expands to its components, indented and lighter. It
+ * opens by default only when something inside is failing or in maintenance;
+ * that default comes from the server, so nothing flips after hydration.
  */
 export function ComponentGroup({
   name,
   count,
   state,
+  stateLabel,
   uptime90,
   days,
   locale,
@@ -32,6 +33,7 @@ export function ComponentGroup({
   name: string;
   count: number;
   state: DayState;
+  stateLabel: string | null;
   uptime90: number | null;
   days: BarDay[];
   locale: AppLocale;
@@ -43,44 +45,42 @@ export function ComponentGroup({
   const [open, setOpen] = useState(defaultOpen);
   const contentId = useId();
   return (
-    <Collapsible open={open} onOpenChange={setOpen} className="px-4 py-5 sm:px-5">
-      <div className="flex items-center justify-between gap-3">
+    <Collapsible open={open} onOpenChange={setOpen} className="py-4">
+      <div className="flex items-center gap-2">
         <CollapsibleTrigger
           aria-controls={contentId}
           aria-label={t(open ? "group.collapse" : "group.expand", { name })}
-          className="-mx-1 flex min-w-0 items-center gap-2 rounded-md px-1 py-0.5 text-left"
+          className="-ml-1 flex min-w-0 items-center gap-1.5 rounded px-1 text-left"
         >
+          <StateIcon state={state} className="size-4" />
+          <span className="truncate text-sm font-medium text-foreground">{name}</span>
+          <span className="shrink-0 text-sm text-muted-foreground">
+            {t("group.count", { count })}
+          </span>
           <ChevronRight
             aria-hidden
             className={cn(
-              "size-4 shrink-0 text-muted-foreground motion-safe:transition-transform motion-safe:duration-200",
+              "size-3.5 shrink-0 text-muted-foreground motion-safe:transition-transform motion-safe:duration-150",
               open && "rotate-90",
             )}
           />
-          <StateIcon state={state} className="size-4 shrink-0" />
-          <span className="truncate text-sm font-medium text-foreground">{name}</span>
-          <span className="shrink-0 text-xs text-muted-foreground">
-            {t("group.count", { count })}
-          </span>
-          {state !== "operational" ? (
-            <span className={cn("shrink-0 text-xs", stateInk[state])}>{t(`state.${state}`)}</span>
-          ) : null}
         </CollapsibleTrigger>
-        <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
-          {uptime90 === null
-            ? t("uptime.unmeasured")
-            : t("uptime.value", { value: formatUptime(uptime90) })}
+        <span className="ml-auto flex shrink-0 items-center gap-3 text-sm">
+          {stateLabel ? (
+            <span className={cn("max-sm:hidden", stateInk[state])}>{stateLabel}</span>
+          ) : null}
+          <span className="tabular-nums text-muted-foreground">
+            {uptime90 === null
+              ? t("uptime.unmeasured")
+              : t("uptime.value", { value: formatUptime(uptime90) })}
+          </span>
         </span>
       </div>
-      {open ? null : (
-        <div className="mt-3">
-          <UptimeBar days={days} locale={locale} incidentHref={incidentHref} label={name} />
-        </div>
-      )}
+      <div className="mt-2.5">
+        <UptimeBar days={days} locale={locale} incidentHref={incidentHref} label={name} />
+      </div>
       <CollapsibleContent id={contentId}>
-        <ul className="mt-2 divide-y divide-border border-l border-border pl-4 sm:ml-2">
-          {children}
-        </ul>
+        <ul className="mt-2 divide-y divide-border border-l border-border">{children}</ul>
       </CollapsibleContent>
     </Collapsible>
   );

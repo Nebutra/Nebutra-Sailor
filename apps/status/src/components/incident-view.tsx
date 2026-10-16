@@ -20,12 +20,14 @@ export async function IncidentView({
   slug,
   now,
   locale,
+  timeZone,
 }: {
   incident: SnapshotIncident;
   components: SnapshotComponent[];
   slug: string;
   now: Date;
   locale: AppLocale;
+  timeZone: string | null;
 }) {
   const t = await getTranslations({ locale });
   const isMaintenance = incident.kind === "maintenance";
@@ -56,29 +58,33 @@ export async function IncidentView({
             aria-hidden
             className={cn(
               "size-2 rounded-full",
-              isMaintenance ? "bg-info" : impactFill[incident.impact],
+              isMaintenance ? "bg-blue-700" : impactFill[incident.impact],
             )}
           />
           {isMaintenance
             ? t(`maintenance.${incident.phase ?? "scheduled"}`)
             : `${t(`incidentStatus.${incident.status}`)} · ${t(`impact.${incident.impact}`)}`}
         </p>
-        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+        <h1 className="mt-2 text-xl font-semibold tracking-tight text-foreground">
           {incident.title}
         </h1>
       </header>
 
-      <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-border py-5 sm:grid-cols-3">
+      <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-5 rounded-lg border border-border bg-card p-4 sm:grid-cols-3">
         <div>
           <dt className="text-xs text-muted-foreground">{t("incident.started")}</dt>
           <dd className="mt-1 text-sm tabular-nums text-foreground">
-            <LocalTime iso={start.toISOString()} locale={locale} />
+            <LocalTime iso={start.toISOString()} locale={locale} timeZone={timeZone} />
           </dd>
         </div>
         <div>
           <dt className="text-xs text-muted-foreground">{t("incident.resolvedAt")}</dt>
           <dd className="mt-1 text-sm tabular-nums text-foreground">
-            {end && done ? <LocalTime iso={end.toISOString()} locale={locale} /> : "—"}
+            {end && done ? (
+              <LocalTime iso={end.toISOString()} locale={locale} timeZone={timeZone} />
+            ) : (
+              "—"
+            )}
           </dd>
         </div>
         <div>
@@ -110,8 +116,11 @@ export async function IncidentView({
       </dl>
 
       {isMaintenance ? null : (
-        <section aria-labelledby="progress" className="mt-8">
-          <h2 id="progress" className="text-sm font-medium text-foreground">
+        <section
+          aria-labelledby="progress"
+          className="mt-6 rounded-lg border border-border bg-card p-4"
+        >
+          <h2 id="progress" className="text-base font-medium text-foreground">
             {t("incident.progress")}
           </h2>
           <ol className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-0">
@@ -128,7 +137,7 @@ export async function IncidentView({
                     aria-hidden
                     className={cn(
                       "h-1 rounded-full",
-                      at ? (step === "resolved" ? "bg-success" : "bg-foreground") : "bg-border",
+                      at ? (step === "resolved" ? "bg-green-700" : "bg-foreground") : "bg-border",
                     )}
                   />
                   <p
@@ -141,7 +150,7 @@ export async function IncidentView({
                   </p>
                   <p className="mt-0.5 text-xs tabular-nums text-muted-foreground">
                     {at ? (
-                      <LocalTime iso={at.toISOString()} locale={locale} />
+                      <LocalTime iso={at.toISOString()} locale={locale} timeZone={timeZone} />
                     ) : skipped ? (
                       t("incident.skipped")
                     ) : (
@@ -155,8 +164,11 @@ export async function IncidentView({
         </section>
       )}
 
-      <section aria-labelledby="updates" className="mt-10">
-        <h2 id="updates" className="text-sm font-medium text-foreground">
+      <section
+        aria-labelledby="updates"
+        className="mt-6 rounded-lg border border-border bg-card p-4"
+      >
+        <h2 id="updates" className="text-base font-medium text-foreground">
           {t("incident.updates")}
         </h2>
         <ol className="mt-4">
@@ -186,6 +198,7 @@ export async function IncidentView({
                   <LocalTime
                     iso={u.createdAt.toISOString()}
                     locale={locale}
+                    timeZone={timeZone}
                     className="text-xs tabular-nums text-muted-foreground"
                   />
                 </p>

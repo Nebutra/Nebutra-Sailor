@@ -6,10 +6,10 @@ export const dynamic = "force-dynamic";
 
 type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> };
 
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const target = await homeTarget();
   if (target.kind !== "page") return {};
-  return pageMetadata(await getSnapshot(target.slug), (await searchParams).lang);
+  return pageMetadata(await getSnapshot(target.slug));
 }
 
 export default async function Home({ searchParams }: Props) {
