@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/email",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Multi-provider transactional email (Resend, Console)",
   "private": false,
   "license": "Apache-2.0",

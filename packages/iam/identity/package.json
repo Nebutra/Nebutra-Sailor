@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/identity",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Provider-agnostic identity adapter layer (Nebutra-issued OIDC claims by default)",
   "private": false,
   "nebutra": {

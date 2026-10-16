@@ -1,5 +1,14 @@
 # @nebutra/db
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies [[`8c77238`](https://github.com/Nebutra/Nebutra-Sailor/commit/8c772384caec2c5a7cb7f259d397dc73e2df57e3)]:
+  - @nebutra/logger@5.0.0
+  - @nebutra/tenant@5.0.0
+  - @nebutra/vault@5.0.0
+
 ## 0.1.6
 
 ### Patch Changes

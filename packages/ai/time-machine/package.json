@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/time-machine",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Chronos product surface for timeline browsing, branching, comparison, and rollback previews",
   "private": false,
   "license": "Apache-2.0",

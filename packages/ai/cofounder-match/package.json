@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/cofounder-match",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Behavior-verified cofounder profile, matching, and mutual-consent introduction surface",
   "private": false,
   "license": "Apache-2.0",

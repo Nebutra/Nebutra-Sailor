@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/reel",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Typed node-graph dataflow for generative-media production: versioned IO envelope, multi-transport execution, storyboard pipeline",
   "private": false,
   "license": "Apache-2.0",

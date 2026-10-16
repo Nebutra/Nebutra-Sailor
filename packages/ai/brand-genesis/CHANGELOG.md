@@ -1,5 +1,30 @@
 # @nebutra/brand-genesis
 
+## 0.3.0
+
+### Minor Changes
+
+- [#756](https://github.com/Nebutra/Nebutra-Sailor/pull/756) [`1b92788`](https://github.com/Nebutra/Nebutra-Sailor/commit/1b927886963a3e5c749b20867061bd7009b62d8b) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Retire the `brand_film_60s` Play. Brand Genesis now runs the `brand_kit` Play
+  (BRAND.md, palette, logo/hero/icon, mesh, landing handoff) and no longer
+  renders a film, BGM, or narration. `BrandFilmInput` is renamed to
+  `BrandGenesisInput`; `founderVoiceId`, `storyboard`, `film`, `bgm`, and
+  `narration` are removed, and the video/audio/voice pipeline dependencies are
+  dropped.
+
+### Patch Changes
+
+- [`8c77238`](https://github.com/Nebutra/Nebutra-Sailor/commit/8c772384caec2c5a7cb7f259d397dc73e2df57e3) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - Relicense to Apache-2.0. Every package now declares `"license": "Apache-2.0"` and ships the Apache-2.0 LICENSE text (previously MIT). `create-sailor` writes an Apache-2.0 LICENSE and a NOTICE into each generated project and prints `Skip to production.` in its banner. See ADR 2026-10-16 apache-2-relicense.
+
+- Updated dependencies [[`8c77238`](https://github.com/Nebutra/Nebutra-Sailor/commit/8c772384caec2c5a7cb7f259d397dc73e2df57e3)]:
+  - @nebutra/3d-pipeline@0.1.8
+  - @nebutra/capability-kit@5.0.0
+  - @nebutra/content-store@0.1.9
+  - @nebutra/errors@5.0.0
+  - @nebutra/event-log@5.0.0
+  - @nebutra/generation-context@0.1.8
+  - @nebutra/image-pipeline@0.1.8
+  - @nebutra/play-loader@0.1.8
+
 ## 0.2.7
 
 ### Patch Changes

@@ -1,5 +1,23 @@
 # @nebutra/auth
 
+## 4.0.0
+
+### Patch Changes
+
+- [#793](https://github.com/Nebutra/Nebutra-Sailor/pull/793) [`7684674`](https://github.com/Nebutra/Nebutra-Sailor/commit/7684674ba1e8431a3d75a4580a9aba197d503b1d) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - `createAuth({ provider: "better-auth" })` now resolves after the plugin probe, so `capabilities` reflects what mounted: switching the active organization through the gateway no longer answers 501.
+
+- [`b6b494f`](https://github.com/Nebutra/Nebutra-Sailor/commit/b6b494f280a96982f96c8a1d4dce6b7405b154bf) Thanks [@TsekaLuk](https://github.com/TsekaLuk)! - A fresh scaffold can sell: the Better Auth session now carries the active organization and the member's role (`org:<role>`), so billing's role guards see them, and the default offer catalog adds Pro monthly and annual memberships beside the credit packs.
+
+- Updated dependencies [[`8c77238`](https://github.com/Nebutra/Nebutra-Sailor/commit/8c772384caec2c5a7cb7f259d397dc73e2df57e3)]:
+  - @nebutra/audit@5.0.0
+  - @nebutra/email@5.0.0
+  - @nebutra/logger@5.0.0
+  - @nebutra/ui@5.0.0
+  - @nebutra/i18n@5.0.0
+  - @nebutra/feature-flags@0.1.8
+  - @nebutra/db@0.1.7
+  - @nebutra/repositories@0.0.8
+
 ## 3.0.1
 
 ### Patch Changes

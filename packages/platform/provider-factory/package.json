@@ -1,6 +1,6 @@
 {
   "name": "@nebutra/provider-factory",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Neutral provider-resolution primitive: the identical 'explicit ?? env ?? detect-chain ?? fallback' selection + prod-guard shared by every provider-agnostic Nebutra package. No instantiation logic.",
   "private": false,
   "license": "Apache-2.0",
