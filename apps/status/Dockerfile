@@ -6,9 +6,13 @@
 # On start the container applies pending migrations (`prisma migrate deploy`
 # against STATUS_DATABASE_URL), then serves on :3140.
 
+# The multi-arch index digest of node:22-alpine, so the same pin builds on
+# amd64 servers and arm64 laptops.
+ARG NODE_IMAGE=node:22-alpine@sha256:0a7108bf6c7bf5de370ffb1a3ed6be93d405b43ff159f681a8d18c0e2bc2e402
+
 # ── Stage 1: dependencies ─────────────────────────────────────────────────────
 # `pnpm fetch` needs only the lockfile, so this layer survives source edits.
-FROM node:22-alpine@sha256:92d51e5f20b7ff58faa5a969af1a1cec6cbec3fbff7e0f523242b9b5c85ad887 AS deps
+FROM ${NODE_IMAGE} AS deps
 WORKDIR /app
 RUN corepack enable pnpm
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
@@ -28,7 +32,7 @@ RUN pnpm exec turbo run build --filter="@nebutra/status-app..."
 # ── Stage 3: migrator ─────────────────────────────────────────────────────────
 # The standalone bundle carries no Prisma CLI. Install exactly the CLI version
 # the app was built with next to its config and migrations.
-FROM node:22-alpine@sha256:92d51e5f20b7ff58faa5a969af1a1cec6cbec3fbff7e0f523242b9b5c85ad887 AS migrator
+FROM ${NODE_IMAGE} AS migrator
 WORKDIR /opt/migrate
 COPY --from=builder /app/apps/status/node_modules/prisma/package.json /tmp/prisma-package.json
 RUN version="$(node -p "require('/tmp/prisma-package.json').version")" \
@@ -38,7 +42,7 @@ COPY apps/status/prisma.config.ts ./prisma.config.ts
 COPY apps/status/prisma ./prisma
 
 # ── Stage 4: runtime ──────────────────────────────────────────────────────────
-FROM node:22-alpine@sha256:92d51e5f20b7ff58faa5a969af1a1cec6cbec3fbff7e0f523242b9b5c85ad887 AS runner
+FROM ${NODE_IMAGE} AS runner
 WORKDIR /app
 RUN apk add --no-cache openssl \
  && addgroup --system --gid 1001 nodejs \
