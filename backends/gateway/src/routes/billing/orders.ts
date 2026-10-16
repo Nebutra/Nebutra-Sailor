@@ -21,6 +21,8 @@ import {
   assertProductReturnUrl,
   BillingError,
   createPaymentOrder,
+  getCreemCheckout,
+  getMembership,
   getOffer,
   getPaymentOrder,
   isPaymentMethodAvailable,
@@ -29,6 +31,7 @@ import {
   type Offer,
   offerAccount,
   type PaymentMethod,
+  settlePaymentOrder,
 } from "@nebutra/billing";
 import { getSystemDb } from "@nebutra/db";
 import { logger } from "@nebutra/logger";
@@ -36,13 +39,19 @@ import { PersonalTenantRepository } from "@nebutra/repositories";
 import type { Context, Next } from "hono";
 import { requireAuth, requireBillingManage } from "../../middlewares/tenantContext.js";
 import { billingServiceBreaker, CircuitOpenError } from "../../services/circuitBreaker.js";
+import { resolveSelfServiceReadiness } from "./self-service.js";
+import { browserSession } from "./session.js";
 
 export const orderRoutes = new OpenAPIHono();
 
 // What is for sale, and how it can be paid, is public: a product's pricing
 // page renders before anyone signs in.
-orderRoutes.use("/orders", requireAuth, guardPurchase);
-orderRoutes.use("/orders/*", requireAuth);
+// The product app calls these from the browser with its session cookie
+// (./session.ts); service tokens and Bearer JWTs resolve upstream as before.
+orderRoutes.use("/orders", browserSession, requireAuth, guardPurchase);
+orderRoutes.use("/orders/*", browserSession, requireAuth);
+orderRoutes.use("/orders/:id/verify", guardVerify);
+orderRoutes.use("/self-service", browserSession, requireAuth);
 
 const METHODS = ["card", "alipay", "wechat"] as const satisfies readonly PaymentMethod[];
 
@@ -62,6 +71,21 @@ function publicGrants(params: Record<string, unknown>) {
     if (typeof value === "number" || typeof value === "string") grants[key] = value;
   }
   return grants;
+}
+
+/** An offer as a pricing page may show it: what it grants, never how. */
+function publicOffer(offer: Offer) {
+  return {
+    id: offer.id,
+    product: offer.product,
+    account: offerAccount(offer),
+    kind: offer.fulfillment.type,
+    grants: publicGrants(offer.fulfillment.params),
+    name: offer.name,
+    ...(offer.prices ? { prices: offer.prices } : {}),
+    ...(offer.customAmount ? { customAmount: offer.customAmount } : {}),
+    ...(offer.highlight ? { highlight: offer.highlight } : {}),
+  };
 }
 
 /**
@@ -95,6 +119,16 @@ async function readableTenants(c: Context): Promise<string[]> {
  * for yourself needs nobody's permission. Reading an order (the QR page polls
  * it) stays open to the buyer and the organization's members.
  */
+/**
+ * Settling a workspace order on return needs the same right as buying it.
+ * A personal buyer has no workspace role; the handler still refuses any order
+ * outside the buyer's own tenants.
+ */
+async function guardVerify(c: Context, next: Next) {
+  if (!c.get("tenant")?.organizationId) return next();
+  return requireBillingManage(c, next);
+}
+
 async function guardPurchase(c: Context, next: Next) {
   if (c.req.method !== "POST") return next();
   const body = (await c.req.json().catch(() => null)) as { offerId?: unknown } | null;
@@ -203,20 +237,7 @@ orderRoutes.openapi(
       },
     },
   }),
-  (c) =>
-    c.json({
-      offers: listOffers(c.req.valid("query").product).map((offer) => ({
-        id: offer.id,
-        product: offer.product,
-        account: offerAccount(offer),
-        kind: offer.fulfillment.type,
-        grants: publicGrants(offer.fulfillment.params),
-        name: offer.name,
-        ...(offer.prices ? { prices: offer.prices } : {}),
-        ...(offer.customAmount ? { customAmount: offer.customAmount } : {}),
-        ...(offer.highlight ? { highlight: offer.highlight } : {}),
-      })),
-    }),
+  (c) => c.json({ offers: listOffers(c.req.valid("query").product).map(publicOffer) }),
 );
 
 orderRoutes.openapi(
@@ -420,6 +441,140 @@ orderRoutes.openapi(
     // Someone else's order is indistinguishable from a missing one.
     if (!order || !(await readableTenants(c)).includes(order.tenantId)) {
       return c.json({ error: "Order not found" }, 404);
+    }
+
+    return c.json(
+      {
+        id: order.id,
+        offerId: order.offerId,
+        status: order.status,
+        fulfilled: order.fulfilledAt !== null,
+        amountMinor: order.amountMinor,
+        currency: order.currency,
+        method: order.method,
+        createdAt: order.createdAt.toISOString(),
+      },
+      200,
+    );
+  },
+);
+
+// ── GET /self-service ─────────────────────────────────────────────────────────
+// Everything the product app's /billing page renders, in one read: the rail the
+// checkout factory picked and what to set when nothing can take money, the
+// live methods, the buyer's current plan (their membership of the product) and
+// what can be bought. Buying itself stays POST /orders.
+
+const SelfServiceSchema = z.object({
+  provider: z.string(),
+  status: z.enum(["disabled", "degraded", "ready"]),
+  title: z.string(),
+  description: z.string(),
+  missing: z.array(z.string()),
+  methods: MethodsSchema.shape.methods,
+  product: z.string(),
+  plan: z.object({ tier: z.string(), product: z.string(), endsAt: z.string() }).nullable(),
+  offers: z.array(OfferSchema),
+});
+
+orderRoutes.openapi(
+  createRoute({
+    method: "get",
+    path: "/self-service",
+    tags: ["Billing"],
+    summary: "Billing page state: readiness, live methods, current plan, offers",
+    request: { query: OffersQuerySchema },
+    responses: {
+      200: {
+        description: "What the billing page shows",
+        content: { "application/json": { schema: SelfServiceSchema } },
+      },
+    },
+  }),
+  async (c) => {
+    const product = c.req.valid("query").product ?? "app";
+    const tenant = c.get("tenant");
+    const owner =
+      (tenant.organizationId as string | undefined) ??
+      (await personalTenants().find(tenant.userId as string)) ??
+      undefined;
+    let plan: { tier: string; product: string; endsAt: string } | null = null;
+    if (owner) {
+      try {
+        const membership = await getMembership(owner, product);
+        if (membership) {
+          plan = {
+            tier: membership.tier,
+            product: membership.product,
+            endsAt: membership.endsAt.toISOString(),
+          };
+        }
+      } catch (error) {
+        // A missing membership table or tenant DB is a free plan, not a broken page.
+        logger.warn("Billing self-service could not read the membership", { product, error });
+      }
+    }
+    return c.json(
+      {
+        ...resolveSelfServiceReadiness(),
+        product,
+        plan,
+        offers: listOffers(product).map(publicOffer),
+      },
+      200,
+    );
+  },
+);
+
+// ── POST /orders/{id}/verify ──────────────────────────────────────────────────
+// The buyer is back from Creem's checkout. The webhook normally settles the
+// order within seconds, but it cannot reach a laptop and can be lost; this asks
+// Creem about this one order and settles it when the checkout completed — the
+// same check the reconcile job makes, run on the buyer's return.
+
+orderRoutes.openapi(
+  createRoute({
+    method: "post",
+    path: "/orders/{id}/verify",
+    tags: ["Billing", "Orders"],
+    summary: "Ask the payment provider about a pending order and settle it if paid",
+    request: { params: z.object({ id: z.string().min(1).max(64) }) },
+    responses: {
+      200: {
+        description: "Order status after the check",
+        content: { "application/json": { schema: OrderStatusSchema } },
+      },
+      404: {
+        description: "No such order for this buyer",
+        content: { "application/json": { schema: ErrorSchema } },
+      },
+    },
+  }),
+  async (c) => {
+    const { id } = c.req.valid("param");
+    let order = await getPaymentOrder(id);
+    if (!order || !(await readableTenants(c)).includes(order.tenantId)) {
+      return c.json({ error: "Order not found" }, 404);
+    }
+
+    if (order.status === "PENDING" && order.provider === "creem" && order.providerRef) {
+      try {
+        const ref = order.providerRef;
+        const checkout = await billingServiceBreaker.call(() => getCreemCheckout(ref));
+        if (checkout.status === "completed" && checkout.order) {
+          const paid = checkout.order;
+          await settlePaymentOrder({
+            orderId: order.id,
+            paidMinor: paid.amount,
+            currency: paid.currency,
+            providerRef: paid.id,
+          });
+          order = (await getPaymentOrder(id)) ?? order;
+        }
+      } catch (error) {
+        // The order stays PENDING; the webhook or the reconcile job settles it later.
+        logger.warn("Order verify could not reach the provider", { orderId: id, error });
+      }
     }
 
     return c.json(

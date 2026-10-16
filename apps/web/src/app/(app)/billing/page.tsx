@@ -1,3 +1,4 @@
+import { resolveBillingProviderReadiness } from "@nebutra/billing";
 import { LoadingState, PageHeader } from "@nebutra/ui/layout";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -58,7 +59,19 @@ function BillingReturnNotice({ notice }: { notice: BillingJourneyNotice }) {
 async function BillingContent({ journeyNotice }: { journeyNotice: BillingJourneyNotice | null }) {
   const tc = await getTranslations("copy.billingPage");
   const tenant = await getTenantContext();
-  const billingModel = buildBillingSelfServiceModel({ currentPlan: tenant.plan });
+  // Provider readiness comes from the checkout factory (@nebutra/billing), never
+  // from env sniffing here: the plan portal is the legacy Stripe path and opens
+  // only with BILLING_PROVIDER=stripe (ADR 2026-09-26).
+  const billingModel = buildBillingSelfServiceModel({
+    currentPlan: tenant.plan,
+    env: process.env,
+    readiness: resolveBillingProviderReadiness({
+      selfServiceEnabled:
+        process.env.FEATURE_FLAG_BILLING === "true" &&
+        process.env.NEBUTRA_BILLING_CHECKOUT_MODE !== "none",
+      requiredPriceEnvVars: ["STRIPE_PRICE_ID_PRO_MONTHLY", "STRIPE_PRICE_ID_PRO_YEARLY"],
+    }),
+  });
 
   return (
     <>

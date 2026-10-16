@@ -94,6 +94,24 @@ export const DEFAULT_OFFERS: readonly Offer[] = [
     fulfillment: { type: "credits", params: { credits: 250_000 } },
     highlight: "50,000 bonus",
   },
+  // Memberships (ADR 2026-09-27): what /billing offers as plans in a fresh
+  // scaffold. Replace the whole catalog with BILLING_OFFERS_JSON or
+  // configureOffers() to sell your own.
+  {
+    id: "plan_pro_monthly",
+    product: "app",
+    name: "Pro",
+    prices: { USD: 29, CNY: 198 },
+    fulfillment: { type: "membership", params: { tier: "PRO", days: 30, monthlyCredits: 0 } },
+  },
+  {
+    id: "plan_pro_annual",
+    product: "app",
+    name: "Pro Annual",
+    prices: { USD: 279, CNY: 1898 },
+    fulfillment: { type: "membership", params: { tier: "PRO", days: 365, monthlyCredits: 0 } },
+    highlight: "Save 20%",
+  },
 ];
 
 let catalog: readonly Offer[] = DEFAULT_OFFERS;

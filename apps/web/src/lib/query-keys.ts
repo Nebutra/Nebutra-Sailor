@@ -44,6 +44,12 @@ export const queryKeys = {
     summary: () => ["billing-usage", "summary"] as const,
   },
 
+  /** The /billing page: readiness, live methods, current plan and offers, per product. */
+  billingSelfService: {
+    all: ["billing-self-service"] as const,
+    detail: (product: string) => ["billing-self-service", "detail", product] as const,
+  },
+
   apiKeys: {
     all: ["api-keys"] as const,
     list: (orgId?: string) =>

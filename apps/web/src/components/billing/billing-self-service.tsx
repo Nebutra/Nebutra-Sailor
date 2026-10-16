@@ -13,28 +13,38 @@ import { useTranslations } from "next-intl";
 
 export type BillingPlanId = "free" | "pro_monthly" | "pro_yearly" | "enterprise";
 export type BillingProviderStatus = "disabled" | "ready" | "degraded";
-type BillingCheckoutMode = "none" | "individual" | "workspace";
-
-interface BillingCapabilities {
-  enabled: boolean;
-  checkoutMode: BillingCheckoutMode;
-}
 
 export interface BillingSelfServiceEnv extends Record<string, string | undefined> {
-  BILLING_PROVIDER?: string;
-  FEATURE_FLAG_BILLING?: string;
-  NEXT_PUBLIC_API_URL?: string;
   PRICE_ID_PRO_MONTHLY?: string;
   PRICE_ID_PRO_YEARLY?: string;
   STRIPE_PRICE_ID_PRO_MONTHLY?: string;
   STRIPE_PRICE_ID_PRO_YEARLY?: string;
-  STRIPE_SECRET_KEY?: string;
+}
+
+/**
+ * Which rail checkout runs on, as the server decided it. This component never
+ * detects a provider itself: the checkout factory in @nebutra/billing
+ * (`detectProvider`, Creem-first, WeChat Pay / Alipay first under
+ * NEBUTRA_LOCALE=cn) is the one place that happens, and the server hands the
+ * result here — the gateway's GET /api/v1/billing/self-service, or
+ * `resolveBillingProviderReadiness` on a server-rendered page.
+ */
+export interface BillingReadinessView {
+  provider: string;
+  status: BillingProviderStatus;
+  title: string;
+  description: string;
+  /** Legacy Stripe plan subscriptions only: checkout sessions can be opened. */
+  checkoutReady?: boolean;
+  /** Legacy Stripe plan subscriptions only: the hosted portal can be opened. */
+  portalReady?: boolean;
 }
 
 export interface BillingSelfServiceInput {
   currentPlan: string | null | undefined;
+  /** Price ids for the legacy Stripe subscription plans. No provider is read from it. */
   env?: BillingSelfServiceEnv;
-  capabilities?: BillingCapabilities;
+  readiness?: BillingReadinessView;
 }
 
 export interface BillingPlanAction {
@@ -110,32 +120,19 @@ const PLAN_DEFINITIONS: Omit<BillingPlanOption, "active" | "action">[] = [
   },
 ];
 
+/** What a page shows before the server has said anything about payments. */
+export const BILLING_READINESS_UNKNOWN: BillingReadinessView = {
+  provider: "manual",
+  status: "disabled",
+  title: "Plan changes aren't open yet",
+  description:
+    "You can compare the plans below. Upgrading opens here once payments are switched on.",
+};
+
 function normalizePlan(plan: string | null | undefined): "FREE" | "PRO" | "ENTERPRISE" {
   const normalized = plan?.toUpperCase();
   if (normalized === "PRO" || normalized === "ENTERPRISE") return normalized;
   return "FREE";
-}
-
-function getDetectedProvider(env: BillingSelfServiceEnv) {
-  if (env.BILLING_PROVIDER) return env.BILLING_PROVIDER.toLowerCase();
-  if (env.STRIPE_SECRET_KEY) return "stripe";
-  return "manual";
-}
-
-function isEnabled(value: string | undefined) {
-  return value === "true" || value === "1";
-}
-
-function resolveBillingCapabilities(env: BillingSelfServiceEnv): BillingCapabilities {
-  const checkoutMode = env.NEBUTRA_BILLING_CHECKOUT_MODE;
-
-  return {
-    enabled: isEnabled(env.FEATURE_FLAG_BILLING),
-    checkoutMode:
-      checkoutMode === "none" || checkoutMode === "workspace" || checkoutMode === "individual"
-        ? checkoutMode
-        : "individual",
-  };
 }
 
 export function getPlanPriceId(
@@ -161,60 +158,6 @@ function isStripePriceId(value: string | undefined) {
   return typeof value === "string" && value.startsWith("price_");
 }
 
-function getProviderState(env: BillingSelfServiceEnv, capabilities: BillingCapabilities) {
-  if (!capabilities.enabled || capabilities.checkoutMode === "none") {
-    return {
-      name: "manual",
-      status: "disabled" as const,
-      title: "Plan changes aren't open yet",
-      description:
-        "You can compare the plans below. Upgrading opens here once payments are switched on.",
-    };
-  }
-
-  const provider = getDetectedProvider(env);
-
-  if (provider !== "stripe") {
-    return {
-      name: provider,
-      status: "degraded" as const,
-      title: "Subscription self-service needs Stripe",
-      description: `A non-Stripe or manual provider is detected. ${brand.name} is not exposing subscription checkout until a supported provider route is configured.`,
-    };
-  }
-
-  if (!env.STRIPE_SECRET_KEY) {
-    return {
-      name: "stripe",
-      status: "degraded" as const,
-      title: "Stripe is selected but not configured",
-      description:
-        "Set STRIPE_SECRET_KEY and plan price ids before enabling checkout or customer portal actions.",
-    };
-  }
-
-  const missingPriceIds = ["pro_monthly", "pro_yearly"].filter(
-    (planId) => !isStripePriceId(getPlanPriceId(planId as BillingPlanId, env)),
-  );
-
-  if (missingPriceIds.length > 0) {
-    return {
-      name: "stripe",
-      status: "degraded" as const,
-      title: "Stripe is partially configured",
-      description:
-        "Customer portal can be requested, but paid plan checkout stays disabled until every paid plan has a Stripe price id.",
-    };
-  }
-
-  return {
-    name: "stripe",
-    status: "ready" as const,
-    title: "Stripe self-service is ready",
-    description: "Checkout and hosted billing portal actions can be exposed for configured plans.",
-  };
-}
-
 function getActivePlanId(plan: string | null | undefined): BillingPlanId {
   switch (normalizePlan(plan)) {
     case "PRO":
@@ -226,13 +169,26 @@ function getActivePlanId(plan: string | null | undefined): BillingPlanId {
   }
 }
 
+/**
+ * The plan cards and their actions. Paid-plan subscription checkout (the
+ * `/api/billing/checkout` form) is the legacy Stripe path and opens only when
+ * the server says Stripe is selected and ready; one-time purchases through
+ * Creem or the wallets are offers, rendered by the product app's billing route.
+ */
 export function buildBillingSelfServiceModel({
   currentPlan,
-  env = process.env,
-  capabilities = resolveBillingCapabilities(env),
+  env = {},
+  readiness = BILLING_READINESS_UNKNOWN,
 }: BillingSelfServiceInput): BillingSelfServiceModel {
   const activePlanId = getActivePlanId(currentPlan);
-  const provider = getProviderState(env, capabilities);
+  const provider = {
+    name: readiness.provider,
+    status: readiness.status,
+    title: readiness.title,
+    description: readiness.description,
+  };
+  const subscriptionCheckout = readiness.provider === "stripe" && readiness.checkoutReady === true;
+  const portalReady = readiness.provider === "stripe" && readiness.portalReady === true;
   const normalizedEnv = PLAN_DEFINITIONS.reduce<Record<BillingPlanId, string | undefined>>(
     (acc, plan) => {
       acc[plan.id] = getPlanPriceId(plan.id, env);
@@ -262,9 +218,7 @@ export function buildBillingSelfServiceModel({
       };
     } else if (!isPaidSelfServicePlan) {
       action = { label: "Included", enabled: false, reason: "No checkout required." };
-    } else if (provider.status === "disabled") {
-      action = { label: "Checkout unavailable", enabled: false, reason: provider.description };
-    } else if (provider.name !== "stripe" || !env.STRIPE_SECRET_KEY) {
+    } else if (!subscriptionCheckout) {
       action = { label: "Checkout unavailable", enabled: false, reason: provider.description };
     } else if (!isStripePriceId(priceId)) {
       action = {
@@ -297,11 +251,8 @@ export function buildBillingSelfServiceModel({
     provider,
     portal: {
       label: "Manage billing",
-      enabled: capabilities.enabled && provider.name === "stripe" && !!env.STRIPE_SECRET_KEY,
-      reason:
-        capabilities.enabled && provider.name === "stripe" && !!env.STRIPE_SECRET_KEY
-          ? undefined
-          : provider.description,
+      enabled: portalReady,
+      reason: portalReady ? undefined : provider.description,
     },
     plans,
   };

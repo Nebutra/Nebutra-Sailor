@@ -393,6 +393,24 @@ export function createBetterAuthProvider(config: AuthConfig): AuthProvider {
 
   /** The session exactly as the auth center issued it (raw subject in `userId`). */
   async function resolveRawSession(request: Request): Promise<Session | null> {
+    const session = await resolveMappedSession(request);
+    if (!session?.organizationId) return session;
+    // The member's role in the active organization: billing and the other
+    // role guards read it from the session (`org:<role>`).
+    try {
+      const auth = await getAuth();
+      const api = auth.api as unknown as {
+        getActiveMember?: (input: { headers: Headers }) => Promise<{ role?: string } | null>;
+      };
+      const member = await api.getActiveMember?.({ headers: request.headers });
+      if (member?.role) return { ...session, role: `org:${member.role}` };
+    } catch (error) {
+      logger.warn("Better Auth getSession: active member lookup failed", { error });
+    }
+    return session;
+  }
+
+  async function resolveMappedSession(request: Request): Promise<Session | null> {
     const authBase = process.env.BETTER_AUTH_URL?.trim();
     if (authBase && shouldResolveSessionAtAuthCenter(request.url, authBase)) {
       try {

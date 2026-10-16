@@ -8,8 +8,13 @@ export function mapSession(
 ): Session | null {
   if (!raw) return null;
   const { session, user } = raw;
+  const activeOrganizationId =
+    typeof session.activeOrganizationId === "string" && session.activeOrganizationId
+      ? session.activeOrganizationId
+      : undefined;
   return {
     userId: String(session.userId ?? user.id ?? ""),
+    ...(activeOrganizationId ? { organizationId: activeOrganizationId } : {}),
     email: (user.email as string) ?? undefined,
     expiresAt: session.expiresAt
       ? new Date(session.expiresAt as string | number)
