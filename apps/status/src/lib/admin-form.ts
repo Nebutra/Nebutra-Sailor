@@ -9,6 +9,27 @@ export function messageFieldName(locale: AppLocale): string {
   return `message:${locale}`;
 }
 
+export function titleFieldName(locale: AppLocale): string {
+  return `title:${locale}`;
+}
+
+/** Title per page language: the default carries `title`, the rest `titleI18n`. */
+export function localizedTitle(
+  read: (name: string) => string | null,
+  locales: readonly string[],
+): { title: string; titleI18n?: Record<string, string> } | null {
+  const ordered = pageLocales(locales);
+  const filled = ordered
+    .map((l) => ({ locale: l, text: (read(titleFieldName(l)) ?? "").trim() }))
+    .filter((e) => e.text.length > 0);
+  const base = filled[0];
+  if (!base) return null;
+  const rest = filled.slice(1);
+  return rest.length === 0
+    ? { title: base.text }
+    : { title: base.text, titleI18n: Object.fromEntries(rest.map((e) => [e.locale, e.text])) };
+}
+
 export function localizedMessage(
   read: (name: string) => string | null,
   locales: readonly string[],

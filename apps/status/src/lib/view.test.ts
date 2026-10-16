@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { type EvidenceReading, evaluateComponent } from "@/server/evaluate";
 import type { SnapshotComponent, SnapshotDay, SnapshotIncident } from "@/server/snapshot";
 import {
+  componentEvidence,
   evidenceLine,
   groupComponents,
   groupStartsOpen,
@@ -256,5 +257,54 @@ describe("calendar", () => {
       [9, ["c", "b"]],
       [8, ["a"]],
     ]);
+  });
+});
+
+describe("componentEvidence", () => {
+  it("reads the snapshot's evidence summary when present", () => {
+    const c = component("api", {
+      evidenceLine: {
+        primary: {
+          source: "journey",
+          coverage: "synthetic",
+          state: "operational",
+          checkedAt: now,
+          latencyMs: 800,
+        },
+        stale: [
+          {
+            source: "probe-x",
+            coverage: "dependency",
+            lastState: "operational",
+            checkedAt: now,
+            ageSeconds: 1380,
+          },
+        ],
+      },
+    });
+    expect(componentEvidence(c, now)).toMatchObject({
+      kind: "synthetic",
+      passing: true,
+      quiet: { source: "probe-x", ageSeconds: 1380 },
+      staleMinutes: 23,
+    });
+  });
+
+  it("reports only silence when no source is fresh", () => {
+    const c = component("api", {
+      evidenceLine: {
+        primary: null,
+        stale: [
+          {
+            source: "probe-x",
+            coverage: "dependency",
+            lastState: "outage",
+            checkedAt: now,
+            ageSeconds: 600,
+          },
+        ],
+      },
+    });
+    expect(componentEvidence(c, now).kind).toBe("stale");
   });
 });

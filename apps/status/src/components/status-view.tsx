@@ -166,7 +166,7 @@ export async function StatusView({
                 state={group.state}
                 stateLabel={group.state === "operational" ? null : t(`state.${group.state}`)}
                 uptime90={group.uptime90}
-                days={groupBar(group, snapshot.recentIncidents, now)}
+                days={groupBar(group, snapshot.recentIncidents, now, locale)}
                 locale={locale}
                 incidentHref={incidentHref}
                 defaultOpen={groupStartsOpen(group.state)}

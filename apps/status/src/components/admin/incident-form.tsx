@@ -4,7 +4,12 @@ import { Button, Checkbox, Field, Input, Select, Textarea } from "@nebutra/ui/pr
 import { useTranslations } from "next-intl";
 import { useActionState, useState } from "react";
 import { type ActionState, createIncidentAction } from "@/app/admin/actions";
-import { INCIDENT_STATUSES, localInputToIso, messageFieldName } from "@/lib/admin-form";
+import {
+  INCIDENT_STATUSES,
+  localInputToIso,
+  messageFieldName,
+  titleFieldName,
+} from "@/lib/admin-form";
 import type { AppLocale } from "@/lib/locale";
 import { FormError } from "./form-error";
 
@@ -80,15 +85,23 @@ export function IncidentForm({
         ) : null}
       </div>
 
-      <Field label={t("admin.form.title")} htmlFor="title">
-        <Input
-          id="title"
-          name="title"
-          required
-          maxLength={200}
-          placeholder={t("admin.form.titlePlaceholder")}
-        />
-      </Field>
+      {locales.map((l, i) => (
+        <Field
+          key={l}
+          label={t("admin.form.titleIn", { locale: LOCALE_NAMES[l] })}
+          htmlFor={titleFieldName(l)}
+          {...(i > 0 ? { description: t("admin.form.messageOptional") } : {})}
+        >
+          <Input
+            id={titleFieldName(l)}
+            name={titleFieldName(l)}
+            required={i === 0}
+            maxLength={200}
+            lang={l}
+            {...(i === 0 ? { placeholder: t("admin.form.titlePlaceholder") } : {})}
+          />
+        </Field>
+      ))}
 
       {kind === "maintenance" ? (
         <div className="grid gap-4 sm:grid-cols-2">

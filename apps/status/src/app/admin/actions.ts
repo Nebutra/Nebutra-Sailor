@@ -11,7 +11,12 @@ import { redirect } from "next/navigation";
 import { ZodError } from "zod";
 import { loadMessages } from "@/i18n/messages";
 import { adminLocale, currentMember } from "@/lib/admin";
-import { localizedMessage, messageFieldName } from "@/lib/admin-form";
+import {
+  localizedMessage,
+  localizedTitle,
+  messageFieldName,
+  titleFieldName,
+} from "@/lib/admin-form";
 import { invalidateSnapshot } from "@/lib/data";
 import { pageLocales } from "@/lib/locale";
 import {
@@ -108,12 +113,21 @@ export async function createIncidentAction(_: ActionState, form: FormData): Prom
       },
     };
   }
+  const title = localizedTitle((n) => text(form, n), page.locales);
+  if (!title) {
+    return {
+      error: {
+        code: "invalid_input",
+        detail: titleFieldName(pageLocales(page.locales)[0] ?? "en"),
+      },
+    };
+  }
   const kind = text(form, "kind") === "maintenance" ? "maintenance" : "incident";
   let id: string;
   try {
     const created = await createIncident(getDb(), page, {
       kind,
-      title: text(form, "title"),
+      ...title,
       impact: text(form, "impact") as never,
       status: (kind === "maintenance"
         ? "identified"

@@ -1,4 +1,5 @@
 import { WordmarkEnSVG } from "@nebutra/brand";
+import { ArrowUpRight } from "@nebutra/icons";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
@@ -21,7 +22,13 @@ export async function PageShell({
   children,
 }: {
   locale: AppLocale;
-  page: { slug: string; title: string; locales: string[]; logoUrl?: string | null } | null;
+  page: {
+    slug: string;
+    title: string;
+    locales: string[];
+    logoUrl?: string | null;
+    siteUrl?: string | null;
+  } | null;
   /** Components a reader may narrow a subscription to. */
   components?: Array<{ key: string; name: string }>;
   /** This page's own path, so the language switch returns here. */
@@ -56,6 +63,16 @@ export async function PageShell({
               </span>
             </a>
             <nav className="flex shrink-0 items-center gap-2">
+              {page?.siteUrl ? (
+                <a
+                  href={page.siteUrl}
+                  rel="noopener"
+                  className="hidden items-center gap-1 rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline-flex"
+                >
+                  {hostOf(page.siteUrl)}
+                  <ArrowUpRight aria-hidden className="size-3.5" />
+                </a>
+              ) : null}
               {other ? (
                 <a
                   href={`/lang/${other}?next=${encodeURIComponent(path)}`}
@@ -91,4 +108,12 @@ export async function PageShell({
       </div>
     </NextIntlClientProvider>
   );
+}
+
+function hostOf(url: string): string {
+  try {
+    return new URL(url).host.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
 }

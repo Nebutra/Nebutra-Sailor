@@ -278,7 +278,8 @@
       "windowEnd": "Ends",
       "windowHint": "In your local time zone.",
       "submit": "Publish",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "titleIn": "Title ({locale})"
     },
     "update": {
       "title": "Post an update",

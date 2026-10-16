@@ -278,7 +278,8 @@
       "windowEnd": "结束时间",
       "windowHint": "按你所在的时区填写。",
       "submit": "发布",
-      "cancel": "取消"
+      "cancel": "取消",
+      "titleIn": "标题（{locale}）"
     },
     "update": {
       "title": "发布更新",

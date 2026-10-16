@@ -5,6 +5,7 @@
  */
 import type { ComponentState, ComponentVerdict, EvidenceCoverage } from "@/server/evaluate";
 import type { SnapshotComponent, SnapshotDay, SnapshotIncident } from "@/server/snapshot";
+import { type AppLocale, pickI18n } from "./locale";
 
 export type DayState = ComponentState | "no_data";
 
@@ -49,6 +50,7 @@ export function incidentsOnDay(
   componentKeys: string[] | null,
   dayKey: string,
   now: Date,
+  locale?: AppLocale,
 ): DayIncident[] {
   return incidents
     .filter((i) => i.kind === "incident")
@@ -58,17 +60,22 @@ export function incidentsOnDay(
       const end = utcDayKey(i.resolvedAt ?? now);
       return dayKey >= start && dayKey <= end;
     })
-    .map((i) => ({ id: i.id, title: i.title, impact: i.impact }));
+    .map((i) => ({
+      id: i.id,
+      title: locale ? pickI18n(i.title, i.titleI18n ?? null, locale) : i.title,
+      impact: i.impact,
+    }));
 }
 
 export function componentBar(
   component: SnapshotComponent,
   incidents: SnapshotIncident[],
   now: Date,
+  locale?: AppLocale,
 ): BarDay[] {
   return component.days.map((d) => ({
     ...d,
-    incidents: incidentsOnDay(incidents, [component.key], d.date, now),
+    incidents: incidentsOnDay(incidents, [component.key], d.date, now, locale),
   }));
 }
 
@@ -113,9 +120,13 @@ export function groupBar(
   group: ComponentGroupView,
   incidents: SnapshotIncident[],
   now: Date,
+  locale?: AppLocale,
 ): BarDay[] {
   const keys = group.components.map((c) => c.key);
-  return group.days.map((d) => ({ ...d, incidents: incidentsOnDay(incidents, keys, d.date, now) }));
+  return group.days.map((d) => ({
+    ...d,
+    incidents: incidentsOnDay(incidents, keys, d.date, now, locale),
+  }));
 }
 
 export interface ComponentGroupView {
@@ -228,6 +239,31 @@ export function evidenceLine(verdict: ComponentVerdict, now: Date): EvidenceLine
     return { kind: coverage, passing, at: newest.checkedAt, staleMinutes, quiet };
   }
   return { kind: "none", passing: false, at: null, staleMinutes, quiet };
+}
+
+/**
+ * The row caption from the snapshot's own evidence summary (the backend's
+ * single derivation), falling back to deriving it here for older snapshots.
+ */
+export function componentEvidence(component: SnapshotComponent, now: Date): EvidenceLine {
+  const summary = component.evidenceLine;
+  if (!summary) return evidenceLine(component.verdict, now);
+  const quietest = summary.stale[0] ?? null;
+  const quiet = quietest ? { source: quietest.source, ageSeconds: quietest.ageSeconds } : null;
+  const staleMinutes = quiet ? Math.max(1, Math.floor(quiet.ageSeconds / 60)) : null;
+  if (summary.primary) {
+    return {
+      kind: summary.primary.coverage,
+      passing: summary.primary.state === "operational",
+      at: summary.primary.checkedAt,
+      staleMinutes,
+      quiet,
+    };
+  }
+  if (quietest) {
+    return { kind: "stale", passing: false, at: quietest.checkedAt, staleMinutes, quiet };
+  }
+  return { kind: "none", passing: false, at: null, staleMinutes: null, quiet: null };
 }
 
 /** The newest reading across every component — what "updated" honestly means. */

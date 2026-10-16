@@ -2,7 +2,7 @@ import { cn } from "@nebutra/ui/utils";
 import { getTranslations } from "next-intl/server";
 import { formatAge, formatUptime } from "@/lib/format";
 import { type AppLocale, pickI18n } from "@/lib/locale";
-import { componentBar, evidenceLine } from "@/lib/view";
+import { componentBar, componentEvidence, type EvidenceLine } from "@/lib/view";
 import type { SnapshotComponent, SnapshotIncident } from "@/server/snapshot";
 import { ComponentDescription } from "./component-description";
 import { LocalTime } from "./local-time";
@@ -33,7 +33,7 @@ export async function ComponentRow({
   const t = await getTranslations({ locale });
   const name = pickI18n(component.name, component.nameI18n, locale);
   const { verdict } = component;
-  const line = evidenceLine(verdict, now);
+  const line = componentEvidence(component, now);
   const silent = verdict.state === "unknown";
   const stateWord =
     verdict.state === "operational"
@@ -71,13 +71,13 @@ export async function ComponentRow({
           </span>
         </span>
       </div>
-      {stateWord ? (
+      {stateWord && line.kind === "none" ? (
         <p className={cn("mt-1 text-xs sm:hidden", stateInk[verdict.state])}>{stateWord}</p>
       ) : null}
-      <EvidenceLine line={line} now={now} locale={locale} />
+      <EvidenceCaption line={line} now={now} locale={locale} />
       <div className="mt-2.5">
         <UptimeBar
-          days={componentBar(component, incidents, now)}
+          days={componentBar(component, incidents, now, locale)}
           locale={locale}
           incidentHref={incidentHref}
           label={name}
@@ -92,12 +92,12 @@ export async function ComponentRow({
  * fresh it is — "用户旅程已验证 · 2 分钟前", "依赖探测 · 30 秒前". Amber only
  * when a fresh source is failing; a quiet source is named, never painted red.
  */
-async function EvidenceLine({
+async function EvidenceCaption({
   line,
   now,
   locale,
 }: {
-  line: ReturnType<typeof evidenceLine>;
+  line: EvidenceLine;
   now: Date;
   locale: AppLocale;
 }) {

@@ -21,6 +21,11 @@ export function componentNames(
     .join(sep);
 }
 
+/** The incident's title in the reader's language, when the operator wrote one. */
+export function incidentTitle(incident: SnapshotIncident, locale: AppLocale): string {
+  return pickI18n(incident.title, incident.titleI18n ?? null, locale);
+}
+
 export function latestMessage(incident: SnapshotIncident, locale: AppLocale): string | null {
   const last = incident.updates.at(-1);
   return last ? pickI18n(last.message, last.messageI18n, locale) : null;
@@ -60,7 +65,7 @@ export async function ActiveIncidentCard({
           className={cn("size-2 shrink-0 rounded-full", impactFill[incident.impact])}
         />
         <h2 className="min-w-0 flex-1 truncate text-base font-medium text-foreground">
-          {incident.title}
+          {incidentTitle(incident, locale)}
         </h2>
         <span className="shrink-0 text-sm text-foreground/80">
           {t(`incidentStatus.${incident.status}`)}
@@ -128,7 +133,7 @@ export async function MaintenanceCard({
       >
         <Wrench aria-hidden className="size-4 shrink-0 text-blue-900" />
         <h2 className="min-w-0 flex-1 truncate text-base font-medium text-foreground">
-          {item.title}
+          {incidentTitle(item, locale)}
         </h2>
         <span className="shrink-0 text-sm text-foreground/80">{t(`maintenance.${phase}`)}</span>
       </div>
@@ -187,7 +192,7 @@ export async function IncidentListItem({
         />
         <span className="min-w-0 flex-1">
           <span className="block truncate text-sm font-medium text-foreground">
-            {incident.title}
+            {incidentTitle(incident, locale)}
           </span>
           <span className="mt-0.5 flex flex-wrap gap-x-1.5 text-xs tabular-nums text-muted-foreground">
             <LocalTime iso={incident.createdAt.toISOString()} locale={locale} timeZone={timeZone} />

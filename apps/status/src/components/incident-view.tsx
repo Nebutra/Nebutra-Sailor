@@ -66,7 +66,7 @@ export async function IncidentView({
             : `${t(`incidentStatus.${incident.status}`)} · ${t(`impact.${incident.impact}`)}`}
         </p>
         <h1 className="mt-2 text-xl font-semibold tracking-tight text-foreground">
-          {incident.title}
+          {pickI18n(incident.title, incident.titleI18n ?? null, locale)}
         </h1>
       </header>
 
