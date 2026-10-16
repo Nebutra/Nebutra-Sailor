@@ -1,0 +1,8 @@
+/**
+ * Nebutra Status — the design system through its single entry: Tailwind,
+ * @nebutra/tokens (light + dark), UI source scan, typography.
+ */
+@import "@nebutra/ui/styles/preset.css";
+
+/* This app's own sources; the preset scans @nebutra/ui and icons. */
+@source "../**/*.{ts,tsx}";

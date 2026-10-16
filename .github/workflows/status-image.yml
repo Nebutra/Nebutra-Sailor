@@ -1,0 +1,95 @@
+name: Status image
+
+# Builds the self-hosted Nebutra Status image natively on amd64 and arm64,
+# boots it with Postgres through apps/status/docker-compose.yml and the
+# example config, and smoke-tests it end to end. Nothing is published.
+
+on:
+  pull_request:
+    paths:
+      - "apps/status/**"
+      - "packages/platform/status/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/status-image.yml"
+  push:
+    branches: [main]
+    paths:
+      - "apps/status/**"
+      - "packages/platform/status/**"
+      - "pnpm-lock.yaml"
+      - ".github/workflows/status-image.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: status-image-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  image:
+    name: Build and smoke (${{ matrix.arch }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-latest
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    env:
+      STATUS_IMAGE: nebutra-status:ci
+      STATUS_SETUP_TOKEN: ci-setup-token
+      STATUS_DB_PASSWORD: ci-db-password
+      STATUS_PUBLIC_URL: http://localhost:3140
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: apps/status/Dockerfile
+          platforms: linux/${{ matrix.arch }}
+          tags: ${{ env.STATUS_IMAGE }}
+          load: true
+          push: false
+          cache-from: type=gha,scope=status-image-${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=status-image-${{ matrix.arch }}
+
+      - name: Start Postgres and the image with the example config
+        working-directory: apps/status
+        run: |
+          cp examples/status.config.json status.config.json
+          docker compose up -d --wait --wait-timeout 180
+
+      - name: Smoke test
+        env:
+          BASE: http://localhost:3140
+          SETUP_TOKEN: ${{ env.STATUS_SETUP_TOKEN }}
+          SLUG: acme
+          COMPONENT: sign-in
+        run: apps/status/scripts/smoke.sh
+
+      - name: Container logs
+        if: always()
+        working-directory: apps/status
+        run: docker compose logs --no-color --tail 300 status
+
+      - name: Image size
+        if: always()
+        run: docker image ls "$STATUS_IMAGE"
+
+      - name: Stop
+        if: always()
+        working-directory: apps/status
+        run: docker compose down -v

@@ -1,0 +1,335 @@
+{
+  "meta": {
+    "statusOf": "{title} status",
+    "fallbackTitle": "Nebutra Status"
+  },
+  "verdict": {
+    "operational": "All systems operational",
+    "degraded": "Some systems are degraded",
+    "outage": "Some systems are down",
+    "affected": "Affected: {names}",
+    "maintenanceNote": "Maintenance in progress on {names}.",
+    "latestReading": "Latest reading",
+    "waiting": "Waiting for the first reading",
+    "operationalBody": "We're not aware of any issues affecting our systems.",
+    "degradedBody": "Degraded: {names}.",
+    "outageBody": "Unavailable: {names}.",
+    "noFresh": "{count, plural, one {# component is} other {# components are}} awaiting fresh data.",
+    "handling": "{count, plural, one {We're working on # incident.} other {We're working on # incidents.}}"
+  },
+  "state": {
+    "operational": "Operational",
+    "degraded": "Degraded",
+    "outage": "Outage",
+    "maintenance": "Maintenance",
+    "unknown": "Awaiting fresh data",
+    "no_data": "No data",
+    "no_source": "No evidence source"
+  },
+  "impact": {
+    "none": "No impact",
+    "minor": "Minor impact",
+    "major": "Major impact",
+    "critical": "Critical impact"
+  },
+  "incidentStatus": {
+    "investigating": "Investigating",
+    "identified": "Identified",
+    "monitoring": "Monitoring",
+    "resolved": "Resolved"
+  },
+  "sections": {
+    "active": "Active incidents",
+    "maintenance": "Maintenance",
+    "components": "Components",
+    "recent": "Recent incidents",
+    "history": "History"
+  },
+  "incident": {
+    "ongoingFor": "Ongoing for {duration}",
+    "lasted": "Lasted {duration}",
+    "affects": "Affects {names}",
+    "back": "Back to status",
+    "progress": "Progress",
+    "updates": "Updates",
+    "notReached": "Not yet",
+    "skipped": "Skipped",
+    "started": "Started",
+    "resolvedAt": "Resolved",
+    "duration": "Duration",
+    "components": "Affected components",
+    "noComponents": "No component was marked as affected.",
+    "openDetails": "Open incident: {title}",
+    "maintenance": "Maintenance",
+    "latest": "Latest update"
+  },
+  "maintenance": {
+    "scheduled": "Scheduled maintenance",
+    "in_progress": "Maintenance in progress",
+    "completed": "Maintenance completed",
+    "window": "{start} – {end}"
+  },
+  "group": {
+    "count": "{count, plural, one {# component} other {# components}}",
+    "expand": "Show components in {name}",
+    "collapse": "Hide components in {name}",
+    "ungrouped": "Services"
+  },
+  "uptime": {
+    "value": "{value} uptime",
+    "unmeasured": "Not measured yet"
+  },
+  "bar": {
+    "summary": "{days}-day history, {known} days with readings.",
+    "noReadings": "No readings this day",
+    "readings": "{count, plural, one {# reading} other {# readings}}",
+    "avgLatency": "Avg {value}",
+    "noIncidents": "No incidents recorded",
+    "stateDetected": "{state} in readings",
+    "start": "{days} days ago",
+    "today": "Today",
+    "dayLabel": "{date}: {state}",
+    "dayLabelUptime": "{date}: {state}, {uptime} uptime",
+    "dayIncidents": "{count, plural, one {# incident} other {# incidents}}"
+  },
+  "evidence": {
+    "synthetic": "Synthetic journey verified",
+    "synthetic_failing": "Synthetic journey failing",
+    "device": "Device heartbeat",
+    "device_failing": "Device heartbeat failing",
+    "upstream": "Upstream status",
+    "upstream_failing": "Upstream reports a problem",
+    "dependency": "Dependency check",
+    "dependency_failing": "Dependency check failing",
+    "manual": "Manual check",
+    "manual_failing": "Manually marked as affected",
+    "none": "No evidence source connected",
+    "stale": "No new reading for {minutes} min",
+    "staleHours": "No new reading for {hours} h",
+    "staleAlso": "one source quiet for {minutes} min",
+    "staleAlsoHours": "one source quiet for {hours} h",
+    "explain": "What this colour rests on: the freshest proof and how old it is.",
+    "awaiting": "Awaiting fresh data",
+    "silentFor": "{source} silent for {age}"
+  },
+  "history": {
+    "title": "History",
+    "subtitle": "The last 90 days, day by day.",
+    "outsideWindow": "Outside the 90-day window",
+    "future": "Not yet",
+    "quietMonth": "No incidents this month.",
+    "quietWindow": "No incidents in the last 90 days.",
+    "viewHistory": "View history",
+    "legend": "Legend"
+  },
+  "footer": {
+    "powered": "Powered by",
+    "subscribe": "Subscribe",
+    "atom": "Atom feed",
+    "rss": "RSS feed",
+    "language": "Language",
+    "poweredLabel": "Powered by Nebutra Status",
+    "poweredSuffix": "Status"
+  },
+  "home": {
+    "emptyTitle": "This instance has no status page yet",
+    "emptyBody": "Declare a page and its components in status.config.json; the instance applies it on start. The README walks through it.",
+    "unconfiguredTitle": "Database not configured",
+    "unconfiguredBody": "Set STATUS_DATABASE_URL and restart the instance. The README lists every setting.",
+    "chooseTitle": "Status pages",
+    "chooseBody": "This instance publishes several pages. Set STATUS_DEFAULT_PAGE to open one here directly."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "This status page or incident does not exist, or it is no longer published.",
+    "home": "Go to the status page"
+  },
+  "status": {
+    "title": "System status",
+    "other": "Other",
+    "range": "{start} – {end}"
+  },
+  "coverage": {
+    "synthetic": "User journey",
+    "dependency": "Dependency check",
+    "device": "Device heartbeat",
+    "upstream": "Upstream",
+    "manual": "Manual",
+    "ok": "passing",
+    "failing": "failing",
+    "quiet": "awaiting fresh data",
+    "explain": "What this colour rests on"
+  },
+  "header": {
+    "subscribe": "Subscribe to updates",
+    "language": "中文",
+    "languageLabel": "切换到中文",
+    "history": "History",
+    "home": "Status home"
+  },
+  "subscribe": {
+    "title": "Subscribe to updates",
+    "body": "Get a message when an incident opens, changes or is resolved.",
+    "channel": "Channel",
+    "email": "Email",
+    "webhook": "Webhook",
+    "feishu": "Feishu",
+    "dingtalk": "DingTalk",
+    "wecom": "WeCom",
+    "slack": "Slack",
+    "targetEmail": "Email address",
+    "targetWebhook": "Webhook URL",
+    "targetBot": "Bot webhook URL",
+    "secret": "Signing secret (optional)",
+    "secretHint": "Bots with signature checks enabled need it.",
+    "components": "Only these components",
+    "componentsHint": "Leave all unchecked for every component.",
+    "submit": "Subscribe",
+    "pending": "Check {target}: confirm from the email we just sent.",
+    "active": "Subscribed. A welcome message is on its way to that address.",
+    "keepLink": "Keep this link to unsubscribe later:",
+    "emailDisabled": "Email delivery is not set up on this instance. Choose a group bot or webhook instead.",
+    "error": "That did not go through: {detail}",
+    "rateLimited": "Too many attempts. Try again in a minute.",
+    "feeds": "Or follow a feed:",
+    "atom": "Atom",
+    "rss": "RSS",
+    "again": "Subscribe another address"
+  },
+  "subscription": {
+    "confirmTitle": "Subscription confirmed",
+    "confirmBody": "Incident and maintenance notices will reach you from now on.",
+    "invalidTitle": "This link no longer works",
+    "invalidBody": "It may have expired or been used to unsubscribe already.",
+    "unsubscribeTitle": "Unsubscribe",
+    "unsubscribeBody": "Stop receiving status notices at this address?",
+    "unsubscribeButton": "Unsubscribe",
+    "unsubscribedTitle": "Unsubscribed",
+    "unsubscribedBody": "This address will not receive any more notices.",
+    "back": "Go to the status page"
+  },
+  "admin": {
+    "title": "Nebutra Status admin",
+    "nav": {
+      "incidents": "Incidents",
+      "keys": "API keys",
+      "components": "Components",
+      "viewPage": "View public page",
+      "signOut": "Sign out",
+      "page": "Page"
+    },
+    "setup": {
+      "title": "Create the owner account",
+      "body": "This instance has no members yet. Enter the STATUS_SETUP_TOKEN set at deploy time to create the first owner.",
+      "token": "Setup token",
+      "email": "Email",
+      "password": "Password",
+      "passwordHint": "At least 12 characters.",
+      "name": "Name (optional)",
+      "workspace": "Workspace slug",
+      "workspaceHint": "Lower-case letters, digits, - and _. Use the slug in status.config.json if you have one.",
+      "submit": "Create and sign in",
+      "closedTitle": "Setup is closed",
+      "closedBody": "This instance already has members, or STATUS_SETUP_TOKEN is not set. Sign in instead.",
+      "toSignIn": "Go to sign-in"
+    },
+    "signIn": {
+      "title": "Sign in",
+      "body": "Manage incidents, maintenance and API keys.",
+      "submit": "Sign in",
+      "setupLink": "First deploy? Create the owner account"
+    },
+    "errors": {
+      "invalid_credentials": "Email or password is incorrect.",
+      "setup_token_invalid": "The setup token is incorrect.",
+      "already_set_up": "This instance already has an owner. Sign in instead.",
+      "setup_disabled": "Setup is closed: STATUS_SETUP_TOKEN is not set.",
+      "invalid_input": "Check the fields: {detail}",
+      "forbidden": "Your role cannot do this.",
+      "not_found": "That item no longer exists.",
+      "generic": "That did not go through: {detail}",
+      "rate_limited": "Too many attempts. Try again in {detail} seconds."
+    },
+    "incidents": {
+      "title": "Incidents",
+      "new": "New incident",
+      "open": "Open and scheduled",
+      "closed": "Closed",
+      "quietOpen": "Nothing is open right now.",
+      "quietClosed": "Closed incidents will appear here.",
+      "updated": "Updated",
+      "started": "Started",
+      "components": "{count, plural, =0 {No components} one {# component} other {# components}}"
+    },
+    "form": {
+      "kind": "Type",
+      "kindIncident": "Incident",
+      "kindMaintenance": "Maintenance",
+      "title": "Title",
+      "titlePlaceholder": "What is affected, in plain words",
+      "impact": "Impact",
+      "status": "Status",
+      "components": "Affected components",
+      "componentsHint": "Leave all unchecked if no specific component is affected.",
+      "message": "Message ({locale})",
+      "messageHint": "Published to the status page, feeds and subscribers.",
+      "messageOptional": "Optional. Readers in this language see the default otherwise.",
+      "windowStart": "Starts",
+      "windowEnd": "Ends",
+      "windowHint": "In your local time zone.",
+      "submit": "Publish",
+      "cancel": "Cancel",
+      "titleIn": "Title ({locale})"
+    },
+    "update": {
+      "title": "Post an update",
+      "submit": "Post update",
+      "resolve": "Resolve",
+      "resolveHint": "Marks the incident resolved with a standard closing message.",
+      "resolvedMessage": "This incident has been resolved.",
+      "maintenanceDone": "This maintenance is complete.",
+      "closed": "This incident is closed. Posting an update reopens it."
+    },
+    "detail": {
+      "back": "All incidents",
+      "timeline": "Timeline",
+      "public": "View on the status page"
+    },
+    "keys": {
+      "title": "API keys",
+      "body": "Machine credentials for pushing evidence, automating incidents and deploy gates.",
+      "create": "Create key",
+      "name": "Name",
+      "namePlaceholder": "e.g. ci-deploy-gate",
+      "scopes": "Scopes",
+      "scope_status:read": "Read status",
+      "scope_evidence:write": "Push evidence",
+      "scope_incidents:write": "Write incidents",
+      "created": "Key created. This is the only time the full key is shown; store it now.",
+      "copy": "Copy",
+      "prefix": "Prefix",
+      "lastUsed": "Last used",
+      "never": "Never",
+      "createdAt": "Created",
+      "revoke": "Revoke",
+      "revokeConfirm": "Confirm revoke",
+      "revoked": "Revoked",
+      "quiet": "Keys you create will appear here.",
+      "forbidden": "Only owners and admins can manage keys."
+    },
+    "components": {
+      "title": "Components",
+      "body": "Components, groups and monitors come from status.config.json (configuration as code). Edit the file and restart the instance to change them; this view is read-only.",
+      "key": "Key",
+      "name": "Name",
+      "group": "Group",
+      "state": "State",
+      "evidence": "Evidence",
+      "visibility": "Visibility",
+      "public": "Public",
+      "internal": "Internal",
+      "sources": "{count, plural, =0 {No source} one {# source} other {# sources}}"
+    },
+    "lang": "Language"
+  }
+}
