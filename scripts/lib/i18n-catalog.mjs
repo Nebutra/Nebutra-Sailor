@@ -18,6 +18,7 @@
  *                      last translation pass, and which translations went stale
  *                      when the English changed after it.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
@@ -380,8 +381,27 @@ export function readJson(path, fallback) {
   return JSON.parse(readFileSync(path, "utf8"));
 }
 
+/**
+ * Write JSON exactly as the repo's Biome config formats it.
+ *
+ * `JSON.stringify(_, null, 2)` puts every array element on its own line; Biome
+ * collapses an array that fits in the line width (`"cs": ["a.b"]`). Writing the
+ * former committed a file `biome ci` rejects, so every catalog/lock write goes
+ * through Biome itself — the same binary and config the lint gate runs.
+ */
+const BIOME_BIN = join(REPO_ROOT, "node_modules", ".bin", "biome");
+
+export function formatJson(path, value) {
+  return execFileSync(BIOME_BIN, ["format", `--stdin-file-path=${path}`], {
+    cwd: REPO_ROOT,
+    input: `${JSON.stringify(value, null, 2)}\n`,
+    encoding: "utf8",
+    maxBuffer: 64 * 1024 * 1024,
+  });
+}
+
 export function writeJson(path, value) {
-  writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+  writeFileSync(path, formatJson(path, value), "utf8");
 }
 
 export function catalogDir(catalog) {

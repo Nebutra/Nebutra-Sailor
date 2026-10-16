@@ -7483,9 +7483,7 @@
         "sitePages.investors.work.rules.title",
         "sitePages.investors.work.tools.title"
       ],
-      "cs": [
-        "landing.faq.items.why-turborepo.answer"
-      ],
+      "cs": ["landing.faq.items.why-turborepo.answer"],
       "da": [
         "landing.faq.items.why-turborepo.answer",
         "sitePages.investors.built.title",
@@ -7585,9 +7583,7 @@
         "sitePages.investors.work.rules.title",
         "sitePages.investors.work.tools.title"
       ],
-      "hu": [
-        "landing.faq.items.why-turborepo.answer"
-      ],
+      "hu": ["landing.faq.items.why-turborepo.answer"],
       "id": [
         "landing.faq.items.why-turborepo.answer",
         "sitePages.investors.built.title",
@@ -7687,9 +7683,7 @@
         "sitePages.investors.work.rules.title",
         "sitePages.investors.work.tools.title"
       ],
-      "ro": [
-        "landing.faq.items.why-turborepo.answer"
-      ],
+      "ro": ["landing.faq.items.why-turborepo.answer"],
       "ru": [
         "landing.faq.items.why-turborepo.answer",
         "sitePages.investors.built.title",
@@ -7778,14 +7772,8 @@
         "sitePages.investors.work.rules.title",
         "sitePages.investors.work.tools.title"
       ],
-      "zh-Hans": [
-        "landing.faq.items.why-turborepo.answer",
-        "roadmapPage.direction.lead"
-      ],
-      "zh-Hant": [
-        "landing.faq.items.why-turborepo.answer",
-        "roadmapPage.direction.lead"
-      ]
+      "zh-Hans": ["landing.faq.items.why-turborepo.answer", "roadmapPage.direction.lead"],
+      "zh-Hant": ["landing.faq.items.why-turborepo.answer", "roadmapPage.direction.lead"]
     }
   }
 }
