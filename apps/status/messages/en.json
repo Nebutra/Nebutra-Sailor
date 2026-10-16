@@ -9,7 +9,7 @@
     "outage": "Some systems are down",
     "affected": "Affected: {names}",
     "maintenanceNote": "Maintenance in progress on {names}",
-    "latestReading": "Latest reading {time}",
+    "latestReading": "Latest reading",
     "waiting": "Waiting for the first reading"
   },
   "state": {

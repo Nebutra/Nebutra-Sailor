@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
   ],
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg"],
   poweredByHeader: false,
+  // The repo carries its own agent instructions; do not generate Next's.
+  agentRules: false,
   experimental: {
     serverSourceMaps: false,
     optimizePackageImports: ["@nebutra/ui", "@nebutra/ui/primitives", "@nebutra/icons"],

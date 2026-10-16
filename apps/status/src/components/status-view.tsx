@@ -80,18 +80,19 @@ export async function StatusView({
               </p>
             ) : null}
             <p className="mt-2 text-xs text-muted-foreground">
-              {latest
-                ? t.rich("verdict.latestReading", {
-                    time: () => (
-                      <LocalTime
-                        iso={latest.toISOString()}
-                        serverNow={now.toISOString()}
-                        locale={locale}
-                        mode="relative"
-                      />
-                    ),
-                  })
-                : t("verdict.waiting")}
+              {latest ? (
+                <>
+                  {t("verdict.latestReading")}{" "}
+                  <LocalTime
+                    iso={latest.toISOString()}
+                    serverNow={now.toISOString()}
+                    locale={locale}
+                    mode="relative"
+                  />
+                </>
+              ) : (
+                t("verdict.waiting")
+              )}
             </p>
           </div>
         </div>

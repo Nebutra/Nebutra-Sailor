@@ -9,7 +9,7 @@
     "outage": "部分系统中断",
     "affected": "受影响：{names}",
     "maintenanceNote": "{names} 正在维护",
-    "latestReading": "最新读数 {time}",
+    "latestReading": "最新读数",
     "waiting": "等待第一次读数"
   },
   "state": {
