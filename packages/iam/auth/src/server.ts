@@ -24,7 +24,8 @@ export async function createAuth(config: AuthConfig): Promise<AuthProvider> {
       // Explicit extension: `providers/better-auth` is both a file and a
       // directory, and Node-side resolvers (tsx, the gateway's dev server)
       // pick the directory's index and fail.
-      return (await import("./providers/better-auth.js")).createBetterAuthProvider(config);
+      // Resolves once the plugin probe has run, so `capabilities` is real.
+      return (await import("./providers/better-auth.js")).createReadyBetterAuthProvider(config);
     case "dev":
       return (await import("./providers/dev")).createDevAuthProvider(config);
     default:

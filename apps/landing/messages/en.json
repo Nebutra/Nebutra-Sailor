@@ -336,7 +336,7 @@
     },
     "contact": {
       "title": "Technical & Commercial Inquiry — {brandName}",
-      "description": "The dedicated communication channel for Sailor support plans, enterprise self-hosting, and advanced technical support.",
+      "description": "The dedicated communication channel for support plans, enterprise self-hosting, and advanced technical support.",
       "heading": "Establish Support Connection",
       "subheading": "We will dispatch a dedicated technical specialist or architect to evaluate your explicit requirements.",
       "contacts": {
@@ -613,7 +613,7 @@
             },
             "1": {
               "q": "How is the code licensed?",
-              "a": "Everything is open source under Apache-2.0: the repository, every npm package, and every project create-sailor generates. Commercial, closed-source, and hosted use are all free, with no copyleft obligation. Organizations needing support SLAs, indemnification, or trademark rights can buy a paid support plan."
+              "a": "Everything is open source under Apache-2.0: the repository, every npm package, and every project generated from it. Commercial, closed-source, and hosted use are all free, with no copyleft obligation. Organizations needing support SLAs, indemnification, or trademark rights can buy a paid support plan."
             },
             "2": {
               "q": "What is the speed of initial commercial evaluation?",
@@ -1097,8 +1097,8 @@
       "intro2End": ". If you do not agree to these Terms, do not use our Services.",
       "scope": {
         "title": "Scope of These Terms",
-        "hosted": "These Terms govern your use of the <strong>{brandName} hosted SaaS services</strong> (the marketing site, dashboard at <code>{appDomain}</code>, and related APIs). They do <strong>not</strong> govern your use of the {brandName}-Sailor codebase.",
-        "license": "Source-code use is governed by the <strong>Apache License 2.0</strong> (see <code>LICENSE</code> and <code>NOTICE</code> in the repository). It covers the repository, every published npm package, and every project scaffolded with <code>create-sailor</code>. It is free and requires no registration.",
+        "hosted": "These Terms govern your use of the <strong>{brandName} hosted SaaS services</strong> (the marketing site, dashboard at <code>{appDomain}</code>, and related APIs). They do <strong>not</strong> govern your use of the {brandName} source code.",
+        "license": "Source-code use is governed by the <strong>Apache License 2.0</strong> (see <code>LICENSE</code> and <code>NOTICE</code> in the repository). It covers the repository, every published npm package, and every project generated from it. It is free and requires no registration.",
         "paid": "Paid plans sell support, SLAs, indemnification, compliance documentation, and trademark rights — not permission to use the software. See <support>Commercial Support</support> and <plans>{plansDomain}</plans>.",
         "conflict": "Where these Terms and the source-code license appear to conflict regarding rights to the codebase itself, the source-code license controls. Where they appear to conflict regarding use of the hosted services, these Terms control."
       },
