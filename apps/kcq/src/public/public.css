@@ -245,6 +245,10 @@ button {
   font: inherit;
   color: inherit;
 }
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 code,
 kbd,
 pre {

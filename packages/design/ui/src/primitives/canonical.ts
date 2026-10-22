@@ -148,4 +148,5 @@ export {
   TooltipTrigger,
 } from "./tooltip";
 export * from "./tree";
+export { type UiLabelMessages, UiLabelsProvider } from "./ui-labels";
 export * from "./use-confirm";

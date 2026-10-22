@@ -19,7 +19,7 @@ const items = computed(() =>
     short: SHORT[id],
     label: PUBLIC_LOCALES[id].label,
     lang: PUBLIC_LOCALES[id].htmlLang,
-    to: publicPath(route.meta.page === "benchmark" ? "benchmark" : "home", id),
+    to: publicPath(route.meta.page === "investors" ? "investors" : route.meta.page === "benchmark" ? "benchmark" : "home", id),
   })),
 );
 </script>

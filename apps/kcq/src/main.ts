@@ -3,6 +3,7 @@ import { brand } from "@nebutra/brand/metadata";
 
 import { configureBrowserPersistenceScope } from "@363045841yyt/klinechart-core/persistence-scope";
 import { createAuthCenterBrowserClient } from "@nebutra/auth/browser";
+import { buttonVariants } from "@nebutra/ui/primitives/canonical";
 import { createApp, type App as VueApp } from "vue";
 import "./styles.css";
 import { APP_PATH, getKcqRoute } from "./main-route";
@@ -83,7 +84,7 @@ function showError(error: unknown) {
   message.textContent = error instanceof Error ? error.message : "无法打开 KCQ。";
   const retry = document.createElement("button");
   retry.type = "button";
-  retry.className = "boot-retry";
+  retry.className = `${buttonVariants({ size: "sm" })} boot-retry`;
   retry.textContent = "重新加载";
   retry.onclick = () => window.location.reload();
   root.append(message, retry);

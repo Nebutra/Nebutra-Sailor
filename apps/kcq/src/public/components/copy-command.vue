@@ -83,6 +83,7 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
   transform: scale(var(--kcq-press));
 }
 .copy-command .copy-button {
+  flex-shrink: 0;
   justify-content: center;
   width: var(--klc-density-default);
   height: var(--klc-density-default);
