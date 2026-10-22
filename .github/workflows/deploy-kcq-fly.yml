@@ -262,6 +262,25 @@ jobs:
           echo "::error::KCQ Fly URL is not healthy; DNS will not cut over"
           exit 1
 
+      - name: Verify wide, zoomed and restored market history in Chromium
+        env:
+          KCQ_SMOKE_ORIGIN: https://nebutra-kcq.fly.dev
+          KCQ_UI_BROWSER: chromium
+          KCQ_MARKET_OUTPUT: .nebutra/kcq-candidates/market-acceptance
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          node apps/kcq/scripts/market-smoke.mjs
+
+      - name: Upload real market browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: kcq-market-history
+          path: .nebutra/kcq-candidates/market-acceptance
+          include-hidden-files: true
+          retention-days: 7
+          if-no-files-found: ignore
+
       - name: Cut over Cloudflare DNS
         if: inputs.cutover == true
         env:

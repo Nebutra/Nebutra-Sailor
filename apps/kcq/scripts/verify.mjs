@@ -40,6 +40,7 @@ run(
     "run",
     "src/foundation/persistence/__tests__",
     "src/data/provider/__tests__/router.test.ts",
+    "src/data/provider/protocol/__tests__/provider.test.ts",
     "src/engine/data/__tests__",
     "src/engine/data/marketRuntime/__tests__",
     "src/engine/layout/__tests__",
