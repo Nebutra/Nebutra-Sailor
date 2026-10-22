@@ -3,13 +3,13 @@
 import { Error as ErrorSurface } from "../primitives/error-message";
 
 export interface ErrorStateProps {
-  /** Error title */
+  /** Heading describing the failed operation. */
   title?: string;
-  /** Error detail or message */
+  /** Supporting detail explaining the failure or how to recover. */
   message?: string;
-  /** Optional retry callback */
+  /** Shows a "Try Again" action and runs this callback when it is activated. */
   onRetry?: () => void;
-  /** Stable request, trace, deployment, or run identifier */
+  /** Stable request, trace, deployment, or run identifier passed to the error surface. */
   errorId?: string;
 }
 

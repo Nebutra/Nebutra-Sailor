@@ -24,9 +24,9 @@
   },
   "totals": {
     "apps": 19,
-    "tsxFiles": 1113,
-    "uiFiles": 645,
-    "uiRatio": 0.5795,
+    "tsxFiles": 1143,
+    "uiFiles": 676,
+    "uiRatio": 0.5914,
     "hardcodedHex": 95,
     "arbitraryFontSizes": 877
   },
@@ -55,9 +55,9 @@
       "name": "design",
       "status": "wip",
       "graph": "labs",
-      "tsxFiles": 132,
-      "uiFiles": 90,
-      "uiRatio": 0.6818,
+      "tsxFiles": 160,
+      "uiFiles": 119,
+      "uiRatio": 0.7438,
       "hardcodedHex": 6,
       "arbitraryFontSizes": 109
     },
@@ -85,8 +85,8 @@
       "name": "kcq",
       "status": "labs",
       "graph": "product",
-      "tsxFiles": 4,
-      "uiFiles": 4,
+      "tsxFiles": 6,
+      "uiFiles": 6,
       "uiRatio": 1,
       "hardcodedHex": 0,
       "arbitraryFontSizes": 0

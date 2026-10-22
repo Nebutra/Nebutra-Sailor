@@ -28,6 +28,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
   Kbd,
 } from "@nebutra/ui/primitives";
@@ -96,8 +97,8 @@ export function LanguageSwitcher({ shortcut = false, className }: LanguageSwitch
           <ChevronDown aria-hidden className="size-3.5 shrink-0 text-muted-foreground" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-[min(20rem,calc(100vw-2rem))]" sideOffset={8}>
-        <DropdownMenuLabel className="flex items-baseline justify-between gap-3">
+      <DropdownMenuContent align="start" className="w-[min(19rem,calc(100vw-2rem))]" sideOffset={8}>
+        <DropdownMenuLabel className="flex items-baseline justify-between gap-3 px-2 py-1.5">
           <span>Design language</span>
           {shortcut ? (
             <span className="hidden items-center gap-1.5 font-normal text-2xs text-muted-foreground md:inline-flex">
@@ -107,17 +108,23 @@ export function LanguageSwitcher({ shortcut = false, className }: LanguageSwitch
         </DropdownMenuLabel>
         <DropdownMenuRadioGroup onValueChange={(value) => select(String(value))} value={current.id}>
           {LANGUAGES.map((language) => (
-            <DropdownMenuRadioItem className="gap-3 py-2" key={language.id} value={language.id}>
+            <DropdownMenuRadioItem
+              className="min-h-9 gap-3 py-1.5 pr-3 pl-8"
+              closeOnClick
+              key={language.id}
+              value={language.id}
+            >
+              <span className="min-w-0 flex-1 text-foreground text-ui">{language.name}</span>
               <PaletteDots id={language.id} mode={mode} />
-              <span className="flex min-w-0 flex-1 flex-col">
-                <span className="font-medium text-foreground text-ui">{language.name}</span>
-                {language.tagline ? (
-                  <span className="truncate text-muted-foreground text-xs">{language.tagline}</span>
-                ) : null}
-              </span>
             </DropdownMenuRadioItem>
           ))}
         </DropdownMenuRadioGroup>
+        {current.tagline ? (
+          <>
+            <DropdownMenuSeparator />
+            <p className="m-0 px-2 py-1.5 text-muted-foreground text-xs">{current.tagline}</p>
+          </>
+        ) : null}
       </DropdownMenuContent>
     </DropdownMenu>
   );

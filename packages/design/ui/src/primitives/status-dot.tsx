@@ -105,6 +105,7 @@ export interface StatusDotProps {
    * @default false
    */
   decorative?: boolean;
+  /** Classes applied to the inline wrapper containing the dot and optional state label. */
   className?: string;
 }
 
@@ -112,6 +113,10 @@ export interface StatusDotProps {
 // Component
 // ---------------------------------------------------------------------------
 
+/**
+ * Deployment lifecycle indicator with a state-specific accessible sentence.
+ * Queued and building states pulse unless motion is reduced; mark it decorative beside equivalent text.
+ */
 export const StatusDot = function StatusDot({
   ref,
   state,

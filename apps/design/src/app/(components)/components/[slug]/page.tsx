@@ -104,8 +104,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   };
   const Demo = mod.default;
 
-  // The playground and the states matrix exist for the components listed in
-  // LIVE_DOCS; every other page gets the same template without those two.
+  // Every registered page has live documentation; the shared coverage check
+  // keeps this list and the client modules aligned with the registry.
   const live = LIVE_DOCS.has(entry.slug)
     ? ((await import(`../../../../lib/components/docs/${entry.slug}`)) as {
         Playground: React.ComponentType<DemoProps>;

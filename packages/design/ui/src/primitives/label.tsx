@@ -21,11 +21,11 @@ export interface LabelProps
 // =============================================================================
 
 /**
- * Label - Accessible form label component
+ * Native form label; use `htmlFor` to associate it with the target control's id.
  *
  * @description
- * A label component built as a native HTML label element.
- * Automatically handles accessibility attributes and peer styling.
+ * Label activation focuses its associated control. Disabled peer styling applies
+ * when the disabled control is a preceding sibling with the `peer` class.
  *
  * @example Basic usage
  * ```tsx

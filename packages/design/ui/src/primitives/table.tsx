@@ -82,14 +82,23 @@ export type TableCellProps = React.TdHTMLAttributes<HTMLTableCellElement> & {
 type TableComponent = React.ComponentType<
   TableProps & { ref?: React.Ref<HTMLTableElement> | undefined }
 > & {
+  /** Table body with optional row striping, separators, and interaction feedback. */
   Body: typeof TableBody;
+  /** Native caption describing the table, positioned below its rows. */
   Caption: typeof TableCaption;
+  /** Body cell with optional numeric formatting and explicit horizontal alignment. */
   Cell: typeof TableCell;
+  /** Native column element for sizing or styling a column inside Table.Colgroup. */
   Col: typeof TableCol;
+  /** Native column group for declaring shared column sizing or styling. */
   Colgroup: typeof TableColgroup;
+  /** Footer row group separated from the table body by a top border. */
   Footer: typeof TableFooter;
+  /** Header cell with column scope by default and optional numeric formatting. */
   Head: typeof TableHead;
+  /** Header row group separated from the table body by a bottom border. */
   Header: typeof TableHeader;
+  /** Native table row with shared cell corner and transition styling. */
   Row: typeof TableRow;
 };
 
@@ -112,6 +121,7 @@ function createTableVars(style: TableStyle | undefined, bare: boolean) {
   } satisfies React.CSSProperties & Record<TableCssVar, string | number>;
 }
 
+/** Renders a native table in a scrollable container with optional card chrome. */
 const TableRoot = ({
   className,
   wrapperClassName,
@@ -143,6 +153,7 @@ const TableRoot = ({
 );
 TableRoot.displayName = "Table";
 
+/** Declares a native column group for shared column sizing or styling. */
 const TableColgroup = ({
   className,
   ref,
@@ -152,6 +163,7 @@ const TableColgroup = ({
 }) => <colgroup ref={ref} className={className} {...props} />;
 TableColgroup.displayName = "TableColgroup";
 
+/** Declares a native column inside Table.Colgroup for column sizing or styling. */
 const TableCol = ({
   className,
   ref,
@@ -161,6 +173,7 @@ const TableCol = ({
 }) => <col ref={ref} className={className} {...props} />;
 TableCol.displayName = "TableCol";
 
+/** Groups header rows in a native thead with a bottom border. */
 const TableHeader = ({
   className,
   ref,
@@ -170,6 +183,10 @@ const TableHeader = ({
 }) => <thead ref={ref} className={cn("border-b border-border", className)} {...props} />;
 TableHeader.displayName = "TableHeader";
 
+/**
+ * Groups body rows with optional striping, separators, and interaction feedback.
+ * The virtualize flag adds a data marker; callers supply any virtualization behavior.
+ */
 const TableBody = ({
   className,
   striped = false,
@@ -198,6 +215,7 @@ const TableBody = ({
 );
 TableBody.displayName = "TableBody";
 
+/** Groups summary or footer rows in a native tfoot with a top border. */
 const TableFooter = ({
   className,
   ref,
@@ -207,6 +225,7 @@ const TableFooter = ({
 }) => <tfoot ref={ref} className={cn("border-t border-border", className)} {...props} />;
 TableFooter.displayName = "TableFooter";
 
+/** Renders a native row with shared cell corner and transition styling. */
 const TableRow = ({
   className,
   ref,
@@ -225,6 +244,7 @@ const TableRow = ({
 );
 TableRow.displayName = "TableRow";
 
+/** Renders a column header, right-aligning the last column unless alignment is explicit. */
 const TableHead = ({
   className,
   numeric = false,
@@ -249,6 +269,7 @@ const TableHead = ({
 );
 TableHead.displayName = "TableHead";
 
+/** Renders a body cell, right-aligning the last column unless alignment is explicit. */
 const TableCell = ({
   className,
   numeric = false,
@@ -271,6 +292,7 @@ const TableCell = ({
 );
 TableCell.displayName = "TableCell";
 
+/** Describes the table in a native caption positioned beneath its rows. */
 const TableCaption = ({
   className,
   ref,
@@ -282,6 +304,7 @@ const TableCaption = ({
 );
 TableCaption.displayName = "TableCaption";
 
+/** Composable native table with scroll containment, card chrome, and semantic row and cell parts. */
 const Table = TableRoot as TableComponent;
 Table.Body = TableBody;
 Table.Caption = TableCaption;

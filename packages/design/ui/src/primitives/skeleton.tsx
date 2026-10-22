@@ -43,15 +43,15 @@ export interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, "chi
   width?: number | string;
   /** Height in px (number) or any CSS length (string). */
   height?: number | string;
-  /** Outer wrapper height — keeps surrounding layout from reflowing. */
+  /** Minimum height of the placeholder, in pixels or a CSS length. */
   boxHeight?: number | string;
-  /** Pill shape — fully rounded. Mutually exclusive with `rounded`/`squared`. */
+  /** Uses fully rounded corners; takes precedence over squared and rounded. */
   pill?: boolean;
-  /** Rounded shape — radius-md. */
+  /** Requests the default medium corner radius; pill and squared take precedence. */
   rounded?: boolean;
-  /** Squared shape — radius-sm. */
+  /** Uses the small corner radius when pill is not set. */
   squared?: boolean;
-  /** Animate the shimmer. @default true */
+  /** Animates the opacity pulse unless reduced motion is preferred. @default true */
   animated?: boolean;
   /**
    * Show the placeholder. When `false` and children are passed, the children
@@ -60,9 +60,15 @@ export interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, "chi
   show?: boolean;
   /** Optional children — when present, the skeleton sizes itself to wrap them. */
   children?: ReactNode;
-  /** @deprecated Use `show={!isLoaded}` instead. */
+  /**
+   * Legacy inverse visibility flag, used only when show is omitted.
+   * @deprecated Use `show={!isLoaded}` instead.
+   */
   isLoaded?: boolean;
-  /** @deprecated Use `animated={false}` instead. */
+  /**
+   * Legacy inverse animation flag, used only when animated is omitted.
+   * @deprecated Use `animated={false}` instead.
+   */
   disableAnimation?: boolean;
 }
 
@@ -86,6 +92,7 @@ function shapeRadiusClass(props: SkeletonProps): string {
 // Component
 // ---------------------------------------------------------------------------
 
+/** Renders an accessible loading placeholder that can preserve a loaded layout's shape. */
 export function Skeleton(props: SkeletonProps) {
   const {
     width,
@@ -151,11 +158,15 @@ export function Skeleton(props: SkeletonProps) {
 // Pre-built variants — common layouts to avoid copy-paste arithmetic
 // ---------------------------------------------------------------------------
 
+/** Renders a stack of variable-width text-line placeholders. */
 export function SkeletonText({
   lines = 3,
   className,
   ...props
-}: SkeletonProps & { lines?: number }) {
+}: SkeletonProps & {
+  /** Number of placeholder text lines to render. @default 3 */
+  lines?: number;
+}) {
   return (
     <div className={cn("space-y-2", className)} {...props}>
       {Array.from({ length: lines }).map((_, i) => (
@@ -169,15 +180,20 @@ export function SkeletonText({
   );
 }
 
+/** Renders a circular avatar-sized placeholder. */
 export function SkeletonAvatar({
   size = "md",
   className,
   ...props
-}: SkeletonProps & { size?: "sm" | "md" | "lg" }) {
+}: SkeletonProps & {
+  /** Avatar size preset used to choose the placeholder dimensions. @default "md" */
+  size?: "sm" | "md" | "lg";
+}) {
   const px = size === "sm" ? 32 : size === "lg" ? 48 : 40;
   return <Skeleton pill width={px} height={px} className={className} {...props} />;
 }
 
+/** Renders a card-shaped placeholder with media, title, and summary regions. */
 export function SkeletonCard({ className, ...props }: SkeletonProps) {
   return (
     <div className={cn("space-y-4 p-4", className)} {...props}>

@@ -269,7 +269,6 @@ body {
   ) {
   outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
-  border-radius: inherit;
 }
 
 ::selection {

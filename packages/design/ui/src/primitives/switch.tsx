@@ -50,12 +50,22 @@ function useSwitchContext() {
 
 export interface SwitchProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "children" | "defaultValue" | "onChange"> {
+  /** Switch.Control segments sharing one radio group. */
   children?: React.ReactNode;
+  /** Initially selected segment value when selection is uncontrolled. */
   defaultValue?: string;
+  /** Default disabled state inherited by segments unless a segment overrides it. */
   disabled?: boolean;
+  /** Shared radio input name; a unique name is generated when omitted. */
   name?: string;
+  /** Called with the selected segment's value after its uncanceled change event. */
   onValueChange?: (value: string) => void;
+  /**
+   * Size of the track and its segments.
+   * @default "medium"
+   */
   size?: SwitchSize;
+  /** Controlled selected segment value. */
   value?: string;
 }
 
@@ -108,6 +118,7 @@ function getSwitchControlStyle(size: SwitchSize, style: unknown) {
   >;
 }
 
+/** Groups mutually exclusive radio segments with shared selection, size, and disabled state. */
 const SwitchRoot = function SwitchRoot({
   children,
   name,
@@ -157,17 +168,27 @@ const SwitchRoot = function SwitchRoot({
 
 export interface SwitchControlProps
   extends Omit<React.LabelHTMLAttributes<HTMLLabelElement>, "children" | "onChange"> {
+  /** Controls this segment's checked state, taking precedence over the group's value. */
   checked?: boolean;
+  /** Initial checked state for an uncontrolled segment, overriding the group's defaultValue. */
   defaultChecked?: boolean;
+  /** Overrides the group's disabled state for this segment. */
   disabled?: boolean;
+  /** Visual shown in place of the text label; the accessible label remains available. */
   icon?: React.ReactNode;
+  /** Visible text and accessible name; falls back to value. */
   label?: string;
+  /** Overrides the group's shared radio input name for this segment. */
   name?: string;
+  /** Native radio change handler; preventDefault stops the group's onValueChange callback. */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  /** Overrides the group's size for this segment. */
   size?: SwitchSize;
+  /** Unique radio value identifying this segment within the group. */
   value: string;
 }
 
+/** Selectable radio segment with a text or icon label; render inside Switch. */
 const SwitchControl = function SwitchControl({
   checked,
   className,
@@ -253,6 +274,8 @@ const SwitchControl = function SwitchControl({
 SwitchRoot.displayName = "Switch";
 SwitchControl.displayName = "Switch.Control";
 
+/** Segmented single-choice selector built from native radio inputs and Switch.Control parts. */
 export const Switch = Object.assign(SwitchRoot, {
+  /** Selectable radio segment that inherits the group's selection and sizing. */
   Control: SwitchControl,
 });

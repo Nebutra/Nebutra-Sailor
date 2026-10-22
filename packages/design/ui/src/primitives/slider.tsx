@@ -28,29 +28,59 @@ type BaseSliderProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "children" | "defaultValue" | "max" | "min" | "onChange" | "step" | "type" | "value"
 > & {
+  /**
+   * Lower bound for the native range input and the displayed value.
+   * @default 0
+   */
   min?: number;
+  /**
+   * Upper bound for the native range input and the displayed value.
+   * @default 100
+   */
   max?: number;
+  /**
+   * Increment between values accepted by the native range input.
+   * @default 1
+   */
   step?: number;
+  /** Visible label linked to the range input; otherwise supply `aria-label` or `aria-labelledby`. */
   label?: string;
+  /** Text appended to the numeric readout, such as "%" or "px"; ignored when `formatValue` is set. */
   unit?: string;
+  /**
+   * Display the current formatted value beside the label.
+   * @default true
+   */
   showValue?: boolean;
+  /** Renders the visible value readout from the clamped number; takes precedence over `unit`. */
   formatValue?: (value: number) => React.ReactNode;
+  /** Classes applied to the outer label-and-control wrapper; `className` styles the range input. */
   wrapperClassName?: string;
 };
 
 type NumberSliderProps = BaseSliderProps & {
+  /** Use scalar values and callbacks; this mode is inferred when no array-valued props are supplied. */
   valueMode?: "number";
+  /** Controlled scalar value, clamped to the configured bounds for display and interaction. */
   value?: number;
+  /** Initial uncontrolled value; falls back to `min` when omitted. */
   defaultValue?: number;
+  /** Receives the numeric value for each native input change. */
   onValueChange?: (value: number) => void;
+  /** Receives the numeric value on pointer release or after releasing a supported range-navigation key. */
   onValueCommit?: (value: number) => void;
 };
 
 type ArraySliderProps = BaseSliderProps & {
+  /** Array compatibility mode, also inferred from array values; only one thumb is rendered. */
   valueMode?: "array";
+  /** Controlled array value; only the first entry is used by the single range input. */
   value?: readonly number[];
+  /** Initial uncontrolled value from the first entry; an empty array falls back to `min`. */
   defaultValue?: readonly number[];
+  /** Receives a single-element array on each native input change. */
   onValueChange?: (value: number[]) => void;
+  /** Receives a single-element array on pointer release or supported navigation-key release. */
   onValueCommit?: (value: number[]) => void;
 };
 
@@ -106,6 +136,10 @@ function formatSliderValue(value: number, unit: string | undefined) {
   return unit ? `${value}${unit}` : value;
 }
 
+/**
+ * Single-thumb native range control with a label and optional formatted value readout.
+ * Accepts scalar or array-compatible values; array mode uses only the first value and emits one entry.
+ */
 export const Slider = ({
   ref,
   ...props

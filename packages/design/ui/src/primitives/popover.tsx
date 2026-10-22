@@ -1,4 +1,5 @@
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
+import { usePortalContainer } from "@nebutra/ui/utils/portal-container";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
@@ -6,14 +7,22 @@ import { resolveLazyChild } from "../utils/lazy-child";
 import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
 
+/** Coordinates a trigger and anchored popup using Base UI's popover state and focus handling. */
 function Popover({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />;
 }
 
+/** Portal target accepted by popover content and positioning primitives. */
+export type PopoverPortalContainer = React.ComponentProps<
+  typeof PopoverPrimitive.Portal
+>["container"];
+
 type PopoverTriggerProps = React.ComponentProps<typeof PopoverPrimitive.Trigger> & {
+  /** Uses a single valid child element as the trigger instead of creating a button. */
   asChild?: boolean;
 };
 
+/** Opens or toggles the popover, optionally composing the behavior onto a child element. */
 function PopoverTrigger({ asChild, children: rawChildren, render, ...props }: PopoverTriggerProps) {
   const children = resolveLazyChild(rawChildren);
   const renderElement: PopoverPrimitive.Trigger.Props["render"] =
@@ -28,13 +37,19 @@ function PopoverTrigger({ asChild, children: rawChildren, render, ...props }: Po
   );
 }
 
+/** Portals a caller-composed popover surface and positions it relative to the trigger. */
 function PopoverPositioner({
   sideOffset = 4,
+  container,
   style,
   ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Positioner>) {
+}: React.ComponentProps<typeof PopoverPrimitive.Positioner> & {
+  /** Portal target; defaults to the nearest portal scope or document.body. */
+  container?: PopoverPortalContainer;
+}) {
+  const portalContainer = usePortalContainer(container);
   return (
-    <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Portal container={portalContainer}>
       <PopoverPrimitive.Positioner
         data-slot="popover-positioner"
         sideOffset={sideOffset}
@@ -46,13 +61,21 @@ function PopoverPositioner({
 }
 
 export interface PopoverContentProps extends React.ComponentProps<typeof PopoverPrimitive.Popup> {
+  /** Alignment of the popup along the trigger's side. */
   align?: PopoverPrimitive.Positioner.Props["align"];
+  /** Gap from the trigger, in pixels or a Base UI offset callback. */
   sideOffset?: PopoverPrimitive.Positioner.Props["sideOffset"];
+  /** Offset along the alignment axis, in pixels or a Base UI offset callback. */
   alignOffset?: PopoverPrimitive.Positioner.Props["alignOffset"];
+  /** Preferred side of the trigger; collision handling may choose another side. */
   side?: PopoverPrimitive.Positioner.Props["side"];
+  /** Adds a decorative arrow pointing toward the trigger. */
   showArrow?: boolean;
+  /** Portal target; defaults to the nearest portal scope or document.body. */
+  container?: PopoverPortalContainer;
 }
 
+/** Renders the styled popover surface in a portal, with optional arrow and positioning offsets. */
 function PopoverContent({
   className,
   align = "center",
@@ -61,11 +84,13 @@ function PopoverContent({
   side = "bottom",
   children,
   showArrow = false,
+  container,
   style,
   ...props
 }: PopoverContentProps) {
+  const portalContainer = usePortalContainer(container);
   return (
-    <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Portal container={portalContainer}>
       <PopoverPrimitive.Positioner
         style={{ zIndex: overlayZIndex.popover }}
         data-slot="popover-positioner"
@@ -121,6 +146,7 @@ function PopoverArrow({
   );
 }
 
+/** Span wrapper for caller-composed anchor content, marked with the popover-anchor slot. */
 function PopoverAnchor({ ...props }: React.ComponentProps<"span">) {
   return <span data-slot="popover-anchor" {...props} />;
 }

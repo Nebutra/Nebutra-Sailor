@@ -102,6 +102,10 @@
       "types": "./dist/utils/auth-surfaces.d.ts",
       "import": "./dist/utils/auth-surfaces.js"
     },
+    "./utils/portal-container": {
+      "types": "./dist/utils/portal-container.d.ts",
+      "import": "./dist/utils/portal-container.js"
+    },
     "./tailwind.preset": {
       "types": "./dist/tailwind.preset.d.ts",
       "import": "./dist/tailwind.preset.js"

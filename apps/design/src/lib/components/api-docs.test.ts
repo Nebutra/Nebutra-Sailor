@@ -136,6 +136,12 @@ describe("createApiExtractor — fixture", () => {
     expect(block?.members.map((m) => m.name)).toEqual(["show", "hide"]);
     expect(block?.members[0]?.description).toBe("Shows the thing.");
   });
+
+  it("keeps public alias documentation while resolving the implementation's props", () => {
+    const block = extractor.extract(fixture, "FixtureAlias");
+    expect(block?.description).toBe("Public alias with library-specific usage guidance.");
+    expect(prop(block, "loading")?.description).toBe("Shows a spinner and blocks input.");
+  });
 });
 
 describe("package labels", () => {

@@ -71,12 +71,24 @@ type DivProps = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 export interface CardProps extends DivProps {
+  /**
+   * Surface treatment, from the standard elevated card to transparent outline or ghost styles.
+   * @default "default"
+   */
   variant?: CardVariant;
+  /**
+   * Insets the entire card; when set, sections use spacing instead of adding their own padding.
+   * @default "none"
+   */
   padding?: CardPadding;
-  /** Hover lift for a card that is itself a link or button target. */
+  /**
+   * Adds a pointer cursor and hover treatment; the caller still supplies link or button semantics.
+   * @default false
+   */
   interactive?: boolean;
 }
 
+/** Card surface and padding context shared by the standalone and compound section components. */
 const CardRoot = ({
   className,
   variant,
@@ -95,6 +107,7 @@ const CardRoot = ({
 );
 CardRoot.displayName = "Card";
 
+/** Stacks the card heading and description, adding insets only when the card has no root padding. */
 const CardHeader = ({ className, ref, ...props }: DivProps) => {
   const padded = React.use(CardPaddedContext);
   return (
@@ -108,10 +121,15 @@ const CardHeader = ({ className, ref, ...props }: DivProps) => {
 CardHeader.displayName = "CardHeader";
 
 export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  /**
+   * Heading level appropriate to the surrounding document hierarchy.
+   * @default "h3"
+   */
   as?: "h2" | "h3" | "h4" | "h5" | "h6";
   ref?: React.Ref<HTMLHeadingElement> | undefined;
 }
 
+/** Card heading with a selectable semantic level; defaults to an h3. */
 const CardTitle = ({ className, as: Tag = "h3", ref, ...props }: CardTitleProps) => (
   <Tag
     ref={ref}
@@ -123,10 +141,15 @@ CardTitle.displayName = "CardTitle";
 
 export interface CardDescriptionProps
   extends React.HTMLAttributes<HTMLParagraphElement | HTMLDivElement> {
+  /**
+   * Element or component used for supporting copy; choose a div when the content contains blocks.
+   * @default "p"
+   */
   as?: React.ElementType;
   ref?: React.Ref<HTMLParagraphElement | HTMLDivElement> | undefined;
 }
 
+/** Muted supporting copy below a card heading, rendered as a paragraph unless overridden. */
 const CardDescription = ({ className, as: Tag = "p", ref, ...props }: CardDescriptionProps) =>
   React.createElement(Tag, {
     ref,
@@ -135,6 +158,7 @@ const CardDescription = ({ className, as: Tag = "p", ref, ...props }: CardDescri
   });
 CardDescription.displayName = "CardDescription";
 
+/** Main card content; uses its own insets or top spacing according to the root's padding. */
 const CardContent = ({ className, ref, ...props }: DivProps) => {
   const padded = React.use(CardPaddedContext);
   return (
@@ -143,6 +167,7 @@ const CardContent = ({ className, ref, ...props }: DivProps) => {
 };
 CardContent.displayName = "CardContent";
 
+/** Horizontal action row; padded cards receive a top divider and spacing instead of extra insets. */
 const CardFooter = ({ className, ref, ...props }: DivProps) => {
   const padded = React.use(CardPaddedContext);
   return (
@@ -160,11 +185,16 @@ const CardFooter = ({ className, ref, ...props }: DivProps) => {
 CardFooter.displayName = "CardFooter";
 
 export interface CardIconProps extends DivProps {
+  /**
+   * Size of the muted icon tile: 32, 40 or 48 pixels.
+   * @default "md"
+   */
   size?: "sm" | "md" | "lg";
 }
 
 const iconSize = { sm: "size-8", md: "size-10", lg: "size-12" } as const;
 
+/** Muted tile for a card's visual anchor; give meaningful icons a name or mark decoration hidden. */
 const CardIcon = ({ className, size = "md", ref, ...props }: CardIconProps) => (
   <div
     ref={ref}
@@ -183,18 +213,28 @@ export type CardContentProps = DivProps;
 export type CardBodyProps = DivProps;
 export type CardFooterProps = DivProps;
 
-/** Compound form: Card.Header, Card.Title, Card.Body (= CardContent), … */
+/** Tokenized card surface with sections that adapt their insets to the root padding. */
 const Card = Object.assign(CardRoot, {
+  /** Stacked heading area that adds padding only when the root does not. */
   Header: CardHeader,
+  /** Card heading; select its semantic heading level with `as`. */
   Title: CardTitle,
+  /** Muted supporting copy, rendered as a paragraph by default. */
   Description: CardDescription,
+  /** Main content section with insets or spacing supplied according to the root padding. */
   Content: CardContent,
+  /** Alias of Content for the card's main content section. */
   Body: CardContent,
+  /** Action row with a top divider when the root supplies padding. */
   Footer: CardFooter,
+  /** Muted icon tile; accessible naming or decorative hiding is the caller's responsibility. */
   Icon: CardIcon,
 });
 
-/** @deprecated Alias of CardContent from the former patterns/Card. */
+/**
+ * Compatibility name for the main card content section, with the same adaptive spacing.
+ * @deprecated Alias of CardContent from the former patterns/Card.
+ */
 const CardBody = CardContent;
 
 export {

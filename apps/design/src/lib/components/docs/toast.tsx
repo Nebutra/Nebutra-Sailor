@@ -2,9 +2,10 @@
 
 import { useTheme } from "@nebutra/tokens";
 import { Button, Toaster, useToasts } from "@nebutra/ui/primitives";
+import { useState } from "react";
 import { ComponentPlayground, type Knob } from "@/components/component-playground";
 import { ComponentStatesMatrix } from "@/components/component-states-matrix";
-import { jsx, snippet } from "../code-gen";
+import { jsx, raw, snippet } from "../code-gen";
 import type { DemoProps } from "../derived";
 import { present } from "./present";
 
@@ -28,31 +29,39 @@ interface FireOptions {
   preserve?: boolean | undefined;
 }
 
-function useFire() {
+function Trigger({ label, ...opts }: FireOptions & { label: string }) {
   const toasts = useToasts();
-  return (opts: FireOptions) => {
+  const [archived, setArchived] = useState(false);
+  const undo = opts.tone === "message" && Boolean(opts.undo);
+
+  function notify() {
     const extra = present({
       description: opts.description || undefined,
       preserve: opts.preserve ? true : undefined,
     });
     if (opts.tone === "message") {
+      if (undo) setArchived(true);
       toasts.message({
         text: opts.text,
         ...extra,
-        ...(opts.undo ? { onUndoAction: () => undefined } : {}),
+        ...(undo ? { onUndoAction: () => setArchived(false) } : {}),
       });
       return;
     }
     toasts[opts.tone](opts.text, extra);
-  };
-}
+  }
 
-function Trigger({ label, ...opts }: FireOptions & { label: string }) {
-  const fire = useFire();
   return (
-    <Button onClick={() => fire(opts)} variant="outline">
-      {label}
-    </Button>
+    <div className="grid max-w-full gap-3">
+      <Button onClick={notify} variant="outline">
+        {undo ? "Archive project" : label}
+      </Button>
+      {undo ? (
+        <p className="text-muted-foreground text-sm" role="status">
+          Project: {archived ? "archived" : "active"}.
+        </p>
+      ) : null}
+    </div>
   );
 }
 
@@ -65,7 +74,7 @@ export function Playground({ derived }: DemoProps) {
       name: "undo",
       type: "boolean",
       defaultValue: false,
-      hint: "Message tone only. Adds an Undo action and a longer timeout.",
+      hint: "Message tone only. Archives a local project; Undo restores it.",
     },
     {
       name: "preserve",
@@ -77,7 +86,7 @@ export function Playground({ derived }: DemoProps) {
 
   return (
     <ComponentPlayground
-      caption="Toasts appear at the bottom right of the window."
+      caption="Toasts appear at the bottom right of the window. Message + Undo archives a local sample project; Undo restores it."
       code={(v) => {
         const tone = String(v.tone);
         const text = String(v.text);
@@ -93,7 +102,7 @@ export function Playground({ derived }: DemoProps) {
             ? `toasts.message({ ${[
                 `text: ${JSON.stringify(text)}`,
                 options.description ? `description: ${JSON.stringify(description)}` : "",
-                undo ? "onUndoAction: () => restore()" : "",
+                undo ? "onUndoAction: () => setArchived(false)" : "",
                 options.preserve ? "preserve: true" : "",
               ]
                 .filter(Boolean)
@@ -109,17 +118,47 @@ export function Playground({ derived }: DemoProps) {
                   : ""
               });`;
 
-        return snippet({
-          imports: [{ names: ["Toaster", "useToasts"], from: "@nebutra/ui/primitives" }],
-          body: [
-            "// Once, in your root layout",
+        const body = jsx({
+          name: "div",
+          props: { className: "grid max-w-full gap-3" },
+          children: [
             jsx({ name: "Toaster", props: {} }),
-            "",
-            "// Anywhere below it",
-            "const toasts = useToasts();",
-            fire,
-          ].join("\n"),
+            jsx({
+              name: "Button",
+              props: { variant: "outline", onClick: raw("notify") },
+              children: undo ? "Archive project" : "Show toast",
+            }),
+            ...(undo
+              ? [
+                  jsx({
+                    name: "p",
+                    props: { className: "text-muted-foreground text-sm", role: "status" },
+                    children: raw('"Project: " + (archived ? "archived" : "active") + "."'),
+                  }),
+                ]
+              : []),
+          ],
         });
+        return `"use client";\n\n${snippet({
+          imports: [
+            { names: ["Button", "Toaster", "useToasts"], from: "@nebutra/ui/primitives" },
+            { names: ["type ReactElement", ...(undo ? ["useState"] : [])], from: "react" },
+          ],
+          body: `export function ToastExample(): ReactElement {
+  const toasts = useToasts();
+${undo ? "  const [archived, setArchived] = useState(false);\n" : ""}
+  function notify() {
+${undo ? "    setArchived(true);\n" : ""}    ${fire}
+  }
+
+  return (
+${body
+  .split("\n")
+  .map((line) => `    ${line}`)
+  .join("\n")}
+  );
+}`,
+        })}`;
       }}
       knobs={knobs}
       render={(v) => (
@@ -156,8 +195,9 @@ export function StatesMatrix({ derived }: DemoProps) {
       note={
         <>
           A toast is an event, not a resting state, so each cell is a trigger: press it to fire that
-          tone with that content. Undo exists on <code>message</code> only. Persistent toasts stay
-          until dismissed, so close them before firing the next.
+          tone with that content. Undo exists on <code>message</code> only: archive the local sample
+          project, then Undo to restore it. Persistent toasts stay until dismissed, so close them
+          before firing the next.
         </>
       }
       render={(tone, column) =>
@@ -168,7 +208,7 @@ export function StatesMatrix({ derived }: DemoProps) {
             description={column === "description" ? "Visible to everyone on the team." : undefined}
             label="Show"
             preserve={column === "persistent"}
-            text="Changes saved"
+            text={column === "undo" ? "Project archived" : "Changes saved"}
             tone={tone as Tone}
             undo={column === "undo"}
           />

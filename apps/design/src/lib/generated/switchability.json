@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-22T03:03:36.741Z",
+  "generatedAt": "2026-10-22T09:01:37.302Z",
   "source": "scripts/lint-inert-dimensions.mjs",
   "knownInert": [],
   "dimensions": [
     {
       "id": "colour",
       "declared": true,
-      "consumers": 190,
+      "consumers": 188,
       "status": "live"
     },
     {
@@ -30,7 +30,7 @@
     {
       "id": "motion",
       "declared": true,
-      "consumers": 140,
+      "consumers": 141,
       "status": "live"
     },
     {

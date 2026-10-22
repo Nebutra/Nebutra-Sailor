@@ -79,6 +79,9 @@ export function useFixtureThing() {
 
 export const NOT_EXPORTED_AS_COMPONENT = 3;
 
+/** Public alias with library-specific usage guidance. */
+export { FixtureButton as FixtureAlias };
+
 // A cva-shaped mapped type: the props have no written annotation of their own.
 const config = { variants: { density: { compact: "", cozy: "" } } };
 type VariantsOf<T extends { variants: Record<string, Record<string, string>> }> = {

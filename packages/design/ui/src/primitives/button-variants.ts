@@ -18,6 +18,10 @@ export const buttonVariants = cva(
   ].join(" "),
   {
     variants: {
+      /**
+       * Selects the action's visual emphasis or semantic treatment for buttons and links.
+       * @default "default"
+       */
       variant: {
         // Recipe-driven via packages/design/tokens/recipe.css (.btn-brand-default)
         default: "btn-brand-default",
@@ -42,6 +46,10 @@ export const buttonVariants = cva(
       // size — so in one toolbar an outline sm button was 4px beside a default
       // sm at 6px, and under Raycast a large outline button came out at 16px.
       // Geist and Radix keep one control radius across the ladder.
+      /**
+       * Sets text-control height, padding and type size; use `iconSize` for compact icon boxes.
+       * @default "default"
+       */
       size: {
         tiny: "h-[var(--control-height-tiny,1.5rem)] px-2 text-[length:var(--control-font-size-tiny,0.75rem)]",
         sm: "h-[var(--control-height-sm,2rem)] px-3 text-[length:var(--control-font-size-sm,0.875rem)]",
@@ -50,6 +58,10 @@ export const buttonVariants = cva(
         lg: "h-[var(--control-height-lg,3rem)] px-5 text-[length:var(--control-font-size-lg,1rem)]",
         icon: "h-[var(--control-height-md,2.5rem)] w-[var(--control-height-md,2.5rem)]",
       },
+      /**
+       * Sets corner treatment; square and circle also enable equal-sided icon boxes.
+       * @default "default"
+       */
       shape: {
         default: "",
         // Radius from --btn-default-radius / --radius-md — brand-switchable.

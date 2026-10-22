@@ -122,6 +122,16 @@ describe("form primitive focus governance", () => {
       ':where(input, textarea, select, [cmdk-input], [role="textbox"], [contenteditable="true"])',
     );
   });
+
+  it.each(
+    globalFocusSources,
+  )("keeps each component's shape when keyboard focus moves to it in %s", (file) => {
+    const source = readFileSync(file, "utf8");
+    const rule = source.slice(source.indexOf(":focus-visible:not(")).split("}")[0];
+
+    expect(rule).toMatch(/outline:\s*2px solid/);
+    expect(rule).not.toMatch(/border(?:-[a-z-]+)?\s*:/);
+  });
 });
 
 describe("overlay primitive focus governance", () => {

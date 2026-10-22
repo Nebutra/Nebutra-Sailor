@@ -103,6 +103,8 @@ const ENTRIES: Record<string, string> = {
   "shared/animation/css/index": "src/shared/animation/css/index.ts",
   "shared/animation/motion/index": "src/shared/animation/motion/index.ts",
   "utils/index": "src/utils/index.ts",
+  // One shared client context; other entries import this public subpath externally.
+  "utils/portal-container": "src/utils/portal-container.tsx",
   // Pure string contracts — must stay server-importable for AuthSplitLayout (RSC).
   // See SERVER_ONLY_ENTRIES: utils/* must never ship a "use client" stamp.
   "utils/auth-surfaces": "src/utils/auth-surfaces.ts",
@@ -176,6 +178,7 @@ export default defineConfig({
     "@nebutra/brand",
     "@nebutra/tokens",
     "@nebutra/icons",
+    "@nebutra/ui",
     "recharts",
     "react-hook-form",
     "embla-carousel-react",

@@ -32,7 +32,7 @@ const fadeInVariant = {
 // ─────────────────────────────────────────────────────────────
 
 const PRESETS = {
-  /** 涌现 — materialize from the cloud (default) */
+  /** 涌现 — materialize from the cloud */
   emerge: {
     initial: emerge.initial,
     animate: emerge.animate,
@@ -135,11 +135,18 @@ function MotionDiv(props: MotionDivProps) {
 export interface AnimateInProps extends ForwardedDivProps {
   /** Optional: a purely decorative animated surface (a backdrop) has no content. */
   children?: React.ReactNode;
+  /**
+   * Entrance treatment; reduced-motion preferences replace travel and blur with opacity.
+   * @default "fade"
+   */
   preset?: Preset;
+  /** Seconds to wait before starting the transition. */
   delay?: number;
+  /** Positive duration override in seconds; zero retains the preset's transition duration. */
   duration?: number;
-  /** Trigger when enters viewport instead of immediately */
+  /** Start once when the element enters the viewport rather than on mount. */
   inView?: boolean;
+  /** Classes applied to the animated div; use these for static styling. */
   className?: string;
 }
 
@@ -256,15 +263,24 @@ export function AnimateSwap(props: AnimateSwapProps) {
 // ─────────────────────────────────────────────────────────────
 
 export interface AnimateInGroupProps {
+  /** Content inside the container; child motion variants must respond to its animation labels. */
   children: React.ReactNode;
+  /**
+   * Chooses the delay between participating child animations.
+   * @default "normal"
+   */
   stagger?: "fast" | "normal" | "slow";
+  /** Accepted for compatibility but currently unused; choose entrance treatments on the children. */
   preset?: Preset;
+  /** Start the container's sequence once on viewport entry; ignored when motion is reduced. */
   inView?: boolean;
+  /** Classes applied to the container div, including in the reduced-motion fallback. */
   className?: string;
 }
 
 /**
- * AnimateInGroup — staggered container. Each direct child animates in sequence.
+ * Container that broadcasts animation labels and stagger timing to participating motion children.
+ * Reduced motion renders a plain div. Children with their own animation targets run independently.
  *
  * @example
  * <AnimateInGroup stagger="normal" inView>

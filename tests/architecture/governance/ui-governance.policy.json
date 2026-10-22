@@ -108,7 +108,8 @@
       "./styles/preset.css",
       "./styles.css",
       "./utils",
-      "./utils/auth-surfaces"
+      "./utils/auth-surfaces",
+      "./utils/portal-container"
     ]
   },
   "dashboardExperience": {

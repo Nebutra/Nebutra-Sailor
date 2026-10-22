@@ -55,6 +55,7 @@ const inputVariants = cva(
         md: "",
         lg: "",
       },
+      /** Accepted variant key; the component derives inset padding from actual affixes and controls. */
       affix: {
         none: "",
         prefix: "ps-[var(--input-padding-left)]",
@@ -129,11 +130,14 @@ type NativeInputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "prefi
 type LabelledInputProps = {
   /** Visible label. Requires `id` so the label and input remain associated. */
   label: string;
+  /** Unique input identifier used to associate the visible label and field messages. */
   id: string;
 };
 
 type UnlabelledInputProps = {
+  /** Omit the built-in label when supplying an external label or an accessible name. */
   label?: undefined;
+  /** Associates an external label and connects helper or error text when supplied. */
   id?: string;
 };
 
@@ -142,7 +146,7 @@ type InputOwnProps = {
   size?: InputSize;
   /** Non-interactive adornment rendered inside the left edge. */
   prefix?: React.ReactNode;
-  /** Non-interactive adornment rendered inside the right edge. Hidden by clear/shortcut controls. */
+  /** Trailing adornment, hidden while a spinner, clear button, shortcut or password toggle is shown. */
   suffix?: React.ReactNode;
   /** Show a clear button when the field has a value. */
   clearable?: boolean;
@@ -164,7 +168,7 @@ type InputOwnProps = {
   clearLabel?: string;
   /** Clear the current value when Escape is pressed. Defaults to true for search inputs. */
   clearOnEscape?: boolean;
-  /** Helper text associated with the input through aria-describedby. */
+  /** Helper text linked through `aria-describedby` when `id` is supplied; hidden while `error` is truthy. */
   description?: string;
   /** Boolean marks invalid state; string also renders an inline error message. */
   error?: string | boolean;
@@ -248,6 +252,10 @@ function joinDescriptionIds(...ids: Array<string | undefined>) {
   return ids.filter(Boolean).join(" ") || undefined;
 }
 
+/**
+ * Single-line input with optional affixes, clear and password controls, and inline field messages.
+ * A built-in visible label requires `id`; otherwise supply an external label or accessible name.
+ */
 const Input = ({
   ref: forwardedRef,
   ...props

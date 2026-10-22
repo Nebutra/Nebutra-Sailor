@@ -16,7 +16,7 @@ import {
   CommandSeparator,
 } from "./command";
 import { Label } from "./label";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Popover, PopoverContent, type PopoverPortalContainer, PopoverTrigger } from "./popover";
 
 // =============================================================================
 // Types
@@ -77,13 +77,23 @@ interface ComboboxBaseProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "defaultValue" | "onChange"> {
   /** Flat list of options — the component handles grouping internally via option.group */
   options?: ComboboxOption[];
-  /** Disable the entire combobox */
+  /**
+   * Disable the trigger and prevent the popup from being opened or closed by user interaction.
+   * @default false
+   */
   disabled?: boolean;
   /** Show error styling. Prefer `errored`; `error` is kept for existing consumers. */
   errored?: boolean;
-  /** @deprecated Use `errored`. */
+  /**
+   * Legacy invalid-state styling, used only when `errored` is omitted.
+   * @default false
+   * @deprecated Use `errored`.
+   */
   error?: boolean;
-  /** Size variant matching Nebutra form controls. Legacy `sm`/`default`/`lg` values still map through. */
+  /**
+   * Form-control size; legacy `sm`, `default` and `lg` values map to small, medium and large.
+   * @default "medium"
+   */
   size?: ComboboxSize | LegacyComboboxSize;
   /** Custom root width. Numbers are treated as pixels; strings can be CSS lengths. */
   width?: ComboboxWidth;
@@ -91,53 +101,92 @@ interface ComboboxBaseProps
   listMaxWidth?: ComboboxWidth;
   /** Accessible label shown above the trigger */
   label?: string;
-  /** Whether the label is visually hidden (still accessible) */
+  /**
+   * Visually hide the supplied label while retaining its accessible association with the trigger.
+   * @default false
+   */
   hideLabel?: boolean;
-  /** Text shown in trigger when nothing is selected */
+  /**
+   * Trigger text when no value is selected; also the accessible-name fallback without a label.
+   * @default "Select..."
+   */
   placeholder?: string;
-  /** Text shown when no options match the search */
+  /**
+   * No-results text for options mode; in composition mode configure Combobox.List instead.
+   * @default "No results found."
+   */
   emptyMessage?: string;
-  /** Placeholder inside the search input */
+  /**
+   * Search-input placeholder in options mode; configure Combobox.Input directly in composition mode.
+   * @default "Search..."
+   */
   searchPlaceholder?: string;
+  /** Portal target for the options list; defaults to document.body. */
+  container?: PopoverPortalContainer;
   /** Composition mode — children provide their own CommandInput/List/etc. */
   children?: React.ReactNode;
-  /** Loading state for async option providers. */
+  /**
+   * Replace options with loading copy in options mode; composition mode owns its own loading content.
+   * @default false
+   */
   loading?: boolean;
-  /** Text shown while async options are loading. */
+  /**
+   * Text used in place of the options list's empty message while loading.
+   * @default "Loading options..."
+   */
   loadingMessage?: string;
   /** Accessible name when no visible label is rendered. */
   "aria-label"?: string;
 }
 
 type ComboboxChange =
-  | { onValueChange: (value: ComboboxValue) => void; onChange?: never }
   | {
-      /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
+      /** Receives the selected value, or null when the selected option is chosen again. */
+      onValueChange: (value: ComboboxValue) => void;
+      onChange?: never;
+    }
+  | {
+      /** Legacy value callback; receives null when the selection is cleared. @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
       onChange: (value: ComboboxValue) => void;
       onValueChange?: never;
     };
 
 /** Controlled: a value and exactly one change callback. */
 type ControlledComboboxProps = ComboboxBaseProps & {
+  /** Controlled option value; null represents no selection and requires a change callback. */
   value: ComboboxValue;
   defaultValue?: never;
 } & ComboboxChange;
 
 interface UncontrolledComboboxProps extends ComboboxBaseProps {
+  /** Omit to let the combobox manage selection; use `defaultValue` for its initial state. */
   value?: never;
-  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
+  /** Legacy selection callback, used only when `onValueChange` is omitted. @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (value: ComboboxValue) => void;
+  /** Receives the selected value, or null when choosing the current selection clears it. */
   onValueChange?: (value: ComboboxValue) => void;
+  /**
+   * Initial option value for an uncontrolled combobox; later changes do not reset selection.
+   * @default null
+   */
   defaultValue?: ComboboxValue;
 }
 
 export type ComboboxProps = ControlledComboboxProps | UncontrolledComboboxProps;
 
 export interface ComboboxOptionProps {
+  /** Unique selection key; choosing an already-selected key clears the selection. */
   value: string;
+  /** Search keyword and fallback display text when children are omitted. */
   label?: string;
+  /**
+   * Prevent this option from being selected through the command list.
+   * @default false
+   */
   disabled?: boolean;
+  /** Classes applied to the selectable command item. */
   className?: string;
+  /** Visible option content; plain text also supplies a search keyword when no label is provided. */
   children?: React.ReactNode;
 }
 
@@ -148,11 +197,19 @@ export type ComboboxEmptyProps = React.ComponentPropsWithoutRef<typeof CommandEm
 export type ComboboxGroupProps = React.ComponentPropsWithoutRef<typeof CommandGroup>;
 
 export interface ComboboxListProps extends CommandListProps {
+  /** Options, groups and separators rendered after the built-in empty-results message. */
   children?: React.ReactNode;
+  /** Classes applied to the scrollable command list. */
   className?: string;
+  /** Inline list styles, with `maxWidth` taking precedence over `style.maxWidth`. */
   style?: React.CSSProperties;
+  /**
+   * Content displayed when the command list has no matching options.
+   * @default "No results found."
+   */
   emptyMessage?: React.ReactNode;
   // explicit `| undefined` to accept passthrough under `exactOptionalPropertyTypes`
+  /** Maximum list width in pixels for numbers, or as a CSS length string. */
   maxWidth?: ComboboxWidth | undefined;
 }
 
@@ -216,6 +273,7 @@ function useComboboxContext(): ComboboxContextValue {
 // ComboboxOption (sub-component)
 // =============================================================================
 
+/** Selectable command item with a decorative selected checkmark; requires a Combobox ancestor. */
 const ComboboxOptionItem = ({
   ref,
   value,
@@ -257,6 +315,7 @@ ComboboxOptionItem.displayName = "Combobox.Option";
 // ComboboxInput (sub-component)
 // =============================================================================
 
+/** Search input for composition mode; forwards input and filtering behavior to CommandInput. */
 const ComboboxInput = ({
   ref,
   ...props
@@ -269,6 +328,7 @@ ComboboxInput.displayName = "Combobox.Input";
 // ComboboxEmpty (sub-component)
 // =============================================================================
 
+/** Custom empty-results content for a composed command list. */
 const ComboboxEmpty = ({
   ref,
   ...props
@@ -281,6 +341,7 @@ ComboboxEmpty.displayName = "Combobox.Empty";
 // ComboboxGroup (sub-component)
 // =============================================================================
 
+/** Groups related options, optionally under a heading, within a composed combobox list. */
 const ComboboxGroupSub = ({
   ref,
   ...props
@@ -293,8 +354,10 @@ ComboboxGroupSub.displayName = "Combobox.Group";
 // ComboboxSeparator (sub-component)
 // =============================================================================
 
+/** Visual separator between option groups in composition mode. */
 const ComboboxSeparator = CommandSeparator;
 
+/** Scrollable options list with built-in empty-results content and an optional maximum width. */
 const ComboboxList = ({
   children,
   className,
@@ -326,6 +389,7 @@ function toCssLength(value: ComboboxWidth): string {
   return typeof value === "number" ? `${value}px` : value;
 }
 
+/** Searchable single selection with managed popup state and controlled or uncontrolled values. */
 function ComboboxRoot({
   options,
   value: controlledValue,
@@ -343,6 +407,7 @@ function ComboboxRoot({
   placeholder = "Select...",
   emptyMessage = "No results found.",
   searchPlaceholder = "Search...",
+  container,
   loading = false,
   loadingMessage = "Loading options...",
   children,
@@ -485,6 +550,7 @@ function ComboboxRoot({
           </PopoverTrigger>
           <PopoverContent
             className="p-0"
+            container={container}
             style={{
               width: "var(--combobox-width, var(--radix-popover-trigger-width))",
               maxWidth: listMaxWidth ? toCssLength(listMaxWidth) : undefined,
@@ -534,11 +600,17 @@ ComboboxRoot.displayName = "Combobox";
  * ```
  */
 const Combobox = Object.assign(ComboboxRoot, {
+  /** Search field for a composed combobox; provide a descriptive placeholder or accessible name. */
   Input: ComboboxInput,
+  /** Scrollable option container with its own empty-results message. */
   List: ComboboxList,
+  /** Selectable option; choosing the current selection again clears it. */
   Option: ComboboxOptionItem,
+  /** Empty-results message for a manually composed command list. */
   Empty: ComboboxEmpty,
+  /** Groups related options under an optional heading. */
   Group: ComboboxGroupSub,
+  /** Visual divider between groups of options. */
   Separator: ComboboxSeparator,
 });
 

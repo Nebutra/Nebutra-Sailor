@@ -1,8 +1,8 @@
 "use client";
 
 import { Tooltip as BaseTooltip } from "@base-ui/react/tooltip";
+import { usePortalContainer } from "@nebutra/ui/utils/portal-container";
 import * as React from "react";
-
 import { interaction } from "../tokens/components/interaction";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
@@ -81,11 +81,14 @@ function useSkipDelay() {
 
 const TooltipInstantContext = React.createContext(false);
 
+/** Provides Base UI tooltip timing with a shared skip window after a tooltip opens. */
 const TooltipProvider = ({
   children,
   delayDuration = DEFAULT_TOOLTIP_DELAY_MS,
 }: {
+  /** Tooltip triggers and content that share this provider's timing context. */
   children: React.ReactNode;
+  /** Initial hover delay in milliseconds; recent tooltip activity temporarily skips it. */
   delayDuration?: number;
 }) => {
   const skipDelay = useSkipDelay();
@@ -94,13 +97,16 @@ const TooltipProvider = ({
   );
 };
 
+/** Shows contextual help on hover or keyboard focus, with a delay skipped after recent tooltips. */
 const Tooltip = ({
   delayDuration,
   children,
   onOpenChange,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseTooltip.Root> & {
+  /** Hover delay in milliseconds; an explicit value overrides the recent-open skip behavior. */
   delayDuration?: number;
+  /** TooltipTrigger and TooltipContent elements belonging to this tooltip. */
   children?: React.ReactNode;
 }) => {
   const skipDelay = useSkipDelay();
@@ -124,12 +130,16 @@ const Tooltip = ({
   );
 };
 
+/** Opens the tooltip on hover or keyboard focus, optionally reusing its child as the trigger. */
 const TooltipTrigger = ({
   asChild,
   children: rawChildren,
   ref,
   ...props
-}: React.ComponentPropsWithoutRef<typeof BaseTooltip.Trigger> & { asChild?: boolean } & {
+}: React.ComponentPropsWithoutRef<typeof BaseTooltip.Trigger> & {
+  /** Uses a single valid child element as the trigger instead of creating a button. */
+  asChild?: boolean;
+} & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
   const children = resolveLazyChild(rawChildren);
@@ -150,6 +160,7 @@ const TooltipTrigger = ({
 };
 TooltipTrigger.displayName = "TooltipTrigger";
 
+/** Renders tooltip text in a portal positioned relative to TooltipTrigger. */
 const TooltipContent = ({
   className,
   style,
@@ -157,18 +168,26 @@ const TooltipContent = ({
   align = "center",
   sideOffset = 4,
   alignOffset = 0,
+  container,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseTooltip.Popup> & {
+  /** Preferred side of the trigger; collision handling may choose another side. */
   side?: "top" | "right" | "bottom" | "left";
+  /** Alignment of the popup along the trigger's side. */
   align?: "start" | "center" | "end";
+  /** Distance in pixels between the trigger and tooltip. */
   sideOffset?: number;
+  /** Offset in pixels along the alignment axis. */
   alignOffset?: number;
+  /** Portal target; defaults to the nearest portal scope or document.body. */
+  container?: React.ComponentProps<typeof BaseTooltip.Portal>["container"];
 } & { ref?: React.Ref<React.ElementRef<typeof BaseTooltip.Popup>> | undefined }) => {
   const instant = React.use(TooltipInstantContext);
+  const portalContainer = usePortalContainer(container);
 
   return (
-    <BaseTooltip.Portal>
+    <BaseTooltip.Portal container={portalContainer}>
       <BaseTooltip.Positioner
         side={side}
         align={align}

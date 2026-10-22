@@ -284,7 +284,7 @@ export function createApiExtractor(options: ExtractorOptions): ApiExtractor {
     if (!source || !moduleSymbol) return null;
     const found = checker.getExportsOfModule(moduleSymbol).find((s) => s.name === exportName);
     if (!found) return null;
-    return found.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(found) : found;
+    return found;
   }
 
   /**
@@ -437,8 +437,13 @@ export function createApiExtractor(options: ExtractorOptions): ApiExtractor {
     const fromSymbol = ts.displayPartsToString(symbol.getDocumentationComment(checker)).trim();
     if (fromSymbol) return fromSymbol;
     // `const X = forwardRef(...)` keeps its JSDoc on the variable statement.
-    const decl = symbol.valueDeclaration;
-    const statement = decl && ts.isVariableDeclaration(decl) ? decl.parent.parent : decl;
+    const decl = symbol.valueDeclaration ?? symbol.declarations?.[0];
+    const statement =
+      decl && ts.isExportSpecifier(decl)
+        ? decl.parent.parent
+        : decl && ts.isVariableDeclaration(decl)
+          ? decl.parent.parent
+          : decl;
     if (!statement) return "";
     const docs = ts.getJSDocCommentsAndTags(statement).filter(ts.isJSDoc);
     const last = docs[docs.length - 1];
@@ -501,12 +506,16 @@ export function createApiExtractor(options: ExtractorOptions): ApiExtractor {
   return {
     extract(file, exportName) {
       const source = program.getSourceFile(file);
-      const symbol = exportSymbol(file, exportName);
-      if (!source || !symbol) return null;
+      const exported = exportSymbol(file, exportName);
+      if (!source || !exported) return null;
+      const symbol =
+        exported.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(exported) : exported;
 
       const type = checker.getTypeOfSymbolAtLocation(symbol, source);
       const block = extractBlock(exportName, type, symbol, source);
       if (!block) return null;
+      // A wrapper may re-export an upstream function with its own usage contract.
+      block.description = describe(exported) || block.description;
 
       // Compound parts hang off the root as static properties: Table.Head.
       // Skip them for plain functions, whose own properties are methods.

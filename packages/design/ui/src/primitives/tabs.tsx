@@ -48,8 +48,11 @@ const BaseContent = withHtmlProps<
 >(BaseTabs.Panel);
 const BaseIndicator = withHtmlProps<"span">(BaseTabs.Indicator);
 
+/** Visual treatment of the tab list, triggers, and active indicator. */
 export type TabsVariant = "default" | "button" | "line" | "secondary";
+/** Corner treatment of the list and its triggers. */
 export type TabsShape = "default" | "pill";
+/** Whether moving keyboard focus also selects the focused tab. */
 export type TabsActivationMode = "automatic" | "manual";
 
 type TabsCssVar =
@@ -189,53 +192,92 @@ const TabsContext = React.createContext<TabsContextValue>({
 });
 
 export interface TabsItem {
+  /** Supplementary content displayed after the tab title, such as a count. */
   badge?: React.ReactNode;
+  /** Panel content rendered for this value; omit when panels are managed elsewhere. */
   content?: React.ReactNode;
+  /** Prevents this generated tab from being selected or receiving keyboard focus. */
   disabled?: boolean;
+  /** Leading visual displayed before the tab title. */
   icon?: React.ReactNode;
+  /** Visible label for the generated tab trigger. */
   title: React.ReactNode;
+  /** Optional hover and focus hint attached to the generated trigger's wrapper. */
   tooltip?: React.ReactNode;
+  /** Unique key linking the trigger, selected value, and corresponding panel. */
   value: string;
 }
 
 export interface TabsProps
   extends Omit<React.ComponentPropsWithoutRef<"div">, "children" | "defaultValue" | "onChange"> {
+  /**
+   * Selects on focus in automatic mode; manual mode requires explicit activation.
+   * @default "manual"
+   */
   activationMode?: TabsActivationMode;
+  /** Initial uncontrolled selection; falls back to the first enabled tabs item. */
   defaultValue?: string;
+  /** Disables generated tabs and supplies the default disabled state for composed triggers. */
   disabled?: boolean;
+  /** Classes applied to the generated list when using the tabs array. */
   listClassName?: string;
+  /** Called with the newly selected tab value. */
   onValueChange?: (value: string) => void;
+  /** Orientation used by the tab root for keyboard navigation. */
   orientation?: "horizontal" | "vertical";
+  /** Controlled selection alias that takes precedence over value. */
   selected?: string;
+  /** Selection callback alias called alongside onValueChange. */
   setSelected?: (value: string) => void;
+  /** Corner treatment shared by the list and triggers. */
   shape?: TabsShape;
+  /** Control size shared by the list, triggers, icons, and typography. */
   size?: TabsSize;
+  /** Items used to generate a list and any supplied panels, replacing children. */
   tabs?: readonly TabsItem[];
+  /** Controlled selection, used when selected is not supplied. */
   value?: string;
+  /** Visual treatment shared by the list, triggers, and active indicator. */
   variant?: TabsVariant;
+  /** Composed TabsList and TabsContent elements used when tabs is omitted. */
   children?: React.ReactNode;
 }
 
 export interface TabsListProps
   extends React.ComponentPropsWithoutRef<"div">,
     VariantProps<typeof tabsListVariants> {
+  /** Overrides the root's visual treatment for this list and its triggers. */
+  variant?: VariantProps<typeof tabsListVariants>["variant"];
+  /** Overrides the root's corner treatment for this list and its triggers. */
+  shape?: VariantProps<typeof tabsListVariants>["shape"];
+  /** Overrides activationMode: true selects a tab as it receives keyboard focus. */
   activateOnFocus?: boolean;
+  /** Wraps keyboard focus from the last trigger to the first and vice versa. */
   loop?: boolean;
 }
 
 export interface TabsTriggerProps
   extends Omit<React.ComponentPropsWithoutRef<"button">, "children"> {
+  /** Supplementary content displayed after the trigger's label. */
   badge?: React.ReactNode;
+  /** Leading visual displayed before the trigger's label. */
   icon?: React.ReactNode;
+  /** Selection key matching the corresponding TabsContent value. */
   value: string;
+  /** Visible label for the tab. */
   children?: React.ReactNode;
 }
 
 export interface TabsContentProps
   extends React.ComponentPropsWithoutRef<"div">,
     VariantProps<typeof tabsContentVariants> {
+  /** Panel styling variant; currently only the default treatment is available. */
+  variant?: VariantProps<typeof tabsContentVariants>["variant"];
+  /** Keeps an inactive panel mounted when keepMounted is not supplied. */
   forceMount?: true;
+  /** Keeps an inactive panel in the DOM; takes precedence over forceMount. */
   keepMounted?: boolean;
+  /** Selection key matching the trigger that displays this panel. */
   value: string;
 }
 
@@ -278,6 +320,10 @@ function getFirstEnabledValue(tabs: readonly TabsItem[] | undefined) {
   return tabs?.find((tab) => !tab.disabled)?.value;
 }
 
+/**
+ * Coordinates single-selection tabs and panels with keyboard navigation.
+ * Use a tabs array for generated content or compose TabsList, TabsTrigger, and TabsContent.
+ */
 function Tabs({
   "aria-label": ariaLabel,
   activationMode = "manual",
@@ -407,6 +453,7 @@ function TabsCollectionTrigger({ tab, disabled }: { disabled: boolean; tab: Tabs
   );
 }
 
+/** Groups tab triggers with an active indicator and configurable focus activation. */
 function TabsList({
   activateOnFocus,
   className,
@@ -458,6 +505,7 @@ function TabsList({
   );
 }
 
+/** Selects the panel matching its value, with optional leading icon and trailing badge. */
 function TabsTrigger({ badge, children, className, disabled, icon, ...props }: TabsTriggerProps) {
   const context = React.use(TabsContext);
   const isDisabled = disabled ?? context.disabled;
@@ -480,6 +528,7 @@ function TabsTrigger({ badge, children, className, disabled, icon, ...props }: T
   );
 }
 
+/** Displays the panel associated with the selected trigger's value. */
 function TabsContent({ className, forceMount, keepMounted, variant, ...props }: TabsContentProps) {
   return (
     <BaseContent

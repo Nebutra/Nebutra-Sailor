@@ -7,9 +7,13 @@ on:
     paths:
       - ".github/actions/setup-node-pnpm/action.yml"
       - ".github/workflows/ui-governance.yml"
+      - "apps/design/package.json"
       - "apps/design/src/**"
+      - "apps/design/vitest.config.ts"
       - "apps/landing/src/**"
       - "apps/web/src/**"
+      - "e2e/design/**"
+      - "e2e/playwright.design.config.ts"
       - "package.json"
       - "packages/design/**"
       - "pnpm-lock.yaml"
@@ -25,9 +29,13 @@ on:
     paths:
       - ".github/actions/setup-node-pnpm/action.yml"
       - ".github/workflows/ui-governance.yml"
+      - "apps/design/package.json"
       - "apps/design/src/**"
+      - "apps/design/vitest.config.ts"
       - "apps/landing/src/**"
       - "apps/web/src/**"
+      - "e2e/design/**"
+      - "e2e/playwright.design.config.ts"
       - "package.json"
       - "packages/design/**"
       - "pnpm-lock.yaml"
@@ -80,6 +88,9 @@ jobs:
           pnpm --config.verify-deps-before-run=false exec turbo run typecheck --filter=@nebutra/design
           pnpm --config.verify-deps-before-run=false exec turbo run build --filter=@nebutra/design
 
+      - name: Verify Design Documentation Contracts
+        run: pnpm --filter @nebutra/design test
+
       - name: Cache Playwright Browsers
         uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
@@ -90,6 +101,19 @@ jobs:
 
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run Design Browser Regressions
+        run: pnpm exec playwright test --config=e2e/playwright.design.config.ts
+
+      - name: Upload Design Browser Evidence
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: design-browser-regressions
+          path: |
+            test-results/design
+            playwright-report/design
+          retention-days: 7
 
       - name: Audit Design Site Stylesheets for Dropped Declarations
         run: |

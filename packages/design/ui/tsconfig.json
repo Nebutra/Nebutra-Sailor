@@ -31,6 +31,7 @@
       "@nebutra/ui/patterns": ["./src/patterns/index.ts"],
       "@nebutra/ui/layout": ["./src/layout/index.ts"],
       "@nebutra/ui/utils": ["./src/utils/index.ts"],
+      "@nebutra/ui/utils/portal-container": ["./src/utils/portal-container.tsx"],
       "@nebutra/ui/hooks": ["./src/hooks/index.ts"],
       "@nebutra/ui/typography": ["./src/typography/index.ts"]
     }
