@@ -58,7 +58,7 @@ test("Vanta search fits its header and keeps the desktop placeholder on one line
   await page.goto("/components/button");
   await selectVanta(page);
   const search = page.getByRole("button", { name: "Search the design system", exact: true });
-  const label = search.getByText("Search tokens, components…", { exact: true });
+  const label = search.getByText("Search documentation…", { exact: true });
   await expect(search.locator("svg").first()).toBeVisible();
   if (testInfo.project.name === "mobile") {
     await expect(label).toBeHidden();
@@ -83,11 +83,44 @@ test("Vanta search fits its header and keeps the desktop placeholder on one line
   expect(geometry.lines, JSON.stringify(geometry)).toBe(1);
   expect(geometry.height).toBeLessThanOrEqual(geometry.lineHeight + 1);
   expect(geometry.height).toBeLessThan(geometry.pillHeight);
+  for (const width of [1024, 1280, 1920]) {
+    await page.setViewportSize({ width, height: 1000 });
+    const searchBounds = await search.boundingBox();
+    const tabsBounds = await page
+      .getByRole("navigation", { name: "Sections", exact: true })
+      .first()
+      .boundingBox();
+    expect(searchBounds).not.toBeNull();
+    expect(tabsBounds).not.toBeNull();
+    if (!searchBounds || !tabsBounds) throw new Error("Desktop header must have layout boxes");
+    expect(tabsBounds.x + tabsBounds.width).toBeLessThanOrEqual(searchBounds.x - 8);
+    await expectNoOverflow(page);
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await testInfo.attach("vanta-search-single-line", {
     body: await page.screenshot(),
     contentType: "image/png",
   });
   await expectNoOverflow(page);
+});
+
+test("language selection dismisses its compact menu and restores focus", async ({ page }) => {
+  await page.goto("/components/button");
+  const trigger = page.getByRole("button", { name: /^Design language:/ });
+  await trigger.click();
+  const menu = page.getByRole("menu");
+  await expect(menu).toBeVisible();
+  await expect(menu.getByRole("menuitemradio")).toHaveCount(9);
+  expect((await menu.boundingBox())?.height).toBeLessThan(440);
+  await menu.getByRole("menuitemradio", { name: /^Vanta\b/ }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-brand", "vanta");
+  await expect(menu).toHaveCount(0);
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await expect(menu.getByRole("menuitemradio", { name: /^Vanta\b/ })).toBeChecked();
+  await expect(menu.getByText("high-trust enterprise blues", { exact: true })).toBeVisible();
+  await menu.getByRole("menuitemradio", { name: /^Vanta\b/ }).click();
+  await expect(menu).toHaveCount(0);
 });
 
 test("Props clips its rounded top corners and tall controls leave the preview compact", async ({

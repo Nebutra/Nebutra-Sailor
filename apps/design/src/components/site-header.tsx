@@ -61,11 +61,11 @@ export function SiteHeader({ search, menu }: { search: ReactNode; menu: ReactNod
 
         <div className="flex shrink-0 items-center gap-2">
           {/* One mount: the palette owns the Cmd+K listener, so rendering it twice opened two dialogs. Its own classes switch between icon and field at `lg`. */}
-          <div className="lg:w-64">{search}</div>
+          <div className="lg:w-52 xl:w-60 2xl:w-72">{search}</div>
 
           <nav aria-label="Elsewhere" className="flex items-center gap-1">
             <a
-              className="hidden items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-muted-foreground text-sm no-underline transition-colors duration-micro hover:text-foreground xl:inline-flex"
+              className="hidden items-center gap-1 rounded-[var(--radius-sm)] px-2 py-1 text-muted-foreground text-sm no-underline transition-colors duration-micro hover:text-foreground 2xl:inline-flex"
               href={getBrandOrigin("landing")}
             >
               {brand.domains.landing}

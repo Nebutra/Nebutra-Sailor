@@ -77,15 +77,19 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
       <button
         aria-keyshortcuts="Meta+K Control+K"
         aria-label="Search the design system"
-        className="flex h-8 items-center gap-2 rounded-[var(--radius-md)] text-muted-foreground transition-[background-color,border-color,color] duration-micro ease-out hover:text-foreground max-lg:w-8 max-lg:justify-center max-lg:hover:bg-accent lg:w-full lg:border lg:border-border lg:bg-card lg:pr-1.5 lg:pl-2.5 lg:hover:border-input"
+        className="flex h-9 items-center gap-2 rounded-[min(var(--radius-lg),0.5rem)] text-muted-foreground transition-[background-color,border-color,color] duration-micro ease-out hover:text-foreground max-lg:w-8 max-lg:justify-center max-lg:hover:bg-accent lg:w-full lg:border lg:border-transparent lg:bg-muted/50 lg:pr-1.5 lg:pl-2.5 lg:hover:border-border/30 lg:hover:bg-card"
         onClick={() => setOpen(true)}
         type="button"
       >
         <MagnifyingGlass aria-hidden className="size-4 shrink-0" />
-        <span className="hidden min-w-0 flex-1 truncate text-left text-ui lg:inline">
-          Search tokens, components…
+        <span className="hidden min-w-0 flex-1 truncate whitespace-nowrap text-left text-ui lg:inline">
+          Search documentation…
         </span>
-        <Kbd className="hidden shrink-0 lg:inline-flex" meta small>
+        <Kbd
+          className="hidden shrink-0 border-border/20 bg-background/70 text-2xs lg:inline-flex"
+          meta
+          small
+        >
           K
         </Kbd>
       </button>

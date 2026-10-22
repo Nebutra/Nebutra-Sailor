@@ -62,6 +62,11 @@ export default defineConfig({
         __dirname,
         "../../packages/design/ui/src/primitives/index.ts",
       ),
+      // Match the shared context subpath before the utility barrel's prefix alias.
+      "@nebutra/ui/utils/portal-container": path.resolve(
+        __dirname,
+        "../../packages/design/ui/src/utils/portal-container.tsx",
+      ),
       "@nebutra/ui/utils": path.resolve(__dirname, "../../packages/design/ui/src/utils/index.ts"),
     },
   },
