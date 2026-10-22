@@ -4,9 +4,12 @@ import { usePendingVisible } from "../hooks/use-pending-visible";
 import { cn } from "../utils";
 
 export interface LoadingStateProps {
-  /** Optional message shown below the spinner */
+  /** Message shown below the spinner and used as its accessible status label. */
   message?: string;
-  /** Size of the spinner */
+  /**
+   * Spinner size within the centered loading region.
+   * @default "large"
+   */
   size?: "small" | "medium" | "large";
 }
 

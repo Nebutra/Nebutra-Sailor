@@ -2,6 +2,13 @@
  * Utility Functions
  */
 
+// Keep context identity shared across separately bundled public entry points.
+export {
+  type PortalContainer,
+  PortalContainerProvider,
+  type PortalContainerProviderProps,
+  usePortalContainer,
+} from "@nebutra/ui/utils/portal-container";
 /** Auth split-shell + primary CTA contracts (width + ink CTA pairing). */
 export {
   AUTH_FORM_COLUMN_CLASS,

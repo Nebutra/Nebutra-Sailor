@@ -121,9 +121,14 @@ export type AvatarProps = Omit<
   placeholder?: boolean;
   /** Delay before fallback appears. */
   fallbackDelayMs?: number;
+  /** Composed image and fallback elements; supplied children replace convenience content. */
   children?: React.ReactNode;
 };
 
+/**
+ * Displays a user or entity image with convenience source, initials, username,
+ * placeholder, and accessible-label fallbacks.
+ */
 const Avatar = ({
   className,
   size = "md",
@@ -183,6 +188,7 @@ Avatar.displayName = "Avatar";
 
 // ─── AvatarImage ──────────────────────────────────────────────────────────────
 
+/** Displays the avatar image with an aspect-square object-cover treatment. */
 const AvatarImage = ({
   className,
   ref,
@@ -201,10 +207,11 @@ AvatarImage.displayName = "AvatarImage";
 // ─── AvatarFallback ───────────────────────────────────────────────────────────
 
 export type AvatarFallbackProps = React.ComponentPropsWithoutRef<typeof BaseAvatar.Fallback> & {
-  /** Pass the same size as the parent Avatar for correct font size */
+  /** Overrides the parent Avatar's size; inherits from the parent or falls back to "md". */
   size?: AvatarSize;
 };
 
+/** Displays initials or fallback content while the avatar image is unavailable. */
 const AvatarFallback = ({
   className,
   size,

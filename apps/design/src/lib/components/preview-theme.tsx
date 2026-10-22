@@ -24,6 +24,7 @@
 import { Moon, Sun } from "@nebutra/icons";
 import { useTheme } from "@nebutra/tokens";
 import { cn } from "@nebutra/ui/utils";
+import { PortalContainerProvider } from "@nebutra/ui/utils/portal-container";
 import * as React from "react";
 import { useMounted } from "@/lib/use-mounted";
 
@@ -98,8 +99,8 @@ export function PreviewTheme({ children }: { children: React.ReactNode }) {
         </fieldset>
         <p className="m-0 text-muted-foreground text-xs">
           {mode === "split"
-            ? "Both themes at once. The right pane is a nested .dark island."
-            : "The whole document switches, so overlays and portals switch with it."}
+            ? "Compare light and dark side by side, including menus and dialogs."
+            : "Preview the page in light or dark, or choose Split to compare both."}
         </p>
       </div>
 
@@ -116,21 +117,26 @@ export function PreviewTheme({ children }: { children: React.ReactNode }) {
 }
 
 function Pane({ children, dark }: { children: React.ReactNode; dark: boolean }) {
+  const [host, setHost] = React.useState<HTMLDivElement | null>(null);
+
   return (
     /* The pane insets its content, not just its own label. It carried p-1 with
        px-3 on the label alone, so every heading and specimen inside sat flush
        against the pane edge — most visibly on the dark island, where the text
        ran straight into the boundary. A container that pads its chrome and not
        what it contains is the bug; matching the two is the fix. */
-    <div
-      className={cn(
-        // States are full-bleed bands in the article; inside a pane they sit flush.
-        "rounded-lg border border-border bg-background p-4 [&_section]:mx-0 [&_section]:px-0",
-        dark && "dark",
-      )}
-    >
-      <div className="mb-3 font-medium text-foreground text-sm">{dark ? "Dark" : "Light"}</div>
-      {children}
-    </div>
+    <PortalContainerProvider container={host}>
+      <div
+        className={cn(
+          // States are full-bleed bands in the article; inside a pane they sit flush.
+          "rounded-lg border border-border bg-background p-4 [&_section]:mx-0 [&_section]:px-0",
+          dark && "dark",
+        )}
+        ref={setHost}
+      >
+        <div className="mb-3 font-medium text-foreground text-sm">{dark ? "Dark" : "Light"}</div>
+        {children}
+      </div>
+    </PortalContainerProvider>
   );
 }

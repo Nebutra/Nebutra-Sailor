@@ -10,13 +10,16 @@ import { formControlFocusClassNames, formControlInvalidClassNames } from "./form
 type NativeTextareaProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "size">;
 
 type LabelledTextareaProps = {
-  /** Visible label. Type-level nudge keeps labelled fields explicitly addressable. */
+  /** Visible label associated with the textarea through its required `id`. */
   label: string;
+  /** Unique field identifier used by the visible label and supporting messages. */
   id: string;
 };
 
 type UnlabelledTextareaProps = {
+  /** Omit the built-in label when providing an external label or accessible name. */
   label?: undefined;
+  /** Optional field identifier; generated when supporting messages need an association. */
   id?: string;
 };
 
@@ -107,6 +110,10 @@ function isInvalid(
   );
 }
 
+/**
+ * Multiline field that grows with content up to `--textarea-max-height`, then scrolls.
+ * Supports a visible label, linked helper or error text, and optional vertical manual resizing.
+ */
 const Textarea = ({
   className,
   style,

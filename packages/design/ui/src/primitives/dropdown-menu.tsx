@@ -2,6 +2,7 @@
 
 import { Menu as BaseMenu } from "@base-ui/react/menu";
 import { Check, ChevronRight, Status as Circle } from "@nebutra/icons";
+import { usePortalContainer } from "@nebutra/ui/utils/portal-container";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
@@ -11,17 +12,6 @@ import { overlayPrimitiveClassNames } from "./overlay";
 
 type PortalContainer = React.ComponentProps<typeof BaseMenu.Portal>["container"];
 
-/**
- * Portal into the fullscreen element while one is active: the browser renders
- * only that subtree in fullscreen, so a menu portalled to <body> opens unseen
- * (KCQ issue #299, the workspace menu in a fullscreen chart).
- */
-function fullscreenPortalContainer(): HTMLElement | undefined {
-  if (typeof document === "undefined") return undefined;
-  const element = document.fullscreenElement;
-  return element instanceof HTMLElement ? element : undefined;
-}
-
 type DropdownMenuContextValue = {
   setOpen: (open: boolean) => void;
 };
@@ -30,6 +20,7 @@ const DropdownMenuContext = React.createContext<DropdownMenuContextValue | null>
 
 type DropdownMenuProps = React.ComponentPropsWithoutRef<typeof BaseMenu.Root>;
 
+/** Coordinates a menu trigger, popup, keyboard navigation, and controlled open state. */
 function DropdownMenu({
   open: controlledOpen,
   defaultOpen = false,
@@ -63,9 +54,11 @@ function DropdownMenu({
 DropdownMenu.displayName = "DropdownMenu";
 
 type DropdownMenuTriggerProps = React.ComponentProps<typeof BaseMenu.Trigger> & {
+  /** Uses a single valid child element as the trigger instead of creating a button. */
   asChild?: boolean;
 };
 
+/** Opens the menu, optionally applying trigger behavior to a single child element. */
 const DropdownMenuTrigger = ({
   asChild,
   children: rawChildren,
@@ -155,34 +148,42 @@ const DropdownMenuSubContent = ({
   /** Portal target; defaults to the active fullscreen element, else <body>. */
   container?: PortalContainer;
   ref?: React.Ref<React.ElementRef<typeof BaseMenu.Popup>> | undefined;
-}) => (
-  <BaseMenu.Portal container={container ?? fullscreenPortalContainer()}>
-    <BaseMenu.Positioner style={{ zIndex: overlayZIndex.popover }}>
-      <BaseMenu.Popup
-        ref={ref}
-        className={cn(
-          overlayClassNames.menuSurface,
-          overlayPrimitiveClassNames.menuSurface,
-          className,
-        )}
-        style={{ zIndex: overlayZIndex.popover, ...style }}
-        {...props}
-      />
-    </BaseMenu.Positioner>
-  </BaseMenu.Portal>
-);
+}) => {
+  const portalContainer = usePortalContainer(container);
+  return (
+    <BaseMenu.Portal container={portalContainer}>
+      <BaseMenu.Positioner style={{ zIndex: overlayZIndex.popover }}>
+        <BaseMenu.Popup
+          ref={ref}
+          className={cn(
+            overlayClassNames.menuSurface,
+            overlayPrimitiveClassNames.menuSurface,
+            className,
+          )}
+          style={{ zIndex: overlayZIndex.popover, ...style }}
+          {...props}
+        />
+      </BaseMenu.Positioner>
+    </BaseMenu.Portal>
+  );
+};
 DropdownMenuSubContent.displayName = "DropdownMenuSubContent";
 
 export interface DropdownMenuContentProps
   extends React.ComponentPropsWithoutRef<typeof BaseMenu.Popup> {
+  /** Alignment of the popup along the trigger's side. */
   align?: React.ComponentProps<typeof BaseMenu.Positioner>["align"];
+  /** Distance from the trigger, in pixels or a Base UI offset callback. */
   sideOffset?: React.ComponentProps<typeof BaseMenu.Positioner>["sideOffset"];
+  /** Offset along the alignment axis, in pixels or a Base UI offset callback. */
   alignOffset?: React.ComponentProps<typeof BaseMenu.Positioner>["alignOffset"];
+  /** Preferred side of the trigger; collision handling may choose another side. */
   side?: React.ComponentProps<typeof BaseMenu.Positioner>["side"];
   /** Portal target; defaults to the active fullscreen element, else <body>. */
   container?: PortalContainer;
 }
 
+/** Portals and positions the styled menu popup relative to DropdownMenuTrigger. */
 const DropdownMenuContent = ({
   className,
   style,
@@ -195,36 +196,41 @@ const DropdownMenuContent = ({
   ...props
 }: DropdownMenuContentProps & {
   ref?: React.Ref<React.ElementRef<typeof BaseMenu.Popup>> | undefined;
-}) => (
-  <BaseMenu.Portal container={container ?? fullscreenPortalContainer()}>
-    <BaseMenu.Positioner
-      sideOffset={sideOffset}
-      align={align}
-      alignOffset={alignOffset}
-      side={side}
-      style={{ zIndex: overlayZIndex.popover }}
-    >
-      <BaseMenu.Popup
-        ref={ref}
-        className={cn(
-          overlayClassNames.menuSurface,
-          overlayPrimitiveClassNames.menuSurface,
-          className,
-        )}
-        style={{ zIndex: overlayZIndex.popover, ...style }}
-        {...props}
-      />
-    </BaseMenu.Positioner>
-  </BaseMenu.Portal>
-);
+}) => {
+  const portalContainer = usePortalContainer(container);
+  return (
+    <BaseMenu.Portal container={portalContainer}>
+      <BaseMenu.Positioner
+        sideOffset={sideOffset}
+        align={align}
+        alignOffset={alignOffset}
+        side={side}
+        style={{ zIndex: overlayZIndex.popover }}
+      >
+        <BaseMenu.Popup
+          ref={ref}
+          className={cn(
+            overlayClassNames.menuSurface,
+            overlayPrimitiveClassNames.menuSurface,
+            className,
+          )}
+          style={{ zIndex: overlayZIndex.popover, ...style }}
+          {...props}
+        />
+      </BaseMenu.Positioner>
+    </BaseMenu.Portal>
+  );
+};
 DropdownMenuContent.displayName = "DropdownMenuContent";
 
+/** Renders one selectable menu action, optionally inset to align with labeled content. */
 const DropdownMenuItem = ({
   className,
   inset,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseMenu.Item> & {
+  /** Adds leading inset space for alignment with menu icons or checkmarks. */
   inset?: boolean;
 } & { ref?: React.Ref<React.ElementRef<typeof BaseMenu.Item>> | undefined }) => (
   <BaseMenu.Item
@@ -235,6 +241,7 @@ const DropdownMenuItem = ({
 );
 DropdownMenuItem.displayName = "DropdownMenuItem";
 
+/** Renders a menu item whose checked state is represented by a check indicator. */
 const DropdownMenuCheckboxItem = ({
   className,
   children,
@@ -336,12 +343,14 @@ const DropdownMenuEmpty = ({
 );
 DropdownMenuEmpty.displayName = "DropdownMenuEmpty";
 
+/** Renders non-interactive menu heading text, optionally aligned with inset items. */
 const DropdownMenuLabel = ({
   className,
   inset,
   ref,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
+  /** Adds leading inset space to align the label with menu item content. */
   inset?: boolean;
 } & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
   <div
@@ -352,6 +361,7 @@ const DropdownMenuLabel = ({
 );
 DropdownMenuLabel.displayName = "DropdownMenuLabel";
 
+/** Visually separates related menu item groups. */
 const DropdownMenuSeparator = ({
   className,
   orientation = "horizontal",
@@ -369,6 +379,7 @@ const DropdownMenuSeparator = ({
 );
 DropdownMenuSeparator.displayName = "DropdownMenuSeparator";
 
+/** Displays a keyboard shortcut hint at the end of a menu item. */
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
     <span className={cn("ml-auto text-xs tracking-widest opacity-60", className)} {...props} />

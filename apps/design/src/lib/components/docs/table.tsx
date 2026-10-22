@@ -76,7 +76,7 @@ export function Playground(_: DemoProps) {
         });
         return snippet({
           imports: [{ names: ["Table"], from: "@nebutra/ui/primitives" }],
-          body: jsx({
+          body: `const rows = ${JSON.stringify(ROWS, null, 2)};\n\n${jsx({
             name: "Table",
             props: { bare: v.bare },
             children: [
@@ -86,7 +86,7 @@ export function Playground(_: DemoProps) {
               head,
               body,
             ],
-          }),
+          })}`,
         });
       }}
       knobs={KNOBS}

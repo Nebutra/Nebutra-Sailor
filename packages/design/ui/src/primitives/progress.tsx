@@ -40,6 +40,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tool
 
 const progressVariants = cva("relative overflow-hidden rounded-full", {
   variants: {
+    /**
+     * Track and fill treatment, used when no severity `type` is supplied.
+     * @default "default"
+     */
     variant: {
       default: "bg-primary/20",
       primary: "bg-primary/20",
@@ -49,6 +53,10 @@ const progressVariants = cva("relative overflow-hidden rounded-full", {
       warning: "bg-warning/20",
       outline: "border border-border bg-transparent",
     },
+    /**
+     * Track thickness: small, standard or large.
+     * @default "default"
+     */
     size: {
       sm: "h-1.5",
       default: "h-2.5",
@@ -92,9 +100,11 @@ const GEIST_TYPE_TO_VARIANT = {
 // ---------------------------------------------------------------------------
 
 export interface ProgressStop {
-  /** 0–100 percent (or value in `max` units when `valueIsPercent={false}`). */
+  /** Marker position as a percentage, clamped to 0-100 regardless of the progress maximum. */
   value: number;
+  /** Optional content shown in a tooltip when interacting with the marker. */
   tooltip?: React.ReactNode;
+  /** Screen-reader text for this marker; markers without it are hidden from assistive technology. */
   ariaLabel?: string;
 }
 
@@ -144,21 +154,30 @@ export type ProgressProps = Omit<
   "value" | "max"
 > &
   VariantProps<typeof progressVariants> & {
-    /** Current value (in `max` units). Pass `null`/omit for indeterminate. */
+    /**
+     * Current amount in `max` units; pass null for indeterminate mode. Omitted values start at zero.
+     * @default 0
+     */
     value?: number | null;
-    /** Real ceiling. @default 100 */
+    /**
+     * Real positive ceiling used to calculate the completion percentage.
+     * @default 100
+     */
     max?: number;
-    /** Geist severity alias — maps to `variant`. */
+    /** Severity treatment that overrides `variant`; error uses the destructive palette. */
     type?: "success" | "warning" | "error" | "secondary";
-    /** Optional threshold color map keyed by % (e.g. `{ 0, 50, 100 }`). */
+    /** CSS fill colors keyed by percentage thresholds; the highest threshold at or below progress wins. */
     colors?: ProgressColorMap;
     /** Genuine multi-stage stop markers (dots at given % + Tooltip). */
     stops?: ProgressStop[];
     /** Show a numeric `xx%` label below the bar. */
     showValue?: boolean;
-    /** Animate fill transitions. @default true */
+    /**
+     * Animate fill changes; false makes fill updates immediate but does not disable the value label's animation.
+     * @default true
+     */
     animated?: boolean;
-    /** Optional caption above the bar. */
+    /** Visible caption above the bar; supply `aria-label` or `aria-labelledby` to name the progressbar. */
     label?: string;
   };
 
@@ -166,6 +185,10 @@ export type ProgressProps = Omit<
 // Component
 // ---------------------------------------------------------------------------
 
+/**
+ * Progress bar with a real-value maximum, percentage color thresholds and optional stage markers.
+ * Pass null for indeterminate mode and provide an accessible name on the underlying progressbar.
+ */
 const Progress = function Progress({
   className,
   value = 0,

@@ -6,13 +6,20 @@ import { cn } from "../utils/cn";
 
 // Base UI natively supports exactOptionalPropertyTypes and doesn't need withHtmlProps.
 
+/** Visually divides adjacent content with a horizontal or vertical Base UI separator. */
 const Separator = ({
   className,
   orientation = "horizontal",
   decorative: _decorative = true,
   ref,
   ...props
-}: React.ComponentPropsWithoutRef<typeof BaseSeparator> & { decorative?: boolean } & {
+}: React.ComponentPropsWithoutRef<typeof BaseSeparator> & {
+  /**
+   * Compatibility flag accepted but ignored; Base UI retains its separator semantics.
+   * @default true
+   */
+  decorative?: boolean;
+} & {
   ref?: React.Ref<HTMLDivElement> | undefined;
 }) => (
   <BaseSeparator

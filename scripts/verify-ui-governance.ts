@@ -46,8 +46,7 @@ const FOCUS_GOVERNANCE_ROOTS = ["packages/design/ui/src", "apps/landing/src"] as
 // the global :focus-visible rule on Input's clear and reveal buttons.
 // Select is the exception: its trigger is a <button>, which that unlayered
 // rule matches and beats `outline-none` on, so the trigger keeps an inline
-// `outline: none` and `borderRadius` (the rule's `border-radius: inherit`
-// squared the corners on keyboard focus).
+// `outline: none` so its centralized form-control ring is the only indicator.
 const FORM_CONTROL_FOCUS_REQUIREMENTS = [
   {
     slot: "input",

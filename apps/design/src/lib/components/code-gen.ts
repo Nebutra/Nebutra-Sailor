@@ -41,17 +41,18 @@ function sameValue(a: PropValue, b: PropValue): boolean {
 }
 
 function attribute(key: string, value: PropValue): string | null {
-  if (value === undefined || value === null || value === false) return null;
+  if (value === undefined || value === null) return null;
   if (value === true) return key;
+  if (value === false) return `${key}={false}`;
   if (typeof value === "number") return `${key}={${value}}`;
   if (isRaw(value)) return `${key}={${value.raw}}`;
   // A double quote cannot sit in a JSX string attribute; an expression can.
-  return value.includes('"') ? `${key}={${JSON.stringify(value)}}` : `${key}="${value}"`;
+  return /["&<>\r\n\t]/.test(value) ? `${key}={${JSON.stringify(value)}}` : `${key}="${value}"`;
 }
 
 /** Text JSX would read as syntax has to be an expression. */
 function childText(text: string): string {
-  return /[{}<>]/.test(text) ? `{${JSON.stringify(text)}}` : text;
+  return /[{}<>&\r\n\t]/.test(text) || text !== text.trim() ? `{${JSON.stringify(text)}}` : text;
 }
 
 export function jsx({ name, props, defaults = {}, children, maxLine = 80 }: JsxOptions): string {

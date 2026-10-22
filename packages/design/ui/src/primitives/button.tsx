@@ -120,13 +120,13 @@ function ButtonContent({ loading, prefix, suffix, size, iconSize, children }: Bu
 export interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "prefix">,
     VariantProps<typeof buttonVariants> {
-  /** Render as a child element (Radix Slot — polymorphic) */
+  /** Merge props into one child element; the caller supplies its content and interaction semantics. */
   asChild?: boolean;
-  /** Show loading spinner and disable interaction */
+  /** Disable interaction and mark the button busy immediately; a delayed spinner avoids flashes. */
   loading?: boolean;
-  /** Icon or element rendered before children */
+  /** Decorative content before the label, hidden from assistive technology; ignored with `asChild`. */
   prefix?: React.ReactNode;
-  /** Icon or element rendered after children */
+  /** Decorative content after the label, hidden from assistive technology; ignored with `asChild`. */
   suffix?: React.ReactNode;
   /** Elevation shadow level. `true` resolves to `"md"` */
   shadow?: boolean | "sm" | "md" | "lg";
@@ -139,6 +139,10 @@ export interface ButtonProps
   iconSize?: "sm" | "md" | "lg";
 }
 
+/**
+ * Action button with visual variants and a busy state that prevents repeat activation.
+ * Supply an accessible name with text or `aria-label` for icon-only buttons.
+ */
 const Button = ({
   className,
   variant,
@@ -192,13 +196,13 @@ Button.displayName = "Button";
 export interface ButtonLinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "prefix">,
     VariantProps<typeof buttonVariants> {
-  /** Icon or element rendered before children */
+  /** Decorative content before the link text, hidden from assistive technology. */
   prefix?: React.ReactNode;
-  /** Icon or element rendered after children */
+  /** Decorative content after the link text, hidden from assistive technology. */
   suffix?: React.ReactNode;
   /** Elevation shadow level. `true` resolves to `"md"` */
   shadow?: boolean | "sm" | "md" | "lg";
-  /** Show loading spinner */
+  /** Mark the link busy and disabled, remove it from tab order and block pointer interaction. */
   loading?: boolean;
   /**
    * Icon-only box size (28 / 32 / 36px) — only takes effect with
@@ -209,6 +213,10 @@ export interface ButtonLinkProps
   iconSize?: "sm" | "md" | "lg";
 }
 
+/**
+ * Native anchor styled as a button for navigation, with an optional delayed busy spinner.
+ * Give icon-only links an accessible name; use `href` for their destination.
+ */
 const ButtonLink = ({
   className,
   variant,

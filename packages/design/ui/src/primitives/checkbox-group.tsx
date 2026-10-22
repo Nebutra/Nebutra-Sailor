@@ -26,22 +26,37 @@ export interface CheckboxProps
     React.InputHTMLAttributes<HTMLInputElement>,
     "type" | "checked" | "defaultChecked" | "onChange" | "children"
   > {
+  /** Controlled checked state; omit to let the checkbox manage its own state. */
   checked?: boolean;
+  /**
+   * Initial checked state for uncontrolled use; later changes do not reset the checkbox.
+   * @default false
+   */
   defaultChecked?: boolean;
-  /** @deprecated Use `onCheckedChange` — `onChange` conventionally receives an event. */
+  /** Legacy boolean callback, used only when `onCheckedChange` is omitted. @deprecated Use `onCheckedChange` — `onChange` conventionally receives an event. */
   onChange?: (checked: boolean) => void;
+  /** Receives the next boolean checked state after a user change; not called while indeterminate. */
   onCheckedChange?: (checked: boolean) => void;
+  /** Disables native checkbox interaction and dims the control and label. */
   disabled?: boolean;
+  /** Shows the mixed-state glyph, exposes `aria-checked="mixed"` and suppresses change handling. */
   indeterminate?: boolean;
+  /** Visible label; provide `aria-label` or `aria-labelledby` when no label content is rendered. */
   children?: React.ReactNode;
+  /** Classes applied to the wrapping label rather than the hidden native input. */
   className?: string;
 }
 export interface CheckboxGroupProps {
-  /** Accessible group label */
+  /** Visible heading also used as the accessible name of the group. */
   label?: string;
-  /** Layout direction */
+  /**
+   * Stack controls vertically or arrange them in a horizontal wrapping row.
+   * @default "vertical"
+   */
   orientation?: "vertical" | "horizontal";
+  /** Checkbox controls or other content; selection state remains on each child. */
   children: React.ReactNode;
+  /** Classes applied to the group layout wrapper. */
   className?: string;
 }
 
@@ -59,6 +74,10 @@ const boxClassName = (on: boolean) =>
 // =============================================================================
 // Checkbox
 // =============================================================================
+/**
+ * Native checkbox with a visible label and painted checked or mixed-state indicator.
+ * Supports controlled and uncontrolled values; indeterminate state must be managed by the caller.
+ */
 export const Checkbox = ({
   checked: controlledChecked,
   defaultChecked = false,
@@ -104,6 +123,7 @@ export const Checkbox = ({
 // =============================================================================
 // CheckboxGroup — simple layout wrapper
 // =============================================================================
+/** Named layout group for independent checkboxes; it does not manage child selection state. */
 export function CheckboxGroup({
   label,
   orientation = "vertical",

@@ -137,6 +137,13 @@ const config: StorybookConfig = {
             find: /^@nebutra\/ui\/utils$/,
             replacement: resolve(HERE, "../../../packages/design/ui/src/utils/index.ts"),
           },
+          {
+            find: /^@nebutra\/ui\/utils\/portal-container$/,
+            replacement: resolve(
+              HERE,
+              "../../../packages/design/ui/src/utils/portal-container.tsx",
+            ),
+          },
           { find: /^next\/link$/, replacement: resolve(stubsDir, "./next-link.tsx") },
           { find: /^next\/image$/, replacement: resolve(stubsDir, "./next-image.tsx") },
           { find: /^next\/navigation$/, replacement: resolve(stubsDir, "./next-navigation.tsx") },

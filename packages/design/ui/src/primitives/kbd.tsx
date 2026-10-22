@@ -19,6 +19,7 @@ export interface KbdProps extends React.HTMLAttributes<HTMLElement> {
   small?: boolean;
   /** One key, digit, punctuation mark, or named key. */
   children?: React.ReactNode;
+  /** Additional classes for the keyboard shortcut badge. */
   className?: string;
 }
 
@@ -79,6 +80,7 @@ function getModifierSymbols(platform: Platform): Record<Modifier, string> {
   return platform === "apple" ? appleModifierSymbols : otherModifierSymbols;
 }
 
+/** Displays a shortcut in a semantic kbd element with platform-specific modifier labels. */
 const Kbd = ({
   meta,
   shift,

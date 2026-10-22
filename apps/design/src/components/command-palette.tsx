@@ -82,10 +82,10 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
         type="button"
       >
         <MagnifyingGlass aria-hidden className="size-4 shrink-0" />
-        <span className="hidden flex-1 text-left text-ui lg:inline">
+        <span className="hidden min-w-0 flex-1 truncate text-left text-ui lg:inline">
           Search tokens, components…
         </span>
-        <Kbd className="hidden lg:inline-flex" meta small>
+        <Kbd className="hidden shrink-0 lg:inline-flex" meta small>
           K
         </Kbd>
       </button>

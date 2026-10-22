@@ -66,7 +66,7 @@ export function ComponentPlayground({
   const dirty = knobs.some((knob) => values[knob.name] !== knob.defaultValue);
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_18rem]">
+    <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_18rem] lg:grid-rows-[auto_1fr]">
       {/* biome-ignore lint/a11y/useSemanticElements: a labelled stage, not a form fieldset */}
       <div
         aria-label="Preview"
@@ -81,7 +81,7 @@ export function ComponentPlayground({
 
       <aside
         aria-label="Props"
-        className="flex flex-col rounded-lg border border-border bg-card lg:col-start-2 lg:row-span-2 lg:row-start-1"
+        className="flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-card lg:col-start-2 lg:row-span-2 lg:row-start-1"
       >
         <div className="flex items-center justify-between gap-2 border-border border-b bg-background px-3 py-1.5">
           <span className="text-muted-foreground text-xs">Props</span>

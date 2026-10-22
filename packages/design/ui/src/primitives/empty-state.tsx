@@ -20,8 +20,11 @@ export type EmptyStateAlign = "center" | "start";
 
 export interface EmptyStateRootProps
   extends Omit<React.HTMLAttributes<HTMLElement>, "title" | "children"> {
+  /** Main empty-state message rendered as an h3; explain what is missing or what to do next. */
   title: React.ReactNode;
+  /** Supporting copy rendered below the heading as a paragraph. */
   description?: React.ReactNode;
+  /** Visual slot above the message; hide decorative content from assistive technology. */
   icon?: React.ReactNode;
   /** Preferred CTA slot. Use real Button/Link elements. */
   children?: React.ReactNode;
@@ -29,14 +32,30 @@ export interface EmptyStateRootProps
   action?: React.ReactNode;
   /** Compatibility alias for the secondary CTA. Prefer children for new code. */
   link?: React.ReactNode;
+  /**
+   * Chooses the surface and icon tone for the empty-state scenario.
+   * @default "blank-slate"
+   */
   variant?: EmptyStateVariant;
+  /**
+   * Sets minimum height, insets and type scale.
+   * @default "md"
+   */
   size?: EmptyStateSize;
+  /**
+   * Aligns copy, visuals and actions to the center or the start edge.
+   * @default "center"
+   */
   align?: EmptyStateAlign;
-  /** Use for empty states that appear after async filtering changes. */
+  /**
+   * Add a polite live region for empty states appearing after asynchronous filtering.
+   * @default false
+   */
   live?: boolean;
 }
 
 export interface EmptyStateIconProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Decorative visual rendered inside an aria-hidden tile; include meaningful information in the title. */
   icon: React.ReactNode;
 }
 
@@ -100,6 +119,7 @@ const emptyStateCssVars = (size: EmptyStateSize) =>
     "--empty-state-description-line-height": `${emptyStateTokens.typography.descriptionLineHeight}px`,
   }) satisfies React.CSSProperties & Record<EmptyStateCssVar, string>;
 
+/** Decorative bordered icon tile, hidden from assistive technology. */
 const EmptyStateIcon = ({
   className,
   icon,
@@ -121,6 +141,7 @@ const EmptyStateIcon = ({
 );
 EmptyStateIcon.displayName = "EmptyState.Icon";
 
+/** Composable empty-state section with a heading, supporting copy, visual and action slots. */
 const EmptyStateRoot = ({
   className,
   title,
@@ -193,7 +214,7 @@ EmptyStateRoot.displayName = "EmptyState.Root";
 type EmptyStateTone = "default" | "branded" | "subtle";
 
 export interface EmptyStateProps {
-  /** Primary message. */
+  /** Main message rendered as an h3; identify the missing content or the next useful step. */
   title: string;
   /** Supporting description. */
   description?: string;
@@ -210,8 +231,14 @@ export interface EmptyStateProps {
    * - `default`: neutral bordered state
    * - `branded`: first-touch panel (bordered card surface; pass `mascot` for a visual)
    * - `subtle`: quieter inline state
+   * Ignored when a preview supplies its own layout and surface.
+   * @default "default"
    */
   tone?: EmptyStateTone;
+  /**
+   * Sets the root's height, padding and type scale when no preview is rendered.
+   * @default "md"
+   */
   size?: EmptyStateSize;
   /**
    * Show the shape of the content this surface will hold — a ghost chart,
@@ -224,8 +251,10 @@ export interface EmptyStateProps {
    * message. `beside` gives it its own column, unmasked, with the message and
    * its one action to the right — for a product glimpse that should be seen,
    * not just hinted at (ElevenLabs' create cards). Stacks on a phone.
+   * @default "behind"
    */
   previewPlacement?: "behind" | "beside";
+  /** Classes applied to the outer empty-state section in either preview or icon layouts. */
   className?: string;
 }
 
@@ -323,14 +352,13 @@ function EmptyStateSimple({
 }
 
 /**
- * One EmptyState, two forms. `<EmptyState title … />` renders the simple form;
- * `EmptyState.Root` / `EmptyState.Icon` compose it by hand. It used to be two
- * symbols with one name — a component from @nebutra/ui/layout and a plain
- * `{ Root, Icon }` object from /primitives — so the import path decided
- * whether `<EmptyState />` rendered or threw.
+ * Explains missing content and offers next steps through a simple prop API or composed Root and Icon.
+ * Supports decorative content previews; action slots should contain named buttons or links.
  */
 export const EmptyState = Object.assign(EmptyStateSimple, {
+  /** Composable section with rich heading content, alignment and optional polite live announcements. */
   Root: EmptyStateRoot,
+  /** Decorative icon tile hidden from assistive technology; convey its meaning in the message. */
   Icon: EmptyStateIcon,
 });
 

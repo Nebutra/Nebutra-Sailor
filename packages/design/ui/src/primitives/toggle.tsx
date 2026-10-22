@@ -45,17 +45,40 @@ export interface ToggleProps
     React.InputHTMLAttributes<HTMLInputElement>,
     "children" | "color" | "onChange" | "size" | "type"
   > {
+  /** Visible label associated with the input; otherwise provide `aria-label` or `aria-labelledby`. */
   children?: React.ReactNode;
+  /** Classes applied to the outer span that lays out the switch and label. */
   className?: string;
+  /**
+   * Semantic palette for the checked track and thumb icon; default uses the success palette.
+   * @default "default"
+   */
   color?: ToggleColor;
+  /**
+   * Places the label before or after the switch; `switch-last` is an alias for `label-first`.
+   * @default "label-first"
+   */
   direction?: ToggleDirection;
+  /** Decorative content inside the thumb for each checked state, hidden from assistive technology. */
   icon?: {
+    /** Thumb content displayed while the input is checked. */
     checked?: React.ReactNode;
+    /** Thumb content displayed while the input is unchecked. */
     unchecked?: React.ReactNode;
   };
+  /**
+   * Sets the visible label's `data-label-casing` attribute for stylesheet-controlled casing.
+   * @default "title"
+   */
   labelCasing?: ToggleLabelCasing;
+  /** Receives the next checked boolean and native React change event, after `onCheckedChange`. */
   onChange?: ToggleChangeHandler;
+  /** Receives the next checked boolean and native React change event before `onChange`. */
   onCheckedChange?: ToggleChangeHandler;
+  /**
+   * Sets track, thumb, icon and label dimensions from the shared token scale.
+   * @default "small"
+   */
   size?: ToggleSize;
 }
 
@@ -95,6 +118,10 @@ function getToggleStyle(size: ToggleSize, color: ToggleColor, style: unknown) {
   } satisfies ToggleCssVars;
 }
 
+/**
+ * Labeled boolean setting control backed by a native checkbox.
+ * Supports controlled or uncontrolled checked state and requires a visible or accessible label.
+ */
 const Toggle = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,

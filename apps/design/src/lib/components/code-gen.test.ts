@@ -12,14 +12,35 @@ describe("jsx", () => {
     );
   });
 
-  it("omits false, null and undefined", () => {
+  it("omits explicit defaults, null and undefined", () => {
     expect(
       jsx({
         name: "Button",
         props: { loading: false, size: undefined, shape: null },
+        defaults: { loading: false },
         children: "Go",
       }),
     ).toBe("<Button>Go</Button>");
+  });
+
+  it("keeps false when it overrides a true default", () => {
+    expect(
+      jsx({
+        name: "DialogContent",
+        props: { showCloseButton: false },
+        defaults: { showCloseButton: true },
+      }),
+    ).toBe("<DialogContent showCloseButton={false} />");
+  });
+
+  it("preserves entities and whitespace in editable labels and attributes", () => {
+    const text = "A &amp; B\nC";
+    expect(jsx({ name: "Label", props: {}, children: text })).toBe(
+      `<Label>{${JSON.stringify(text)}}</Label>`,
+    );
+    expect(jsx({ name: "Input", props: { placeholder: text } })).toBe(
+      `<Input placeholder={${JSON.stringify(text)}} />`,
+    );
   });
 
   it("omits a prop that equals its default, so the snippet is what a reader would write", () => {

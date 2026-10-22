@@ -2,6 +2,7 @@
 
 import { Select as BaseSelect, type SelectRoot } from "@base-ui/react/select";
 import { Check, ChevronDown } from "@nebutra/icons";
+import { usePortalContainer } from "@nebutra/ui/utils/portal-container";
 import * as React from "react";
 import {
   type ControlStep,
@@ -38,14 +39,10 @@ const SELECT_STEP: Record<SelectSize, ControlStep> = {
  * same height and corner as the Input and Button beside it under every
  * language (see tokens/components/control-ladder.ts).
  *
- * `outline` and `borderRadius` stay inline. The trigger is a <button>, so the
- * global :focus-visible rule in design-tokens/static/base.css matches it on
- * keyboard focus. That rule is unlayered and beats the `outline-none` and
- * `rounded-[var(--select-radius)]` utilities in `@layer utilities`: it drew a
- * 2px outline and set `border-radius: inherit`, which squared the trigger's
- * corners. Only an inline value outranks it. The trigger has no nested
- * buttons, so the inline outline hides no other focus indicator; focus is
- * drawn by the tokenized ring in formControlFocusClassNames.select.
+ * The global unlayered :focus-visible rule matches this button trigger and
+ * outranks outline-none in the utilities layer. Keep outline inline so the
+ * tokenized formControlFocusClassNames.select ring is the sole focus indicator;
+ * the trigger has no nested buttons whose focus would be hidden.
  */
 function getSelectTriggerStyle(size: SelectSize, style: unknown): SelectTriggerCssVars {
   const token = selectTokens.sizes[size];
@@ -115,15 +112,28 @@ export interface OptionsSelectProps
    * Only use when a true native control is required (rare).
    */
   native?: boolean;
+  /** Visual treatment of the select trigger or native control. */
   variant?: SelectVariant;
+  /** Options rendered by the convenience select API. */
   options?: readonly SelectOption[];
+  /** Visible label associated with the select control. */
   label?: string;
+  /** Placeholder shown before a value is selected. */
   placeholder?: string;
+  /**
+   * Control size on the shared form-control ladder.
+   * @default "medium"
+   */
   size?: SelectSize;
+  /** Decorative content rendered before the selected value. */
   prefix?: React.ReactNode;
+  /** Trailing decoration; in native mode it replaces the default chevron. */
   suffix?: React.ReactNode;
+  /** Validation message rendered below the control. */
   error?: string;
+  /** Option elements for the convenience API; native mode also accepts optgroup elements. */
   children?: React.ReactNode;
+  /** Classes applied to the wrapper around the control and its label/message. */
   wrapperClassName?: string;
   /** HTML-select-compatible change handler (value on event.target.value). */
   onChange?: (event: { target: { value: string; name?: string } }) => void;
@@ -520,6 +530,10 @@ function CompoundSelectRoot(props: Omit<CompoundSelectProps, "native">) {
   );
 }
 
+/**
+ * Selects one option through the styled listbox API, with an opt-in native path
+ * and a compound form for composing SelectTrigger and SelectItem.
+ */
 function Select(props: OptionsSelectProps): React.JSX.Element;
 function Select(props: CompoundSelectProps): React.JSX.Element;
 function Select(props: SelectProps): React.JSX.Element {
@@ -546,13 +560,17 @@ const SelectGroup = ({
 }) => <BaseSelect.Group ref={ref} className={cn("p-1", className)} {...props} />;
 SelectGroup.displayName = "SelectGroup";
 
+/** Displays the selected option label or a placeholder inside SelectTrigger. */
 const SelectValue = ({
   className,
   placeholder,
   children,
   ref,
   ...props
-}: React.ComponentPropsWithoutRef<typeof BaseSelect.Value> & { placeholder?: React.ReactNode } & {
+}: React.ComponentPropsWithoutRef<typeof BaseSelect.Value> & {
+  /** Content displayed when there is no selected value. */
+  placeholder?: React.ReactNode;
+} & {
   ref?: React.Ref<HTMLSpanElement> | undefined;
 }) => {
   const labels = React.use(SelectLabelsContext);
@@ -572,6 +590,7 @@ const SelectValue = ({
 };
 SelectValue.displayName = "SelectValue";
 
+/** Opens the option list and displays the current value for a Select root. */
 const SelectTrigger = ({
   className,
   children,
@@ -580,6 +599,7 @@ const SelectTrigger = ({
   ref,
   ...props
 }: Omit<React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger>, "size"> & {
+  /** Control size on the shared form-control ladder. @default "medium" */
   size?: SelectSize;
 } & { ref?: React.Ref<HTMLButtonElement> | undefined }) => (
   <BaseSelect.Trigger
@@ -614,17 +634,22 @@ const SelectScrollDownButton = ({
 }: React.ComponentPropsWithoutRef<"div"> & { ref?: React.Ref<HTMLDivElement> | undefined }) => null;
 SelectScrollDownButton.displayName = "SelectScrollDownButton";
 
+/** Portals the styled option list and positions it relative to SelectTrigger. */
 const SelectContent = ({
   className,
   children,
   position = "popper",
+  container,
   style,
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseSelect.Popup> & {
+  /** Aligns the popup to the trigger or to the selected item. @default "popper" */
   position?: "item-aligned" | "popper";
+  /** Portal target; defaults to the nearest portal scope or document.body. */
+  container?: React.ComponentProps<typeof BaseSelect.Portal>["container"];
 } & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
-  <BaseSelect.Portal>
+  <BaseSelect.Portal container={usePortalContainer(container)}>
     <BaseSelect.Positioner
       // z-index on the positioned element — the Popup inside is static, so a
       // z-index there is ignored and any z-10 layer on the page covers the list.
@@ -665,6 +690,7 @@ const SelectLabel = ({
 );
 SelectLabel.displayName = "SelectLabel";
 
+/** Renders one selectable option inside SelectContent. */
 const SelectItem = ({
   className,
   children,

@@ -10,6 +10,10 @@ const badgeVariants = cva(
   "inline-flex justify-center items-center align-middle shrink-0 rounded-full font-sans font-medium whitespace-nowrap tabular-nums transition-colors focus-visible:outline-none border border-transparent",
   {
     variants: {
+      /**
+       * Surface and text treatment; convey status in the label as well as color.
+       * @default "default"
+       */
       variant: {
         // ─── Semantic / brand variants ────────────────────────────────────────
         // Recipe-driven default (solid | outline | … via --badge-default-*)
@@ -65,6 +69,10 @@ const badgeVariants = cva(
         featured: "badge-brand-default border [text-shadow:0_0_1px_hsl(var(--background)/0.2)]",
         "coming-soon": "border-transparent bg-muted/60 text-muted-foreground italic",
       },
+      /**
+       * Sets the badge height, text size, padding and decorative icon size.
+       * @default "md"
+       */
       size: {
         sm: "text-[11px] h-5 px-1.5 tracking-[0.2px] gap-[3px] [&_svg]:h-[11px] [&_svg]:w-[11px]",
         md: "text-[12px] h-6 px-2.5 tracking-normal gap-1 [&_svg]:h-[14px] [&_svg]:w-[14px]",
@@ -101,14 +109,18 @@ const dotColorMap: Partial<Record<NonNullable<BadgeProps["variant"]>, string>> =
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLElement>,
     VariantProps<typeof badgeVariants> {
-  /** @deprecated Prefer Status Dot for dot-only indicators. Keep text labels redundant with color. */
+  /**
+   * Adds a decorative leading dot whose color follows the badge treatment.
+   * @deprecated Prefer Status Dot for dot-only indicators. Keep text labels redundant with color.
+   */
   dot?: boolean;
   /** Icon element rendered before the label. Decorative icons are hidden from assistive tech. */
   icon?: React.ReactNode;
-  /** Render as child element — use with `<a>` for link badges */
+  /** Merge styling into a single child element, such as an anchor; otherwise render a span. */
   asChild?: boolean;
 }
 
+/** Compact inline label for a category or status, with optional decorative icon or dot. */
 function Badge({
   className,
   variant = "default",

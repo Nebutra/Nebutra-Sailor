@@ -4,11 +4,11 @@ import type React from "react";
 import { cn } from "../utils";
 
 export interface PageHeaderProps {
-  /** Page title */
+  /** Primary page heading rendered as an h1 at either visual size. */
   title: string;
   /** Optional subtitle or description (text, or rich text with inline links). */
   description?: React.ReactNode;
-  /** Optional action slot (e.g. a Button) */
+  /** Action controls shown beside the title on wider screens and below it on phones. */
   actions?: React.ReactNode;
   /**
    * Trail above the title (a breadcrumb `<nav>`, or a back link). Rendered as
@@ -25,6 +25,7 @@ export interface PageHeaderProps {
   size?: "page" | "section";
   /** Draw a hairline under the header (pages whose body starts with a table or tabs). */
   divider?: boolean;
+  /** Classes applied to the outer header layout wrapper. */
   className?: string;
 }
 

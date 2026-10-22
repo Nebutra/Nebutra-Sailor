@@ -12,6 +12,7 @@ import {
 import { cn } from "../utils/cn";
 import { asPlainStyle } from "../utils/primitive-props";
 
+/** Legacy visual names retained for compatibility; all use the canonical spinner. */
 export type SpinnerVariant =
   | "default"
   | "circle"
@@ -36,15 +37,19 @@ type SpinnerCssVar =
 type SpinnerCssVars = CSSProperties & Record<SpinnerCssVar, string>;
 
 export interface SpinnerProps extends Omit<ComponentProps<"span">, "children" | "color" | "role"> {
-  /** Size token or explicit pixel size. Prefer tokens inside primitives. */
+  /**
+   * Size token or explicit pixel size. Prefer tokens inside primitives.
+   * @default "md"
+   */
   size?: SpinnerSize | number;
   /** Semantic color tone. Use className only for local composition overrides. */
   tone?: SpinnerTone;
-  /** Accessible status label. Omit when the parent already exposes aria-busy. */
+  /** Accessible status label, overridden by aria-label; omit for a decorative spinner. */
   label?: string;
-  /** Force decorative mode even when a label would otherwise announce status. */
+  /** Hides the spinner from assistive technology; inferred from the absence of a label. */
   decorative?: boolean;
   /**
+   * Legacy variant name recorded in data-variant without changing the spinner's appearance.
    * @deprecated Spinner is intentionally a single canonical loading indicator.
    * Legacy variants are accepted for source compatibility and render the same
    * tokenized spinner.
@@ -95,6 +100,10 @@ function getBarTransform(index: number) {
   return `rotate(${index * (360 / spinnerTokens.barCount)}deg) translate(var(--spinner-bar-translate))`;
 }
 
+/**
+ * Shows indeterminate progress with delayed paint to avoid flashing during fast operations.
+ * Supply a label to expose a polite status announcement from the first frame.
+ */
 export function Spinner({
   className,
   style,

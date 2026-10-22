@@ -56,8 +56,9 @@ export function ComponentStatesMatrix({
       }
       title="States"
     >
-      <div className="overflow-x-auto rounded-lg border border-border bg-card">
-        <table className="w-full border-collapse">
+      {/* Keep absolutely positioned assistive text inside the scroll container. */}
+      <div className="relative min-w-0 max-w-full overflow-x-auto rounded-lg border border-border bg-card">
+        <table className="w-full min-w-max border-collapse">
           <thead>
             <tr className="border-border border-b bg-background">
               <th

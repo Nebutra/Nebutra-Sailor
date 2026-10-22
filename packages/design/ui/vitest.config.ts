@@ -24,6 +24,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@nebutra/ui/utils/portal-container": path.resolve(
+        __dirname,
+        "./src/utils/portal-container.tsx",
+      ),
       "@": path.resolve(__dirname, "./src"),
     },
   },

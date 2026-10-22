@@ -56,6 +56,7 @@ type RadioGroupBaseProps = Omit<
 >;
 
 export type RadioGroupProps = RadioGroupBaseProps & {
+  /** Radio items sharing this group's name, selected value and disabled or required state. */
   children: ReactNode;
   /** Visible group label rendered as a native legend. */
   label?: ReactNode;
@@ -63,14 +64,29 @@ export type RadioGroupProps = RadioGroupBaseProps & {
   name?: string;
   /** Controlled selected value. */
   value?: RadioValue;
-  /** Uncontrolled initial selected value. */
+  /**
+   * Initial selection for uncontrolled use; later changes do not reset the group.
+   * @default ""
+   */
   defaultValue?: RadioValue;
-  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
+  /** Legacy value callback, invoked before `onValueChange` when both are provided. @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (value: RadioValue) => void;
-  /** Base UI / Radix-compatible change callback. */
+  /** Receives the selected item's string value after a user selects an option. */
   onValueChange?: (value: RadioValue) => void;
+  /**
+   * Disables the fieldset and every item using this group's context.
+   * @default false
+   */
   disabled?: boolean;
+  /**
+   * Marks the grouped native radio inputs required for form validation.
+   * @default false
+   */
   required?: boolean;
+  /**
+   * Stacks options vertically or lays them out in a horizontal wrapping row.
+   * @default "vertical"
+   */
   orientation?: RadioOrientation;
   /** Applies to the options container. */
   className?: string;
@@ -87,8 +103,11 @@ export type RadioProps = Omit<
     | { "aria-labelledby": string; "aria-label"?: string | undefined; id?: string | undefined }
     | { id: string; "aria-label"?: string | undefined; "aria-labelledby"?: string | undefined }
   ) & {
+    /** Classes applied to the inline wrapper around the native input and painted indicator. */
     className?: string | undefined;
+    /** Classes applied to the decorative radio indicator. */
     indicatorClassName?: string | undefined;
+    /** Classes applied to the visually hidden native radio input. */
     inputClassName?: string | undefined;
   };
 
@@ -96,22 +115,36 @@ export type RadioGroupItemProps = Omit<
   LabelHTMLAttributes<HTMLLabelElement>,
   "children" | "onChange"
 > & {
+  /** Unique item value compared with the parent group's current selection. */
   value: RadioValue;
+  /** Initial checked state when rendered without a group; ignored when group context controls selection. */
   defaultChecked?: boolean;
+  /** Visible option label; supply `aria-label` or `aria-labelledby` when no label content is present. */
   children?: ReactNode;
+  /** Supporting option copy linked to the native input through `aria-describedby`. */
   description?: ReactNode;
+  /** Disables this item; a disabled parent group always takes precedence. */
   disabled?: boolean;
+  /** Explanation exposed to screen readers and used as a title when the item is disabled. */
   disabledReason?: string;
+  /** Classes applied to the decorative radio indicator. */
   controlClassName?: string;
+  /** Classes applied to the visually hidden native radio input. */
   inputClassName?: string;
 };
 
 export type UseRadioProps = {
+  /** Option value matched against the surrounding RadioGroup selection. */
   value: RadioValue;
+  /** Disables this option in addition to any disabled state inherited from the group. */
   disabled?: boolean;
+  /** Explanation linked to the input when rendering the hook's prebuilt component. */
   disabledReason?: string;
+  /** Native input identifier; a unique identifier is generated when omitted. */
   id?: string;
+  /** Accessible option name when the custom layout does not provide a visible label. */
   "aria-label"?: string;
+  /** Identifier of the element that supplies this option's accessible name. */
   "aria-labelledby"?: string;
 };
 
@@ -145,6 +178,7 @@ function useRadioGroupContext() {
   return use(RadioGroupContext);
 }
 
+/** Native radio input with a painted indicator; associate an external label or provide an accessible name. */
 function RadioRoot({ className, indicatorClassName, inputClassName, ...props }: RadioProps) {
   return (
     <span className={cn("inline-flex items-center", className)}>
@@ -156,6 +190,7 @@ function RadioRoot({ className, indicatorClassName, inputClassName, ...props }: 
 
 RadioRoot.displayName = "Radio";
 
+/** Labeled radio option that inherits selection, name and validation state from its RadioGroup. */
 function RadioGroupItemRoot({
   children,
   className,
@@ -262,6 +297,7 @@ function RadioGroupItemRoot({
 
 RadioGroupItemRoot.displayName = "RadioGroupItem";
 
+/** Native fieldset and shared single-selection state for radio options, with an optional legend. */
 function RadioGroupRoot({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
@@ -348,6 +384,10 @@ function RadioGroupRoot({
 
 RadioGroupRoot.displayName = "RadioGroup";
 
+/**
+ * Connect a custom radio layout to the nearest group's selection and naming context.
+ * Render the returned component to include the hidden disabled reason, or associate that text yourself.
+ */
 export function useRadio({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
@@ -377,9 +417,13 @@ export function useRadio({
   } satisfies RadioProps;
 
   return {
+    /** Whether this option matches the parent group's selected value. */
     checked,
+    /** Effective disabled state combined from this option and its group. */
     disabled: isDisabled,
+    /** Native radio bindings for a custom control, including selection and accessible-name attributes. */
     inputProps,
+    /** Prebuilt painted radio and optional hidden disabled-reason text. */
     component: (
       <>
         <RadioRoot {...inputProps} id={inputId} />
@@ -393,8 +437,15 @@ export function useRadio({
   };
 }
 
+/** Standalone native radio with a painted indicator; provide an associated label or accessible name. */
 export const Radio = RadioRoot;
+/** Labeled radio option whose name, checked state and required state come from its enclosing group. */
 export const RadioGroupItem = RadioGroupItemRoot;
+/**
+ * Single-selection fieldset with native radio keyboard behavior and controlled or uncontrolled state.
+ * Supply a visible legend through `label`, or name the group with ARIA attributes.
+ */
 export const RadioGroup = Object.assign(RadioGroupRoot, {
+  /** Labeled option that inherits the group's selection, disabled state and form validation settings. */
   Item: RadioGroupItemRoot,
 });

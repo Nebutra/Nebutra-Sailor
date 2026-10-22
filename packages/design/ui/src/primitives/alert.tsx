@@ -279,12 +279,29 @@ export interface AlertProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof alertVariants> {
   /**
-   * Show close button
+   * Semantic color palette for the message, combined with appearance.
+   * @default "secondary"
+   */
+  variant?: VariantProps<typeof alertVariants>["variant"];
+  /** Icon color override used when variant is "mono"; render the icon with AlertIcon. */
+  icon?: VariantProps<typeof alertVariants>["icon"];
+  /**
+   * Surface treatment: filled, outlined, tinted, or a colored border on the canvas.
+   * @default "solid"
+   */
+  appearance?: VariantProps<typeof alertVariants>["appearance"];
+  /**
+   * Spacing, typography, and icon size for the alert.
+   * @default "md"
+   */
+  size?: VariantProps<typeof alertVariants>["size"];
+  /**
+   * Shows a dismiss button; the caller controls removing or hiding the alert.
    * @default false
    */
   close?: boolean;
   /**
-   * Callback when close button is clicked
+   * Called when the dismiss button is activated.
    */
   onClose?: () => void;
   /** Accessible name for the close button. Pass a translated string. */
@@ -293,7 +310,16 @@ export interface AlertProps
 
 export interface AlertIconProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof alertVariants> {}
+    VariantProps<typeof alertVariants> {
+  /** Compatibility prop; set variant on the parent Alert to color the icon. */
+  variant?: VariantProps<typeof alertVariants>["variant"];
+  /** Compatibility prop; set icon on the parent Alert to override a mono icon's color. */
+  icon?: VariantProps<typeof alertVariants>["icon"];
+  /** Compatibility prop; set appearance on the parent Alert to style its surface. */
+  appearance?: VariantProps<typeof alertVariants>["appearance"];
+  /** Compatibility prop; set size on the parent Alert to size its icon. */
+  size?: VariantProps<typeof alertVariants>["size"];
+}
 
 export type AlertTitleProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -308,7 +334,8 @@ export type AlertToolbarProps = React.HTMLAttributes<HTMLDivElement>;
 // =============================================================================
 
 /**
- * Alert - Contextual feedback messages
+ * Displays contextual feedback in an alert region with composable content and actions.
+ * Dismissal calls onClose without changing the alert's visibility.
  *
  * @example
  * ```tsx
@@ -386,7 +413,7 @@ function Alert({
 }
 
 /**
- * AlertTitle - Alert heading/title
+ * Short message or heading that shares the alert's first row with its icon and actions.
  */
 function AlertTitle({ className, ...props }: AlertTitleProps) {
   return (
@@ -399,7 +426,7 @@ function AlertTitle({ className, ...props }: AlertTitleProps) {
 }
 
 /**
- * AlertIcon - Icon container for alert
+ * Holds a leading icon whose size and color are controlled by the parent Alert.
  */
 function AlertIcon({ children, className, ...props }: AlertIconProps) {
   return (
@@ -414,7 +441,7 @@ function AlertIcon({ children, className, ...props }: AlertIconProps) {
 }
 
 /**
- * AlertToolbar - Actions area for alert
+ * Groups alert actions, wrapping beneath the message when space is limited.
  */
 function AlertToolbar({ children, className, ...props }: AlertToolbarProps) {
   return (
@@ -434,7 +461,7 @@ function AlertToolbar({ children, className, ...props }: AlertToolbarProps) {
 }
 
 /**
- * AlertDescription - Detailed description text
+ * Supporting text or paragraphs explaining the alert and any recovery steps.
  */
 function AlertDescription({ className, ...props }: AlertDescriptionProps) {
   return (
@@ -447,7 +474,7 @@ function AlertDescription({ className, ...props }: AlertDescriptionProps) {
 }
 
 /**
- * AlertContent - Container for title and description
+ * Groups an AlertTitle and AlertDescription into a flexible message column.
  */
 function AlertContent({ className, ...props }: AlertContentProps) {
   return (
