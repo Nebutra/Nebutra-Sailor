@@ -65,8 +65,9 @@ CI retains the UI screenshots and report for seven days, including failed runs.
 
 `node apps/kcq/scripts/market-smoke.mjs` checks real A-share data at a 5,000px
 initial viewport and a zoomed-out 3,006px viewport with Agent open, then reloads
-the saved selection. Every HTTP page must respect the connector's declared
-`bars.maxBarsPerRequest`; cursor requests must still load more than one page of
+the saved selection after the layout menu confirms saving. Every HTTP page must
+respect the connector's declared `bars.maxBarsPerRequest`; cursor requests must
+still load more than one page of
 history. Deployment runs this gate against the released product origin, verifies
 the pinned chart revision, and retains
 screenshots and request reports for seven days. It uses isolated guest contexts,
