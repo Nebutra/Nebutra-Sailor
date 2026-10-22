@@ -33,6 +33,7 @@ interactions. No duplicated chart controls or DOM-injected overrides.
 - Built-browser matrix: 1440x900, 390x844, 844x390 and 320x640; light/dark and
   Pro, Exchange, Terminal, Zen and Quant. Check computed focus, growth/scrolling,
   modal bounds, keyboard dismissal/return, toolbar reachability and page overflow.
+  The workbench uses an explicit zh-CN browser locale, not the runner's OS locale.
 - Public routes: English/Chinese Home, Benchmark, Investors and real 404 surfaces;
   theme keyboard navigation, route-preserving locale links, reduced motion.
 - Local signed-in fixtures: long profile identity, rejected save and connection

@@ -87,6 +87,15 @@ jobs:
           KCQ_UI_SERVE: "true"
           KCQ_UI_BROWSER: "chromium"
         run: node apps/kcq/scripts/ui-smoke.mjs
+      - name: Preserve UI acceptance evidence
+        if: always() && inputs.candidate_ref == ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: kcq-ui-${{ github.run_id }}
+          path: .nebutra/kcq-candidates/ui-acceptance/
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Check candidate without changing production
         if: inputs.candidate_ref != ''
         env:

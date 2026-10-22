@@ -61,6 +61,7 @@ landscape viewports; both modes; all five chart presets; account menus; feedback
 layout naming; symbol/indicator search; chart settings; Agent settings/composer;
 public pages; and local account/error/credential fixtures. It never sends an AI
 request or submits feedback. Connector correctness has a separate real-data gate.
+CI retains the UI screenshots and report for seven days, including failed runs.
 
 Keep source-library corrections in its repository and consume an immutable SHA.
 `UI-AUDIT.md` records the cross-surface convergence rather than isolated patches.

@@ -368,6 +368,7 @@ try {
     const id = `${viewport.width}x${viewport.height}-${viewport.colorScheme}`;
     const context = await browser.newContext({
       viewport: { width: viewport.width, height: viewport.height },
+      locale: "zh-CN",
       colorScheme: viewport.colorScheme,
       reducedMotion: "reduce",
     });
@@ -399,6 +400,7 @@ try {
   if (local) {
     const context = await browser.newContext({
       viewport: { width: 390, height: 844 },
+      locale: "zh-CN",
       reducedMotion: "reduce",
       colorScheme: "dark",
     });
@@ -414,7 +416,10 @@ try {
     } finally {
       await context.close();
     }
-    const failureContext = await browser.newContext({ viewport: { width: 320, height: 640 } });
+    const failureContext = await browser.newContext({
+      viewport: { width: 320, height: 640 },
+      locale: "zh-CN",
+    });
     try {
       const page = await failureContext.newPage();
       await page.route("https://auth.nebutra.com/**", (route) =>
