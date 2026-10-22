@@ -30,7 +30,7 @@ const FOLDERS = {
   "architecture/engineering": { en: "Engineering notes", zh: "工程笔记" },
   "market-data/sources": { en: "More data sources", zh: "更多数据源" },
 };
-const REFERENCE_ORDER = ["vue", "react", "web-component", "packages"];
+const REFERENCE_ORDER = ["vue", "react", "web-component", "packages", "script-api"];
 
 const started = Date.now();
 const pin = readPin();

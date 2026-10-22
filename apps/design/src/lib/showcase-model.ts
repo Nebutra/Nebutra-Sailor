@@ -177,7 +177,7 @@ export const EXPRESSIVE_AUDIT: Record<string, GraduationAudit> = {
     budget: true,
     staticFallback: true,
     consumers: 2,
-    note: "Static gradient layers coloured from var(--primary) and the neutral/blue scales; nothing animates. Used by landing and forge.",
+    note: "Static gradient layers coloured from the primary token and the neutral/blue scales; nothing animates. Used by landing and forge.",
   },
   "dot-pattern": {
     tokens: true,

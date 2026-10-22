@@ -19,6 +19,15 @@ const { default: Icons } = await load("unplugin-icons/vite");
 const { createCoreSourceAliases } = await import(
   pathToFileURL(resolve(source, "scripts/core-source-aliases.mjs")).href
 );
+const { createWorkspaceSourceAliases } = await import(
+  pathToFileURL(resolve(source, "scripts/package-source-aliases.mjs")).href
+);
+const { scriptEditorPagePlugin } = await import(
+  pathToFileURL(resolve(source, "packages/vue/scripts/script-editor-page-plugin.mjs")).href
+);
+const { contractResourcesPlugin } = await import(
+  pathToFileURL(resolve(source, "packages/script/scripts/contract-resources-plugin.mjs")).href
+);
 const { kcqLandingPlugin } = await import(
   pathToFileURL(resolve(root, "scripts/landing-plugin.mjs")).href
 );
@@ -84,12 +93,15 @@ export default ({ isSsrBuild }) => ({
     __INTLIFY_PROD_DEVTOOLS__: "false",
   },
   server: { host: "127.0.0.1", port: 3130, fs: { allow: [resolve(root, "../.."), source] } },
+  worker: { format: "es" },
   plugins: [
     devRoutes(),
     kcqLandingPlugin({ root, source }),
     ...(isSsrBuild ? [] : [publicBoundary()]),
     ...(isSsrBuild ? [] : [appPreload()]),
     tailwindcss(),
+    scriptEditorPagePlugin(),
+    contractResourcesPlugin(),
     indicatorEntrypointsPlugin(),
     babel({
       include: [/\/src\/.*\.ts$/],
@@ -162,19 +174,14 @@ export default ({ isSsrBuild }) => ({
         find: /^@363045841yyt\/klinechart$/,
         replacement: resolve(source, "packages/vue/src/index.ts"),
       },
+      {
+        find: /^@vue-src\//,
+        replacement: `${resolve(source, "packages/vue/src")}/`,
+      },
       ...createCoreSourceAliases(resolve(source, "packages/core/src")),
-      {
-        find: /^@363045841yyt\/klinechart-agent-runtime\/browser$/,
-        replacement: resolve(source, "packages/agent-runtime/src/browser.ts"),
-      },
-      {
-        find: /^@363045841yyt\/klinechart-agent-runtime\/contracts\/ui$/,
-        replacement: resolve(source, "packages/agent-runtime/src/contracts/ui.ts"),
-      },
-      {
-        find: /^@363045841yyt\/klinechart-agent-runtime$/,
-        replacement: resolve(source, "packages/agent-runtime/src/index.ts"),
-      },
+      ...createWorkspaceSourceAliases(source, {
+        exclude: [resolve(source, "packages/core/src"), resolve(source, "packages/vue/src")],
+      }),
     ],
   },
 });

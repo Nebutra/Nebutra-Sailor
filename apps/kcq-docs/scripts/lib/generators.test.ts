@@ -1,8 +1,27 @@
 import { describe, expect, it } from "vitest";
+import { readVueComponent } from "./components.mjs";
 import { detectLanguage, mdxCode, rewriteLinks, semverCompare, takeTitle } from "./markdown.mjs";
 import { decodeHtmlEntities } from "./og.mjs";
-import { splitRelease } from "./pages.mjs";
+import { packagePages, splitRelease } from "./pages.mjs";
+import { chartSource, githubLinks, readPin } from "./source.mjs";
 import { groupTools, minimalInput, schemaRows } from "./tools.mjs";
+
+describe("pinned chart contracts", () => {
+  it("reads the chart props and host toolbar slot from the canonical component", () => {
+    const component = readVueComponent(chartSource());
+    expect(component.props.map((prop: { name: string }) => prop.name)).toContain("symbols");
+    expect(component.slots.map((slot: { name: string }) => slot.name)).toContain("toolbar-start");
+  }, 180_000); // A clean CI checkout may fetch and build the pinned chart before this contract runs.
+
+  it("documents script packages with their own source license", () => {
+    const pages = packagePages(chartSource(), { links: githubLinks(readPin()) });
+    for (const page of pages) {
+      expect(page.content).toContain("@363045841yyt/klinechart-script-chart");
+      expect(page.content).toContain("AGPL-3.0-or-later");
+      expect(page.content).toContain("Apache-2.0");
+    }
+  });
+});
 
 describe("reference text", () => {
   it("preserves code punctuation without introducing MDX or table syntax", () => {

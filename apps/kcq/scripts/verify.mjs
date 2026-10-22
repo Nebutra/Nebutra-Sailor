@@ -16,9 +16,11 @@ const source = process.env.KCQ_SOURCE_DIR
   : resolveChartSource(app);
 for (const path of [
   "packages/core/src/foundation/persistence/persistence-scope.ts",
-  "packages/vue/src/components/TopToolbar.slots.test.ts",
+  "packages/vue/src/components/toolbar/TopToolbar.slots.test.ts",
+  "packages/vue/scripts/script-editor-page-plugin.mjs",
   "packages/core/src/data/provider/impl/sources/index.ts",
   "scripts/core-source-aliases.mjs",
+  "scripts/package-source-aliases.mjs",
   "scripts/indicator-entrypoints-plugin.mjs",
 ]) {
   if (!existsSync(resolve(source, path)))
@@ -38,11 +40,23 @@ run(
     "run",
     "src/foundation/persistence/__tests__",
     "src/data/provider/__tests__/router.test.ts",
+    "src/engine/data/__tests__",
+    "src/engine/data/marketRuntime/__tests__",
+    "src/engine/layout/__tests__",
+    "src/data/__tests__/barsLive.test.ts",
   ],
   source,
 );
 run(
-  ["--dir", "packages/vue", "exec", "vitest", "run", "src/components/TopToolbar.slots.test.ts"],
+  [
+    "--dir",
+    "packages/vue",
+    "exec",
+    "vitest",
+    "run",
+    "src/components/toolbar/TopToolbar.slots.test.ts",
+    "src/features/agent/__tests__/browser-agent-bridge-managed.test.ts",
+  ],
   source,
 );
 // Build every workspace package KCQ depends on (dist exports such as @nebutra/billing/links),

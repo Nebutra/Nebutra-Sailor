@@ -19,7 +19,7 @@ export function renderLlmsTxt(): string {
     "",
     "> An open-source K-line (candlestick) chart and quant workstation that an agent can drive. The",
     "> agent and the interface call the same chart methods, so what an agent does appears on the chart",
-    `> the user is looking at. Apache-2.0. Version ${facts.version}, commit ${facts.commit.slice(0, 8)}.`,
+    `> the user is looking at. Apache-2.0 engine; AGPL-3.0-or-later scripts. Version ${facts.version}, commit ${facts.commit.slice(0, 8)}.`,
     "",
     "## Use it",
     "",

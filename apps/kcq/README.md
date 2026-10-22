@@ -24,7 +24,7 @@ GOTDX at `/market/tdx` (A shares, indices and extended markets), TradingView
 at `/market/python` (global historical bars), and the canonical Binance V1
 connector at `/market/binance` (spot bars, real trades, trade archives and
 depth). All three enter the chart source catalog. Binance real trades power
-the library's footprint indicators; the connector has no trading credentials.
+the library's footprint display mode; the connector has no trading credentials.
 Old scoped loopback defaults migrate to hosted endpoints;
 custom addresses and user source choices are retained.
 
@@ -78,13 +78,22 @@ regressions run from the repository root with
 
 `chart-source.json` records the deployed immutable commit separately from the
 canonical `upstreamRepository`. Upstream PRs #297 and #298 (workspace/navigation
-and BYOK) are merged. The 2026-10-12 integration starts from upstream
-`196d0fcc00f2910f5be37510c91cc39d9c418f9a` and cherry-picks the fork's managed
+and BYOK) are merged. The 2026-10-22 integration starts from upstream
+`8d4fba5d` and cherry-picks the fork's managed
 Agent, canonical branding, history prefetch and live instrument identity.
 The fork also exports the canonical trade-source factory and read-only active
 layout settings for the account page. See
-`docs/ops/nebutra/2026-10-12-kcq-upstream-convergence.md` for the source ledger.
+`docs/ops/nebutra/2026-10-22-kcq-upstream-convergence.md` for the source ledger.
 Never replace the pin with upstream main until the product compatibility gate passes.
+
+The host initializes the canonical built-in script service after configuring
+account/workspace persistence and before mounting the chart. It provides the
+same service to the editor and disposes its worker on unmount. Script editor
+assets and workspace aliases come from upstream's build plugins. The CSP
+permits native compilation and QuickJS/WASM only in the dedicated script
+worker; page scripts retain their existing policy. Core and framework packages
+use Apache-2.0; the script packages use AGPL-3.0-or-later. The generated
+package reference records each package's source license.
 
 From the repository root, run `node apps/kcq/scripts/verify.mjs` for the same
 library tests, product tests, typecheck and production build used by CI and Fly
