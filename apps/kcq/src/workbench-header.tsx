@@ -10,8 +10,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@nebutra/ui/primitives/canonical";
+import { useRef } from "react";
 import type { WalletState } from "./wallet";
 import { WalletChip } from "./wallet-chip";
+import type { HelpSection } from "./workbench-support";
 
 export interface WorkbenchHeaderProps {
   context: BrowserAuthContext | null;
@@ -22,6 +24,7 @@ export interface WorkbenchHeaderProps {
   /** The active workspace's KCQ wallet; omitted for a visitor. */
   wallet?: WalletState;
   onWalletOpen?: () => void;
+  onHelp?: (section: HelpSection, returnFocus?: HTMLElement) => void;
 }
 export function WorkbenchHeader({
   context,
@@ -31,7 +34,9 @@ export function WorkbenchHeader({
   onSignOut,
   wallet,
   onWalletOpen,
+  onHelp,
 }: WorkbenchHeaderProps) {
+  const menuTrigger = useRef<HTMLButtonElement>(null);
   const active = context?.workspaces.find(
     (workspace) => workspace.id === context.activeWorkspaceId,
   );
@@ -39,6 +44,7 @@ export function WorkbenchHeader({
     <nav className="workbench-navigation" aria-label="账户与工作区">
       <DropdownMenu>
         <DropdownMenuTrigger
+          ref={menuTrigger}
           className="account-trigger"
           aria-label="账户与工作区菜单"
           disabled={busy}
@@ -103,6 +109,19 @@ export function WorkbenchHeader({
                 </a>
               }
             />
+          )}
+          {onHelp && (
+            <>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => onHelp("guide", menuTrigger.current ?? undefined)}>
+                开始研究与使用帮助
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => onHelp("feedback", menuTrigger.current ?? undefined)}
+              >
+                反馈与建议
+              </DropdownMenuItem>
+            </>
           )}
         </DropdownMenuContent>
       </DropdownMenu>

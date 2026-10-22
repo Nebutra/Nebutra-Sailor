@@ -15,6 +15,7 @@
     "typecheck": "node scripts/run.mjs typecheck"
   },
   "dependencies": {
+    "@nebutra/analytics": "workspace:*",
     "@nebutra/auth": "workspace:*",
     "@nebutra/billing": "workspace:*",
     "@nebutra/brand": "workspace:*",

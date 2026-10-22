@@ -137,6 +137,9 @@ jobs:
           install-command: pnpm install --frozen-lockfile --filter @nebutra/kcq... --filter @nebutra/kcq-docs...
 
       - name: Validate library and product compatibility
+        env:
+          VITE_PUBLIC_POSTHOG_KEY: ${{ vars.NEXT_PUBLIC_POSTHOG_KEY || secrets.NEXT_PUBLIC_POSTHOG_KEY }}
+          VITE_PUBLIC_POSTHOG_HOST: ${{ vars.NEXT_PUBLIC_POSTHOG_HOST || 'https://analytics.nebutra.com' }}
         run: |
           set -euo pipefail
           export KCQ_SOURCE_DIR="$GITHUB_WORKSPACE/kcq-source"

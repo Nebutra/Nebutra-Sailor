@@ -131,6 +131,17 @@ describe("ProductAnalyticsClient", () => {
     expect(body.distinct_id).toBe("anonymous");
   });
 
+  it("supports an anonymous client identifier without adding identity to event properties", async () => {
+    const anonymous = createProductAnalyticsClient({
+      posthog: { apiKey: "phc_test" },
+      distinctId: "anonymous-session",
+    });
+    await anonymous.track("checkout", { action: "started", tier: "OPC" });
+    const body = JSON.parse(mockFetch.mock.calls[0][1].body);
+    expect(body.distinct_id).toBe("anonymous-session");
+    expect(body.properties).toEqual({ action: "started", tier: "OPC" });
+  });
+
   it("track is a no-op (success:true) when no provider configured", async () => {
     const noProviderClient = createProductAnalyticsClient({});
     const result = await noProviderClient.track("checkout", {

@@ -68,3 +68,10 @@ declare module "*.woff2?url" {
   const url: string;
   export default url;
 }
+declare const __KCQ_CHART_REVISION__: string;
+interface ImportMeta {
+  readonly env: {
+    readonly VITE_PUBLIC_POSTHOG_KEY?: string;
+    readonly VITE_PUBLIC_POSTHOG_HOST?: string;
+  };
+}

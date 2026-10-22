@@ -131,8 +131,8 @@ describe("Event contracts", () => {
     ).not.toThrow();
   });
 
-  it("EVENT_SCHEMAS has all 7 event contracts defined", () => {
-    expect(Object.keys(EVENT_SCHEMAS)).toHaveLength(7);
+  it("EVENT_SCHEMAS has all 8 event contracts defined", () => {
+    expect(Object.keys(EVENT_SCHEMAS)).toHaveLength(8);
     expect(EVENT_SCHEMAS["scaffold.completed"]).toBeDefined();
     expect(EVENT_SCHEMAS["license.wizard"]).toBeDefined();
     expect(EVENT_SCHEMAS["license.cli"]).toBeDefined();
@@ -140,6 +140,23 @@ describe("Event contracts", () => {
     expect(EVENT_SCHEMAS["docs.search_query"]).toBeDefined();
     expect(EVENT_SCHEMAS.checkout).toBeDefined();
     expect(EVENT_SCHEMAS["deployment.verified"]).toBeDefined();
+  });
+
+  it("KCQ activation accepts steps but rejects personal data and arbitrary content", () => {
+    expect(
+      EVENT_SCHEMAS["kcq.activation"].safeParse({
+        action: "preset_selected",
+        preset: "cn",
+      }).success,
+    ).toBe(true);
+    for (const extra of [{ userId: "private" }, { prompt: "research" }, { symbol: "600519" }]) {
+      expect(
+        EVENT_SCHEMAS["kcq.activation"].safeParse({
+          action: "chart_loaded",
+          ...extra,
+        }).success,
+      ).toBe(false);
+    }
   });
 
   it("BaseEventProps fields are optional across all schemas", () => {
