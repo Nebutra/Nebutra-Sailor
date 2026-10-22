@@ -58,3 +58,5 @@ theme customization, paid Agent execution or a new authentication/billing audit.
   generation pass. Existing poster-script lint warnings are not suppressed.
 - Browser acceptance is required before release; production acceptance is rerun
   against the deployed origin without the local account/error fixtures.
+- Remove KCQ's two obsolete hover-motion exceptions: the offending local
+  button states are gone, so the governance gate now requires zero exceptions.
