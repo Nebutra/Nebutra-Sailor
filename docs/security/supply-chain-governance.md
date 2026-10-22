@@ -54,6 +54,38 @@ The production audit still records the locally patched `braces` finding and
 the unpatched moderate `sprintf-js` finding below. No advisory ignore or
 severity threshold has been added.
 
+The full audit's development graph also contained these fixed-version findings:
+
+| Package | Fixed version | Advisory |
+| --- | --- | --- |
+| `@opennextjs/cloudflare` | `1.20.2` | `GHSA-2vc4-c4r6-p6v6` |
+| Storybook 8 packages | `8.6.19` | `GHSA-f2ph-cmg5-wxc8` |
+| `vitest` / `@vitest/coverage-v8` / `@vitest/mocker` | `4.1.12` | `GHSA-qxg6-89mg-rqv8`, `GHSA-xp26-3454-mjgp` |
+
+OpenNext is used by the auth, Sailor docs and TypeLens development toolchains.
+All declared Storybook 8 packages in the Storybook app and UI package move
+together to 8.6.19, the first patched v8 release; no Storybook major upgrade
+is included. Vitest and its coverage package move through the shared catalog so
+the patched mocker is selected consistently. These releases were older than
+the 24-hour `minimumReleaseAge` gate when resolved.
+
+All 26 resolved Storybook 8.6.19 packages have npm GitHub Actions
+trusted-publisher and registry-signature metadata, and their `gitHead` matches
+the official `v8.6.19` release commit
+`117b95a45b27138796c151b7928ba7956ca6da45`. They lack
+`dist.attestations`, so pnpm 11.28.5's `trustPolicy: no-downgrade` rejects this
+hotfix after the previously attested release. The workspace contains
+exact-version `trustPolicyExclude` entries for those packages following this
+manual metadata and upstream release review. Publisher metadata and a matching
+commit do not replace provenance attestation; this exception accepts that gap
+to install the patched v8 suite. Remove the entries when a compatible attested
+release is available. The release-age gate and advisory policy stay enabled.
+
+After regeneration and a frozen install, both the production and full audits
+report zero active high/critical findings. Each raw report retains one high
+`braces` finding, verified as locally patched, and one unpatched moderate
+`sprintf-js` finding.
+
 ## Locally patched advisory (2026-10-09)
 
 `braces@3.0.3` has no published fix for
@@ -118,6 +150,7 @@ Run the policy gate before merging dependency, lockfile, or workflow changes:
 pnpm install --frozen-lockfile
 pnpm supply-chain:verify
 node scripts/ci/dependency-audit.mjs
+node scripts/ci/dependency-audit.mjs --all
 ```
 
 If `pnpm supply-chain:verify` reports stale dependencies after a policy change,

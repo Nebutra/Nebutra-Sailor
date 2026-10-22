@@ -48,6 +48,37 @@ trustPolicyExclude:
   # only interpolates strings and adds a no-op defineProjection; no dependencies
   # or install scripts. Stable 3.88.1 lacks the SDK's projection/schema types.
   - "groq@3.88.1-typegen-experimental.0"
+  # Storybook 8.6.19 is the first safe v8 patch for GHSA-f2ph-cmg5-wxc8.
+  # All 26 packages have GitHub Actions publisher/signature metadata and match
+  # upstream release commit 117b95a45b27138796c151b7928ba7956ca6da45, but lack
+  # provenance attestations. Manual review accepts this gap for the safe v8
+  # hotfix; replace these exact exceptions with a compatible attested release.
+  - "storybook@8.6.19"
+  - "@storybook/addon-a11y@8.6.19"
+  - "@storybook/addon-actions@8.6.19"
+  - "@storybook/addon-backgrounds@8.6.19"
+  - "@storybook/addon-controls@8.6.19"
+  - "@storybook/addon-docs@8.6.19"
+  - "@storybook/addon-essentials@8.6.19"
+  - "@storybook/addon-highlight@8.6.19"
+  - "@storybook/addon-interactions@8.6.19"
+  - "@storybook/addon-measure@8.6.19"
+  - "@storybook/addon-outline@8.6.19"
+  - "@storybook/addon-toolbars@8.6.19"
+  - "@storybook/addon-viewport@8.6.19"
+  - "@storybook/blocks@8.6.19"
+  - "@storybook/builder-vite@8.6.19"
+  - "@storybook/components@8.6.19"
+  - "@storybook/core@8.6.19"
+  - "@storybook/csf-plugin@8.6.19"
+  - "@storybook/instrumenter@8.6.19"
+  - "@storybook/manager-api@8.6.19"
+  - "@storybook/preview-api@8.6.19"
+  - "@storybook/react-dom-shim@8.6.19"
+  - "@storybook/react-vite@8.6.19"
+  - "@storybook/react@8.6.19"
+  - "@storybook/test@8.6.19"
+  - "@storybook/theming@8.6.19"
 strictDepBuilds: true
 dangerouslyAllowAllBuilds: false
 ignorePnpmfile: true
@@ -104,8 +135,8 @@ catalog:
 
   # ── Testing ────────────────────────────────────────────────────────────────
   vite: 8.1.6
-  vitest: ^4.1.11
-  "@vitest/coverage-v8": ^4.1.11
+  vitest: ^4.1.12
+  "@vitest/coverage-v8": ^4.1.12
   "@vitejs/plugin-react-swc": ^4.3.1
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/react": ^16.3.2
