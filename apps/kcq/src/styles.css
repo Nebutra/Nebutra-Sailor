@@ -249,7 +249,6 @@ button {
 .kcq-help textarea {
   width: 100%;
   box-sizing: border-box;
-  resize: vertical;
   min-height: 96px;
   padding: 10px;
   border: 1px solid var(--klc-color-ui-border-strong);

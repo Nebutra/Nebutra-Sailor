@@ -32,6 +32,8 @@ layout. A pending catalog lookup offers cancellation, and a failed bar request
 offers an explicit retry. Research guidance and feedback live in shared dialogs,
 opened from the account menu or empty state, without another toolbar row.
 Feedback diagnostics are optional and reviewable before opening a public draft.
+Feedback fields keep the shared Textarea growth and scrolling behavior, without
+a native resize handle.
 Anonymous activation statistics require explicit consent and stay off by default.
 
 Validate production build, strict types, lint, the toolbar public contract,
