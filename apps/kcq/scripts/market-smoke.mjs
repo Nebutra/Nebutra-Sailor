@@ -123,6 +123,10 @@ try {
         bars.reduce((total, bar) => total + bar.count, 0) > maxBarsPerRequest,
         `${id}: history must not be truncated to one page`,
       );
+      await page.getByRole("button", { name: "默认布局", exact: true }).click();
+      await page.getByRole("menuitem", { name: "保存布局", exact: true }).click();
+      await page.getByRole("status", { name: "布局保存成功", exact: true }).waitFor();
+      await page.keyboard.press("Escape");
       const previous = bars.length;
       await page.reload({ waitUntil: "domcontentloaded" });
       await waitForBars(previous);
