@@ -336,8 +336,17 @@ async function publicPages(page, id) {
     "/404",
     "/zh/404",
   ]) {
+    // A stored language is a real visitor preference; keep each requested route
+    // explicit instead of racing the browser-language redirect on a cold load.
+    await page.evaluate(
+      (locale) => localStorage.setItem("kcq:locale", locale),
+      path.startsWith("/zh/") ? "zh" : "en",
+    );
     const response = await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" });
     assert.equal(response.status(), path.endsWith("/404") ? 404 : 200);
+    // Prerendered controls exist before the asynchronous Vue route is mounted.
+    await page.waitForFunction(() => Boolean(document.querySelector("#app")?.__vue_app__));
+    assert.equal(new URL(page.url()).pathname, path);
     assert.equal(
       await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),
       false,
