@@ -6,9 +6,11 @@
  * shadow/radius/ring classes.
  */
 
+// Menu rows highlight instantly: they are hovered/keyboard-walked dozens of
+// times a minute, where a colour fade reads as lag.
 const menuItemBaseClassName = [
   "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm",
-  "outline-none transition-colors duration-micro ease-out",
+  "outline-none",
   "data-[disabled]:pointer-events-none data-[disabled]:opacity-60",
 ].join(" ");
 
@@ -65,19 +67,19 @@ export const overlayPrimitiveClassNames = {
   ].join(" "),
   menubarSubTrigger: [
     "flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm",
-    "outline-none transition-colors duration-micro ease-out",
+    "outline-none",
     menubarFocusClassName,
     "data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
   ].join(" "),
   menubarItem: [
     "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] px-2 py-1.5 text-sm",
-    "outline-none transition-colors duration-micro ease-out",
+    "outline-none",
     menubarFocusClassName,
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
   ].join(" "),
   menubarCheckboxItem: [
     "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] py-1.5 pl-8 pr-2 text-sm",
-    "outline-none transition-colors duration-micro ease-out",
+    "outline-none",
     menubarFocusClassName,
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
   ].join(" "),

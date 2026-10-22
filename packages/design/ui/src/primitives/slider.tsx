@@ -278,8 +278,8 @@ export const Slider = ({
           rangeThumbFocusClassName,
           "[&::-moz-range-thumb]:size-[var(--slider-thumb-size)] [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-border [&::-moz-range-thumb]:bg-[var(--slider-thumb-background)] [&::-moz-range-thumb]:shadow-[var(--slider-thumb-shadow)]",
           "[&::-webkit-slider-thumb]:size-[var(--slider-thumb-size)] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-border [&::-webkit-slider-thumb]:bg-[var(--slider-thumb-background)] [&::-webkit-slider-thumb]:shadow-[var(--slider-thumb-shadow)]",
-          "[&::-moz-range-thumb]:transition-transform [&::-moz-range-thumb]:duration-[var(--slider-duration)] [&::-moz-range-thumb]:ease-[var(--slider-easing)]",
-          "[&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:duration-[var(--slider-duration)] [&::-webkit-slider-thumb]:ease-[var(--slider-easing)]",
+          "[&::-moz-range-thumb]:transition-[box-shadow,transform] [&::-moz-range-thumb]:duration-[var(--slider-duration)] [&::-moz-range-thumb]:ease-[var(--slider-easing)]",
+          "[&::-webkit-slider-thumb]:transition-[box-shadow,transform] [&::-webkit-slider-thumb]:duration-[var(--slider-duration)] [&::-webkit-slider-thumb]:ease-[var(--slider-easing)]",
           "active:[&::-moz-range-thumb]:scale-110 active:[&::-webkit-slider-thumb]:scale-110 motion-reduce:[&::-moz-range-thumb]:transition-none motion-reduce:[&::-webkit-slider-thumb]:transition-none",
           className,
         )}

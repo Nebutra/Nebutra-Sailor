@@ -193,15 +193,15 @@ export function Stepper({
                 onClick={() => clickable && goToStep(index)}
                 disabled={!clickable}
                 className={cn(
-                  "relative flex items-center justify-center rounded-full border-2 transition-[background-color,border-color,box-shadow,color,opacity,transform]",
+                  "relative flex items-center justify-center rounded-full border transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-micro ease-out active:scale-[0.97] motion-reduce:transition-none motion-reduce:transform-none",
                   config.icon,
                   status === "completed" && "border-primary bg-primary text-primary-foreground",
-                  status === "current" && "border-primary bg-background text-primary",
+                  status === "current" &&
+                    "border-primary bg-background text-primary ring-4 ring-primary/15",
                   status === "pending" && "border-neutral-6 bg-background text-muted-foreground",
                   status === "error" &&
                     "border-destructive bg-destructive text-destructive-foreground",
-                  clickable &&
-                    "cursor-pointer transition-[box-shadow] duration-flow ease-out hover:ring-4 hover:ring-accent",
+                  clickable && "cursor-pointer hover:ring-4 hover:ring-accent",
                 )}
               >
                 {status === "completed" ? (
@@ -215,7 +215,7 @@ export function Stepper({
               {showConnector && !isLast && (
                 <div
                   className={cn(
-                    "transition-colors",
+                    "transition-colors duration-micro ease-out",
                     orientation === "horizontal" ? cn(config.connector, "mx-2") : "my-2 h-8 w-0.5",
                     index < currentStep ? "bg-primary" : "bg-neutral-4",
                   )}
@@ -324,12 +324,12 @@ export function StepperNavigation({
           disabled={loading || disableNext}
           className="bg-primary hover:bg-primary/90"
         >
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin motion-reduce:animate-pulse" />}
           {finishLabel || "Finish"}
         </Button>
       ) : (
         <Button type="button" onClick={nextStep} disabled={loading || disableNext}>
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin motion-reduce:animate-pulse" />}
           {nextLabel || "Next"}
         </Button>
       )}
@@ -425,7 +425,7 @@ export function ProgressStepper({
       {/* 进度条 */}
       <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-4">
         <div
-          className="h-full rounded-full bg-primary transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300"
+          className="h-full rounded-full bg-primary transition-[width,background-color] duration-flow ease-out motion-reduce:transition-none"
           style={{ width: `${progress}%` }}
         />
       </div>

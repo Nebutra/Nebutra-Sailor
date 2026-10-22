@@ -43,7 +43,7 @@ export function EditorialTimeline({ className, items, label, title }: EditorialT
           <li key={item.key ?? `${index}-${item.marker}`} className="relative pb-7 pl-6 last:pb-0">
             <span
               aria-hidden
-              className="absolute -left-[0.3125rem] top-1.5 size-2.5 rounded-full border-2 border-background bg-[hsl(var(--primary))]"
+              className="absolute -left-[0.3125rem] top-1.5 size-2.5 rounded-full bg-[hsl(var(--primary))] ring-2 ring-background"
             />
             <span
               className="absolute right-[calc(100%+1.5rem)] top-0 whitespace-nowrap font-mono text-xs font-semibold tabular-nums leading-6 text-muted-foreground"

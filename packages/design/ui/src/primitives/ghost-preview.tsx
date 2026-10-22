@@ -66,7 +66,7 @@ function GhostChart() {
         </svg>
         <span className="absolute top-[30%] left-[72.7%] size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-card bg-foreground/30" />
         {/* The tooltip card the crosshair would open. */}
-        <span className="absolute top-1 left-[74.5%] hidden w-28 flex-col gap-1.5 rounded-[var(--radius-lg)] border border-foreground/[0.08] bg-card/80 p-2.5 shadow-xs sm:flex">
+        <span className="absolute top-1 left-[74.5%] hidden w-28 flex-col gap-1.5 rounded-[var(--radius-lg)] border border-border bg-card/80 p-2.5 shadow-xs sm:flex">
           <span className="h-1.5 w-12 rounded-full bg-foreground/[0.12]" />
           <span className="h-2 w-16 rounded-full bg-foreground/[0.09]" />
         </span>
@@ -94,7 +94,7 @@ function GhostRows({ columns }: { columns: number }) {
   const widths = ["w-2/5", "w-1/4", "w-1/5", "w-1/6"];
   return (
     <div className="w-full">
-      <div className="flex gap-6 border-b border-foreground/[0.09] px-5 py-3">
+      <div className="flex gap-6 border-b border-border px-5 py-3">
         {Array.from({ length: columns }, (_, c) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: static decorative columns
           <span key={c} className={cn("h-2 rounded-full bg-foreground/[0.10]", widths[c])} />
@@ -104,7 +104,7 @@ function GhostRows({ columns }: { columns: number }) {
         <div
           // biome-ignore lint/suspicious/noArrayIndexKey: static decorative rows
           key={r}
-          className="flex items-center gap-6 border-b border-foreground/[0.06] px-5 py-3.5 last:border-0"
+          className="flex items-center gap-6 border-b border-border px-5 py-3.5 last:border-0"
         >
           {Array.from({ length: columns }, (_, c) => (
             <span

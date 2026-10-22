@@ -17,3 +17,37 @@
 
 /* How the change moves lives with the mechanism — see @nebutra/theme/morph.css. */
 @import "@nebutra/theme/morph.css";
+
+/*
+ * Baseline for anything pressable that no component styled: colour, fill, edge,
+ * shadow and opacity ease over the micro rail instead of snapping. Transform is
+ * left out on purpose — travel and press scale belong to the component. It sits
+ * in the base layer at zero specificity, so every utility (and every primitive's
+ * own transition list) overrides it.
+ */
+@layer base {
+  :where(a, button, [role="tab"], summary, [role="button"]) {
+    transition-property: color, background-color, border-color, box-shadow, opacity;
+    transition-duration: var(--duration-micro);
+    transition-timing-function: var(--ease-out);
+  }
+}
+
+/* Hand-written transitions on this site are all micro-feedback; honour the
+   user's preference once, here, instead of per element. */
+@media (prefers-reduced-motion: reduce) {
+  @layer base {
+    :where(a, button, [role="tab"], summary, [role="button"]) {
+      transition-duration: 0.01ms;
+    }
+  }
+
+  :where(main, header, aside, nav) *,
+  :where(main, header, aside, nav) *::before,
+  :where(main, header, aside, nav) *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: the preference must beat every utility's own duration */
+    transition-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: same preference, same reason */
+    scroll-behavior: auto !important;
+  }
+}

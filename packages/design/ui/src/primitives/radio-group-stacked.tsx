@@ -6,6 +6,7 @@ import { Radio as BaseRadio } from "@base-ui/react/radio";
 import { RadioGroup as BaseRadioGroup } from "@base-ui/react/radio-group";
 import type * as React from "react";
 import { cn } from "../utils/cn";
+import { controlFocusVisibleClassName } from "./form-control";
 
 const RadioGroupStacked = ({
   className,
@@ -32,7 +33,11 @@ const RadioGroupStackedItem = ({
       className={cn(
         // Base UI radio emits `data-checked` / `data-unchecked`; the Radix-era
         // `data-state-checked:` selectors never matched.
-        "relative flex w-full flex-row items-center justify-between rounded-[var(--radius-lg)] border px-4 py-3 text-left hover:bg-accent outline-none focus-visible:outline-none data-[checked]:border-primary data-[checked]:bg-primary/5",
+        "relative flex w-full flex-row items-center justify-between rounded-[var(--radius-card,var(--radius-lg))] border border-input px-4 py-3 text-left",
+        "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out motion-reduce:transition-none",
+        "hover:bg-accent",
+        "data-[checked]:border-primary data-[checked]:bg-primary/5 data-[checked]:ring-1 data-[checked]:ring-primary",
+        controlFocusVisibleClassName,
         className,
       )}
       {...props}

@@ -152,7 +152,8 @@ export function Spinner({
         className={cn(
           "absolute inset-0 origin-center",
           "[animation:spin_var(--spinner-duration)_var(--spinner-easing)_infinite]",
-          "motion-reduce:animate-none",
+          // Reduced motion: no rotation, a soft opacity pulse keeps it legible as busy.
+          "motion-reduce:animate-pulse",
         )}
       >
         {Array.from({ length: spinnerTokens.barCount }, (_, index) => (

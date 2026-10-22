@@ -98,7 +98,7 @@ export function AvatarCircles({
           className="rounded-full transition-[box-shadow] duration-micro ease-out hover:z-10 hover:ring-2 hover:ring-foreground/25"
         >
           <Image
-            className="rounded-full border-2 border-background"
+            className="rounded-full ring-2 ring-background"
             src={avatar.imageUrl}
             width={size}
             height={size}
@@ -111,7 +111,7 @@ export function AvatarCircles({
       ))}
       {(numPeople ?? 0) > 0 && (
         <a
-          className="flex items-center justify-center rounded-full border-2 border-background bg-foreground text-center text-xs font-medium text-background hover:bg-muted-foreground dark:bg-foreground dark:text-background"
+          className="flex items-center justify-center rounded-full bg-muted text-center text-xs font-medium text-foreground ring-2 ring-background transition-[background-color] duration-micro ease-out hover:bg-accent motion-reduce:transition-none"
           style={{ width: size, height: size }}
           href={overflowUrl}
         >

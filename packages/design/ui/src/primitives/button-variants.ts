@@ -1,7 +1,8 @@
 import { cva } from "class-variance-authority";
+import { controlFocusVisibleClassName } from "./form-control";
 
 // Heights / weights from recipe.css (--control-height-*, --font-weight-medium).
-// Focus ring uses shared ring token.
+// Keyboard focus is the shared recipe in form-control.ts.
 export const buttonVariants = cva(
   [
     "inline-flex items-center justify-center gap-2 whitespace-nowrap",
@@ -9,10 +10,11 @@ export const buttonVariants = cva(
     "text-[length:var(--control-font-size-md,0.875rem)] font-[number:var(--font-weight-medium,500)]",
     // `transform` is in the property list on purpose: without it the
     // active:scale-[0.97] press snapped instantly and the button felt dead
-    // under the finger. Duration/ease stay on the flow rail — motion
-    // governance pins them (primitives/__tests__/motion-governance.test.ts).
-    "transition-[color,background-color,border-color,box-shadow,transform] duration-flow ease-[var(--ease-brand)]",
-    "active:scale-[0.97] motion-reduce:active:scale-100 motion-reduce:transition-none",
+    // under the finger. Micro rail + ease-out, like every other form control;
+    // motion governance pins them (primitives/__tests__/motion-governance.test.ts).
+    "transition-[background-color,border-color,box-shadow,color,transform] duration-micro ease-out",
+    "active:scale-[0.97] motion-reduce:transform-none motion-reduce:active:scale-100 motion-reduce:transition-none",
+    controlFocusVisibleClassName,
     "disabled:pointer-events-none disabled:opacity-50",
     "aria-busy:cursor-wait",
   ].join(" "),

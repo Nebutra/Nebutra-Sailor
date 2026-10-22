@@ -24,9 +24,9 @@
   },
   "totals": {
     "apps": 19,
-    "tsxFiles": 1143,
-    "uiFiles": 676,
-    "uiRatio": 0.5914,
+    "tsxFiles": 1144,
+    "uiFiles": 678,
+    "uiRatio": 0.5927,
     "hardcodedHex": 95,
     "arbitraryFontSizes": 877
   },
@@ -55,9 +55,9 @@
       "name": "design",
       "status": "wip",
       "graph": "labs",
-      "tsxFiles": 160,
-      "uiFiles": 119,
-      "uiRatio": 0.7438,
+      "tsxFiles": 161,
+      "uiFiles": 121,
+      "uiRatio": 0.7516,
       "hardcodedHex": 6,
       "arbitraryFontSizes": 109
     },

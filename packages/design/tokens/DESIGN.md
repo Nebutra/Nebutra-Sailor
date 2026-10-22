@@ -181,13 +181,53 @@ These are stored as space-separated HSL triplets so Tailwind v4 can consume them
 ```
 --radius-none: 0
 --radius-sm:   0.25rem  (4px)
---radius-md:   0.375rem (6px)   ← default --radius
---radius-lg:   0.5rem   (8px)
+--radius-md:   0.375rem (6px)   ← default --radius; the chip step
+--radius-lg:   0.5rem   (8px)   ← the control step
 --radius-xl:   0.75rem  (12px)
 --radius-2xl:  1rem     (16px)
 --radius-3xl:  1.5rem   (24px)
 --radius-full: 9999px
 ```
+
+### 2.8.1 Shape ladder (recipe.css)
+
+The numeric scale above is the raw ramp. Components bind the **role** steps, so a
+control, a card and a chip stop disagreeing:
+
+| Token | Factory | Used for | Tailwind |
+|-------|---------|----------|----------|
+| `--radius-control` | 8px | buttons, fields, selects, triggers | `rounded-control` |
+| `--radius-card` | 12px | cards, panels, popovers, dialogs | `rounded-card` |
+| `--radius-chip` | 6px | chips, tags, kbd | `rounded-chip` |
+
+`--radius-button` and `--radius-inputs` point at `--radius-control`, and
+`--radius-badge` at `--radius-chip` (a badge is a chip; it used to be a 9999px
+pill). A skin may restate `--radius-control` / `--radius-chip` / `--radius-badge`
+(a language's identity: GSAP controls are pills; Vanta's controls are 12px but
+its chips and badges stay pills); the ladder is only enforced for non-pill
+values (control and chip never rounder than card).
+
+### 2.8.2 Edges, focus and stage (recipe.css)
+
+| Token | Meaning |
+|-------|---------|
+| `--hairline-alpha` / `--hairline-alpha-hover` | Foreground alpha behind the hairline: 8% / 14% light, 12% / 20% dark |
+| `--border-hairline`, `--border-hairline-hover` | Complete hairline colours (not channels) |
+| `--border-strong` | The language's heavy stroke, declared per skin (Vanta carbon ink lives here) |
+| `--border-default` | "This language's outline": the hairline, or the ink when `recipe.outline = "ink"` |
+| `--focus-ring-width` / `--focus-ring-offset` | 2px ring, 2px gap |
+| `--focus-ring-color` | `hsl(var(--ring))` |
+| `--shadow-focus` | Page-colour gap, then the ring. `--focus-ring` is the same recipe |
+| `--dot-matrix-color` / `-size` / `-image` | The dot grid behind stages and previews |
+
+Tailwind: `shadow-border`, `shadow-border-hover`, `shadow-border-strong`
+(1px edge, no layout shift), `border-hairline`, `border-hairline-hover`,
+`bg-hairline`, `border-border-strong`, `bg-dot-matrix`.
+
+**Contract (tested):** every language's `--border` stays within 1.1–1.55:1 of its
+background and card in both modes (`scripts/surface-audit.mjs`). Anything
+heavier is `--border-strong`. A skin that declares no `borderStrong` gets a 45%
+foreground-over-background mix, so the token always exists.
 
 ### 2.9 Elevation / shadow
 

@@ -184,7 +184,7 @@ function ChoiceboxItem({
         <span
           aria-hidden="true"
           className={cn(
-            "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center border-2 transition-colors",
+            "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center border transition-colors duration-micro ease-out motion-reduce:transition-none",
             isRadio ? "rounded-full" : "rounded-[var(--radius-sm)]",
             isSelected
               ? "border-primary bg-primary text-primary-foreground"

@@ -55,6 +55,7 @@ html[data-brand="cosmos"] {
   --destructive: 4 76% 40%;
   --destructive-foreground: 0 0% 100%;
   --border: 30 5% 85%;
+  --border-strong: color-mix(in oklab, hsl(0 0% 5%) 45%, hsl(30 20% 96%));
   --input: 30 5% 85%;
   --ring: 0 0% 5%;
   --success: 134 62% 40%;
@@ -104,6 +105,8 @@ html[data-brand="cosmos"] {
   --badge-default-radius: 16px;
   --radius-inputs: 16px;
   --input-radius: 16px;
+  --radius-control: 16px;
+  --radius-chip: min(0.375rem, 16px);
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -212,6 +215,7 @@ html.dark[data-brand="cosmos"] {
   --destructive: 4 76% 40%;
   --destructive-foreground: 0 0% 100%;
   --border: 0 1% 18%;
+  --border-strong: color-mix(in oklab, hsl(30 20% 96%) 45%, hsl(0 0% 5%));
   --input: 0 1% 18%;
   --ring: 30 20% 96%;
   --success: 134 62% 40%;
@@ -269,8 +273,8 @@ html[data-brand="gsap"] {
   --role-quiet-fg: 150 7% 6%;
   --role-muted: 54 50% 90%;
   --role-muted-fg: 60 6% 33%;
-  --role-border: 54 15% 76%;
-  --role-input: 54 15% 76%;
+  --role-border: 54 15% 80%;
+  --role-input: 54 15% 80%;
   --role-ring: 150 7% 6%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
@@ -290,8 +294,9 @@ html[data-brand="gsap"] {
   --accent-foreground: 150 7% 6%;
   --destructive: 309 100% 38%;
   --destructive-foreground: 0 0% 100%;
-  --border: 54 15% 76%;
-  --input: 54 15% 76%;
+  --border: 54 15% 80%;
+  --border-strong: color-mix(in oklab, hsl(150 7% 6%) 45%, hsl(54 100% 94%));
+  --input: 54 15% 80%;
   --ring: 150 7% 6%;
   --success: 137 85% 26%;
   --success-foreground: 0 0% 100%;
@@ -303,7 +308,7 @@ html[data-brand="gsap"] {
   --sidebar-primary-foreground: 150 7% 6%;
   --sidebar-accent: 54 40% 86%;
   --sidebar-accent-foreground: 150 7% 6%;
-  --sidebar-border: 54 15% 76%;
+  --sidebar-border: 54 15% 80%;
   --sidebar-ring: 150 7% 6%;
   --brand-primary: hsl(137 92% 47%);
   --brand-accent: hsl(137 92% 47%);
@@ -317,14 +322,14 @@ html[data-brand="gsap"] {
   /* ── Neutral ramp, anchored on this language's roles ── */
   --neutral-1: hsl(54 100% 94%);
   --neutral-2: hsl(54 100% 97%);
-  --neutral-3: color-mix(in oklab, hsl(54 15% 76%) 20%, hsl(54 100% 97%));
-  --neutral-4: color-mix(in oklab, hsl(54 15% 76%) 40%, hsl(54 100% 97%));
-  --neutral-5: color-mix(in oklab, hsl(54 15% 76%) 60%, hsl(54 100% 97%));
-  --neutral-6: color-mix(in oklab, hsl(54 15% 76%) 80%, hsl(54 100% 97%));
-  --neutral-7: hsl(54 15% 76%);
-  --neutral-8: color-mix(in oklab, hsl(60 6% 33%) 25%, hsl(54 15% 76%));
-  --neutral-9: color-mix(in oklab, hsl(60 6% 33%) 50%, hsl(54 15% 76%));
-  --neutral-10: color-mix(in oklab, hsl(60 6% 33%) 75%, hsl(54 15% 76%));
+  --neutral-3: color-mix(in oklab, hsl(54 15% 80%) 20%, hsl(54 100% 97%));
+  --neutral-4: color-mix(in oklab, hsl(54 15% 80%) 40%, hsl(54 100% 97%));
+  --neutral-5: color-mix(in oklab, hsl(54 15% 80%) 60%, hsl(54 100% 97%));
+  --neutral-6: color-mix(in oklab, hsl(54 15% 80%) 80%, hsl(54 100% 97%));
+  --neutral-7: hsl(54 15% 80%);
+  --neutral-8: color-mix(in oklab, hsl(60 6% 33%) 25%, hsl(54 15% 80%));
+  --neutral-9: color-mix(in oklab, hsl(60 6% 33%) 50%, hsl(54 15% 80%));
+  --neutral-10: color-mix(in oklab, hsl(60 6% 33%) 75%, hsl(54 15% 80%));
   --neutral-11: hsl(60 6% 33%);
   --neutral-12: hsl(150 7% 6%);
 
@@ -340,6 +345,8 @@ html[data-brand="gsap"] {
   --badge-default-radius: 9999px;
   --radius-inputs: 100px;
   --input-radius: 100px;
+  --radius-control: 100px;
+  --radius-chip: min(0.375rem, 8px);
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -435,8 +442,8 @@ html.dark[data-brand="gsap"] {
   --role-quiet-fg: 54 100% 94%;
   --role-muted: 0 0% 10%;
   --role-muted-fg: 60 6% 52%;
-  --role-border: 70 5% 25%;
-  --role-input: 70 5% 25%;
+  --role-border: 70 5% 18%;
+  --role-input: 70 5% 18%;
   --role-ring: 137 92% 47%;
 
   /* ── shadcn bridge (primary = action CTA) ── */
@@ -456,8 +463,9 @@ html.dark[data-brand="gsap"] {
   --accent-foreground: 54 100% 94%;
   --destructive: 309 100% 47%;
   --destructive-foreground: 54 100% 94%;
-  --border: 70 5% 25%;
-  --input: 70 5% 25%;
+  --border: 70 5% 18%;
+  --border-strong: hsl(70 5% 30%);
+  --input: 70 5% 18%;
   --ring: 137 92% 47%;
   --success: 137 92% 47%;
   --success-foreground: 150 7% 6%;
@@ -469,7 +477,7 @@ html.dark[data-brand="gsap"] {
   --sidebar-primary-foreground: 150 7% 6%;
   --sidebar-accent: 70 5% 25%;
   --sidebar-accent-foreground: 54 100% 94%;
-  --sidebar-border: 70 5% 25%;
+  --sidebar-border: 70 5% 18%;
   --sidebar-ring: 137 92% 47%;
   --brand-primary: hsl(137 92% 47%);
   --brand-accent: hsl(137 92% 47%);
@@ -483,14 +491,14 @@ html.dark[data-brand="gsap"] {
   /* ── Neutral ramp, anchored on this language's roles ── */
   --neutral-1: hsl(150 7% 6%);
   --neutral-2: hsl(0 0% 10%);
-  --neutral-3: color-mix(in oklab, hsl(70 5% 25%) 20%, hsl(0 0% 10%));
-  --neutral-4: color-mix(in oklab, hsl(70 5% 25%) 40%, hsl(0 0% 10%));
-  --neutral-5: color-mix(in oklab, hsl(70 5% 25%) 60%, hsl(0 0% 10%));
-  --neutral-6: color-mix(in oklab, hsl(70 5% 25%) 80%, hsl(0 0% 10%));
-  --neutral-7: hsl(70 5% 25%);
-  --neutral-8: color-mix(in oklab, hsl(60 6% 52%) 25%, hsl(70 5% 25%));
-  --neutral-9: color-mix(in oklab, hsl(60 6% 52%) 50%, hsl(70 5% 25%));
-  --neutral-10: color-mix(in oklab, hsl(60 6% 52%) 75%, hsl(70 5% 25%));
+  --neutral-3: color-mix(in oklab, hsl(70 5% 18%) 20%, hsl(0 0% 10%));
+  --neutral-4: color-mix(in oklab, hsl(70 5% 18%) 40%, hsl(0 0% 10%));
+  --neutral-5: color-mix(in oklab, hsl(70 5% 18%) 60%, hsl(0 0% 10%));
+  --neutral-6: color-mix(in oklab, hsl(70 5% 18%) 80%, hsl(0 0% 10%));
+  --neutral-7: hsl(70 5% 18%);
+  --neutral-8: color-mix(in oklab, hsl(60 6% 52%) 25%, hsl(70 5% 18%));
+  --neutral-9: color-mix(in oklab, hsl(60 6% 52%) 50%, hsl(70 5% 18%));
+  --neutral-10: color-mix(in oklab, hsl(60 6% 52%) 75%, hsl(70 5% 18%));
   --neutral-11: hsl(60 6% 52%);
   --neutral-12: hsl(54 100% 94%);
 }
@@ -536,6 +544,7 @@ html[data-brand="linear"] {
   --destructive: 0 79% 63%;
   --destructive-foreground: 0 0% 100%;
   --border: 220 13% 91%;
+  --border-strong: color-mix(in oklab, hsl(210 11% 4%) 45%, hsl(0 0% 100%));
   --input: 220 13% 91%;
   --ring: 64 89% 54%;
   --success: 134 62% 40%;
@@ -585,6 +594,8 @@ html[data-brand="linear"] {
   --badge-default-radius: 9999px;
   --radius-inputs: 6px;
   --input-radius: 6px;
+  --radius-control: 6px;
+  --radius-chip: min(0.375rem, 12px);
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -695,6 +706,7 @@ html.dark[data-brand="linear"] {
   --destructive: 0 79% 63%;
   --destructive-foreground: 0 0% 100%;
   --border: 223 9% 15%;
+  --border-strong: color-mix(in oklab, hsl(0 0% 100%) 45%, hsl(210 11% 4%));
   --input: 223 9% 15%;
   --ring: 64 89% 54%;
   --success: 134 62% 40%;
@@ -774,6 +786,7 @@ html[data-brand="nebutra-site"] {
   --destructive: 0 79% 63%;
   --destructive-foreground: 0 0% 100%;
   --border: 220 13% 91%;
+  --border-strong: color-mix(in oklab, hsl(210 11% 4%) 45%, hsl(0 0% 100%));
   --input: 220 13% 91%;
   --ring: 222.8 85% 55.7%;
   --success: 134 62% 40%;
@@ -823,6 +836,8 @@ html[data-brand="nebutra-site"] {
   --badge-default-radius: 9999px;
   --radius-inputs: 8px;
   --input-radius: 8px;
+  --radius-control: 8px;
+  --radius-chip: min(0.375rem, 12px);
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -920,6 +935,7 @@ html.dark[data-brand="nebutra-site"] {
   --destructive: 0 79% 63%;
   --destructive-foreground: 0 0% 100%;
   --border: 210 3.4% 11.4%;
+  --border-strong: color-mix(in oklab, hsl(180 6.7% 97.1%) 45%, hsl(210 11.1% 3.5%));
   --input: 210 3.4% 11.4%;
   --ring: 223 87.3% 69%;
   --success: 134 62% 40%;
@@ -1003,6 +1019,7 @@ html[data-brand="notion"] {
   --destructive: 7 92% 58%;
   --destructive-foreground: 0 0% 100%;
   --border: 30 5% 88%;
+  --border-strong: color-mix(in oklab, hsl(0 0% 0%) 45%, hsl(30 10% 96%));
   --input: 30 5% 88%;
   --ring: 208 100% 44%;
   --warning: 40 100% 53%;
@@ -1052,6 +1069,8 @@ html[data-brand="notion"] {
   --badge-default-radius: 9999px;
   --radius-inputs: 8px;
   --input-radius: 8px;
+  --radius-control: 8px;
+  --radius-chip: min(0.375rem, 12px);
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -1166,6 +1185,7 @@ html.dark[data-brand="notion"] {
   --destructive: 7 78% 62%;
   --destructive-foreground: 0 0% 10%;
   --border: 0 0% 18%;
+  --border-strong: color-mix(in oklab, hsl(0 0% 81%) 45%, hsl(0 0% 10%));
   --input: 0 0% 18%;
   --ring: 203 54% 56%;
   --warning: 40 100% 53%;
@@ -1249,6 +1269,7 @@ html[data-brand="raycast"] {
   --destructive: 0 72% 46%;
   --destructive-foreground: 0 0% 100%;
   --border: 240 5% 88%;
+  --border-strong: color-mix(in oklab, hsl(220 9% 7%) 45%, hsl(0 0% 100%));
   --input: 240 5% 88%;
   --ring: 240 2% 45%;
   --success: 151 70% 30%;
@@ -1298,6 +1319,8 @@ html[data-brand="raycast"] {
   --badge-default-radius: 6px;
   --radius-inputs: 8px;
   --input-radius: 8px;
+  --radius-control: 8px;
+  --radius-chip: min(0.375rem, 16px);
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -1448,6 +1471,7 @@ html.dark[data-brand="raycast"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 210 2% 19%;
+  --border-strong: color-mix(in oklab, hsl(0 0% 100%) 45%, hsl(210 20% 2%));
   --input: 210 2% 19%;
   --ring: 240 1% 61%;
   --success: 151 59% 59%;
@@ -1531,6 +1555,7 @@ html[data-brand="stripe"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 210 44% 93%;
+  --border-strong: color-mix(in oklab, hsl(211 78% 11%) 45%, hsl(0 0% 100%));
   --input: 210 44% 93%;
   --ring: 248 98% 61%;
   --info: 231 100% 73%;
@@ -1578,6 +1603,8 @@ html[data-brand="stripe"] {
   --badge-default-radius: 9999px;
   --radius-inputs: 4px;
   --input-radius: 4px;
+  --radius-control: 4px;
+  --radius-chip: min(0.375rem, 4px);
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -1690,6 +1717,7 @@ html.dark[data-brand="stripe"] {
   --destructive: 0 84% 66%;
   --destructive-foreground: 222 44% 10%;
   --border: 219 26% 22%;
+  --border-strong: color-mix(in oklab, hsl(210 44% 93%) 45%, hsl(222 44% 10%));
   --input: 219 26% 22%;
   --ring: 244 100% 71%;
   --info: 231 100% 73%;
@@ -1745,8 +1773,8 @@ html[data-brand="vanta"] {
   --role-quiet-fg: 272 100% 14%;
   --role-muted: 240 20% 93%;
   --role-muted-fg: 238 11% 44%;
-  --role-border: 240 17% 11%;
-  --role-input: 240 17% 11%;
+  --role-border: 240 14% 86%;
+  --role-input: 240 14% 86%;
   --role-ring: 268 95% 39%;
   --role-brand: 272 100% 14%;
   --role-brand-fg: 0 0% 100%;
@@ -1770,8 +1798,9 @@ html[data-brand="vanta"] {
   --accent-foreground: 272 100% 14%;
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
-  --border: 240 17% 11%;
-  --input: 240 17% 11%;
+  --border: 240 14% 86%;
+  --border-strong: hsl(240 17% 11%);
+  --input: 240 14% 86%;
   --ring: 268 95% 39%;
   --warning: 44 100% 53%;
   --warning-foreground: 240 17% 11%;
@@ -1783,7 +1812,7 @@ html[data-brand="vanta"] {
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 250 100% 92%;
   --sidebar-accent-foreground: 272 100% 14%;
-  --sidebar-border: 240 17% 11%;
+  --sidebar-border: 240 14% 86%;
   --sidebar-ring: 268 95% 39%;
   --brand-primary: hsl(272 100% 14%);
   --brand-accent: hsl(268 95% 39%);
@@ -1797,29 +1826,31 @@ html[data-brand="vanta"] {
   /* ── Neutral ramp, anchored on this language's roles ── */
   --neutral-1: hsl(220 23% 97%);
   --neutral-2: hsl(0 0% 100%);
-  --neutral-3: color-mix(in oklab, hsl(240 17% 11%) 20%, hsl(0 0% 100%));
-  --neutral-4: color-mix(in oklab, hsl(240 17% 11%) 40%, hsl(0 0% 100%));
-  --neutral-5: color-mix(in oklab, hsl(240 17% 11%) 60%, hsl(0 0% 100%));
-  --neutral-6: color-mix(in oklab, hsl(240 17% 11%) 80%, hsl(0 0% 100%));
-  --neutral-7: hsl(240 17% 11%);
-  --neutral-8: color-mix(in oklab, hsl(238 11% 44%) 25%, hsl(240 17% 11%));
-  --neutral-9: color-mix(in oklab, hsl(238 11% 44%) 50%, hsl(240 17% 11%));
-  --neutral-10: color-mix(in oklab, hsl(238 11% 44%) 75%, hsl(240 17% 11%));
+  --neutral-3: color-mix(in oklab, hsl(240 14% 86%) 20%, hsl(0 0% 100%));
+  --neutral-4: color-mix(in oklab, hsl(240 14% 86%) 40%, hsl(0 0% 100%));
+  --neutral-5: color-mix(in oklab, hsl(240 14% 86%) 60%, hsl(0 0% 100%));
+  --neutral-6: color-mix(in oklab, hsl(240 14% 86%) 80%, hsl(0 0% 100%));
+  --neutral-7: hsl(240 14% 86%);
+  --neutral-8: color-mix(in oklab, hsl(238 11% 44%) 25%, hsl(240 14% 86%));
+  --neutral-9: color-mix(in oklab, hsl(238 11% 44%) 50%, hsl(240 14% 86%));
+  --neutral-10: color-mix(in oklab, hsl(238 11% 44%) 75%, hsl(240 14% 86%));
   --neutral-11: hsl(238 11% 44%);
   --neutral-12: hsl(240 17% 11%);
 
   /* Recipe (action language + free elev/radii) */
   /* Shape slots */
-  --btn-default-radius: 999px;
-  --radius-button: 999px;
-  --radius-buttons: 999px;
-  --radius-md: min(999px, 16px);
+  --btn-default-radius: 12px;
+  --radius-button: 12px;
+  --radius-buttons: 12px;
+  --radius-md: min(12px, 16px);
   --radius-card: 16px;
   --radius-lg: 16px;
   --radius-badge: 999px;
   --badge-default-radius: 999px;
-  --radius-inputs: 999px;
-  --input-radius: 999px;
+  --radius-inputs: 12px;
+  --input-radius: 12px;
+  --radius-control: 12px;
+  --radius-chip: 999px;
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -1903,8 +1934,8 @@ html.dark[data-brand="vanta"] {
   --role-quiet-fg: 250 100% 92%;
   --role-muted: 262 25% 14%;
   --role-muted-fg: 240 12% 66%;
-  --role-border: 250 15% 30%;
-  --role-input: 250 15% 30%;
+  --role-border: 255 16% 21%;
+  --role-input: 255 16% 21%;
   --role-ring: 266 92% 74%;
   --role-brand: 250 100% 92%;
   --role-brand-fg: 272 100% 14%;
@@ -1928,8 +1959,9 @@ html.dark[data-brand="vanta"] {
   --accent-foreground: 250 100% 92%;
   --destructive: 0 84% 66%;
   --destructive-foreground: 260 30% 7%;
-  --border: 250 15% 30%;
-  --input: 250 15% 30%;
+  --border: 255 16% 21%;
+  --border-strong: hsl(250 15% 30%);
+  --input: 255 16% 21%;
   --ring: 266 92% 74%;
   --warning: 44 100% 53%;
   --warning-foreground: 240 17% 11%;
@@ -1941,7 +1973,7 @@ html.dark[data-brand="vanta"] {
   --sidebar-primary-foreground: 272 100% 10%;
   --sidebar-accent: 266 35% 22%;
   --sidebar-accent-foreground: 250 100% 92%;
-  --sidebar-border: 250 15% 30%;
+  --sidebar-border: 255 16% 21%;
   --sidebar-ring: 266 92% 74%;
   --brand-primary: hsl(250 100% 92%);
   --brand-accent: hsl(266 92% 74%);
@@ -1955,14 +1987,14 @@ html.dark[data-brand="vanta"] {
   /* ── Neutral ramp, anchored on this language's roles ── */
   --neutral-1: hsl(260 30% 7%);
   --neutral-2: hsl(262 28% 11%);
-  --neutral-3: color-mix(in oklab, hsl(250 15% 30%) 20%, hsl(262 28% 11%));
-  --neutral-4: color-mix(in oklab, hsl(250 15% 30%) 40%, hsl(262 28% 11%));
-  --neutral-5: color-mix(in oklab, hsl(250 15% 30%) 60%, hsl(262 28% 11%));
-  --neutral-6: color-mix(in oklab, hsl(250 15% 30%) 80%, hsl(262 28% 11%));
-  --neutral-7: hsl(250 15% 30%);
-  --neutral-8: color-mix(in oklab, hsl(240 12% 66%) 25%, hsl(250 15% 30%));
-  --neutral-9: color-mix(in oklab, hsl(240 12% 66%) 50%, hsl(250 15% 30%));
-  --neutral-10: color-mix(in oklab, hsl(240 12% 66%) 75%, hsl(250 15% 30%));
+  --neutral-3: color-mix(in oklab, hsl(255 16% 21%) 20%, hsl(262 28% 11%));
+  --neutral-4: color-mix(in oklab, hsl(255 16% 21%) 40%, hsl(262 28% 11%));
+  --neutral-5: color-mix(in oklab, hsl(255 16% 21%) 60%, hsl(262 28% 11%));
+  --neutral-6: color-mix(in oklab, hsl(255 16% 21%) 80%, hsl(262 28% 11%));
+  --neutral-7: hsl(255 16% 21%);
+  --neutral-8: color-mix(in oklab, hsl(240 12% 66%) 25%, hsl(255 16% 21%));
+  --neutral-9: color-mix(in oklab, hsl(240 12% 66%) 50%, hsl(255 16% 21%));
+  --neutral-10: color-mix(in oklab, hsl(240 12% 66%) 75%, hsl(255 16% 21%));
   --neutral-11: hsl(240 12% 66%);
   --neutral-12: hsl(220 23% 95%);
 }
@@ -2008,6 +2040,7 @@ html[data-brand="vercel"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 92%;
+  --border-strong: color-mix(in oklab, hsl(0 0% 9%) 45%, hsl(0 0% 98%));
   --input: 0 0% 92%;
   --ring: 0 0% 9%;
   --success: 133 50% 32%;
@@ -2057,6 +2090,8 @@ html[data-brand="vercel"] {
   --badge-default-radius: 6px;
   --radius-inputs: 6px;
   --input-radius: 6px;
+  --radius-control: 6px;
+  --radius-chip: min(0.375rem, 6px);
   --radius-pill: 9999px;
 
   /* Free elevation (carrier-provided CSS shadows) */
@@ -2169,6 +2204,7 @@ html.dark[data-brand="vercel"] {
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 16%;
+  --border-strong: color-mix(in oklab, hsl(0 0% 93%) 45%, hsl(0 0% 0%));
   --input: 0 0% 16%;
   --ring: 0 0% 100%;
   --success: 133 49% 40%;

@@ -93,6 +93,7 @@ export function rolesFromSemantic(
   // absent so the emitter derives it from border, not become an explicit
   // undefined the emitter's ?? would then have to defend against twice.
   if (s.input) roles.input = s.input;
+  if (s.borderStrong) roles.borderStrong = s.borderStrong;
   const brand = asChannels(brandMark?.brand);
   if (brand) roles.brand = brand;
   const brandFg = asChannels(brandMark?.brandForeground);
@@ -135,6 +136,7 @@ export function semanticFromRoles(r: BrandColorRoles): BrandSemanticColors {
     ring: r.ring,
   };
   if (r.input) semantic.input = r.input;
+  if (r.borderStrong) semantic.borderStrong = r.borderStrong;
   if (r.success) semantic.success = r.success;
   if (r.successForeground) semantic.successForeground = r.successForeground;
   if (r.warning) semantic.warning = r.warning;
@@ -154,6 +156,9 @@ function normalizeRadii(recipe: BrandRecipeInput): BrandRadii {
     input: recipe.radii?.input ?? recipe.inputRadius ?? button,
     pill: recipe.radii?.pill ?? "9999px",
   };
+  // Optional under exactOptionalPropertyTypes: absent stays absent, and the
+  // emitter derives the chip step from the card radius.
+  if (recipe.radii?.chip) radii.chip = recipe.radii.chip;
   return radii;
 }
 
@@ -215,6 +220,8 @@ export function normalizeModePalette(
     destructiveForeground: baseRoles.destructiveForeground,
   };
   if (baseRoles.input) roles.input = baseRoles.input;
+  const strong = baseRoles.borderStrong ?? palette.semantic?.borderStrong;
+  if (strong) roles.borderStrong = strong;
   const brandCh = asChannels(baseRoles.brand);
   if (brandCh) roles.brand = brandCh;
   const brandFg = asChannels(baseRoles.brandForeground) ?? baseRoles.actionForeground;
@@ -289,6 +296,7 @@ export function normalizeBrandPackage(brand: BrandPackage | BrandPackageInput): 
   if (looseRecipe.outlineBorder) {
     recipe.outlineBorder = looseRecipe.outlineBorder;
   }
+  if (looseRecipe.outline) recipe.outline = looseRecipe.outline;
 
   const out: BrandPackage = {
     ...brand,

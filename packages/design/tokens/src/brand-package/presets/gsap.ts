@@ -44,8 +44,11 @@ export function buildGsap(ctx: CompileContext): BrandPackage {
       accentForeground: tryHexToHsl(green, "136 91% 47%"),
       destructive: tryHexToHsl(ctx.colors["lipstick-pink"] ?? "#f100cb", "310 100% 47%"),
       destructiveForeground: tryHexToHsl(cream, "54 100% 94%"),
-      border: tryHexToHsl(hairline, "60 5% 25%"),
-      input: tryHexToHsl(hairline, "60 5% 25%"),
+      // The surface-25 grey was a 1.9:1 stroke; the hairline sits a step under it
+      // and the original survives as --border-strong.
+      border: "70 5% 18%",
+      borderStrong: "70 5% 30%",
+      input: "70 5% 18%",
       ring: tryHexToHsl(green, "136 91% 47%"),
       info: tryHexToHsl(ctx.colors.blue ?? "#00bae2", "191 100% 44%"),
       infoForeground: tryHexToHsl(canvas, "150 8% 6%"),

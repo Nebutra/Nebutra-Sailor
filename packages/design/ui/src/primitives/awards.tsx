@@ -219,7 +219,7 @@ export function Awards({
       <div
         className={cn(
           "relative z-0",
-          "flex flex-col items-center justify-center rounded-[var(--radius-xl)] border-2 border-dotted p-2",
+          "flex flex-col items-center justify-center rounded-[var(--radius-xl)] border border-dotted p-2",
           "overflow-hidden",
           className,
         )}

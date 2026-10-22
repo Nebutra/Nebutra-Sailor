@@ -15,6 +15,7 @@ import {
   type CommandListProps,
   CommandSeparator,
 } from "./command";
+import { textControlFocusVisibleClassName } from "./form-control";
 import { Label } from "./label";
 import { Popover, PopoverContent, type PopoverPortalContainer, PopoverTrigger } from "./popover";
 
@@ -225,8 +226,9 @@ export const comboboxTriggerVariants = cva(
     // tracked whatever a language did to medium surfaces instead of what it
     // decided for its fields.
     "h-[var(--combobox-trigger-height)] rounded-[var(--radius-inputs,var(--radius-md))] border border-input bg-background px-[var(--combobox-trigger-padding-x)]",
-    "text-[length:var(--combobox-font-size)] ring-offset-background",
-    "transition-colors duration-micro ease-out",
+    "text-[length:var(--combobox-font-size)]",
+    "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out",
+    textControlFocusVisibleClassName,
     "placeholder:text-muted-foreground",
     "disabled:cursor-not-allowed disabled:opacity-50",
     "[&>span]:line-clamp-1 [&>span]:text-start",
@@ -541,6 +543,10 @@ function ComboboxRoot({
               data-invalid={isErrored || undefined}
               disabled={disabled}
               className={cn(comboboxTriggerVariants({ size: normalizedSize, error: isErrored }))}
+              // The unlayered global :focus-visible outline beats the
+              // `outline-none` utility, so it would stack on the border + ring
+              // this trigger already draws. Select opts out the same way.
+              style={{ outline: "none" }}
             >
               <span className={cn(!selectedValue && "text-muted-foreground")}>
                 {selectedValue ? selectedLabel : placeholder}
@@ -552,7 +558,10 @@ function ComboboxRoot({
             className="p-0"
             container={container}
             style={{
-              width: "var(--combobox-width, var(--radix-popover-trigger-width))",
+              // Base UI publishes the trigger width as --anchor-width. The
+              // Radix-era variable is never set, so the list used to fall back
+              // to the surface's w-72.
+              width: "var(--combobox-width, var(--anchor-width))",
               maxWidth: listMaxWidth ? toCssLength(listMaxWidth) : undefined,
             }}
           >

@@ -85,7 +85,7 @@ const tabsListVariants = cva(
     variants: {
       variant: {
         default:
-          "gap-[var(--tabs-gap)] rounded-[var(--tabs-radius)] border border-border bg-muted p-[calc(var(--tabs-padding)-1px)] text-muted-foreground",
+          "gap-[var(--tabs-gap)] rounded-[var(--tabs-radius)] bg-muted p-[var(--tabs-padding)] text-muted-foreground",
         button: "gap-[var(--tabs-gap)] text-muted-foreground",
         line: "gap-[calc(var(--tabs-gap)*3)] border-b border-border text-muted-foreground",
         secondary:
@@ -127,7 +127,7 @@ const tabsTriggerVariants = cva(
       variant: {
         default: "hover:text-foreground data-[active]:text-foreground",
         button:
-          "border border-border bg-background text-muted-foreground shadow-xs hover:border-ring/40 hover:text-foreground data-[active]:border-ring/40 data-[active]:text-foreground",
+          "bg-background text-muted-foreground shadow-xs ring-1 ring-inset ring-[var(--edge-soft)] hover:text-foreground hover:ring-[var(--edge-medium)] data-[active]:text-foreground data-[active]:ring-[var(--edge-medium)]",
         line: "min-w-0 rounded-none px-0 hover:text-foreground data-[active]:text-foreground",
         secondary:
           "hover:bg-muted hover:text-foreground data-[active]:bg-muted data-[active]:text-foreground",

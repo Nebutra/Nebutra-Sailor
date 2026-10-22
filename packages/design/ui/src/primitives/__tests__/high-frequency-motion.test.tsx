@@ -7,13 +7,14 @@ import { CommandMenuInput, CommandMenuList, CommandMenuRoot } from "../command-m
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 describe("high-frequency interaction motion", () => {
-  it("presses the product Button with the brand flow scale", () => {
+  it("presses the product Button on the micro rail with a reduced-motion-safe scale", () => {
     render(<Button>Save</Button>);
 
     const button = screen.getByRole("button", { name: "Save" });
     expect(button.className).toMatch(/active:scale-\[0\.97\]/u);
-    expect(button.className).toMatch(/duration-flow/u);
-    expect(button.className).toMatch(/ease-\[var\(--ease-brand\)\]/u);
+    expect(button.className).toMatch(/duration-micro/u);
+    expect(button.className).toMatch(/\bease-out\b/u);
+    expect(button.className).toMatch(/motion-reduce:transform-none/u);
   });
 
   it("opens the command palette without a scale or transition recipe", () => {

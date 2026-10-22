@@ -65,7 +65,7 @@ pnpm --filter @nebutra/theme sync:skins
 | gsap | gradient-stroke / outline + zones |
 | raycast | action ≠ brand-mark + elev=key |
 | vercel | Light mono + elev=hairline + dual-mode palettes |
-| vanta | Chromatic action≠brand + elev=none + pills |
+| vanta | Chromatic action≠brand + elev=none + 12px controls with pill chips and badges |
 | stripe | Indigo action ≠ midnight brand + elev=none + 4px |
 | notion | Blue action ≠ ink brand + paper canvas + 8/12 radii |
 

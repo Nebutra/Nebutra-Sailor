@@ -14,7 +14,7 @@ export function CommandLine({ command, className }: { command: string; className
   return (
     <div
       className={cn(
-        "flex h-10 items-center justify-between gap-1 rounded-[var(--radius-md)] border border-border bg-background pr-1 pl-3",
+        "flex h-10 items-center justify-between gap-1 rounded-[var(--radius-md)] border border-hairline bg-muted/40 pr-1 pl-3",
         className,
       )}
     >

@@ -155,10 +155,10 @@ function Block({ block, primary = false }: { block: ApiBlock; primary?: boolean 
 
 function PropsTable({ props }: { props: ApiProp[] }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-border bg-card">
+    <div className="overflow-hidden rounded-lg border border-hairline bg-card shadow-xs">
       <table className="w-full border-collapse text-sm" role="table">
         <thead className="max-md:sr-only" role="rowgroup">
-          <tr className="border-border border-b bg-background" role="row">
+          <tr className="border-hairline border-b bg-background" role="row">
             <th className={cn(TH, "w-[22%]")} role="columnheader" scope="col">
               Prop
             </th>
@@ -186,7 +186,7 @@ function PropsTable({ props }: { props: ApiProp[] }) {
 function PropRow({ prop }: { prop: ApiProp }) {
   return (
     <tr
-      className="border-border border-b align-top last:border-b-0 max-md:flex max-md:flex-col max-md:gap-1 max-md:px-4 max-md:py-3"
+      className="border-hairline border-b align-top last:border-b-0 max-md:flex max-md:flex-col max-md:gap-1 max-md:px-4 max-md:py-3"
       role="row"
     >
       <td className="px-3 py-2.5 max-md:block max-md:p-0" role="cell">
@@ -229,10 +229,10 @@ function PropRow({ prop }: { prop: ApiProp }) {
 function FunctionSignatures({ block }: { block: ApiBlock }) {
   return (
     <div className="flex flex-col gap-4">
-      <div className="overflow-hidden rounded-lg border border-border bg-card">
+      <div className="overflow-hidden rounded-lg border border-hairline bg-card shadow-xs">
         {block.signatures.map((signature) => (
           <pre
-            className="m-0 overflow-x-auto border-border border-b px-4 py-3 font-mono text-foreground text-xs last:border-b-0"
+            className="m-0 overflow-x-auto border-hairline border-b px-4 py-3 font-mono text-foreground text-xs last:border-b-0"
             key={signature}
           >
             <code>{`${block.name}${signature}`}</code>
@@ -298,7 +298,10 @@ function Disclosure({
   children: React.ReactNode;
 }) {
   return (
-    <details className="group rounded-lg border border-border bg-card open:bg-card" open={open}>
+    <details
+      className="group rounded-lg border border-hairline bg-card shadow-xs open:bg-card"
+      open={open}
+    >
       <summary className="flex cursor-pointer list-none flex-wrap items-baseline gap-x-3 gap-y-0.5 px-4 py-2.5 marker:hidden [&::-webkit-details-marker]:hidden">
         <span className="font-medium font-mono text-foreground text-xs">{summary}</span>
         {meta ? <span className="text-muted-foreground text-xs">{meta}</span> : null}
@@ -308,7 +311,7 @@ function Disclosure({
           </span>
         ) : null}
       </summary>
-      <div className="border-border border-t px-4 py-4">{children}</div>
+      <div className="border-hairline border-t px-4 py-4">{children}</div>
     </details>
   );
 }

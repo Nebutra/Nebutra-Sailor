@@ -88,8 +88,8 @@ function Section({
             // for the current page. Colour only: weight would reflow it.
             "flex h-8 items-center justify-between gap-2 rounded-[var(--radius-md)] px-3 text-sm no-underline transition-colors duration-micro",
             active
-              ? "bg-accent text-foreground"
-              : "text-neutral-11 hover:bg-accent hover:text-foreground",
+              ? "bg-muted text-foreground"
+              : "text-neutral-11 hover:bg-muted hover:text-foreground",
           );
           return (
             <li key={item.href}>
@@ -156,8 +156,8 @@ export function TopNav() {
           className={cn(
             "inline-flex h-8 items-center rounded-[var(--radius-md)] px-3 text-sm no-underline transition-colors duration-micro",
             group.id === active
-              ? "bg-accent text-foreground"
-              : "text-neutral-11 hover:bg-accent hover:text-foreground",
+              ? "bg-muted text-foreground"
+              : "text-neutral-11 hover:bg-muted hover:text-foreground",
           )}
           href={group.href}
           key={group.id}
@@ -175,7 +175,7 @@ export function SiteNav({ sections }: { sections: NavSection[] }) {
   // The home page is the front door, not a place inside one group.
   if (!groupForPath(pathname)) return null;
   return (
-    <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-64 shrink-0 flex-col border-border border-r lg:flex">
+    <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-64 shrink-0 flex-col border-hairline border-r lg:flex">
       <nav
         aria-label="Design system"
         className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-8 pb-12"
@@ -211,10 +211,10 @@ export function SiteNavSheet({ sections }: { sections: NavSection[] }) {
             <Link
               aria-current={group.id === active ? "page" : undefined}
               className={cn(
-                "flex h-9 items-center justify-center rounded-[var(--radius-md)] border text-sm no-underline transition-colors duration-micro",
+                "flex h-9 items-center justify-center rounded-[var(--radius-md)] text-sm no-underline transition-colors duration-micro",
                 group.id === active
-                  ? "border-foreground bg-accent text-foreground"
-                  : "border-border text-neutral-11 hover:bg-accent hover:text-foreground",
+                  ? "bg-muted text-foreground"
+                  : "text-neutral-11 hover:bg-muted hover:text-foreground",
               )}
               href={group.href}
               key={group.id}
@@ -226,7 +226,7 @@ export function SiteNavSheet({ sections }: { sections: NavSection[] }) {
         </nav>
         <nav
           aria-label="Design system"
-          className="min-h-0 flex-1 overflow-y-auto border-border border-t px-4 pt-4 pb-10"
+          className="min-h-0 flex-1 overflow-y-auto border-hairline border-t px-4 pt-4 pb-10"
         >
           <Tree onNavigate={close} sections={sections} />
         </nav>
@@ -251,7 +251,7 @@ export function MobilePageBar({ sections }: { sections: NavSection[] }) {
   }, [pathname, sections]);
 
   return (
-    <div className="sticky top-16 z-20 flex h-12 items-center justify-between gap-3 border-border border-b bg-background/80 px-4 backdrop-blur-md md:px-6 lg:hidden">
+    <div className="sticky top-16 z-20 flex h-12 items-center justify-between gap-3 border-hairline border-b bg-background/80 px-4 backdrop-blur-md md:px-6 lg:hidden">
       <p className="m-0 min-w-0 truncate text-ui">
         {here ? (
           <>

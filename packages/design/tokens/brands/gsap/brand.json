@@ -20,12 +20,13 @@
     "accentForeground": "54 100% 94%",
     "destructive": "309 100% 47%",
     "destructiveForeground": "54 100% 94%",
-    "border": "70 5% 25%",
+    "border": "70 5% 18%",
     "ring": "137 92% 47%",
     "success": "137 92% 47%",
     "successForeground": "150 7% 6%",
     "info": "191 100% 44%",
-    "infoForeground": "150 7% 6%"
+    "infoForeground": "150 7% 6%",
+    "borderStrong": "70 5% 30%"
   },
   "recipe": {
     "buttonDefault": "gradient-stroke",
@@ -95,14 +96,15 @@
     "quietForeground": "54 100% 94%",
     "muted": "0 0% 10%",
     "mutedForeground": "60 6% 52%",
-    "border": "70 5% 25%",
+    "border": "70 5% 18%",
     "ring": "137 92% 47%",
     "destructive": "309 100% 47%",
     "destructiveForeground": "54 100% 94%",
     "success": "137 92% 47%",
     "successForeground": "150 7% 6%",
     "info": "191 100% 44%",
-    "infoForeground": "150 7% 6%"
+    "infoForeground": "150 7% 6%",
+    "borderStrong": "70 5% 30%"
   },
   "modes": {
     "dark": {
@@ -123,12 +125,13 @@
         "accentForeground": "54 100% 94%",
         "destructive": "309 100% 47%",
         "destructiveForeground": "54 100% 94%",
-        "border": "70 5% 25%",
+        "border": "70 5% 18%",
         "ring": "137 92% 47%",
         "success": "137 92% 47%",
         "successForeground": "150 7% 6%",
         "info": "191 100% 44%",
-        "infoForeground": "150 7% 6%"
+        "infoForeground": "150 7% 6%",
+        "borderStrong": "70 5% 30%"
       },
       "roles": {
         "canvas": "150 7% 6%",
@@ -141,14 +144,15 @@
         "quietForeground": "54 100% 94%",
         "muted": "0 0% 10%",
         "mutedForeground": "60 6% 52%",
-        "border": "70 5% 25%",
+        "border": "70 5% 18%",
         "ring": "137 92% 47%",
         "destructive": "309 100% 47%",
         "destructiveForeground": "54 100% 94%",
         "success": "137 92% 47%",
         "successForeground": "150 7% 6%",
         "info": "191 100% 44%",
-        "infoForeground": "150 7% 6%"
+        "infoForeground": "150 7% 6%",
+        "borderStrong": "70 5% 30%"
       }
     },
     "light": {
@@ -169,7 +173,7 @@
         "accentForeground": "150 7% 6%",
         "destructive": "309 100% 38%",
         "destructiveForeground": "0 0% 100%",
-        "border": "54 15% 76%",
+        "border": "54 15% 80%",
         "ring": "150 7% 6%",
         "success": "137 85% 26%",
         "successForeground": "0 0% 100%",
@@ -187,7 +191,7 @@
         "quietForeground": "150 7% 6%",
         "muted": "54 50% 90%",
         "mutedForeground": "60 6% 33%",
-        "border": "54 15% 76%",
+        "border": "54 15% 80%",
         "ring": "150 7% 6%",
         "destructive": "309 100% 38%",
         "destructiveForeground": "0 0% 100%",

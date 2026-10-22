@@ -1,5 +1,4 @@
 "use client";
-// @primitive-exempt: the package-manager switch is an aria-pressed segmented toggle, not an action button.
 
 /**
  * A copyable code block, and the install/import card at the top of a page.
@@ -7,30 +6,67 @@
  * Deliberately unhighlighted: a component page has dozens of snippets and a
  * colourful one in every section turns the page into a code editor. Mono,
  * hairline, one copy affordance.
+ *
+ * Both share one frame (`CodeFrame`): a single hairline card whose rows are
+ * separated by hairlines inside it, never boxes inside boxes.
  */
 
 import { CopyButton } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import * as React from "react";
+import { Segmented } from "./segmented";
+
+/** The one frame for code on this site. */
+function CodeFrame({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string | undefined;
+}) {
+  return (
+    <figure
+      className={cn(
+        "m-0 overflow-hidden rounded-lg border border-hairline bg-card shadow-xs",
+        className,
+      )}
+    >
+      {children}
+    </figure>
+  );
+}
+
+/** A row's caption bar: a quiet label on the left, controls on the right. */
+const BAR = "flex min-h-9 items-center justify-between gap-3 bg-muted/40 px-3 py-1";
+const LABEL = "font-medium text-muted-foreground text-xs";
+
+/**
+ * Press feedback for the copy buttons. CopyButton appends its own
+ * `transition-colors` after Button's list and the merge keeps the later one, so
+ * the 0.97 press would snap; restating the list with `transform` keeps it eased.
+ */
+const PRESS =
+  "transition-[background-color,border-color,box-shadow,color,transform] active:scale-[0.97] motion-reduce:transform-none motion-reduce:active:scale-100";
 
 export function CodeBlock({
   code,
   label,
   className,
+  bare = false,
 }: {
   code: string;
   /** Names what the block is, for assistive tech and the visible caption. */
   label?: string;
   className?: string;
+  /** Drop the frame: the block sits inside a container that already draws one. */
+  bare?: boolean;
 }) {
-  return (
-    <figure
-      className={cn("m-0 overflow-hidden rounded-lg border border-border bg-card", className)}
-    >
-      <div className="flex items-center justify-between gap-2 border-border border-b bg-background px-3 py-1.5">
-        <figcaption className="text-muted-foreground text-xs">{label ?? "Code"}</figcaption>
+  const body = (
+    <>
+      <div className={cn(BAR, "border-hairline border-b")}>
+        <figcaption className={LABEL}>{label ?? "Code"}</figcaption>
         <CopyButton
-          className="text-muted-foreground"
+          className={cn("text-muted-foreground", PRESS)}
           showToast={false}
           tooltipText="Copy code"
           value={code}
@@ -39,7 +75,13 @@ export function CodeBlock({
       <pre className="m-0 overflow-x-auto px-4 py-3 font-mono text-foreground text-xs leading-relaxed">
         <code>{code}</code>
       </pre>
-    </figure>
+    </>
+  );
+
+  return bare ? (
+    <figure className={cn("m-0 min-w-0", className)}>{body}</figure>
+  ) : (
+    <CodeFrame className={className}>{body}</CodeFrame>
   );
 }
 
@@ -50,6 +92,7 @@ const MANAGERS = [
 ] as const;
 
 type Manager = (typeof MANAGERS)[number]["id"];
+const MANAGER_IDS = MANAGERS.map((m) => m.id);
 
 /**
  * The two lines a reader needs before anything else: how to get the package
@@ -61,35 +104,22 @@ export function InstallCard({ importLine }: { importLine: string }) {
   const command = MANAGERS.find((m) => m.id === manager)?.command ?? MANAGERS[0].command;
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border bg-card">
-      <div className="flex items-center justify-between gap-4 border-border border-b bg-background px-3 py-1.5">
-        <span className="text-muted-foreground text-xs">Install</span>
-        {/* biome-ignore lint/a11y/useSemanticElements: a labelled button group, not a form fieldset */}
-        <div aria-label="Package manager" className="flex items-center gap-0.5" role="group">
-          {MANAGERS.map((m) => (
-            <button
-              aria-pressed={manager === m.id}
-              className={cn(
-                "h-6 rounded-[var(--radius-sm)] px-2 font-medium text-xs transition-colors duration-micro",
-                manager === m.id
-                  ? "bg-accent text-foreground"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
-              key={m.id}
-              onClick={() => setManager(m.id)}
-              type="button"
-            >
-              {m.id}
-            </button>
-          ))}
-        </div>
+    <CodeFrame>
+      <div className={cn(BAR, "border-hairline border-b")}>
+        <span className={LABEL}>Install</span>
+        <Segmented
+          label="Package manager"
+          onValueChange={setManager}
+          options={MANAGER_IDS}
+          value={manager}
+        />
       </div>
-      <Line value={command} copyLabel="Copy install command" />
-      <div className="border-border border-t bg-background px-3 py-1.5 text-muted-foreground text-xs">
-        Import
+      <Line copyLabel="Copy install command" value={command} />
+      <div className={cn(BAR, "border-hairline border-y")}>
+        <span className={LABEL}>Import</span>
       </div>
-      <Line value={importLine} copyLabel="Copy import" />
-    </div>
+      <Line copyLabel="Copy import" value={importLine} />
+    </CodeFrame>
   );
 }
 
@@ -100,7 +130,7 @@ function Line({ value, copyLabel }: { value: string; copyLabel: string }) {
         {value}
       </code>
       <CopyButton
-        className="shrink-0 text-muted-foreground"
+        className={cn("shrink-0 text-muted-foreground", PRESS)}
         showToast={false}
         tooltipText={copyLabel}
         value={value}

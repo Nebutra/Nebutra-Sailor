@@ -116,7 +116,7 @@ export function KineticFeatureCard({
   return (
     <article
       className={cn(
-        "group/kinetic relative flex h-full min-h-[540px] flex-col overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/82 p-6 shadow-glass-md backdrop-blur-2xl transition-[border-color,background-color] duration-flow ease-out hover:border-foreground/25 hover:bg-background/94 focus-within:border-foreground/25 sm:p-7",
+        "group/kinetic relative flex h-full min-h-[540px] flex-col overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/82 p-6 shadow-glass-md backdrop-blur-2xl transition-[border-color,background-color] duration-flow ease-out hover:border-[var(--edge-medium)] hover:bg-background/94 focus-within:border-[var(--edge-medium)] sm:p-7",
         className,
       )}
       data-taste="nebutra-texture-cutout-card"
@@ -131,7 +131,7 @@ export function KineticFeatureCard({
       <div className="relative z-10 flex h-full flex-col">
         <div className="mb-8 flex items-start justify-between gap-4">
           {renderedIcon && (
-            <div className="grid size-14 place-items-center rounded-[var(--radius-xl)] border border-border/65 bg-background/75 shadow-glass-sm transition-[border-color] duration-flow ease-out group-hover/kinetic:border-foreground/20">
+            <div className="grid size-14 place-items-center rounded-[var(--radius-xl)] border border-border/65 bg-background/75 shadow-glass-sm transition-[border-color] duration-flow ease-out group-hover/kinetic:border-[var(--edge-medium)]">
               {renderedIcon}
             </div>
           )}
@@ -163,7 +163,7 @@ export function KineticCodePreview({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-muted/30 shadow-ambient-md transition-[border-color] duration-flow ease-out group-hover/kinetic:border-foreground/20",
+        "relative overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-muted/30 shadow-ambient-md transition-[border-color] duration-flow ease-out group-hover/kinetic:border-[var(--edge-medium)]",
         className,
       )}
       {...props}
@@ -209,7 +209,7 @@ export function KineticConsoleFrame({
   return (
     <div
       className={cn(
-        "group/kinetic relative flex h-full min-h-[460px] w-full flex-col overflow-hidden rounded-[2rem] border border-border/65 bg-background/84 shadow-glass-md backdrop-blur-3xl transition-[border-color] duration-flow ease-out hover:border-foreground/25",
+        "group/kinetic relative flex h-full min-h-[460px] w-full flex-col overflow-hidden rounded-[2rem] border border-border/65 bg-background/84 shadow-glass-md backdrop-blur-3xl transition-[border-color] duration-flow ease-out hover:border-[var(--edge-medium)]",
         className,
       )}
       data-taste="nebutra-terminal-animation"
@@ -261,7 +261,7 @@ export function KineticMorphSurface({
   return (
     <div
       className={cn(
-        "group/kinetic relative overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/80 p-3 shadow-glass-md backdrop-blur-2xl transition-[border-color,background-color] duration-flow ease-out hover:border-foreground/20 hover:bg-background/92 sm:p-4 lg:p-5",
+        "group/kinetic relative overflow-hidden rounded-[var(--radius-panel)] border border-border/65 bg-background/80 p-3 shadow-glass-md backdrop-blur-2xl transition-[border-color,background-color] duration-flow ease-out hover:border-[var(--edge-medium)] hover:bg-background/92 sm:p-4 lg:p-5",
         className,
       )}
       data-active-key={activeKey}
@@ -395,7 +395,7 @@ export function KineticStep({
   return (
     <article
       className={cn(
-        "group/kinetic relative flex h-full flex-col items-center rounded-[var(--radius-xl)] border border-border/60 bg-background/82 p-5 text-center shadow-ambient-md backdrop-blur-xl transition-[border-color] duration-flow ease-out hover:border-foreground/25",
+        "group/kinetic relative flex h-full flex-col items-center rounded-[var(--radius-xl)] border border-border/60 bg-background/82 p-5 text-center shadow-ambient-md backdrop-blur-xl transition-[border-color] duration-flow ease-out hover:border-[var(--edge-medium)]",
         className,
       )}
       {...props}

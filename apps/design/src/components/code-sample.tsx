@@ -19,10 +19,13 @@ export function CodeSample({
 }) {
   return (
     <figure
-      className={cn("m-0 overflow-hidden rounded-lg border border-border bg-card", className)}
+      className={cn(
+        "m-0 overflow-hidden rounded-lg border border-hairline bg-card shadow-xs",
+        className,
+      )}
     >
       {caption ? (
-        <figcaption className="border-border border-b px-4 py-2 font-mono text-muted-foreground text-xs">
+        <figcaption className="border-hairline border-b bg-muted/40 px-4 py-2 font-mono text-muted-foreground text-xs">
           {caption}
         </figcaption>
       ) : null}

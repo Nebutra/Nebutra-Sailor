@@ -79,7 +79,7 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
               {/* Node dot */}
               <motion.div
                 className={cn(
-                  "w-3 h-3 rounded-full border-2 transition-colors duration-flow",
+                  "size-3 rounded-full border transition-colors duration-flow ease-out",
                   isActive
                     ? "bg-primary border-primary"
                     : isPast
