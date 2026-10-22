@@ -102,11 +102,10 @@ describe("form-control visual contract", () => {
     expect(source(filename)).toMatch(/controlFocusVisibleClassName/u);
   });
 
-  it("combobox: draws the same border + ring as Input/Select, on :focus-visible only", () => {
-    expect(source("combobox.tsx")).toMatch(/textControlFocusVisibleClassName/u);
-    expect(source("form-control.ts")).toMatch(
-      /textControlFocusVisibleClassName =\s*"outline-none focus-visible:border-ring /u,
-    );
+  it("combobox: draws the same border + ring as Select, from the shared contract", () => {
+    const combobox = source("combobox.tsx");
+    expect(combobox).toMatch(/formControlFocusClassNames\.select/u);
+    expect(combobox).toMatch(/--select-focus-ring-width/u);
   });
 
   it.each(

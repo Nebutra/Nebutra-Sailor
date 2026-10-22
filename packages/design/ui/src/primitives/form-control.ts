@@ -52,14 +52,6 @@ export const controlFocusVisibleClassName =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[hsl(var(--ring))]";
 
 /**
- * Keyboard focus for a text-like control that is itself a button (the
- * combobox trigger): the same border + soft ring Input and Select draw, but on
- * :focus-visible so a mouse click opens the list without flashing a ring.
- */
-export const textControlFocusVisibleClassName =
-  "outline-none focus-visible:border-ring focus-visible:ring-[length:var(--select-focus-ring-width,3px)] focus-visible:ring-ring/30";
-
-/**
  * Keyboard focus for a native range input. The global :focus-visible rule
  * excludes `input`, and the thumb is a pseudo-element, so a focused slider
  * showed nothing at all (7 of 7 on the design site). Same outline as the

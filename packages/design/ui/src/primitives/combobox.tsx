@@ -4,6 +4,7 @@ import { Check, ChevronUpDown as ChevronsUpDown } from "@nebutra/icons";
 import { cva } from "class-variance-authority";
 import * as React from "react";
 import { controlFontSize, controlHeight } from "../tokens/components/control-ladder";
+import { selectTokens } from "../tokens/components/select";
 import { cn } from "../utils/cn";
 import {
   Command,
@@ -15,7 +16,7 @@ import {
   type CommandListProps,
   CommandSeparator,
 } from "./command";
-import { textControlFocusVisibleClassName } from "./form-control";
+import { formControlFocusClassNames } from "./form-control";
 import { Label } from "./label";
 import { Popover, PopoverContent, type PopoverPortalContainer, PopoverTrigger } from "./popover";
 
@@ -228,7 +229,12 @@ export const comboboxTriggerVariants = cva(
     "h-[var(--combobox-trigger-height)] rounded-[var(--radius-inputs,var(--radius-md))] border border-input bg-background px-[var(--combobox-trigger-padding-x)]",
     "text-[length:var(--combobox-font-size)]",
     "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out",
-    textControlFocusVisibleClassName,
+    // The trigger is a select-like field: it takes the same border + ring as
+    // Select, from the shared contract. `outline-none!` is important on
+    // purpose: the unlayered global :focus-visible outline beats a plain
+    // utility and would stack a second indicator on the ring.
+    formControlFocusClassNames.select,
+    "outline-none!",
     "placeholder:text-muted-foreground",
     "disabled:cursor-not-allowed disabled:opacity-50",
     "[&>span]:line-clamp-1 [&>span]:text-start",
@@ -543,10 +549,11 @@ function ComboboxRoot({
               data-invalid={isErrored || undefined}
               disabled={disabled}
               className={cn(comboboxTriggerVariants({ size: normalizedSize, error: isErrored }))}
-              // The unlayered global :focus-visible outline beats the
-              // `outline-none` utility, so it would stack on the border + ring
-              // this trigger already draws. Select opts out the same way.
-              style={{ outline: "none" }}
+              style={
+                {
+                  "--select-focus-ring-width": `${selectTokens.focusRingWidth}px`,
+                } as React.CSSProperties
+              }
             >
               <span className={cn(!selectedValue && "text-muted-foreground")}>
                 {selectedValue ? selectedLabel : placeholder}
