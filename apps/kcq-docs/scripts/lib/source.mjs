@@ -15,8 +15,8 @@ export function readPin() {
   return JSON.parse(readFileSync(resolve(KCQ_APP_ROOT, "chart-source.json"), "utf8"));
 }
 
-export function chartSource() {
-  return resolveChartSource(KCQ_APP_ROOT);
+export function chartSource(options) {
+  return resolveChartSource(KCQ_APP_ROOT, options);
 }
 
 /** GitHub URLs for the pinned commit (the fork that Sailor builds from). */

@@ -8,7 +8,7 @@ function run(command, args, cwd) {
   const result = spawnSync(command, args, { cwd, stdio: "inherit" });
   if (result.status !== 0) throw new Error(`KCQ source preparation failed: ${command}`);
 }
-export function resolveChartSource(root) {
+export function resolveChartSource(root, { prepare = true } = {}) {
   const explicit = process.env.KCQ_SOURCE_DIR;
   if (explicit) return resolve(explicit);
   const pin = validatePin(JSON.parse(readFileSync(resolve(root, "chart-source.json"), "utf8")));
@@ -23,6 +23,7 @@ export function resolveChartSource(root) {
   const head = spawnSync("git", ["rev-parse", "HEAD"], { cwd: target, encoding: "utf8" });
   if (head.stdout.trim() !== pin.commit)
     throw new Error("KCQ cached source revision differs from its pin.");
+  if (!prepare) return target;
   if (!existsSync(resolve(target, "node_modules/.modules.yaml"))) {
     run("pnpm", ["install", "--frozen-lockfile"], target);
   }
