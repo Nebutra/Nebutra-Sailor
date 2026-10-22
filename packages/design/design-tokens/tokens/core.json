@@ -371,6 +371,56 @@
       "$type": "cubicBezier"
     }
   },
+  "spring": {
+    "$description": "Spring presets. Only the physics is authored here — stiffness, damping, mass. The settle `duration` and the CSS `linear()` `easing` are derived from them at build time (scripts/spring.mjs), so the CSS curve and the JS parameters cannot drift. JS consumers (Motion, react-spring, WAAPI) read stiffness/damping/mass; CSS consumers read easing + duration.",
+    "snappy": {
+      "$description": "UI response: lands quickly with a hair of overshoot (damping ratio 0.75). Toggles, popovers, anything a finger just touched.",
+      "stiffness": { "$value": 400, "$type": "number" },
+      "damping": { "$value": 30, "$type": "number" },
+      "mass": { "$value": 1, "$type": "number" }
+    },
+    "smooth": {
+      "$description": "No overshoot (damping ratio ~1): a long, even settle. Layout moves and shared-element travel, where a bounce would read as an error.",
+      "stiffness": { "$value": 170, "$type": "number" },
+      "damping": { "$value": 26, "$type": "number" },
+      "mass": { "$value": 1, "$type": "number" }
+    },
+    "bouncy": {
+      "$description": "Visible overshoot of about 25% (damping ratio 0.40). Delight moments only: it asks to be noticed.",
+      "stiffness": { "$value": 300, "$type": "number" },
+      "damping": { "$value": 14, "$type": "number" },
+      "mass": { "$value": 1, "$type": "number" }
+    }
+  },
+  "stagger": {
+    "$description": "Delay between consecutive siblings in an orchestrated entrance. Names are density, not speed: tight for dense lists, loose for a few large items.",
+    "tight": {
+      "$value": "30ms",
+      "$type": "duration",
+      "$description": "Dense lists and table rows; the cascade reads as one gesture."
+    },
+    "normal": {
+      "$value": "60ms",
+      "$type": "duration",
+      "$description": "Default for card grids and menu items."
+    },
+    "loose": {
+      "$value": "100ms",
+      "$type": "duration",
+      "$description": "A handful of large elements where each arrival should be seen."
+    }
+  },
+  "distance": {
+    "$description": "How far a moving element travels. Short travel reads as polish, long travel as an event; most UI motion is xs or sm.",
+    "xs": { "$value": "2px", "$type": "dimension", "$description": "Press sink, swap nudge" },
+    "sm": { "$value": "8px", "$type": "dimension", "$description": "Enter / exit rise" },
+    "md": {
+      "$value": "16px",
+      "$type": "dimension",
+      "$description": "Shared-element and panel travel"
+    },
+    "lg": { "$value": "32px", "$type": "dimension", "$description": "Hero entrance" }
+  },
   "tracking": {
     "$description": "Letter-spacing tokens — 2026 SaaS hero typography (Vercel Geist consensus).",
     "display": {

@@ -25,6 +25,25 @@ export default function DialogDemo() {
     <DemoPage>
       <State
         breaks="A modal that does not trap focus, so Tab walks out into the page behind it."
+        code={`<Dialog>
+  <DialogTrigger asChild>
+    <Button variant="outline">Delete workspace</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Delete workspace</DialogTitle>
+      <DialogDescription>This action is permanent.</DialogDescription>
+    </DialogHeader>
+    <DialogFooter>
+      <DialogClose asChild>
+        <Button variant="outline">Cancel</Button>
+      </DialogClose>
+      <DialogClose asChild>
+        <Button variant="destructive">Delete</Button>
+      </DialogClose>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>`}
         id="default"
         note="Open it and Tab around. Focus stays inside; Escape closes."
         title="Default"
@@ -56,6 +75,10 @@ export default function DialogDemo() {
 
       <State
         breaks="A submitting dialog that can be dismissed mid-request, or one where the confirm button stays clickable and fires twice. Open it and press Confirm."
+        code={`<DialogFooter>
+  <Button disabled={submitting} variant="outline">Cancel</Button>
+  <Button loading={submitting} onClick={confirm}>Confirm</Button>
+</DialogFooter>`}
         id="submitting"
         note="Confirm puts the dialog into a pending state for a second. Both buttons disable; the dialog stays put."
         title="Submitting"

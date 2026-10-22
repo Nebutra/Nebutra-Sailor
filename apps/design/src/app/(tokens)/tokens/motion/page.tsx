@@ -1,5 +1,17 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { DurationCarriers } from "@/components/duration-carriers";
+import { MotionRoleDemos } from "@/components/motion-role-demos";
+import { SpringCurveSvg } from "@/components/motion-spring-curve";
+import {
+  distanceSteps,
+  motionRoles,
+  plainTokens,
+  type ScaleStep,
+  springPresets,
+  staggerSteps,
+} from "@/lib/motion/roles";
+import { dampingRatio, describeFeel, springOvershoot } from "@/lib/motion/spring";
 import { durations, easings, motionComposites } from "@/lib/tokens";
 import { Mono, Note, PageHeader, Section, Table } from "../_components/primitives";
 import { SimpleRow, SimpleTableHead } from "../_components/token-rows";
@@ -7,7 +19,7 @@ import { SimpleRow, SimpleTableHead } from "../_components/token-rows";
 export const metadata: Metadata = {
   title: "Motion — tokens",
   description:
-    "The four duration rails and four easing curves, generated from the source, each rail animated at its own value.",
+    "Motion by role (enter, exit, swap, shared, press), three spring presets, stagger and distance scales, and the four duration rails — generated from the token source and played on the real thing.",
 };
 
 /** Shared cycle for the duration rails, in ms. Just past the slowest rail, so
@@ -66,25 +78,206 @@ function DurationBar({ duration, easing }: { duration: string; easing: string })
   );
 }
 
+/** Stagger as it reads on a timeline: five items, each starting one step after the last. */
+function StaggerStrip({ step, longest }: { step: ScaleStep; longest: number }) {
+  const total = longest * 4;
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-baseline justify-between gap-3">
+        <Mono>{step.cssVar}</Mono>
+        <span className="font-mono text-muted-foreground text-xs tabular-nums">{step.value}</span>
+      </div>
+      <div aria-hidden className="relative h-9">
+        {[0, 1, 2, 3, 4].map((index) => (
+          <span
+            className="absolute h-1.5 rounded-full bg-primary"
+            key={index}
+            style={{
+              left: `${((index * step.amount) / total) * 76}%`,
+              top: `${index * 7}px`,
+              width: "24%",
+            }}
+          />
+        ))}
+      </div>
+      {step.description ? (
+        <p className="m-0 text-muted-foreground text-xs leading-snug">{step.description}</p>
+      ) : null}
+    </div>
+  );
+}
+
+function DistanceBar({ step, longest }: { step: ScaleStep; longest: number }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-baseline justify-between gap-3">
+        <Mono>{step.cssVar}</Mono>
+        <span className="font-mono text-muted-foreground text-xs tabular-nums">{step.value}</span>
+      </div>
+      <div aria-hidden className="h-1.5 rounded-full bg-muted">
+        <div
+          className="h-full rounded-full bg-primary"
+          style={{ width: `${(step.amount / longest) * 100}%` }}
+        />
+      </div>
+      {step.description ? (
+        <p className="m-0 text-muted-foreground text-xs leading-snug">{step.description}</p>
+      ) : null}
+    </div>
+  );
+}
+
 export default function MotionPage() {
   const rails = durations("light");
+  const roles = motionRoles();
+  const springs = springPresets();
+  const staggers = staggerSteps();
+  const distances = distanceSteps();
+  const composites = motionComposites("light");
+  const roleRows = composites.filter(
+    (item) => item.token.group === "motion" && !item.token.name.startsWith("duration."),
+  );
+  const otherComposites = composites.filter((item) => !roleRows.includes(item));
 
   return (
     <div>
       <PageHeader eyebrow="tokens / motion" title="Motion">
         <p>
-          Four duration rails, named for what they are <em>for</em> rather than for how fast they
-          are. That is the governance decision recorded in the source itself, and the descriptions
-          below are quoted from it: a hover response and a hero entrance are different jobs, not
-          different points on a fast-to-slow slider.
+          Motion is specified by what is changing, not by how fast it should be. Five roles —{" "}
+          <Mono>enter</Mono>, <Mono>exit</Mono>, <Mono>swap</Mono>, <Mono>shared</Mono>,{" "}
+          <Mono>press</Mono> — each bundle a duration, a curve and a distance. Under them sit the
+          primitives: four duration rails, three springs, a stagger scale and a distance scale.
         </p>
         <p>
-          Every bar below leaves at the same instant and moves for exactly its own duration, at full
-          speed — the fast rail arrives first and waits while the slow one is still travelling, so
-          the gap between arrivals is the difference between the tokens. They stop entirely under{" "}
-          <Mono>prefers-reduced-motion</Mono>.
+          Behaviour first, numbers after. Every demo plays at 1× or 0.25×, and every role is shown
+          twice — with full motion and with reduced motion — because the second column is the
+          contract for anyone who asked for less. Try the springs live in the{" "}
+          <Link className="underline underline-offset-4" href="/motion-lab">
+            Motion Lab
+          </Link>
+          .
         </p>
       </PageHeader>
+
+      <Section
+        title="Roles"
+        note={
+          <p>
+            A role answers one question — <em>what kind of change is this?</em> Reduced motion drops
+            every transform and keeps the opacity change, so a state change still reads as a change
+            instead of a snap. That is the policy in the token stylesheet; the right column is that
+            policy, not a mock-up of it.
+          </p>
+        }
+      >
+        <div className="mb-10">
+          <MotionRoleDemos roles={roles} />
+        </div>
+        <Table>
+          <SimpleTableHead />
+          <tbody>
+            {roleRows.map((item, index) => (
+              <SimpleRow key={item.token.path.join(".")} item={item} index={index} />
+            ))}
+          </tbody>
+        </Table>
+      </Section>
+
+      <Section
+        title="Springs"
+        note={
+          <p>
+            Only the physics is authored — <Mono>stiffness</Mono>, <Mono>damping</Mono>,{" "}
+            <Mono>mass</Mono>. The settle time and the CSS <Mono>linear()</Mono> curve are derived
+            from them when the tokens build, so the CSS curve and the JS parameters cannot drift
+            apart. The dashed line is the target.
+          </p>
+        }
+      >
+        <div className="mb-8 grid gap-4 md:grid-cols-3">
+          {springs.map((spring) => {
+            const overshoot = springOvershoot(spring.params) * 100;
+            return (
+              <figure
+                className="m-0 flex flex-col gap-3 rounded-[var(--radius-lg)] bg-card p-4 shadow-ambient-sm"
+                key={spring.name}
+              >
+                <SpringCurveSvg
+                  label={`${spring.name} spring response curve`}
+                  params={spring.params}
+                />
+                <figcaption className="flex flex-col gap-1.5">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <Mono>--spring-{spring.name}</Mono>
+                    <span className="font-mono text-muted-foreground text-xs tabular-nums">
+                      {spring.duration.value}
+                    </span>
+                  </div>
+                  <span className="font-mono text-muted-foreground text-xs tabular-nums">
+                    ζ {dampingRatio(spring.params).toFixed(2)} · overshoot {overshoot.toFixed(1)}%
+                  </span>
+                  <span className="text-muted-foreground text-xs leading-snug">
+                    {describeFeel(spring.params)}
+                  </span>
+                </figcaption>
+              </figure>
+            );
+          })}
+        </div>
+        <Table>
+          <SimpleTableHead />
+          <tbody>
+            {plainTokens("spring").map((item, index) => (
+              <SimpleRow key={item.token.path.join(".")} item={item} index={index} />
+            ))}
+          </tbody>
+        </Table>
+      </Section>
+
+      <Section
+        title="Stagger and distance"
+        note={
+          <p>
+            Stagger is the gap between consecutive siblings; distance is how far something travels.
+            Names are density and reach, not speed — most UI motion is <Mono>xs</Mono> or{" "}
+            <Mono>sm</Mono>, and a long distance reads as an event. Scrub a staggered entrance in
+            the{" "}
+            <Link className="underline underline-offset-4" href="/motion-lab#orchestration">
+              Motion Lab
+            </Link>
+            .
+          </p>
+        }
+      >
+        <div className="mb-8 grid gap-8 md:grid-cols-2">
+          <div className="flex flex-col gap-6">
+            {staggers.map((step) => (
+              <StaggerStrip
+                key={step.cssVar}
+                longest={Math.max(...staggers.map((s) => s.amount))}
+                step={step}
+              />
+            ))}
+          </div>
+          <div className="flex flex-col gap-6">
+            {distances.map((step) => (
+              <DistanceBar
+                key={step.cssVar}
+                longest={Math.max(...distances.map((s) => s.amount))}
+                step={step}
+              />
+            ))}
+          </div>
+        </div>
+        <Table>
+          <SimpleTableHead />
+          <tbody>
+            {[...plainTokens("stagger"), ...plainTokens("distance")].map((item, index) => (
+              <SimpleRow key={item.token.path.join(".")} item={item} index={index} />
+            ))}
+          </tbody>
+        </Table>
+      </Section>
 
       <Section title="Duration rails">
         {/* The carriers first. A rail shows that one number exceeds another,
@@ -107,7 +300,7 @@ export default function MotionPage() {
             <div key={rail.token.cssVar}>
               <div className="mb-2 flex items-baseline gap-3">
                 <Mono>--{rail.token.cssVar}</Mono>
-                <span className="font-mono text-[12px] text-muted-foreground tabular-nums">
+                <span className="font-mono text-muted-foreground text-xs tabular-nums">
                   {rail.token.resolved}
                 </span>
               </div>
@@ -140,7 +333,7 @@ export default function MotionPage() {
             <div key={curve.token.cssVar}>
               <div className="mb-2 flex items-baseline gap-3">
                 <Mono>--{curve.token.cssVar}</Mono>
-                <span className="font-mono text-[12px] text-muted-foreground">
+                <span className="font-mono text-muted-foreground text-xs">
                   {curve.token.resolved}
                 </span>
               </div>
@@ -176,7 +369,7 @@ export default function MotionPage() {
         <Table>
           <SimpleTableHead />
           <tbody>
-            {motionComposites("light").map((item, index) => (
+            {otherComposites.map((item, index) => (
               <SimpleRow key={item.token.path.join(".")} item={item} index={index} />
             ))}
           </tbody>

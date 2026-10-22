@@ -92,6 +92,11 @@ export interface ComponentEntry {
   covers: string[];
   /** Measured import sites (see file header). */
   consumers: number;
+  /**
+   * When `consumers` was counted, if not on the date in the file header — an
+   * entry added later is counted on the day it is added.
+   */
+  consumersMeasured?: string;
   /** One line on what the component is for. Editorial. */
   blurb: string;
   cva?: CvaRequest[];
@@ -280,6 +285,18 @@ export const COMPONENTS: ComponentEntry[] = [
     covers: ["RadioGroup", "RadioGroupItem"],
     consumers: 9,
     blurb: "Exclusive choice group with roving-focus keyboard navigation.",
+  },
+  {
+    slug: "toast",
+    name: "Toaster",
+    group: "primitives",
+    entry: "primitives/toaster.tsx",
+    covers: ["Toaster", "toast", "useToasts"],
+    consumers: 9,
+    consumersMeasured: "2026-10-22",
+    blurb:
+      "Notifications on top of Sonner. Mount one Toaster, then call useToasts() or toast() from anywhere.",
+    axes: [{ as: "tone", file: "primitives/toaster.tsx", kind: "union", name: "ToastTone" }],
   },
   {
     slug: "separator",

@@ -42,7 +42,7 @@ export default function PageHeaderDemo() {
             },
           ].map((entry) => (
             <div key={entry.label}>
-              <div className="mb-2 font-mono text-[11px] text-muted-foreground">{entry.label}</div>
+              <div className="mb-2 font-mono text-2xs text-muted-foreground">{entry.label}</div>
               <div className="rounded-lg bg-background p-6">
                 <PageHeader {...entry.props} />
               </div>

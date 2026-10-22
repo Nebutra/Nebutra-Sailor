@@ -6,7 +6,7 @@ import { Mono, PageHeader, Section } from "../../(tokens)/tokens/_components/pri
 export const metadata: Metadata = {
   title: "Icons — foundations",
   description:
-    "The Geist set, every icon searchable and rendered from the package, plus the three-tier rule that decides which library a surface may reach for.",
+    "IconBox: the Geist set as a workbench — search, categories, size, weight and colour controls, and one click to copy the import, the React element or the SVG — plus the three-tier rule for which library a surface may reach for.",
 };
 
 /**
@@ -52,7 +52,7 @@ export default function IconsPage() {
     <div>
       <PageHeader eyebrow="foundations / icons" title="Icons">
         <p>
-          {count} icons, generated from the Geist source into tree-shakable components. The gallery
+          {count} icons, generated from the Geist source into tree-shakable components. IconBox
           below renders every one from <Mono>@nebutra/icons</Mono> — the count is{" "}
           <Mono>Object.keys</Mono> on the package, so it cannot drift from what ships.
         </p>
@@ -69,7 +69,7 @@ export default function IconsPage() {
         title="Which set"
       >
         <div className="overflow-x-auto">
-          <table className="w-full max-w-3xl min-w-[640px] table-fixed text-left text-[14px]">
+          <table className="w-full max-w-3xl min-w-[640px] table-fixed text-left text-ui">
             <colgroup>
               <col className="w-[26%]" />
               <col className="w-[34%]" />
@@ -97,7 +97,25 @@ export default function IconsPage() {
         </div>
       </Section>
 
-      <Section title="Every icon">
+      <Section
+        note={
+          <>
+            <p>
+              Search matches the set&apos;s own names and the words people type — <Mono>close</Mono>{" "}
+              finds <Mono>Cross</Mono>, <Mono>delete</Mono> finds <Mono>Trash</Mono>. Categories are
+              derived from the names, because the Geist source ships none. A click copies the format
+              you pick; the panel beside the grid holds all three.
+            </p>
+            <p>
+              The Geist glyphs are filled shapes, not strokes. <Mono>Weight</Mono> lays an SVG
+              stroke over the fill, which thickens the drawing outward; at zero you get the glyph
+              exactly as shipped. Colour sets a semantic text class, so a copied snippet follows the
+              theme. Brand logos keep their own colours.
+            </p>
+          </>
+        }
+        title="IconBox"
+      >
         <IconGallery />
       </Section>
     </div>

@@ -85,6 +85,41 @@
       "flow": { "$value": "{duration.flow}", "$type": "duration" },
       "reveal": { "$value": "{duration.reveal}", "$type": "duration" },
       "cinematic": { "$value": "{duration.cinematic}", "$type": "duration" }
+    },
+    "enter": {
+      "$description": "Something appears: dialog, popover, toast, list item. Decelerates into place.",
+      "duration": { "$value": "var(--motion-duration-reveal)", "$type": "string" },
+      "easing": { "$value": "var(--motion-ease-out)", "$type": "string" },
+      "distance": { "$value": "var(--distance-sm)", "$type": "string" }
+    },
+    "exit": {
+      "$description": "Something leaves. Shorter than its enter and accelerating away: a leaving element should not hold the screen.",
+      "duration": { "$value": "var(--motion-duration-flow)", "$type": "string" },
+      "easing": { "$value": "var(--motion-ease-in)", "$type": "string" },
+      "distance": { "$value": "var(--distance-sm)", "$type": "string" }
+    },
+    "swap": {
+      "$description": "One thing replaces another in place: tab content, value change, segmented control.",
+      "duration": { "$value": "var(--motion-duration-flow)", "$type": "string" },
+      "easing": { "$value": "var(--motion-ease-in-out)", "$type": "string" },
+      "distance": { "$value": "var(--distance-xs)", "$type": "string" }
+    },
+    "shared": {
+      "$description": "One element travels between two places (reorder, expand to detail). Spring-driven so an interrupted move carries its velocity.",
+      "duration": { "$value": "var(--spring-smooth-duration)", "$type": "string" },
+      "easing": { "$value": "var(--spring-smooth-easing)", "$type": "string" },
+      "distance": { "$value": "var(--distance-md)", "$type": "string" }
+    },
+    "press": {
+      "$description": "Direct feedback to a finger or cursor. Fast enough to finish before the press does.",
+      "duration": { "$value": "var(--motion-duration-micro)", "$type": "string" },
+      "easing": { "$value": "var(--motion-ease-out)", "$type": "string" },
+      "distance": { "$value": "var(--distance-xs)", "$type": "string" },
+      "scale": {
+        "$value": "0.97",
+        "$type": "string",
+        "$description": "Scale applied while pressed."
+      }
     }
   },
   "focusRing": {

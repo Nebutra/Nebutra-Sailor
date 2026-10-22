@@ -59,7 +59,7 @@ export default function EmptyStateDemo() {
         <Stack>
           {TONES.map((tone) => (
             <div key={tone}>
-              <div className="mb-2 font-mono text-[11px] text-muted-foreground">
+              <div className="mb-2 font-mono text-2xs text-muted-foreground">
                 tone="{tone}"{tone === "default" ? " (default)" : ""}
               </div>
               <div className="rounded-lg bg-background p-6">
@@ -84,7 +84,7 @@ export default function EmptyStateDemo() {
         <Stack>
           {SIZES.map((size) => (
             <div key={size}>
-              <div className="mb-2 font-mono text-[11px] text-muted-foreground">size="{size}"</div>
+              <div className="mb-2 font-mono text-2xs text-muted-foreground">size="{size}"</div>
               <div className="rounded-lg bg-background p-4">
                 <EmptyState
                   description="Connect a Git repository to start."

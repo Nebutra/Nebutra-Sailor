@@ -1,0 +1,602 @@
+{
+  "accordion-compact-demo": {
+    "w": 560,
+    "h": 41
+  },
+  "accordion-controlled-demo": {
+    "w": 560,
+    "h": 90
+  },
+  "accordion-demo": {
+    "w": 448,
+    "h": 155
+  },
+  "accordion-disabled-demo": {
+    "w": 560,
+    "h": 51
+  },
+  "agent-plan-demo": {
+    "w": 512,
+    "h": 336
+  },
+  "animated-beam-demo": {
+    "w": 560,
+    "h": 260
+  },
+  "animated-circular-progress-bar-demo": {
+    "w": 108,
+    "h": 109
+  },
+  "animated-gradient-text-demo": {
+    "w": 423,
+    "h": 47
+  },
+  "animated-group-demo": {
+    "w": 192,
+    "h": 256
+  },
+  "animated-hike-card-demo": {
+    "w": 480,
+    "h": 346
+  },
+  "animated-list-demo": {
+    "w": 288,
+    "h": 224
+  },
+  "animated-shiny-text-demo": {
+    "w": 287,
+    "h": 35
+  },
+  "announcement-demo": {
+    "w": 297,
+    "h": 66
+  },
+  "app-shell-demo": {
+    "w": 560,
+    "h": 901
+  },
+  "artifact-shift-card-demo": {
+    "w": 512,
+    "h": 560
+  },
+  "aspect-ratio-demo": {
+    "w": 384,
+    "h": 216
+  },
+  "assisted-password-confirmation-demo": {
+    "w": 336,
+    "h": 279
+  },
+  "aurora-background-demo": {
+    "w": 560,
+    "h": 288
+  },
+  "aurora-text-demo": {
+    "w": 464,
+    "h": 134
+  },
+  "awards-demo": {
+    "w": 560,
+    "h": 706
+  },
+  "bento-grid-demo": {
+    "w": 498,
+    "h": 744
+  },
+  "book-demo": {
+    "w": 560,
+    "h": 221
+  },
+  "border-trail-demo": {
+    "w": 288,
+    "h": 219
+  },
+  "box-demo": {
+    "w": 128,
+    "h": 128
+  },
+  "breadcrumb-custom-separator-demo": {
+    "w": 233,
+    "h": 21
+  },
+  "breadcrumb-demo": {
+    "w": 290,
+    "h": 21
+  },
+  "breadcrumb-ellipsis-demo": {
+    "w": 233,
+    "h": 21
+  },
+  "calendar-demo": {
+    "w": 250,
+    "h": 250
+  },
+  "carousel-2-demo": {
+    "w": 560,
+    "h": 110
+  },
+  "carousel-3-demo": {
+    "w": 312,
+    "h": 538
+  },
+  "carousel-demo": {
+    "w": 560,
+    "h": 312
+  },
+  "carousel-multiple-demo": {
+    "w": 560,
+    "h": 110
+  },
+  "carousel-vertical-demo": {
+    "w": 312,
+    "h": 538
+  },
+  "chart-demo": {
+    "w": 484,
+    "h": 239
+  },
+  "choicebox-demo": {
+    "w": 528,
+    "h": 74
+  },
+  "choicebox-radio-demo": {
+    "w": 560,
+    "h": 74
+  },
+  "code-block-demo": {
+    "w": 496,
+    "h": 273
+  },
+  "code-block-mermaid-demo": {
+    "w": 560,
+    "h": 210
+  },
+  "collapsible-2-demo": {
+    "w": 320,
+    "h": 58
+  },
+  "collapsible-demo": {
+    "w": 320,
+    "h": 78
+  },
+  "color-badge-demo": {
+    "w": 505,
+    "h": 488
+  },
+  "color-picker-alpha-demo": {
+    "w": 272,
+    "h": 302
+  },
+  "color-picker-demo": {
+    "w": 272,
+    "h": 300
+  },
+  "color-picker-popover-demo": {
+    "w": 102,
+    "h": 32
+  },
+  "color-picker-swatches-demo": {
+    "w": 273,
+    "h": 307
+  },
+  "command-demo": {
+    "w": 390,
+    "h": 300
+  },
+  "command-menu-demo": {
+    "w": 155,
+    "h": 40
+  },
+  "confirm-dialog-demo": {
+    "w": 132,
+    "h": 40
+  },
+  "confirm-dialog-use-confirm-demo": {
+    "w": 320,
+    "h": 77
+  },
+  "consent-card-demo": {
+    "w": 560,
+    "h": 320
+  },
+  "context-card-demo": {
+    "w": 123,
+    "h": 24
+  },
+  "context-menu-demo": {
+    "w": 300,
+    "h": 150
+  },
+  "context-menu-with-icons-demo": {
+    "w": 300,
+    "h": 150
+  },
+  "copy-button-demo": {
+    "w": 551,
+    "h": 40
+  },
+  "dashboard-surfaces-demo": {
+    "w": 512,
+    "h": 207
+  },
+  "data-list-demo": {
+    "w": 512,
+    "h": 217
+  },
+  "data-table-demo": {
+    "w": 560,
+    "h": 504
+  },
+  "date-picker-demo": {
+    "w": 272,
+    "h": 90
+  },
+  "dot-pattern-demo": {
+    "w": 560,
+    "h": 401
+  },
+  "drawer-2-demo": {
+    "w": 132,
+    "h": 40
+  },
+  "drawer-3-demo": {
+    "w": 138,
+    "h": 40
+  },
+  "drawer-demo": {
+    "w": 119,
+    "h": 40
+  },
+  "drawer-side-right-demo": {
+    "w": 119,
+    "h": 40
+  },
+  "dropzone-demo": {
+    "w": 401,
+    "h": 184
+  },
+  "edit-tool-demo": {
+    "w": 512,
+    "h": 120
+  },
+  "entity-demo": {
+    "w": 384,
+    "h": 208
+  },
+  "error-message-demo": {
+    "w": 480,
+    "h": 149
+  },
+  "expandable-tabs-demo": {
+    "w": 242,
+    "h": 83
+  },
+  "expanding-textarea-demo": {
+    "w": 416,
+    "h": 96
+  },
+  "feature-card-demo": {
+    "w": 322,
+    "h": 382
+  },
+  "feature-check-item-demo": {
+    "w": 448,
+    "h": 608
+  },
+  "feature-icon-item-demo": {
+    "w": 552,
+    "h": 337
+  },
+  "feedback-demo": {
+    "w": 88,
+    "h": 32
+  },
+  "file-attachment-demo": {
+    "w": 427,
+    "h": 50
+  },
+  "file-card-demo": {
+    "w": 320,
+    "h": 72
+  },
+  "filter-pills-demo": {
+    "w": 412,
+    "h": 36
+  },
+  "folder-demo": {
+    "w": 512,
+    "h": 160
+  },
+  "form-demo": {
+    "w": 384,
+    "h": 228
+  },
+  "full-page-status-demo": {
+    "w": 480,
+    "h": 184
+  },
+  "gallery-card-demo": {
+    "w": 512,
+    "h": 208
+  },
+  "gauge-demo": {
+    "w": 208,
+    "h": 98
+  },
+  "github-calendar-demo": {
+    "w": 560,
+    "h": 200
+  },
+  "github-inline-diff-demo": {
+    "w": 559,
+    "h": 378
+  },
+  "gradient-animated-text-demo": {
+    "w": 560,
+    "h": 300
+  },
+  "grain-gradient-background-demo": {
+    "w": 528,
+    "h": 400
+  },
+  "grid-feature-card-demo": {
+    "w": 560,
+    "h": 453
+  },
+  "grid-pattern-card-demo": {
+    "w": 496,
+    "h": 299
+  },
+  "hex-grid-demo": {
+    "w": 560,
+    "h": 1099
+  },
+  "highlighter-demo": {
+    "w": 552,
+    "h": 301
+  },
+  "hover-card-2-demo": {
+    "w": 163,
+    "h": 40
+  },
+  "hover-card-demo": {
+    "w": 65,
+    "h": 21
+  },
+  "infinite-slider-demo": {
+    "w": 560,
+    "h": 269
+  },
+  "kinetic-marketing-demo": {
+    "w": 400,
+    "h": 540
+  },
+  "kpi-card-demo": {
+    "w": 560,
+    "h": 190
+  },
+  "line-shadow-text-demo": {
+    "w": 560,
+    "h": 300
+  },
+  "loading-dots-demo": {
+    "w": 217,
+    "h": 43
+  },
+  "macbook-pro-demo": {
+    "w": 466,
+    "h": 286
+  },
+  "magic-card-demo": {
+    "w": 527,
+    "h": 363
+  },
+  "material-demo": {
+    "w": 560,
+    "h": 691
+  },
+  "mcp-tool-demo": {
+    "w": 512,
+    "h": 73
+  },
+  "menubar-demo": {
+    "w": 110,
+    "h": 40
+  },
+  "message-content-demo": {
+    "w": 512,
+    "h": 412
+  },
+  "metric-card-demo": {
+    "w": 512,
+    "h": 74
+  },
+  "metric-strip-demo": {
+    "w": 512,
+    "h": 194
+  },
+  "middle-truncate-demo": {
+    "w": 560,
+    "h": 623
+  },
+  "multiple-selector-demo": {
+    "w": 321,
+    "h": 147
+  },
+  "navigation-menu-demo": {
+    "w": 418,
+    "h": 40
+  },
+  "node-graph-canvas-demo": {
+    "w": 560,
+    "h": 541
+  },
+  "noise-pattern-card-demo": {
+    "w": 536,
+    "h": 269
+  },
+  "notification-message-list-demo": {
+    "w": 384,
+    "h": 280
+  },
+  "number-field-demo": {
+    "w": 560,
+    "h": 4718
+  },
+  "pagination-demo": {
+    "w": 560,
+    "h": 80
+  },
+  "pricing-card-demo": {
+    "w": 320,
+    "h": 297
+  },
+  "progressive-blur-demo": {
+    "w": 496,
+    "h": 1478
+  },
+  "project-banner-demo": {
+    "w": 512,
+    "h": 92
+  },
+  "prompt-input-demo": {
+    "w": 528,
+    "h": 100
+  },
+  "question-tool-demo": {
+    "w": 512,
+    "h": 144
+  },
+  "reaction-chip-demo": {
+    "w": 560,
+    "h": 400
+  },
+  "reaction-chip-message-demo": {
+    "w": 225,
+    "h": 102
+  },
+  "relative-time-card-demo": {
+    "w": 560,
+    "h": 101
+  },
+  "resizable-2-demo": {
+    "w": 560,
+    "h": 98
+  },
+  "resizable-demo": {
+    "w": 560,
+    "h": 146
+  },
+  "scroll-velocity-demo": {
+    "w": 560,
+    "h": 455
+  },
+  "scroller-demo": {
+    "w": 560,
+    "h": 128
+  },
+  "search-tool-demo": {
+    "w": 512,
+    "h": 162
+  },
+  "section-container-demo": {
+    "w": 560,
+    "h": 513
+  },
+  "section-demo": {
+    "w": 512,
+    "h": 171
+  },
+  "settings-section-demo": {
+    "w": 512,
+    "h": 423
+  },
+  "sheet-demo": {
+    "w": 111,
+    "h": 40
+  },
+  "sheet-mobile-demo": {
+    "w": 70,
+    "h": 40
+  },
+  "sheet-side-demo": {
+    "w": 40,
+    "h": 40
+  },
+  "shine-border-demo": {
+    "w": 384,
+    "h": 149
+  },
+  "show-more-demo": {
+    "w": 416,
+    "h": 159
+  },
+  "sidebar-chrome-demo": {
+    "w": 240,
+    "h": 190
+  },
+  "sidebar-nav-demo": {
+    "w": 256,
+    "h": 420
+  },
+  "split-button-demo": {
+    "w": 117,
+    "h": 40
+  },
+  "status-badge-demo": {
+    "w": 224,
+    "h": 31
+  },
+  "stepper-demo": {
+    "w": 512,
+    "h": 205
+  },
+  "subagent-tool-demo": {
+    "w": 512,
+    "h": 55
+  },
+  "terminal-demo": {
+    "w": 512,
+    "h": 154
+  },
+  "text-loop-demo": {
+    "w": 208,
+    "h": 51
+  },
+  "text-scramble-demo": {
+    "w": 351,
+    "h": 32
+  },
+  "text-shimmer-demo": {
+    "w": 560,
+    "h": 300
+  },
+  "theme-switcher-demo": {
+    "w": 271,
+    "h": 61
+  },
+  "theme-toggle-demo": {
+    "w": 560,
+    "h": 220
+  },
+  "todo-tool-demo": {
+    "w": 347,
+    "h": 79
+  },
+  "tree-view-demo": {
+    "w": 384,
+    "h": 456
+  },
+  "user-menu-demo": {
+    "w": 40,
+    "h": 32
+  },
+  "word-fade-in-demo": {
+    "w": 456,
+    "h": 253
+  },
+  "workspace-switcher-demo": {
+    "w": 480,
+    "h": 42
+  }
+}

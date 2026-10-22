@@ -31,6 +31,7 @@ export default function ButtonDemo({ derived }: DemoProps) {
     <DemoPage>
       <State
         breaks="A variant added to buttonVariants that nobody checked against the dark theme, or one that reaches for --blue-9 / --brand-primary. That token is the VI identity lock and is lint-banned on component surfaces; --primary is the action fill."
+        code={`<Button variant="outline">Deploy</Button>`}
         id="variants"
         note={`All ${variants.length} variants declared in buttonVariants.`}
         title="Every variant"
@@ -45,6 +46,7 @@ export default function ButtonDemo({ derived }: DemoProps) {
 
       <State
         breaks="A size whose height stops matching --control-height-*, which is what makes a button line up with an Input in the same form row."
+        code={`<Button size="sm">Deploy</Button>`}
         id="sizes"
         note="Heights come from the control-height tokens, so a button and an input of the same size agree."
         title="Sizes"
@@ -67,6 +69,9 @@ export default function ButtonDemo({ derived }: DemoProps) {
 
       <State
         breaks="A square/circle compound variant that stops being square because the width rule and the size rule fell out of sync — or a corner radius hardcoded as rounded-md / rounded-full so a Brand Package cannot retarget the shape."
+        code={`<Button aria-label="Add project" shape="circle">
+  <Plus />
+</Button>`}
         id="shapes"
         note="shape crosses with size through compound variants — square and circle take their width from the same height token. Radius is token-backed: square → --btn-default-radius / --radius-md, circle/pill → --radius-pill."
         title="Shapes"
@@ -89,6 +94,9 @@ export default function ButtonDemo({ derived }: DemoProps) {
 
       <State
         breaks="An icon trigger forced through size=icon (40px) or shape=circle when the product surface actually wants a 28/32/36 rounded-md square — the recurring toolbar / bell / sidebar pattern."
+        code={`<Button aria-label="Add" iconSize="sm" shape="square" variant="outline">
+  <Plus />
+</Button>`}
         id="icon-size"
         note="iconSize is orthogonal to size and only combines with shape=square|circle. Boxes read --control-height-icon-sm|md|lg (28/32/36 by default, density-scaled by Brand Packages)."
         title="Icon-only triggers"
@@ -113,6 +121,8 @@ export default function ButtonDemo({ derived }: DemoProps) {
 
       <State
         breaks="A loading button that stays clickable, loses aria-busy, or jumps size when the spinner appears. Toggle both and watch the width."
+        code={`<Button loading={isSaving}>Save changes</Button>
+<Button disabled>Save changes</Button>`}
         id="loading-disabled"
         note="loading implies disabled and sets aria-busy. The spinner is sized from the same size token as the label."
         title="Loading and disabled"
@@ -136,6 +146,8 @@ export default function ButtonDemo({ derived }: DemoProps) {
 
       <State
         breaks="A prefix icon that keeps its own size instead of taking the button's, or one that is read out by a screen reader on top of the label."
+        code={`<Button prefix={<Plus />}>New project</Button>
+<Button suffix={<ArrowRight />}>Continue</Button>`}
         id="affixes"
         note="prefix and suffix are wrapped in an aria-hidden span and sized from the size token."
         title="Prefix and suffix"
@@ -204,6 +216,7 @@ export default function ButtonDemo({ derived }: DemoProps) {
 
       <State
         breaks="A ButtonLink in a loading state that is still reachable by Tab, or one whose disabled look is not matched by aria-disabled."
+        code={`<ButtonLink href="/docs" variant="secondary">Docs</ButtonLink>`}
         id="button-link"
         note="ButtonLink is the anchor twin: same variants, no disabled attribute. Its loading state sets aria-disabled and tabIndex -1 rather than pretending an anchor can be disabled."
         title="ButtonLink"

@@ -26,6 +26,7 @@ import { fileURLToPath } from "node:url";
 import StyleDictionary from "style-dictionary";
 import { multiThemeName, pathToCssVarName } from "./scripts/css-var-name.mjs";
 import { assertLadder, deriveBorderTier } from "./scripts/derive-border-tier.mjs";
+import { deriveSpring } from "./scripts/spring.mjs";
 
 // Multi-mood oklch catalog removed (2026.07). Only light/dark modes remain.
 // Design-language swap lives in @nebutra/theme (Brand Packages / skins.css).
@@ -198,6 +199,10 @@ function registerLayeredNameTransform({ name, sources, nameForPath }) {
 
   for (const source of sources) {
     const tokens = JSON.parse(readFileSync(source, "utf8"));
+    // Leaves the build derives (spring duration/easing) are not in the file, but
+    // they are real declarations: without them here the name transform sees an
+    // unknown owner for the name and skips the token as a duplicate.
+    deriveSpring(tokens);
     for (const { path } of walkTokenLeaves(tokens)) {
       const tokenName = nameForPath(path);
       if (!tokenName) continue;
@@ -247,6 +252,19 @@ StyleDictionary.registerPreprocessor({
   name: "nebutra/derive-border-tier",
   preprocessor: (tokens) => {
     deriveBorderTier(tokens);
+    return tokens;
+  },
+});
+
+/**
+ * Spring tokens author physics only; the settle duration and the linear()
+ * easing are computed here from stiffness/damping/mass (scripts/spring.mjs), so
+ * the CSS curve and the JS parameters share one source.
+ */
+StyleDictionary.registerPreprocessor({
+  name: "nebutra/derive-spring",
+  preprocessor: (tokens) => {
+    deriveSpring(tokens);
     return tokens;
   },
 });
@@ -320,7 +338,12 @@ const buildMode = ({ mode, selector, sources, outputFile, nameTransform = "name/
 
   return {
     log: { verbosity: "default", warnings: "error" },
-    preprocessors: ["tokens-studio", "nebutra/safe-descriptions", "nebutra/derive-border-tier"],
+    preprocessors: [
+      "tokens-studio",
+      "nebutra/safe-descriptions",
+      "nebutra/derive-border-tier",
+      "nebutra/derive-spring",
+    ],
     include: sources.slice(0, -1),
     source: sources.slice(-1),
     platforms: {

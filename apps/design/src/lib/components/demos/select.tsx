@@ -37,6 +37,12 @@ export default function SelectDemo({ derived }: DemoProps) {
     <DemoPage>
       <State
         breaks="A themed trigger paired with an unthemed OS popup. Open this in the dark theme: the list must be dark too. That is the whole reason raw select is banned in apps."
+        code={`<Select
+  label="Region"
+  options={regions}
+  placeholder="Choose a region"
+  prefix={<Globe />}
+/>`}
         id="default"
         note="The default is a listbox, not an OS select. Open it and the options are inside the design system."
         title="Default"
@@ -53,6 +59,7 @@ export default function SelectDemo({ derived }: DemoProps) {
 
       <State
         breaks="A size whose trigger height drifts from Input's at the same size name, which shows up as a ragged form row."
+        code={`<Select options={regions} size="small" />`}
         id="sizes"
         note="Sizes come from the SelectSize union in tokens/components/select.ts. Note it has four steps, not Input's three."
         title="Sizes"
@@ -72,6 +79,7 @@ export default function SelectDemo({ derived }: DemoProps) {
 
       <State
         breaks="An error state that only colours the message and leaves the trigger looking valid."
+        code={`<Select disabled error="Pick a region before deploying." label="Region" options={regions} />`}
         id="error"
         title="Error and disabled"
       >
@@ -96,6 +104,10 @@ export default function SelectDemo({ derived }: DemoProps) {
 
       <State
         breaks="A disabled option that is still selectable by keyboard. Open the list and arrow down onto Sydney."
+        code={`const regions = [
+  { value: "fra1", label: "Frankfurt (fra1)" },
+  { value: "syd1", label: "Sydney (syd1), at capacity", disabled: true },
+];`}
         id="disabled-option"
         note="One option in the list is disabled at the data level."
         title="Disabled option"
