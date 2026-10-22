@@ -5,7 +5,7 @@ import {
 } from "@nebutra/auth/browser";
 import { brand } from "@nebutra/brand/metadata";
 import { ArrowLeft } from "@nebutra/icons";
-import { Avatar, Button, ButtonLink, Input, Label } from "@nebutra/ui/primitives/canonical";
+import { Avatar, Button, ButtonLink, Input } from "@nebutra/ui/primitives/canonical";
 import { type FormEvent, useState } from "react";
 import { APP_PATH } from "./main-route";
 
@@ -20,6 +20,7 @@ export function ProfilePage({ context, auth }: ProfilePageProps) {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [failed, setFailed] = useState(false);
+  const [edited, setEdited] = useState(false);
   const trimmed = name.trim();
   const invalid = trimmed.length === 0 || trimmed.length > 64;
   const signInUrl = buildAuthCenterSignInUrl(window.location.origin + "/settings/profile", {
@@ -75,17 +76,21 @@ export function ProfilePage({ context, auth }: ProfilePageProps) {
               </div>
             </div>
             <form className="profile-form" onSubmit={(event) => void save(event)}>
-              <Label htmlFor="profile-name">显示名称</Label>
               <Input
+                label="显示名称"
                 id="profile-name"
                 name="name"
+                size="sm"
                 autoComplete="name"
                 maxLength={64}
+                error={edited && invalid ? "请输入 1–64 个字符的显示名称。" : undefined}
                 value={name}
                 disabled={saving}
                 onChange={(event) => {
                   setName(event.target.value);
+                  setEdited(true);
                   setMessage("");
+                  setFailed(false);
                 }}
               />
               <div className="profile-form-footer">
@@ -93,12 +98,10 @@ export function ProfilePage({ context, auth }: ProfilePageProps) {
                   {message}
                 </p>
                 <Button
-                  className="profile-save"
-                  variant="secondary"
                   size="sm"
                   type="submit"
-                  disabled={saving || trimmed === user.name || invalid}
-                  aria-busy={saving}
+                  disabled={trimmed === user.name || invalid}
+                  loading={saving}
                 >
                   {saving ? "保存中…" : "保存"}
                 </Button>

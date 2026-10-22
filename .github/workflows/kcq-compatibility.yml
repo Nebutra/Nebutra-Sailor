@@ -78,6 +78,15 @@ jobs:
           pnpm --filter @nebutra/kcq-docs typecheck
           pnpm --filter @nebutra/kcq-docs test
           pnpm --filter @nebutra/kcq-docs build
+      - name: Install UI acceptance browser
+        if: inputs.candidate_ref == ''
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Verify built UI across themes and viewport sizes
+        if: inputs.candidate_ref == ''
+        env:
+          KCQ_UI_SERVE: "true"
+          KCQ_UI_BROWSER: "chromium"
+        run: node apps/kcq/scripts/ui-smoke.mjs
       - name: Check candidate without changing production
         if: inputs.candidate_ref != ''
         env:

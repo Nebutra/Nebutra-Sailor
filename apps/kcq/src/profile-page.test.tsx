@@ -19,6 +19,22 @@ function authClient() {
 }
 afterEach(cleanup);
 
+it("associates an invalid name with the shared inline field error and blocks saving", () => {
+  const auth = authClient();
+  render(createElement(ProfilePage, { context, auth }));
+  const name = screen.getByLabelText("显示名称");
+  fireEvent.change(name, { target: { value: "   " } });
+  expect(name.getAttribute("aria-invalid")).toBe("true");
+  const error = screen.getByRole("alert");
+  expect(name.getAttribute("aria-describedby")?.split(" ")).toContain(error.id);
+  const form = name.closest("form");
+  if (!form) throw new Error("Profile form was not rendered");
+  fireEvent.submit(form);
+  expect(auth.updateProfile).not.toHaveBeenCalled();
+  fireEvent.change(name, { target: { value: "Taylor" } });
+  expect(name.getAttribute("aria-invalid")).not.toBe("true");
+});
+
 it("renders shared identity on the profile page without a chart", () => {
   render(createElement(ProfilePage, { context, auth: authClient() }));
   expect(screen.getByRole("heading", { name: "个人资料" })).toBeTruthy();

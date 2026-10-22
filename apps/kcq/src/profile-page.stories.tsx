@@ -14,6 +14,19 @@ const auth = {
 };
 export const SignedIn = { args: { context, auth } };
 export const SignedOut = { args: { context: null, auth } };
+export const LongIdentity = {
+  args: {
+    context: {
+      ...context,
+      user: {
+        ...context.user,
+        name: "KCQ".repeat(20),
+        email: `${"account".repeat(12)}@example.test`,
+      },
+    },
+    auth,
+  },
+};
 export const SaveRejected = {
   args: {
     context,

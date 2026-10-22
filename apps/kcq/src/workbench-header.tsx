@@ -4,6 +4,7 @@ import { brand } from "@nebutra/brand/metadata";
 import { ArrowUpRight, Check, ChevronDown, GridSquare, User } from "@nebutra/icons";
 import {
   Avatar,
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -48,19 +49,22 @@ export function WorkbenchHeader({
           className="account-trigger"
           aria-label="账户与工作区菜单"
           disabled={busy}
-        >
-          {context ? (
-            <Avatar size={24} src={context.user.image ?? undefined} title={context.user.name} />
-          ) : (
-            <span className="guest-avatar">
-              <User aria-hidden="true" />
-            </span>
-          )}
-          <span className="workspace-name">
-            {context ? (active?.name ?? "个人工作区") : "工作区"}
-          </span>
-          <ChevronDown className="account-chevron" aria-hidden="true" />
-        </DropdownMenuTrigger>
+          render={
+            <Button type="button" variant="ghost" size="sm">
+              {context ? (
+                <Avatar size={24} src={context.user.image ?? undefined} title={context.user.name} />
+              ) : (
+                <span className="guest-avatar">
+                  <User aria-hidden="true" />
+                </span>
+              )}
+              <span className="workspace-name">
+                {context ? (active?.name ?? "个人工作区") : "工作区"}
+              </span>
+              <ChevronDown className="account-chevron" aria-hidden="true" />
+            </Button>
+          }
+        />
         <DropdownMenuContent align="start" sideOffset={8} className="kcq-menu w-64">
           {context ? (
             <>

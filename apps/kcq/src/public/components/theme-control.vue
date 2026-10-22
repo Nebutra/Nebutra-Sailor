@@ -22,9 +22,9 @@ const cycleLabel = computed(
 /** Arrow keys move the selection inside the radiogroup (WAI-ARIA radio pattern). */
 function onKey(event: KeyboardEvent) {
   const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-  if (!step) return;
+  if (!step && event.key !== "Home" && event.key !== "End") return;
   event.preventDefault();
-  const index = (THEME_PREFERENCES.indexOf(preference.value) + step + 3) % 3;
+  const index = event.key === "Home" ? 0 : event.key === "End" ? THEME_PREFERENCES.length - 1 : (THEME_PREFERENCES.indexOf(preference.value) + step! + THEME_PREFERENCES.length) % THEME_PREFERENCES.length;
   choose(THEME_PREFERENCES[index]);
   const group = event.currentTarget as HTMLElement;
   group.querySelectorAll<HTMLElement>('[role="radio"]')[index]?.focus();
