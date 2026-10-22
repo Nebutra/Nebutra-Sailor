@@ -1,6 +1,23 @@
 // @primitive-exempt: a miniature UI painted entirely in the generated palette; the primitives would paint it in the site theme.
 import { type Step, solidInk } from "@/lib/color";
 
+// Spelled out, not templated, so the defined-css-vars guard can see every
+// property this preview sets at runtime.
+const STEP_VARS: Record<string, number> = {
+  "--p-1": 1,
+  "--p-2": 2,
+  "--p-3": 3,
+  "--p-4": 4,
+  "--p-5": 5,
+  "--p-6": 6,
+  "--p-7": 7,
+  "--p-8": 8,
+  "--p-9": 9,
+  "--p-10": 10,
+  "--p-11": 11,
+  "--p-12": 12,
+};
+
 /**
  * The generated ladder, used the way the roles say to use it. Every colour is a
  * `--p-N` custom property set from the steps, so the hover and focus states are
@@ -10,7 +27,10 @@ import { type Step, solidInk } from "@/lib/color";
  */
 export function PalettePreview({ steps }: { steps: readonly Step[] }) {
   const vars: Record<string, string> = { "--p-ink": solidInk(steps) };
-  for (const step of steps) vars[`--p-${step.step}`] = step.hex;
+  for (const [name, n] of Object.entries(STEP_VARS)) {
+    const step = steps.find((s) => s.step === n);
+    if (step) vars[name] = step.hex;
+  }
 
   return (
     <div

@@ -61,7 +61,9 @@ describe("countArbitraryFontSizes", () => {
 
   it("leaves token sizes and non-size arbitrary values alone", () => {
     expect(
-      countArbitraryFontSizes(`"text-sm text-2xs text-[var(--x)] text-[length:var(--y)]"`),
+      countArbitraryFontSizes(
+        `"text-sm text-2xs text-[var(--font-x)] text-[length:var(--font-y)]"`,
+      ),
     ).toBe(0);
     expect(countArbitraryFontSizes(`"text-[#333] text-[color:red]"`)).toBe(0);
   });

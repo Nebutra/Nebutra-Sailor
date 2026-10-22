@@ -30,15 +30,15 @@ describe("springTokenJson", () => {
 
 describe("springCss", () => {
   it("publishes the derived duration and curve under the token names the build would emit", () => {
-    const css = springCss("pop", params);
-    expect(css).toContain(`--spring-pop-duration: ${springSettleMs(params)}ms;`);
-    expect(css).toContain(`--spring-pop-easing: ${springToLinear(params)};`);
+    const css = springCss("snappy", params);
+    expect(css).toContain(`--spring-snappy-duration: ${springSettleMs(params)}ms;`);
+    expect(css).toContain(`--spring-snappy-easing: ${springToLinear(params)};`);
   });
 
   it("shows how to consume them", () => {
-    const css = springCss("pop", params);
+    const css = springCss("snappy", params);
     expect(css).toContain(
-      "transition: transform var(--spring-pop-duration) var(--spring-pop-easing);",
+      "transition: transform var(--spring-snappy-duration) var(--spring-snappy-easing);",
     );
   });
 });
