@@ -1,10 +1,11 @@
 /** Real-data acceptance for wide, zoomed-out and restored chart history. Never sends AI requests. */
 import assert from "node:assert/strict";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { chromium } from "playwright";
 
 const origin = process.env.KCQ_SMOKE_ORIGIN ?? "https://kcq.nebutra.com";
+const { commit: chartRevision } = JSON.parse(await readFile("apps/kcq/chart-source.json", "utf8"));
 const output = resolve(
   process.env.KCQ_MARKET_OUTPUT ?? ".nebutra/kcq-candidates/market-acceptance",
 );
@@ -85,6 +86,18 @@ try {
       await page.goto(`${origin}/app`, { waitUntil: "domcontentloaded" });
       await page.getByRole("button", { name: "A 股 · 贵州茅台", exact: true }).click();
       await waitForBars();
+      await page.getByRole("button", { name: "账户与工作区菜单", exact: true }).click();
+      await page.getByRole("menuitem", { name: "反馈与建议", exact: true }).click();
+      const feedback = page.getByRole("dialog", { name: "反馈与建议", exact: true });
+      await feedback
+        .getByText("附上基础诊断（图表版本、主题、屏幕尺寸类别）", { exact: true })
+        .click();
+      assert.ok(
+        (await feedback.locator("pre").innerText()).includes(chartRevision),
+        "The deployed chart must match the tested source pin",
+      );
+      await page.keyboard.press("Escape");
+      await feedback.waitFor({ state: "hidden" });
       if (zoomSteps) {
         await page.getByTestId("agent-panel-open").click();
         await page.getByTestId("agent-panel").waitFor();
@@ -127,7 +140,7 @@ try {
         !requests.some((url) => /\/chat\/completions|\/responses$|\/capture\//.test(url)),
         "Unexpected paid AI or analytics request",
       );
-      reports.push({ id, width, zoomSteps, maxBarsPerRequest, bars });
+      reports.push({ id, width, zoomSteps, chartRevision, maxBarsPerRequest, bars });
       console.log(JSON.stringify(reports.at(-1)));
     } finally {
       await page.screenshot({ path: resolve(output, `${id}.png`) });
