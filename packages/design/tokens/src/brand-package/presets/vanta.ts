@@ -24,7 +24,9 @@ export function buildVanta(ctx: CompileContext): BrandPackage {
   ctx.warnings.push(
     "Vanta: vivid-violet is action CTA only; indigo-ink is brand-mark/logo (never default CTA fill).",
   );
-  ctx.warnings.push("Vanta: elevation=none — cards use 1px carbon border, not box-shadow.");
+  ctx.warnings.push(
+    "Vanta: elevation=none — cards use a 1px hairline; the carbon ink is --border-strong.",
+  );
 
   const brand: BrandPackage = {
     id: "vanta",
@@ -47,7 +49,10 @@ export function buildVanta(ctx: CompileContext): BrandPackage {
       quietForeground: tryHexToHsl(indigo, "273 100% 14%"),
       muted: tryHexToHsl(fog, "240 14% 93%"),
       mutedForeground: tryHexToHsl(graphite, "237 11% 48%"),
-      border: tryHexToHsl(carbon, "240 14% 11%"),
+      // A hairline, not the carbon: the ink is Vanta's heavy stroke
+      // (--border-strong), reachable by choice and not painted on every card.
+      border: "240 14% 86%",
+      borderStrong: tryHexToHsl(carbon, "240 14% 11%"),
       input: tryHexToHsl(paper, "0 0% 100%"),
       ring: tryHexToHsl(vivid, "268 95% 39%"),
       destructive: "0 72% 51%",
@@ -75,7 +80,10 @@ export function buildVanta(ctx: CompileContext): BrandPackage {
       accentForeground: tryHexToHsl(paper, "0 0% 100%"),
       destructive: "0 72% 51%",
       destructiveForeground: tryHexToHsl(paper, "0 0% 100%"),
-      border: tryHexToHsl(carbon, "240 14% 11%"),
+      // A hairline, not the carbon: the ink is Vanta's heavy stroke
+      // (--border-strong), reachable by choice and not painted on every card.
+      border: "240 14% 86%",
+      borderStrong: tryHexToHsl(carbon, "240 14% 11%"),
       input: tryHexToHsl(paper, "0 0% 100%"),
       ring: tryHexToHsl(vivid, "268 95% 39%"),
       warning: tryHexToHsl(amber, "44 100% 53%"),
@@ -85,24 +93,20 @@ export function buildVanta(ctx: CompileContext): BrandPackage {
     },
     recipe: buildRecipe({
       buttonDefault: ctx.recipeHints.buttonDefault ?? "solid",
-      // Prefer structural ctx.radius tokens (full=pill, 2xl=cards) over free-text
+      // Controls sit on the ladder at 12px. A Refero export reads Vanta's marketing
+      // pills as `full`/`buttons`, but product controls are not pills; chips and
+      // badges stay pills (identity).
       radii: {
-        button:
-          leafHex(ctx.radius, ["buttons"]) ??
-          leafHex(ctx.radius, ["full"]) ??
-          ctx.recipeHints.radii?.button ??
-          "999px",
+        button: "12px",
         card: leafHex(ctx.radius, ["cards"]) ?? leafHex(ctx.radius, ["2xl"]) ?? "16px",
         badge:
           leafHex(ctx.radius, ["badges"]) ??
           leafHex(ctx.radius, ["full"]) ??
           ctx.recipeHints.radii?.button ??
           "999px",
-        input:
-          leafHex(ctx.radius, ["inputs"]) ??
-          leafHex(ctx.radius, ["full"]) ??
-          ctx.recipeHints.radii?.button ??
-          "999px",
+        // Vanta's chips are pills, like its buttons: identity, not a ladder step.
+        chip: "999px",
+        input: "12px",
       },
       elevationPreset: ctx.recipeHints.elevationPreset ?? "none",
       density: ctx.recipeHints.density ?? "comfortable",
@@ -152,7 +156,7 @@ export function buildVanta(ctx: CompileContext): BrandPackage {
         "roles.action = Vivid Violet (filled CTA only).",
         "roles.brand = Indigo Ink (logo / wordmark / brand-mark).",
         "Elevation none — 1px carbon borders frame cards; no drop-shadow.",
-        "Full-pill controls (999px); cards 16px.",
+        "Controls 12px; chips and badges stay pills; cards 16px.",
         "UI = Inter Variable; marketing display = Reckless serif.",
         "Lavender wash is marketing hero surface (decorative), not product chrome fill.",
       ],

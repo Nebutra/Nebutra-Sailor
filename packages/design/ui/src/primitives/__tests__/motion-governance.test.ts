@@ -35,7 +35,7 @@ describe("primitive motion governance", () => {
 
   it("keeps the command palette instant — no open/close transform or opacity", () => {
     const overlay = designFile("ui/src/tokens/components/overlay.ts");
-    const commandBlock = overlay.match(/commandSurface:\s*\[[\s\S]*?\],/u)?.[0] ?? "";
+    const commandBlock = overlay.match(/commandSurface:\s*\[[\s\S]*?\]\.join/u)?.[0] ?? "";
 
     expect(commandBlock).toMatch(/commandSurface/u);
     expect(commandBlock).not.toMatch(/transition-/u);
@@ -51,12 +51,12 @@ describe("primitive motion governance", () => {
     expect(recipe).toMatch(/\(hover: hover\) and \(pointer: fine\)/u);
   });
 
-  it("presses the canonical Button with a flow-rail brand ease and 0.97 scale", () => {
+  it("presses the canonical Button on the micro rail with ease-out and 0.97 scale", () => {
     const variants = source("button-variants.ts");
 
     expect(variants).toMatch(/active:scale-\[0\.97\]/u);
-    expect(variants).toMatch(/duration-flow/u);
-    expect(variants).toMatch(/ease-\[var\(--ease-brand\)\]/u);
+    expect(variants).toMatch(/duration-micro/u);
+    expect(variants).toMatch(/\bease-out\b/u);
   });
 
   it("does not animate radio dots from scale-0", () => {
@@ -72,7 +72,7 @@ describe("primitive motion governance", () => {
         new RegExp(`${surface}:[\\s\\S]*?origin-\\[var\\(--transform-origin\\)\\]`, "u"),
       );
     }
-    const modalBlock = overlay.match(/modalSurface:\s*\[[\s\S]*?\],/u)?.[0] ?? "";
+    const modalBlock = overlay.match(/modalSurface:\s*\[[\s\S]*?\]\.join/u)?.[0] ?? "";
     expect(modalBlock).toMatch(/modalSurface/u);
     expect(modalBlock).not.toMatch(/origin-\[var\(--transform-origin\)\]/u);
   });

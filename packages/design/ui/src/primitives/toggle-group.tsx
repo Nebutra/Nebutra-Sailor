@@ -3,6 +3,7 @@
 import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { cn } from "../utils/cn";
+import { controlFocusVisibleClassName } from "./form-control";
 import { toggleGroupItemVariants, toggleGroupVariants } from "./toggle-group-variants";
 
 type ToggleGroupType = "single" | "multiple";
@@ -226,6 +227,7 @@ const ToggleGroupItem = ({
           size: size ?? context.size,
         }),
         className,
+        controlFocusVisibleClassName,
         "focus-visible:z-10",
       )}
       onClick={toggleItemSelection}

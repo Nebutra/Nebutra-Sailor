@@ -1,5 +1,4 @@
 "use client";
-// @primitive-exempt: knob chips are aria-pressed segmented toggles and Reset is a quiet text action; neither maps to a Button variant.
 
 /**
  * Live playground: knobs drive a real component and the code beside it.
@@ -9,15 +8,18 @@
  * (their options come from the library's own variant maps, not from a list
  * typed here), a render function, and a code function built on `jsx()`.
  *
- * Layout: preview and code on the left, knobs on the right at `lg`. Below that
- * the order is preview, knobs, code — the knobs belong next to what they move.
+ * Layout: one workbench, one frame. Stage and code stack on the left, the props
+ * inspector sits on the right at `lg`, and hairlines — not boxes — divide them.
+ * The stage is a dot matrix canvas. Below `lg` the order is preview, props,
+ * code: the knobs belong next to what they move.
  */
 
 import { RefreshCounterClockwise } from "@nebutra/icons";
-import { Input, Select, Toggle } from "@nebutra/ui/primitives";
+import { Button, Input, Select, Toggle } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import * as React from "react";
 import { CodeBlock } from "./component-code";
+import { Segmented } from "./segmented";
 
 export type KnobValue = string | boolean;
 export type KnobValues = Record<string, KnobValue>;
@@ -66,51 +68,59 @@ export function ComponentPlayground({
   const dirty = knobs.some((knob) => values[knob.name] !== knob.defaultValue);
 
   return (
-    <div className="grid items-start gap-4 lg:grid-cols-[minmax(0,1fr)_18rem] lg:grid-rows-[auto_1fr]">
-      {/* biome-ignore lint/a11y/useSemanticElements: a labelled stage, not a form fieldset */}
-      <div
-        aria-label="Preview"
-        className={cn(
-          "flex min-h-56 min-w-0 items-center justify-center overflow-auto rounded-lg border border-border bg-card p-6 lg:col-start-1",
-          stageClassName,
-        )}
-        role="group"
-      >
-        <div className="min-w-0 max-w-full">{render(values)}</div>
-      </div>
-
-      <aside
-        aria-label="Props"
-        className="flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-card lg:col-start-2 lg:row-span-2 lg:row-start-1"
-      >
-        <div className="flex items-center justify-between gap-2 border-border border-b bg-background px-3 py-1.5">
-          <span className="text-muted-foreground text-xs">Props</span>
-          <button
-            className="inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 font-medium text-muted-foreground text-xs transition-colors hover:text-foreground disabled:pointer-events-none disabled:opacity-40"
-            disabled={!dirty}
-            onClick={() => setValues(defaultsOf(knobs))}
-            type="button"
+    <div className="flex min-w-0 flex-col gap-2">
+      <div className="overflow-hidden rounded-card border border-hairline bg-card shadow-xs">
+        <div className="grid lg:grid-cols-[minmax(0,1fr)_18rem] lg:grid-rows-[1fr_auto]">
+          {/* biome-ignore lint/a11y/useSemanticElements: a labelled stage, not a form fieldset */}
+          <div
+            aria-label="Preview"
+            className={cn(
+              "bg-dot-matrix flex min-h-56 min-w-0 items-center justify-center overflow-auto p-6 lg:col-start-1",
+              stageClassName,
+            )}
+            role="group"
           >
-            <RefreshCounterClockwise aria-hidden className="size-3.5" />
-            Reset
-          </button>
-        </div>
-        <div className="flex flex-col gap-4 p-4">
-          {knobs.map((knob) => (
-            <KnobControl
-              key={knob.name}
-              knob={knob}
-              onChange={(value) => set(knob.name, value)}
-              value={values[knob.name] ?? knob.defaultValue}
-            />
-          ))}
-        </div>
-      </aside>
+            <div className="min-w-0 max-w-full">{render(values)}</div>
+          </div>
 
-      <div className="flex min-w-0 flex-col gap-2 lg:col-start-1">
-        <CodeBlock code={code(values)} label="Code" />
-        {caption ? <p className="m-0 text-muted-foreground text-xs">{caption}</p> : null}
+          <aside
+            aria-label="Props"
+            className="flex min-w-0 flex-col border-hairline border-t lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-h-[40rem] lg:border-t-0 lg:border-l"
+          >
+            <div className="flex min-h-9 shrink-0 items-center justify-between gap-2 border-hairline border-b bg-muted/40 py-1 pr-2 pl-3">
+              <span className="font-medium text-muted-foreground text-xs">Props</span>
+              <Button
+                className="text-muted-foreground"
+                disabled={!dirty}
+                onClick={() => setValues(defaultsOf(knobs))}
+                size="tiny"
+                variant="ghost"
+              >
+                <RefreshCounterClockwise aria-hidden className="size-3.5" />
+                Reset
+              </Button>
+            </div>
+            <div className="flex min-h-0 flex-col gap-4 overflow-y-auto p-4">
+              {knobs.map((knob) => (
+                <KnobControl
+                  key={knob.name}
+                  knob={knob}
+                  onChange={(value) => set(knob.name, value)}
+                  value={values[knob.name] ?? knob.defaultValue}
+                />
+              ))}
+            </div>
+          </aside>
+
+          <CodeBlock
+            bare
+            className="border-hairline border-t lg:col-start-1"
+            code={code(values)}
+            label="Code"
+          />
+        </div>
       </div>
+      {caption ? <p className="m-0 text-muted-foreground text-xs">{caption}</p> : null}
     </div>
   );
 }
@@ -131,7 +141,7 @@ function KnobControl({
     return (
       <div className="flex flex-col gap-1">
         <Toggle checked={value === true} onChange={(next) => onChange(next)} size="small">
-          <span className="font-mono text-xs">{label}</span>
+          <span className="font-medium text-foreground text-sm">{label}</span>
         </Toggle>
         {knob.hint ? <Hint>{knob.hint}</Hint> : null}
       </div>
@@ -172,28 +182,14 @@ function KnobControl({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="font-medium text-foreground text-sm" id={id}>
-        {label}
-      </span>
-      {/* biome-ignore lint/a11y/useSemanticElements: a labelled button group, not a form fieldset */}
-      <div aria-labelledby={id} className="flex flex-wrap gap-1" role="group">
-        {knob.options.map((option) => (
-          <button
-            aria-pressed={value === option}
-            className={cn(
-              "h-7 rounded-[var(--radius-sm)] border px-2.5 font-medium font-mono text-xs transition-colors duration-micro",
-              value === option
-                ? "border-foreground bg-foreground text-background"
-                : "border-border bg-background text-muted-foreground hover:text-foreground",
-            )}
-            key={option}
-            onClick={() => onChange(option)}
-            type="button"
-          >
-            {option}
-          </button>
-        ))}
-      </div>
+      <span className="font-medium text-foreground text-sm">{label}</span>
+      <Segmented
+        label={label}
+        mono
+        onValueChange={onChange}
+        options={knob.options}
+        value={String(value)}
+      />
       {knob.hint ? <Hint>{knob.hint}</Hint> : null}
     </div>
   );

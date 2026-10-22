@@ -1,6 +1,7 @@
 "use client";
 
 import { usePendingVisible } from "../hooks/use-pending-visible";
+import { Spinner } from "../primitives/spinner";
 import { cn } from "../utils";
 
 export interface LoadingStateProps {
@@ -14,9 +15,9 @@ export interface LoadingStateProps {
 }
 
 const spinnerSize = {
-  small: "h-4 w-4 border-2",
-  medium: "h-6 w-6 border-2",
-  large: "h-8 w-8 border-4",
+  small: 16,
+  medium: 24,
+  large: 32,
 } as const;
 
 /**
@@ -44,14 +45,8 @@ export function LoadingState({ message, size = "large" }: LoadingStateProps) {
         visible ? "opacity-100" : "opacity-0",
       )}
     >
-      <span
-        className={cn(
-          "inline-block animate-spin rounded-full border-solid border-primary border-r-transparent align-[-0.125em]",
-          spinnerSize[size],
-        )}
-        role="status"
-        aria-label={message ?? "Loading"}
-      />
+      {/* The block already waits out the pending delay, so the spinner paints at once. */}
+      <Spinner immediate size={spinnerSize[size]} tone="foreground" label={message ?? "Loading"} />
       {message && <p className="mt-3 text-sm text-muted-foreground">{message}</p>}
     </div>
   );

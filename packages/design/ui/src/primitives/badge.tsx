@@ -7,7 +7,7 @@ import { cn } from "../utils/cn";
 // ─── Variants ─────────────────────────────────────────────────────────────────
 
 const badgeVariants = cva(
-  "inline-flex justify-center items-center align-middle shrink-0 rounded-full font-sans font-medium whitespace-nowrap tabular-nums transition-colors focus-visible:outline-none border border-transparent",
+  "inline-flex justify-center items-center align-middle shrink-0 rounded-full font-sans font-medium whitespace-nowrap tabular-nums transition-colors duration-micro ease-out motion-reduce:transition-none focus-visible:outline-none border border-transparent",
   {
     variants: {
       /**

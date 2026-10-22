@@ -266,7 +266,7 @@ export const Gauge = ({
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="10"
-          className="origin-center transition-[stroke-dasharray,stroke] duration-300 ease-out motion-reduce:transition-none"
+          className="origin-center transition-[stroke-dasharray,stroke] duration-flow ease-out motion-reduce:transition-none"
           style={{ transform: `rotate(${geometry.secondaryRotation}deg) scaleY(-1)` }}
         />
 
@@ -283,7 +283,7 @@ export const Gauge = ({
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="10"
-              className="origin-center transition-[stroke-dasharray,stroke] duration-300 ease-out motion-reduce:transition-none"
+              className="origin-center transition-[stroke-dasharray,stroke] duration-flow ease-out motion-reduce:transition-none"
               style={{ transform: `rotate(${geometry.primaryRotation}deg)` }}
             />
           </g>

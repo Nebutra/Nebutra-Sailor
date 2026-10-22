@@ -44,7 +44,7 @@ export type FilterPillsProps = FilterPillsSingleProps | FilterPillsMultipleProps
 // ─── Style helpers ────────────────────────────────────────────────────────────
 
 const pillBaseClass =
-  "inline-flex items-center justify-center shrink-0 whitespace-nowrap rounded-full font-medium border transition-colors duration-flow cursor-pointer focus-visible:outline-none";
+  "inline-flex items-center justify-center shrink-0 whitespace-nowrap rounded-full font-medium border cursor-pointer select-none transition-[background-color,border-color,color,transform] duration-micro ease-out active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none motion-reduce:transform-none";
 
 const pillSizeClass: Record<FilterPillsSize, string> = {
   sm: "h-8 px-3 text-xs gap-1.5",
@@ -56,11 +56,14 @@ const pillIconSizeClass: Record<FilterPillsSize, string> = {
   md: "h-3.5 w-3.5",
 };
 
-const pillInactiveClass = "border-border bg-background text-foreground hover:bg-muted";
+const pillInactiveClass =
+  "border-border bg-background text-muted-foreground hover:bg-muted hover:text-foreground";
 
 const pillActiveClass: Record<FilterPillsVariant, string> = {
-  solid: "bg-foreground text-background border-foreground hover:bg-foreground",
-  subtle: "bg-accent text-accent-foreground border-accent hover:bg-accent",
+  // Selection is a fill, not a black block: the solid pill is a muted fill with
+  // a medium hairline, the subtle pill a plain accent tint.
+  solid: "border-[var(--edge-medium)] bg-muted text-foreground",
+  subtle: "border-transparent bg-accent text-accent-foreground",
 };
 
 const pillDisabledClass = "opacity-40 pointer-events-none";

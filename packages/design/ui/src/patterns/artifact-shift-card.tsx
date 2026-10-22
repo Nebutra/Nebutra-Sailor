@@ -26,7 +26,7 @@ export function ArtifactShiftCard({
   return (
     <div
       className={cn(
-        "group/card relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[var(--radius-panel)] border bg-background/90 transition-[border-color] duration-flow ease-out hover:border-foreground/25 focus-within:border-foreground/25",
+        "group/card relative flex h-full min-h-[560px] flex-col overflow-hidden rounded-[var(--radius-panel)] border bg-background/90 transition-[border-color] duration-flow ease-out hover:border-[var(--edge-medium)] focus-within:border-[var(--edge-medium)]",
         className,
       )}
       data-taste="nebutra-shift-card"
@@ -64,7 +64,7 @@ export function ArtifactShiftCardPreview({
     <section
       aria-label={label}
       className={cn(
-        "relative min-h-[260px] overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-background/80 p-3 shadow-ambient-sm transition-[border-color] duration-flow ease-out group-hover/card:border-foreground/20 group-focus-within/card:border-foreground/20 sm:p-4",
+        "relative min-h-[260px] overflow-hidden rounded-[var(--radius-xl)] border border-border/60 bg-background/80 p-3 shadow-ambient-sm transition-[border-color] duration-flow ease-out group-hover/card:border-[var(--edge-medium)] group-focus-within/card:border-[var(--edge-medium)] sm:p-4",
         className,
       )}
       {...props}
@@ -121,7 +121,7 @@ export function ArtifactShiftCardFooter({ className, ...props }: ArtifactShiftCa
   return (
     <footer
       className={cn(
-        "relative mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-xl)] border border-border/60 bg-background/85 px-4 py-3 shadow-ambient-sm backdrop-blur-xl transition-[border-color] duration-flow ease-out group-hover/card:border-foreground/20 group-focus-within/card:border-foreground/20",
+        "relative mt-4 flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-xl)] border border-border/60 bg-background/85 px-4 py-3 shadow-ambient-sm backdrop-blur-xl transition-[border-color] duration-flow ease-out group-hover/card:border-[var(--edge-medium)] group-focus-within/card:border-[var(--edge-medium)]",
         className,
       )}
       {...props}

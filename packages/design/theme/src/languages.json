@@ -183,13 +183,13 @@
       "id": "vanta",
       "name": "Vanta",
       "kind": "design-language",
-      "description": "Dual-mode: editorial violet on parchment + deep-indigo night; Vivid Violet action ≠ Indigo Ink brand-mark; full pills; elevation=none (carbon hairlines).",
+      "description": "Dual-mode: editorial violet on parchment + deep-indigo night; Vivid Violet action ≠ Indigo Ink brand-mark; 12px controls with pill chips and badges; elevation=none, 1px hairline edges with the carbon ink kept as --border-strong.",
       "tagline": "high-trust enterprise blues",
       "shortName": "Vanta",
       "proves": [
         "action ≠ brand-mark (chromatic)",
-        "elevation=none border-only",
-        "999px pill controls",
+        "elevation=none border-only (hairline default, ink in --border-strong)",
+        "12px controls with pill chips and badges",
         "serif display + sans UI zones"
       ],
       "darkDefault": false,

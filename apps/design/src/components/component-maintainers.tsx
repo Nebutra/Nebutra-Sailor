@@ -36,7 +36,7 @@ export function ComponentMaintainers({
 
   return (
     <section
-      className="-mx-4 border-border border-t px-4 py-8 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12"
+      className="-mx-4 border-hairline border-t px-4 py-8 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12"
       id="maintainers"
     >
       <details className="group">
@@ -68,7 +68,7 @@ export function ComponentMaintainers({
                 <span className="flex flex-wrap items-center gap-1.5">
                   {axes.map((axis) => (
                     <span
-                      className="inline-flex items-baseline gap-1.5 rounded-[var(--radius-md)] border border-border bg-card px-2 py-0.5"
+                      className="inline-flex items-baseline gap-1.5 rounded-[var(--radius-md)] border border-hairline bg-card px-2 py-0.5"
                       key={axis.name}
                     >
                       <code className="font-mono text-foreground text-xs">{axis.name}</code>
@@ -101,7 +101,7 @@ export function ComponentMaintainers({
               <ol className="m-0 flex list-none flex-col gap-3 p-0">
                 {catches.map((note) => (
                   <li
-                    className="grid gap-1 border-border border-t pt-3 md:grid-cols-[12rem_1fr] md:gap-6"
+                    className="grid gap-1 border-hairline border-t pt-3 md:grid-cols-[12rem_1fr] md:gap-6"
                     key={note.id}
                   >
                     <a

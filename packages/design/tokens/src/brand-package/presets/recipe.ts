@@ -12,6 +12,7 @@ import type {
   ButtonDefaultStyle,
   Density,
   ElevationStyle,
+  OutlineStyle,
 } from "../types";
 
 export interface RecipeInput {
@@ -28,6 +29,8 @@ export interface RecipeInput {
   badgeDefault?: BadgeDefaultStyle;
   primaryStrokeGradient?: string;
   outlineBorder?: string;
+  /** Default hairline; `ink` makes --border-default the language's heavy stroke. */
+  outline?: OutlineStyle;
   /** Used when expanding elevationPreset key/hairline */
   cardShadow?: string;
 }
@@ -44,6 +47,7 @@ export function buildRecipe(input: RecipeInput): BrandRecipe {
     input: input.radii?.input ?? button,
     pill: input.radii?.pill ?? "9999px",
   };
+  if (input.radii?.chip) radii.chip = input.radii.chip;
   const elevationPreset = input.elevationPreset ?? "soft";
   const elevationTokens =
     input.elevationTokens ?? elevationPresetToTokens(elevationPreset, input.cardShadow);
@@ -57,5 +61,6 @@ export function buildRecipe(input: RecipeInput): BrandRecipe {
   if (input.badgeDefault) recipe.badgeDefault = input.badgeDefault;
   if (input.primaryStrokeGradient) recipe.primaryStrokeGradient = input.primaryStrokeGradient;
   if (input.outlineBorder) recipe.outlineBorder = input.outlineBorder;
+  if (input.outline) recipe.outline = input.outline;
   return recipe;
 }

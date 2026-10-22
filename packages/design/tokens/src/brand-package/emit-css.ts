@@ -17,6 +17,7 @@ import type {
   BrandRecipe,
   BrandSemanticColors,
   BrandSpacing,
+  OutlineStyle,
 } from "./types";
 
 /**
@@ -164,6 +165,12 @@ function recipeVars(recipe: BrandRecipe): string[] {
     `  --badge-default-radius: ${radii.badge ?? "9999px"};`,
     `  --radius-inputs: ${radii.input ?? radii.button};`,
     `  --input-radius: ${radii.input ?? radii.button};`,
+    // The ladder's two named steps. Control is whatever shape a field takes in
+    // this language (a pill for Vanta and GSAP, 6–8px for the rest); chip is a
+    // step tighter, capped at the card so a skin that omits it can never sit
+    // rounder than the surface it labels.
+    `  --radius-control: ${radii.input ?? radii.button};`,
+    `  --radius-chip: ${radii.chip ?? `min(0.375rem, ${radii.card})`};`,
     `  --radius-pill: ${radii.pill ?? "9999px"};`,
     ``,
     `  /* Free elevation (carrier-provided CSS shadows) */`,
@@ -432,7 +439,11 @@ function neutralRamp(s: BrandSemanticColors, r: BrandColorRoles | undefined): st
   return lines;
 }
 
-function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): string[] {
+function emitColorVars(
+  s: BrandSemanticColors,
+  r: BrandColorRoles | undefined,
+  outline: OutlineStyle = "hairline",
+): string[] {
   // --accent is the hover surface, never a brand hue — see hover-surface.ts.
   const hover = hoverSurface(s.accent, s.accentForeground, s.background, s.foreground);
   const roleLines: string[] = [
@@ -482,6 +493,20 @@ function emitColorVars(s: BrandSemanticColors, r: BrandColorRoles | undefined): 
     `  --destructive: ${s.destructive};`,
     `  --destructive-foreground: ${s.destructiveForeground};`,
     `  --border: ${s.border};`,
+    // The heavy stroke, a complete colour (not channels) so it can be read
+    // straight into `border-color`. A language that declares none still gets one
+    // — a 45% foreground-over-background mix (about 3:1) — so `border-border-strong` always
+    // means "visibly stronger than the hairline" and never "unset".
+    `  --border-strong: ${
+      s.borderStrong
+        ? `hsl(${s.borderStrong})`
+        : `color-mix(in oklab, hsl(${s.foreground}) 45%, hsl(${s.background}))`
+    };`,
+    // Only an ink language writes this: everyone else inherits the hairline
+    // default from recipe.css, which re-resolves `--border` per scope. Writing
+    // `hsl(var(--border))` here would freeze the light value at the html element
+    // and hand it to every nested `.dark` subtree.
+    ...(outline === "ink" ? [`  --border-default: var(--border-strong);`] : []),
     // Field stroke, not field fill: --input reaches the DOM only through
     // `border-input`. A language that omits it inherits the hairline colour,
     // which is always a visible boundary — writing the surface colour here
@@ -620,14 +645,18 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
     // Light block: colors + shared chrome
     parts.push(emitLightModeSelector(b.id, mode, root));
     parts.push(
-      ...emitColorVars(b.modes.light.semantic, b.modes.light.roles),
+      ...emitColorVars(b.modes.light.semantic, b.modes.light.roles, b.recipe.outline),
       ...sharedChrome,
       `}`,
       ``,
     );
     // Dark block: colors only (chrome inherits)
     parts.push(emitDarkModeSelector(b.id, mode, root));
-    parts.push(...emitColorVars(b.modes.dark.semantic, b.modes.dark.roles), `}`, ``);
+    parts.push(
+      ...emitColorVars(b.modes.dark.semantic, b.modes.dark.roles, b.recipe.outline),
+      `}`,
+      ``,
+    );
   } else {
     // Single-mode: one selector + full block
     const selector =
@@ -635,7 +664,7 @@ export function emitBrandCss(brand: BrandPackage, options: EmitBrandCssOptions =
         ? `${root}[data-brand="${b.id}"] {`
         : emitGlobalSkinSelector(b.id, b.darkDefault, root);
     parts.push(selector);
-    parts.push(...emitColorVars(b.semantic, b.roles), ...sharedChrome, `}`, ``);
+    parts.push(...emitColorVars(b.semantic, b.roles, b.recipe.outline), ...sharedChrome, `}`, ``);
   }
 
   return parts.join("\n");

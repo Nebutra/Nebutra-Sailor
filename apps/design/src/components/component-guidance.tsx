@@ -13,7 +13,7 @@ import type { Guidance, Rule } from "@/lib/components/guidance";
 
 function Key({ children }: { children: string }) {
   return (
-    <kbd className="rounded-[var(--radius-sm)] border border-border bg-background px-1.5 py-0.5 font-mono text-foreground text-xs">
+    <kbd className="rounded-[var(--radius-sm)] border border-hairline bg-background px-1.5 py-0.5 font-mono text-foreground text-xs">
       {children}
     </kbd>
   );
@@ -21,10 +21,10 @@ function Key({ children }: { children: string }) {
 
 export function KeyboardTable({ rows }: { rows: NonNullable<Guidance["keyboard"]> }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-border bg-card">
+    <div className="overflow-hidden rounded-lg border border-hairline bg-card shadow-xs">
       <table className="w-full border-collapse text-sm" role="table">
         <thead className="max-md:sr-only" role="rowgroup">
-          <tr className="border-border border-b bg-background" role="row">
+          <tr className="border-hairline border-b bg-background" role="row">
             <th
               className="w-[34%] px-4 py-2 text-left font-medium text-muted-foreground text-xs"
               role="columnheader"
@@ -44,7 +44,7 @@ export function KeyboardTable({ rows }: { rows: NonNullable<Guidance["keyboard"]
         <tbody role="rowgroup">
           {rows.map((row) => (
             <tr
-              className="border-border border-b align-top last:border-b-0 max-md:flex max-md:flex-col max-md:gap-1.5 max-md:px-4 max-md:py-3"
+              className="border-hairline border-b align-top last:border-b-0 max-md:flex max-md:flex-col max-md:gap-1.5 max-md:px-4 max-md:py-3"
               key={`${row.keys.join("+")}: ${row.does}`}
               role="row"
             >
@@ -99,8 +99,8 @@ function RuleColumn({ rules, tone }: { rules: Rule[]; tone: "do" | "dont" }) {
   const isDo = tone === "do";
 
   return (
-    <div className="flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-card">
-      <div className="flex items-center gap-2 border-border border-b bg-background px-4 py-2">
+    <div className="flex min-w-0 flex-col overflow-hidden rounded-lg border border-hairline bg-card shadow-xs">
+      <div className="flex items-center gap-2 border-hairline border-b bg-background px-4 py-2">
         {isDo ? (
           <Check aria-hidden className="size-4 text-success-strong" />
         ) : (
@@ -111,13 +111,13 @@ function RuleColumn({ rules, tone }: { rules: Rule[]; tone: "do" | "dont" }) {
       <ul className="m-0 flex list-none flex-col p-0">
         {rules.map((rule) => (
           <li
-            className="flex flex-col gap-2 border-border border-b px-4 py-4 last:border-b-0"
+            className="flex flex-col gap-2 border-hairline border-b px-4 py-4 last:border-b-0"
             key={rule.title}
           >
             <span className="font-medium text-foreground text-sm">{rule.title}</span>
             <span className="text-neutral-11 text-sm">{rule.body}</span>
             {rule.code ? (
-              <pre className="m-0 overflow-x-auto rounded-md border border-border bg-background px-3 py-2 font-mono text-foreground text-xs leading-relaxed">
+              <pre className="m-0 overflow-x-auto rounded-md border border-hairline bg-background px-3 py-2 font-mono text-foreground text-xs leading-relaxed">
                 <code>{rule.code}</code>
               </pre>
             ) : null}

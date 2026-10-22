@@ -21,6 +21,9 @@ export type CssColor = string;
 
 export type ButtonDefaultStyle = "solid" | "outline" | "gradient-stroke";
 
+/** Which stroke a language's default outline is: a quiet hairline or its ink. */
+export type OutlineStyle = "hairline" | "ink";
+
 /**
  * Elevation *presets* are only shortcuts that expand to free CSS box-shadow tokens.
  * Carriers should prefer `recipe.elevationTokens` with arbitrary shadow stacks.
@@ -62,6 +65,17 @@ export interface BrandColorRoles {
   mutedForeground: HslChannels;
   border: HslChannels;
   /**
+   * The heavy stroke — a language's ink outline, as distinct from its hairline.
+   *
+   * `border` is what every card, field and divider paints by default, so it has
+   * to stay a hairline (about 1.1–1.55:1 against the surface). A language whose
+   * identity IS a hard outline (Vanta's carbon ink) keeps that here instead of
+   * in `border`, and opts a control into it through `recipe.outline: "ink"` or
+   * `border-border-strong`. Omit it and the emitter mixes one from foreground
+   * and background, so every language always has a visibly stronger stroke.
+   */
+  borderStrong?: HslChannels;
+  /**
    * Field stroke. `--input` is consumed only as a border colour (`border-input`
    * on Input, Textarea, Select, Combobox, InputOTP) — never as a fill. Omit it
    * and it derives from `border`, which is what every language wants: six of
@@ -88,6 +102,12 @@ export interface BrandRadii {
   badge?: string;
   input?: string;
   pill?: string;
+  /**
+   * Small labels: chips, tags, kbd. The ladder is control 8 / card 12 / chip 6,
+   * so a chip sits a step tighter than a control. Defaults to 6px, capped at the
+   * card radius. A language whose chips are pills (Vanta) says so here.
+   */
+  chip?: string;
 }
 
 /**
@@ -124,6 +144,10 @@ export interface BrandSemanticColors {
   destructiveForeground: HslChannels;
   border: HslChannels;
   /**
+   * The heavy stroke. See {@link BrandColorRoles.borderStrong}.
+   */
+  borderStrong?: HslChannels;
+  /**
    * Field stroke. `--input` is consumed only as a border colour (`border-input`
    * on Input, Textarea, Select, Combobox, InputOTP) — never as a fill. Omit it
    * and it derives from `border`, which is what every language wants: six of
@@ -153,6 +177,12 @@ export interface BrandRecipe {
   primaryStrokeGradient?: string;
   outlineBorder?: CssColor;
   badgeDefault?: BadgeDefaultStyle;
+  /**
+   * What `--border-default` resolves to: the hairline (default) or the language's
+   * ink stroke. Components that want "this language's own outline" read
+   * `--border-default`; everything else reads `--border`.
+   */
+  outline?: OutlineStyle;
 }
 
 /**
@@ -171,6 +201,8 @@ export type BrandRecipeInput = {
   badgeDefault?: BadgeDefaultStyle;
   /** @deprecated input-only — use radii.button */
   buttonRadius?: string;
+  /** Default `hairline`. */
+  outline?: OutlineStyle;
   /** @deprecated input-only — use radii.card */
   cardRadius?: string;
   /** @deprecated input-only — use radii.badge */

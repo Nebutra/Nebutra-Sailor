@@ -279,7 +279,7 @@ export function DitheringBackground({
     <div
       id="dithering-bg-parallax"
       className={cn(
-        "pointer-events-none fixed inset-0 -z-10 transition-colors duration-500",
+        "pointer-events-none fixed inset-0 -z-10 transition-colors duration-cinematic",
         className,
       )}
       style={{

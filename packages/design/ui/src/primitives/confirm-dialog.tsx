@@ -184,7 +184,9 @@ export function ConfirmDialog({
                 "bg-destructive text-destructive-foreground hover:bg-destructive/90",
             )}
           >
-            {isProcessing && <Loader2 className="size-4 mr-2 animate-spin" />}
+            {isProcessing && (
+              <Loader2 className="size-4 mr-2 animate-spin motion-reduce:animate-pulse" />
+            )}
             {confirmText}
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -616,7 +618,9 @@ function BulkActionConfirmDialogContent({
             onClick={handleConfirm}
             disabled={!isConfirmEnabled || isProcessing}
           >
-            {isProcessing && <Loader2 className="size-4 mr-2 animate-spin" />}
+            {isProcessing && (
+              <Loader2 className="size-4 mr-2 animate-spin motion-reduce:animate-pulse" />
+            )}
             Confirm
           </Button>
         </AlertDialogFooter>

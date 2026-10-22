@@ -324,7 +324,7 @@ Primary Filled Button Background #533afd.
 });
 
 describe("compileReferoTokens — Vanta", () => {
-  it("separates vivid-violet action from indigo-ink brand-mark; pill + no shadow", () => {
+  it("separates vivid-violet action from indigo-ink brand-mark; 12px controls + pill badges + no shadow", () => {
     const result = compileReferoTokens({
       id: "vanta",
       designMd: `
@@ -370,7 +370,12 @@ Primary Filled Button fill #5e05c4. Logo in Reckless #260048.
     assert.equal(result.brand.recipe.buttonDefault, "solid");
     assert.match(result.brand.recipe.elevationTokens.card, /0 0 #0000|0 0 #0000/);
     assert.equal(result.brand.recipe.density, "comfortable");
-    assert.match(result.brand.recipe.radii.button, /999/);
+    // The export says pill, the language says 12px: controls sit on the ladder
+    // and only chips and badges keep the pill (presets/vanta.ts).
+    assert.equal(result.brand.recipe.radii.button, "12px");
+    assert.equal(result.brand.recipe.radii.input, "12px");
+    assert.equal(result.brand.recipe.radii.badge, "999px");
+    assert.equal(result.brand.recipe.radii.chip, "999px");
     assert.equal(result.brand.recipe.radii.card, "16px");
     assert.equal(result.brand.recipe.badgeDefault, "muted");
 
@@ -386,7 +391,7 @@ Primary Filled Button fill #5e05c4. Logo in Reckless #260048.
 
     assert.match(result.css, /--brand-mark:/);
     assert.match(result.css, /--elevation-card: 0 0 #0000/);
-    assert.match(result.css, /--radius-button: 999/);
+    assert.match(result.css, /--radius-button: 12px/);
     assert.match(result.brand.typography.fontSans, /Inter/i);
     assert.match(result.brand.typography.fontDisplay ?? "", /Reckless/i);
     assert.ok(result.warnings.some((w) => /indigo-ink|brand-mark/i.test(w)));

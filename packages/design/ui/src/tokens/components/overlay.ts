@@ -8,7 +8,6 @@
  */
 
 import { primitiveRadius, primitiveTransition } from "../primitive";
-import { shadowClasses } from "../shadows";
 
 const overlayFocusRingClassName = "outline-none";
 
@@ -21,9 +20,9 @@ export const overlayZIndex = {
 
 export const overlayTokens = {
   radius: {
-    menu: primitiveRadius.lg,
+    menu: primitiveRadius.xl,
     modal: primitiveRadius.xl,
-    popover: primitiveRadius.lg,
+    popover: primitiveRadius.xl,
     tooltip: primitiveRadius.md,
   },
   motion: {
@@ -52,41 +51,41 @@ export const overlayClassNames = {
   ].join(" "),
   commandSurface: [
     "fixed left-1/2 top-[18vh] w-[calc(100vw-2rem)] max-w-xl -translate-x-1/2 overflow-hidden",
-    "rounded-[var(--radius-lg)] border border-border/70 bg-popover text-popover-foreground",
-    shadowClasses["2xl"],
+    "rounded-[var(--radius-card)] bg-popover text-popover-foreground",
+    "shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-overlay)]",
   ].join(" "),
   menuSurface: [
-    "min-w-32 origin-[var(--transform-origin)] overflow-hidden rounded-[var(--radius-lg)] border border-border/70 bg-popover/95 p-1 text-popover-foreground backdrop-blur-md",
-    shadowClasses.xl,
+    "min-w-32 origin-[var(--transform-origin)] overflow-hidden rounded-[var(--radius-card)] bg-popover/95 p-1 text-popover-foreground backdrop-blur-md",
+    "shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-overlay)]",
     "outline-none transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-brand)]",
     "data-[starting-style]:scale-[0.97] data-[starting-style]:opacity-0 data-ending-style:scale-[0.97] data-ending-style:opacity-0 data-ending-style:duration-[var(--motion-duration-micro)]",
     "motion-reduce:transition-none motion-reduce:data-[starting-style]:transform-none motion-reduce:data-[ending-style]:transform-none",
   ].join(" "),
   selectSurface: [
     "max-h-[var(--select-content-max-height)] min-w-[var(--select-content-min-width)] origin-[var(--transform-origin)] overflow-hidden",
-    "rounded-[var(--select-content-radius)] border border-border/70 bg-popover/95 text-popover-foreground backdrop-blur-md",
-    "shadow-[var(--select-content-shadow)] outline-none",
+    "rounded-[var(--select-content-radius)] bg-popover/95 text-popover-foreground backdrop-blur-md",
+    "shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-overlay)] outline-none",
     "transition-[opacity,transform] duration-[var(--select-duration)] ease-[var(--ease-brand)]",
     "data-starting-style:scale-[0.97] data-starting-style:opacity-0 data-ending-style:scale-[0.97] data-ending-style:opacity-0",
     "motion-reduce:transition-none motion-reduce:data-starting-style:transform-none motion-reduce:data-ending-style:transform-none",
   ].join(" "),
   navigationMenuSurface: [
-    "min-w-32 origin-[var(--transform-origin)] overflow-hidden rounded-[var(--radius-xl)] border border-border/70 bg-popover/95 text-popover-foreground backdrop-blur-md",
-    shadowClasses.xl,
+    "min-w-32 origin-[var(--transform-origin)] overflow-hidden rounded-[var(--radius-card)] bg-popover/95 text-popover-foreground backdrop-blur-md",
+    "shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-overlay)]",
     "outline-none transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-brand)]",
     "data-[starting-style]:scale-[0.97] data-[starting-style]:opacity-0 data-ending-style:scale-[0.97] data-ending-style:opacity-0 data-ending-style:duration-[var(--motion-duration-micro)]",
     "motion-reduce:transition-none motion-reduce:data-[starting-style]:transform-none motion-reduce:data-[ending-style]:transform-none",
   ].join(" "),
   popoverSurface: [
-    "w-72 origin-[var(--transform-origin)] rounded-[var(--radius-lg)] border border-border/70 bg-popover/95 p-4 text-popover-foreground backdrop-blur-md",
-    shadowClasses.xl,
+    "w-72 origin-[var(--transform-origin)] rounded-[var(--radius-card)] bg-popover/95 p-4 text-popover-foreground backdrop-blur-md",
+    "shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-overlay)]",
     "outline-none transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-brand)]",
-    "data-[open]:opacity-100 data-[closed]:opacity-0 data-[closed]:scale-[0.97] data-[open]:scale-100 data-[closed]:duration-[var(--motion-duration-micro)]",
-    "motion-reduce:transition-none motion-reduce:data-[closed]:transform-none motion-reduce:data-[open]:transform-none",
+    "data-[starting-style]:scale-[0.97] data-[starting-style]:opacity-0 data-ending-style:scale-[0.97] data-ending-style:opacity-0 data-ending-style:duration-[var(--motion-duration-micro)]",
+    "motion-reduce:transition-none motion-reduce:data-[starting-style]:transform-none motion-reduce:data-[ending-style]:transform-none",
   ].join(" "),
   tooltipSurface: [
-    "origin-[var(--transform-origin)] overflow-hidden rounded-[var(--radius-md)] border border-border/70 bg-popover/95 px-3 py-1.5 text-sm text-popover-foreground backdrop-blur-md",
-    shadowClasses.md,
+    "origin-[var(--transform-origin)] overflow-hidden rounded-[var(--radius-md)] bg-popover/95 px-3 py-1.5 text-sm text-popover-foreground backdrop-blur-md",
+    "shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-overlay)]",
     "transition-[opacity,transform] duration-[var(--motion-duration-flow)] ease-[var(--ease-brand)]",
     "data-starting-style:scale-[0.97] data-starting-style:opacity-0 data-ending-style:scale-[0.97] data-ending-style:opacity-0 data-ending-style:duration-[var(--motion-duration-micro)]",
     "data-[instant]:duration-0",

@@ -4,6 +4,7 @@ import { Slider as BaseSlider } from "@base-ui/react/slider";
 import NumberFlow, { continuous } from "@number-flow/react";
 import type * as React from "react";
 import { cn } from "../utils";
+import { controlFocusVisibleClassName } from "./form-control";
 
 export const SliderNumberFlow = ({
   className,
@@ -26,7 +27,12 @@ export const SliderNumberFlow = ({
       <BaseSlider.Indicator className="absolute h-full rounded-full bg-primary" />
     </BaseSlider.Track>
     <BaseSlider.Thumb
-      className="relative block h-5 w-5 rounded-full border border-border bg-background shadow-xs ring-1 ring-border/40 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+      className={cn(
+        "relative block h-5 w-5 rounded-full border border-border bg-background shadow-xs ring-1 ring-border/40",
+        "transition-[box-shadow,transform] duration-micro ease-out motion-reduce:transition-none",
+        controlFocusVisibleClassName,
+        "disabled:pointer-events-none disabled:opacity-50",
+      )}
       aria-label={valueLabel}
     >
       {(Array.isArray(value) ? value[0] : value) != null && (

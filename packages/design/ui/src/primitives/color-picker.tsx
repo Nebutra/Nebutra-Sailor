@@ -101,7 +101,7 @@ const CHECKER =
 const thumbClass = cn(
   "absolute size-4 -translate-x-1/2 -translate-y-1/2 rounded-full outline-none",
   // allow-palette: the thumb sits on arbitrary user colours, so it is white with a dark hairline in both themes
-  "border-2 border-white shadow-[0_0_0_1px_rgb(0_0_0/0.45),0_1px_3px_rgb(0_0_0/0.35)]",
+  "ring-2 ring-white shadow-[0_0_0_1px_rgb(0_0_0/0.45),0_1px_3px_rgb(0_0_0/0.35)]",
   "transition-transform duration-micro ease-out motion-reduce:transition-none",
   "data-[dragging=true]:scale-110",
 );
@@ -625,8 +625,8 @@ function ColorPicker({
                   );
                 }}
                 className={cn(
-                  "size-6 bg-[color:var(--cp-color)] rounded-full border-2 ring-1 ring-inset ring-border transition-[box-shadow] duration-micro ease-out hover:ring-foreground/40 disabled:opacity-50",
-                  active ? "border-foreground" : "border-transparent",
+                  "size-6 bg-[color:var(--cp-color)] rounded-full ring-1 ring-inset ring-border transition-[box-shadow] duration-micro ease-out hover:ring-[var(--edge-medium)] disabled:opacity-50 motion-reduce:transition-none",
+                  active && "outline outline-2 outline-offset-2 outline-ring",
                 )}
                 style={{ "--cp-color": swatch } as CpVars}
               />
@@ -694,8 +694,8 @@ function ColorPickerPopover({
             aria-label={`${labels.trigger}, ${shown}`}
             disabled={pickerProps.disabled}
             className={cn(
-              "relative size-8 overflow-hidden rounded-full border-2 ring-1 ring-inset ring-border transition-[box-shadow] duration-micro ease-out hover:ring-foreground/40 disabled:opacity-50",
-              triggerSelected ? "border-foreground" : "border-transparent",
+              "relative size-8 overflow-hidden rounded-full ring-1 ring-inset ring-border transition-[box-shadow] duration-micro ease-out hover:ring-[var(--edge-medium)] disabled:opacity-50 motion-reduce:transition-none",
+              triggerSelected && "outline outline-2 outline-offset-2 outline-ring",
               CHECKER,
               triggerClassName,
             )}

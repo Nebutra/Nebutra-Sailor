@@ -16,7 +16,7 @@ function Spinner({ className }: { className?: string }) {
     <span
       aria-hidden="true"
       className={cn(
-        "block rounded-full border-2 border-current border-t-transparent animate-[spinner_0.6s_linear_infinite]",
+        "block rounded-full border-[1.5px] border-current border-t-transparent animate-[spinner_0.6s_linear_infinite] motion-reduce:animate-pulse",
         className,
       )}
     />

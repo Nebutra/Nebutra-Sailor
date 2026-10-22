@@ -72,15 +72,15 @@ export function PageToc() {
       <span className="pb-3 font-medium text-foreground text-sm">On this page</span>
       {/* A hairline rail with the current section marked on it — position in
           the article, not a second menu competing with the sidebar. */}
-      <ul className="m-0 flex list-none flex-col border-border border-l p-0">
+      <ul className="m-0 flex list-none flex-col border-hairline border-l p-0">
         {headings.map((heading) => (
           <li key={heading.id}>
             <a
               aria-current={active === heading.id ? "location" : undefined}
               className={cn(
-                "-ml-px block border-l py-1.5 pl-3 text-ui no-underline transition-colors duration-micro",
+                "-ml-px block border-l-2 py-1.5 pl-3 text-ui no-underline transition-colors duration-micro",
                 active === heading.id
-                  ? "border-foreground text-foreground"
+                  ? "border-primary text-foreground"
                   : "border-transparent text-muted-foreground hover:text-foreground",
               )}
               href={`#${heading.id}`}

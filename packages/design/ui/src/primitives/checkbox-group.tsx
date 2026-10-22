@@ -62,8 +62,8 @@ export interface CheckboxGroupProps {
 
 const boxClassName = (on: boolean) =>
   cn(
-    "relative inline-flex size-4 shrink-0 items-center justify-center rounded-[4px] border",
-    "stroke-current fill-none transition-[background-color,border-color,color] duration-micro",
+    "relative inline-flex size-4 shrink-0 items-center justify-center rounded-sm border",
+    "stroke-current fill-none transition-[background-color,border-color,box-shadow,color] duration-micro ease-out motion-reduce:transition-none",
     on
       ? "border-primary bg-primary text-primary-foreground"
       : "border-[var(--control-border)] bg-background text-transparent group-hover:border-muted-foreground",
@@ -95,7 +95,7 @@ export const Checkbox = ({
   return (
     <label
       className={cn(
-        "group flex items-center text-[13px] font-sans",
+        "group flex items-center text-sm font-sans",
         disabled ? "cursor-not-allowed text-muted-foreground" : "cursor-pointer text-foreground",
         className,
       )}

@@ -123,29 +123,31 @@ test("language selection dismisses its compact menu and restores focus", async (
   await expect(menu).toHaveCount(0);
 });
 
-test("Props clips its rounded top corners and tall controls leave the preview compact", async ({
+test("Playground is one framed workbench: stage, Code and Props share a single clipped container", async ({
   page,
 }, testInfo) => {
   await page.goto("/components/button");
   await selectVanta(page);
   const props = propsOf(page);
-  await props.locator(":scope > div").first().scrollIntoViewIfNeeded();
-  const corners = await props.evaluate((element) => {
-    const bounds = element.getBoundingClientRect();
-    const style = getComputedStyle(element);
+  await props.scrollIntoViewIfNeeded();
+  const frame = await props.evaluate((element) => {
+    const container = element.parentElement?.parentElement;
+    if (!container) throw new Error("Props has no workbench container");
+    const style = getComputedStyle(container);
     return {
       radius: Number.parseFloat(style.borderTopLeftRadius),
-      headerCoversLeftCorner: element.contains(
-        document.elementFromPoint(bounds.left + 1, bounds.top + 1),
-      ),
-      headerCoversRightCorner: element.contains(
-        document.elementFromPoint(bounds.right - 1, bounds.top + 1),
-      ),
+      overflow: style.overflow,
+      holdsPreview: Boolean(container.querySelector('[role="group"][aria-label="Preview"]')),
+      holdsCode: Boolean(container.querySelector("pre code")),
+      // Props must not draw its own rounded box inside the frame.
+      propsRadius: Number.parseFloat(getComputedStyle(element).borderTopLeftRadius),
     };
   });
-  expect(corners.radius).toBeGreaterThan(0);
-  expect(corners.headerCoversLeftCorner, JSON.stringify(corners)).toBe(false);
-  expect(corners.headerCoversRightCorner, JSON.stringify(corners)).toBe(false);
+  expect(frame.radius).toBeGreaterThan(0);
+  expect(frame.overflow).toBe("hidden");
+  expect(frame.holdsPreview).toBe(true);
+  expect(frame.holdsCode).toBe(true);
+  expect(frame.propsRadius).toBe(0);
 
   if (testInfo.project.name === "desktop") {
     const preview = await previewOf(page).boundingBox();
@@ -155,14 +157,14 @@ test("Props clips its rounded top corners and tall controls leave the preview co
     expect(panel).not.toBeNull();
     expect(code).not.toBeNull();
     if (!preview || !panel || !code) throw new Error("Playground panels must have layout boxes");
-    expect(panel.height).toBeGreaterThan(preview.height + code.height + 16);
-    expect(preview.height).toBeLessThanOrEqual(225);
-    expect(code.y - (preview.y + preview.height)).toBeCloseTo(16, 0);
+    // Stage and Code stack in one column with no gap; Props runs the full height.
+    expect(code.y - (preview.y + preview.height)).toBeLessThanOrEqual(1);
+    expect(panel.height).toBeGreaterThanOrEqual(preview.height + code.height - 1);
   }
   await expectNoOverflow(page);
 });
 
-test("keyboard focus preserves the canonical Combobox radius and two-pixel outline", async ({
+test("keyboard focus preserves the canonical Combobox radius and draws the border + ring", async ({
   page,
 }, testInfo) => {
   await page.goto("/components/combobox");
@@ -177,9 +179,12 @@ test("keyboard focus preserves the canonical Combobox radius and two-pixel outli
   await expect(trigger).toBeFocused();
   expect(await trigger.evaluate((element) => element.matches(":focus-visible"))).toBe(true);
   await expect(trigger).toHaveCSS("border-radius", before);
-  await expect(trigger).toHaveCSS("outline-width", "2px");
-  await expect(trigger).toHaveCSS("outline-style", "solid");
-  await expect(trigger).toHaveCSS("outline-offset", "2px");
+  // Same indicator as Input and Select: border change + 3px soft ring, with no
+  // second outline stacked on top.
+  await expect(trigger).toHaveCSS("outline-style", "none");
+  expect(
+    await trigger.evaluate((element) => /\s3px\b/u.test(getComputedStyle(element).boxShadow)),
+  ).toBe(true);
   await testInfo.attach("combobox-keyboard-focus-screenshot", {
     body: await page.screenshot(),
     contentType: "image/png",
@@ -254,6 +259,8 @@ test("Light, Dark, and Split render distinct themes and portalled controls follo
   await page.goto("/components/combobox");
   const themes = page.getByRole("group", { name: "Preview theme", exact: true });
   const preview = previewOf(page);
+  // The stage is transparent over the dot matrix; the workbench frame owns the surface.
+  const surface = preview.locator("xpath=../..");
   const trigger = preview.getByRole("combobox", { name: "Framework", exact: true });
   await themes.getByRole("button", { name: "Light", exact: true }).click();
   await expect(page.locator("html")).not.toHaveClass(/\bdark\b/);
@@ -261,7 +268,7 @@ test("Light, Dark, and Split render distinct themes and portalled controls follo
     "aria-pressed",
     "true",
   );
-  const lightBackground = await backgroundOf(preview);
+  const lightBackground = await backgroundOf(surface);
   await trigger.click();
   const popup = page.getByRole("dialog");
   await expect(popup).toBeVisible();
@@ -276,7 +283,7 @@ test("Light, Dark, and Split render distinct themes and portalled controls follo
     "aria-pressed",
     "true",
   );
-  await expect(preview).not.toHaveCSS("background-color", lightBackground);
+  await expect(surface).not.toHaveCSS("background-color", lightBackground);
   await trigger.click();
   await expect(popup).toBeVisible();
   await expect(popup).not.toHaveCSS("background-color", lightPopup);

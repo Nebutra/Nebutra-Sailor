@@ -442,7 +442,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                                   <AnimatePresence mode="wait">
                                     {isSubtaskExpanded && (
                                       <motion.div
-                                        className="ml-1.5 mt-1 overflow-hidden border-l border-dashed border-foreground/20 pl-5 text-xs text-muted-foreground"
+                                        className="ml-1.5 mt-1 overflow-hidden border-l border-dashed border-border pl-5 text-xs text-muted-foreground"
                                         initial={{ opacity: 0, height: 0 }}
                                         animate={{ opacity: 1, height: "auto" }}
                                         exit={{ opacity: 0, height: 0 }}

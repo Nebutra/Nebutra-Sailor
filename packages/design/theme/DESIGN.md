@@ -55,7 +55,7 @@ typography.faces → @font-face
 | gsap | Non-solid CTA recipe + zones |
 | raycast | action ≠ brand-mark + elev=key |
 | vercel | Light mono + elev=hairline + **dual-mode** light/dark palettes |
-| vanta | Chromatic action≠brand + elev=none + pills + dual fonts |
+| vanta | Chromatic action≠brand + elev=none + 12px controls with pill chips and badges + dual fonts |
 
 ### 2.2 CSS modes
 

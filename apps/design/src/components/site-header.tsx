@@ -31,7 +31,7 @@ export function SiteHeader({ search, menu }: { search: ReactNode; menu: ReactNod
     // Geist's bar: 64px with a hairline under it. The left is a breadcrumb in
     // the shape of Vercel's dashboard scope ("team / project ⌄"), the right is
     // search and the way out.
-    <header className="sticky top-0 z-30 border-border border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
+    <header className="sticky top-0 z-30 border-hairline border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
       <div className="flex h-16 items-center gap-4 px-4 md:px-6">
         {/* Vercel's scope breadcrumb: mark, product, then the scope the page is
             shown in — "Design / Factory" — with the last crumb the one

@@ -136,3 +136,41 @@ describe("emitBrandCss darkDefault binding", () => {
     assert.doesNotMatch(css, /:root,\n\.dark,\nhtml\[data-brand="dual"\]/);
   });
 });
+
+describe("emitBrandCss surface vocabulary", () => {
+  it("derives a --border-strong when a language declares none, and a shape ladder", () => {
+    const css = emitBrandCss(minimalBrand({ id: "plain", darkDefault: false }));
+    assert.match(
+      css,
+      /--border-strong: color-mix\(in oklab, hsl\(0 0% 10%\) 45%, hsl\(0 0% 100%\)\);/,
+    );
+    assert.match(css, /--radius-control: 0\.375rem;/);
+    assert.match(css, /--radius-chip: min\(0\.375rem, 0\.75rem\);/);
+    // Hairline languages inherit --border-default from recipe.css.
+    assert.doesNotMatch(css, /--border-default:/);
+  });
+
+  it("emits a declared borderStrong as a complete colour and honours radii.chip", () => {
+    const base = minimalBrand({ id: "inked", darkDefault: false });
+    const css = emitBrandCss({
+      ...base,
+      semantic: { ...base.semantic, borderStrong: "240 17% 11%" },
+      recipe: { ...base.recipe, radii: { ...base.recipe.radii, chip: "999px" } },
+    });
+    assert.match(css, /--border-strong: hsl\(240 17% 11%\);/);
+    assert.match(css, /--radius-chip: 999px;/);
+  });
+
+  it("writes --border-default into every mode block only for an ink outline", () => {
+    const base = minimalBrand({ id: "ink", darkDefault: false });
+    const css = emitBrandCss({
+      ...base,
+      recipe: { ...base.recipe, outline: "ink" },
+      modes: {
+        light: { semantic: base.semantic },
+        dark: { semantic: { ...base.semantic, background: "0 0% 6%" } },
+      },
+    });
+    assert.equal(css.match(/--border-default: var\(--border-strong\);/g)?.length, 2);
+  });
+});

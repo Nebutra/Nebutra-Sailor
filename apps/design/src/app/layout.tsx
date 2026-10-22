@@ -53,7 +53,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               with a hairline on each side, so every horizontal rule in the
               page runs edge to edge of something. The canvas outside the
               frame is the same canvas; the frame is drawn by the two rails. */}
-          <div className="mx-auto min-h-screen max-w-wide border-border xl:border-x">
+          <div className="mx-auto min-h-screen max-w-wide border-hairline xl:border-x">
             <SiteHeader
               menu={<SiteNavSheet sections={sections} />}
               search={<CommandPalette entries={entries} />}

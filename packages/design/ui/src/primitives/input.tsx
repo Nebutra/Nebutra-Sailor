@@ -13,7 +13,11 @@ import {
 import { type InputSize, inputTokens } from "../tokens/components/input";
 import { cn } from "../utils/cn";
 import { asPlainStyle } from "../utils/primitive-props";
-import { formControlFocusClassNames, formControlInvalidClassNames } from "./form-control";
+import {
+  controlFocusVisibleClassName,
+  formControlFocusClassNames,
+  formControlInvalidClassNames,
+} from "./form-control";
 import { Kbd } from "./kbd";
 
 type InputCssVars = React.CSSProperties & {
@@ -108,9 +112,9 @@ const affixVariants = cva(
 const inputControlButtonVariants = cva(
   [
     "absolute end-[var(--input-control-inset)] top-1/2 flex size-[var(--input-control-size)] -translate-y-1/2 items-center justify-center",
-    "rounded-[var(--radius-sm)] text-muted-foreground transition-colors duration-micro ease-out",
+    "rounded-[var(--radius-sm)] text-muted-foreground transition-[background-color,box-shadow,color] duration-micro ease-out",
     "hover:bg-accent hover:text-accent-foreground",
-    "focus-visible:outline-none",
+    controlFocusVisibleClassName,
     "disabled:pointer-events-none disabled:opacity-50",
     "[&_svg]:size-[var(--input-control-icon-size)]",
   ].join(" "),
@@ -449,7 +453,7 @@ const Input = ({
           className="pointer-events-none absolute end-[var(--input-control-inset)] top-1/2 flex size-[var(--input-control-size)] -translate-y-1/2 items-center justify-center text-muted-foreground"
           style={getInputStyle(size, undefined)}
         >
-          <Loader2 className="size-[var(--input-control-icon-size)] animate-spin" />
+          <Loader2 className="size-[var(--input-control-icon-size)] animate-spin motion-reduce:animate-pulse" />
         </span>
       )}
 

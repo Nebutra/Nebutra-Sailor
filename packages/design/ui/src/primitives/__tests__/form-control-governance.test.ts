@@ -146,7 +146,9 @@ describe("overlay primitive focus governance", () => {
 
     expect(classNames.menuSurface).toContain("duration-[var(--motion-duration-flow)]");
     expect(classNames.selectSurface).toContain("duration-[var(--select-duration)]");
-    expect(classNames.selectSurface).toContain("shadow-[var(--select-content-shadow)]");
+    expect(classNames.selectSurface).toContain(
+      "shadow-[0_0_0_1px_var(--edge-soft),var(--elevation-overlay)]",
+    );
     expect(classNames.navigationMenuSurface).toContain("duration-[var(--motion-duration-flow)]");
     expect(classNames.sheetBackdrop).toContain("duration-[var(--motion-duration-flow)]");
     expect(classNames.sheetSurface).toContain("duration-[var(--motion-duration-flow)]");

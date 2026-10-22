@@ -75,7 +75,7 @@ export const AnimatedHikeCard = ({
         {/* Card Header: Title and Arrow */}
         <div className="mb-6 flex items-center justify-between">
           <h2 className="text-3xl tracking-tighter">{title}</h2>
-          <ArrowRight className="h-6 w-6 transition-transform duration-300 ease-in-out group-hover:translate-x-1" />
+          <ArrowRight className="h-6 w-6 transition-transform duration-flow ease-out motion-reduce:transition-none group-hover:translate-x-1" />
         </div>
 
         {/* Stacked Images with Hover Animation */}
@@ -84,7 +84,7 @@ export const AnimatedHikeCard = ({
             <div
               key={index}
               className={cn(
-                "absolute h-full w-[40%] overflow-hidden rounded-[var(--radius-lg)] border-2 border-background shadow-md transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300 ease-in-out",
+                "absolute h-full w-[40%] overflow-hidden rounded-[var(--radius-lg)] shadow-md ring-2 ring-background transition-[transform] duration-flow ease-out motion-reduce:transition-none",
                 "group-hover:translate-x-[var(--tx)] group-hover:rotate-[var(--r)]",
               )}
               style={

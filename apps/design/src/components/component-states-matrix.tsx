@@ -57,10 +57,10 @@ export function ComponentStatesMatrix({
       title="States"
     >
       {/* Keep absolutely positioned assistive text inside the scroll container. */}
-      <div className="relative min-w-0 max-w-full overflow-x-auto rounded-lg border border-border bg-card">
+      <div className="relative min-w-0 max-w-full overflow-x-auto rounded-lg border border-hairline bg-card shadow-xs">
         <table className="w-full min-w-max border-collapse">
           <thead>
-            <tr className="border-border border-b bg-background">
+            <tr className="border-hairline border-b bg-background">
               <th
                 className="sticky left-0 z-[1] bg-background px-4 py-2 text-left font-medium text-muted-foreground text-xs"
                 scope="col"
@@ -80,7 +80,7 @@ export function ComponentStatesMatrix({
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr className="border-border border-b last:border-b-0" key={row.id}>
+              <tr className="border-hairline border-b last:border-b-0" key={row.id}>
                 <th
                   className="sticky left-0 z-[1] bg-card px-4 py-4 text-left align-middle font-medium font-mono text-foreground text-xs"
                   scope="row"

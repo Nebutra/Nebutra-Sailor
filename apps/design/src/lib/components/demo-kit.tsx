@@ -21,7 +21,7 @@
  */
 
 import { Check, ChevronDown, Command } from "@nebutra/icons";
-import { CopyButton } from "@nebutra/ui/primitives";
+import { Button, CopyButton } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import * as React from "react";
 import { registerCatch } from "./catches";
@@ -102,6 +102,12 @@ export function State({
   );
 }
 
+// Button already presses to 0.97 on a transform transition. CopyButton appends
+// `transition-colors`, which the class merge keeps over Button's list, so the
+// copy button restates the list with `transform` to stay eased.
+const COPY_PRESS =
+  "transition-[background-color,border-color,box-shadow,color,transform] active:scale-[0.97] motion-reduce:transform-none motion-reduce:active:scale-100";
+
 /** "Show code" strip under an example's stage, with copy available while closed. */
 function ExampleCode({ code }: { code: string }) {
   const [open, setOpen] = React.useState(false);
@@ -110,18 +116,24 @@ function ExampleCode({ code }: { code: string }) {
   return (
     <div className="border-border border-t bg-background">
       <div className="flex items-center justify-between gap-2 px-3 py-1.5">
-        <button
+        <Button
           aria-controls={panelId}
           aria-expanded={open}
-          className="inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 font-medium text-muted-foreground text-xs transition-colors hover:text-foreground"
+          className="gap-1.5 px-1.5 text-muted-foreground hover:text-foreground"
           onClick={() => setOpen((v) => !v)}
-          type="button"
+          size="tiny"
+          variant="ghost"
         >
-          <ChevronDown className={cn("size-3.5 transition-transform", open && "rotate-180")} />
+          <ChevronDown
+            className={cn(
+              "size-3.5 transition-transform motion-reduce:transition-none",
+              open && "rotate-180",
+            )}
+          />
           {open ? "Hide code" : "Show code"}
-        </button>
+        </Button>
         <CopyButton
-          className="text-muted-foreground"
+          className={cn("text-muted-foreground", COPY_PRESS)}
           showToast={false}
           tooltipText="Copy code"
           value={code}

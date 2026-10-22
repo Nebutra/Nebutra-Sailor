@@ -20,6 +20,15 @@ This package is a *carrier* (roles + free elev/radii), not a list of brand hacks
 | `--card` / `--muted` / `--border` / `--input` / `--ring` | surfaces | Controls |
 | `--btn-default-bg/fg/border/radius` | `Button` default | **Recipe** (solid vs outline) |
 
+### Edges: hairline by default, ink by choice
+
+`--border` is the static edge of every card, field and divider, so it stays a
+hairline (1.1–1.55:1 against the surface; a test holds it). A language whose
+identity is a hard outline declares it as `borderStrong` in `brand.json`
+(emitted as `--border-strong`), and may set `recipe.outline: "ink"` to make
+`--border-default` resolve to it. `radii.chip` sets the chip corner (default 6px,
+capped at the card radius). See `DESIGN.md` §2.8.1–2.8.2.
+
 **Do not** paint product chrome with raw hex / `bg-blue-9` / VI `--brand-primary`.
 
 ## Apply a brand (opt-in)
@@ -71,7 +80,7 @@ Cataloged as **design languages** on `@nebutra/theme` (`LANGUAGE_REGISTRY` / `sk
 | **gsap** | `gradient-stroke` / outline, 100px pill | Green is **accent**, not solid fill |
 | **raycast** | `solid` Mist/Iron, 8px, elevation=`key` | Coral is brand-only; CTA is neutral gray |
 | **vercel** | `solid` Obsidian on paper, 6px, elevation=`hairline` | Light monochrome; no chromatic CTA |
-| **vanta** | `solid` Vivid Violet, 999px pill, elevation=`none` | Light parchment; **indigo-ink** brand-mark ≠ CTA; carbon 1px borders |
+| **vanta** | `solid` Vivid Violet, 12px controls, pill chips and badges, elevation=`none` | Light parchment; **indigo-ink** brand-mark ≠ CTA; 1px hairline edges, carbon ink in `--border-strong` |
 | **stripe** | `solid` Indigo Ink, 4px, elevation=`none` | Light frost ledger; **midnight** brand-mark ≠ indigo CTA; tint-ladder depth |
 | **notion** | `solid` Notion Blue, 8px/12px, elevation=`none` | Warm paper canvas ≠ white cards; ink brand-mark; accent hues decorative only |
 

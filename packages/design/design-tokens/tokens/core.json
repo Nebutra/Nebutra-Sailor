@@ -286,12 +286,12 @@
       "md": {
         "$value": "0.375rem",
         "$type": "dimension",
-        "$description": "Job: control. The default for anything you can click or type into at text height: input, select trigger, small button, menu item, badge with square corners. The most-used step on the ladder."
+        "$description": "Job: chip. 6px, the same value as the --radius-chip role step in recipe.css: tags, kbd, badges, dense menu items and other small labels. It is not the default control: buttons, inputs and select triggers use --radius-control (8px, the lg step)."
       },
       "lg": {
         "$value": "0.5rem",
         "$type": "dimension",
-        "$description": "Job: container. Things that hold controls rather than being one: popover, dropdown surface, tooltip, toolbar, inline code block. Aliased as radius-button."
+        "$description": "Job: control. 8px, the --radius-control role step: button, input, select trigger, and the containers that hold them (popover, dropdown surface, tooltip, toolbar, inline code block). Aliased as radius-button."
       },
       "xl": {
         "$value": "0.75rem",

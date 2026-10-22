@@ -188,7 +188,7 @@ export function CopyButton({
       size={size}
       onClick={handleCopy}
       data-copy-status={status}
-      className={cn("transition-colors", className)}
+      className={className}
       {...iconSlot}
       {...props}
     >

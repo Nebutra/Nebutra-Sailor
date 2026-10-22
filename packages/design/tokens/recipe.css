@@ -39,12 +39,37 @@
   --btn-default-padding-y: 0.5rem;
   --btn-default-padding-x: 1rem;
 
-  /* ── Shape slots ──────────────────────────────────────────────── */
-  --radius-button: var(--radius-md, 0.375rem);
-  --radius-card: var(--radius-lg, 0.75rem);
-  --radius-badge: 9999px;
-  --radius-inputs: var(--radius-md, 0.375rem);
+  /* ── Shape ladder ─────────────────────────────────────────────────
+   * One step per job, so a control, a card and a chip stop disagreeing:
+   *
+   *   --radius-control   8px   buttons, fields, selects, triggers
+   *   --radius-card     12px   cards, panels, popovers, dialogs
+   *   --radius-chip      6px   chips, tags, kbd, small labels
+   *
+   * A pill is a decision a language makes about a control, not a step on the
+   * ladder: skins that want one (Vanta, GSAP) restate --radius-control and
+   * --radius-chip in their own block and are exempt from the ordering.
+   * Tailwind spells the steps rounded-control / rounded-chip / rounded-card
+   * (the @utility rules below).
+   */
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-chip: 0.375rem;
+  --radius-button: var(--radius-control);
+  --radius-inputs: var(--radius-control);
+  /* Badges are chips on the factory ladder (6px). Skins state their own: a
+   * language whose badges are pills (Vanta) writes it in its skin block. */
+  --radius-badge: var(--radius-chip);
   --radius-pill: 9999px;
+
+  /* ── Focus ring: 2px ring, 2px gap ────────────────────────────────
+   * The widths are constants. The colour and the composed --shadow-focus are
+   * declared further down under `:root, .dark` so they re-resolve inside a
+   * nested `.dark` subtree instead of inheriting the light value computed at the
+   * html element.
+   */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
 
   /* ── Control density (factory = Geist ladder; brands may override) ─ */
   --control-height-tiny: 1.5rem; /* 24 */
@@ -97,7 +122,7 @@
   --badge-default-bg: hsl(var(--brand-mark));
   --badge-default-fg: hsl(var(--brand-mark-foreground));
   --badge-default-border: transparent;
-  --badge-default-radius: var(--radius-badge, 9999px);
+  --badge-default-radius: var(--radius-badge, 6px);
   --badge-default-hover-bg: color-mix(in srgb, hsl(var(--brand-mark)) 80%, transparent);
 }
 
@@ -236,13 +261,13 @@
 @property --badge-default-radius {
   syntax: "<length-percentage>";
   inherits: true;
-  initial-value: 9999px;
+  initial-value: 6px;
 }
 
 @property --radius-button {
   syntax: "<length-percentage>";
   inherits: true;
-  initial-value: 6px;
+  initial-value: 8px;
 }
 
 @property --radius-card {
@@ -254,19 +279,31 @@
 @property --radius-badge {
   syntax: "<length-percentage>";
   inherits: true;
-  initial-value: 9999px;
+  initial-value: 6px;
 }
 
 @property --radius-inputs {
   syntax: "<length-percentage>";
   inherits: true;
-  initial-value: 6px;
+  initial-value: 8px;
 }
 
 @property --radius-pill {
   syntax: "<length-percentage>";
   inherits: true;
   initial-value: 9999px;
+}
+
+@property --radius-control {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 8px;
+}
+
+@property --radius-chip {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 6px;
 }
 
 @property --control-height-tiny {
@@ -427,6 +464,122 @@
   --color-brand-mark-foreground: hsl(var(--brand-mark-foreground));
 }
 
+/* ══ Surface vocabulary ═══════════════════════════════════════════════════════
+ * What every app reaches for to draw an edge, ring a control or stage a demo.
+ * Names are the contract; the values move with the language and the mode.
+ *
+ *   hairline   the default static edge: the foreground at 8% (light) / 12%
+ *              (dark). Holds 1.1–1.55:1 against every surface in every language,
+ *              which is why a card reads as a boundary and not as a drawn line.
+ *   strong     the language's own heavy stroke (--border-strong, declared per
+ *              skin). Vanta's carbon ink lives here, not in --border.
+ *   default    what "this language's outline" means: the hairline, or the ink
+ *              for a skin that sets recipe.outline = "ink".
+ */
+
+/* The alpha is the only number; everything below derives from it. Zero
+ * specificity so a skin can restate either step without a fight. */
+:where(:root) {
+  --hairline-alpha: 8%;
+  --hairline-alpha-hover: 14%;
+}
+
+/* Dark needs a little more lift for the same line to read. */
+:where(.dark) {
+  --hairline-alpha: 12%;
+  --hairline-alpha-hover: 20%;
+}
+
+:where(:root, .dark) {
+  /* Complete colours (not channels), so they go straight into border-color. */
+  --border-hairline: hsl(var(--foreground) / var(--hairline-alpha));
+  --border-hairline-hover: hsl(var(--foreground) / var(--hairline-alpha-hover));
+
+  /* The heavy stroke. Every skin overrides this; the mix keeps an unskinned
+   * page honest. */
+  --border-strong: color-mix(in oklab, hsl(var(--foreground)) 45%, hsl(var(--background)));
+
+  /* An ink language writes --border-default itself, in both modes. */
+  --border-default: hsl(var(--border));
+
+  /* A quiet dot grid for stages, previews and empty canvases — the surface
+   * motion and component demos sit on. The dots are the foreground at 14%
+   * (22% in dark); the pitch is 16px with 1px dots. */
+  --dot-matrix-color: color-mix(in oklab, hsl(var(--foreground)) 14%, transparent);
+  --dot-matrix-size: 16px;
+  --dot-matrix-image: radial-gradient(
+    circle at 1px 1px,
+    var(--dot-matrix-color) 1px,
+    transparent 1.5px
+  );
+}
+
+:where(.dark) {
+  --dot-matrix-color: color-mix(in oklab, hsl(var(--foreground)) 22%, transparent);
+}
+
+/* Focus: one recipe. Plain `:root, .dark` (not :where) because --focus-ring is
+ * also declared by the generated sheet, and this has to win it by source order. */
+:root,
+.dark {
+  /* The ring colour is the language's --ring. */
+  --focus-ring-color: hsl(var(--ring));
+  /* Gap in the page colour, then the ring: `box-shadow: var(--shadow-focus)`.
+   * The gap is what makes the ring read on a filled control. */
+  --shadow-focus:
+    0 0 0 var(--focus-ring-offset) hsl(var(--background)),
+    0 0 0 calc(var(--focus-ring-offset) + var(--focus-ring-width)) var(--focus-ring-color);
+  /* The legacy composite, now the same recipe. It used to be a 40%-translucent
+   * gap-less 2px ring that nothing consumed. */
+  --focus-ring: var(--shadow-focus);
+}
+
+/* Tailwind v4: the vocabulary as classes.
+ *
+ * `inline`, so the value is written into the utility and resolves on the element
+ * that uses it — a nested `.dark` preview or a skin scoped to a subtree gets its
+ * own foreground, not the one computed at the html element. For the same reason
+ * these spell out `hsl(var(--foreground) / alpha)` instead of pointing at
+ * --border-hairline (which is computed where it is declared).
+ *
+ * Keep each shadow on ONE line: Tailwind rewrites the colour of a shadow when a
+ * `shadow-<colour>` class is added, and a line break inside the value makes it
+ * read the spread as the colour. */
+@theme inline {
+  /* shadow-border: a 1px edge that takes no layout space and, unlike `border`,
+   * does not shift content by a pixel when it appears (hover, selected). */
+  --shadow-border: 0 0 0 1px hsl(var(--foreground) / var(--hairline-alpha));
+  --shadow-border-hover: 0 0 0 1px hsl(var(--foreground) / var(--hairline-alpha-hover));
+  --shadow-border-strong: 0 0 0 1px var(--border-strong);
+
+  /* border-hairline / bg-hairline / divide-hairline … */
+  --color-hairline: hsl(var(--foreground) / var(--hairline-alpha));
+  --color-hairline-hover: hsl(var(--foreground) / var(--hairline-alpha-hover));
+  /* border-border-strong */
+  --color-border-strong: var(--border-strong);
+}
+
+/* bg-dot-matrix: the stage background. Pair with `border border-hairline` and
+ * a radius; it paints dots only, never a fill, so it sits on any surface. */
+@utility bg-dot-matrix {
+  background-image: var(--dot-matrix-image);
+  background-size: var(--dot-matrix-size) var(--dot-matrix-size);
+}
+
+/* The ladder as classes. @utility rather than @theme --radius-*: a theme token
+ * named like its own source variable resolves to itself. */
+@utility rounded-control {
+  border-radius: var(--radius-control);
+}
+
+@utility rounded-chip {
+  border-radius: var(--radius-chip);
+}
+
+@utility rounded-card {
+  border-radius: var(--radius-card);
+}
+
 /* ── Button default ─────────────────────────────────────────────── */
 .btn-brand-default {
   border-width: var(--btn-default-border-width, 0px);
@@ -447,19 +600,22 @@
   font-weight: var(--font-weight-medium, 500);
 }
 
-.btn-brand-default:hover:not(:disabled):not([aria-disabled="true"]) {
-  background-image:
-    linear-gradient(
-      var(--btn-default-hover-bg, color-mix(in srgb, hsl(var(--primary)) 90%, transparent)),
-      var(--btn-default-hover-bg, color-mix(in srgb, hsl(var(--primary)) 90%, transparent))
-    ),
-    var(--btn-default-stroke-gradient, linear-gradient(transparent, transparent));
+/* Hover only where hover exists: on touch, :hover sticks after a tap. */
+@media (hover: hover) {
+  .btn-brand-default:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-image:
+      linear-gradient(
+        var(--btn-default-hover-bg, color-mix(in srgb, hsl(var(--primary)) 90%, transparent)),
+        var(--btn-default-hover-bg, color-mix(in srgb, hsl(var(--primary)) 90%, transparent))
+      ),
+      var(--btn-default-stroke-gradient, linear-gradient(transparent, transparent));
+  }
 }
 
 /* ── Badge default (brand-mark; skins may set match-action → primary) ─ */
 .badge-brand-default {
   border-color: var(--badge-default-border, transparent);
-  border-radius: var(--badge-default-radius, 9999px);
+  border-radius: var(--badge-default-radius, 6px);
   background-color: var(--badge-default-bg, hsl(var(--brand-mark)));
   color: var(--badge-default-fg, hsl(var(--brand-mark-foreground)));
   font-weight: var(--font-weight-medium, 500);

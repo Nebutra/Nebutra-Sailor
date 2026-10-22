@@ -102,7 +102,7 @@ export function AssistedPasswordConfirmation({
         <span className="text-sm font-semibold text-muted-foreground">→ {password}</span>
       )}
       <motion.div
-        className="mb-3 mt-1 h-[52px] w-full rounded-[var(--radius-xl)] border-2 border-border bg-background px-2 py-2"
+        className="mb-3 mt-1 h-[52px] w-full rounded-[var(--radius-card)] border border-border bg-background px-2 py-2"
         animate={{
           ...bounceAnimation,
           ...matchAnimation,
@@ -130,7 +130,7 @@ export function AssistedPasswordConfirmation({
                   "absolute h-full w-4 ease-out",
                   shouldReduceMotion
                     ? "transition-colors duration-0"
-                    : "transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-300",
+                    : "transition-[background-color,opacity] duration-flow ease-out",
                   getLetterStatus(letter, index),
                 )}
                 style={{
@@ -153,7 +153,7 @@ export function AssistedPasswordConfirmation({
         animate={matchAnimation}
       >
         <motion.input
-          className="h-full w-full rounded-[var(--radius-xl)] border-2 border-border bg-background px-3.5 py-3 tracking-[0.4em] text-foreground outline-none transition-colors placeholder:tracking-normal focus-visible:border-ring"
+          className="h-full w-full rounded-[var(--radius-card)] border border-border bg-background px-3.5 py-3 tracking-[0.4em] text-foreground outline-none transition-[border-color,box-shadow] duration-micro ease-out placeholder:tracking-normal focus-visible:border-ring"
           type="password"
           placeholder={placeholder}
           value={confirmPassword}

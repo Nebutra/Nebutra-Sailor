@@ -83,6 +83,13 @@ pnpm --filter @nebutra/tokens sync                   # copies styles.generated.c
 
 ### Brand Packages (design-language skins)
 
+Surface vocabulary shipped by `recipe.css` (see `DESIGN.md` §2.8.1–2.8.2):
+`--border-hairline`, `--border-strong`, `--border-default`, `--shadow-focus`,
+`--radius-control|card|chip`, `--dot-matrix-*`, and the Tailwind classes
+`shadow-border`, `border-hairline`, `border-border-strong`, `bg-dot-matrix`,
+`rounded-control|card|chip`. A Brand Package may declare `borderStrong`,
+`radii.chip` and `recipe.outline`.
+
 ```ts
 import { emitBrandCss, type BrandPackage } from "@nebutra/tokens/brand-package";
 

@@ -62,7 +62,7 @@ const AccordionTrigger = ({
     <AccordionTriggerBase
       ref={ref}
       className={cn(
-        "font-medium flex flex-1 items-center justify-between transition-[color,box-shadow] duration-flow ease-out hover:text-muted-foreground focus-visible:outline-none [&[data-panel-open]>svg]:rotate-45",
+        "font-medium flex flex-1 items-center justify-between transition-[color,box-shadow] duration-micro ease-out motion-reduce:transition-none hover:text-muted-foreground focus-visible:outline-none [&[data-panel-open]>svg]:rotate-45",
         size === "small" ? "py-2.5 text-sm" : "py-4 text-[15px]",
         className,
       )}

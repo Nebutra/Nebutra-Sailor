@@ -59,7 +59,7 @@ const LINK =
 
 export function SiteFooter() {
   return (
-    <footer className="border-border border-t">
+    <footer className="border-hairline border-t">
       <nav
         aria-label="Site map"
         className="grid grid-cols-2 gap-x-6 gap-y-10 px-4 py-10 text-sm md:px-8 lg:grid-cols-4 lg:px-12"
@@ -94,7 +94,7 @@ export function SiteFooter() {
           </div>
         ))}
       </nav>
-      <div className="flex items-center gap-2.5 border-border border-t px-4 py-5 text-muted-foreground text-xs md:px-8 lg:px-12">
+      <div className="flex items-center gap-2.5 border-hairline border-t px-4 py-5 text-muted-foreground text-xs md:px-8 lg:px-12">
         <BrandMark size={16} />
         <span>{brand.name} Design · rendered from the packages it documents</span>
       </div>

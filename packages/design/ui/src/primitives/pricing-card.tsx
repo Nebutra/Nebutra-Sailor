@@ -102,7 +102,7 @@ function PricingCardBadge({ className, ...props }: React.ComponentProps<"span">)
   return (
     <span
       className={cn(
-        "border-foreground/20 text-foreground/80 rounded-full border px-2 py-0.5 text-xs",
+        "rounded-full border-border text-foreground/80 border px-2 py-0.5 text-xs",
         className,
       )}
       {...props}

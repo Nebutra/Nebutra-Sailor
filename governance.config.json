@@ -259,31 +259,11 @@
         "count": 1
       },
       {
-        "file": "packages/design/ui/src/primitives/animated-hike-card.tsx",
-        "count": 2
-      },
-      {
-        "file": "packages/design/ui/src/primitives/assisted-password-confirmation.tsx",
-        "count": 1
-      },
-      {
         "file": "packages/design/ui/src/primitives/book.tsx",
         "count": 1
       },
       {
-        "file": "packages/design/ui/src/primitives/dithering-background.tsx",
-        "count": 1
-      },
-      {
-        "file": "packages/design/ui/src/primitives/gauge.tsx",
-        "count": 2
-      },
-      {
         "file": "packages/design/ui/src/primitives/input-otp.tsx",
-        "count": 1
-      },
-      {
-        "file": "packages/design/ui/src/primitives/stepper.tsx",
         "count": 1
       }
     ]
@@ -1525,10 +1505,6 @@
       },
       {
         "file": "packages/design/ui/src/primitives/accordion.tsx",
-        "count": 1
-      },
-      {
-        "file": "packages/design/ui/src/primitives/checkbox-group.tsx",
         "count": 1
       },
       {

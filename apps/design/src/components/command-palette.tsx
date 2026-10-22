@@ -77,7 +77,7 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
       <button
         aria-keyshortcuts="Meta+K Control+K"
         aria-label="Search the design system"
-        className="flex h-9 items-center gap-2 rounded-[min(var(--radius-lg),0.5rem)] text-muted-foreground transition-[background-color,border-color,color] duration-micro ease-out hover:text-foreground max-lg:w-8 max-lg:justify-center max-lg:hover:bg-accent lg:w-full lg:border lg:border-transparent lg:bg-muted/50 lg:pr-1.5 lg:pl-2.5 lg:hover:border-border/30 lg:hover:bg-card"
+        className="flex h-9 items-center gap-2 rounded-[min(var(--radius-lg),0.5rem)] text-muted-foreground transition-[background-color,border-color,color] duration-micro ease-out hover:text-foreground max-lg:w-8 max-lg:justify-center max-lg:hover:bg-muted lg:w-full lg:border lg:border-transparent lg:bg-muted/50 lg:pr-1.5 lg:pl-2.5 lg:hover:border-hairline/30 lg:hover:bg-card"
         onClick={() => setOpen(true)}
         type="button"
       >
@@ -86,7 +86,7 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
           Search documentation…
         </span>
         <Kbd
-          className="hidden shrink-0 border-border/20 bg-background/70 text-2xs lg:inline-flex"
+          className="hidden shrink-0 border-hairline/20 bg-background/70 text-2xs lg:inline-flex"
           meta
           small
         >
@@ -101,7 +101,7 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
         ? createPortal(
             // biome-ignore lint/a11y/useKeyWithClickEvents: the backdrop is a dismiss affordance; Escape is handled globally above.
             <div
-              /* A fixed wash, not a themed one. `bg-foreground/20` is correct in
+              /* A fixed wash, not a themed one. The foreground-tinted overlay is correct in
              light mode — near-black over a light page — and inverts in a dark
              skin, where --foreground is near-white and the scrim became a 20%
              white veil laid over dark content. That is the haze: measured at
@@ -115,11 +115,11 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
               <div
                 aria-label="Search the design system"
                 aria-modal="true"
-                className="w-full max-w-xl overflow-hidden rounded-[var(--radius-lg)] bg-popover shadow-ambient-lg ring-1 ring-border"
+                className="w-full max-w-xl overflow-hidden rounded-[var(--radius-lg)] bg-popover shadow-ambient-lg ring-1 ring-hairline"
                 role="dialog"
               >
                 <input
-                  className="w-full border-border border-b bg-transparent px-4 py-3.5 text-base text-foreground outline-none placeholder:text-muted-foreground"
+                  className="w-full border-hairline border-b bg-transparent px-4 py-3.5 text-base text-foreground outline-none placeholder:text-muted-foreground"
                   data-allow-native
                   onChange={(event) => {
                     setQuery(event.target.value);
@@ -154,7 +154,7 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
                       <button
                         className={cn(
                           "flex w-full items-baseline justify-between gap-4 rounded-[var(--radius-md)] px-3 py-2 text-left transition-colors",
-                          index === active ? "bg-accent text-foreground" : "text-muted-foreground",
+                          index === active ? "bg-muted text-foreground" : "text-muted-foreground",
                         )}
                         key={`${entry.group}/${entry.label}`}
                         onClick={() => go(entry)}

@@ -86,7 +86,7 @@ export function LanguageSwitcher({ shortcut = false, className }: LanguageSwitch
           className={cn(
             // A crumb, not a field: no border, no fill at rest, the tint on
             // hover and while open is the only thing that says "press me".
-            "-mx-1.5 inline-flex h-8 min-w-0 items-center gap-2 rounded-[var(--radius-md)] px-1.5 text-left transition-colors duration-micro ease-out hover:bg-accent data-[state=open]:bg-accent",
+            "-mx-1.5 inline-flex h-8 min-w-0 items-center gap-2 rounded-[var(--radius-md)] px-1.5 text-left transition-colors duration-micro ease-out hover:bg-muted data-[state=open]:bg-muted",
             className,
           )}
           data-language-trigger
