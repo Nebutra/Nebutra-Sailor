@@ -1,4 +1,5 @@
 "use client";
+// @primitive-exempt: knob chips are aria-pressed segmented toggles and Reset is a quiet text action; neither maps to a Button variant.
 
 /**
  * Live playground: knobs drive a real component and the code beside it.

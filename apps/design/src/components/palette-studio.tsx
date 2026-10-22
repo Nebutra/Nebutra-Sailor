@@ -1,4 +1,5 @@
 "use client";
+// @brand-exempt: design-system documentation copy; it names the product in prose and carries no brand colour or domain literal.
 
 import { Input } from "@nebutra/ui/primitives";
 import * as React from "react";
@@ -84,6 +85,7 @@ export function PaletteStudio({ defaultSeed }: { defaultSeed: string }) {
                 Colour
               </label>
               <input
+                data-allow-native
                 aria-label="Seed colour picker"
                 className="h-10 w-full cursor-pointer rounded-md border border-border bg-transparent p-1 sm:w-16"
                 id="palette-picker"

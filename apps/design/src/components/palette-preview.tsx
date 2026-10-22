@@ -57,6 +57,7 @@ export function PalettePreview({ steps }: { steps: readonly Step[] }) {
       </div>
 
       <input
+        data-allow-native
         aria-label="Sample input"
         className="rounded-md border bg-transparent px-3 py-2 text-sm outline-none placeholder:opacity-70 hover:border-[var(--p-8)] focus-visible:border-[var(--p-9)] focus-visible:ring-2 focus-visible:ring-[color:color-mix(in_oklch,var(--p-9)_45%,transparent)]"
         placeholder="Focus me for the ring"

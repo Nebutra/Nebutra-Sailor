@@ -1,3 +1,4 @@
+// @primitive-exempt: type fixture for the API extractor; it intentionally mimics a bare button.
 /**
  * Fixture for api-docs.test.ts. Each export covers one shape the extractor has
  * to read in the real library: forwardRef-free function components, union

@@ -1,4 +1,6 @@
 "use client";
+// @brand-exempt: design-system documentation copy; it names the product in prose and carries no brand colour or domain literal.
+// @primitive-exempt: the whole list row is the click target inside a Card; a Button would add chrome to the behaviour being demonstrated.
 
 /**
  * Motion as it behaves in the components that ship.

@@ -1,4 +1,5 @@
 "use client";
+// @primitive-exempt: the package-manager switch is an aria-pressed segmented toggle, not an action button.
 
 /**
  * A copyable code block, and the install/import card at the top of a page.

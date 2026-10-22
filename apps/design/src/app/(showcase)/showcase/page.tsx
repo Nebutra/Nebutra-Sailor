@@ -1,3 +1,4 @@
+// @brand-exempt: design-system documentation copy; it names the product in prose and carries no brand colour or domain literal.
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import type { BlockEntry } from "@/components/showcase-block";

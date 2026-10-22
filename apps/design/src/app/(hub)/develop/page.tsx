@@ -1,3 +1,4 @@
+// @brand-exempt: design-system documentation copy; it names the product in prose and carries no brand colour or domain literal.
 import { CATALOG, CATALOG_CATEGORIES, type CatalogCategory } from "@nebutra/ui/catalog";
 import { Badge, Button } from "@nebutra/ui/primitives";
 import type { Metadata } from "next";

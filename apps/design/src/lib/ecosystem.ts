@@ -1,3 +1,4 @@
+// @brand-exempt: design-system documentation copy; it names the product in prose and carries no brand colour or domain literal.
 import { NPM_UI_URL, REGISTRY_URL, STUDIO_URL } from "@/lib/site";
 
 /**

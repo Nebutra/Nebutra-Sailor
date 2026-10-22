@@ -1,3 +1,4 @@
+// @brand-exempt: design-system documentation copy; it names the product in prose and carries no brand colour or domain literal.
 import { Robot, Sparkles, Terminal } from "@nebutra/icons";
 import { ButtonLink } from "@nebutra/ui/primitives";
 import Link from "next/link";

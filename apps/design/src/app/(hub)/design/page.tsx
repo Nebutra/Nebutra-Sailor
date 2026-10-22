@@ -1,3 +1,4 @@
+// @brand-exempt: design-system documentation copy; it names the product in prose and carries no brand colour or domain literal.
 import { ArrowUpRight } from "@nebutra/icons";
 import type { Metadata } from "next";
 import Link from "next/link";

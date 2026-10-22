@@ -1,4 +1,5 @@
 "use client";
+// @primitive-exempt: demo harness controls (knobs and toggles) sit outside the component under test.
 
 /**
  * Scaffolding shared by every component page.
