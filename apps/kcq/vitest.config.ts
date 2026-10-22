@@ -8,6 +8,11 @@ const source = resolveChartSource(fileURLToPath(new URL(".", import.meta.url)));
 export default defineConfig({
   resolve: {
     alias: {
+      "@363045841yyt/klinechart": resolve(source, "packages/vue/dist/index.js"),
+      "@363045841yyt/klinechart-script-chart": resolve(
+        source,
+        "packages/script-chart/dist/index.js",
+      ),
       "@363045841yyt/klinechart-core/market-data/sources": resolve(
         source,
         "packages/core/dist/data/provider/impl/sources/index.js",

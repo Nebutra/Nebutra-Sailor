@@ -27,7 +27,7 @@ description: 在浏览器中通过 kcq.nebutra.com/app 使用 KLineChartQuant：
 
 - **GOTDX：**A 股、指数及扩展市场。
 - **TradingView：**全球品种的历史 K 线。
-- **Binance：**现货 K 线、真实逐笔成交及历史成交归档，可供足迹指标使用。
+- **Binance：**现货 K 线、真实逐笔成交及历史成交归档，可供足迹显示模式使用。
 
 三者无需任何配置，直接出现在图表的数据源列表中。BaoStock、FinShare、MT5 和 THS 在开源库中可用，但托管工作台不提供。同花顺日线需要单独配置 API Key。
 
@@ -39,6 +39,12 @@ description: 在浏览器中通过 kcq.nebutra.com/app 使用 KLineChartQuant：
 - **团队连接**可供工作区成员使用；只有所有者和管理员可以添加或更换 Key。
 
 Key 保存之后就不会再回到浏览器。它在 Nebutra 网关上加密存储，浏览器只能看到名称和打码后的尾号；图表的数据请求经由网关转发，由网关代你调用 Twelve Data。使用你的 Key 发出的请求计入你自己的 Twelve Data 套餐；你的连接出错时，也不会回退到 Nebutra 自己的数据。具体实现见[行情数据指南](/zh/docs/guides/data-feeds)。
+
+## 脚本指标
+
+指标目录包含上游内置脚本。打开脚本编辑器可以创建自定义指标、查看输出，或将编辑器分离到独立窗口。用户脚本默认在 QuickJS 中运行；只有通过编辑器的信任设置明确授权后，才会在脚本 Worker 中原生执行。用户脚本沿用账号与工作区隔离的浏览器本地存储。
+
+[脚本 API](/zh/docs/reference/script-api)直接导入自固定版本的图表源码，涵盖 Plot、共享线条绘图和用于跨周期数据的 `request.security`。历史与实时数据仍取决于所选连接器的能力。[包与入口](/zh/docs/reference/packages)列出各包的实际许可证，包括采用 AGPL 的脚本包。
 
 ## Agent
 

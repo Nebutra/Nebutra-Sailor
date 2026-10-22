@@ -154,8 +154,8 @@ const en = {
       readme: "Read the docs",
     },
     community: {
-      heading: "Open source under Apache-2.0",
-      body: "Read the code, fork it, and ship it in commercial products. Issues, pull requests and roadmap discussions happen in public on GitHub.",
+      heading: "Apache-2.0 chart engine",
+      body: "The engine and framework bindings use Apache-2.0; script packages use AGPL-3.0-or-later. Code, issues and pull requests are public on GitHub.",
       github: "GitHub",
       telegram: "Telegram",
       qq: "QQ group",
@@ -243,7 +243,7 @@ const en = {
     model: {
       heading: "The engine is free and open source. Pro modules and support are paid per team.",
       tiers: [
-        { name: "Community", term: "Free · Apache-2.0", body: "The chart engine, the indicators and the agent tools." },
+        { name: "Community", term: "Free · Open source", body: "Apache-2.0 chart engine and agent tools; AGPL-3.0-or-later script indicators." },
         {
           name: "Pro",
           term: "Team subscription",
@@ -497,8 +497,8 @@ const zh: PublicMessages = {
       readme: "阅读文档",
     },
     community: {
-      heading: "Apache-2.0 开源",
-      body: "代码随便看，可以 fork，也可以用在商业产品里。Issue、PR 和路线图讨论都在 GitHub 上公开进行。",
+      heading: "Apache-2.0 图表引擎",
+      body: "引擎和框架绑定使用 Apache-2.0，脚本包使用 AGPL-3.0-or-later。代码、Issue 和 PR 均在 GitHub 上公开。",
       github: "GitHub",
       telegram: "Telegram",
       qq: "QQ 群",
@@ -581,7 +581,7 @@ const zh: PublicMessages = {
     model: {
       heading: "引擎开源免费，专业模块和支持按团队收费",
       tiers: [
-        { name: "社区版", term: "免费 · Apache-2.0", body: "图表引擎、指标和智能体工具。" },
+        { name: "社区版", term: "免费 · 开源", body: "Apache-2.0 图表引擎与智能体工具，AGPL-3.0-or-later 脚本指标。" },
         { name: "专业版", term: "团队订阅", body: "专业模块、稳定版本、迁移工具和优先支持。" },
         { name: "企业版", term: "年度合同", body: "白标构建、私有分发、长期支持和安全评审。" },
         { name: "解决方案", term: "按项目", body: "为单个产品做集成，可复用的部分回流到引擎。" },

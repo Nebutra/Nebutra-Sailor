@@ -96,6 +96,25 @@ class NginxRoutesTest(unittest.TestCase):
                 self.assertIn("gzip off;", body, path)
         self.assertNotIn("/api/binance/", self.conf)
 
+    def test_dynamic_script_execution_is_limited_to_the_script_worker(self):
+        snippet = (HERE / "kcq.security-headers.conf").read_text()
+        self.assertRegex(snippet, r"script-src [^;]* \$kcq_script_eval")
+        body = re.search(r"map \$uri \$kcq_script_eval \{(.*?)\n\}", self.conf, re.S)
+        self.assertIsNotNone(body)
+        rules = re.findall(r'^\s*(\S+)\s+"([^"]*)";', body.group(1), re.M)
+
+        def policy(uri):
+            for pattern, value in rules:
+                if pattern.startswith("~") and re.search(pattern[1:], uri):
+                    return value
+            return dict(rules)["default"]
+
+        self.assertEqual(policy("/assets/script.worker-Abc_123.js"), "'unsafe-eval'")
+        for path in ("/app", "/settings/profile", "/docs", "/assets/index-Abc.js",
+                     "/assets/script-editor/editor-Abc.js", "/assets/script.worker-x.js/extra"):
+            self.assertEqual(policy(path), "", path)
+        self.assertNotIn("'unsafe-eval'", snippet)
+
 
     def test_only_prerendered_public_files_are_edge_cacheable(self):
         snippet = (HERE / "kcq.security-headers.conf").read_text()

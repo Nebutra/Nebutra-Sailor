@@ -39,6 +39,9 @@ if (mode === "typecheck") {
           allowImportingTsExtensions: true,
           paths: {
             "@363045841yyt/klinechart": [resolve(upstream, "packages/vue/dist/index.d.ts")],
+            "@363045841yyt/klinechart-script-chart": [
+              resolve(upstream, "packages/script-chart/dist/index.d.ts"),
+            ],
             "@363045841yyt/klinechart-core": [resolve(upstream, "packages/core/dist/index.d.ts")],
             "@363045841yyt/klinechart-core/controllers": [
               resolve(upstream, "packages/core/dist/controllers/index.d.ts"),

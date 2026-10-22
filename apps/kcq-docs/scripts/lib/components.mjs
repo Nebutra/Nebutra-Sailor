@@ -8,7 +8,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import ts from "typescript";
 
-export const VUE_COMPONENT = "packages/vue/src/components/KLineChart.vue";
+export const VUE_COMPONENT = "packages/vue/src/components/chart/KLineChart.vue";
 export const REACT_COMPONENT = "packages/react/src/KLineChartWC.tsx";
 export const WEB_COMPONENT = "packages/vue/src/web-component.ts";
 

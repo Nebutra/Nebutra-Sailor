@@ -404,6 +404,10 @@ const PACKAGES = [
   "packages/angular",
   "packages/agent-runtime",
   "packages/ui-schema",
+  "packages/plot-contracts",
+  "packages/script",
+  "packages/script-server",
+  "packages/script-chart",
 ];
 
 export function packagePages(source, { links }) {
@@ -420,6 +424,7 @@ export function packagePages(source, { links }) {
       name: manifest.name,
       version: manifest.version,
       description: manifest.description ?? "",
+      license: manifest.license,
       entries: Object.keys(manifest.exports ?? {}).filter((k) => k !== "./package.json"),
       dir,
     });
@@ -440,6 +445,7 @@ export function packagePages(source, { links }) {
         "",
       );
       if (pkg.description) body.push(mdxText(pkg.description), "");
+      if (pkg.license) body.push(`${en ? "License" : "许可证"}: ${mdxCode(pkg.license)}.`, "");
       body.push("```bash", `pnpm add ${pkg.name}`, "```", "");
       if (pkg.entries.length) {
         body.push(

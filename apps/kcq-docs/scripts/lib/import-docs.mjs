@@ -28,6 +28,9 @@ const NOTES = [
   "design/drawing/drawing-tools.md",
   "design/indicator/indicator-instance-state.md",
   "design/chart-frame-capture.md",
+  "design/shared-drawing-line-api.md",
+  "design/footprint-display-mode.md",
+  "design/script-chart-integration.md",
 ];
 
 /**
@@ -98,6 +101,10 @@ const TITLES = {
   "market-data/sources/baostock": { en: "BaoStock and TradingView", zh: "BaoStock 与 TradingView" },
   "market-data/sources/klinechartquantgo": { en: "GoTDX-Connector", zh: "GoTDX-Connector" },
   "market-data/sources/mt5": { en: "MT5", zh: "MT5" },
+  "reference/script-api": { en: "Script API", zh: "脚本 API" },
+  "architecture/notes/shared-drawing-line-api": { en: "Shared drawing API", zh: "共享绘图 API" },
+  "architecture/notes/footprint-display-mode": { en: "Footprint display mode", zh: "足迹显示模式" },
+  "architecture/notes/script-chart-integration": { en: "Script integration", zh: "脚本集成" },
 };
 
 /** [source path, docs slug] for every imported document. */
@@ -113,6 +120,7 @@ export function importList(source) {
     ["docs/contributing/CONTRIBUTING_INDICATOR.md", "contributing/indicators"],
     ["docs/contributing/CI_GATES.md", "contributing/ci-gates"],
     ["docs/actions/release-guide.md", "contributing/releases"],
+    ["docs/script/api.md", "reference/script-api"],
   ];
   for (const file of readdirSync(resolve(source, "docs/adr")).sort()) {
     if (/^\d{4}-.+\.md$/.test(file))
