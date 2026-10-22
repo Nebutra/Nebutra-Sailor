@@ -271,6 +271,27 @@ jobs:
           FLY_APP: nebutra-kcq
         run: bash infra/ops/scripts/point-host-dns-fly.sh
 
+      # Use the product origin: auth deliberately trusts kcq.nebutra.com,
+      # while the fly.dev origin is only an infrastructure health endpoint.
+      - name: Verify wide, zoomed and restored market history in Chromium
+        env:
+          KCQ_SMOKE_ORIGIN: https://kcq.nebutra.com
+          KCQ_UI_BROWSER: chromium
+          KCQ_MARKET_OUTPUT: .nebutra/kcq-candidates/market-acceptance
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          node apps/kcq/scripts/market-smoke.mjs
+
+      - name: Upload real market browser evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: kcq-market-history
+          path: .nebutra/kcq-candidates/market-acceptance
+          include-hidden-files: true
+          retention-days: 7
+          if-no-files-found: ignore
+
       # Edge cache for the prerendered public pages (infra/ops/scripts/apply-kcq-edge-cache.sh).
       # Fail-soft: a token without Cache Rules / Zone Settings / Cache Purge gets a ::warning naming
       # the missing permission; the origin headers are correct either way.
