@@ -24,6 +24,7 @@ describe("workbench guidance and support", () => {
     expect(screen.getByRole("link", { name: /登录/ }).getAttribute("href")).toBe("/sign-in");
     expect(screen.getByRole("checkbox", { name: /匿名使用统计/ })).toHaveProperty("checked", false);
     expect(screen.queryByRole("link", { name: /GitHub/ })).toBeNull();
+    expect(screen.getByRole("button", { name: "关闭" })).toBeTruthy();
   });
   it("requires user-written feedback and keeps diagnostics off until selected", () => {
     render(<WorkbenchHelp {...props} section="feedback" />);

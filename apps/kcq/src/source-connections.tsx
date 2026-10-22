@@ -1,6 +1,6 @@
 /** Shared UI primitives for hosted market credentials; secrets stay in the password input. */
-import { Button, ButtonLink, Input, Label } from "@nebutra/ui/primitives/canonical";
-import { type FormEvent, useState } from "react";
+import { Button, ButtonLink, Input } from "@nebutra/ui/primitives/canonical";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import type { MarketConnection } from "./market-connections";
 export interface SourceConnectionsProps {
   signedIn: boolean;
@@ -17,6 +17,13 @@ export interface SourceConnectionsProps {
 export function SourceConnections(props: SourceConnectionsProps) {
   const [editing, setEditing] = useState<MarketConnection | "new" | null>(null);
   const [message, setMessage] = useState("");
+  const [fieldError, setFieldError] = useState("");
+  const [labelError, setLabelError] = useState("");
+  const [attempt, setAttempt] = useState(0);
+  const editorTrigger = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    if (!editing) editorTrigger.current?.focus();
+  }, [editing]);
   async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
@@ -24,6 +31,16 @@ export function SourceConnections(props: SourceConnectionsProps) {
     const key = data.get("apiKey");
     const label = data.get("label");
     if (typeof key !== "string" || typeof label !== "string" || !editing) return;
+    if (props.busy) return;
+    if (!label.trim() || label.length > 64 || key.length < 8 || key.length > 256) {
+      setLabelError(!label.trim() || label.length > 64 ? "请输入 1–64 个字符的连接名称。" : "");
+      setFieldError(key.length < 8 || key.length > 256 ? "请输入 8–256 个字符的 API Key。" : "");
+      const input = form.elements.namedItem(!label.trim() ? "label" : "apiKey");
+      if (input instanceof HTMLInputElement) input.focus();
+      return;
+    }
+    setFieldError("");
+    setLabelError("");
     setMessage("");
     try {
       const saved = await props.onSave(label, key, editing === "new" ? undefined : editing.id);
@@ -33,6 +50,9 @@ export function SourceConnections(props: SourceConnectionsProps) {
     } finally {
       const input = form.elements.namedItem("apiKey");
       if (input instanceof HTMLInputElement) input.value = "";
+      // Remount the shared uncontrolled Input too, so a later render cannot
+      // restore a credential retained in its internal value state.
+      setAttempt((value) => value + 1);
     }
   }
   if (!props.signedIn)
@@ -52,8 +72,11 @@ export function SourceConnections(props: SourceConnectionsProps) {
             variant="secondary"
             size="sm"
             disabled={props.busy}
-            onClick={() => {
+            onClick={(event) => {
+              editorTrigger.current = event.currentTarget;
               setEditing("new");
+              setFieldError("");
+              setLabelError("");
               setMessage("");
             }}
           >
@@ -62,7 +85,7 @@ export function SourceConnections(props: SourceConnectionsProps) {
         )}
       </div>
       {props.error && (
-        <div role="alert" className="source-connection-error">
+        <div id="source-connection-error" role="alert" className="source-connection-error">
           {props.error}
           <Button
             variant="ghost"
@@ -101,7 +124,13 @@ export function SourceConnections(props: SourceConnectionsProps) {
                   variant="ghost"
                   size="sm"
                   disabled={props.busy}
-                  onClick={() => setEditing(item)}
+                  onClick={(event) => {
+                    editorTrigger.current = event.currentTarget;
+                    setEditing(item);
+                    setFieldError("");
+                    setLabelError("");
+                    setMessage("");
+                  }}
                 >
                   替换 Key
                 </Button>
@@ -119,22 +148,43 @@ export function SourceConnections(props: SourceConnectionsProps) {
         </div>
       ))}
       {editing && (
-        <form className="source-connection-form" onSubmit={(event) => void save(event)}>
+        <form
+          key={`${editing === "new" ? "new" : editing.id}:${attempt}`}
+          className="source-connection-form"
+          noValidate
+          onSubmit={(event) => void save(event)}
+          onKeyDown={(event) => {
+            if (event.key === "Escape" && !props.busy) {
+              event.preventDefault();
+              event.stopPropagation();
+              setEditing(null);
+            }
+          }}
+        >
           <h3>Twelve Data</h3>
-          <Label htmlFor="source-label">连接名称</Label>
           <Input
+            label="连接名称"
             id="source-label"
             name="label"
+            size="sm"
+            autoFocus={editing === "new"}
             defaultValue={editing === "new" ? "Twelve Data" : editing.label}
             readOnly={editing !== "new"}
             maxLength={64}
             required
+            error={labelError || undefined}
+            onChange={() => setLabelError("")}
             disabled={props.busy}
           />
-          <Label htmlFor="source-key">API Key</Label>
           <Input
+            label="API Key"
             id="source-key"
             name="apiKey"
+            size="sm"
+            autoFocus={editing !== "new"}
+            aria-describedby={props.error ? "source-connection-error" : undefined}
+            error={fieldError || undefined}
+            onChange={() => setFieldError("")}
             type="password"
             autoComplete="off"
             minLength={8}
@@ -151,7 +201,7 @@ export function SourceConnections(props: SourceConnectionsProps) {
             >
               取消
             </Button>
-            <Button variant="secondary" size="sm" type="submit" disabled={props.busy}>
+            <Button size="sm" type="submit" loading={props.busy}>
               {props.busy ? "保存中…" : "保存连接"}
             </Button>
           </div>

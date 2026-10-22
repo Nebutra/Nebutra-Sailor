@@ -59,10 +59,13 @@ export function WalletChip({ wallet, origin, onOpen }: WalletChipProps) {
         className="account-trigger wallet-trigger"
         data-low={isLow(wallet) || undefined}
         aria-label={`KCQ AI ${label}`}
-      >
-        <Coins aria-hidden="true" />
-        <span className="wallet-amount">{label}</span>
-      </DropdownMenuTrigger>
+        render={
+          <Button type="button" variant="ghost" size="sm">
+            <Coins aria-hidden="true" />
+            <span className="wallet-amount">{label}</span>
+          </Button>
+        }
+      />
       <DropdownMenuContent align="start" sideOffset={8} className="kcq-menu w-72">
         <div className="account-identity">
           <span>KCQ AI 余额</span>
@@ -133,7 +136,6 @@ export function InsufficientBalanceNotice({ origin, onDismiss }: InsufficientBal
         <Button
           type="button"
           size="sm"
-          variant="ink"
           onClick={() => window.location.assign(topUpUrl(origin, KCQ_TOP_UP_PRESETS[0]))}
         >
           充值

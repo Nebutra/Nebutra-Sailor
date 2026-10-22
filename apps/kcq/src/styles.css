@@ -23,6 +23,9 @@
   --color-ring: var(--klc-color-ui-focus);
   --color-destructive: var(--klc-color-ui-danger);
   --color-destructive-foreground: var(--klc-color-ui-on-accent);
+  --color-destructive-strong: var(--klc-color-ui-danger-text);
+  --color-warning: var(--klc-color-ui-warning);
+  --color-warning-foreground: var(--klc-color-ui-text);
 }
 
 @font-face {
@@ -43,23 +46,33 @@ body,
   height: 100%;
 }
 body {
+  /* Recipes and focus proxies consume raw semantic variables as well as
+     Tailwind colours. Resolve both paths on body, where KCQ publishes presets,
+     so portals, primary buttons and checkboxes inherit the active chart theme. */
+  --ring: from var(--klc-color-ui-focus, var(--neutral-12)) h s l;
+  --btn-default-bg: var(--klc-color-ui-accent, var(--neutral-12));
+  --btn-default-fg: var(--klc-color-ui-on-accent, var(--neutral-1));
+  --btn-default-hover-bg: var(--klc-color-ui-accent-strong, var(--neutral-11));
+  --control-border: color-mix(
+    in oklab,
+    var(--klc-color-ui-text, var(--neutral-12)) 50%,
+    var(--klc-color-ui-background, var(--neutral-1))
+  );
+  --radius-md: var(--klc-radius-sm, 6px);
+  --radius-lg: var(--klc-radius-lg, 12px);
+  --radius-button: var(--radius-md);
+  --radius-inputs: var(--radius-md);
+  --radius-card: var(--radius-lg);
+  --btn-default-radius: var(--radius-button);
+  --control-height-sm: 30px;
+  --control-font-size-sm: 13px;
   color: var(--klc-color-ui-text, var(--neutral-12));
   background: var(--klc-color-ui-background, var(--neutral-1));
   font-size: 13px;
 }
-a {
-  text-decoration: none;
-}
 button,
 a {
   -webkit-tap-highlight-color: transparent;
-}
-button {
-  font: inherit;
-}
-.account-trigger:focus-visible {
-  outline: 2px solid var(--klc-color-ui-focus);
-  outline-offset: 3px;
 }
 .workbench {
   height: 100dvh;
@@ -83,21 +96,11 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  height: 30px;
   padding: 0 6px 0 2px;
-  border: 0;
-  border-radius: var(--radius-md);
-  background: transparent;
   color: var(--klc-color-ui-text);
-  cursor: pointer;
 }
-.account-trigger:hover,
 .account-trigger[data-popup-open] {
   background: var(--klc-color-ui-hover);
-}
-.account-trigger:disabled {
-  opacity: 0.5;
-  cursor: wait;
 }
 .workspace-name {
   max-width: 128px;
@@ -113,6 +116,9 @@ button {
   color: var(--klc-color-ui-muted);
 }
 .kcq-menu {
+  max-width: calc(100vw - 16px);
+  max-height: min(var(--available-height, 80dvh), 80dvh);
+  overflow-y: auto;
   font-family: var(--font-sans);
   font-size: 13px;
   background: var(--klc-color-ui-surface);
@@ -137,6 +143,7 @@ button {
 .account-identity strong {
   font-weight: 500;
   font-size: 14px;
+  overflow-wrap: anywhere;
 }
 .account-identity span {
   color: var(--klc-color-ui-muted);
@@ -164,6 +171,9 @@ button {
   text-align: center;
   width: min(420px, calc(100% - 140px));
   color: var(--klc-color-ui-muted);
+  max-height: calc(100% - 100px);
+  overflow-y: auto;
+  overflow-wrap: anywhere;
 }
 .chart-empty h1 {
   font-family: var(--font-sans);
@@ -185,30 +195,11 @@ button {
   gap: 8px;
   margin-top: 12px;
 }
-.chart-empty-actions button {
-  min-height: 32px;
-  padding: 6px 10px;
-  border: 1px solid var(--klc-color-ui-border);
-  border-radius: var(--radius-md);
-  color: var(--klc-color-ui-text);
-  background: var(--klc-color-ui-surface);
-  cursor: pointer;
-}
-@media (hover: hover) {
-  .chart-empty-actions button:hover {
-    background: var(--klc-color-ui-hover);
-  }
-}
-.chart-empty-actions button:focus-visible,
-.kcq-help a:focus-visible,
-.kcq-help textarea:focus-visible {
-  outline: 2px solid var(--klc-color-ui-focus);
-  outline-offset: 2px;
-}
-.chart-empty-actions .chart-help-action {
-  border-color: transparent;
-  color: var(--klc-color-ui-muted);
-  background: transparent;
+fieldset.chart-empty-actions {
+  min-width: 0;
+  margin-inline: 0;
+  padding: 0;
+  border: 0;
 }
 .kcq-help {
   width: min(520px, calc(100vw - 32px));
@@ -246,29 +237,11 @@ button {
   gap: 8px;
   cursor: pointer;
 }
-.kcq-help textarea {
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 96px;
-  padding: 10px;
-  border: 1px solid var(--klc-color-ui-border-strong);
-  border-radius: var(--radius-md);
-  background: var(--klc-color-ui-control-background);
-  color: var(--klc-color-ui-text);
-  font: inherit;
-}
 .kcq-help .kcq-help-note {
   font-size: 12px;
 }
 .kcq-help-primary {
   justify-self: start;
-  color: var(--klc-color-ui-on-accent);
-  background: var(--klc-color-ui-accent);
-}
-@media (hover: hover) {
-  .kcq-help-primary:hover {
-    background: var(--klc-color-ui-accent-strong);
-  }
 }
 .kcq-help-link {
   color: var(--klc-color-ui-text);
@@ -334,8 +307,6 @@ button {
 }
 .boot-retry {
   justify-self: center;
-  padding: 8px 16px;
-  cursor: pointer;
 }
 
 .profile-page {
@@ -386,6 +357,7 @@ button {
   margin: 0;
   font-size: 16px;
   font-weight: 500;
+  overflow-wrap: anywhere;
 }
 .profile-identity p {
   margin: 4px 0 0;
@@ -396,13 +368,9 @@ button {
 .profile-form {
   padding-top: 24px;
 }
-.profile-form label {
-  display: block;
-  margin-bottom: 8px;
-}
 .profile-form-footer {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
   margin-top: 20px;
@@ -410,16 +378,14 @@ button {
 .profile-form-footer p {
   margin: 0;
   font-size: 14px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.profile-form-footer button {
+  flex-shrink: 0;
 }
 .profile-error {
   color: var(--klc-color-ui-danger);
-}
-.profile-save {
-  color: var(--klc-color-ui-on-accent);
-  background: var(--klc-color-ui-accent);
-}
-.profile-save:hover {
-  background: var(--klc-color-ui-accent-strong);
 }
 .profile-signed-out h2 {
   margin-bottom: 20px;
@@ -451,6 +417,11 @@ button {
   display: block;
   font-weight: 500;
 }
+.source-connection-row > div:first-child {
+  min-width: 0;
+  flex: 1 1 120px;
+  overflow-wrap: anywhere;
+}
 .source-connection-row span {
   color: var(--klc-color-ui-muted);
 }
@@ -458,6 +429,8 @@ button {
   display: flex;
   gap: 4px;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-left: auto;
 }
 .source-connection-form {
   display: grid;
@@ -467,6 +440,7 @@ button {
 .source-connection-error {
   color: var(--klc-color-ui-danger);
   margin-top: 8px;
+  overflow-wrap: anywhere;
 }
 .wallet-trigger {
   padding: 0 8px 0 6px;
@@ -520,6 +494,17 @@ button {
 .balance-notice-actions {
   display: flex;
   gap: 8px;
+}
+@media (max-width: 480px) {
+  .profile-content {
+    padding-block: 24px;
+  }
+  .profile-card {
+    padding: 16px;
+  }
+  .profile-identity {
+    align-items: flex-start;
+  }
 }
 @media (max-width: 720px) {
   .wallet-amount {

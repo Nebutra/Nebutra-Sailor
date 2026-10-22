@@ -34,6 +34,11 @@ opened from the account menu or empty state, without another toolbar row.
 Feedback diagnostics are optional and reviewable before opening a public draft.
 Feedback fields keep the shared Textarea growth and scrolling behavior, without
 a native resize handle.
+Configure controls through shared variants, label/error props and semantic recipe
+variables. Do not restyle primitive borders, padding, focus or disabled states
+from a page selector. The KCQ token bridge must cover recipes and proxy-control
+focus as well as Tailwind colours; portals inherit that bridge from body.
+Empty-chart actions and bootstrap recovery use the same canonical Button contract.
 Anonymous activation statistics require explicit consent and stay off by default.
 
 Validate production build, strict types, lint, the toolbar public contract,
@@ -45,3 +50,18 @@ revision in chart-source.json. Product and library remain separate repositories.
 or Agent runtime. It reads the same scoped settings and public KCQ theme resolver,
 uses shared Avatar/Input/Button primitives and keeps session revalidation active.
 Profile edits go through the public Nebutra auth adapter; email is read-only.
+
+## UI Acceptance
+
+`node apps/kcq/scripts/ui-smoke.mjs` checks the built app in real Chrome. Set
+`KCQ_UI_SERVE=true` to serve the build on loopback, or `KCQ_SMOKE_ORIGIN` to inspect
+the deployed origin without injecting account fixtures. CI runs this gate with
+Playwright Chromium. The matrix includes desktop, phone, narrow phone and short
+landscape viewports; both modes; all five chart presets; account menus; feedback;
+layout naming; symbol/indicator search; chart settings; Agent settings/composer;
+public pages; and local account/error/credential fixtures. It never sends an AI
+request or submits feedback. Connector correctness has a separate real-data gate.
+CI retains the UI screenshots and report for seven days, including failed runs.
+
+Keep source-library corrections in its repository and consume an immutable SHA.
+`UI-AUDIT.md` records the cross-surface convergence rather than isolated patches.

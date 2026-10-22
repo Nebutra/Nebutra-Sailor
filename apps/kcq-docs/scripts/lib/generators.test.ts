@@ -8,13 +8,13 @@ import { groupTools, minimalInput, schemaRows } from "./tools.mjs";
 
 describe("pinned chart contracts", () => {
   it("reads the chart props and host toolbar slot from the canonical component", () => {
-    const component = readVueComponent(chartSource());
+    const component = readVueComponent(chartSource({ prepare: false }));
     expect(component.props.map((prop: { name: string }) => prop.name)).toContain("symbols");
     expect(component.slots.map((slot: { name: string }) => slot.name)).toContain("toolbar-start");
   }, 180_000); // A clean CI checkout may fetch and build the pinned chart before this contract runs.
 
   it("documents script packages with their own source license", () => {
-    const pages = packagePages(chartSource(), { links: githubLinks(readPin()) });
+    const pages = packagePages(chartSource({ prepare: false }), { links: githubLinks(readPin()) });
     for (const page of pages) {
       expect(page.content).toContain("@363045841yyt/klinechart-script-chart");
       expect(page.content).toContain("AGPL-3.0-or-later");
