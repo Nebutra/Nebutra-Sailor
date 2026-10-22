@@ -1,7 +1,7 @@
 {
   "gotdx": {
     "repository": "TsekaLuk/GoTDX-Connector",
-    "commit": "a7990d8ee5dff0bd72e2d933c46c31deb07c0b58"
+    "commit": "57db83021cb3b2c8d80792d50be01f678e114b8a"
   },
   "binance": {
     "repository": "363045841/Binance-Connector",
