@@ -33,6 +33,27 @@ The two former image-size audit ignores were removed after updating its
 Fumadocs dependency to the fixed 2.0.3+ line. No GHSA ignore remains in the
 workspace policy.
 
+## Dependency remediation (2026-10-22)
+
+The production gate's six unpatched high findings are addressed in the locked
+graph with these same-major upgrades:
+
+| Package | Fixed version | Advisory |
+| --- | --- | --- |
+| `follow-redirects` | `1.16.1` | `GHSA-q3jh-wrc6-jgq8`, `GHSA-8r9p-f939-6h3c` |
+| `@modelcontextprotocol/sdk` | `1.32.0` | `GHSA-22jm-h49p-29qw`, `GHSA-46jr-4wx8-v453` |
+| `vite` | `8.1.6` | `GHSA-587h-7wmj-h5pm` |
+| `markdown-it` | `15.0.3` | `GHSA-gfr2-rv44-r23c` |
+
+Vite's catalog and transitive override share one version. The MCP package's
+declared dependency matches its override, so a published consumer receives the
+fixed SDK too. The redirect and Markdown floors reject the affected releases
+while staying within their currently locked major versions.
+
+The production audit still records the locally patched `braces` finding and
+the unpatched moderate `sprintf-js` finding below. No advisory ignore or
+severity threshold has been added.
+
 ## Locally patched advisory (2026-10-09)
 
 `braces@3.0.3` has no published fix for
