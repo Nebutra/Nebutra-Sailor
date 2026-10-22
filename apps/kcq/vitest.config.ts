@@ -9,6 +9,14 @@ export default defineConfig({
   resolve: {
     alias: {
       "@363045841yyt/klinechart": resolve(source, "packages/vue/dist/index.js"),
+      "@363045841yyt/klinechart-agent-runtime/browser": resolve(
+        source,
+        "packages/agent-runtime/dist/browser.js",
+      ),
+      "@363045841yyt/klinechart-agent-runtime": resolve(
+        source,
+        "packages/agent-runtime/dist/index.js",
+      ),
       "@363045841yyt/klinechart-script-chart": resolve(
         source,
         "packages/script-chart/dist/index.js",

@@ -26,6 +26,14 @@ marketing gradients. Empty state is one instruction; errors show actionable
 provider feedback. State must reflect actual controller data and disappear
 when data arrives. Do not fabricate prices, connector health or cloud sync.
 
+The empty chart may offer compact market shortcuts below its one instruction.
+Show them only before any instrument is selected; never replace a restored
+layout. A pending catalog lookup offers cancellation, and a failed bar request
+offers an explicit retry. Research guidance and feedback live in shared dialogs,
+opened from the account menu or empty state, without another toolbar row.
+Feedback diagnostics are optional and reviewable before opening a public draft.
+Anonymous activation statistics require explicit consent and stay off by default.
+
 Validate production build, strict types, lint, the toolbar public contract,
 both themes, keyboard menu dismissal and Agent open/close in a real browser.
 Deployment builds workspace prerequisites and pins the canonical library

@@ -91,6 +91,24 @@ export const DeploymentVerifiedEvent = BaseEventProps.extend({
   smoke_status: z.literal("passed"),
 });
 
+/** KCQ activation deliberately excludes identity, chart content and free text. */
+export const KcqActivationEvent = z
+  .object({
+    action: z.enum([
+      "workbench_opened",
+      "preset_selected",
+      "preset_failed",
+      "chart_loaded",
+      "agent_run_started",
+      "agent_run_completed",
+      "agent_run_failed",
+      "guide_opened",
+      "feedback_opened",
+    ]),
+    preset: z.enum(["cn", "crypto", "us"]).optional(),
+  })
+  .strict();
+
 export type EventName =
   | "scaffold.completed"
   | "license.wizard"
@@ -98,7 +116,8 @@ export type EventName =
   | "sleptons"
   | "docs.search_query"
   | "checkout"
-  | "deployment.verified";
+  | "deployment.verified"
+  | "kcq.activation";
 
 export const EVENT_SCHEMAS = {
   "scaffold.completed": ScaffoldCompletedEvent,
@@ -108,6 +127,7 @@ export const EVENT_SCHEMAS = {
   "docs.search_query": DocsSearchEvent,
   checkout: CheckoutEvent,
   "deployment.verified": DeploymentVerifiedEvent,
+  "kcq.activation": KcqActivationEvent,
 } as const satisfies Record<EventName, z.ZodTypeAny>;
 
 // Inferred types — exported for downstream type-safe handlers.
@@ -118,5 +138,6 @@ export type SleptonsPayload = z.infer<typeof SleptonsEvent>;
 export type DocsSearchPayload = z.infer<typeof DocsSearchEvent>;
 export type CheckoutPayload = z.infer<typeof CheckoutEvent>;
 export type DeploymentVerifiedPayload = z.infer<typeof DeploymentVerifiedEvent>;
+export type KcqActivationPayload = z.infer<typeof KcqActivationEvent>;
 
 export type EventPayload<E extends EventName> = z.infer<(typeof EVENT_SCHEMAS)[E]>;

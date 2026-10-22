@@ -704,6 +704,9 @@ importers:
       '@fontsource/outfit':
         specifier: 5.3.0
         version: 5.3.0
+      '@nebutra/analytics':
+        specifier: workspace:*
+        version: link:../../packages/platform/analytics
       '@nebutra/auth':
         specifier: workspace:*
         version: link:../../packages/iam/auth

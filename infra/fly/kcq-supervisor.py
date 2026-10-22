@@ -97,7 +97,8 @@ def run(name: str, spec: dict) -> None:
         if proc is not None:
             children[name] = proc
             log("supervisor", f"{name} started pid={proc.pid}")
-            pump(name, proc.stdout)
+            with proc.stdout:
+                pump(name, proc.stdout)
             code = proc.wait()
             log("supervisor", f"{name} exited code={code}")
         if stopping.is_set():

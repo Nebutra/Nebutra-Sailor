@@ -47,6 +47,41 @@ sources are not advertised as provisioned.
 
 Frontend layout and interaction requirements live in [DESIGN.md](./DESIGN.md).
 
+## First chart and product support
+
+An empty chart offers A-share, Binance BTC/USDT and NASDAQ Apple shortcuts.
+Each shortcut resolves the exact instrument through the hosted provider's public
+catalog, retaining its identity, routing metadata and trading session. It never
+replaces a saved selection. Requests time out after 12 seconds and can be
+cancelled; stale responses cannot overwrite a later toolbar selection. Bar
+failures offer the canonical controller's reload action.
+
+The account menu and empty state open compact research guidance. This reuses the
+Agent's existing editable prompt templates and read-only control; no AI request
+is sent by selecting a market, opening help or choosing a template. Managed AI
+still requires sign-in and available wallet balance.
+
+Feedback opens a GitHub Issue draft for the user to review and submit. No report
+is submitted automatically. Optional diagnostics show only the pinned chart
+revision, resolved theme and compact/wide viewport category. They exclude
+account details, URLs, chart symbols, research history, provider endpoints and
+credentials. Reports are public; the form asks users to omit private data.
+
+Activation events use the strict `kcq.activation` contract in
+`@nebutra/analytics/events` and its shared transport. Tracking defaults off,
+requires stored analytics consent, respects Do Not Track / Global Privacy
+Control, and has no pre-consent queue. The random identifier exists only in
+memory for the current page. Events contain allowlisted step names and optional
+shortcut IDs; no user/workspace IDs, prompts, symbols or URLs. Old Agent runs
+are excluded when sessions are restored.
+
+Set the public build inputs `VITE_PUBLIC_POSTHOG_KEY` and
+`VITE_PUBLIC_POSTHOG_HOST` to enable the receiver. The deployment workflow maps
+the existing `NEXT_PUBLIC_POSTHOG_KEY` repository variable/secret and
+`NEXT_PUBLIC_POSTHOG_HOST` variable to those inputs. Without a project key,
+events are a no-op even after consent. This delivers event instrumentation,
+not a conversion dashboard or verified production analytics ingestion.
+
 ## Routes
 
 | Path | Surface | Rendering |

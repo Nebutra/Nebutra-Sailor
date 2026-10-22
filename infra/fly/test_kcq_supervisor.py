@@ -49,11 +49,18 @@ class SupervisorTest(unittest.TestCase):
             while time.time() < deadline and starts.count("print('boom'") < 2:
                 time.sleep(0.1)
         finally:
-            subprocess.Popen = original
             sup.stopping.set()
-            for proc in sup.children.values():
+            for proc in list(sup.children.values()):
                 if proc.poll() is None:
                     proc.kill()
+                proc.wait(timeout=5)
+            for thread in threads:
+                thread.join(timeout=5)
+            subprocess.Popen = original
+        for thread in threads:
+            self.assertFalse(thread.is_alive(), "log workers must finish before interpreter teardown")
+        for proc in sup.children.values():
+            self.assertTrue(proc.stdout.closed, "each finished worker must close its output pipe")
         self.assertGreaterEqual(starts.count("print('boom'"), 2, "crashing child must be restarted")
         self.assertEqual(starts.count("import time;"), 1, "healthy sibling must not restart")
 

@@ -10,6 +10,8 @@
 import { EVENT_SCHEMAS, type EventName, type EventPayload } from "./events";
 
 export interface AnalyticsClientOptions {
+  /** Optional anonymous client identifier; never added to event properties. */
+  distinctId?: string;
   posthog?: {
     apiKey: string;
     /** PostHog host. Defaults to https://app.posthog.com (cloud). */
@@ -89,7 +91,9 @@ export function createProductAnalyticsClient(opts: AnalyticsClientOptions): Prod
 
       const data = parsed.data as Record<string, unknown>;
       const distinctId =
-        typeof data.userId === "string" && data.userId.length > 0 ? data.userId : "anonymous";
+        typeof data.userId === "string" && data.userId.length > 0
+          ? data.userId
+          : opts.distinctId || "anonymous";
       const timestamp =
         typeof data.timestamp === "string" ? data.timestamp : new Date().toISOString();
 

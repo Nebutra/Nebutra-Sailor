@@ -1,4 +1,6 @@
 /** Reuse upstream compiler plugins and export-derived aliases, without copying its demo app. */
+
+import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -88,6 +90,9 @@ export default ({ isSsrBuild }) => ({
   // Bundle everything for prerender so Vue, the router and unhead share one runtime instance.
   ssr: { noExternal: true },
   define: {
+    __KCQ_CHART_REVISION__: JSON.stringify(
+      JSON.parse(readFileSync(resolve(root, "chart-source.json"), "utf8")).commit,
+    ),
     __VUE_I18N_FULL_INSTALL__: "true",
     __VUE_I18N_LEGACY_API__: "false",
     __INTLIFY_PROD_DEVTOOLS__: "false",
