@@ -11,7 +11,7 @@ describe("pinned chart contracts", () => {
     const component = readVueComponent(chartSource());
     expect(component.props.map((prop: { name: string }) => prop.name)).toContain("symbols");
     expect(component.slots.map((slot: { name: string }) => slot.name)).toContain("toolbar-start");
-  });
+  }, 180_000); // A clean CI checkout may fetch and build the pinned chart before this contract runs.
 
   it("documents script packages with their own source license", () => {
     const pages = packagePages(chartSource(), { links: githubLinks(readPin()) });
