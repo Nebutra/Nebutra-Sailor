@@ -11,6 +11,9 @@
       "en": "Controlled custom markers. When set, it replaces the current custom markers as a whole."
     },
     "marketSessions": { "en": "Market trading-session overrides for this chart instance." },
+    "marketDataContext": {
+      "en": "Market-data management context selected at mount. Its lifecycle belongs to the host."
+    },
     "yPaddingPx": {
       "en": "Vertical padding inside the price pane, in CSS pixels.",
       "zh": "价格区上下留白（CSS 像素）。"
@@ -36,7 +39,7 @@
     },
     "timezone": { "en": "IANA time zone used for dates and times on the axes and tooltips." },
     "settings": {
-      "en": "Chart settings, merged per key: keys you pass win, other keys fall back to what the browser stored, then to defaults."
+      "en": "Chart settings, merged per key: keys you pass override the active layout; other keys come from that layout and the defaults."
     },
     "legend": {
       "en": "Canvas legend configuration for the main pane. Core draws it; it never enters the Vue update path."

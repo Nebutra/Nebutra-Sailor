@@ -42,6 +42,8 @@ async function boot() {
     await marketConnections.initialize();
     const { default: Workbench } = await import("./workbench.vue");
     app = createApp(Workbench, { context, auth, scope, marketConnections });
+    const { initializeScriptIndicators } = await import("./script-indicators");
+    await initializeScriptIndicators(app);
   }
   app.mount("#app");
   let checking = false;

@@ -76,7 +76,7 @@ Logs from every process share one terminal, prefixed `[vite]`, `[gotdx]`, `[bina
 
 ### Binance
 
-[Binance-Connector](https://github.com/363045841/Binance-Connector) is a separate read-only spot service, started with `pnpm connector binance` (`go run ./cmd/binance-connector`). Its `binance` provider exposes V1 bars and live bars, real trades, historical trade ranges and NDJSON archives. The chart's canonical trade source supplies footprint indicators. Depth uses `/api/v1/market-data/sources/binance/depth` and `/depth/stream`; the former `/api/binance` routes are retired.
+[Binance-Connector](https://github.com/363045841/Binance-Connector) is a separate read-only spot service, started with `pnpm connector binance` (`go run ./cmd/binance-connector`). Its `binance` provider exposes V1 bars and live bars, real trades, historical trade ranges and NDJSON archives. The chart's canonical trade source supplies the footprint display mode. Depth uses `/api/v1/market-data/sources/binance/depth` and `/depth/stream`; the former `/api/binance` routes are retired.
 
 ### THS
 

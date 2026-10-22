@@ -17,7 +17,7 @@ The workstation checks your session again when the window regains focus and once
 
 The account menu sits at the start of the chart toolbar. From there you see who you are signed in as and switch between your personal workspace and team workspaces.
 
-Layouts, watchlists, chart preferences and agent sessions are kept per account and per workspace, so switching workspace gives you that workspace's charts. Switching reloads the page to drop cached state from the previous one.
+Layouts, watchlists, chart preferences, user scripts and agent sessions are kept per account and per workspace, so switching workspace gives you that workspace's charts. Switching reloads the page to drop cached state from the previous one.
 
 These preferences are stored in your browser. They are not synced to the cloud, and they do not follow you to another device.
 
@@ -27,7 +27,7 @@ The workstation hosts three connectors alongside the app:
 
 - **GOTDX:** A shares, indices and extended markets.
 - **TradingView:** historical bars for global instruments.
-- **Binance:** spot bars, real trades and historical trade archives for footprint indicators.
+- **Binance:** spot bars, real trades and historical trade archives for the footprint display mode.
 
 All three appear in the chart's source list without any setup. BaoStock, FinShare, MT5 and THS exist in the library but are not provided on the hosted workstation. THS daily bars require a separately configured API key.
 
@@ -39,6 +39,12 @@ You can connect your own Twelve Data key to chart US equities, ETFs and crypto f
 - **Team connections** are usable by members of the workspace; only owners and admins can add or change the key.
 
 The key never reaches the browser after you save it. It is encrypted on the Nebutra gateway, the browser only sees a label and a masked suffix, and chart requests go through the gateway, which calls Twelve Data on your behalf. Requests made with your key count against your Twelve Data plan, and a failure on your connection does not fall back to Nebutra's own data. The [data feeds guide](/docs/guides/data-feeds#host-managed-connections-byok) explains how this is wired.
+
+## Script indicators
+
+The indicator catalog includes the upstream built-in scripts. Open the script editor to create a custom indicator, inspect its output, or detach the editor into a separate window. User scripts run in QuickJS by default; the editor's trust setting explicitly enables native execution in the script worker.
+
+The [Script API](/docs/reference/script-api) is imported from the pinned chart source. It covers plots, shared line drawings and `request.security` for data from another period. Historical and live data still depend on the selected connector's capabilities. The [package reference](/docs/reference/packages) lists each package's own license, including the AGPL script packages.
 
 ## The agent
 
