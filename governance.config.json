@@ -556,10 +556,6 @@
         "count": 8
       },
       {
-        "file": "apps/design/src/components/duration-carriers.tsx",
-        "count": 7
-      },
-      {
         "file": "apps/design/src/components/pattern-specimens.tsx",
         "count": 7
       },
@@ -812,10 +808,6 @@
         "count": 4
       },
       {
-        "file": "apps/design/src/lib/components/previews.tsx",
-        "count": 4
-      },
-      {
         "file": "apps/forge/src/components/dns-leak-runner.tsx",
         "count": 4
       },
@@ -984,10 +976,6 @@
         "count": 4
       },
       {
-        "file": "apps/design/src/app/(components)/components/page.tsx",
-        "count": 3
-      },
-      {
         "file": "apps/design/src/app/(patterns)/patterns/modality/page.tsx",
         "count": 3
       },
@@ -997,10 +985,6 @@
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/color/page.tsx",
-        "count": 3
-      },
-      {
-        "file": "apps/design/src/lib/components/demos/separator.tsx",
         "count": 3
       },
       {
@@ -1120,27 +1104,11 @@
         "count": 3
       },
       {
-        "file": "apps/design/src/app/(tokens)/tokens/motion/page.tsx",
-        "count": 2
-      },
-      {
         "file": "apps/design/src/app/(tokens)/tokens/switchability/page.tsx",
         "count": 2
       },
       {
         "file": "apps/design/src/components/modality-specimens.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/design/src/lib/components/demos/empty-state.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/design/src/lib/components/demos/status-dot.tsx",
-        "count": 2
-      },
-      {
-        "file": "apps/design/src/lib/components/demos/tabs.tsx",
         "count": 2
       },
       {
@@ -1336,35 +1304,11 @@
         "count": 2
       },
       {
-        "file": "apps/design/src/app/(foundations)/icons/page.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/design/src/app/(tokens)/tokens/elevation/page.tsx",
         "count": 1
       },
       {
         "file": "apps/design/src/components/pattern-specimen.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/components/showcase-demo.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/lib/components/demos/alert.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/lib/components/demos/animate-in.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/lib/components/demos/page-header.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/lib/components/demos/table.tsx",
         "count": 1
       },
       {
@@ -2730,19 +2674,11 @@
         "count": 1
       },
       {
-        "file": "apps/design/src/app/(components)/components/page.tsx",
-        "count": 1
-      },
-      {
         "file": "apps/design/src/app/(tokens)/tokens/_components/primitives.tsx",
         "count": 1
       },
       {
         "file": "apps/design/src/app/(tokens)/tokens/shape/page.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/components/icon-gallery.tsx",
         "count": 1
       },
       {
@@ -2899,10 +2835,6 @@
       },
       {
         "file": "apps/admin/src/components/add-account-dialog.tsx",
-        "count": 1
-      },
-      {
-        "file": "apps/design/src/components/icon-gallery.tsx",
         "count": 1
       },
       {

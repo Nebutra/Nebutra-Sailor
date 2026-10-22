@@ -63,13 +63,13 @@ export default async function ShowcaseDetailPage({ params }: { params: Promise<{
 
       {item.audit && item.status === "lab" ? (
         <section className="flex max-w-2xl flex-col gap-3" id="graduation">
-          <h2 className="font-medium text-foreground text-lg">What it needs to graduate</h2>
+          <h2 className="text-foreground text-lg">What it needs to graduate</h2>
           <GraduationChecklist audit={item.audit} />
         </section>
       ) : null}
 
       <section className="flex flex-col gap-6" id="demos">
-        <h2 className="font-medium text-foreground text-lg">
+        <h2 className="text-foreground text-lg">
           {item.variants > 1 ? `${item.variants} demos` : "Demo"}
         </h2>
         {item.demos.map((demoId) => (

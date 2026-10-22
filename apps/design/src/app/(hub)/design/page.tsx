@@ -107,7 +107,7 @@ export default function DesignPage() {
         <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">
           {principles.map((item) => (
             <div className={LINK_CELL} key={item.title}>
-              <h3 className="m-0 font-sans font-medium text-base text-foreground">{item.title}</h3>
+              <h3 className="m-0 font-sans text-base text-foreground">{item.title}</h3>
               <p className="m-0 text-neutral-11 text-sm">{item.body}</p>
               <Link className={`${CELL_TITLE} mt-2 text-muted-foreground text-sm`} href={item.href}>
                 {item.proof}

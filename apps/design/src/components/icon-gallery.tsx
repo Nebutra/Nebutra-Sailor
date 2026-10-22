@@ -334,10 +334,7 @@ const IconCell = React.memo(function IconCell({
       >
         <Icon className="shrink-0" size={size} {...weightProps(weight)} />
       </span>
-      <span
-        className="line-clamp-2 w-full whitespace-normal break-all px-1 text-center font-medium text-2xs text-muted-foreground leading-tight transition-colors group-hover:text-current"
-        title={name}
-      >
+      <span className="line-clamp-2 w-full whitespace-normal break-all px-1 text-center font-medium text-2xs text-muted-foreground leading-tight transition-colors group-hover:text-current">
         {name}
       </span>
 
@@ -399,9 +396,7 @@ function IconDetail({
 
       <div className="flex items-start justify-between gap-3 px-4 pt-4">
         <div className="min-w-0">
-          <p className="m-0 truncate font-medium text-foreground text-sm" title={name}>
-            {name}
-          </p>
+          <p className="m-0 truncate font-medium text-foreground text-sm">{name}</p>
           <p className="m-0 text-muted-foreground text-xs">{category?.label}</p>
         </div>
         <Button onClick={() => void copy(name, "name")} size="sm" variant="ghost">

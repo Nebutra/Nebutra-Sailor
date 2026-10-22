@@ -35,7 +35,7 @@ function Door({
     <div className="flex flex-col gap-4 bg-background p-6 sm:p-8">
       <div className="flex items-center gap-2.5 text-foreground">
         {icon}
-        <h3 className="m-0 font-sans font-medium text-base">{title}</h3>
+        <h3 className="m-0 font-sans text-base">{title}</h3>
       </div>
       <p className="m-0 text-neutral-11 text-sm">{lead}</p>
       <div className="mt-auto flex flex-col gap-2 pt-2">{children}</div>

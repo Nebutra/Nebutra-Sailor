@@ -88,6 +88,7 @@ export const GUIDANCE: Record<string, Guidance> = {
       {
         title: "Don't recolour with className",
         body: "Pick a variant. A local background class drifts from the theme and from dark mode.",
+        // allow-palette: this is the Don't example showing a raw palette class.
         code: '<Button className="bg-red-600">Delete</Button>',
       },
       {

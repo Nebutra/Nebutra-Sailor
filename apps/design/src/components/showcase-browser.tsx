@@ -200,7 +200,7 @@ export function ShowcaseBrowser({
 
             {byCategory(tierItems).map((group) => (
               <Fragment key={group.category}>
-                <h3 className="mt-10 mb-4 font-medium text-muted-foreground text-sm first:mt-0">
+                <h3 className="mt-10 mb-4 text-muted-foreground text-sm first:mt-0">
                   {group.category}
                 </h3>
                 <ul className={GRID}>

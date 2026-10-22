@@ -12,6 +12,7 @@
  */
 
 // biome-ignore-all lint/a11y/noRedundantRoles: Below md the rows are display-overridden to stack, which drops native table semantics in Safari/VoiceOver; the explicit roles restore them.
+import { Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import type * as React from "react";
 import type { ApiBlock, ApiProp, InheritedGroup } from "@/lib/components/api-docs";
@@ -41,7 +42,7 @@ export function ApiBlocks({ blocks, unresolved }: { blocks: ApiBlock[]; unresolv
       {primary ? <Block block={primary} primary /> : null}
       {rest.length > 0 ? (
         <div className="flex flex-col gap-2">
-          <h3 className="m-0 font-medium text-foreground text-sm">Related exports</h3>
+          <h3 className="m-0 text-foreground text-sm">Related exports</h3>
           {rest.map((block) => (
             <Disclosure
               key={block.name}
@@ -70,6 +71,28 @@ export function ApiBlocks({ blocks, unresolved }: { blocks: ApiBlock[]; unresolv
   );
 }
 
+/** A type signature; when it was shortened for the table, the full one opens on hover or focus. */
+function TypeCode({ type, full }: { type: string; full?: string | undefined }) {
+  const code = <code className="break-words font-mono text-muted-foreground text-xs">{type}</code>;
+  if (!full || full === type) return code;
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <code
+          className="break-words font-mono text-muted-foreground text-xs"
+          // biome-ignore lint/a11y/noNoninteractiveTabindex: a tooltip trigger has to be reachable by keyboard
+          tabIndex={0}
+        >
+          {type}
+        </code>
+      </TooltipTrigger>
+      <TooltipContent className="max-w-[min(40rem,90vw)] break-words font-mono text-xs">
+        {full}
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
 function countLabel(block: ApiBlock): string {
   if (block.kind === "function") return "function";
   const inherited = block.inherited.reduce((sum, g) => sum + g.props.length, 0);
@@ -81,9 +104,7 @@ function Block({ block, primary = false }: { block: ApiBlock; primary?: boolean 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1">
-        {primary ? (
-          <h3 className="m-0 font-medium font-mono text-foreground text-base">{block.name}</h3>
-        ) : null}
+        {primary ? <h3 className="m-0 font-mono text-foreground text-base">{block.name}</h3> : null}
         {block.description ? (
           <p className="m-0 max-w-3xl text-neutral-11 text-sm">
             <Prose text={block.description} />
@@ -178,23 +199,14 @@ function PropRow({ prop }: { prop: ApiProp }) {
           >
             {prop.name}
           </code>
-          {prop.required ? (
-            <span className="text-destructive-strong text-xs" title="Required">
-              required
-            </span>
-          ) : null}
+          {prop.required ? <span className="text-destructive-strong text-xs">required</span> : null}
           {prop.deprecated !== null ? (
             <span className="text-muted-foreground text-xs">deprecated</span>
           ) : null}
         </span>
       </td>
       <td className="px-3 py-2.5 max-md:block max-md:p-0" role="cell">
-        <code
-          className="break-words font-mono text-muted-foreground text-xs"
-          title={prop.typeFull ?? prop.type}
-        >
-          {prop.type}
-        </code>
+        <TypeCode full={prop.typeFull} type={prop.type} />
       </td>
       <td className="px-3 py-2.5 max-md:block max-md:p-0" role="cell">
         {prop.defaultValue !== null ? (
@@ -262,12 +274,7 @@ function InheritedDisclosure({ group, open }: { group: InheritedGroup; open: boo
                 <code className="font-mono text-foreground text-xs">{p.name}</code>
               </dt>
               <dd className="m-0 mb-1.5 md:mb-0">
-                <code
-                  className="break-words font-mono text-muted-foreground text-xs"
-                  title={p.typeFull ?? p.type}
-                >
-                  {p.type}
-                </code>
+                <TypeCode full={p.typeFull} type={p.type} />
               </dd>
             </div>
           ))}

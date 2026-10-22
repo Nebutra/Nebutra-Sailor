@@ -1,3 +1,4 @@
+import { Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { ComponentPreview } from "@/lib/components/previews";
 import {
@@ -220,13 +221,14 @@ function Gaps({ gaps, groupId }: { gaps: UiExport[]; groupId: string }) {
       </p>
       <div className="mt-4 flex flex-wrap gap-1.5">
         {gaps.map((gap) => (
-          <code
-            className="rounded bg-background px-1.5 py-0.5 font-mono text-2xs text-muted-foreground"
-            key={`${groupId}-${gap.name}`}
-            title={gap.file}
-          >
-            {gap.name}
-          </code>
+          <Tooltip key={`${groupId}-${gap.name}`}>
+            <TooltipTrigger asChild>
+              <code className="rounded bg-background px-1.5 py-0.5 font-mono text-2xs text-muted-foreground">
+                {gap.name}
+              </code>
+            </TooltipTrigger>
+            <TooltipContent className="font-mono text-xs">{gap.file}</TooltipContent>
+          </Tooltip>
         ))}
       </div>
     </details>

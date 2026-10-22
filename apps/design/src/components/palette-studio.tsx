@@ -1,7 +1,7 @@
 "use client";
 // @brand-exempt: design-system documentation copy; it names the product in prose and carries no brand colour or domain literal.
 
-import { Input } from "@nebutra/ui/primitives";
+import { ColorPickerPopover, Input } from "@nebutra/ui/primitives";
 import * as React from "react";
 import { generatePalette, hexToOklch, normalizeHex, oklchToHex } from "@/lib/color";
 import { ModeFrame, Section } from "../app/(tokens)/tokens/_components/primitives";
@@ -81,16 +81,10 @@ export function PaletteStudio({ defaultSeed }: { defaultSeed: string }) {
         <div className="flex flex-col gap-6">
           <div className="grid gap-4 sm:grid-cols-[auto_minmax(0,14rem)_minmax(0,14rem)] sm:items-end">
             <div className="flex flex-col gap-1.5">
-              <label className="text-muted-foreground text-xs" htmlFor="palette-picker">
-                Colour
-              </label>
-              <input
-                data-allow-native
-                aria-label="Seed colour picker"
-                className="h-10 w-full cursor-pointer rounded-md border border-border bg-transparent p-1 sm:w-16"
-                id="palette-picker"
-                onChange={(event) => setText(event.target.value)}
-                type="color"
+              <span className="text-muted-foreground text-xs">Colour</span>
+              <ColorPickerPopover
+                onChange={(hex) => setText(hex)}
+                triggerClassName="h-10 w-full sm:w-16"
                 value={active}
               />
             </div>
@@ -147,7 +141,7 @@ export function PaletteStudio({ defaultSeed }: { defaultSeed: string }) {
               {defaultSeed ? (
                 <button
                   aria-label="Use the Nebutra brand colour"
-                  className="flex items-center gap-2 rounded-md border border-border bg-card px-2.5 py-1.5 text-foreground text-xs outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
+                  className="flex items-center gap-2 rounded-md border border-border bg-card px-2.5 py-1.5 text-foreground text-xs hover:bg-accent"
                   onClick={() => setText(defaultSeed)}
                   type="button"
                 >
@@ -162,7 +156,7 @@ export function PaletteStudio({ defaultSeed }: { defaultSeed: string }) {
               {presets.map((preset) => (
                 <button
                   aria-label={`Use a ${preset.label.toLowerCase()} seed`}
-                  className="flex items-center gap-2 rounded-md border border-border bg-card px-2.5 py-1.5 text-foreground text-xs outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
+                  className="flex items-center gap-2 rounded-md border border-border bg-card px-2.5 py-1.5 text-foreground text-xs hover:bg-accent"
                   key={preset.label}
                   onClick={() => setText(preset.hex)}
                   type="button"

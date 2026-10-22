@@ -35,7 +35,7 @@ export function ShowcaseBlock({ block }: { block: BlockEntry }) {
       <div className="flex flex-col gap-3 px-5 pt-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-baseline gap-3">
-            <h3 className="font-medium text-base text-foreground">{block.title}</h3>
+            <h3 className="text-base text-foreground">{block.title}</h3>
             <span className="text-muted-foreground text-xs">{block.product}</span>
           </div>
           <StatusBadge status={block.status} />

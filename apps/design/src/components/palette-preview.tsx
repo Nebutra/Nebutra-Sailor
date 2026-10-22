@@ -34,21 +34,21 @@ export function PalettePreview({ steps }: { steps: readonly Step[] }) {
 
       <div className="flex flex-wrap gap-2">
         <button
-          className="rounded-md px-3.5 py-2 font-medium text-sm outline-none transition-colors hover:bg-[var(--p-10)] focus-visible:ring-2 focus-visible:ring-[color:color-mix(in_oklch,var(--p-9)_45%,transparent)]"
+          className="rounded-md px-3.5 py-2 font-medium text-sm transition-colors hover:bg-[var(--p-10)] focus-visible:outline-[color:var(--p-9)]"
           style={{ backgroundColor: "var(--p-9)", color: "var(--p-ink)" }}
           type="button"
         >
           Solid
         </button>
         <button
-          className="rounded-md px-3.5 py-2 font-medium text-sm outline-none transition-colors hover:bg-[var(--p-4)] active:bg-[var(--p-5)] focus-visible:ring-2 focus-visible:ring-[color:color-mix(in_oklch,var(--p-9)_45%,transparent)]"
+          className="rounded-md px-3.5 py-2 font-medium text-sm transition-colors hover:bg-[var(--p-4)] active:bg-[var(--p-5)] focus-visible:outline-[color:var(--p-9)]"
           style={{ backgroundColor: "var(--p-3)", color: "var(--p-11)" }}
           type="button"
         >
           Soft
         </button>
         <button
-          className="rounded-md border px-3.5 py-2 font-medium text-sm outline-none transition-colors hover:border-[var(--p-8)] focus-visible:ring-2 focus-visible:ring-[color:color-mix(in_oklch,var(--p-9)_45%,transparent)]"
+          className="rounded-md border px-3.5 py-2 font-medium text-sm transition-colors hover:border-[var(--p-8)] focus-visible:outline-[color:var(--p-9)]"
           style={{ borderColor: "var(--p-7)", color: "var(--p-11)" }}
           type="button"
         >
@@ -59,7 +59,7 @@ export function PalettePreview({ steps }: { steps: readonly Step[] }) {
       <input
         data-allow-native
         aria-label="Sample input"
-        className="rounded-md border bg-transparent px-3 py-2 text-sm outline-none placeholder:opacity-70 hover:border-[var(--p-8)] focus-visible:border-[var(--p-9)] focus-visible:ring-2 focus-visible:ring-[color:color-mix(in_oklch,var(--p-9)_45%,transparent)]"
+        className="rounded-md border bg-transparent px-3 py-2 text-sm placeholder:opacity-70 hover:border-[var(--p-8)] focus-visible:border-[var(--p-9)] focus-visible:outline-[color:var(--p-9)]"
         placeholder="Focus me for the ring"
         style={{ borderColor: "var(--p-7)", color: "var(--p-12)" }}
         type="text"

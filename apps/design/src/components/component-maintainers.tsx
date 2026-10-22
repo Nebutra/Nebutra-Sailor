@@ -91,7 +91,7 @@ export function ComponentMaintainers({
           </dl>
 
           <div className="flex flex-col gap-3">
-            <h3 className="m-0 font-medium text-foreground text-sm">
+            <h3 className="m-0 text-foreground text-sm">
               What the examples guard against
               {catches.length > 0 ? (
                 <span className="ml-2 text-muted-foreground tabular-nums">{catches.length}</span>

@@ -46,17 +46,16 @@ function Swatches({ steps }: { steps: readonly Step[] }) {
           return (
             <button
               aria-label={`Copy step ${step.step}, ${role?.label ?? ""}, ${value}`}
-              className="group flex min-w-0 flex-col bg-card text-left outline-none focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-ring"
+              className="group flex min-w-0 flex-col bg-card text-left focus-visible:z-10"
               key={step.step}
               onClick={() => {
                 void copy(value, key);
                 setLiveMessage(`Copied step ${step.step}`);
               }}
-              title={`${role?.label ?? ""} — click to copy ${value}`}
               type="button"
             >
               <span
-                className="block h-16 w-full transition-transform duration-150 group-hover:scale-[1.02] md:h-20"
+                className="block h-16 w-full transition-transform duration-micro group-hover:scale-[1.02] md:h-20"
                 // Generated colour: this is the thing being shown.
                 style={{ backgroundColor: step.hex }}
               />
@@ -84,12 +83,9 @@ function Swatches({ steps }: { steps: readonly Step[] }) {
   );
 }
 
-function Verdict({ pass, label, bar }: { pass: boolean; label: string; bar: string }) {
+function Verdict({ pass, label }: { pass: boolean; label: string }) {
   return (
-    <Chip
-      tone={pass ? "pass" : "fail"}
-      title={pass ? `Meets ${bar}` : `Below the ${bar} bar for this pairing`}
-    >
+    <Chip tone={pass ? "pass" : "fail"}>
       {pass ? "Pass" : "Miss"} · {label}
     </Chip>
   );
@@ -120,11 +116,7 @@ function PairRow({ pair }: { pair: PairResult }) {
             {pair.wcag.toFixed(2)}
             <span className="text-muted-foreground">:1</span>
           </span>
-          <Verdict
-            bar={`WCAG 2 ${pair.wcagMin}:1`}
-            label={`${pair.wcagMin}`}
-            pass={pair.passesWcag}
-          />
+          <Verdict label={`${pair.wcagMin}`} pass={pair.passesWcag} />
         </span>
         <span className="flex items-center gap-2">
           <span className="w-14 shrink-0 whitespace-nowrap text-muted-foreground text-xs sm:hidden">
@@ -134,11 +126,7 @@ function PairRow({ pair }: { pair: PairResult }) {
             <span className="text-muted-foreground">Lc </span>
             {Math.abs(pair.apca).toFixed(0)}
           </span>
-          <Verdict
-            bar={`APCA Lc ${pair.apcaMin}`}
-            label={`${pair.apcaMin}`}
-            pass={pair.passesApca}
-          />
+          <Verdict label={`${pair.apcaMin}`} pass={pair.passesApca} />
         </span>
       </div>
     </li>
@@ -162,7 +150,7 @@ export function PaletteModePanel({
 
       <div>
         <div className="mb-1 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-          <h3 className="m-0 font-medium text-base text-foreground">
+          <h3 className="m-0 text-base text-foreground">
             Contrast, {mode === "light" ? "light" : "dark"}
           </h3>
           <p className="m-0 text-muted-foreground text-xs tabular-nums">

@@ -102,11 +102,11 @@ function RuleColumn({ rules, tone }: { rules: Rule[]; tone: "do" | "dont" }) {
     <div className="flex min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-card">
       <div className="flex items-center gap-2 border-border border-b bg-background px-4 py-2">
         {isDo ? (
-          <Check aria-hidden className="size-4 text-[hsl(var(--success-strong))]" />
+          <Check aria-hidden className="size-4 text-success-strong" />
         ) : (
           <Cross aria-hidden className="size-4 text-destructive-strong" />
         )}
-        <h3 className="m-0 font-medium text-foreground text-sm">{isDo ? "Do" : "Don't"}</h3>
+        <h3 className="m-0 text-foreground text-sm">{isDo ? "Do" : "Don't"}</h3>
       </div>
       <ul className="m-0 flex list-none flex-col p-0">
         {rules.map((rule) => (
