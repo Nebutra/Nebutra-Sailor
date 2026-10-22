@@ -1,5 +1,6 @@
 import type { AgentRunView } from "@363045841yyt/klinechart";
 import type { KcqActivationPayload } from "@nebutra/analytics/events";
+import { brand } from "@nebutra/brand/metadata";
 
 export type HelpSection = "guide" | "feedback";
 export interface FeedbackDiagnostics {
@@ -9,7 +10,7 @@ export interface FeedbackDiagnostics {
 }
 
 export function buildFeedbackUrl(message: string, diagnostics?: FeedbackDiagnostics): string {
-  const url = new URL("https://github.com/Nebutra/Nebutra-Sailor/issues/new");
+  const url = new URL(`${brand.social.github}/${brand.name}-Sailor/issues/new`);
   let body = `## KCQ 反馈\n\n${message.trim().slice(0, 2000)}`;
   if (diagnostics) {
     body += `\n\n## 基础诊断\n\nChart: ${diagnostics.chartRevision}\nTheme: ${diagnostics.theme}\nViewport: ${diagnostics.viewport}`;

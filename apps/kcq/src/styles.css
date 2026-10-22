@@ -194,12 +194,13 @@ button {
   background: var(--klc-color-ui-surface);
   cursor: pointer;
 }
-.chart-empty-actions button:hover {
-  background: var(--klc-color-ui-hover);
+@media (hover: hover) {
+  .chart-empty-actions button:hover {
+    background: var(--klc-color-ui-hover);
+  }
 }
 .chart-empty-actions button:focus-visible,
 .kcq-help a:focus-visible,
-.kcq-help input:focus-visible,
 .kcq-help textarea:focus-visible {
   outline: 2px solid var(--klc-color-ui-focus);
   outline-offset: 2px;
@@ -245,11 +246,6 @@ button {
   gap: 8px;
   cursor: pointer;
 }
-.kcq-help-option input {
-  flex: none;
-  margin-top: 4px;
-  accent-color: var(--klc-color-ui-accent);
-}
 .kcq-help textarea {
   width: 100%;
   box-sizing: border-box;
@@ -270,8 +266,10 @@ button {
   color: var(--klc-color-ui-on-accent);
   background: var(--klc-color-ui-accent);
 }
-.kcq-help-primary:hover {
-  background: var(--klc-color-ui-accent-strong);
+@media (hover: hover) {
+  .kcq-help-primary:hover {
+    background: var(--klc-color-ui-accent-strong);
+  }
 }
 .kcq-help-link {
   color: var(--klc-color-ui-text);

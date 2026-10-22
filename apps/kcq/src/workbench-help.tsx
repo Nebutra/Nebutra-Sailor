@@ -1,11 +1,13 @@
 import {
   Button,
   ButtonLink,
+  Checkbox,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  Textarea,
 } from "@nebutra/ui/primitives/canonical";
 import { useState } from "react";
 import { buildFeedbackUrl, type FeedbackDiagnostics, type HelpSection } from "./workbench-support";
@@ -57,7 +59,7 @@ export function WorkbenchHelp({
         {feedback ? (
           <div className="kcq-help-body">
             <label htmlFor="kcq-feedback">遇到了什么问题，或希望改进什么？</label>
-            <textarea
+            <Textarea
               id="kcq-feedback"
               rows={5}
               maxLength={2000}
@@ -65,14 +67,13 @@ export function WorkbenchHelp({
               onChange={(event) => setMessage(event.target.value)}
               placeholder="操作步骤、实际结果、期待的结果"
             />
-            <label className="kcq-help-option">
-              <input
-                type="checkbox"
-                checked={includeDiagnostics}
-                onChange={(event) => setIncludeDiagnostics(event.target.checked)}
-              />
+            <Checkbox
+              className="kcq-help-option"
+              checked={includeDiagnostics}
+              onCheckedChange={setIncludeDiagnostics}
+            >
               附上基础诊断（图表版本、主题、屏幕尺寸类别）
-            </label>
+            </Checkbox>
             {includeDiagnostics && (
               <pre className="kcq-diagnostics">
                 Chart: {diagnostics.chartRevision}
@@ -125,18 +126,15 @@ export function WorkbenchHelp({
             <a href="/zh/docs" target="_blank" rel="noopener noreferrer" className="kcq-help-link">
               阅读使用文档
             </a>
-            <label className="kcq-help-option">
-              <input
-                type="checkbox"
-                checked={analyticsConsent}
-                onChange={(event) =>
-                  setConsentError(
-                    onConsentChange(event.target.checked) ? "" : "无法保存偏好，匿名统计保持关闭。",
-                  )
-                }
-              />
+            <Checkbox
+              className="kcq-help-option"
+              checked={analyticsConsent}
+              onCheckedChange={(enabled) =>
+                setConsentError(onConsentChange(enabled) ? "" : "无法保存偏好，匿名统计保持关闭。")
+              }
+            >
               允许匿名使用统计，帮助改进 KCQ
-            </label>
+            </Checkbox>
             <p className="kcq-help-note">
               默认关闭。仅记录打开图表、研究成功或失败等步骤，不发送问题正文、商品、自选或账户信息。遵循浏览器的“请勿追踪”设置，可随时关闭。
             </p>

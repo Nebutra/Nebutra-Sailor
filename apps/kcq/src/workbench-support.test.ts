@@ -10,7 +10,7 @@ describe("reviewable product feedback", () => {
         viewport: "compact",
       }),
     );
-    expect(url.origin + url.pathname).toBe("https://github.com/Nebutra/Nebutra-Sailor/issues/new");
+    expect(url.origin + url.pathname).toBe("https://github.com/nebutra/Nebutra-Sailor/issues/new");
     const body = url.searchParams.get("body");
     expect(body).toContain("选择市场后没有图表 & 重试失败");
     expect(body).toContain("abcdef12");
