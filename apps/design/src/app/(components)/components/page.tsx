@@ -1,3 +1,4 @@
+import { Tooltip, TooltipContent, TooltipTrigger } from "@nebutra/ui/primitives";
 import Link from "next/link";
 import { ComponentPreview } from "@/lib/components/previews";
 import {
@@ -69,6 +70,9 @@ function registryDrift(groups: GroupView[]): { name: string; slug: string; group
       // cva helpers and type aliases are not component-shaped exports and are
       // intentionally outside the measured population.
       if (name.endsWith("Variants")) continue;
+      // Hooks and functions (`toast`, `useToasts`) are not component-shaped
+      // exports either, so the barrel scan never lists them.
+      if (/^[a-z]/.test(name)) continue;
       if (!known.has(name)) drift.push({ name, slug: entry.slug, group: entry.group });
     }
   }
@@ -179,7 +183,7 @@ function GroupSection({ group }: { group: GroupView }) {
                 <div className="flex flex-col gap-1 p-4">
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="font-medium text-foreground text-sm">{entry.name}</span>
-                    <span className="font-mono text-muted-foreground text-[11px]">
+                    <span className="font-mono text-muted-foreground text-2xs">
                       {entry.consumers} uses
                     </span>
                   </div>
@@ -217,13 +221,14 @@ function Gaps({ gaps, groupId }: { gaps: UiExport[]; groupId: string }) {
       </p>
       <div className="mt-4 flex flex-wrap gap-1.5">
         {gaps.map((gap) => (
-          <code
-            className="rounded bg-background px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground"
-            key={`${groupId}-${gap.name}`}
-            title={gap.file}
-          >
-            {gap.name}
-          </code>
+          <Tooltip key={`${groupId}-${gap.name}`}>
+            <TooltipTrigger asChild>
+              <code className="rounded bg-background px-1.5 py-0.5 font-mono text-2xs text-muted-foreground">
+                {gap.name}
+              </code>
+            </TooltipTrigger>
+            <TooltipContent className="font-mono text-xs">{gap.file}</TooltipContent>
+          </Tooltip>
         ))}
       </div>
     </details>
@@ -259,7 +264,7 @@ function LegacyClaims() {
       <div className="flex flex-wrap gap-1.5">
         {missing.map((claim) => (
           <code
-            className="rounded bg-muted/60 px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground line-through"
+            className="rounded bg-muted/60 px-1.5 py-0.5 font-mono text-2xs text-muted-foreground line-through"
             key={claim.name}
           >
             {claim.name}

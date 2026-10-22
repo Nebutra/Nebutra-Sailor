@@ -85,7 +85,7 @@ export default function AnimateInDemo({ derived }: DemoProps) {
         <div className="grid gap-6 md:grid-cols-3">
           {(["fast", "normal", "slow"] as const).map((stagger) => (
             <div key={stagger}>
-              <div className="mb-2 font-mono text-[11px] text-muted-foreground">{stagger}</div>
+              <div className="mb-2 font-mono text-2xs text-muted-foreground">{stagger}</div>
               <AnimateInGroup
                 className="flex flex-col gap-2"
                 key={`${stagger}-${run}`}

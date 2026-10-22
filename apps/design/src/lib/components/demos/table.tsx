@@ -15,6 +15,21 @@ export default function TableDemo() {
     <DemoPage>
       <State
         breaks="Numeric columns left-aligned, so the digits do not line up and a total cannot be scanned. The numeric prop is what fixes it, on both the head and the cell."
+        code={`<Table>
+  <Table.Caption>API traffic by region, last 24 hours.</Table.Caption>
+  <Table.Header>
+    <Table.Row>
+      <Table.Head>Region</Table.Head>
+      <Table.Head numeric>Requests</Table.Head>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body bordered interactive>
+    <Table.Row>
+      <Table.Cell>Frankfurt</Table.Cell>
+      <Table.Cell numeric>620,118</Table.Cell>
+    </Table.Row>
+  </Table.Body>
+</Table>`}
         id="default"
         note="Compound parts. numeric right-aligns and switches to tabular figures."
         title="Default"
@@ -44,6 +59,8 @@ export default function TableDemo() {
 
       <State
         breaks="Zebra striping hand-applied per row, which is how 28 files in this repo ended up with slightly different stripes. striped is a prop."
+        code={`<Table.Body striped />
+<Table.Body bordered interactive />`}
         id="density"
         note="The same data with the body-level presentation props on and off."
         title="Striped, bordered, interactive"
@@ -57,7 +74,7 @@ export default function TableDemo() {
             ] as const
           ).map((config) => (
             <div key={config.label}>
-              <div className="mb-2 font-mono text-[11px] text-muted-foreground">{config.label}</div>
+              <div className="mb-2 font-mono text-2xs text-muted-foreground">{config.label}</div>
               <div className="max-w-2xl">
                 <Table>
                   <Table.Header>

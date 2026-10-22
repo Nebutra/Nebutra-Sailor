@@ -33,9 +33,7 @@ export default function StatusDotDemo({ derived }: DemoProps) {
         ) : (
           <div className="flex flex-col gap-4">
             <div>
-              <div className="mb-2 font-mono text-[11px] text-muted-foreground">
-                label — readable
-              </div>
+              <div className="mb-2 font-mono text-2xs text-muted-foreground">label — readable</div>
               <Row className="gap-6">
                 {states.map((state) => (
                   <StatusDot key={state} label state={state as never} />
@@ -43,7 +41,7 @@ export default function StatusDotDemo({ derived }: DemoProps) {
               </Row>
             </div>
             <div>
-              <div className="mb-2 font-mono text-[11px] text-muted-foreground">
+              <div className="mb-2 font-mono text-2xs text-muted-foreground">
                 dot only — colour is the only signal
               </div>
               <Row className="gap-6">

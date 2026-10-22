@@ -11,7 +11,12 @@
  * little before the card reaches the viewport, the chunk arrives, the demo
  * renders. Scrolling to the bottom of the page loads everything above it and
  * nothing below — which is the behaviour you want and also, incidentally, the
- * only way this page is affordable at all.
+ * only way this page is affordable at all. A card too narrow for its demo hides
+ * it (display: none), and a hidden node never intersects, so it never loads.
+ *
+ * The demo is rendered at its own size and is interactive. It used to be scaled
+ * to fit a thumbnail and made inert; both are gone, so what you see is what you
+ * would get in your own app.
  *
  * `ssr: false` is deliberate rather than lazy. These demos reach for canvas,
  * WebGL and measured layout; rendering them on the server produces markup the
@@ -23,7 +28,7 @@ import dynamic from "next/dynamic";
 import * as React from "react";
 
 const Fallback = () => (
-  <div className="h-[160px] w-[320px] animate-pulse rounded-[var(--radius-md)] bg-muted/60" />
+  <div className="h-24 w-full max-w-xs animate-pulse rounded-[var(--radius-md)] bg-muted/60" />
 );
 
 function loader(id: string) {
@@ -83,7 +88,7 @@ class DemoBoundary extends React.Component<
   render() {
     if (this.state.failed) {
       return (
-        <p className="px-3 text-center font-mono text-[11px] text-muted-foreground">
+        <p className="px-3 text-center font-mono text-muted-foreground text-xs">
           {this.props.id} failed to render
         </p>
       );
@@ -92,9 +97,13 @@ class DemoBoundary extends React.Component<
   }
 }
 
-export function ShowcaseDemo({ id }: { id: string }) {
+/**
+ * `eager` mounts at once instead of on approach - for a page that shows one
+ * demo (the detail page) or has to have all of them in the DOM (the size probe).
+ */
+export function ShowcaseDemo({ id, eager = false }: { id: string; eager?: boolean }) {
   const [ref, near] = useOnApproach<HTMLDivElement>();
-  const Demo = React.useMemo(() => (near ? loader(id) : null), [near, id]);
+  const Demo = React.useMemo(() => (eager || near ? loader(id) : null), [eager, near, id]);
 
   return (
     <div className="w-full" ref={ref}>

@@ -1,4 +1,5 @@
 "use client";
+// @primitive-exempt: demo harness controls (knobs and toggles) sit outside the component under test.
 
 /**
  * Scaffolding shared by every component page.
@@ -14,11 +15,16 @@
  *   - a specimen sits on a framed stage: the card surface, one hairline, an
  *     8px corner — Geist's preview card. A tonal wash with no edge read as a
  *     smudge behind the component rather than a place it was put.
+ *   - `State` is one example inside the page's Examples section, not a section
+ *     of its own: an h3, separated from its neighbours by a hairline rather
+ *     than a full-bleed band.
  */
 
 import { Check, ChevronDown, Command } from "@nebutra/icons";
+import { CopyButton } from "@nebutra/ui/primitives";
 import { cn } from "@nebutra/ui/utils";
 import * as React from "react";
+import { registerCatch } from "./catches";
 
 // ─── page frame ───────────────────────────────────────────────────────────────
 
@@ -27,69 +33,109 @@ export function DemoPage({ children }: { children: React.ReactNode }) {
 }
 
 /**
- * One state of one component. `id` becomes an anchor so a defect can be linked
+ * One example of one component. `id` becomes an anchor so a defect can be linked
  * to precisely ("the overflow case on /components/badge#overflow").
+ *
+ * `code` is the snippet a reader copies to get this example: usage, not the
+ * demo's own plumbing, so it is written by hand next to the example it
+ * describes. `breaks` is the maintainer's note on what the example guards
+ * against; it is not rendered here but collected into the page's Maintainers
+ * panel (see catches.ts).
  */
 export function State({
   id,
   title,
   note,
   breaks,
+  code,
   children,
 }: {
   id: string;
   title: string;
-  /** What this state is showing, and what to look for. */
+  /** What this example is showing, and what to look for. */
   note?: React.ReactNode;
-  /** Why this state is on the page — the failure it is here to catch. */
+  /** Why this example is on the page — the failure it is here to catch. */
   breaks?: React.ReactNode;
+  /** Copyable usage for this example. */
+  code?: string;
   children: React.ReactNode;
 }) {
+  React.useEffect(() => {
+    if (!breaks) return;
+    return registerCatch({ id, title, breaks });
+  }, [id, title, breaks]);
+
   return (
     <section
       aria-labelledby={`${id}-heading`}
-      className="group -mx-4 scroll-mt-20 border-border border-t px-4 py-12 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12"
+      className="group mt-10 scroll-mt-24 border-border border-t pt-10 first:mt-0 first:border-t-0 first:pt-0"
       id={id}
     >
-      <div className="mb-6 flex flex-col gap-3">
+      <div className="mb-5 flex flex-col gap-2">
         <div className="flex items-baseline gap-3">
-          <h2
-            className="m-0 text-2xl text-foreground leading-heading tracking-heading"
+          <h3
+            className="m-0 text-foreground text-xl leading-heading tracking-heading"
             id={`${id}-heading`}
           >
             {title}
-          </h2>
+          </h3>
           <a
-            aria-label={`Link to the ${title} state`}
+            aria-label={`Link to ${title}`}
             className="text-muted-foreground text-sm no-underline opacity-0 transition-opacity duration-micro hover:text-foreground focus-visible:opacity-100 group-hover:opacity-100"
             href={`#${id}`}
           >
             #
           </a>
         </div>
-        {note ? <p className="m-0 max-w-3xl text-base text-neutral-11">{note}</p> : null}
+        {note ? <p className="m-0 max-w-3xl text-neutral-11 text-sm">{note}</p> : null}
       </div>
       <div className="overflow-hidden rounded-lg border border-border bg-card">
         {/* The card clips to its corners, so the stage itself scrolls: an
-            overflow state (a long label that grows its button) stays whole
+            overflow example (a long label that grows its button) stays whole
             and reachable at 390 instead of being cropped by the frame. */}
         <div className="overflow-x-auto p-4 sm:p-6" data-stage>
           {children}
         </div>
-        {/* What the state is here to catch, in the strip under the stage —
-            where Geist puts "Show code": metadata about the specimen, kept off
-            the specimen and out of the reading column above it. */}
-        {breaks ? (
-          <p className="m-0 border-border border-t bg-background px-6 py-3 text-muted-foreground text-sm">
-            <span className="font-medium text-foreground">Catches</span>
-            <span aria-hidden className="px-2">
-              ·
-            </span>
-            {breaks}
-          </p>
-        ) : null}
+        {code ? <ExampleCode code={code} /> : null}
       </div>
     </section>
+  );
+}
+
+/** "Show code" strip under an example's stage, with copy available while closed. */
+function ExampleCode({ code }: { code: string }) {
+  const [open, setOpen] = React.useState(false);
+  const panelId = React.useId();
+
+  return (
+    <div className="border-border border-t bg-background">
+      <div className="flex items-center justify-between gap-2 px-3 py-1.5">
+        <button
+          aria-controls={panelId}
+          aria-expanded={open}
+          className="inline-flex items-center gap-1.5 rounded-md px-1.5 py-1 font-medium text-muted-foreground text-xs transition-colors hover:text-foreground"
+          onClick={() => setOpen((v) => !v)}
+          type="button"
+        >
+          <ChevronDown className={cn("size-3.5 transition-transform", open && "rotate-180")} />
+          {open ? "Hide code" : "Show code"}
+        </button>
+        <CopyButton
+          className="text-muted-foreground"
+          showToast={false}
+          tooltipText="Copy code"
+          value={code}
+        />
+      </div>
+      {open ? (
+        <pre
+          className="m-0 overflow-x-auto border-border border-t px-4 py-3 font-mono text-foreground text-xs leading-relaxed"
+          id={panelId}
+        >
+          <code>{code}</code>
+        </pre>
+      ) : null}
+    </div>
   );
 }
 
@@ -263,7 +309,7 @@ export function KeyboardPath({
         </div>
         <dl className="flex flex-col gap-1.5">
           {steps.map((step) => (
-            <div className="flex flex-wrap items-baseline gap-2" key={step.keys}>
+            <div className="flex flex-wrap items-baseline gap-2" key={`${step.keys}: ${step.does}`}>
               <dt>
                 <kbd className="rounded-[var(--radius-sm)] border border-border bg-background px-1.5 py-0.5 font-mono text-foreground text-xs">
                   {step.keys}

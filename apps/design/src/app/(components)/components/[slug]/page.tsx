@@ -1,7 +1,17 @@
-import { CopyButton } from "@nebutra/ui/primitives";
 import { notFound } from "next/navigation";
 import type * as React from "react";
+import { ApiBlocks } from "@/components/component-api-table";
+import { InstallCard } from "@/components/component-code";
+import { A11yList, DoDont, KeyboardTable } from "@/components/component-guidance";
+import { ComponentMaintainers } from "@/components/component-maintainers";
+import { ComponentSection } from "@/components/component-section";
+import { UsedBy } from "@/components/component-used-by";
+import { apiForEntry } from "@/lib/components/api-docs";
+import { mergeCva } from "@/lib/components/api-merge";
+import { importLine } from "@/lib/components/code-gen";
 import type { DemoProps, Derived } from "@/lib/components/derived";
+import { LIVE_DOCS } from "@/lib/components/docs";
+import { GUIDANCE } from "@/lib/components/guidance";
 import { PreviewTheme } from "@/lib/components/preview-theme";
 import type { ComponentEntry } from "@/lib/components/registry";
 import { COMPONENTS, COMPONENTS_BY_SLUG, GROUPS } from "@/lib/components/registry";
@@ -37,6 +47,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${entry.name} — ${SITE_NAME}`,
     description: entry.blurb,
   };
+}
+
+/**
+ * What a reader pastes to start using the component: the exports the page
+ * covers, minus the cva helpers. A long list falls back to the headline name
+ * rather than a wall of imports.
+ */
+function importLineFor(entry: ComponentEntry, from: string): string {
+  const names = entry.covers.filter((name) => !name.endsWith("Variants"));
+  const shown = names.length > 0 && names.length <= 4 ? names : [entry.name];
+  return importLine([...shown], from);
 }
 
 function derive(entry: ComponentEntry): Derived {
@@ -83,7 +104,27 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   };
   const Demo = mod.default;
 
-  const importLine = `import { ${entry.name} } from "${group?.importPath ?? "@nebutra/ui"}";`;
+  // The playground and the states matrix exist for the components listed in
+  // LIVE_DOCS; every other page gets the same template without those two.
+  const live = LIVE_DOCS.has(entry.slug)
+    ? ((await import(`../../../../lib/components/docs/${entry.slug}`)) as {
+        Playground: React.ComponentType<DemoProps>;
+        StatesMatrix: React.ComponentType<DemoProps>;
+      })
+    : null;
+
+  const { blocks, unresolved } = apiForEntry(entry, COMPONENTS);
+  const apiBlocks = blocks.map((block) => mergeCva(block, derived.cva));
+  const guidance = GUIDANCE[entry.slug];
+
+  const importLine = importLineFor(entry, group?.importPath ?? "@nebutra/ui");
+
+  const axes = [
+    ...Object.values(derived.cva).flatMap((spec) =>
+      Object.entries(spec.variants).map(([name, values]) => ({ name, count: values.length })),
+    ),
+    ...Object.entries(derived.axes).map(([name, values]) => ({ name, count: values.length })),
+  ];
 
   return (
     <div className="flex flex-col">
@@ -91,111 +132,70 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         <p>{entry.blurb}</p>
       </PageHeader>
 
-      {/* Usage, then provenance: the import a reader copies, and under it in
-          the strip where the facts about a specimen go, where it comes from. */}
-      <div className="-mt-4 mb-12 overflow-hidden rounded-lg border border-border bg-card">
-        <div className="flex items-center justify-between gap-4 px-4 py-3">
-          <code className="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-foreground text-sm">
-            {importLine}
-          </code>
-          <CopyButton
-            className="shrink-0 text-muted-foreground"
-            showToast={false}
-            tooltipText="Copy import"
-            value={importLine}
-          />
-        </div>
-        <dl className="m-0 flex flex-wrap gap-x-8 gap-y-2 border-border border-t bg-background px-4 py-3 text-xs">
-          <Meta label="Source">
-            <code className="break-all font-mono">{derived.sourceFile}</code>
-          </Meta>
-          <Meta label="Story">
-            {derived.storyFile ? (
-              <code className="break-all font-mono">{derived.storyFile}</code>
-            ) : (
-              <span>none — this page is the only visual coverage</span>
-            )}
-          </Meta>
-          <Meta label="Used by">
-            <span className="tabular-nums">{entry.consumers} import sites</span>
-          </Meta>
-        </dl>
+      <div className="-mt-4 mb-12 max-w-3xl">
+        <InstallCard importLine={importLine} />
       </div>
 
-      <DerivedSummary derived={derived} />
+      {live ? (
+        <ComponentSection
+          note={
+            <p>
+              Change a prop and the component and the code beside it change together. Copy the code
+              when it looks right.
+            </p>
+          }
+          title="Playground"
+        >
+          <live.Playground derived={derived} />
+        </ComponentSection>
+      ) : null}
 
       <PreviewTheme>
-        <Demo derived={derived} />
+        <ComponentSection title="Examples">
+          <Demo derived={derived} />
+        </ComponentSection>
+        {live ? <live.StatesMatrix derived={derived} /> : null}
       </PreviewTheme>
 
-      <footer className="-mx-4 border-border border-t px-4 pt-12 md:-mx-8 md:px-8 lg:-mx-12 lg:px-12">
-        <h2 className="m-0 text-foreground text-lg leading-heading tracking-heading">
-          Why there is no prop table
-        </h2>
-        <p className="m-0 mt-3 max-w-3xl text-neutral-11">
-          A prop table has to be extracted from the TypeScript types to be trustworthy, and this app
-          does not extract them. A hand-written one would be wrong within a release — the
-          design-docs site currently documents props that do not exist, including one rendered with
-          a package that was removed from the repo. Until the extraction is real, the source file
-          named at the top of this page is the authority, and the specimens above are the behaviour.
-        </p>
-      </footer>
-    </div>
-  );
-}
+      <ComponentSection
+        note={
+          <p>
+            Read from the TypeScript types in{" "}
+            <code className="break-all font-mono text-sm">{derived.sourceFile}</code> when this site
+            is built, so it changes when the component does.
+          </p>
+        }
+        title="API"
+      >
+        <ApiBlocks blocks={apiBlocks} unresolved={unresolved} />
+      </ComponentSection>
 
-function Meta({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="flex items-baseline gap-2">
-      <dt className="shrink-0 text-muted-foreground">{label}</dt>
-      <dd className="m-0 text-neutral-11">{children}</dd>
-    </div>
-  );
-}
+      {guidance?.keyboard || guidance?.a11y ? (
+        <ComponentSection title="Keyboard and accessibility">
+          <div className="flex flex-col gap-10">
+            {guidance.keyboard ? <KeyboardTable rows={guidance.keyboard} /> : null}
+            {guidance.a11y ? <A11yList items={guidance.a11y} /> : null}
+          </div>
+        </ComponentSection>
+      ) : null}
 
-/**
- * States plainly which axes on this page came out of the library source. If this
- * block is empty for a component that has variants, the extractor is broken.
- */
-function DerivedSummary({ derived }: { derived: Derived }) {
-  const cvaEntries = Object.values(derived.cva);
-  const axisEntries = Object.entries(derived.axes);
+      {guidance?.dos && guidance.donts ? (
+        <ComponentSection title="Do and don't">
+          <DoDont donts={guidance.donts} dos={guidance.dos} />
+        </ComponentSection>
+      ) : null}
 
-  if (cvaEntries.length === 0 && axisEntries.length === 0) {
-    return (
-      <p className="m-0 mb-12 max-w-3xl text-muted-foreground text-sm">
-        This component declares no cva variant map and no enumerable size or tone union, so every
-        state below is hand-composed rather than derived.
-      </p>
-    );
-  }
+      <ComponentSection title="Used in">
+        <UsedBy entry={entry} />
+      </ComponentSection>
 
-  return (
-    <div className="mb-12 flex flex-wrap items-center gap-2 text-sm">
-      <span className="mr-1 text-muted-foreground">Derived from source</span>
-      {cvaEntries.map((spec) =>
-        Object.entries(spec.variants).map(([axis, values]) => (
-          <span
-            className="inline-flex items-baseline gap-1.5 rounded-[var(--radius-md)] border border-border bg-card px-2 py-0.5"
-            key={`${spec.name}-${axis}`}
-          >
-            <code className="font-mono text-foreground text-xs">{axis}</code>
-            <span className="text-muted-foreground text-xs tabular-nums">{values.length}</span>
-          </span>
-        )),
-      )}
-      {axisEntries.map(([axis, values]) => (
-        <span
-          className="inline-flex items-baseline gap-1.5 rounded-[var(--radius-md)] border border-border bg-card px-2 py-0.5"
-          key={`axis-${axis}`}
-        >
-          <code className="font-mono text-foreground text-xs">{axis}</code>
-          <span className="text-muted-foreground text-xs tabular-nums">{values.length}</span>
-        </span>
-      ))}
-      <span className="ml-1 text-muted-foreground">
-        — add a value in the library and it appears here
-      </span>
+      <ComponentMaintainers
+        axes={axes}
+        demoFile={`apps/design/src/lib/components/demos/${entry.slug}.tsx`}
+        registryFile="apps/design/src/lib/components/registry.ts"
+        sourceFile={derived.sourceFile}
+        storyFile={derived.storyFile}
+      />
     </div>
   );
 }

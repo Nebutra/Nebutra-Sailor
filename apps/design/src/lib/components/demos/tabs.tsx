@@ -48,10 +48,10 @@ export default function TabsDemo({ derived }: DemoProps) {
           <div className="flex flex-col gap-6">
             {shapes.map((shape) => (
               <div className="flex flex-col gap-3" key={shape}>
-                <code className="font-mono text-[11px] text-muted-foreground">shape="{shape}"</code>
+                <code className="font-mono text-2xs text-muted-foreground">shape="{shape}"</code>
                 {variants.map((variant) => (
                   <div className="flex flex-col gap-1" key={variant}>
-                    <code className="font-mono text-[10px] text-muted-foreground">{variant}</code>
+                    <code className="font-mono text-2xs text-muted-foreground">{variant}</code>
                     <div className="max-w-md">
                       <Tabs
                         aria-label={`Project views — ${variant} ${shape}`}

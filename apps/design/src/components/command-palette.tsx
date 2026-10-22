@@ -20,43 +20,9 @@ import { cn } from "@nebutra/ui/utils";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { createPortal } from "react-dom";
+import { type CommandEntry, rank } from "@/lib/command-rank";
 
-export interface CommandEntry {
-  href: string;
-  label: string;
-  /** Section it belongs to, shown as context on the row. */
-  group: string;
-}
-
-/**
- * Subsequence match, ranked.
- *
- * A plain `includes` fails "ipmock" → "iPhone Mockup", which is exactly how
- * people type into a palette. Subsequence matching handles that; the score then
- * favours a prefix hit and a tight run of characters, so "table" puts Table
- * above Turntable and above anything that merely contains the letters.
- */
-function score(label: string, query: string): number {
-  const haystack = label.toLowerCase();
-  const needle = query.toLowerCase();
-  if (!needle) return 0;
-
-  let at = -1;
-  let first = -1;
-  let last = -1;
-  for (const char of needle) {
-    at = haystack.indexOf(char, at + 1);
-    if (at === -1) return -1;
-    if (first === -1) first = at;
-    last = at;
-  }
-
-  const spread = last - first + 1;
-  const tightness = needle.length / spread;
-  const early = 1 - first / Math.max(haystack.length, 1);
-  const exact = haystack.startsWith(needle) ? 1 : 0;
-  return exact * 2 + tightness + early;
-}
+export type { CommandEntry };
 
 const MAX_RESULTS = 12;
 
@@ -70,7 +36,7 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
   const results = React.useMemo(() => {
     if (!query.trim()) return entries.slice(0, MAX_RESULTS);
     return entries
-      .map((entry) => ({ entry, rank: score(entry.label, query.trim()) }))
+      .map((entry) => ({ entry, rank: rank(entry, query.trim()) }))
       .filter((row) => row.rank >= 0)
       .sort((a, b) => b.rank - a.rank)
       .slice(0, MAX_RESULTS)
@@ -101,7 +67,9 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
   function go(entry: CommandEntry | undefined) {
     if (!entry) return;
     setOpen(false);
-    router.push(entry.href);
+    if (!entry.external) router.push(entry.href);
+    else if (/^https?:\/\//.test(entry.href)) window.open(entry.href, "_blank", "noopener");
+    else window.location.assign(entry.href);
   }
 
   return (
@@ -184,7 +152,7 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
                           "flex w-full items-baseline justify-between gap-4 rounded-[var(--radius-md)] px-3 py-2 text-left transition-colors",
                           index === active ? "bg-accent text-foreground" : "text-muted-foreground",
                         )}
-                        key={entry.href}
+                        key={`${entry.group}/${entry.label}`}
                         onClick={() => go(entry)}
                         onMouseEnter={() => setActive(index)}
                         type="button"

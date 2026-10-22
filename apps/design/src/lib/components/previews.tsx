@@ -223,7 +223,7 @@ const PREVIEWS: Record<string, React.ReactNode> = {
     </div>
   ),
   separator: (
-    <div className="flex w-full flex-col gap-2 text-[12px] text-muted-foreground">
+    <div className="flex w-full flex-col gap-2 text-xs text-muted-foreground">
       <span>Production</span>
       <Separator />
       <span>Preview</span>
@@ -257,7 +257,7 @@ const PREVIEWS: Record<string, React.ReactNode> = {
           Open popover
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-56 p-4 text-[13px]">
+      <PopoverContent className="w-56 p-4 text-sm">
         Anchored surface. Dismisses on outside click and Escape.
       </PopoverContent>
     </Popover>
@@ -323,7 +323,7 @@ const PREVIEWS: Record<string, React.ReactNode> = {
   ),
   "animate-in": (
     <AnimateIn preset="emerge">
-      <div className="rounded-panel bg-muted px-3 py-2 text-[13px] text-muted-foreground">
+      <div className="rounded-panel bg-muted px-3 py-2 text-sm text-muted-foreground">
         The only sanctioned entrance
       </div>
     </AnimateIn>
@@ -372,7 +372,5 @@ const PREVIEWS: Record<string, React.ReactNode> = {
 export function ComponentPreview({ slug, name }: { slug: string; name: string }) {
   const preview = PREVIEWS[slug];
   if (preview) return <>{preview}</>;
-  return (
-    <span className="font-mono text-[12px] text-muted-foreground">{name} — no specimen yet</span>
-  );
+  return <span className="font-mono text-xs text-muted-foreground">{name} — no specimen yet</span>;
 }

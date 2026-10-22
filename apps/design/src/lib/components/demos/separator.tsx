@@ -56,7 +56,7 @@ export default function SeparatorDemo() {
       >
         <div className="grid gap-4 md:grid-cols-3">
           <div>
-            <div className="mb-2 font-mono text-[11px] text-muted-foreground">rule</div>
+            <div className="mb-2 font-mono text-2xs text-muted-foreground">rule</div>
             <div className="rounded-lg bg-background p-4 text-sm text-foreground">
               <div>Production</div>
               <Separator className="my-2" />
@@ -64,14 +64,14 @@ export default function SeparatorDemo() {
             </div>
           </div>
           <div>
-            <div className="mb-2 font-mono text-[11px] text-muted-foreground">spacing only</div>
+            <div className="mb-2 font-mono text-2xs text-muted-foreground">spacing only</div>
             <div className="rounded-lg bg-background p-4 text-sm text-foreground">
               <div className="pb-4">Production</div>
               <div>Preview</div>
             </div>
           </div>
           <div>
-            <div className="mb-2 font-mono text-[11px] text-muted-foreground">tonal shift</div>
+            <div className="mb-2 font-mono text-2xs text-muted-foreground">tonal shift</div>
             <div className="rounded-lg bg-background p-1 text-sm text-foreground">
               <div className="rounded-md p-3">Production</div>
               <div className="rounded-md bg-muted/50 p-3">Preview</div>

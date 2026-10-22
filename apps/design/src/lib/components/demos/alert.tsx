@@ -78,7 +78,7 @@ export default function AlertDemo({ derived }: DemoProps) {
           <div className="flex flex-col gap-6">
             {appearances.map((appearance) => (
               <div className="flex flex-col gap-2" key={appearance}>
-                <code className="font-mono text-[11px] text-muted-foreground">
+                <code className="font-mono text-2xs text-muted-foreground">
                   appearance="{appearance}"
                 </code>
                 <div className="grid gap-2">

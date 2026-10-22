@@ -34,6 +34,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { pathToCssVarName } from "@nebutra/design-tokens/scripts/css-var-name.mjs";
 import { deriveBorderTier } from "@nebutra/design-tokens/scripts/derive-border-tier.mjs";
+import { deriveSpring } from "@nebutra/design-tokens/scripts/spring.mjs";
 
 // ─── locating the token source ────────────────────────────────────────────────
 
@@ -315,6 +316,10 @@ function buildSet(mode: Mode): TokenSet {
   // Step 2 — the SAME derivation the token build runs. Mutates `merged` so that
   // scale steps 6/7/8 carry computed hexes rather than placeholder aliases.
   const derivationLog = deriveBorderTier(merged);
+
+  // Spring duration/easing are computed from stiffness/damping/mass by the same
+  // function the build runs, so the site lists exactly the tokens the CSS has.
+  deriveSpring(merged);
 
   // Step 3 — last declaration of a variable name wins, exactly as
   // `registerLayeredNameTransform` decides it in the build config.

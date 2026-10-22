@@ -29,6 +29,10 @@
       "types": "./scripts/derive-border-tier.d.mts",
       "default": "./scripts/derive-border-tier.mjs"
     },
+    "./scripts/spring.mjs": {
+      "types": "./scripts/spring.d.mts",
+      "default": "./scripts/spring.mjs"
+    },
     "./themes": {
       "types": "./themes.ts",
       "import": "./themes.ts"
@@ -42,6 +46,8 @@
     "scripts/css-var-name.d.mts",
     "scripts/derive-border-tier.mjs",
     "scripts/derive-border-tier.d.mts",
+    "scripts/spring.mjs",
+    "scripts/spring.d.mts",
     "themes.ts",
     "style-dictionary.config.mjs"
   ],

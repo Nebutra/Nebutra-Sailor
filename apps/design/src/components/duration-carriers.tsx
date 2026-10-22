@@ -68,13 +68,13 @@ function Carrier({
   return (
     <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] bg-card p-5 shadow-ambient-sm">
       <div className="flex items-baseline justify-between gap-3">
-        <code className="font-mono text-[12px] text-foreground">--{token}</code>
-        <code className="font-mono text-[12px] text-muted-foreground tabular-nums">{value}</code>
+        <code className="font-mono text-xs text-foreground">--{token}</code>
+        <code className="font-mono text-xs text-muted-foreground tabular-nums">{value}</code>
       </div>
       <div className="flex min-h-[104px] items-center justify-center overflow-hidden">
         {children}
       </div>
-      <p className="text-[12px] text-muted-foreground leading-snug">{job}</p>
+      <p className="text-xs text-muted-foreground leading-snug">{job}</p>
     </div>
   );
 }
@@ -111,7 +111,7 @@ export function DurationCarriers() {
         value="200ms"
       >
         <div className="relative w-full max-w-[180px]">
-          <div className="flex rounded-[var(--radius-md)] bg-muted p-1 text-[12px]">
+          <div className="flex rounded-[var(--radius-md)] bg-muted p-1 text-xs">
             <span className="relative z-10 flex-1 py-1 text-center text-foreground">Overview</span>
             <span className="relative z-10 flex-1 py-1 text-center text-muted-foreground">
               Logs
@@ -135,7 +135,7 @@ export function DurationCarriers() {
         value="300ms"
       >
         <div className="w-full max-w-[200px] overflow-hidden rounded-[var(--radius-md)] bg-muted/60">
-          <div className="flex items-center justify-between px-3 py-2 text-[12px] text-foreground">
+          <div className="flex items-center justify-between px-3 py-2 text-xs text-foreground">
             Build settings
             <ChevronDown
               className="size-3.5 transition-transform ease-out"
@@ -153,7 +153,7 @@ export function DurationCarriers() {
             }}
           >
             <div className="overflow-hidden">
-              <div className="px-3 pb-2 text-[11px] text-muted-foreground">
+              <div className="px-3 pb-2 text-2xs text-muted-foreground">
                 Framework preset, root directory, install command.
               </div>
             </div>
@@ -181,7 +181,7 @@ export function DurationCarriers() {
             <StatusDot label state="READY" />
             <Badge variant="success">live</Badge>
           </div>
-          <span className="text-[12px] text-foreground">sailor-web deployed</span>
+          <span className="text-xs text-foreground">sailor-web deployed</span>
         </div>
       </Carrier>
     </div>

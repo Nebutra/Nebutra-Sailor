@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "excluded": {
+    "directories": [
+      "node_modules",
+      ".next",
+      ".turbo",
+      ".source",
+      ".vercel",
+      "dist",
+      "build",
+      "out",
+      "coverage",
+      "storybook-static",
+      "__tests__",
+      "__mocks__"
+    ],
+    "files": [
+      ".test.tsx",
+      ".spec.tsx",
+      ".stories.tsx",
+      ".d.tsx"
+    ]
+  },
+  "totals": {
+    "apps": 19,
+    "tsxFiles": 1113,
+    "uiFiles": 645,
+    "uiRatio": 0.5795,
+    "hardcodedHex": 95,
+    "arbitraryFontSizes": 877
+  },
+  "apps": [
+    {
+      "name": "admin",
+      "status": "foundation",
+      "graph": "core",
+      "tsxFiles": 21,
+      "uiFiles": 13,
+      "uiRatio": 0.619,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "auth",
+      "status": "foundation",
+      "graph": "core",
+      "tsxFiles": 25,
+      "uiFiles": 11,
+      "uiRatio": 0.44,
+      "hardcodedHex": 1,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "design",
+      "status": "wip",
+      "graph": "labs",
+      "tsxFiles": 132,
+      "uiFiles": 90,
+      "uiRatio": 0.6818,
+      "hardcodedHex": 6,
+      "arbitraryFontSizes": 109
+    },
+    {
+      "name": "forge",
+      "status": "wip",
+      "graph": "labs",
+      "tsxFiles": 93,
+      "uiFiles": 69,
+      "uiRatio": 0.7419,
+      "hardcodedHex": 25,
+      "arbitraryFontSizes": 36
+    },
+    {
+      "name": "idp",
+      "status": "foundation",
+      "graph": "core",
+      "tsxFiles": 9,
+      "uiFiles": 3,
+      "uiRatio": 0.3333,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "kcq",
+      "status": "labs",
+      "graph": "product",
+      "tsxFiles": 4,
+      "uiFiles": 4,
+      "uiRatio": 1,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "kcq-docs",
+      "status": "labs",
+      "graph": "product",
+      "tsxFiles": 19,
+      "uiFiles": 0,
+      "uiRatio": 0,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "kuanlan",
+      "status": "wip",
+      "graph": "labs",
+      "tsxFiles": 22,
+      "uiFiles": 0,
+      "uiRatio": 0,
+      "hardcodedHex": 6,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "landing",
+      "status": "foundation",
+      "graph": "core",
+      "tsxFiles": 334,
+      "uiFiles": 215,
+      "uiRatio": 0.6437,
+      "hardcodedHex": 36,
+      "arbitraryFontSizes": 667
+    },
+    {
+      "name": "mail-preview",
+      "status": "foundation",
+      "graph": "core",
+      "tsxFiles": 10,
+      "uiFiles": 4,
+      "uiRatio": 0.4,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 3
+    },
+    {
+      "name": "para",
+      "status": "wip",
+      "graph": "labs",
+      "tsxFiles": 54,
+      "uiFiles": 24,
+      "uiRatio": 0.4444,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "pebble",
+      "status": "wip",
+      "graph": "labs",
+      "tsxFiles": 14,
+      "uiFiles": 0,
+      "uiRatio": 0,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "router",
+      "status": "wip",
+      "graph": "labs",
+      "tsxFiles": 39,
+      "uiFiles": 24,
+      "uiRatio": 0.6154,
+      "hardcodedHex": 13,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "sailor-docs",
+      "status": "foundation",
+      "graph": "core",
+      "tsxFiles": 24,
+      "uiFiles": 7,
+      "uiRatio": 0.2917,
+      "hardcodedHex": 3,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "sleptons",
+      "status": "wip",
+      "graph": "labs",
+      "tsxFiles": 19,
+      "uiFiles": 8,
+      "uiRatio": 0.4211,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 2
+    },
+    {
+      "name": "storybook",
+      "status": "foundation",
+      "graph": "core",
+      "tsxFiles": 6,
+      "uiFiles": 0,
+      "uiRatio": 0,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "studio",
+      "status": "foundation",
+      "graph": "core",
+      "tsxFiles": 0,
+      "uiFiles": 0,
+      "uiRatio": null,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 0
+    },
+    {
+      "name": "typelens",
+      "status": "wip",
+      "graph": "labs",
+      "tsxFiles": 21,
+      "uiFiles": 3,
+      "uiRatio": 0.1429,
+      "hardcodedHex": 0,
+      "arbitraryFontSizes": 22
+    },
+    {
+      "name": "web",
+      "status": "foundation",
+      "graph": "core",
+      "tsxFiles": 267,
+      "uiFiles": 170,
+      "uiRatio": 0.6367,
+      "hardcodedHex": 5,
+      "arbitraryFontSizes": 38
+    }
+  ]
+}

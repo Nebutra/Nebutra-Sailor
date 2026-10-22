@@ -31,6 +31,7 @@ export default function InputDemo({ derived }: DemoProps) {
     <DemoPage>
       <State
         breaks="A field that renders without a label. Input's types make label and id co-required: supplying one without the other is a type error, not a runtime surprise."
+        code={`<Input id="email" label="Email" placeholder="you@example.com" type="email" />`}
         id="default"
         note="The labelled form. label and id are co-required at the type level."
         title="Default"
@@ -42,6 +43,9 @@ export default function InputDemo({ derived }: DemoProps) {
 
       <State
         breaks="A size whose height stops matching the control-height token, which is what keeps an input aligned with a same-size Button."
+        code={`<Input size="sm" />
+<Input size="md" />
+<Input size="lg" />`}
         id="sizes"
         note="Sizes come from the InputSize union in tokens/components/input.ts, not from a cva map."
         title="Sizes"
@@ -61,6 +65,12 @@ export default function InputDemo({ derived }: DemoProps) {
 
       <State
         breaks="An inline error that changes the field height and shoves the rest of the form down. Toggle error and watch whether anything below moves."
+        code={`<Input
+  description="We only use this for receipts."
+  error="Enter an address like name@company.com"
+  id="email"
+  label="Email"
+/>`}
         id="error"
         note="error takes a string or a boolean. A boolean marks the control invalid; a string also renders the message and wires aria-describedby."
         title="Error and description"
@@ -103,6 +113,7 @@ export default function InputDemo({ derived }: DemoProps) {
 
       <State
         breaks="A spinner that disables the field. loading is for async validation — the user must be able to keep typing while it resolves."
+        code={`<Input id="slug" label="Project slug" loading />`}
         id="loading"
         note="loading shows a spinner on the right and leaves the control interactive."
         title="Loading"
@@ -125,6 +136,7 @@ export default function InputDemo({ derived }: DemoProps) {
 
       <State
         breaks="A search field where the clear button appears over the suffix, or where Escape does not clear. Type into it, then press Escape."
+        code={`<Input clearable prefix={<MagnifyingGlass />} shortcut="⌘K" />`}
         id="affixes"
         note="prefix and suffix are decorative. clearable and shortcut render real controls on the right and take priority over suffix."
         title="Affixes, clear and shortcut"
