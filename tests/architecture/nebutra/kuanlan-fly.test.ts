@@ -12,4 +12,14 @@ describe("retired Kuanlan Fly surface", () => {
     expect(fly).not.toContain('"host":"kuanlan"');
     expect(fly).not.toContain("apps/kuanlan/**");
   });
+
+  it("does not remain in the Cloud VM deploy either", () => {
+    // Retiring the Fly app left deploy-ecs.yml building kuanlan onto the VM
+    // whenever pnpm-lock.yaml changed, then failing the run on a smoke test
+    // against a host whose DNS was already gone.
+    // Case-sensitive on purpose: the KUANLAN_* secrets are still forwarded
+    // through the shared runtime-env list; this guards the app, not them.
+    const ecs = readFileSync(resolve(ROOT, ".github/workflows/deploy-ecs.yml"), "utf-8");
+    expect(ecs).not.toMatch(/kuanlan/);
+  });
 });
