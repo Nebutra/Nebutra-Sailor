@@ -5319,6 +5319,153 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/v1/billing/self-service": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Billing page state: readiness, live methods, current plan, offers */
+    get: {
+      parameters: {
+        query?: {
+          product?: string;
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description What the billing page shows */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              provider: string;
+              /** @enum {string} */
+              status: "disabled" | "degraded" | "ready";
+              title: string;
+              description: string;
+              missing: string[];
+              methods: {
+                /** @enum {string} */
+                id: "card" | "alipay" | "wechat";
+                /** @enum {string} */
+                currency: "USD" | "CNY";
+              }[];
+              product: string;
+              plan: {
+                tier: string;
+                product: string;
+                endsAt: string;
+              } | null;
+              offers: {
+                id: string;
+                product: string;
+                /** @enum {string} */
+                account: "personal" | "organization" | "workspace";
+                kind: string;
+                grants: {
+                  credits?: number;
+                  tier?: string;
+                  days?: number;
+                  monthlyCredits?: number;
+                  expiresInDays?: number;
+                };
+                name: string;
+                prices?: {
+                  USD?: number;
+                  CNY?: number;
+                };
+                customAmount?: {
+                  USD?: {
+                    min: number;
+                    max: number;
+                  };
+                  CNY?: {
+                    min: number;
+                    max: number;
+                  };
+                };
+                highlight?: string;
+              }[];
+            };
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/billing/orders/{id}/verify": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /** Ask the payment provider about a pending order and settle it if paid */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Order status after the check */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              id: string;
+              offerId: string;
+              /** @enum {string} */
+              status: "PENDING" | "PAID" | "PARTIALLY_REFUNDED" | "REFUNDED" | "EXPIRED";
+              fulfilled: boolean;
+              amountMinor: number;
+              currency: string;
+              method: string;
+              createdAt: string;
+            };
+          };
+        };
+        /** @description No such order for this buyer */
+        404: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": {
+              error: string;
+              code?: string;
+            };
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/v1/notifications": {
     parameters: {
       query?: never;
