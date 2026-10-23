@@ -102,10 +102,20 @@ function runCoverage(flags) {
     }
 
     console.log(`::group::Coverage gate: ${pkg.name}`);
-    const result = spawnSync("pnpm", ["--filter", pkg.name, "run", "test:coverage"], {
+    // Workspace dependencies resolve through their built dist/ exports
+    // (e.g. @nebutra/theme/languages), and this job starts from a clean
+    // checkout, so build the package's dependency closure first.
+    const build = spawnSync("pnpm", ["turbo", "run", "build", `--filter=${pkg.name}^...`], {
       stdio: "inherit",
-      env: { ...process.env, CI: "true" },
+      env: { ...process.env, SKIP_ENV_VALIDATION: "true" },
     });
+    const result =
+      build.status === 0
+        ? spawnSync("pnpm", ["--filter", pkg.name, "run", "test:coverage"], {
+            stdio: "inherit",
+            env: { ...process.env, CI: "true" },
+          })
+        : build;
     console.log("::endgroup::");
 
     const status = result.status ?? 1;
@@ -113,7 +123,12 @@ function runCoverage(flags) {
       ...pkg,
       state: status === 0 ? "passed" : "failed",
       exitCode: status,
-      reason: status === 0 ? "threshold satisfied" : "coverage threshold or test command failed",
+      reason:
+        status === 0
+          ? "threshold satisfied"
+          : build.status === 0
+            ? "coverage threshold or test command failed"
+            : "dependency build failed",
     });
   }
 
