@@ -284,10 +284,10 @@ export const config = {
     // tests/architecture/seo-locale-closure.test.ts, which asserts this
     // alternation === ROUTE_LOCALES ∪ the legacy prefixes that need redirects.
     "/:locale(en|zh-Hans|zh-Hant|zh|de|es|fr|ja|ko|pt|it|nl|sv|da|fi|no|pl|cs|ro|hu|el|ru|uk|tr|ar|he|fa|hi|bn|ur|th|vi|id|ms|sw)/docs/:path*",
-    // Generated metadata images (app/icon, apple-icon, opengraph-image,
+    // Generated metadata images (app/icon, opengraph-image,
     // twitter-image — at the root or under a route) are files, not pages: the
     // locale rewrite turned the root ones into 404s.
-    "/((?!api|trpc|_next|_vercel|(?:.*/)?(?:opengraph-image|twitter-image|apple-icon|icon)(?:$|/)|.*\\..*).*)",
+    "/((?!api|trpc|_next|_vercel|(?:.*/)?(?:opengraph-image|twitter-image|icon)(?:$|/)|.*\\..*).*)",
     // Release pages are named by version ("/changelog/1.7"), and the catch-all
     // above skips any path with a dot as a file — so the canonical,
     // unprefixed URL of every release never reached the locale rewrite and

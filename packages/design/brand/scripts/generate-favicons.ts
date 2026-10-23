@@ -1,14 +1,19 @@
 #!/usr/bin/env tsx
 
 /**
- * Generate favicon set from logo-inverse.svg using @resvg/resvg-wasm + sharp.
+ * Generate the favicon set from the colour logo symbol (assets/logo/logo-color.svg).
  *
  * Produces (under assetsDir/favicon/):
- *   favicon.svg          — monochrome logomark SVG (recolored for browser tab)
- *   favicon.ico          — multi-size ICO (16 + 32 + 48 px, from PNG via manual ICO write)
- *   apple-touch-icon.png — 180×180 rounded PNG via sharp
- *   android-chrome-192x192.png — 192×192 PNG via resvg-wasm
- *   android-chrome-512x512.png — 512×512 PNG via resvg-wasm
+ *   favicon.svg                — the symbol, transparent, as an SVG wrapper around a 128px render
+ *   favicon.ico                — 16 + 32 + 48 px, transparent, symbol only
+ *   apple-touch-icon.png       — 180×180 on paper white (iOS flattens transparency to black)
+ *   android-chrome-192x192.png — 192×192 on paper white, symbol inside the maskable safe zone
+ *   android-chrome-512x512.png — 512×512, same
+ *
+ * The source is the colour symbol, never logo-inverse/logo-mono: those are white or black
+ * ink on a transparent ground, so an icon drawn from them is blank or the wrong colour.
+ * The symbol's two counters (the slanted openings of the N) are left as the artwork draws them:
+ * transparent. Nothing is painted into them; the opaque icons simply sit on a paper-white tile.
  *
  * Wordmark geometry CANNOT be auto-generated from a name — recolor only.
  * Operators supply replacement wordmark SVGs via brand.config/assets/logo/ →
@@ -18,7 +23,6 @@
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -35,66 +39,11 @@ function warn(msg: string): void {
   process.stderr.write(`  ⚠ ${msg}\n`);
 }
 
-async function toSquarePngCanvas(png: Buffer, size: number): Promise<Buffer> {
-  try {
-    const { default: sharpFn } = (await import("sharp")) as unknown as {
-      default: (input: Buffer) => import("sharp").Sharp;
-    };
+type SharpFn = (input: Buffer, options?: { density?: number }) => import("sharp").Sharp;
 
-    return await sharpFn(png)
-      .resize(size, size, {
-        background: { r: 0, g: 0, b: 0, alpha: 0 },
-        fit: "contain",
-      })
-      .png()
-      .toBuffer();
-  } catch (err) {
-    warn(`square PNG canvas failed (size=${size}): ${String(err)} — keeping rendered dimensions`);
-    return png;
-  }
-}
-
-/**
- * Render an SVG string to a PNG Buffer at the given width using @resvg/resvg-wasm.
- * Returns null on failure (caller falls back gracefully).
- */
-async function svgToPng(svgStr: string, width: number): Promise<Buffer | null> {
-  try {
-    // resvg-wasm is a named import from the package
-    const wasmPkg = await import("@resvg/resvg-wasm");
-    const { Resvg, initWasm } = wasmPkg;
-
-    // Resolve the wasm file — the package exports ./index_bg.wasm as a subpath.
-    // We use createRequire to get the package directory without relying on
-    // the unexported ./package.json subpath.
-    const require = createRequire(import.meta.url);
-    // Resolve the main entry to find the package location.
-    const mainEntry = require.resolve("@resvg/resvg-wasm");
-    const wasmPath = join(dirname(mainEntry), "index_bg.wasm");
-
-    if (!existsSync(wasmPath)) {
-      warn(`resvg-wasm WASM not found at ${wasmPath} — skipping PNG generation`);
-      return null;
-    }
-
-    // initWasm is idempotent across multiple calls in the same process.
-    try {
-      const wasmBuf = readFileSync(wasmPath);
-      await initWasm(wasmBuf);
-    } catch (_initErr) {
-      // Already initialised — safe to ignore "already been initialized" errors.
-    }
-
-    const resvg = new Resvg(svgStr, {
-      fitTo: { mode: "width", value: width },
-    });
-    const rendered = resvg.render();
-    const pngBytes = rendered.asPng();
-    return await toSquarePngCanvas(Buffer.from(pngBytes), width);
-  } catch (err) {
-    warn(`SVG→PNG failed (width=${width}): ${String(err)}`);
-    return null;
-  }
+async function loadSharp(): Promise<SharpFn> {
+  const { default: sharpFn } = (await import("sharp")) as unknown as { default: SharpFn };
+  return sharpFn;
 }
 
 /**
@@ -154,126 +103,92 @@ function buildIco(pngs: Array<{ png: Buffer; size: number }>): Buffer {
 
 // ─── main export ──────────────────────────────────────────────────────────────
 
+const PAPER = "#ffffff";
+
+interface TileOptions {
+  /** Edge of the square canvas, in px. */
+  size: number;
+  /** The symbol's width as a share of the canvas. */
+  fill: number;
+  /** Paint the canvas paper white; otherwise it is transparent. */
+  paper: boolean;
+}
+
+/** The symbol centred on a square canvas. */
+async function renderTile(svg: string, { size, fill, paper }: TileOptions): Promise<Buffer> {
+  const sharpFn = await loadSharp();
+  const width = Math.round(size * fill);
+  // Render well above the target so the facets' gradients stay smooth after downscaling.
+  const symbol = await sharpFn(Buffer.from(svg), { density: 300 })
+    .resize({ width, height: width, fit: "inside" })
+    .png()
+    .toBuffer();
+  const { width: w = width, height: h = width } = await sharpFn(symbol).metadata();
+  const tile = sharpFn(symbol).extend({
+    background: paper ? PAPER : { r: 0, g: 0, b: 0, alpha: 0 },
+    bottom: size - h - Math.floor((size - h) / 2),
+    left: Math.floor((size - w) / 2),
+    right: size - w - Math.floor((size - w) / 2),
+    top: Math.floor((size - h) / 2),
+  });
+  // The artwork is transparent between its facets; an opaque tile must be flat paper.
+  return (paper ? tile.flatten({ background: PAPER }) : tile).png().toBuffer();
+}
+
 /**
- * Generate the favicon set from the brand logo SVG.
+ * Generate the favicon set from the colour logo symbol.
  *
  * @param assetsDir  Absolute path to packages/design/brand/assets
  */
 export async function generateFavicons(assetsDir: string): Promise<void> {
   const faviconDir = join(assetsDir, "favicon");
-  const logoInversePath = join(assetsDir, "logo", "logo-inverse.svg");
+  const logoColorPath = join(assetsDir, "logo", "logo-color.svg");
 
-  if (!existsSync(logoInversePath)) {
-    warn(`logo-inverse.svg not found at ${logoInversePath} — skipping favicon generation`);
+  if (!existsSync(logoColorPath)) {
+    warn(`logo-color.svg not found at ${logoColorPath} — skipping favicon generation`);
     return;
   }
 
   mkdirSync(faviconDir, { recursive: true });
 
-  const svgSource = readFileSync(logoInversePath, "utf-8");
+  const svg = readFileSync(logoColorPath, "utf-8");
 
-  // ── 1. favicon.svg — monochrome logomark for browser tab ──────────────────
-  // The logomark is already white-on-transparent; write a minimal monochrome
-  // copy that adds a black background for light-theme browser tabs.
-  const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535.71 500" width="32" height="32"><rect width="535.71" height="500" fill="#020617" rx="80"/>${svgSource
-    .replace(/<\?xml[^>]*\?>/g, "")
-    .replace(/<!-- [^>]* -->/g, "")
-    .replace(/<svg[^>]*>/g, "")
-    .replace(/<\/svg>/g, "")
-    .trim()}</svg>`;
+  // ── 1. favicon.svg — the symbol itself is raster-backed artwork, so wrap a render ──
+  const svgPng = await renderTile(svg, { size: 128, fill: 1, paper: false });
+  const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32"><image width="64" height="64" href="data:image/png;base64,${svgPng.toString("base64")}"/></svg>`;
   writeFileSync(join(faviconDir, "favicon.svg"), faviconSvg, "utf-8");
   log("favicon.svg");
 
-  // ── 2. android-chrome-192x192.png & android-chrome-512x512.png ────────────
-  const png192 = await svgToPng(svgSource, 192);
-  const png512 = await svgToPng(svgSource, 512);
+  // ── 2. android-chrome — maskable, so the symbol stays inside the 80% safe zone ──
+  writeFileSync(
+    join(faviconDir, "android-chrome-192x192.png"),
+    await renderTile(svg, { size: 192, fill: 0.6, paper: true }),
+  );
+  log("android-chrome-192x192.png");
+  writeFileSync(
+    join(faviconDir, "android-chrome-512x512.png"),
+    await renderTile(svg, { size: 512, fill: 0.6, paper: true }),
+  );
+  log("android-chrome-512x512.png");
 
-  if (png192) {
-    writeFileSync(join(faviconDir, "android-chrome-192x192.png"), png192);
-    log("android-chrome-192x192.png");
-  } else {
-    warn("android-chrome-192x192.png skipped — resvg-wasm unavailable; keeping existing file");
-    // Leave existing file in place — same pattern as favicon.ico fallback.
-    // Writing Buffer.alloc(0) would produce a corrupt zero-byte PNG that breaks
-    // Next.js manifest, PWA install, and Lighthouse audits.
-  }
+  // ── 3. apple-touch-icon.png — square and opaque; iOS rounds the corners itself ──
+  writeFileSync(
+    join(faviconDir, "apple-touch-icon.png"),
+    await renderTile(svg, { size: 180, fill: 0.66, paper: true }),
+  );
+  log("apple-touch-icon.png (180×180)");
 
-  if (png512) {
-    writeFileSync(join(faviconDir, "android-chrome-512x512.png"), png512);
-    log("android-chrome-512x512.png");
-  } else {
-    warn("android-chrome-512x512.png skipped — resvg-wasm unavailable; keeping existing file");
-    // Leave existing file in place — same pattern as favicon.ico fallback.
-  }
-
-  // ── 3. apple-touch-icon.png — 180×180 rounded corners via sharp ───────────
-  const pngForApple = png512 ?? png192;
-  if (pngForApple) {
-    try {
-      // sharp is a devDep of @nebutra/brand — imported dynamically to avoid
-      // bundling in the dist (this script is only run at brand:apply time).
-      // sharp uses `export = sharp` (CJS-style). With esModuleInterop + bundler
-      // resolution the default import works correctly at runtime.
-      const { default: sharpFn } = (await import("sharp")) as unknown as {
-        default: (input: Buffer) => import("sharp").Sharp;
-      };
-
-      // Resize to 180×180 with rounded corners
-      const size = 180;
-      const cornerRadius = 40;
-      const roundedSvgMask = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}"><rect width="${size}" height="${size}" rx="${cornerRadius}" ry="${cornerRadius}" fill="white"/></svg>`;
-
-      const appleBuffer = await sharpFn(pngForApple)
-        .resize(size, size)
-        .composite([{ input: Buffer.from(roundedSvgMask), blend: "dest-in" }])
-        .png()
-        .toBuffer();
-
-      writeFileSync(join(faviconDir, "apple-touch-icon.png"), appleBuffer);
-      log("apple-touch-icon.png (rounded 180×180 via sharp)");
-    } catch (_sharpErr) {
-      // Fallback: flat PNG without rounded corners
-      warn("sharp failed — falling back to flat PNG for apple-touch-icon");
-      try {
-        const { default: sharpFn2 } = (await import("sharp")) as unknown as {
-          default: (input: Buffer) => import("sharp").Sharp;
-        };
-        const appleBuffer = await sharpFn2(pngForApple).resize(180, 180).png().toBuffer();
-        writeFileSync(join(faviconDir, "apple-touch-icon.png"), appleBuffer);
-        log("apple-touch-icon.png (flat 180×180)");
-      } catch (_fallbackErr) {
-        warn("apple-touch-icon.png skipped — sharp unavailable");
-        writeFileSync(join(faviconDir, "apple-touch-icon.png"), pngForApple);
-      }
-    }
-  } else {
-    warn("apple-touch-icon.png skipped — no PNG source available; keeping existing file");
-    // Leave existing file in place — writing Buffer.alloc(0) would produce a
-    // corrupt zero-byte PNG that breaks PWA install and Lighthouse audits.
-  }
-
-  // ── 4. favicon.ico — 16+32+48 multi-size ICO ─────────────────────────────
-  const png16 = await svgToPng(svgSource, 16);
-  const png32 = await svgToPng(svgSource, 32);
-  const png48 = await svgToPng(svgSource, 48);
-
-  if (png16 && png32 && png48) {
-    const icoBuffer = buildIco([
-      { png: png16, size: 16 },
-      { png: png32, size: 32 },
-      { png: png48, size: 48 },
-    ]);
-    writeFileSync(join(faviconDir, "favicon.ico"), icoBuffer);
-    log("favicon.ico (16+32+48 multi-size)");
-  } else if (png32) {
-    // Partial fallback: single-size ICO
-    const icoBuffer = buildIco([{ png: png32, size: 32 }]);
-    writeFileSync(join(faviconDir, "favicon.ico"), icoBuffer);
-    warn("favicon.ico generated as single-size (32px only) — some sizes unavailable");
-  } else {
-    warn("favicon.ico skipped — resvg-wasm unavailable; keeping existing file");
-    // Leave existing favicon.ico in place (not writing an empty file)
-  }
+  // ── 4. favicon.ico — 16+32+48, symbol only, as large as the tab allows ──
+  const ico = buildIco(
+    await Promise.all(
+      [16, 32, 48].map(async (size) => ({
+        png: await renderTile(svg, { size, fill: 0.96, paper: false }),
+        size,
+      })),
+    ),
+  );
+  writeFileSync(join(faviconDir, "favicon.ico"), ico);
+  log("favicon.ico (16+32+48 multi-size)");
 }
 
 // ─── text-wordmark brands: the icon set from the brand's initial ─────────────

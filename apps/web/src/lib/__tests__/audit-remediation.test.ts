@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -59,14 +59,27 @@ describe("UI/UX audit remediation invariants", () => {
     expect(brandIndex).toContain("brandMotion");
   });
 
-  it("keeps app icons aligned with Nebutra blue-cyan gradient", () => {
-    const appleIcon = readFromRepo("apps/landing/src/app/apple-icon.tsx");
-
-    // Satori cannot resolve CSS var(); icons use brand metadata gradient SSOT.
-    expect(appleIcon).toContain("colors.gradient.primary");
-    expect(appleIcon).toContain('from "@nebutra/brand/metadata"');
-    expect(appleIcon).not.toContain("#3B82F6");
-    expect(appleIcon).not.toContain("#8B5CF6");
+  it("draws no stand-in icon: the home-screen icon is the logo symbol file", () => {
+    // A route that renders the brand initial on a gradient is what search engines
+    // showed as the site icon. The icon is the static colour-symbol file instead.
+    for (const route of ["apple-icon.tsx", "apple-icon.for-template.tsx", "icon.tsx"]) {
+      expect(
+        existsSync(
+          path.join(path.resolve(process.cwd(), "..", ".."), "apps/landing/src/app", route),
+        ),
+        route,
+      ).toBe(false);
+    }
+    const layout = readFromRepo("apps/landing/src/app/layout.tsx");
+    expect(layout).toContain("/apple-touch-icon.png");
+    expect(
+      existsSync(
+        path.join(
+          path.resolve(process.cwd(), "..", ".."),
+          "apps/landing/public/apple-touch-icon.png",
+        ),
+      ),
+    ).toBe(true);
   });
 
   it("keeps Twitter OG dimensions and branding consistent with OpenGraph", () => {

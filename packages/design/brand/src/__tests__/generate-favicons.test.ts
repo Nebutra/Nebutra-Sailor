@@ -35,15 +35,15 @@ describe("generateFavicons", { timeout: 30_000 }, () => {
   let tmpAssetsDir: string;
 
   beforeEach(() => {
-    // Create a temp assets dir with a copy of logo-inverse.svg
+    // Create a temp assets dir with a copy of the colour symbol
     tmpAssetsDir = join(tmpdir(), `brand-favicon-test-${Date.now()}`);
     const logoDir = join(tmpAssetsDir, "logo");
     mkdirSync(logoDir, { recursive: true });
 
-    // Copy real logo-inverse.svg into the temp dir
-    const realLogoPath = join(brandAssetsDir, "logo/logo-inverse.svg");
+    // Copy the real colour symbol into the temp dir
+    const realLogoPath = join(brandAssetsDir, "logo/logo-color.svg");
     if (existsSync(realLogoPath)) {
-      copyFileSync(realLogoPath, join(logoDir, "logo-inverse.svg"));
+      copyFileSync(realLogoPath, join(logoDir, "logo-color.svg"));
     }
   });
 
@@ -121,13 +121,35 @@ describe("generateFavicons", { timeout: 30_000 }, () => {
     expect(existsSync(svgPath), "favicon.svg must exist").toBe(true);
 
     const content = readFileSync(svgPath, "utf-8").trim();
-    expect(
-      content.startsWith("<svg"),
-      "favicon.svg must start with <svg (monochrome logomark SVG)",
-    ).toBe(true);
+    expect(content.startsWith("<svg"), "favicon.svg must start with <svg").toBe(true);
   });
 
-  it("skips gracefully when logo-inverse.svg is missing", async () => {
+  it("draws the colour symbol, not a letter or a blank mark", async () => {
+    await generateFavicons(tmpAssetsDir);
+    const sharpFn = (await import("sharp")).default;
+
+    // The opaque icons are flat paper at the corners and carry the symbol's blue in the middle.
+    for (const name of ["apple-touch-icon.png", "android-chrome-512x512.png"]) {
+      const { data, info } = await sharpFn(join(tmpAssetsDir, "favicon", name))
+        .raw()
+        .toBuffer({ resolveWithObject: true });
+      const at = (x: number, y: number) => {
+        const i = (y * info.width + x) * info.channels;
+        return [data[i], data[i + 1], data[i + 2], data[i + 3]] as const;
+      };
+      expect(at(1, 1), `${name} corner must be opaque paper white`).toEqual([255, 255, 255, 255]);
+      let blue = 0;
+      for (let y = 0; y < info.height; y++) {
+        for (let x = 0; x < info.width; x++) {
+          const [r, , b] = at(x, y);
+          if (b > 180 && r < 80) blue++;
+        }
+      }
+      expect(blue, `${name} must show the blue symbol`).toBeGreaterThan(info.width ** 2 * 0.1);
+    }
+  });
+
+  it("skips gracefully when logo-color.svg is missing", async () => {
     // Remove the logo dir entirely
     rmSync(join(tmpAssetsDir, "logo"), { recursive: true, force: true });
 

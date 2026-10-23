@@ -188,7 +188,6 @@ const BRAND_LITERALS_BASELINE_ALLOWLIST = [
   "apps/landing/src/app/api/blog/comments/route.ts",
   "apps/landing/src/app/api/blog/reactions/route.ts",
   "apps/landing/src/app/api/og/route.ts",
-  "apps/landing/src/app/apple-icon.tsx",
   "apps/landing/src/components/auth/google-one-tap.tsx",
   "apps/landing/src/components/cookie-consent-banner.tsx",
   "apps/landing/src/i18n/request.ts",
