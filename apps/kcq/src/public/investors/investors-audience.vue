@@ -1,11 +1,12 @@
 <!--
   Who we build for (research §4.6): the shape of the market without a TAM slide. Four kinds of
   team, each with one concrete thing they would build; archetypes, not customers, so no logos.
-  The section grammar: heading, then the list on a hairline.
+  The section grammar (components/page-section.vue): heading, then the list on a hairline.
 -->
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import PageSection from "../components/page-section.vue";
 
 const { t, tm } = useI18n();
 const items = computed(() =>
@@ -16,22 +17,16 @@ const items = computed(() =>
 );
 </script>
 <template>
-  <section id="audience" class="band audience" aria-labelledby="audience-heading">
-    <div class="container">
-      <h2 id="audience-heading" class="t-heading audience-heading">{{ t("investors.audience.heading") }}</h2>
-      <ul class="audience-list section-artifact">
-        <li v-for="item in items" :key="item.title" class="audience-item">
-          <h3 class="t-title">{{ item.title }}</h3>
-          <p class="t-copy">{{ item.body }}</p>
-        </li>
-      </ul>
-    </div>
-  </section>
+  <PageSection id="audience" :heading="t('investors.audience.heading')">
+    <ul class="audience-list">
+      <li v-for="item in items" :key="item.title" class="audience-item">
+        <h3 class="t-title">{{ item.title }}</h3>
+        <p class="t-copy">{{ item.body }}</p>
+      </li>
+    </ul>
+  </PageSection>
 </template>
 <style scoped>
-.audience-heading {
-  max-width: 40rem;
-}
 .audience-list {
   display: grid;
   gap: 0 var(--kcq-column-gap);

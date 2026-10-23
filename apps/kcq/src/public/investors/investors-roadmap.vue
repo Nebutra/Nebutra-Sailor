@@ -5,6 +5,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import PageSection from "../components/page-section.vue";
 
 const { t, tm } = useI18n();
 const items = computed(() =>
@@ -15,40 +16,29 @@ const items = computed(() =>
 );
 </script>
 <template>
-  <section id="roadmap" class="band roadmap" aria-labelledby="roadmap-heading">
-    <div class="container">
-      <div class="section-head">
-        <h2 id="roadmap-heading" class="t-heading">{{ t("investors.roadmap.heading") }}</h2>
-      </div>
-      <ol class="road">
-        <li
-          v-for="(item, index) in items"
-          :key="item.when"
-          class="stop"
-          :aria-current="index === 0 ? 'step' : undefined"
-        >
-          <span class="stop-node" aria-hidden="true" />
-          <p class="stop-when">
-            <span class="t-title">{{ item.when }}</span>
-            <span v-if="index === 0" class="stop-here t-meta">{{ t("investors.roadmap.here") }}</span>
-          </p>
-          <p class="t-copy">{{ item.body }}</p>
-        </li>
-      </ol>
-    </div>
-  </section>
+  <PageSection id="roadmap" :heading="t('investors.roadmap.heading')">
+    <ol class="road">
+      <li
+        v-for="(item, index) in items"
+        :key="item.when"
+        class="stop"
+        :aria-current="index === 0 ? 'step' : undefined"
+      >
+        <span class="stop-node" aria-hidden="true" />
+        <p class="stop-when">
+          <span class="t-title">{{ item.when }}</span>
+          <span v-if="index === 0" class="stop-here t-meta">{{ t("investors.roadmap.here") }}</span>
+        </p>
+        <p class="t-copy">{{ item.body }}</p>
+      </li>
+    </ol>
+  </PageSection>
 </template>
 <style scoped>
 .road {
   position: relative;
   display: grid;
   gap: var(--klc-space-32);
-  margin-top: var(--klc-space-48);
-}
-@media (min-width: 1024px) {
-  .road {
-    margin-top: var(--klc-space-64);
-  }
 }
 .stop {
   position: relative;

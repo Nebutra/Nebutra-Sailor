@@ -41,7 +41,7 @@ const { stop } = useIntersectionObserver(
 );
 </script>
 <template>
-  <figure ref="frame" class="shot product-frame section-artifact">
+  <figure ref="frame" class="shot product-frame">
     <template v-if="near">
       <img
         v-for="capture in CAPTURES"

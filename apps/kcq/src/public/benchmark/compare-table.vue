@@ -1,5 +1,5 @@
 <!--
-  Every scenario of the run as a table, collapsed under the figure: the figure's main-thread time
+  Every scenario of the run as a table, inside the page's fine print: the figure's main-thread time
   plus the in-page frame-work percentiles and dropped frames, tier by tier in the figure's order.
   The same numbers as the CSV download.
 -->
@@ -23,68 +23,37 @@ const percent = (value: number) =>
   value.toLocaleString(PUBLIC_LOCALES[locale.value].htmlLang, { style: "percent", maximumFractionDigits: 1 });
 </script>
 <template>
-  <details class="compare-table">
-    <summary class="t-label">{{ t("benchmark.table.summary", { count: COMPARE_RUN.scenarios.length }) }}</summary>
-    <div class="table-scroll">
-      <table class="t-copy t-num">
-        <thead>
-          <tr>
-            <th scope="col">{{ t("benchmark.table.library") }}</th>
-            <th scope="col">{{ t("benchmark.table.renderer") }}</th>
-            <th scope="col" class="number">{{ t("benchmark.table.bars") }}</th>
-            <th scope="col" class="number">{{ t("benchmark.table.main") }}</th>
-            <th scope="col" class="number">{{ t("benchmark.table.range") }}</th>
-            <th scope="col" class="number">{{ t("benchmark.table.p50") }}</th>
-            <th scope="col" class="number">{{ t("benchmark.table.p99") }}</th>
-            <th scope="col" class="number">{{ t("benchmark.table.dropped") }}</th>
-          </tr>
-        </thead>
-        <tbody v-for="tier in tiers" :key="tier.bars">
-          <tr v-for="row in tier.rows" :key="row.subject.id" :data-kcq="row.kcq || undefined">
-            <th scope="row">{{ row.subject.library }}</th>
-            <td>{{ row.subject.renderer }}</td>
-            <td class="number">{{ count(row.scenario.actualVisibleBars) }}</td>
-            <td class="number">{{ ms(row.scenario.mainThreadMsPerFrame) }}</td>
-            <td class="number">{{ range(row) }}</td>
-            <td class="number">{{ ms(row.scenario.frameWorkP50Ms) }}</td>
-            <td class="number">{{ ms(row.scenario.frameWorkP99Ms) }}</td>
-            <td class="number">{{ percent(row.scenario.droppedFrameRate) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </details>
+  <div class="table-scroll">
+    <table class="t-copy t-num">
+      <thead>
+        <tr>
+          <th scope="col">{{ t("benchmark.table.library") }}</th>
+          <th scope="col">{{ t("benchmark.table.renderer") }}</th>
+          <th scope="col" class="number">{{ t("benchmark.table.bars") }}</th>
+          <th scope="col" class="number">{{ t("benchmark.table.main") }}</th>
+          <th scope="col" class="number">{{ t("benchmark.table.range") }}</th>
+          <th scope="col" class="number">{{ t("benchmark.table.p50") }}</th>
+          <th scope="col" class="number">{{ t("benchmark.table.p99") }}</th>
+          <th scope="col" class="number">{{ t("benchmark.table.dropped") }}</th>
+        </tr>
+      </thead>
+      <tbody v-for="tier in tiers" :key="tier.bars">
+        <tr v-for="row in tier.rows" :key="row.subject.id" :data-kcq="row.kcq || undefined">
+          <th scope="row">{{ row.subject.library }}</th>
+          <td>{{ row.subject.renderer }}</td>
+          <td class="number">{{ count(row.scenario.actualVisibleBars) }}</td>
+          <td class="number">{{ ms(row.scenario.mainThreadMsPerFrame) }}</td>
+          <td class="number">{{ range(row) }}</td>
+          <td class="number">{{ ms(row.scenario.frameWorkP50Ms) }}</td>
+          <td class="number">{{ ms(row.scenario.frameWorkP99Ms) }}</td>
+          <td class="number">{{ percent(row.scenario.droppedFrameRate) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 <style scoped>
-.compare-table summary {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--klc-space-8);
-  min-height: var(--klc-density-comfortable);
-  color: var(--kcq-accent-text);
-  cursor: pointer;
-  list-style: none;
-}
-.compare-table summary::-webkit-details-marker {
-  display: none;
-}
-/* A plus that turns into a minus: two hairlines, the vertical one folds away when open. */
-.compare-table summary::before {
-  content: "";
-  width: var(--klc-space-12);
-  height: var(--klc-space-12);
-  background:
-    linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat,
-    linear-gradient(currentColor, currentColor) center / 1.5px 100% no-repeat;
-  transition: background-size var(--klc-motion-dur-base) var(--klc-motion-ease-out);
-}
-.compare-table[open] summary::before {
-  background-size:
-    100% 1.5px,
-    1.5px 0;
-}
 .table-scroll {
-  margin-top: var(--klc-space-16);
   overflow-x: auto;
 }
 table {

@@ -6,7 +6,8 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useReveal } from "../home/motion/use-reveal";
+import { useReveal } from "../motion/use-reveal";
+import PageSection from "../components/page-section.vue";
 
 const { t, tm } = useI18n();
 const tiers = computed(() =>
@@ -21,26 +22,20 @@ const stairs = ref<HTMLElement>();
 const { state } = useReveal(stairs);
 </script>
 <template>
-  <section id="model" class="band model" aria-labelledby="model-heading">
-    <div class="container">
-      <div class="section-head">
-        <h2 id="model-heading" class="t-heading">{{ t("investors.model.heading") }}</h2>
-      </div>
-      <ol ref="stairs" class="stairs" :data-reveal="state">
-        <li v-for="(tier, index) in tiers" :key="tier.name" class="step reveal-item" :style="{ '--i': index, '--reveal-y': `${16 + index * 8}px` }">
-          <h3 class="t-title">{{ tier.name }}</h3>
-          <p class="t-meta step-term">{{ tier.term }}</p>
-          <p class="t-copy">{{ tier.body }}</p>
-        </li>
-      </ol>
-      <p class="t-copy model-note">{{ t("investors.model.note") }}</p>
-    </div>
-  </section>
+  <PageSection id="model" :heading="t('investors.model.heading')">
+    <ol ref="stairs" class="stairs" :data-reveal="state">
+      <li v-for="(tier, index) in tiers" :key="tier.name" class="step reveal-item" :style="{ '--i': index, '--reveal-y': `${16 + index * 8}px` }">
+        <h3 class="t-title">{{ tier.name }}</h3>
+        <p class="t-meta step-term">{{ tier.term }}</p>
+        <p class="t-copy">{{ tier.body }}</p>
+      </li>
+    </ol>
+    <p class="t-copy model-note">{{ t("investors.model.note") }}</p>
+  </PageSection>
 </template>
 <style scoped>
 .stairs {
   display: grid;
-  margin-top: var(--klc-space-48);
   border-top: 1px solid var(--kcq-rule);
 }
 .step {
@@ -67,7 +62,6 @@ const { state } = useReveal(stairs);
   .stairs {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     column-gap: 0;
-    margin-top: var(--klc-space-64);
     border-bottom: 1px solid var(--kcq-rule);
   }
   .step {

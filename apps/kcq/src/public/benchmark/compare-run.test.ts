@@ -6,8 +6,8 @@ import {
   COMPARE_RUN_FILES,
   roundRange,
   summarizeCompareRun,
+  highlights,
   tierRows,
-  verdict,
 } from "./compare-run";
 import summary from "./compare-run.json";
 
@@ -45,15 +45,19 @@ describe("chart-library comparison run", () => {
     }
   });
 
-  it("quotes the verdict from KCQ's best backend at the largest tier", () => {
-    const { bars, best, heaviest, ratio, lighter } = verdict(COMPARE_RUN);
+  it("sells only figures the run contains", () => {
+    const { bars, best, heaviest, ratio, share, growth } = highlights(COMPARE_RUN);
+    const rows = tierRows(COMPARE_RUN, bars);
     expect(bars).toBe(Math.max(...tiers));
-    expect(best.kcq).toBe(true);
-    expect(best).toEqual(tierRows(COMPARE_RUN, bars).find((row) => row.kcq));
-    if (heaviest && ratio) expect(ratio).toBeCloseTo(heaviest.scenario.mainThreadMsPerFrame / best.scenario.mainThreadMsPerFrame);
-    for (const row of lighter) {
-      expect(row.kcq).toBe(false);
-      expect(row.scenario.mainThreadMsPerFrame).toBeLessThanOrEqual(best.scenario.mainThreadMsPerFrame);
-    }
+    expect(best).toEqual(rows.find((row) => row.kcq));
+    expect(heaviest).toEqual(rows.at(-1));
+    expect(heaviest.kcq).toBe(false);
+    expect(ratio).toBeCloseTo(heaviest.scenario.mainThreadMsPerFrame / best.scenario.mainThreadMsPerFrame);
+    expect(best.scenario.mainThreadMsPerFrame / COMPARE_RUN.configuration.refreshIntervalMs).toBeLessThan(share / 100);
+    const smallest = tierRows(COMPARE_RUN, Math.min(...tiers)).find((row) => row.kcq);
+    if (!smallest) throw new Error("The run has no KCQ scenario at its smallest tier");
+    expect(growth.from).toBe(smallest.scenario.actualVisibleBars);
+    expect(growth.to).toBe(best.scenario.actualVisibleBars);
+    expect(1 + growth.rate).toBeCloseTo(best.scenario.mainThreadMsPerFrame / smallest.scenario.mainThreadMsPerFrame);
   });
 });

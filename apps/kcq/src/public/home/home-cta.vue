@@ -9,6 +9,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
+import PageSection from "../components/page-section.vue";
 import { LINKS } from "../links";
 import { APP_PATH } from "../routes";
 // Files, not data URIs: the close is far below the fold, so it stays out of the HTML. Lazy, so only
@@ -23,8 +24,8 @@ const POSTERS = [
 ] as const;
 </script>
 <template>
-  <section id="start" class="band band-closing cta" aria-labelledby="cta-heading">
-    <div class="container cta-body">
+  <PageSection id="start" :heading="t('home.cta.heading')" :lede="t('home.cta.body')" layout="center" closing>
+    <template #kicker>
       <img
         v-for="poster in POSTERS"
         :key="poster.mode"
@@ -37,8 +38,8 @@ const POSTERS = [
         loading="lazy"
         decoding="async"
       />
-      <h2 id="cta-heading" class="t-heading">{{ t("home.cta.heading") }}</h2>
-      <p class="t-lede">{{ t("home.cta.body") }}</p>
+    </template>
+    <template #head>
       <div class="cta-actions">
         <a class="button button-primary" :href="APP_PATH">
           {{ t("home.cta.primary") }}
@@ -49,19 +50,10 @@ const POSTERS = [
           <KcqIcon name="external" :size="14" />
         </a>
       </div>
-    </div>
-  </section>
+    </template>
+  </PageSection>
 </template>
 <style scoped>
-.cta {
-  padding-bottom: var(--klc-space-96);
-}
-.cta-body {
-  display: grid;
-  justify-items: center;
-  gap: var(--klc-space-16);
-  text-align: center;
-}
 /* The light returns: the field's opening frame, cropped to the glyph (at 590 × 175 of the 800px
    frame) and fading out at the edges, so only the candle and its glow show. */
 .cta-light {

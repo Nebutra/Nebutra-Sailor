@@ -1,5 +1,5 @@
 <!--
-  Agent (deck 5.2; restraint benchmark §4 row 2). The section grammar: heading, sub, then one framed
+  Agent (deck 5.2; restraint benchmark §4 row 2). The section grammar (components/page-section.vue): heading, sub, then one framed
   artifact, the agent's window, a product frame in the page's colour mode. Beside it
   the deck's three details as a plain numbered list. At rest (no script, reduced motion, touch,
   phones) the whole story is shown finished and stacked; on desktop the scroll types the prompt
@@ -22,6 +22,7 @@ import AgentChart from "./agent/agent-chart.vue";
 import { useProvideReplay } from "./agent/replay";
 import { CACHED_BARS } from "./hero/bars";
 import { type AgentStory, createAgentStory } from "./motion/agent-story";
+import PageSection from "../components/page-section.vue";
 
 const { t, tm, rt } = useI18n();
 
@@ -111,130 +112,123 @@ const format = (input: object) => JSON.stringify(input);
 const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, legacy: true });
 </script>
 <template>
-  <section id="agent" class="band agent" aria-labelledby="agent-heading">
-    <div class="container">
-      <div class="section-head">
-        <h2 id="agent-heading" class="t-heading">{{ t("home.agent.heading") }}</h2>
-        <p class="t-lede">{{ t("home.agent.body") }}</p>
-      </div>
+  <PageSection id="agent" :heading="t('home.agent.heading')" :lede="t('home.agent.body')">
+    <div ref="track" class="agent-story" :data-story="storyActive || undefined">
+      <div ref="pinned" class="agent-stage">
+        <ol class="chapters">
+          <li v-for="(detail, index) in (tm('home.agent.details') as unknown as string[])" :key="index">
+            <button
+              type="button"
+              class="chapter"
+              :aria-current="chapter === index ? 'step' : undefined"
+              @click="replay.seek(CHAPTER_STEPS[index]!)"
+            >
+              <span class="chapter-index t-num">{{ index + 1 }}</span>
+              <span>{{ rt(detail) }}</span>
+            </button>
+          </li>
+        </ol>
 
-      <div ref="track" class="agent-story section-artifact" :data-story="storyActive || undefined">
-        <div ref="pinned" class="agent-stage">
-          <ol class="chapters">
-            <li v-for="(detail, index) in (tm('home.agent.details') as unknown as string[])" :key="index">
-              <button
-                type="button"
-                class="chapter"
-                :aria-current="chapter === index ? 'step' : undefined"
-                @click="replay.seek(CHAPTER_STEPS[index]!)"
-              >
-                <span class="chapter-index t-num">{{ index + 1 }}</span>
-                <span>{{ rt(detail) }}</span>
-              </button>
-            </li>
-          </ol>
-
-          <div class="agent-console product-frame" :data-playing="playing || undefined">
-            <div class="console-bar">
-              <span class="t-ui">{{ t("home.agent.console") }}</span>
-              <svg class="console-glyph" :viewBox="`0 0 ${COLUMNS} ${ROWS}`" role="img" :aria-label="`${t('home.agent.fieldLabel')} ${progress}`">
-                <defs>
-                  <pattern id="agent-ground" width="1" height="1" patternUnits="userSpaceOnUse">
-                    <circle class="glyph-dot" cx="0.5" cy="0.5" r="0.16" />
-                  </pattern>
-                </defs>
-                <rect :width="COLUMNS" :height="ROWS" fill="url(#agent-ground)" />
-                <path
-                  v-for="(band, index) in bands"
-                  :key="index"
-                  :d="band"
-                  :class="['glyph-dot', index < step ? 'is-lit' : 'is-mark']"
-                />
-              </svg>
-            </div>
-            <div class="console-body">
-              <div class="transcript">
-                <p class="transcript-prompt">
-                  <span class="t-ui transcript-who">{{ t("home.agent.you") }}</span>
-                  <span>
-                    <span class="visually-hidden">{{ promptText }}</span>
-                    <span aria-hidden="true">{{ shownPrompt }}</span><span
-                      v-if="shownPrompt.length < promptText.length"
-                      class="caret"
-                      aria-hidden="true"
-                    /><span class="ghost" aria-hidden="true">{{ promptText.slice(shownPrompt.length) }}</span>
+        <div class="agent-console product-frame" :data-playing="playing || undefined">
+          <div class="console-bar">
+            <span class="t-ui">{{ t("home.agent.console") }}</span>
+            <svg class="console-glyph" :viewBox="`0 0 ${COLUMNS} ${ROWS}`" role="img" :aria-label="`${t('home.agent.fieldLabel')} ${progress}`">
+              <defs>
+                <pattern id="agent-ground" width="1" height="1" patternUnits="userSpaceOnUse">
+                  <circle class="glyph-dot" cx="0.5" cy="0.5" r="0.16" />
+                </pattern>
+              </defs>
+              <rect :width="COLUMNS" :height="ROWS" fill="url(#agent-ground)" />
+              <path
+                v-for="(band, index) in bands"
+                :key="index"
+                :d="band"
+                :class="['glyph-dot', index < step ? 'is-lit' : 'is-mark']"
+              />
+            </svg>
+          </div>
+          <div class="console-body">
+            <div class="transcript">
+              <p class="transcript-prompt">
+                <span class="t-ui transcript-who">{{ t("home.agent.you") }}</span>
+                <span>
+                  <span class="visually-hidden">{{ promptText }}</span>
+                  <span aria-hidden="true">{{ shownPrompt }}</span><span
+                    v-if="shownPrompt.length < promptText.length"
+                    class="caret"
+                    aria-hidden="true"
+                  /><span class="ghost" aria-hidden="true">{{ promptText.slice(shownPrompt.length) }}</span>
+                </span>
+              </p>
+              <ol class="transcript-calls" aria-live="polite">
+                <li v-for="(call, index) in calls" :key="call.tool" class="call" :data-state="state(index)">
+                  <span class="call-mark" aria-hidden="true">
+                    <KcqIcon v-if="state(index) === 'done'" name="check" :size="12" />
                   </span>
-                </p>
-                <ol class="transcript-calls" aria-live="polite">
-                  <li v-for="(call, index) in calls" :key="call.tool" class="call" :data-state="state(index)">
-                    <span class="call-mark" aria-hidden="true">
-                      <KcqIcon v-if="state(index) === 'done'" name="check" :size="12" />
-                    </span>
-                    <span class="call-head">
-                      <span class="call-name" translate="no" :title="format(call.input)">{{ call.tool }}</span>
-                      <span class="call-safety" :data-safety="call.safety">{{ t(`home.agent.safety.${call.safety}`) }}</span>
-                    </span>
-                    <span class="call-result">
-                      <span v-if="state(index) === 'running'" class="shimmer">{{ t("home.agent.running") }}</span>
-                      <template v-else>{{ t("home.agent.returns", { result: rt(tm("home.agent.results")[index]!) }) }}</template>
-                    </span>
-                  </li>
-                </ol>
-              </div>
-              <AgentChart class="console-chart" />
-            </div>
-            <div class="scrubber" role="group" :aria-label="t('home.agent.scrub')">
-              <button type="button" class="scrub-button" :aria-label="t('home.agent.back')" :disabled="step === 0" @click="replay.seek(step - 1)">
-                <KcqIcon name="step-back" :size="14" />
-              </button>
-              <button
-                type="button"
-                class="scrub-button scrub-play"
-                :aria-label="playing ? t('home.agent.pause') : step >= calls.length ? t('home.agent.replay') : t('home.agent.play')"
-                @click="replay.toggle()"
-              >
-                <KcqIcon :name="playing ? 'pause' : step >= calls.length ? 'replay' : 'play'" :size="14" />
-              </button>
-              <button type="button" class="scrub-button" :aria-label="t('home.agent.forward')" :disabled="step >= calls.length" @click="replay.seek(step + 1)">
-                <KcqIcon name="step-forward" :size="14" />
-              </button>
-              <ol class="scrub-track">
-                <li v-for="index in calls.length" :key="index">
-                  <button
-                    type="button"
-                    class="scrub-tick"
-                    :data-done="index <= step || undefined"
-                    :aria-label="t('home.agent.step', { step: index, total: calls.length })"
-                    :aria-current="index === step ? 'step' : undefined"
-                    @click="replay.seek(index)"
-                  />
+                  <span class="call-head">
+                    <span class="call-name" translate="no" :title="format(call.input)">{{ call.tool }}</span>
+                    <span class="call-safety" :data-safety="call.safety">{{ t(`home.agent.safety.${call.safety}`) }}</span>
+                  </span>
+                  <span class="call-result">
+                    <span v-if="state(index) === 'running'" class="shimmer">{{ t("home.agent.running") }}</span>
+                    <template v-else>{{ t("home.agent.returns", { result: rt(tm("home.agent.results")[index]!) }) }}</template>
+                  </span>
                 </li>
               </ol>
-              <button type="button" class="scrub-button scrub-speed t-num" :aria-label="`${t('home.agent.speed')} ${speed}×`" @click="replay.cycleSpeed()">
-                {{ speed }}×
-              </button>
             </div>
-            <!-- The input: the deck's example prompts, ready to paste into the workstation's agent. -->
-            <ul class="composer" :aria-label="t('home.agent.chipsLabel')">
-              <li v-for="(chip, index) in (tm('home.agent.chips') as unknown as string[])" :key="index">
+            <AgentChart class="console-chart" />
+          </div>
+          <div class="scrubber" role="group" :aria-label="t('home.agent.scrub')">
+            <button type="button" class="scrub-button" :aria-label="t('home.agent.back')" :disabled="step === 0" @click="replay.seek(step - 1)">
+              <KcqIcon name="step-back" :size="14" />
+            </button>
+            <button
+              type="button"
+              class="scrub-button scrub-play"
+              :aria-label="playing ? t('home.agent.pause') : step >= calls.length ? t('home.agent.replay') : t('home.agent.play')"
+              @click="replay.toggle()"
+            >
+              <KcqIcon :name="playing ? 'pause' : step >= calls.length ? 'replay' : 'play'" :size="14" />
+            </button>
+            <button type="button" class="scrub-button" :aria-label="t('home.agent.forward')" :disabled="step >= calls.length" @click="replay.seek(step + 1)">
+              <KcqIcon name="step-forward" :size="14" />
+            </button>
+            <ol class="scrub-track">
+              <li v-for="index in calls.length" :key="index">
                 <button
                   type="button"
-                  class="suggestion"
-                  :data-copied="(copied && copiedText === rt(chip)) || undefined"
-                  @click="copy(rt(chip))"
-                >
-                  <KcqIcon name="prompt" :size="12" />
-                  <span>{{ rt(chip) }}</span>
-                </button>
+                  class="scrub-tick"
+                  :data-done="index <= step || undefined"
+                  :aria-label="t('home.agent.step', { step: index, total: calls.length })"
+                  :aria-current="index === step ? 'step' : undefined"
+                  @click="replay.seek(index)"
+                />
               </li>
-            </ul>
-            <p class="visually-hidden" aria-live="polite">{{ copied ? t("home.agent.chipCopied") : "" }}</p>
-            <p class="console-note t-ui">{{ t("home.agent.note", { commit: facts.commit.slice(0, 8) }) }}</p>
+            </ol>
+            <button type="button" class="scrub-button scrub-speed t-num" :aria-label="`${t('home.agent.speed')} ${speed}×`" @click="replay.cycleSpeed()">
+              {{ speed }}×
+            </button>
           </div>
+          <!-- The input: the deck's example prompts, ready to paste into the workstation's agent. -->
+          <ul class="composer" :aria-label="t('home.agent.chipsLabel')">
+            <li v-for="(chip, index) in (tm('home.agent.chips') as unknown as string[])" :key="index">
+              <button
+                type="button"
+                class="suggestion"
+                :data-copied="(copied && copiedText === rt(chip)) || undefined"
+                @click="copy(rt(chip))"
+              >
+                <KcqIcon name="prompt" :size="12" />
+                <span>{{ rt(chip) }}</span>
+              </button>
+            </li>
+          </ul>
+          <p class="visually-hidden" aria-live="polite">{{ copied ? t("home.agent.chipCopied") : "" }}</p>
+          <p class="console-note t-ui">{{ t("home.agent.note", { commit: facts.commit.slice(0, 8) }) }}</p>
         </div>
       </div>
     </div>
-  </section>
+  </PageSection>
 </template>
 <style scoped>
 /* Complete at rest: with no script, reduced motion, touch or a short screen, the three details

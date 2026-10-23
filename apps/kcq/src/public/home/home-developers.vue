@@ -1,5 +1,5 @@
 <!--
-  Developers (deck 5.5; restraint benchmark §4 row 5; research G1, G2, G4). The section grammar:
+  Developers (deck 5.5; restraint benchmark §4 row 5; research G1, G2, G4). The section grammar (components/page-section.vue):
   heading, sub, the docs link, then one artifact, the code window (a hairline, no shadow, cobalt and
   greys only). The snippets are highlighted by
   Shiki at build time (virtual:kcq-code, scripts/landing-plugin.mjs): spans carry
@@ -16,6 +16,7 @@ import KcqIcon from "../components/kcq-icon.vue";
 import { docsPath } from "../links";
 import type { PublicLocale } from "../routes";
 import { SNIPPETS as ALL_SNIPPETS } from "./developer-snippets";
+import PageSection from "../components/page-section.vue";
 
 /** The deck's three tabs (5.5); the agent-tools snippet is published in /llms.txt instead. */
 const SNIPPETS = ALL_SNIPPETS.filter((snippet) => snippet.id !== "agent");
@@ -59,83 +60,79 @@ function onKey(event: KeyboardEvent) {
 }
 </script>
 <template>
-  <section id="developers" class="band developers" aria-labelledby="developers-heading">
-    <div class="container">
-      <div class="section-head">
-        <h2 id="developers-heading" class="t-heading">{{ t("home.developers.heading") }}</h2>
-        <p class="t-lede">{{ t("home.developers.body") }}</p>
-        <a class="section-link" :href="docsPath(locale as PublicLocale)">
-          {{ t("home.developers.readme") }}
-          <KcqIcon class="button-arrow" name="arrow" />
-        </a>
-      </div>
-      <div class="code-window section-artifact">
-        <div
-          ref="tablist"
-          class="code-tabs"
-          role="tablist"
-          :aria-label="t('home.developers.tabs')"
-          :data-indicator="indicator ? '' : undefined"
-          @keydown="onKey"
+  <PageSection id="developers" :heading="t('home.developers.heading')" :lede="t('home.developers.body')">
+    <template #head>
+      <a class="section-link" :href="docsPath(locale as PublicLocale)">
+        {{ t("home.developers.readme") }}
+        <KcqIcon class="button-arrow" name="arrow" />
+      </a>
+    </template>
+    <div class="code-window">
+      <div
+        ref="tablist"
+        class="code-tabs"
+        role="tablist"
+        :aria-label="t('home.developers.tabs')"
+        :data-indicator="indicator ? '' : undefined"
+        @keydown="onKey"
+      >
+        <button
+          v-for="(snippet, index) in SNIPPETS"
+          :id="`tab-${snippet.id}`"
+          :key="snippet.id"
+          ref="tabs"
+          type="button"
+          role="tab"
+          class="code-tab t-label"
+          :aria-selected="active === index"
+          :aria-controls="`panel-${snippet.id}`"
+          :tabindex="active === index ? 0 : -1"
+          @click="active = index"
         >
-          <button
-            v-for="(snippet, index) in SNIPPETS"
-            :id="`tab-${snippet.id}`"
-            :key="snippet.id"
-            ref="tabs"
-            type="button"
-            role="tab"
-            class="code-tab t-label"
-            :aria-selected="active === index"
-            :aria-controls="`panel-${snippet.id}`"
-            :tabindex="active === index ? 0 : -1"
-            @click="active = index"
-          >
-            {{ snippet.label }}
-          </button>
-          <span
-            v-if="indicator"
-            class="code-tab-indicator"
-            aria-hidden="true"
-            :style="{ '--x': `${indicator.x}px`, '--w': indicator.width }"
-          />
-        </div>
-        <!-- Every panel sits in one grid cell, so the window is as tall as the longest snippet and a
-             tab switch never moves the page (the hidden ones keep their box, out of the a11y tree). -->
-        <div class="code-panels">
-          <div
-            v-for="(snippet, index) in SNIPPETS"
-            :id="`panel-${snippet.id}`"
-            :key="snippet.id"
-            role="tabpanel"
-            :aria-labelledby="`tab-${snippet.id}`"
-            class="code-panel"
-            :data-active="active === index || undefined"
-            :inert="active !== index || undefined"
-          >
-            <div class="code-bar">
-              <span class="code-file" translate="no">{{ snippet.file }}</span>
-              <button
-                type="button"
-                class="code-copy t-label"
-                :data-copied="copied || undefined"
-                :aria-label="t('home.developers.copy')"
-                @click="copy(snippet.code)"
-              >
-                <span class="code-copy-icons" aria-hidden="true">
-                  <KcqIcon name="copy" class="code-copy-idle" />
-                  <KcqIcon name="check" class="code-copy-done" />
-                </span>
-              </button>
-              <span class="visually-hidden" aria-live="polite">{{ copied && active === index ? t("home.developers.copied") : "" }}</span>
-            </div>
-            <!-- Build-time Shiki output of our own snippet source (no user input). -->
-            <pre class="code" tabindex="0" translate="no"><code v-html="highlighted.get(snippet.id)" /></pre>
+          {{ snippet.label }}
+        </button>
+        <span
+          v-if="indicator"
+          class="code-tab-indicator"
+          aria-hidden="true"
+          :style="{ '--x': `${indicator.x}px`, '--w': indicator.width }"
+        />
+      </div>
+      <!-- Every panel sits in one grid cell, so the window is as tall as the longest snippet and a
+           tab switch never moves the page (the hidden ones keep their box, out of the a11y tree). -->
+      <div class="code-panels">
+        <div
+          v-for="(snippet, index) in SNIPPETS"
+          :id="`panel-${snippet.id}`"
+          :key="snippet.id"
+          role="tabpanel"
+          :aria-labelledby="`tab-${snippet.id}`"
+          class="code-panel"
+          :data-active="active === index || undefined"
+          :inert="active !== index || undefined"
+        >
+          <div class="code-bar">
+            <span class="code-file" translate="no">{{ snippet.file }}</span>
+            <button
+              type="button"
+              class="code-copy t-label"
+              :data-copied="copied || undefined"
+              :aria-label="t('home.developers.copy')"
+              @click="copy(snippet.code)"
+            >
+              <span class="code-copy-icons" aria-hidden="true">
+                <KcqIcon name="copy" class="code-copy-idle" />
+                <KcqIcon name="check" class="code-copy-done" />
+              </span>
+            </button>
+            <span class="visually-hidden" aria-live="polite">{{ copied && active === index ? t("home.developers.copied") : "" }}</span>
           </div>
+          <!-- Build-time Shiki output of our own snippet source (no user input). -->
+          <pre class="code" tabindex="0" translate="no"><code v-html="highlighted.get(snippet.id)" /></pre>
         </div>
       </div>
     </div>
-  </section>
+  </PageSection>
 </template>
 <style scoped>
 /* Token colours: only pairs that hold AA on the window ground (ink, ink-2, accent text). */

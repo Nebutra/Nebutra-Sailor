@@ -347,8 +347,9 @@ const en = {
     ogAlt:
       "Ranked bars of main-thread time per frame for KLineChartQuant, Lightweight Charts, Apache ECharts and KLineChart drawing the same candles. Lower is better.",
     heading: "Every millisecond counts.",
-    lede: "See it sooner. Act sooner. With {bars} bars on screen, KCQ on {renderer} takes {ms} ms of main-thread time per frame, under {share}% of a {budget} ms frame.",
-    run: "The same candles and moving averages, drawn by each library and scrolled one bar per frame. Measured {date} on {cpu}, {browser}.",
+    lede: "See it sooner. Act sooner. With {bars} candles on screen, KCQ draws each frame in {ms} ms of main-thread time.",
+    run: "Tested {date} on {cpu}, {browser}.",
+    fineprintLink: "How we tested",
     figure: {
       caption: "Main-thread time per frame",
       lower: "Lower is better",
@@ -356,10 +357,27 @@ const en = {
       tier: "{count} bars",
       note: "Bars are the mean of {frames} frames × {rounds} rounds; the line spans the fastest and slowest round. A 60 Hz frame is {budget} ms.",
     },
-    verdict: {
-      lead: "At {bars} visible bars, {library} spends {ratio}× the main-thread time per frame of KCQ on {renderer}.",
-      trail: "On this scene, {libraries} spends less. | On this scene, {libraries} spend less.",
-      both: "{lead} {trail}",
+    proof: {
+      heading: "The denser the chart, the clearer the difference.",
+      growth: {
+        value: "{times}×",
+        label: "the candles on screen, from {from} to {to}. KCQ's cost per frame rises only {rate}%.",
+      },
+      ratio: {
+        value: "{ratio}×",
+        label: "lighter than {library}, drawing the same screen of candles.",
+      },
+      share: {
+        value: "<{share}%",
+        label: "of a {budget} ms frame goes to the chart. The rest is yours: strategies, indicators, your agent.",
+      },
+    },
+    fineprint: {
+      summary: "Open and reproducible: method, machine and every frame of raw data",
+      run: "The same candles and moving averages, drawn by each library and scrolled one bar per frame.",
+      method: "Method",
+      environment: "This run",
+      table: "Every scenario",
     },
     downloads: {
       json: "Raw data, every frame (JSON)",
@@ -367,7 +385,6 @@ const en = {
       harness: "Harness source",
     },
     table: {
-      summary: "All {count} scenarios",
       library: "Library",
       renderer: "Renderer",
       bars: "Visible bars",
@@ -377,19 +394,15 @@ const en = {
       p99: "Frame work P99, ms",
       dropped: "Dropped frames",
     },
-    method: {
-      heading: "How it was measured",
-      items: [
-        "Same data: 50,000 seeded one-minute candles and five simple moving averages (5, 10, 20, 30, 60), mounted through each library's public API from a production build.",
-        "Same window: KCQ snaps bar width to whole device pixels, so its reachable counts set the tiers and every other library zooms to the same number of visible bars.",
-        "Same motion: after warm-up frames, each chart scrolls one bar per frame, in several rounds per library and tier.",
-        "The metric: Chrome's main-thread task time divided by frames, which covers script, style, layout and garbage collection. Work in the GPU process is not counted.",
-        "Frame rate is not compared: headless Chrome on macOS holds animation frames at 60 Hz. Dropped frames and in-page frame-work percentiles are in the table; in-page timing can miss work a library defers past its frame.",
-        "Scenes match on data, not decoration: KCQ and KLineChart also draw their legends and extremum labels, Lightweight Charts and ECharts their defaults.",
-      ],
-    },
+    method: [
+      "Same data: 50,000 seeded one-minute candles and five simple moving averages (5, 10, 20, 30, 60), mounted through each library's public API from a production build.",
+      "Same window: KCQ snaps bar width to whole device pixels, so its reachable counts set the tiers and every other library zooms to the same number of visible bars.",
+      "Same motion: after warm-up frames, each chart scrolls one bar per frame, in several rounds per library and tier.",
+      "The metric: Chrome's main-thread task time divided by frames, which covers script, style, layout and garbage collection. Work in the GPU process is not counted.",
+      "Frame rate is not compared: headless Chrome on macOS holds animation frames at 60 Hz. Dropped frames and in-page frame-work percentiles are in the table; in-page timing can miss work a library defers past its frame.",
+      "Scenes match on data, not decoration: KCQ and KLineChart also draw their legends and extremum labels, Lightweight Charts and ECharts their defaults.",
+    ],
     environment: {
-      heading: "This run",
       machine: "Machine",
       graphics: "Graphics",
       browser: "Browser",
@@ -400,7 +413,11 @@ const en = {
       commit: "KCQ source",
       dirty: "{commit} with uncommitted changes",
     },
-    caveat: "One machine, one run. Your hardware will give other numbers; the harness is open source, so you can run it yourself.",
+    caveat: "Other hardware gives other numbers. The harness is open source: run it yourself.",
+    cta: {
+      heading: "Put this speed in your product.",
+      body: "Open source under Apache-2.0. Opens in your browser, no account needed.",
+    },
   },
   notFound: {
     title: "Page not found · KLineChartQuant",
@@ -718,8 +735,9 @@ const zh: PublicMessages = {
       "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时的每帧主线程耗时。方法、硬件与原始数据全部公开。",
     ogAlt: "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时每帧主线程耗时的排名条形图，越低越好。",
     heading: "毫秒必争。",
-    lede: "看到得早一点，就快人一步。{bars} 根 K 线在屏，KCQ（{renderer}）每帧只占主线程 {ms} ms，不到一帧 {budget} ms 的 {share}%。",
-    run: "同样的 K 线与均线，由各库分别绘制，每帧向历史滚动一根。测于 {date}，{cpu}，{browser}。",
+    lede: "看到得早一点，就快人一步。{bars} 根 K\u00a0线同屏，KCQ 画一帧只占主线程 {ms} ms。",
+    run: "测于 {date}，{cpu}，{browser}。",
+    fineprintLink: "怎么测的",
     figure: {
       caption: "每帧主线程耗时",
       lower: "越低越好",
@@ -727,10 +745,27 @@ const zh: PublicMessages = {
       tier: "{count} 根",
       note: "柱为 {frames} 帧 × {rounds} 轮的均值，细线标出最快与最慢的一轮。60 Hz 下一帧为 {budget} ms。",
     },
-    verdict: {
-      lead: "可见 {bars} 根 K 线时，{library} 每帧主线程耗时是 KCQ（{renderer}）的 {ratio} 倍。",
-      trail: "在这个场景里，{libraries} 耗时更低。",
-      both: "{lead}{trail}",
+    proof: {
+      heading: "K\u00a0线越密，越见真章。",
+      growth: {
+        value: "{times}×",
+        label: "同屏 K\u00a0线从 {from} 根加到 {to} 根，KCQ 每帧开销只多 {rate}%。",
+      },
+      ratio: {
+        value: "{ratio}×",
+        label: "比 {library} 更轻：画同一屏 K\u00a0线的主线程开销之比。",
+      },
+      share: {
+        value: "<{share}%",
+        label: "一帧 {budget} ms，图表只用这么多。剩下的，留给你的策略、指标和智能体。",
+      },
+    },
+    fineprint: {
+      summary: "公开、可复现：测试方法、运行环境和逐帧原始数据",
+      run: "同样的 K 线与均线，由各库分别绘制，每帧向历史滚动一根。",
+      method: "测试方法",
+      environment: "本次运行",
+      table: "全部场景",
     },
     downloads: {
       json: "原始数据，逐帧（JSON）",
@@ -738,7 +773,6 @@ const zh: PublicMessages = {
       harness: "测试框架源码",
     },
     table: {
-      summary: "全部 {count} 组场景",
       library: "图表库",
       renderer: "渲染后端",
       bars: "可见 K 线",
@@ -748,19 +782,15 @@ const zh: PublicMessages = {
       p99: "帧内工作 P99 ms",
       dropped: "掉帧率",
     },
-    method: {
-      heading: "测量方法",
-      items: [
-        "同样的数据：50,000 根固定种子生成的一分钟 K 线和五条简单均线（5、10、20、30、60），各库都以生产构建、经公开 API 挂载。",
-        "同样的窗口：KCQ 的 K 线宽度按整数设备像素取整，由它能取到的根数定档，其他库缩放到相同的可见根数。",
-        "同样的动作：预热之后，每帧向历史滚动一根；每个库、每档都跑多轮。",
-        "指标：Chrome 主线程任务时间除以帧数，涵盖脚本、样式、布局与垃圾回收；GPU 进程里的工作不计入。",
-        "不比帧率：macOS 上的无头 Chrome 把动画帧固定在 60 Hz。掉帧率与页面内测得的帧内工作分位数列在表中；页面内计时会漏掉库推迟到帧外的工作。",
-        "场景按数据对齐，不按装饰对齐：KCQ 与 KLineChart 还绘制了图例和极值标签，Lightweight Charts 与 ECharts 保持默认外观。",
-      ],
-    },
+    method: [
+      "同样的数据：50,000 根固定种子生成的一分钟 K 线和五条简单均线（5、10、20、30、60），各库都以生产构建、经公开 API 挂载。",
+      "同样的窗口：KCQ 的 K 线宽度按整数设备像素取整，由它能取到的根数定档，其他库缩放到相同的可见根数。",
+      "同样的动作：预热之后，每帧向历史滚动一根；每个库、每档都跑多轮。",
+      "指标：Chrome 主线程任务时间除以帧数，涵盖脚本、样式、布局与垃圾回收；GPU 进程里的工作不计入。",
+      "不比帧率：macOS 上的无头 Chrome 把动画帧固定在 60 Hz。掉帧率与页面内测得的帧内工作分位数列在表中；页面内计时会漏掉库推迟到帧外的工作。",
+      "场景按数据对齐，不按装饰对齐：KCQ 与 KLineChart 还绘制了图例和极值标签，Lightweight Charts 与 ECharts 保持默认外观。",
+    ],
     environment: {
-      heading: "本次运行",
       machine: "机器",
       graphics: "图形",
       browser: "浏览器",
@@ -771,7 +801,11 @@ const zh: PublicMessages = {
       commit: "KCQ 源码",
       dirty: "{commit}，含未提交改动",
     },
-    caveat: "一台机器，一次运行。换一台机器数字会不同；测试框架是开源的，可以自己跑一遍。",
+    caveat: "换一台机器，数字会不同。测试代码开源，欢迎自己跑一遍。",
+    cta: {
+      heading: "把这份速度，放进你的产品。",
+      body: "开源，Apache-2.0。浏览器里直接打开，不用注册。",
+    },
   },
   notFound: {
     title: "页面不存在 · KLineChartQuant",

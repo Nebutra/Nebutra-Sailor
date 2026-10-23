@@ -164,23 +164,30 @@ export function axisTicks(run: CompareRun): number[] {
 }
 
 /**
- * The figures the verdict sentence quotes, at the largest tier: KCQ's best backend, the competitors
- * that spend more main-thread time (with the largest ratio) and those that spend less.
+ * The figures the page sells with, all from the run: KCQ's best backend at the largest tier (the
+ * hero's number and its share of one frame), the heaviest competitor there as a multiple of it, and
+ * how much KCQ's best frame cost grows from the smallest tier to the largest.
  */
-export function verdict(run: CompareRun) {
-  const bars = Math.max(...run.configuration.visibleBars);
-  const rows = tierRows(run, bars);
-  const best = rows.find((row) => row.kcq);
-  if (!best) throw new Error("The comparison run has no KCQ scenario");
-  const others = rows.filter((row) => !row.kcq);
-  const heavier = others.filter((row) => row.scenario.mainThreadMsPerFrame > best.scenario.mainThreadMsPerFrame);
-  const lighter = others.filter((row) => row.scenario.mainThreadMsPerFrame <= best.scenario.mainThreadMsPerFrame);
-  const heaviest = heavier.at(-1);
+export function highlights(run: CompareRun) {
+  const tiers = run.configuration.visibleBars;
+  const bestAt = (bars: number) => {
+    const row = tierRows(run, bars).find((candidate) => candidate.kcq);
+    if (!row) throw new Error(`The comparison run has no KCQ scenario at ${bars} bars`);
+    return row;
+  };
+  const bars = Math.max(...tiers);
+  const fewest = Math.min(...tiers);
+  const best = bestAt(bars);
+  const heaviest = tierRows(run, bars).at(-1);
+  if (!heaviest || heaviest.kcq) throw new Error("The comparison run has no competitor heavier than KCQ");
+  const ms = best.scenario.mainThreadMsPerFrame;
   return {
     bars,
     best,
     heaviest,
-    ratio: heaviest ? heaviest.scenario.mainThreadMsPerFrame / best.scenario.mainThreadMsPerFrame : undefined,
-    lighter,
+    ratio: heaviest.scenario.mainThreadMsPerFrame / ms,
+    // "Under N%": the next whole percent above the measured share, so the claim always holds.
+    share: Math.floor((ms / run.configuration.refreshIntervalMs) * 100) + 1,
+    growth: { from: bestAt(fewest).scenario.actualVisibleBars, to: best.scenario.actualVisibleBars, rate: ms / bestAt(fewest).scenario.mainThreadMsPerFrame - 1 },
   };
 }
