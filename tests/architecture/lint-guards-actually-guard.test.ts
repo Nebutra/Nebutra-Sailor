@@ -66,6 +66,13 @@ const CASES: Case[] = [
     path: "docs/__lint_guard_probe.md",
   },
   {
+    // Tailwind v4 moves translate-* onto the `translate` property, so a list
+    // naming only `transform` lets the thumb jump (Toggle, 2026-10-23).
+    guard: "lint-transition-properties",
+    violation:
+      'export function Probe() {\n  return <div className="transition-[transform] hover:translate-x-1" />;\n}\n',
+  },
+  {
     // A second source of row-level security beside the generated rls.sql —
     // how the database drifted into two policy models before ADR 2026-09-25.
     guard: "lint-database",

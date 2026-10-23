@@ -161,7 +161,7 @@ export async function GettingStarted() {
                       {task.label}
                     </p>
                     <ArrowRight
-                      className={`size-3.5 shrink-0 opacity-0 transition-[opacity,transform] duration-150 group-hover:translate-x-0.5 group-hover:opacity-60 motion-reduce:group-hover:translate-x-0 ${
+                      className={`size-3.5 shrink-0 opacity-0 transition-[opacity,transform,translate] duration-150 group-hover:translate-x-0.5 group-hover:opacity-60 motion-reduce:group-hover:translate-x-0 ${
                         task.done ? "text-success-strong" : "text-neutral-11"
                       }`}
                       aria-hidden="true"

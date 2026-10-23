@@ -51,7 +51,7 @@ function PlaybookCard({ item, t }: { item: PlaybookItem; t: CatalogTranslator })
         {external ? (
           <ExternalLink className="size-4 shrink-0 text-neutral-9 transition-colors group-hover:text-primary dark:group-hover:text-[color:var(--brand-accent)]" />
         ) : (
-          <ArrowRight className="size-4 shrink-0 text-neutral-9 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-primary motion-reduce:group-hover:translate-x-0 dark:group-hover:text-[color:var(--brand-accent)]" />
+          <ArrowRight className="size-4 shrink-0 text-neutral-9 transition-[color,transform,translate] group-hover:translate-x-0.5 group-hover:text-primary motion-reduce:group-hover:translate-x-0 dark:group-hover:text-[color:var(--brand-accent)]" />
         )}
       </div>
       <div className="mt-4">

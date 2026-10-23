@@ -193,7 +193,7 @@ export function ModelTable({
                 <td className={cn(cell, "hidden pr-4 text-muted-foreground md:table-cell")}>
                   <ArrowRight
                     aria-hidden
-                    className="size-4 opacity-0 transition-[opacity,transform] group-hover:translate-x-0.5 group-hover:opacity-100"
+                    className="size-4 opacity-0 transition-[opacity,transform,translate] group-hover:translate-x-0.5 group-hover:opacity-100"
                   />
                 </td>
               </tr>
@@ -264,7 +264,7 @@ export function ModelList({
               </div>
               <ArrowRight
                 aria-hidden
-                className="mt-2 hidden size-4 shrink-0 text-muted-foreground opacity-0 transition-[opacity,transform] group-hover:translate-x-0.5 group-hover:opacity-100 md:block"
+                className="mt-2 hidden size-4 shrink-0 text-muted-foreground opacity-0 transition-[opacity,transform,translate] group-hover:translate-x-0.5 group-hover:opacity-100 md:block"
               />
             </div>
           </li>

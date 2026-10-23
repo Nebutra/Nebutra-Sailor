@@ -70,7 +70,7 @@ export function WorkCard({ work, typefaces, specimen }: WorkCardProps) {
             loading="lazy"
             decoding="async"
             referrerPolicy="no-referrer"
-            className="aspect-[4/5] w-full object-cover transition-[transform,opacity] duration-500 group-hover:scale-[1.02] group-hover:opacity-95"
+            className="aspect-[4/5] w-full object-cover transition-[transform,opacity,scale] duration-500 group-hover:scale-[1.02] group-hover:opacity-95"
           />
         ) : (
           <div className="flex aspect-[4/5] w-full items-end bg-gradient-to-br from-[var(--tl-paper-deep)] to-[var(--tl-line)] p-4">

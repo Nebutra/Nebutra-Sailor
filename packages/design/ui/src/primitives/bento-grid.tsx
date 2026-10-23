@@ -136,15 +136,15 @@ export const BentoCard = ({
 
       {/* Content */}
       <div className="p-4">
-        <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal lg:group-hover:-translate-y-10">
-          <IconComponent className="h-12 w-12 origin-left transform-gpu text-muted-foreground transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal ease-[var(--ease-brand)] group-hover:scale-75" />
+        <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 transition-[background-color,border-color,box-shadow,color,opacity,transform,translate] duration-reveal lg:group-hover:-translate-y-10">
+          <IconComponent className="h-12 w-12 origin-left transform-gpu text-muted-foreground transition-[background-color,border-color,box-shadow,color,opacity,transform,scale] duration-reveal ease-[var(--ease-brand)] group-hover:scale-75" />
           <h3 className="text-xl text-foreground">{name}</h3>
           <p className="max-w-lg text-muted-foreground">{description}</p>
         </div>
 
         {/* Mobile CTA (always visible) */}
         {href && (
-          <div className="pointer-events-none flex w-full translate-y-0 transform-gpu flex-row items-center transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal group-hover:translate-y-0 group-hover:opacity-100 lg:hidden">
+          <div className="pointer-events-none flex w-full translate-y-0 transform-gpu flex-row items-center transition-[background-color,border-color,box-shadow,color,opacity,transform,translate] duration-reveal group-hover:translate-y-0 group-hover:opacity-100 lg:hidden">
             <Button variant="link" asChild size="sm" className="pointer-events-auto p-0">
               <a href={href}>
                 {cta}
@@ -157,7 +157,7 @@ export const BentoCard = ({
 
       {/* Desktop CTA (reveals on hover) */}
       {href && (
-        <div className="pointer-events-none absolute bottom-0 hidden w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal group-hover:translate-y-0 group-hover:opacity-100 lg:flex">
+        <div className="pointer-events-none absolute bottom-0 hidden w-full translate-y-10 transform-gpu flex-row items-center p-4 opacity-0 transition-[background-color,border-color,box-shadow,color,opacity,transform,translate] duration-reveal group-hover:translate-y-0 group-hover:opacity-100 lg:flex">
           <Button variant="link" asChild size="sm" className="pointer-events-auto p-0">
             <a href={href}>
               {cta}

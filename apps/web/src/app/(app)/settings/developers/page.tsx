@@ -47,7 +47,7 @@ export default async function DeveloperConsolePage() {
                   {tc(`links.${link.id}.description`)}
                 </span>
               </span>
-              <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-neutral-11 transition-[color,transform] group-hover:translate-x-0.5 group-hover:text-foreground motion-reduce:group-hover:translate-x-0" />
+              <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-neutral-11 transition-[color,transform,translate] group-hover:translate-x-0.5 group-hover:text-foreground motion-reduce:group-hover:translate-x-0" />
             </Link>
           </li>
         ))}
