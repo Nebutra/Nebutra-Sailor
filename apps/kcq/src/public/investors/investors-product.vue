@@ -12,6 +12,7 @@ import KcqIcon from "../components/kcq-icon.vue";
 import WorkstationShot from "../components/workstation-shot.vue";
 import { LINKS } from "../links";
 import { APP_PATH } from "../routes";
+import PageSection from "../components/page-section.vue";
 
 const { t } = useI18n();
 const BACKEND_NAMES: Record<string, string> = { webgpu: "WebGPU", webgl: "WebGL", canvas: "Canvas 2D" };
@@ -28,27 +29,23 @@ const rows = computed(() => [
 ]);
 </script>
 <template>
-  <section id="product" class="band product" aria-labelledby="product-heading">
-    <div class="container">
-      <div class="section-head">
-        <h2 id="product-heading" class="t-heading">{{ t("investors.product.heading") }}</h2>
-        <p class="t-lede">{{ t("investors.product.body") }}</p>
-        <a class="section-link" :href="APP_PATH">
-          {{ t("investors.product.open") }}
-          <KcqIcon class="button-arrow" name="arrow" />
-        </a>
+  <PageSection id="product" :heading="t('investors.product.heading')" :lede="t('investors.product.body')">
+    <template #head>
+      <a class="section-link" :href="APP_PATH">
+        {{ t("investors.product.open") }}
+        <KcqIcon class="button-arrow" name="arrow" />
+      </a>
+    </template>
+    <WorkstationShot :alt="t('home.workstation.alt')" />
+    <dl class="facts">
+      <div v-for="row in rows" :key="row.label" class="fact">
+        <dt class="t-meta">{{ row.label }}</dt>
+        <dd>
+          <a class="fact-value" :href="row.href" rel="noopener" translate="no">{{ row.value }}</a>
+        </dd>
       </div>
-      <WorkstationShot :alt="t('home.workstation.alt')" />
-      <dl class="facts">
-        <div v-for="row in rows" :key="row.label" class="fact">
-          <dt class="t-meta">{{ row.label }}</dt>
-          <dd>
-            <a class="fact-value" :href="row.href" rel="noopener" translate="no">{{ row.value }}</a>
-          </dd>
-        </div>
-      </dl>
-    </div>
-  </section>
+    </dl>
+  </PageSection>
 </template>
 <style scoped>
 .facts {

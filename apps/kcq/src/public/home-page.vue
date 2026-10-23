@@ -2,7 +2,9 @@
   /home: seven blocks on one surface (restraint benchmark §4, founder decisions 2026-10-10), each in
   one grammar (heading, sub, one artifact) and one rhythm: hero · agent (the pinned story) · chart
   quality · markets and data (the real workstation) · developers · open source and trust (merged,
-  text only) · final CTA (the closing band, where the light returns) · footer.
+  text only) · final CTA (the closing band, where the light returns) · footer. The hero is
+  components/page-hero.vue and every other block components/page-section.vue, shared with
+  /investors, /benchmark and 404.
 -->
 <script setup lang="ts">
 import HomeAgent from "./home/home-agent.vue";

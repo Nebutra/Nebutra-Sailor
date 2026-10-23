@@ -14,6 +14,7 @@ import { useIntersectionObserver, usePreferredReducedMotion } from "@vueuse/core
 import facts from "virtual:kcq-facts";
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import PageSection from "../components/page-section.vue";
 
 /** The session's calls, in order (the agent panel in the hero screenshot). */
 const CALLS = ["instruments_query_name", "market_bars_query", "drawing_create"] as const;
@@ -47,53 +48,33 @@ const { stop } = useIntersectionObserver(
 );
 </script>
 <template>
-  <section id="tools" class="band tools" aria-labelledby="tools-heading">
-    <div class="container tools-grid">
-      <div class="section-head">
-        <h2 id="tools-heading" class="t-heading">{{ t("investors.tools.heading") }}</h2>
-        <p class="t-lede">{{ t("investors.tools.body") }}</p>
-        <p class="t-meta">{{ t("investors.tools.note") }}</p>
-      </div>
-      <figure
-        ref="log"
-        class="log product-frame"
-        :data-armed="armed || undefined"
-        :data-seen="seen || undefined"
-      >
-        <figcaption class="log-head">
-          <span class="status-dot" aria-hidden="true" />{{ t("investors.tools.log") }}
-        </figcaption>
-        <ol class="log-list">
-          <li v-for="(step, index) in steps" :key="step.tool" class="call" :style="{ '--i': index }">
-            <span class="call-node" aria-hidden="true" />
-            <div class="call-line">
-              <code class="call-tool" translate="no">{{ step.tool }}</code>
-              <span class="call-safety" :data-safety="step.safety">{{ step.label }}</span>
-            </div>
-            <p class="t-copy call-what">{{ step.what }}</p>
-          </li>
-        </ol>
-      </figure>
-    </div>
-  </section>
+  <PageSection id="tools" :heading="t('investors.tools.heading')" :lede="t('investors.tools.body')" layout="split">
+    <template #head>
+      <p class="t-meta">{{ t("investors.tools.note") }}</p>
+    </template>
+    <figure
+      ref="log"
+      class="log product-frame"
+      :data-armed="armed || undefined"
+      :data-seen="seen || undefined"
+    >
+      <figcaption class="log-head">
+        <span class="status-dot" aria-hidden="true" />{{ t("investors.tools.log") }}
+      </figcaption>
+      <ol class="log-list">
+        <li v-for="(step, index) in steps" :key="step.tool" class="call" :style="{ '--i': index }">
+          <span class="call-node" aria-hidden="true" />
+          <div class="call-line">
+            <code class="call-tool" translate="no">{{ step.tool }}</code>
+            <span class="call-safety" :data-safety="step.safety">{{ step.label }}</span>
+          </div>
+          <p class="t-copy call-what">{{ step.what }}</p>
+        </li>
+      </ol>
+    </figure>
+  </PageSection>
 </template>
 <style scoped>
-.tools-grid {
-  display: grid;
-  gap: var(--klc-space-48) var(--kcq-column-gap);
-  align-items: center;
-}
-@media (min-width: 1024px) {
-  .tools-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-  .tools-grid > .section-head {
-    grid-column: 1 / span 5;
-  }
-  .log {
-    grid-column: 7 / span 6;
-  }
-}
 /* The log, drawn like the agent panel: a quiet card, a rail of nodes, one row per call. */
 .log {
   position: relative;

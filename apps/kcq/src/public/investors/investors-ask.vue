@@ -10,6 +10,7 @@ import { useClipboard } from "@vueuse/core";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
+import PageSection from "../components/page-section.vue";
 import { CONTACT_TRACKS, INVESTOR_EMAIL, mailtoHref } from "./contact";
 
 const { t } = useI18n();
@@ -25,12 +26,8 @@ const tracks = computed(() =>
 const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy: true });
 </script>
 <template>
-  <section id="contact" class="band band-closing ask" aria-labelledby="ask-heading">
-    <div class="container ask-grid">
-      <div class="ask-head">
-        <h2 id="ask-heading" class="t-heading ask-heading">{{ t("investors.ask.heading") }}</h2>
-        <p class="t-lede">{{ t("investors.ask.body") }}</p>
-      </div>
+  <PageSection id="contact" :heading="t('investors.ask.heading')" :lede="t('investors.ask.body')" layout="split" closing>
+    <div class="ask-body">
       <ul class="tracks">
         <li v-for="(item, index) in tracks" :key="item.track" class="track">
           <h3 class="t-title">{{ item.title }}</h3>
@@ -57,21 +54,12 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
         <span class="visually-hidden" aria-live="polite">{{ copied ? t("investors.ask.copied") : "" }}</span>
       </p>
     </div>
-  </section>
+  </PageSection>
 </template>
 <style scoped>
-/* The footer continues this ground, so the band does not need its own bottom margin of air. */
-.ask {
-  padding-bottom: var(--klc-space-64);
-}
-.ask-grid {
+.ask-body {
   display: grid;
-  gap: var(--klc-space-48) var(--kcq-column-gap);
-}
-.ask-head {
-  display: grid;
-  gap: var(--klc-space-16);
-  max-width: 40rem;
+  gap: var(--klc-space-48);
 }
 .tracks {
   display: grid;
@@ -143,21 +131,6 @@ const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy:
 @media (min-width: 768px) {
   .tracks {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (min-width: 1024px) {
-  .ask-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    align-items: start;
-  }
-  .ask-head {
-    grid-column: 1 / span 6;
-  }
-  .tracks {
-    grid-column: 7 / span 6;
-  }
-  .ask-direct {
-    grid-column: 1 / -1;
   }
 }
 </style>

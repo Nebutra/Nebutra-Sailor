@@ -12,8 +12,9 @@ import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
 import activity from "../home/community/activity.json";
 import { LINKS } from "../links";
-import { useReveal } from "../home/motion/use-reveal";
+import { useReveal } from "../motion/use-reveal";
 import { usePublicLocale } from "../state/use-public-locale";
+import PageSection from "../components/page-section.vue";
 
 const { t } = useI18n();
 const { intl } = usePublicLocale();
@@ -66,63 +67,59 @@ const plot = ref<HTMLElement>();
 const { state } = useReveal(plot, 0.5);
 </script>
 <template>
-  <section id="releases" class="band cadence" aria-labelledby="cadence-heading">
-    <div class="container">
-      <div class="section-head">
-        <h2 id="cadence-heading" class="t-heading">{{ t("investors.cadence.heading") }}</h2>
-        <p class="t-lede">{{ t("investors.cadence.body") }}</p>
-        <a class="section-link" :href="LINKS.releases" rel="noopener">
-          {{ t("investors.cadence.changelog") }}
-          <KcqIcon name="external" :size="14" />
-        </a>
+  <PageSection id="releases" :heading="t('investors.cadence.heading')" :lede="t('investors.cadence.body')">
+    <template #head>
+      <a class="section-link" :href="LINKS.releases" rel="noopener">
+        {{ t("investors.cadence.changelog") }}
+        <KcqIcon name="external" :size="14" />
+      </a>
+    </template>
+    <figure class="timeline">
+      <figcaption class="timeline-caption">
+        <span class="t-label t-num">{{ summary }}</span>
+        <span v-if="latest" class="t-meta timeline-latest" translate="no">
+          <span class="timeline-latest-dot" aria-hidden="true" />{{ t("investors.cadence.latest") }} {{ latest.tag }}
+        </span>
+      </figcaption>
+      <div
+        ref="plot"
+        class="timeline-plot"
+        :data-reveal="state"
+        role="img"
+        :aria-label="t('investors.cadence.label', { date: activity.fetchedAt.slice(0, 10) })"
+      >
+        <svg class="timeline-ticks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <line class="timeline-axis" x1="0" x2="100" y1="100" y2="100" vector-effect="non-scaling-stroke" />
+          <line
+            v-for="tick in ticks"
+            :key="tick.tag"
+            class="timeline-tick"
+            :data-opens="tick.opens || undefined"
+            :data-latest="tick === latest || undefined"
+            :style="{ '--x': tick.x.toFixed(1) }"
+            :x1="tick.x"
+            :x2="tick.x"
+            y1="100"
+            :y2="tick === latest ? 8 : tick.opens ? 30 : 62"
+            vector-effect="non-scaling-stroke"
+          />
+        </svg>
+        <span
+          v-for="tick in ticks.filter((item) => item.opens)"
+          :key="`label-${tick.tag}`"
+          class="timeline-version t-meta"
+          :style="{ left: `${tick.x}%` }"
+          aria-hidden="true"
+          translate="no"
+        >v{{ minorOf(tick.tag) }}</span>
       </div>
-      <figure class="timeline section-artifact">
-        <figcaption class="timeline-caption">
-          <span class="t-label t-num">{{ summary }}</span>
-          <span v-if="latest" class="t-meta timeline-latest" translate="no">
-            <span class="timeline-latest-dot" aria-hidden="true" />{{ t("investors.cadence.latest") }} {{ latest.tag }}
-          </span>
-        </figcaption>
-        <div
-          ref="plot"
-          class="timeline-plot"
-          :data-reveal="state"
-          role="img"
-          :aria-label="t('investors.cadence.label', { date: activity.fetchedAt.slice(0, 10) })"
-        >
-          <svg class="timeline-ticks" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <line class="timeline-axis" x1="0" x2="100" y1="100" y2="100" vector-effect="non-scaling-stroke" />
-            <line
-              v-for="tick in ticks"
-              :key="tick.tag"
-              class="timeline-tick"
-              :data-opens="tick.opens || undefined"
-              :data-latest="tick === latest || undefined"
-              :style="{ '--x': tick.x.toFixed(1) }"
-              :x1="tick.x"
-              :x2="tick.x"
-              y1="100"
-              :y2="tick === latest ? 8 : tick.opens ? 30 : 62"
-              vector-effect="non-scaling-stroke"
-            />
-          </svg>
-          <span
-            v-for="tick in ticks.filter((item) => item.opens)"
-            :key="`label-${tick.tag}`"
-            class="timeline-version t-meta"
-            :style="{ left: `${tick.x}%` }"
-            aria-hidden="true"
-            translate="no"
-          >v{{ minorOf(tick.tag) }}</span>
-        </div>
-        <div class="timeline-months" aria-hidden="true">
-          <span v-for="month in months" :key="month.label" class="t-meta" :style="{ left: `${month.x}%` }">
-            {{ month.label }}
-          </span>
-        </div>
-      </figure>
-    </div>
-  </section>
+      <div class="timeline-months" aria-hidden="true">
+        <span v-for="month in months" :key="month.label" class="t-meta" :style="{ left: `${month.x}%` }">
+          {{ month.label }}
+        </span>
+      </div>
+    </figure>
+  </PageSection>
 </template>
 <style scoped>
 .timeline {

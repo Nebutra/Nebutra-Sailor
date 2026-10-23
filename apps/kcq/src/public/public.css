@@ -451,12 +451,6 @@ main [id] {
 main:has(> .band-closing:last-child) + .site-footer {
   border-top-color: transparent;
 }
-.section-head {
-  display: grid;
-  align-content: start;
-  gap: var(--klc-space-16);
-  max-width: 40rem;
-}
 .section-link {
   display: inline-flex;
   align-items: center;
@@ -466,14 +460,6 @@ main:has(> .band-closing:last-child) + .site-footer {
   font-size: var(--klc-text-label-14-font-size);
   font-weight: var(--klc-text-label-14-font-weight);
   text-decoration: none;
-}
-.section-artifact {
-  margin-top: var(--klc-space-48);
-}
-@media (min-width: 1024px) {
-  .section-artifact {
-    margin-top: var(--klc-space-64);
-  }
 }
 /* A product frame: the chart's own ground in the page's mode (it equals the page ground in both
    KCQ presets), so the hairline is what draws the object; radius 12, no shadow. */

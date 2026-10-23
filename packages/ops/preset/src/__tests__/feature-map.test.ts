@@ -84,6 +84,12 @@ describe("getFeatureEnvVars", () => {
     const vars = getFeatureEnvVars(customConfig);
     expect(vars.NEBUTRA_BRAND_CONFIG).toBe("config/brand.config.ts");
   });
+
+  it("always advertises REST first, even when only another protocol is selected", () => {
+    const vars = getFeatureEnvVars({ ...mockConfig, apiProtocols: ["orpc"] });
+    expect(vars.API_PROTOCOLS).toBe("rest,orpc");
+    expect(vars.NEBUTRA_API_PROTOCOLS).toBe("rest,orpc");
+  });
 });
 
 describe("getActiveApps", () => {
