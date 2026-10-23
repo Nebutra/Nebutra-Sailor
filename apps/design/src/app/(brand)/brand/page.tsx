@@ -119,7 +119,9 @@ export default function BrandPage() {
         title="Logo"
       >
         <div className="mb-8 flex min-h-[160px] items-center justify-center rounded-[var(--radius-lg)] bg-card p-10 shadow-ambient-sm">
-          <Asset asset="logo-horizontal-en" height={64} />
+          <span className="text-foreground">
+            <Asset asset="logo-horizontal-en" height={64} />
+          </span>
         </div>
 
         {/* The trap, stated where it was fallen into. */}
