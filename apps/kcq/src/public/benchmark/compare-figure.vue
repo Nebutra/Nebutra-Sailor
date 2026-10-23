@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useReveal } from "../home/motion/use-reveal";
+import { useReveal } from "../motion/use-reveal";
 import { PUBLIC_LOCALES } from "../routes";
 import { usePublicLocale } from "../state/use-public-locale";
 import { axisTicks, COMPARE_RUN, type CompareRow, roundRange, tierRows } from "./compare-run";

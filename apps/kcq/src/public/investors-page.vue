@@ -6,7 +6,8 @@
   one H2 size, one section rhythm, no eyebrows, product frames in the page's colour mode.
   hero with the real 601360 session · why now · the tool calls (the page's one motion) · the live
   workstation · releases in public · business model · who it is for · roadmap · team · the ask
-  (the closing band, which the footer continues) · footer.
+  (the closing band, which the footer continues) · footer. The opening and every section are the
+  shared components/page-hero.vue and components/page-section.vue.
 -->
 <script setup lang="ts">
 import { useHead } from "@unhead/vue";

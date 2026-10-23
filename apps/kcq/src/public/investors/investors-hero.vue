@@ -4,13 +4,14 @@
   the team's own screenshot of the 601360 session (BP asset agent-box-range-601360, 2026-09-04),
   where an agent boxed a year of consolidation ranges on the chart. Static: the page's one motion
   is the tool-call log further down. On phones the shot crops to the chart, the part that reads.
-  Restraint (benchmark rules 1, 8, 9): nothing above the headline, one stacked column, then one
+  The shared page opening (components/page-hero.vue; restraint benchmark rules 1, 8, 9), then one
   product frame in the page's colour mode; no shadow. The screenshot itself is the team's dark-mode
   capture (there is no light one): content inside the frame, not the frame's surface.
 -->
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
+import PageHero from "../components/page-hero.vue";
 import { APP_PATH } from "../routes";
 import { mailtoHref } from "./contact";
 import session960 from "./shots/agent-601360-960.webp";
@@ -21,24 +22,19 @@ import square720 from "./shots/agent-601360-square-720.webp";
 const { t } = useI18n();
 </script>
 <template>
-  <section id="hero" class="band hero" aria-labelledby="hero-heading">
-    <div class="container">
-      <div class="hero-copy">
-        <h1 id="hero-heading" class="t-display hero-heading enter-mask">{{ t("investors.heading") }}</h1>
-        <p class="t-lede hero-lede enter-rise">{{ t("investors.hero.lede") }}</p>
-        <p class="hero-stage enter-rise">{{ t("investors.hero.stage") }}</p>
-        <div class="hero-actions enter-rise">
-          <a
-            class="button button-primary"
-            :href="mailtoHref(t('investors.ask.investors.subject'), t('investors.ask.mailBody'))"
-          >
-            {{ t("investors.hero.primary") }}
-            <KcqIcon class="button-arrow" name="arrow" />
-          </a>
-          <a class="button button-quiet" :href="APP_PATH">{{ t("investors.hero.secondary") }}</a>
-        </div>
-      </div>
-      <figure class="session enter-settle">
+  <PageHero :heading="t('investors.heading')" :lede="t('investors.hero.lede')">
+    <template #details>
+      <p class="hero-stage">{{ t("investors.hero.stage") }}</p>
+    </template>
+    <template #actions>
+      <a class="button button-primary" :href="mailtoHref(t('investors.ask.investors.subject'), t('investors.ask.mailBody'))">
+        {{ t("investors.hero.primary") }}
+        <KcqIcon class="button-arrow" name="arrow" />
+      </a>
+      <a class="button button-quiet" :href="APP_PATH">{{ t("investors.hero.secondary") }}</a>
+    </template>
+    <template #artifact>
+      <figure class="session">
         <div class="session-frame product-frame">
           <picture>
             <source
@@ -63,45 +59,15 @@ const { t } = useI18n();
           <span class="t-copy">{{ t("investors.session.caption") }}</span>
         </figcaption>
       </figure>
-    </div>
-  </section>
+    </template>
+  </PageHero>
 </template>
 <style scoped>
-.hero {
-  padding-block: var(--klc-space-48) var(--kcq-band-space);
-}
-@media (min-width: 1024px) {
-  .hero {
-    padding-top: var(--klc-space-96);
-  }
-}
-.hero-copy {
-  display: grid;
-  justify-items: start;
-  gap: var(--klc-space-24);
-}
-.hero-heading {
-  max-width: 47.5rem;
-}
-.hero-lede {
-  max-width: 40rem;
-}
 .hero-stage {
-  max-width: 40rem;
   color: var(--kcq-ink);
 }
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--klc-space-12);
-}
 .session {
-  margin: var(--klc-space-48) 0 0;
-}
-@media (min-width: 1024px) {
-  .session {
-    margin-top: var(--klc-space-64);
-  }
+  margin: 0;
 }
 .session-frame img {
   display: block;
@@ -124,18 +90,5 @@ const { t } = useI18n();
   .session-frame img {
     aspect-ratio: 1 / 1;
   }
-}
-/* The shared entrance (public.css `.enter-*`), the same sequence as /home: about a second. */
-.hero-lede {
-  --enter-delay: 120ms;
-}
-.hero-stage {
-  --enter-delay: 190ms;
-}
-.hero-actions {
-  --enter-delay: 260ms;
-}
-.session {
-  --enter-delay: 300ms;
 }
 </style>
