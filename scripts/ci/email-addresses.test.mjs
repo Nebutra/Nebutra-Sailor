@@ -33,6 +33,6 @@ test("listed addresses and placeholders pass", () => {
 test("an address missing from the manifest fails with its files", () => {
   const found = new Map([["credentails", ["SECURITY.md"]]]);
   assert.deepEqual(checkAddresses(manifest, found), [
-    { address: "credentails@nebutra.com", files: ["SECURITY.md"] },
+    { address: `credentails@${manifest.domain}`, files: ["SECURITY.md"] },
   ]);
 });

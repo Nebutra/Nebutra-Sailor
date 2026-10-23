@@ -5,26 +5,10 @@
     { "local": "postmaster", "kind": "mailbox", "purpose": "Aliyun admin account" },
     { "local": "tseka", "kind": "mailbox", "purpose": "Final inbox for every group" },
     { "local": "cyane", "kind": "mailbox", "purpose": "Board member" },
-    {
-      "local": "founders",
-      "kind": "mailbox",
-      "purpose": "Founders contact; POP-collected into tseka"
-    },
-    {
-      "local": "support",
-      "kind": "mailbox",
-      "purpose": "Customer support; POP-collected into tseka"
-    },
-    {
-      "local": "contact",
-      "kind": "mailbox",
-      "purpose": "General contact; POP-collected into tseka"
-    },
-    {
-      "local": "dev",
-      "kind": "mailbox",
-      "purpose": "Developer accounts; POP-collected into tseka"
-    },
+    { "local": "founders", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "support", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "contact", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "dev", "kind": "group", "deliversTo": ["tseka"] },
     { "local": "legal", "kind": "group", "deliversTo": ["tseka"] },
     { "local": "privacy", "kind": "group", "deliversTo": ["tseka"] },
     { "local": "dpo", "kind": "group", "deliversTo": ["tseka"] },
