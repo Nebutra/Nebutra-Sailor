@@ -38,6 +38,12 @@ primary_region = "sin"
   source = "redis_data"
   destination = "/data"
 
+# Gateway, router and nebutra-inngest all depend on this Machine. Do not let the
+# default on-failure budget (10 retries) leave it stopped (see infra/fly/inngest.toml).
+[[restart]]
+  policy = "always"
+  processes = ["app"]
+
 [[vm]]
   size = "shared-cpu-1x"
   memory = "512mb"
