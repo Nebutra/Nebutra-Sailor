@@ -10374,6 +10374,277 @@
         }
       }
     },
+    "/api/v1/billing/self-service": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "Billing page state: readiness, live methods, current plan, offers",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,31}$"
+            },
+            "required": false,
+            "name": "product",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "What the billing page shows",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "provider": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["disabled", "degraded", "ready"]
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "missing": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "methods": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "enum": ["card", "alipay", "wechat"]
+                          },
+                          "currency": {
+                            "type": "string",
+                            "enum": ["USD", "CNY"]
+                          }
+                        },
+                        "required": ["id", "currency"]
+                      }
+                    },
+                    "product": {
+                      "type": "string"
+                    },
+                    "plan": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "tier": {
+                          "type": "string"
+                        },
+                        "product": {
+                          "type": "string"
+                        },
+                        "endsAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["tier", "product", "endsAt"]
+                    },
+                    "offers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "product": {
+                            "type": "string"
+                          },
+                          "account": {
+                            "type": "string",
+                            "enum": ["personal", "organization", "workspace"]
+                          },
+                          "kind": {
+                            "type": "string"
+                          },
+                          "grants": {
+                            "type": "object",
+                            "properties": {
+                              "credits": {
+                                "type": "number"
+                              },
+                              "tier": {
+                                "type": "string"
+                              },
+                              "days": {
+                                "type": "number"
+                              },
+                              "monthlyCredits": {
+                                "type": "number"
+                              },
+                              "expiresInDays": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "prices": {
+                            "type": "object",
+                            "properties": {
+                              "USD": {
+                                "type": "number"
+                              },
+                              "CNY": {
+                                "type": "number"
+                              }
+                            }
+                          },
+                          "customAmount": {
+                            "type": "object",
+                            "properties": {
+                              "USD": {
+                                "type": "object",
+                                "properties": {
+                                  "min": {
+                                    "type": "number"
+                                  },
+                                  "max": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": ["min", "max"]
+                              },
+                              "CNY": {
+                                "type": "object",
+                                "properties": {
+                                  "min": {
+                                    "type": "number"
+                                  },
+                                  "max": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": ["min", "max"]
+                              }
+                            }
+                          },
+                          "highlight": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["id", "product", "account", "kind", "grants", "name"]
+                      }
+                    }
+                  },
+                  "required": [
+                    "provider",
+                    "status",
+                    "title",
+                    "description",
+                    "missing",
+                    "methods",
+                    "product",
+                    "plan",
+                    "offers"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/orders/{id}/verify": {
+      "post": {
+        "tags": ["Billing", "Orders"],
+        "summary": "Ask the payment provider about a pending order and settle it if paid",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 64
+            },
+            "required": true,
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order status after the check",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "offerId": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": ["PENDING", "PAID", "PARTIALLY_REFUNDED", "REFUNDED", "EXPIRED"]
+                    },
+                    "fulfilled": {
+                      "type": "boolean"
+                    },
+                    "amountMinor": {
+                      "type": "integer"
+                    },
+                    "currency": {
+                      "type": "string"
+                    },
+                    "method": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "offerId",
+                    "status",
+                    "fulfilled",
+                    "amountMinor",
+                    "currency",
+                    "method",
+                    "createdAt"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such order for this buyer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["error"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/notifications": {
       "get": {
         "tags": ["Notifications"],
