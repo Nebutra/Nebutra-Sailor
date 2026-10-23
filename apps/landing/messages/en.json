@@ -271,7 +271,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO STRUCTURE",
-    "title": "10 apps. 111 packages. 4 backend lanes.",
+    "title": "10 apps. 110 packages. 4 backend lanes.",
     "description": "Shared code, parallel builds, zero duplication. Complete end-to-end typing from database to frontend.",
     "metricApps": "apps",
     "metricBackends": "backend lanes",
@@ -1928,7 +1928,7 @@
         },
         "why-turborepo": {
           "question": "Why Turborepo over a standard Next.js app?",
-          "answer": "Sailor is 10 apps + 111 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
+          "answer": "Sailor is 10 apps + 110 shared packages under packages/*/* + 4 backend lanes (Hono gateway, FastAPI/Python, Go, Rust) — far past the point where a single Next.js mega-app stays maintainable. Turborepo gives us affected-only builds, transparent remote caching, and a single source of truth for shared design tokens, auth, billing, and observability — without forcing every team into the same Next.js process."
         },
         "multi-tenancy": {
           "question": "How is multi-tenancy handled?",
@@ -2009,7 +2009,7 @@
           "label": "AI providers supported"
         },
         "projects": {
-          "value": "111",
+          "value": "110",
           "label": "monorepo packages"
         },
         "uptime": {
@@ -3541,7 +3541,6 @@
       "graph-model": "Property-graph model layer for knowledge / org / asset graphs. Edges/nodes typed by Zod, persisted via Prisma or Neo4j adapter.",
       "provider-factory": "Auto-detecting provider factory pattern — env vars choose between queue / search / notifications backends with a single getX() call.",
       "capability-kit": "Composable capability primitives — pricing tier ↔ feature flag ↔ quota ↔ UI gating wired into one declarative manifest.",
-      "typelens-catalog": "The data layer for TypeLens: typographic works, pairings and extract packs for designers and design agents. Work in progress — the catalog model exists, the seed content does not yet.",
       "fonts": "Self-hosted open-source fonts: the Chinese body face every app loads, plus a registry of 19 faces that themes and DESIGN.md files can name — no request leaves for a font CDN.",
       "brand": "Brand primitives — color definitions, gradient tokens, motion language. Source data; not imported at runtime by apps.",
       "tokens": "Runtime CSS variables + ThemeProvider — single source of truth for colors, spacing, radii in every app. @import in your globals.css.",

@@ -6,7 +6,7 @@ import { brand } from "@nebutra/brand/metadata";
  *
  * Each `line` is the one the product itself leads with.
  */
-export type ProductCategory = "Creative" | "Infrastructure" | "Developer" | "Design";
+export type ProductCategory = "Creative" | "Infrastructure" | "Developer";
 
 export interface Product {
   id: string;
@@ -44,16 +44,6 @@ export const PRODUCTS: readonly Product[] = [
     domain: at("router"),
   },
   {
-    id: "typelens",
-    name: "Typelens",
-    line: "Real-world pairings for designers and design agents.",
-    what: "519 works, indexed by typeface, mood and medium.",
-    whatZh: "519 件作品，按字体、情绪和媒介索引。",
-    category: "Design",
-    href: `https://${at("typelens")}`,
-    domain: at("typelens"),
-  },
-  {
     id: "forge",
     name: "Forge",
     line: "Swiss-army knife for online tools.",
@@ -85,9 +75,4 @@ export const PRODUCTS: readonly Product[] = [
   },
 ];
 
-export const CATEGORIES: readonly ProductCategory[] = [
-  "Creative",
-  "Infrastructure",
-  "Developer",
-  "Design",
-];
+export const CATEGORIES: readonly ProductCategory[] = ["Creative", "Infrastructure", "Developer"];

@@ -88,7 +88,7 @@ apps/web/src/lib/__tests__/audit-remediation.test.ts
 # Nebutra-owned apps (not reusable skeleton)
 # Community = Sleptons forum. tsekaluk-dev = personal site.
 # design-docs + docs-hub + studio are Nebutra-authored content systems.
-# Product lines (forge/router/pebble/typelens/design/admin/auth-center) ship
+# Product lines (forge/router/pebble/design/admin/auth-center) ship
 # only in the monorepo — customers get web + landing + idp + mail-preview.
 # ---------------------------------------------------------------------------
 apps/sleptons/
@@ -100,7 +100,6 @@ apps/docs/
 apps/forge/
 apps/router/
 apps/pebble/
-apps/typelens/
 apps/design/
 apps/admin/
 apps/auth/
@@ -253,7 +252,6 @@ tests/load/
 .github/workflows/deploy-gateway.yml
 .github/workflows/deploy-origin-ecs.yml
 .github/workflows/deploy-sailor-docs.yml
-.github/workflows/deploy-typelens.yml
 .github/workflows/ops-auth-console-setup.yml
 .github/workflows/ops-configure-pebble-r2.yml
 .github/workflows/ops-db-inventory.yml
@@ -520,8 +518,6 @@ packages/design/ui/src/primitives/fixtures/
 # Nebutra's product-pricing story imports a landing module template-build
 # strips (product-offer-list), so it fails the scaffold's Storybook build.
 apps/storybook/src/stories/ProductPricing.stories.tsx
-# TypeLens (a Nebutra product) design study: screenshots and route notes.
-docs/design/typelens-fiu-study/
 # Nebutra's Product Hunt launch kit (press / PR, like /marketing/).
 content/producthunt/
 # Nightly cold-start smoke of the published create-sailor against this

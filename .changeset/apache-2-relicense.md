@@ -69,7 +69,6 @@
 "@nebutra/tool-registry": patch
 "@nebutra/trace-store": patch
 "@nebutra/tts": patch
-"@nebutra/typelens-catalog": patch
 "@nebutra/ui": patch
 "@nebutra/uploads": patch
 "@nebutra/vault": patch

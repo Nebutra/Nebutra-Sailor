@@ -32,7 +32,6 @@ const ROOT_LAYOUTS: Record<string, string> = {
   router: "apps/router/src/app/layout.tsx",
   "sailor-docs": "apps/sailor-docs/src/app/[lang]/layout.tsx",
   sleptons: "apps/sleptons/src/app/layout.tsx",
-  typelens: "apps/typelens/src/app/layout.tsx",
   web: "apps/web/src/app/layout.tsx",
 };
 

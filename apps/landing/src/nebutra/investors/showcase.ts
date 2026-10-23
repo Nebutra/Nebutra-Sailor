@@ -4,7 +4,6 @@ import acme from "./shots/acme.webp";
 import forge from "./shots/forge.webp";
 import kcq from "./shots/kcq.webp";
 import router from "./shots/router.webp";
-import typelens from "./shots/typelens.webp";
 
 /**
  * What the investors page shows of the platform: live sites only.
@@ -15,7 +14,7 @@ import typelens from "./shots/typelens.webp";
  * The `copy` key is the product's line under `sitePages.investors.products`.
  */
 export interface ShowcaseItem {
-  id: "router" | "forge" | "typelens" | "kcq";
+  id: "router" | "forge" | "kcq";
   name: string;
   domain: string;
   href: string;
@@ -34,7 +33,6 @@ const live = (sub: string, name: string, shot: StaticImageData, id: ShowcaseItem
 export const SHOWCASE: readonly ShowcaseItem[] = [
   live("router", "Router", router, "router"),
   live("forge", "Forge", forge, "forge"),
-  live("typelens", "Typelens", typelens, "typelens"),
   live("kcq", "KCQ", kcq, "kcq"),
 ];
 

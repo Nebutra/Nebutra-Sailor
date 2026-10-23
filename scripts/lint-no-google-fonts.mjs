@@ -15,7 +15,7 @@
 // the face to @nebutra/fonts and use its CSS variable.
 //
 // Scope: every source file the template ships. Paths .templateignore strips
-// (Nebutra-only apps such as apps/kuanlan and apps/typelens) are out of scope,
+// (Nebutra-only apps such as apps/kuanlan and apps/forge) are out of scope,
 // so no allowlist is needed; in a scaffold there is no .templateignore and
 // every file is in scope. packages/** is never stripped, so @nebutra/fonts is
 // always checked.

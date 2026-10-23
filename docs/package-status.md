@@ -105,7 +105,7 @@ contribute, or (c) a managed SaaS that the provider wraps.
 | `@nebutra/admin-tooling` | (consumed directly)    | Contract surface stable               | No concrete Retool/Forest/Appsmith adapter examples wired yet        |
 | `@nebutra/onboarding`    | (consumed directly)    | Client-side localStorage flow works   | Server-side completion sync pending; analytics hook for step transitions |
 
-## WIP packages (40)
+## WIP packages (39)
 
 These packages have code skeletons, README intent, and types, but no
 production integrations. Their READMEs carry a `Status: WIP — Not yet
@@ -153,7 +153,6 @@ and missing functionality.
 | `@nebutra/forge-dns-leak` | (consumed directly) | Authoritative zone must be delegated at the registrar; six FORGE_DNS_LEAK_* vars configure the listeners; probe sessions are an in-process Map |
 | `@nebutra/prepaid-wallet` | (consumed directly) | Prepaid + API key contracts; Prisma/CreditBalance adapter and billing UI are host-owned |
 | `@nebutra/router-supply` | (consumed directly) | Router supply alias/engine resolution; production sidecar health and multi-tenant credentials pending |
-| `@nebutra/typelens-catalog` | (consumed directly) | Type Lens catalog data model; product surface and seed licensing incomplete |
 
 ## Contributing
 

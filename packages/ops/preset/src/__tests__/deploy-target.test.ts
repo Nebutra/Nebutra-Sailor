@@ -71,7 +71,6 @@ describe("deploy-target selector", () => {
       "sailor-docs",
       "router",
       "forge",
-      "typelens",
       "gateway",
       "python-ai",
     ]);

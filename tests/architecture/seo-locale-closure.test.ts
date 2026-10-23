@@ -207,7 +207,6 @@ describe("per-app robots posture", () => {
     "para",
     "sleptons",
     "studio",
-    "typelens",
     "web",
   ];
 

@@ -268,7 +268,7 @@
   },
   "monorepoTree": {
     "badge": "TURBOREPO 架构",
-    "title": "10 个应用 · 111 个包 · 4 条后端线",
+    "title": "10 个应用 · 110 个包 · 4 条后端线",
     "description": "共享代码、并行构建、零冗余。从数据库到前端的完整端到端类型安全。",
     "metricApps": "应用",
     "metricBackends": "后端线",
@@ -3288,7 +3288,6 @@
       "graph-model": "属性图模型层 — 用于知识 / 组织 / 资产图;边与点用 Zod 定型,可走 Prisma 或 Neo4j adapter。",
       "provider-factory": "自动探测的 provider 工厂模式 — 由环境变量决定 queue / search / notifications backend,一个 getX() 即可。",
       "capability-kit": "可组合 capability 原语 — pricing tier ↔ feature flag ↔ quota ↔ UI gating,以单一声明式 manifest 串联。",
-      "typelens-catalog": "TypeLens 的数据层：字体作品、搭配与供设计师和设计 agent 使用的提取包。仍在开发中，目录模型已就绪，种子内容尚未完成。",
       "fonts": "自托管开源字体：每个应用加载的中文正文字体，以及主题与 DESIGN.md 可引用的 19 款字体注册表；不向任何字体 CDN 发请求。",
       "brand": "品牌原语 — 颜色定义、渐变 token、动效语言;为源数据,不被 app 运行时直接引用。",
       "tokens": "运行时 CSS 变量 + ThemeProvider — 所有 app 颜色 / 间距 / radius 的单一数据源;在 globals.css 中 @import。",

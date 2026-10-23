@@ -41,7 +41,6 @@ const mockConfig: ResolvedConfig = {
     "sailor-docs": "vercel",
     router: "vercel",
     forge: "vercel",
-    typelens: "vercel",
     gateway: "cloudflare-workers",
     "python-ai": "ecs-docker",
   },

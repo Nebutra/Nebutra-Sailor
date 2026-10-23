@@ -1,7 +1,7 @@
 # Cloudflare CI API token (Nebutra-Sailor)
 
-GitHub Actions secrets used by `deploy-sailor-docs.yml`, `deploy-typelens.yml`,
-`deploy-gateway.yml`, and `point-*-dns.yml`:
+GitHub Actions secrets used by `deploy-sailor-docs.yml`, `deploy-gateway.yml`,
+and `point-*-dns.yml`:
 
 | Secret | Purpose |
 |--------|---------|

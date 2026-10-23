@@ -3266,7 +3266,7 @@
       "landing.faq.items.what-is-sailor.question": "fc6c486e",
       "landing.faq.items.who-is-it-for.answer": "7da36375",
       "landing.faq.items.who-is-it-for.question": "2ccd162b",
-      "landing.faq.items.why-turborepo.answer": "6b8aa827",
+      "landing.faq.items.why-turborepo.answer": "9803d933",
       "landing.faq.items.why-turborepo.question": "93a74a4a",
       "landing.faq.subtitle": "2833bd33",
       "landing.faq.title": "23de5e05",
@@ -3274,7 +3274,7 @@
       "landing.socialProof.metrics.developers.label": "ff00b5d9",
       "landing.socialProof.metrics.developers.value": "7120b074",
       "landing.socialProof.metrics.projects.label": "c0957428",
-      "landing.socialProof.metrics.projects.value": "698d51a1",
+      "landing.socialProof.metrics.projects.value": "5f93f983",
       "landing.socialProof.metrics.uptime.label": "eefd403d",
       "landing.socialProof.metrics.uptime.value": "8f14e45f",
       "landing.socialProof.title": "053c0383",
@@ -4076,7 +4076,7 @@
       "monorepoTree.metricApps": "9a6dd283",
       "monorepoTree.metricBackends": "7b762c0a",
       "monorepoTree.metricPackages": "2fc9e511",
-      "monorepoTree.title": "85ca5190",
+      "monorepoTree.title": "382861d4",
       "monorepoTree.verifiedPaths": "d9daa40c",
       "nav.about": "9e66e6bd",
       "nav.avatarMenu.account": "08bd40c7",
@@ -4241,7 +4241,6 @@
       "packageCatalog.descriptions.tool-registry": "fb158065",
       "packageCatalog.descriptions.trace-store": "4d2b7e80",
       "packageCatalog.descriptions.tts": "7959cd29",
-      "packageCatalog.descriptions.typelens-catalog": "7bb18652",
       "packageCatalog.descriptions.ui": "d5213f35",
       "packageCatalog.descriptions.uploads": "ce29e861",
       "packageCatalog.descriptions.vault": "c0616212",
@@ -7463,6 +7462,7 @@
     "landing": {
       "ar": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7474,6 +7474,7 @@
       ],
       "bn": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7483,9 +7484,10 @@
         "sitePages.investors.work.rules.title",
         "sitePages.investors.work.tools.title"
       ],
-      "cs": ["landing.faq.items.why-turborepo.answer"],
+      "cs": ["landing.faq.items.why-turborepo.answer", "monorepoTree.title"],
       "da": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7497,6 +7499,8 @@
       ],
       "de": [
         "landing.faq.items.why-turborepo.answer",
+        "landing.socialProof.metrics.projects.value",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7508,6 +7512,7 @@
       ],
       "el": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7519,6 +7524,8 @@
       ],
       "es": [
         "landing.faq.items.why-turborepo.answer",
+        "landing.socialProof.metrics.projects.value",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7530,6 +7537,7 @@
       ],
       "fa": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7541,6 +7549,7 @@
       ],
       "fi": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7552,6 +7561,8 @@
       ],
       "fr": [
         "landing.faq.items.why-turborepo.answer",
+        "landing.socialProof.metrics.projects.value",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7563,6 +7574,7 @@
       ],
       "he": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7574,6 +7586,7 @@
       ],
       "hi": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7583,9 +7596,10 @@
         "sitePages.investors.work.rules.title",
         "sitePages.investors.work.tools.title"
       ],
-      "hu": ["landing.faq.items.why-turborepo.answer"],
+      "hu": ["landing.faq.items.why-turborepo.answer", "monorepoTree.title"],
       "id": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7597,6 +7611,7 @@
       ],
       "it": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7608,6 +7623,8 @@
       ],
       "ja": [
         "landing.faq.items.why-turborepo.answer",
+        "landing.socialProof.metrics.projects.value",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7619,6 +7636,8 @@
       ],
       "ko": [
         "landing.faq.items.why-turborepo.answer",
+        "landing.socialProof.metrics.projects.value",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7630,6 +7649,7 @@
       ],
       "ms": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7641,6 +7661,7 @@
       ],
       "nl": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7652,6 +7673,7 @@
       ],
       "no": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7663,6 +7685,7 @@
       ],
       "pl": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7674,6 +7697,7 @@
       ],
       "pt": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7683,9 +7707,10 @@
         "sitePages.investors.work.rules.title",
         "sitePages.investors.work.tools.title"
       ],
-      "ro": ["landing.faq.items.why-turborepo.answer"],
+      "ro": ["landing.faq.items.why-turborepo.answer", "monorepoTree.title"],
       "ru": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7697,6 +7722,7 @@
       ],
       "sv": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7708,6 +7734,7 @@
       ],
       "sw": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7719,6 +7746,7 @@
       ],
       "th": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7730,6 +7758,7 @@
       ],
       "tr": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7741,6 +7770,7 @@
       ],
       "uk": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7752,6 +7782,7 @@
       ],
       "ur": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7763,6 +7794,7 @@
       ],
       "vi": [
         "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
         "sitePages.investors.built.title",
         "sitePages.investors.hero.title",
         "sitePages.investors.practice.title",
@@ -7772,8 +7804,16 @@
         "sitePages.investors.work.rules.title",
         "sitePages.investors.work.tools.title"
       ],
-      "zh-Hans": ["landing.faq.items.why-turborepo.answer", "roadmapPage.direction.lead"],
-      "zh-Hant": ["landing.faq.items.why-turborepo.answer", "roadmapPage.direction.lead"]
+      "zh-Hans": [
+        "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
+        "roadmapPage.direction.lead"
+      ],
+      "zh-Hant": [
+        "landing.faq.items.why-turborepo.answer",
+        "monorepoTree.title",
+        "roadmapPage.direction.lead"
+      ]
     }
   }
 }

@@ -98,10 +98,6 @@ function isSharedMotionLayer(file) {
 function isAllowedGsapLayer(file) {
   return (
     file.startsWith("apps/landing/src/shared/animation/gsap/") ||
-    // TypeLens product shell — dedicated motion runtime (not marketing landing hooks)
-    file.startsWith("apps/typelens/src/lib/motion/") ||
-    file === "apps/typelens/src/components/type-lens-motion.tsx" ||
-    file === "apps/typelens/src/styles/shell.css" ||
     // KCQ /home — the one GSAP layer (hero timeline + pinned agent story), lazy-loaded and
     // reduced-motion gated (ADR 2026-10-09 landing-motion-system)
     file.startsWith("apps/kcq/src/public/home/motion/")
@@ -179,7 +175,7 @@ for (const file of files) {
   if (hit.gsap && !isAllowedGsapLayer(file)) {
     violations.push({
       file,
-      rule: "GSAP must live behind landing gsap hooks or typelens motion runtime",
+      rule: "GSAP must live behind landing gsap hooks or the KCQ home motion layer",
     });
   }
 

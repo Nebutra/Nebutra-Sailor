@@ -223,14 +223,6 @@ export const FLEET: readonly FleetServiceDefinition[] = [
     note: "观澜. Production is the nebutra-kuanlan Machine in sin; ECS PM2 is rollback only.",
   },
   {
-    id: "@nebutra/typelens",
-    label: "Type Lens",
-    runtime: "cloudflare-worker",
-    deployService: "typelens",
-    health: null,
-    note: "Host not yet in the domain SSOT.",
-  },
-  {
     id: "@nebutra/studio",
     label: "Studio",
     domainKey: "studio",

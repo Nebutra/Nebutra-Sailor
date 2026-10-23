@@ -36,7 +36,6 @@ export const DEPLOYABLE_SERVICES = [
   "sailor-docs",
   "router",
   "forge",
-  "typelens",
   "gateway",
   "python-ai",
 ] as const;
@@ -54,7 +53,6 @@ const SERVICE_SURFACES = {
   "sailor-docs": "frontend",
   router: "frontend",
   forge: "frontend",
-  typelens: "frontend",
   gateway: "edgeGateway",
   "python-ai": "originBackend",
 } as const satisfies Record<DeployableService, DeploySurface>;

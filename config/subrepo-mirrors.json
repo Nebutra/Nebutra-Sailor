@@ -414,15 +414,6 @@
       "topics": ["nebutra", "tts", "speech", "audio", "typescript"]
     },
     {
-      "packageName": "@nebutra/typelens-catalog",
-      "repoName": "typelens-catalog",
-      "sourceDir": "packages/design/typelens-catalog",
-      "cohort": "fourth-wave",
-      "category": "design-system",
-      "description": "Type Lens works, pairings, and agent extract packs for design systems.",
-      "topics": ["nebutra", "typelens", "design-system", "typography", "typescript"]
-    },
-    {
       "packageName": "@nebutra/video-compose",
       "repoName": "video-compose",
       "sourceDir": "packages/integrations/video-compose",

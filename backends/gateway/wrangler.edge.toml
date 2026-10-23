@@ -20,7 +20,7 @@ compatibility_date = "2026-06-04"
 # `routes` entry makes every `wrangler deploy` upload the new version and then
 # fail on the zone routes call — the job goes red while the Worker is already
 # live, which is how every deploy-gateway run since 2026-09-01 ended. auth-edge
-# and typelens deploy the same way for the same reason. To move or remove the
+# deploys the same way for the same reason. To move or remove the
 # route, use the dashboard or a token with zone rights (docs/ops/cloudflare-ci-token.md).
 #
 # ORIGIN_URL must not be api.nebutra.com. The Fly app URL is outside this

@@ -53,7 +53,6 @@ const VALID_APPS = [
   "forge",
   "router",
   "pebble",
-  "typelens",
   "sailor-docs",
   "studio",
   "sleptons",

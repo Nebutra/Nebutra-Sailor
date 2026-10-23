@@ -125,17 +125,7 @@ const packageGroups = [
     featureAnchor: "capability-design",
     description: "- Brand, tokens, icons, theme, and UI system packages",
     icon: React.createElement(Palette, { className: "h-4 w-4" }),
-    children: [
-      "brand",
-      "design-sync",
-      "design-tokens",
-      "fonts",
-      "icons",
-      "theme",
-      "tokens",
-      "typelens-catalog",
-      "ui",
-    ],
+    children: ["brand", "design-sync", "design-tokens", "fonts", "icons", "theme", "tokens", "ui"],
   },
   {
     id: "iam",
@@ -207,8 +197,8 @@ const packageGroups = [
 ] as const;
 
 /**
- * First-party product surfaces (forge, kcq, kuanlan, para, pebble, router, sleptons,
- * typelens) ship from this monorepo but are not Sailor kit apps. Keep them
+ * First-party product surfaces (forge, kcq, kuanlan, para, pebble, router,
+ * sleptons) ship from this monorepo but are not Sailor kit apps. Keep them
  * off the landing explorer — they have their own origins.
  */
 export const SAILOR_EXCLUDED_PRODUCT_APPS = [
@@ -220,7 +210,6 @@ export const SAILOR_EXCLUDED_PRODUCT_APPS = [
   "pebble",
   "router",
   "sleptons",
-  "typelens",
 ] as const;
 
 export const TREE_DATA: FileNode[] = [
@@ -351,7 +340,7 @@ export const TREE_DATA: FileNode[] = [
     id: "packages",
     label: "packages",
     path: "packages",
-    tag: "111",
+    tag: "110",
     icon: React.createElement(Box, {
       className: "h-[15px] w-[15px] text-success-strong fill-success/20",
     }),

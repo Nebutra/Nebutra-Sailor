@@ -3,7 +3,7 @@
 Status: **WIP** — not yet published to npm.
 
 The Simplified-Chinese face is wired into every Next app that loads Geist (web,
-landing, design-docs, sailor-docs, admin, forge, router, sleptons, typelens,
+landing, design-docs, sailor-docs, admin, forge, router, sleptons,
 mail-preview). The theme / DESIGN.md registry (19 OSS faces) is applied by
 `apps/web`, `apps/landing` and `apps/design`.
 

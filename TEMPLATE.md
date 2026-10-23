@@ -32,8 +32,8 @@ my-app/ contains only the reusable skeleton
 
 - **Marketing / legal** — landing marketing + legal routes and brand assets
 - **Dashboard business pages** — admin, billing, tenants, chat, feature-flags, …
-- **Nebutra product apps** — `forge`, `router`, `pebble`, `typelens`, `design`,
-  `admin`, `auth` (auth-center), `sleptons`, `studio`, `sailor-docs`
+- **Nebutra product apps** — `forge`, `router`, `pebble`, `design`, `admin`,
+  `auth` (auth-center), `sleptons`, `studio`, `sailor-docs`
 - **Product backends / infra** — `backends/go`, `backends/rust`,
   `infra/nebutra-router`, gateway routes for pebble / startup-os
 - **Product CI / DNS** — `deploy-pebble*`, `deploy-carina*`, `point-*-dns`, …
@@ -44,8 +44,8 @@ my-app/ contains only the reusable skeleton
 - **Scaffold weight** — assets nothing in a scaffold reads: the 15 Poppins
   cuts no code loads (Thin / Regular / Bold stay for the brand test), the
   sub-brand art only stripped apps use, an unreferenced UI fixture screenshot,
-  the TypeLens design study, the Product Hunt kit, and Nebutra's product-pricing
-  Storybook story (it imports a landing module the build strips)
+  the Product Hunt kit, and Nebutra's product-pricing Storybook story (it
+  imports a landing module the build strips)
 - **Source-repo CI** — `scaffold-nightly` (cold-start smoke of the published
   `create-sailor` against this mirror)
 

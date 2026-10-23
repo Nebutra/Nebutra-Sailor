@@ -7,7 +7,7 @@ import type { LayerId } from "./roadmap";
  * Two businesses (owner, 2026-10-10): Sailor, the platform, and Consulting,
  * enterprise AI product delivery and going global. KCQ is a product incubated
  * on Sailor, shown smaller, as proof that Sailor carries a live product. The
- * other products (Router, Forge, Typelens, PARA…) are in the footer's "More".
+ * other products (Router, Forge, PARA…) are in the footer's "More".
  *
  * The nine layers are the decision framework: every offering names the layers
  * it answers to, and /about lists the layers with what answers to each. The
