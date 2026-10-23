@@ -140,7 +140,13 @@ function KnobControl({
   if (knob.type === "boolean") {
     return (
       <div className="flex flex-col gap-1">
-        <Toggle checked={value === true} onChange={(next) => onChange(next)} size="small">
+        {/* Label left, switch on the right edge: every boolean row shares one column. */}
+        <Toggle
+          checked={value === true}
+          className="w-full justify-between"
+          onChange={(next) => onChange(next)}
+          size="small"
+        >
           <span className="font-medium text-foreground text-sm">{label}</span>
         </Toggle>
         {knob.hint ? <Hint>{knob.hint}</Hint> : null}

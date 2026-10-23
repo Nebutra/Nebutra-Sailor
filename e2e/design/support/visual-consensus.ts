@@ -695,3 +695,94 @@ export async function pressedState(
   await page.mouse.up();
   return state;
 }
+
+export interface ToggleRowScan {
+  rows: {
+    label: string;
+    labelRight: number;
+    trackLeft: number;
+    trackRight: number;
+    panelRight: number;
+    /** Off-state fill against the surface it sits on. */
+    fillContrast: number;
+    /** Off-state thumb against the off-state fill. */
+    thumbContrast: number;
+    /** Hue of the off-state track edge; a coloured outline here is a status tint on an off switch. */
+    borderAlpha: number;
+  }[];
+}
+
+/**
+ * Geometry and contrast of every unchecked boolean switch inside the Props panel.
+ * A switch is a control: its off state must clear WCAG 1.4.11 (3:1), carry no
+ * status tint, and the rows must share one right-hand column.
+ */
+export async function scanToggleRows(page: Page): Promise<ToggleRowScan> {
+  return page.evaluate(() => {
+    type Rgb = [number, number, number];
+    const canvas = document.createElement("canvas");
+    canvas.width = 1;
+    canvas.height = 1;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    if (!ctx) throw new Error("canvas 2d unavailable");
+    const over = (css: string, base: Rgb): Rgb => {
+      ctx.fillStyle = `rgb(${base[0]} ${base[1]} ${base[2]})`;
+      ctx.fillRect(0, 0, 1, 1);
+      ctx.fillStyle = css;
+      ctx.fillRect(0, 0, 1, 1);
+      const px = ctx.getImageData(0, 0, 1, 1).data;
+      return [px[0] ?? 0, px[1] ?? 0, px[2] ?? 0];
+    };
+    const luminance = ([r, g, b]: Rgb) => {
+      const lin = (v: number) => {
+        const c = v / 255;
+        return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+      };
+      return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+    };
+    const ratio = (a: Rgb, b: Rgb) => {
+      const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+      return ((hi ?? 0) + 0.05) / ((lo ?? 0) + 0.05);
+    };
+    const rootBase: Rgb = document.documentElement.classList.contains("dark")
+      ? [0, 0, 0]
+      : [255, 255, 255];
+    const surface = (el: Element | null): Rgb => {
+      if (!el) return rootBase;
+      const parent = surface(el.parentElement);
+      const bg = getComputedStyle(el).backgroundColor;
+      return bg === "rgba(0, 0, 0, 0)" || bg === "transparent" ? parent : over(bg, parent);
+    };
+    const round = (n: number) => Math.round(n * 100) / 100;
+    const inputs = [
+      ...document.querySelectorAll<HTMLInputElement>("#playground input[type=checkbox]"),
+    ].filter((input) => !input.checked);
+    return {
+      rows: inputs.map((input) => {
+        const track = input.nextElementSibling as HTMLElement;
+        const thumb = track.firstElementChild as HTMLElement;
+        const wrap = input.closest("span.inline-flex") as HTMLElement;
+        const text = [...wrap.querySelectorAll("label")].find((l) => l.textContent?.trim());
+        const page = surface(track.parentElement);
+        const fill = over(getComputedStyle(track).backgroundColor, page);
+        const thumbFill = over(getComputedStyle(thumb).backgroundColor, fill);
+        const panel = wrap.closest("aside") ?? wrap.parentElement;
+        const edge = getComputedStyle(track).borderTopColor;
+        ctx.clearRect(0, 0, 1, 1);
+        ctx.fillStyle = edge;
+        ctx.fillRect(0, 0, 1, 1);
+        const alpha = ctx.getImageData(0, 0, 1, 1).data[3] ?? 0;
+        return {
+          label: text?.textContent?.trim() ?? "",
+          labelRight: text?.getBoundingClientRect().right ?? 0,
+          trackLeft: track.getBoundingClientRect().left,
+          trackRight: track.getBoundingClientRect().right,
+          panelRight: panel?.getBoundingClientRect().right ?? 0,
+          fillContrast: round(ratio(fill, page)),
+          thumbContrast: round(ratio(thumbFill, fill)),
+          borderAlpha: alpha,
+        };
+      }),
+    };
+  });
+}

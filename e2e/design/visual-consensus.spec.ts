@@ -14,6 +14,7 @@ import {
   SURFACE_PAGES,
   scanInteractiveTransitions,
   scanStaticSurfaces,
+  scanToggleRows,
   setOverlayPhase,
   startOverlayRecorder,
   stopOverlayRecorder,
@@ -617,6 +618,43 @@ for (const brand of BRANDS) {
 // ---------------------------------------------------------------------------
 // 7. After screenshots (set DESIGN_SCREENSHOT_DIR to capture)
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Switches: an off switch is still a control (3:1), untinted, in one column
+// ---------------------------------------------------------------------------
+
+for (const scheme of ["light", "dark"] as const) {
+  test.describe(`boolean switches (${scheme})`, () => {
+    test.use({ colorScheme: scheme });
+
+    for (const brand of BRANDS) {
+      for (const slug of ["badge", "input", "button"]) {
+        test(`${brand} /components/${slug}: off switches are visible, untinted and aligned`, async ({
+          page,
+        }, testInfo) => {
+          desktopOnly(testInfo.project.name);
+          await openAs(page, brand, `/components/${slug}`);
+          const { rows } = await scanToggleRows(page);
+          expect(rows.length, "unchecked switches in the playground").toBeGreaterThan(0);
+          for (const row of rows) {
+            expect
+              .soft(row.fillContrast, `${row.label}: off track vs surface`)
+              .toBeGreaterThanOrEqual(3);
+            expect
+              .soft(row.thumbContrast, `${row.label}: thumb vs off track`)
+              .toBeGreaterThanOrEqual(3);
+            expect.soft(row.borderAlpha, `${row.label}: off track has no outline tint`).toBe(0);
+            expect
+              .soft(row.trackLeft - row.labelRight, `${row.label}: label and switch do not touch`)
+              .toBeGreaterThanOrEqual(4);
+          }
+          const rights = rows.map((row) => Math.round(row.trackRight));
+          expect(new Set(rights).size, `switch right edges ${rights.join(", ")}`).toBe(1);
+        });
+      }
+    }
+  });
+}
 
 const SHOT_DIR = process.env.DESIGN_SCREENSHOT_DIR;
 
