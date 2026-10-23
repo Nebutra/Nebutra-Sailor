@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - "packages/design/ui/src/**"
+      - "packages/design/theme/**"
+      - "packages/design/tokens/**"
+      - "apps/design/**"
       - "apps/storybook/**"
       - "apps/landing/src/components/**"
       - "apps/landing/src/app/**/page.tsx"
@@ -14,6 +17,9 @@ on:
   pull_request:
     paths:
       - "packages/design/ui/src/**"
+      - "packages/design/theme/**"
+      - "packages/design/tokens/**"
+      - "apps/design/**"
       - "apps/storybook/**"
       - "apps/landing/src/components/**"
       - "apps/landing/src/app/**/page.tsx"
@@ -27,7 +33,15 @@ jobs:
   chromatic:
     name: Run Chromatic
     runs-on: ubuntu-latest
+    # A step-level `env` is invisible to that same step's `if`, so the token was always
+    # empty there and the publish step never ran. Job-level env is visible to every `if`.
+    env:
+      CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
     steps:
+      - name: Skip notice
+        if: env.CHROMATIC_PROJECT_TOKEN == ''
+        run: echo "::notice title=Chromatic skipped::Add the CHROMATIC_PROJECT_TOKEN repository secret to enable visual regression."
+
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -37,16 +51,16 @@ jobs:
         uses: ./.github/actions/setup-node-pnpm
 
       - name: Build workspace dependencies
+        if: env.CHROMATIC_PROJECT_TOKEN != ''
         run: pnpm --filter @nebutra/brand build
 
       - name: Build Storybook
+        if: env.CHROMATIC_PROJECT_TOKEN != ''
         run: pnpm --filter @nebutra/storybook build
 
       - name: Publish to Chromatic
         if: env.CHROMATIC_PROJECT_TOKEN != ''
         uses: chromaui/action@db24c2b77bb65385a109e4dc29f36f0be9998fa7 # latest
-        env:
-          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           storybookBuildDir: apps/storybook/dist
