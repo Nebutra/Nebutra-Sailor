@@ -347,7 +347,7 @@ const en = {
     ogAlt:
       "Ranked bars of main-thread time per frame for KLineChartQuant, Lightweight Charts, Apache ECharts and KLineChart drawing the same candles. Lower is better.",
     heading: "Every millisecond counts.",
-    lede: "With {bars} bars on screen, KCQ on {renderer} takes {ms} ms of main-thread time per frame, under {share}% of a {budget} ms frame. The rest of the frame is your strategy's.",
+    lede: "See it sooner. Act sooner. With {bars} bars on screen, KCQ on {renderer} takes {ms} ms of main-thread time per frame, under {share}% of a {budget} ms frame.",
     run: "The same candles and moving averages, drawn by each library and scrolled one bar per frame. Measured {date} on {cpu}, {browser}.",
     figure: {
       caption: "Main-thread time per frame",
@@ -718,7 +718,7 @@ const zh: PublicMessages = {
       "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时的每帧主线程耗时。方法、硬件与原始数据全部公开。",
     ogAlt: "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时每帧主线程耗时的排名条形图，越低越好。",
     heading: "毫秒必争。",
-    lede: "{bars} 根 K 线在屏，KCQ（{renderer}）每帧只占主线程 {ms} ms，不到一帧 {budget} ms 的 {share}%。剩下的时间，都留给你的策略。",
+    lede: "看到得早一点，就快人一步。{bars} 根 K 线在屏，KCQ（{renderer}）每帧只占主线程 {ms} ms，不到一帧 {budget} ms 的 {share}%。",
     run: "同样的 K 线与均线，由各库分别绘制，每帧向历史滚动一根。测于 {date}，{cpu}，{browser}。",
     figure: {
       caption: "每帧主线程耗时",
