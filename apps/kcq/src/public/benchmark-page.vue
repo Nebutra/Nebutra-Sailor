@@ -25,12 +25,23 @@ const ms = (value: number) => value.toFixed(2);
 const date = computed(() =>
   new Intl.DateTimeFormat(lang.value, { dateStyle: "long", timeZone: "UTC" }).format(new Date(run.generatedAt)),
 );
+// The headline's proof: KCQ's best backend at the largest tier as a share of one frame. "Under N%"
+// takes the next whole percent above the measured share, so the claim always holds.
+const budget = run.configuration.refreshIntervalMs;
+const ledeText = computed(() =>
+  t("benchmark.lede", {
+    bars: figures.bars.toLocaleString(lang.value),
+    renderer: figures.best.subject.renderer,
+    ms: ms(figures.best.scenario.mainThreadMsPerFrame),
+    budget: budget.toFixed(1),
+    share: Math.floor((figures.best.scenario.mainThreadMsPerFrame / budget) * 100) + 1,
+  }),
+);
 const lead = computed(() =>
   figures.heaviest && figures.ratio
     ? t("benchmark.verdict.lead", {
         bars: figures.bars.toLocaleString(lang.value),
         renderer: figures.best.subject.renderer,
-        ms: ms(figures.best.scenario.mainThreadMsPerFrame),
         library: figures.heaviest.subject.library,
         ratio: figures.ratio.toFixed(1),
       })
@@ -85,7 +96,7 @@ const environment = computed(() => [
     <div class="container">
       <header class="section-head">
         <h1 class="t-heading enter-mask">{{ t("benchmark.heading") }}</h1>
-        <p class="t-lede enter-rise" style="--enter-delay: 80ms">{{ t("benchmark.lede") }}</p>
+        <p class="t-lede enter-rise" style="--enter-delay: 80ms">{{ ledeText }}</p>
         <p class="t-meta enter-rise" style="--enter-delay: 140ms">
           {{ t("benchmark.run", { date, cpu: run.environment.cpu, browser: run.environment.browser }) }}
         </p>

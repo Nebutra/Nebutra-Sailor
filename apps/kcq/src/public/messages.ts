@@ -346,9 +346,9 @@ const en = {
       "Main-thread time per frame for KLineChartQuant, Lightweight Charts, Apache ECharts and KLineChart drawing the same candles. Method, hardware and raw data published.",
     ogAlt:
       "Ranked bars of main-thread time per frame for KLineChartQuant, Lightweight Charts, Apache ECharts and KLineChart drawing the same candles. Lower is better.",
-    heading: "Four chart libraries, one scene",
-    lede: "The same candles and moving averages, drawn by each library and scrolled one bar per frame. The figure is main-thread time per frame; lower is better.",
-    run: "Measured {date} on {cpu}, {browser}.",
+    heading: "Every millisecond counts.",
+    lede: "See it sooner. Act sooner. With {bars} bars on screen, KCQ on {renderer} takes {ms} ms of main-thread time per frame, under {share}% of a {budget} ms frame.",
+    run: "The same candles and moving averages, drawn by each library and scrolled one bar per frame. Measured {date} on {cpu}, {browser}.",
     figure: {
       caption: "Main-thread time per frame",
       lower: "Lower is better",
@@ -357,7 +357,7 @@ const en = {
       note: "Bars are the mean of {frames} frames × {rounds} rounds; the line spans the fastest and slowest round. A 60 Hz frame is {budget} ms.",
     },
     verdict: {
-      lead: "At {bars} visible bars, KCQ on {renderer} spends {ms} ms of main-thread time per frame; {library} spends {ratio}× as much.",
+      lead: "At {bars} visible bars, {library} spends {ratio}× the main-thread time per frame of KCQ on {renderer}.",
       trail: "On this scene, {libraries} spends less. | On this scene, {libraries} spend less.",
       both: "{lead} {trail}",
     },
@@ -717,9 +717,9 @@ const zh: PublicMessages = {
     description:
       "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时的每帧主线程耗时。方法、硬件与原始数据全部公开。",
     ogAlt: "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时每帧主线程耗时的排名条形图，越低越好。",
-    heading: "四个图表库，同一张图",
-    lede: "同样的 K 线与均线，由各库分别绘制，每帧向历史滚动一根。图中是每帧主线程耗时，越低越好。",
-    run: "测于 {date}，{cpu}，{browser}。",
+    heading: "毫秒必争。",
+    lede: "看到得早一点，就快人一步。{bars} 根 K 线在屏，KCQ（{renderer}）每帧只占主线程 {ms} ms，不到一帧 {budget} ms 的 {share}%。",
+    run: "同样的 K 线与均线，由各库分别绘制，每帧向历史滚动一根。测于 {date}，{cpu}，{browser}。",
     figure: {
       caption: "每帧主线程耗时",
       lower: "越低越好",
@@ -728,7 +728,7 @@ const zh: PublicMessages = {
       note: "柱为 {frames} 帧 × {rounds} 轮的均值，细线标出最快与最慢的一轮。60 Hz 下一帧为 {budget} ms。",
     },
     verdict: {
-      lead: "可见 {bars} 根 K 线时，KCQ（{renderer}）每帧主线程耗时 {ms} ms，{library} 是它的 {ratio} 倍。",
+      lead: "可见 {bars} 根 K 线时，{library} 每帧主线程耗时是 KCQ（{renderer}）的 {ratio} 倍。",
       trail: "在这个场景里，{libraries} 耗时更低。",
       both: "{lead}{trail}",
     },

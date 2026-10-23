@@ -208,12 +208,13 @@ function benchmarkCard(html, page) {
   const tier = capture(figure, /aria-checked="true"[^>]*>([^<]+)/, page);
   const rows = figureRows(figure, page);
 
-  // One clause per line where it fits, so the headline reads "subject, / claim".
+  // One clause or sentence per line where it fits, so "See it sooner. / Act sooner." breaks where it reads.
   const han = isHan(heading);
   const size = han ? 56 : 52;
   const lineHeight = size * (han ? 1.2 : 1.04);
   const lines = heading
-    .split(/(?<=[,，])\s*/)
+    .split(/(?<=[,，.。])\s*/)
+    .filter(Boolean)
     .flatMap((clause) => wrap(clause, size, fonts.display, 440));
   if (lines.length > 3) throw new Error(`${page}: the headline needs ${lines.length} lines`);
   const headingTop = 232;
