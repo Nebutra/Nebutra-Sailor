@@ -1406,6 +1406,17 @@
       "emptyDescription": "创建一个工作空间，开始你的旅程。"
     }
   },
+  "navigation": {
+    "orgSwitcher": {
+      "ariaLabel": "切换组织",
+      "current": "当前",
+      "empty": "没有组织",
+      "selectOrg": "选择组织",
+      "create": "创建组织",
+      "switching": "正在切换…",
+      "error": "组织切换失败，请重试。"
+    }
+  },
   "copy": {
     "usagePage": {
       "remainingThisPeriod": "本周期剩余 {value0} {unit}",
@@ -1580,6 +1591,8 @@
       "level": "等级 {id} · {title}",
       "active": "已生效",
       "moreToUnlock": "再邀请 {remaining} 人即可解锁",
+      "claimedInvites": "已领取的邀请",
+      "level2": "等级",
       "levels": {
         "l0": {
           "title": "创作者",
@@ -1597,8 +1610,6 @@
           "description": "有五十位好友通过你的邀请码加入后达成。"
         }
       },
-      "claimedInvites": "已领取的邀请",
-      "level2": "等级",
       "failedToLoadReferrals": "邀请信息加载失败。",
       "redeeming": "兑换中",
       "redeem": "兑换"
@@ -2001,7 +2012,12 @@
       "leaveOrganization2": "离开组织",
       "leave": "离开",
       "remove": "移除",
-      "roles": { "owner": "所有者", "admin": "管理员", "member": "成员", "viewer": "只读成员" },
+      "roles": {
+        "owner": "所有者",
+        "admin": "管理员",
+        "member": "成员",
+        "viewer": "只读成员"
+      },
       "unknownDate": "未知",
       "roleChanged": "{name} 现在是{role}。",
       "memberCount": "{count} 名成员",
@@ -2404,7 +2420,6 @@
       "console": "控制台",
       "shipsInBatch": "第 2 批上线"
     },
-    "brandBrandAssets": {},
     "cofounderMatchCofounderCard": {
       "compiledCompany": "已编译的公司",
       "complementarity": "互补度",
@@ -2657,26 +2672,6 @@
       "notAvailable": "不可用",
       "needsPassword": "需要密码"
     },
-    "selectOrgJourney": {
-      "invitation": {
-        "title": "邀请已接受",
-        "description": "选择你受邀加入的工作区；如果还没列出，可以新建一个。",
-        "emptyActionLabel": "改为创建工作区",
-        "createActionLabel": "再创建一个工作区"
-      },
-      "billing": {
-        "title": "选择要管理账单的工作区",
-        "description": "账单变更以工作区为单位。选择一个工作区继续管理订阅。",
-        "emptyActionLabel": "创建工作区",
-        "createActionLabel": "新建工作区"
-      },
-      "default": {
-        "title": "选择工作区",
-        "description": "选择一个工作区继续，或新建一个。",
-        "emptyActionLabel": "创建工作区",
-        "createActionLabel": "新建工作区"
-      }
-    },
     "adminImpersonateButton": {
       "youWillSeeThe": "在你停止之前，你会以该用户的身份查看应用。",
       "startImpersonating": "开始模拟登录",
@@ -2727,19 +2722,28 @@
       "weCouldnTLoad": "无法加载你的 API 密钥",
       "tryAgain": "重试"
     },
+    "selectOrgJourney": {
+      "invitation": {
+        "title": "邀请已接受",
+        "description": "选择你受邀加入的工作区；如果还没列出，可以新建一个。",
+        "emptyActionLabel": "改为创建工作区",
+        "createActionLabel": "再创建一个工作区"
+      },
+      "billing": {
+        "title": "选择要管理账单的工作区",
+        "description": "账单变更以工作区为单位。选择一个工作区继续管理订阅。",
+        "emptyActionLabel": "创建工作区",
+        "createActionLabel": "新建工作区"
+      },
+      "default": {
+        "title": "选择工作区",
+        "description": "选择一个工作区继续，或新建一个。",
+        "emptyActionLabel": "创建工作区",
+        "createActionLabel": "新建工作区"
+      }
+    },
     "securityActiveSessionsBlock": {
       "unknownTime": "未知时间"
-    }
-  },
-  "navigation": {
-    "orgSwitcher": {
-      "ariaLabel": "切换组织",
-      "current": "当前",
-      "empty": "没有组织",
-      "selectOrg": "选择组织",
-      "create": "创建组织",
-      "switching": "正在切换…",
-      "error": "组织切换失败，请重试。"
     }
   }
 }
