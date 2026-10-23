@@ -3,6 +3,7 @@
 import outfitFont from "@fontsource/outfit/files/outfit-latin-600-normal.woff2?url";
 // Nebutra's heading face: the file public.css loads as `kcq-dm-sans.woff2` (vite.config.mjs alias), so one fetch.
 import dmSansFont from "./brand/kcq-dm-sans-500.woff2?url";
+import { COMPARE_RUN } from "./benchmark/compare-run";
 import { PUBLIC_MESSAGES } from "./messages";
 import {
   KCQ_ORIGIN,
@@ -36,15 +37,18 @@ function contentHash(text: string): string {
 }
 
 /** Pages with their own card (scripts/og-images.mjs); the rest share the home card. */
-const OG_PAGES = ["home", "investors"] as const satisfies readonly PublicPage[];
+const OG_PAGES = ["home", "investors", "benchmark"] as const satisfies readonly PublicPage[];
 type OgPage = (typeof OG_PAGES)[number];
 const ogPage = (page: PublicPage): OgPage =>
   (OG_PAGES as readonly PublicPage[]).includes(page) ? (page as OgPage) : "home";
 
+/** What a card draws beyond its copy: the benchmark card also draws the published run's bars. */
+const ogData = (card: OgPage) => (card === "benchmark" ? COMPARE_RUN.generatedAt : "");
+
 export function ogImageUrl(locale: PublicLocale, page: PublicPage = "home"): string {
   const card = ogPage(page);
   const copy = PUBLIC_MESSAGES[locale][card];
-  return `${KCQ_ORIGIN}/og/${card}-${locale}.png?v=${contentHash(copy.heading + copy.description)}`;
+  return `${KCQ_ORIGIN}/og/${card}-${locale}.png?v=${contentHash(copy.heading + copy.description + ogData(card))}`;
 }
 
 const ICONS = [
