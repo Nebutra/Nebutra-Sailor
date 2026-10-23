@@ -19,13 +19,13 @@ import { join } from "node:path";
 
 const MANIFEST = "infra/ops/email/addresses.json";
 
-function addressPattern(domain) {
-  const escaped = domain.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return new RegExp(`([A-Za-z0-9._+-]+)@${escaped}(?![A-Za-z0-9-]|\\.[A-Za-z])`, "gi");
-}
+const ADDRESS = /([A-Za-z0-9._+-]+)@([A-Za-z0-9.-]+)/g;
 
 export function extractAddresses(text, domain) {
-  return [...text.matchAll(addressPattern(domain))].map((m) => m[1].toLowerCase());
+  const want = domain.toLowerCase();
+  return [...text.matchAll(ADDRESS)]
+    .filter((m) => m[2].replace(/\.+$/, "").toLowerCase() === want)
+    .map((m) => m[1].toLowerCase());
 }
 
 // found: Map<local, string[] files>. Returns the unlisted addresses.
