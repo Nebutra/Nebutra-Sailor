@@ -33,6 +33,30 @@ The two former image-size audit ignores were removed after updating its
 Fumadocs dependency to the fixed 2.0.3+ line. No GHSA ignore remains in the
 workspace policy.
 
+## Dependency remediation (2026-10-23)
+
+The production gate reported two high and four critical findings on `main`.
+Each is fixed by a same-major upgrade in the locked graph:
+
+| Package | Fixed version | Advisory |
+| --- | --- | --- |
+| `next` | `16.4.2` | `GHSA-2464-fhr4-w9xw`, `GHSA-673q-mjm6-r5xr` (critical), `GHSA-p3m5-59mp-jv5r` (high) |
+| `@sentry/nextjs` | `10.76.2` | `GHSA-mchm-gjx6-7h55` (critical) |
+| `dompurify` | `3.4.17` | `GHSA-cg2g-xh64-v4q7` (critical), `GHSA-mrv2-3pqr-j5jr` (high), `GHSA-c6gr-qvv4-5v3f` (low) |
+
+`next` moves through the catalog, which `overrides.next` applies to every
+workspace. `@sentry/nextjs` is a direct `apps/web` dependency and stays on v10.
+The existing `dompurify` floor override, reached through `mermaid`, was raised
+in place. All three releases were older than the 24-hour `minimumReleaseAge`
+gate when resolved. Sentry 10.76 no longer depends on `@sentry/cli`. Its
+`allowBuilds` entry stays as reviewed policy.
+
+After regeneration, both the production and full audits report zero active
+high/critical findings. The raw reports keep the locally patched `braces`
+finding and one moderate `ip-address` finding (`GHSA-rxp7-6hxx-x8q5`, via
+`@modelcontextprotocol/sdk` > `express-rate-limit`). That moderate finding is
+outside the gate.
+
 ## Dependency remediation (2026-10-22)
 
 The production gate's six unpatched high findings are addressed in the locked

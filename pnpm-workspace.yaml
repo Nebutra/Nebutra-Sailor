@@ -108,7 +108,9 @@ catalog:
   "@types/react-dom": ^19.2.3
 
   # ── Next.js ────────────────────────────────────────────────────────────────
-  next: ~16.3.8
+  # 16.4.1+ fixes GHSA-2464-fhr4-w9xw, GHSA-673q-mjm6-r5xr (critical RCE) and
+  # GHSA-p3m5-59mp-jv5r (Server Actions DoS); `overrides.next` follows this pin.
+  next: ~16.4.2
   next-themes: ^0.4.6
   next-intl: ^4.12.0
   "@next/bundle-analyzer": ^16.2.11
@@ -268,7 +270,9 @@ overrides:
   "deepmerge-ts": ">=8.0.0"
   "defu": ">=6.1.5"
   "diff": ">=8.0.3"
-  "dompurify": ">=3.4.16"
+  # GHSA-cg2g-xh64-v4q7 (critical) / GHSA-mrv2-3pqr-j5jr (high): <=3.4.16.
+  # Raised in place; reaches us via mermaid (^3.4.12).
+  "dompurify": ">=3.4.17"
   "effect": ">=3.20.0"
   "esbuild": ">=0.28.1"
   "fast-uri": ">=4.1.5"
