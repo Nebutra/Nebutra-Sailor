@@ -434,6 +434,20 @@ describe("Deploy substrate governance", () => {
     // secrets are Fly secrets, never literals in the manifest
     expect(server).not.toMatch(/^\s*INNGEST_(EVENT_KEY|SIGNING_KEY|REDIS_URI)\s*=/m);
 
+    // 2026-10-16: nebutra-redis restarted, inngest crash-looped on its Redis URI,
+    // spent the default on-failure budget (10 tries) in under two minutes and
+    // stayed stopped for a week. .internal does not wake a stopped Machine, so
+    // every gateway sync failed with "fetch failed". Both keep restarting.
+    const redis = readFileSync(resolve(process.cwd(), "infra/fly/redis.toml"), "utf-8");
+    for (const [name, toml] of [
+      ["inngest.toml", server],
+      ["redis.toml", redis],
+    ] as const) {
+      expect(toml, name).toMatch(
+        /^\[\[restart\]\]\s*\n\s*policy = "always"\s*\n\s*processes = \["app"\]/m,
+      );
+    }
+
     const nextYml = read("deploy-fly.yml");
     expect(nextYml).toContain("want_inngest");
     expect(nextYml).toContain("deploy-inngest:");
@@ -448,6 +462,8 @@ describe("Deploy substrate governance", () => {
     );
     expect(guard).toContain("function_count");
     expect(guard).toContain("-X PUT");
+    // a "fetch failed" sync points at the server Machine, not at the gateway keys
+    expect(guard).toContain("flyctl machines list -a nebutra-inngest");
 
     const ignore = readFileSync(resolve(process.cwd(), ".templateignore"), "utf-8");
     for (const f of [

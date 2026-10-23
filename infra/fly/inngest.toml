@@ -53,6 +53,15 @@ primary_region = "sin"
   source = "inngest_data"
   destination = "/data"
 
+# The default (on-failure, 10 retries) is not enough. On 2026-10-16 nebutra-redis
+# went down for ~20 minutes; inngest exits 1 when its Redis URI is unreachable,
+# used up all 10 retries in about two minutes and then stayed stopped for a week.
+# .internal does not wake a stopped Machine, so every gateway sync failed with
+# "fetch failed" and no function ran. Keep restarting until Redis is back.
+[[restart]]
+  policy = "always"
+  processes = ["app"]
+
 [[vm]]
   size = "shared-cpu-1x"
   memory = "1gb"

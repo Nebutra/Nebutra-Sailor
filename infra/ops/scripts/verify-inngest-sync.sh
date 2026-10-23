@@ -40,6 +40,12 @@ except Exception: print("")' "$tmp")"
   if [ "$code" = "200" ] && [ "$status" = "ok" ]; then ok=1; break; fi
   sleep 10
 done
+# "fetch failed" means the gateway never reached the server at all; on 2026-10-16
+# that was a stopped nebutra-inngest Machine, which .internal does not wake.
+case "${status:-}" in
+  *"fetch failed"*)
+    fail "Inngest sync failed against $url: the gateway could not reach the Inngest server (${status}). Check the Machine is started: flyctl machines list -a nebutra-inngest" ;;
+esac
 [ "$ok" = "1" ] || fail "Inngest sync failed against $url (last http $code, status ${status:-?}). Check INNGEST_SIGNING_KEY / INNGEST_BASE_URL on the gateway and the nebutra-inngest Machine."
 
 # An unsigned GET is answered 401 by inngest-js >= 4.2.6 (inngest/inngest-js#1539),
