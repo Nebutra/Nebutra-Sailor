@@ -58,6 +58,14 @@ const CASES: Case[] = [
     path: "apps/web/src/app/api/admin/route.ts",
   },
   {
+    // An address on the company domain that was never created at the mail
+    // provider: on 2026-10-22 legal@, dpo@ and security@ were published in
+    // policies and bounced. The domain is split so this file carries no host.
+    guard: "lint-email-addresses",
+    violation: `Write to probe-unlisted@${"nebutra"}.com\n`,
+    path: "docs/__lint_guard_probe.md",
+  },
+  {
     // A second source of row-level security beside the generated rls.sql —
     // how the database drifted into two policy models before ADR 2026-09-25.
     guard: "lint-database",

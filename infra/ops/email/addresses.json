@@ -1,0 +1,42 @@
+{
+  "$comment": "Every @nebutra.com address the repository may mention. Receiving mail is Aliyun Qiye (free tier, MX mx1-3.qiye.aliyun.com); sending is Resend (resend-dns.json). Adding an address here does not create it: create the mailbox or group in qiye.aliyun.com/admin first, then list it. Checked by scripts/lint-email-addresses.mjs.",
+  "domain": "nebutra.com",
+  "addresses": [
+    { "local": "postmaster", "kind": "mailbox", "purpose": "Aliyun admin account" },
+    { "local": "tseka", "kind": "mailbox", "purpose": "Final inbox for every group" },
+    { "local": "cyane", "kind": "mailbox", "purpose": "Board member" },
+    { "local": "founders", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "support", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "contact", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "dev", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "legal", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "privacy", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "dpo", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "security", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "billing", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "hello", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "careers", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "credentials", "kind": "group", "deliversTo": ["tseka"] },
+    { "local": "contributors", "kind": "group", "deliversTo": ["tseka"] },
+    {
+      "local": "ops",
+      "kind": "group",
+      "deliversTo": ["tseka"],
+      "purpose": "Let's Encrypt notices"
+    },
+    {
+      "local": "noreply",
+      "kind": "send-only",
+      "purpose": "Transactional mail via Resend; replies bounce"
+    },
+    { "local": "bot", "kind": "send-only", "purpose": "Git commit identity for automation" },
+    { "local": "status", "kind": "send-only", "purpose": "Status notifications via Resend" },
+    {
+      "local": "tsekaluk",
+      "kind": "send-only",
+      "purpose": "Historical git author identity, not a mailbox"
+    }
+  ],
+  "$placeholders": "Fixture and example addresses in tests, stories and demo UI. They must never receive real mail; prefer example.com in new code.",
+  "placeholders": ["a", "ok", "good", "pass", "peter", "user", "admin", "owner"]
+}
