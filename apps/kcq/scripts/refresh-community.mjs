@@ -1,8 +1,10 @@
 /**
  * Refresh the community section's build input from the canonical repository on GitHub: weekly
  * commit totals for the last 52 weeks, the published releases and the star count, with the time
- * they were read. The page states that time; nothing is extrapolated. Run by hand (uses the `gh`
- * CLI for authentication); the file is committed.
+ * they were read. The page states that time; nothing is extrapolated. The deploy workflow
+ * (.github/workflows/deploy-kcq-fly.yml) runs it before every build, so production is always
+ * current; the committed file is what local and PR builds read. Uses the `gh` CLI for
+ * authentication (GH_TOKEN in Actions).
  *
  *   node apps/kcq/scripts/refresh-community.mjs
  */

@@ -136,6 +136,14 @@ jobs:
           node-version: "22.23.2"
           install-command: pnpm install --frozen-lockfile --filter @nebutra/kcq... --filter @nebutra/kcq-docs...
 
+      # Stars, weekly commits and releases are read from GitHub on every deploy, so the header's star
+      # count and the activity charts are as fresh as the build. The upstream repository is public;
+      # the job token only lifts the API rate limit.
+      - name: Refresh community activity
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node apps/kcq/scripts/refresh-community.mjs
+
       - name: Validate library and product compatibility
         env:
           VITE_PUBLIC_POSTHOG_KEY: ${{ vars.NEXT_PUBLIC_POSTHOG_KEY || secrets.NEXT_PUBLIC_POSTHOG_KEY }}
