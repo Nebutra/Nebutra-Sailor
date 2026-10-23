@@ -63,6 +63,16 @@ function getSheetStyle(style: unknown): SheetCssVars {
 
 export type SheetProps = React.ComponentPropsWithoutRef<typeof BaseDialog.Root>;
 
+/**
+ * Sheet - Edge-anchored modal panel
+ *
+ * @description
+ * Groups the parts of a panel that slides in from a screen edge for a secondary task while the
+ * page stays in view behind a backdrop. Built on Base UI Dialog. Unlike Dialog it defaults to
+ * `modal="trap-focus"` (focus is trapped, page scroll is not locked) and to
+ * `disablePointerDismissal`, so a click on the backdrop does not close it. Accepts `open`,
+ * `defaultOpen` and `onOpenChange` from Base UI for controlled use.
+ */
 function Sheet({ modal = "trap-focus", disablePointerDismissal = true, ...props }: SheetProps) {
   return (
     <BaseDialog.Root
@@ -76,9 +86,14 @@ function Sheet({ modal = "trap-focus", disablePointerDismissal = true, ...props 
 Sheet.displayName = "Sheet";
 
 export type SheetTriggerProps = React.ComponentPropsWithoutRef<typeof BaseDialog.Trigger> & {
+  /**
+   * Render the trigger onto the single child element instead of a native button.
+   * @default false
+   */
   asChild?: boolean;
 };
 
+/** Control that opens the sheet. Pass `asChild` to put the behaviour on your own button. */
 const SheetTrigger = ({
   asChild,
   children: rawChildren,
@@ -106,9 +121,14 @@ const SheetTrigger = ({
 SheetTrigger.displayName = "SheetTrigger";
 
 export type SheetCloseProps = React.ComponentPropsWithoutRef<typeof BaseDialog.Close> & {
+  /**
+   * Render the close control onto the single child element instead of a native button.
+   * @default false
+   */
   asChild?: boolean;
 };
 
+/** Control that closes the sheet. Use `asChild` to turn a footer `Button` into one. */
 const SheetClose = ({
   asChild,
   children: rawChildren,
@@ -137,6 +157,7 @@ SheetClose.displayName = "SheetClose";
 
 export type SheetPortalProps = React.ComponentPropsWithoutRef<typeof BaseDialog.Portal>;
 
+/** Portals its children to the document body. `SheetContent` already includes one. */
 function SheetPortal(props: SheetPortalProps) {
   return <BaseDialog.Portal data-slot="sheet-portal" {...props} />;
 }
@@ -144,6 +165,7 @@ SheetPortal.displayName = "SheetPortal";
 
 export type SheetOverlayProps = React.ComponentPropsWithoutRef<typeof BaseDialog.Backdrop>;
 
+/** Dimmed, blurred backdrop behind the sheet. Rendered by `SheetContent` unless `noOverlay` is set. */
 const SheetOverlay = ({
   className,
   style,
@@ -162,6 +184,11 @@ SheetOverlay.displayName = "SheetOverlay";
 
 const sheetVariants = cva(overlayClassNames.sheetSurface, {
   variants: {
+    /**
+     * Screen edge the sheet is anchored to and slides in from; `left` and `right` are physical
+     * edges and do not flip in right-to-left layouts.
+     * @default "right"
+     */
     side: {
       top: "inset-x-[var(--sheet-inset)] top-[var(--sheet-inset)] max-h-[min(var(--sheet-edge-height),calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:-translate-y-full data-starting-style:-translate-y-full",
       bottom:
@@ -182,18 +209,29 @@ export interface SheetContentProps
   /**
    * Render the backdrop. Prefer `noOverlay` in docs because it names the visual
    * removal directly; `overlay` remains available for boolean composition.
+   * @default true
    */
   overlay?: boolean;
-  /** Hide the backdrop while keeping the sheet surface and focus behavior. */
+  /**
+   * Hide the backdrop while keeping the sheet surface and focus behavior.
+   * @default false
+   */
   noOverlay?: boolean;
-  /** Render the built-in close icon button. */
+  /**
+   * Render the built-in close icon button.
+   * @default true
+   */
   showClose?: boolean;
-  /** Alias for `showClose`, matching newer generated examples. */
+  /** Alias for `showClose`, matching newer generated examples; wins over `showClose` when both are set. */
   close?: boolean;
-  /** Accessible name for the built-in close button. Pass a translated string. */
+  /**
+   * Accessible name for the built-in close button. Pass a translated string.
+   * @default "Close"
+   */
   closeLabel?: string;
 }
 
+/** Portalled panel anchored to a screen edge, with its own overlay and an optional close button. */
 const SheetContent = ({
   side = "right",
   className,
@@ -243,6 +281,7 @@ SheetContent.displayName = "SheetContent";
 
 export type SheetHeaderProps = React.ComponentPropsWithoutRef<"div">;
 
+/** Top section holding the title and description, separated from the body by a hairline. */
 const SheetHeader = ({
   className,
   ref,
@@ -262,6 +301,7 @@ SheetHeader.displayName = "SheetHeader";
 
 export type SheetBodyProps = React.ComponentPropsWithoutRef<"div">;
 
+/** Scrollable middle section; the only part that scrolls when content is taller than the sheet. */
 const SheetBody = ({
   className,
   ref,
@@ -281,6 +321,7 @@ SheetBody.displayName = "SheetBody";
 
 export type SheetFooterProps = React.ComponentPropsWithoutRef<"div">;
 
+/** Bottom action row, pinned below the body; stacked on small screens, right-aligned from `sm`. */
 const SheetFooter = ({
   className,
   ref,
@@ -300,6 +341,7 @@ SheetFooter.displayName = "SheetFooter";
 
 export type SheetTitleProps = React.ComponentPropsWithoutRef<typeof BaseDialog.Title>;
 
+/** Accessible name of the sheet. Always render one. */
 const SheetTitle = ({
   className,
   ref,
@@ -316,6 +358,7 @@ SheetTitle.displayName = "SheetTitle";
 
 export type SheetDescriptionProps = React.ComponentPropsWithoutRef<typeof BaseDialog.Description>;
 
+/** Accessible description of the sheet: what it is for or what saving will do. */
 const SheetDescription = ({
   className,
   ref,

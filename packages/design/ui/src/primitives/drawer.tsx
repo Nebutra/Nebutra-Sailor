@@ -21,7 +21,10 @@ export type DrawerProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {
   height?: DrawerHeight;
   /** Alias for `height` when the content needs a capped frame. */
   customHeight?: DrawerHeight;
-  /** Direction the drawer slides from. Use bottom for Drawer; use Sheet for lateral desktop panels. */
+  /**
+   * Direction the drawer slides from. Use bottom for Drawer; use Sheet for lateral desktop panels.
+   * @default "bottom"
+   */
   direction?: DrawerDirection;
 };
 
@@ -36,9 +39,15 @@ export type DrawerOverlayProps = React.ComponentProps<typeof DrawerPrimitive.Ove
 export type DrawerContentProps = React.ComponentProps<typeof DrawerPrimitive.Content> & {
   /** Overrides root height for this content. Numbers resolve to px. */
   height?: DrawerHeight;
-  /** Keep body scroll inside the drawer frame rather than the page behind it. */
+  /**
+   * Keep body scroll inside the drawer frame rather than the page behind it.
+   * @default true
+   */
   verticalScroll?: boolean;
-  /** Show the drag handle on bottom drawers. */
+  /**
+   * Show the drag handle on bottom drawers; it is never drawn for other directions.
+   * @default true
+   */
   showHandle?: boolean;
 };
 
@@ -156,18 +165,22 @@ function Drawer({
   );
 }
 
+/** Control that opens the drawer. Pass `asChild` to put the behaviour on your own button. */
 function DrawerTrigger({ ...props }: DrawerTriggerProps) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
 }
 
+/** Portals its children to the document body. `DrawerContent` already includes one. */
 function DrawerPortal({ ...props }: DrawerPortalProps) {
   return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />;
 }
 
+/** Control that closes the drawer. Use `asChild` to turn a footer `Button` into one. */
 function DrawerClose({ ...props }: DrawerCloseProps) {
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />;
 }
 
+/** Dimmed, blurred backdrop behind the drawer. Rendered by `DrawerContent`. */
 function DrawerOverlay({ className, ...props }: DrawerOverlayProps) {
   return (
     <DrawerPrimitive.Overlay
@@ -182,6 +195,7 @@ function DrawerOverlay({ className, ...props }: DrawerOverlayProps) {
   );
 }
 
+/** Portalled panel anchored to the chosen edge, with its overlay and an optional drag handle. */
 function DrawerContent({
   className,
   children,
@@ -227,6 +241,7 @@ function DrawerContent({
   );
 }
 
+/** Top section holding the title and description, separated from the body by a hairline. */
 function DrawerHeader({ className, ...props }: DrawerHeaderProps) {
   return (
     <div
@@ -240,6 +255,7 @@ function DrawerHeader({ className, ...props }: DrawerHeaderProps) {
   );
 }
 
+/** Middle section that fills the remaining height and scrolls on top and bottom drawers. */
 function DrawerBody({ className, ...props }: DrawerBodyProps) {
   return (
     <div
@@ -254,6 +270,7 @@ function DrawerBody({ className, ...props }: DrawerBodyProps) {
   );
 }
 
+/** Bottom action stack, pinned below the body. */
 function DrawerFooter({ className, ...props }: DrawerFooterProps) {
   return (
     <div
@@ -267,6 +284,7 @@ function DrawerFooter({ className, ...props }: DrawerFooterProps) {
   );
 }
 
+/** Accessible name of the drawer. Always render one. */
 function DrawerTitle({ className, ...props }: DrawerTitleProps) {
   return (
     <DrawerPrimitive.Title
@@ -277,6 +295,7 @@ function DrawerTitle({ className, ...props }: DrawerTitleProps) {
   );
 }
 
+/** Accessible description of the drawer. Render one to avoid a missing-description warning. */
 function DrawerDescription({ className, ...props }: DrawerDescriptionProps) {
   return (
     <DrawerPrimitive.Description

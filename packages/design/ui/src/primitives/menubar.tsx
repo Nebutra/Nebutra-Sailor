@@ -34,6 +34,15 @@ import { overlayPrimitiveClassNames } from "./overlay";
 const OPEN_STATE_CLASSNAME =
   "data-[popup-open]:bg-accent data-[popup-open]:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground";
 
+// Base UI marks a disabled trigger (its own prop, or the whole bar's) with
+// `data-disabled`; the shared menubar classes had no disabled treatment, so a
+// disabled menu looked live and still took the hover highlight.
+const DISABLED_TRIGGER_CLASSNAME = "data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
+
+/**
+ * Horizontal bar of top-level menus. Owns roving focus across its triggers and the hover
+ * hand-off between menus once one is open.
+ */
 const Menubar = ({
   className,
   ref,
@@ -53,10 +62,13 @@ const MenubarMenu = (props: React.ComponentProps<typeof BaseMenu.Root>) => (
 );
 MenubarMenu.displayName = "MenubarMenu";
 
+/** Portal for menu content. `MenubarContent` already wraps itself in one. */
 const MenubarPortal = BaseMenu.Portal;
 
+/** Groups related items so assistive tech announces them together. */
 const MenubarGroup = BaseMenu.Group;
 
+/** Top-level button that opens its menu. Set `disabled` to make it inert. */
 const MenubarTrigger = ({
   className,
   ref,
@@ -66,24 +78,34 @@ const MenubarTrigger = ({
 }) => (
   <BaseMenu.Trigger
     ref={ref}
-    className={cn(overlayPrimitiveClassNames.menubarTrigger, OPEN_STATE_CLASSNAME, className)}
+    className={cn(
+      overlayPrimitiveClassNames.menubarTrigger,
+      OPEN_STATE_CLASSNAME,
+      DISABLED_TRIGGER_CLASSNAME,
+      className,
+    )}
     {...props}
   />
 );
 MenubarTrigger.displayName = "MenubarTrigger";
 
+/** Wraps a `MenubarSubTrigger` and its `MenubarSubContent` to form a nested submenu. */
 const MenubarSub = (props: React.ComponentProps<typeof BaseMenu.SubmenuRoot>) => (
   <BaseMenu.SubmenuRoot {...props} />
 );
 MenubarSub.displayName = "MenubarSub";
 
+/** Item that opens a nested submenu, with a trailing chevron. */
 const MenubarSubTrigger = ({
   className,
   inset,
   children,
   ref,
   ...props
-}: React.ComponentProps<typeof BaseMenu.SubmenuTrigger> & { inset?: boolean } & {
+}: React.ComponentProps<typeof BaseMenu.SubmenuTrigger> & {
+  /** Indent the label to line up with items that carry a check or radio indicator. */
+  inset?: boolean;
+} & {
   ref?: React.Ref<HTMLDivElement> | undefined;
 }) => (
   <BaseMenu.SubmenuTrigger
@@ -105,12 +127,29 @@ MenubarSubTrigger.displayName = "MenubarSubTrigger";
 type PositionerProps = React.ComponentProps<typeof BaseMenu.Positioner>;
 
 export interface MenubarContentProps extends React.ComponentProps<typeof BaseMenu.Popup> {
+  /**
+   * Alignment of the panel against its trigger along the edge it opens from.
+   * @default "start"
+   */
   align?: PositionerProps["align"];
+  /**
+   * Extra offset along the alignment axis, in px.
+   * @default -4
+   */
   alignOffset?: PositionerProps["alignOffset"];
+  /**
+   * Edge of the trigger the panel opens from.
+   * @default "bottom"
+   */
   side?: PositionerProps["side"];
+  /**
+   * Gap between the trigger and the panel, in px.
+   * @default 8
+   */
   sideOffset?: PositionerProps["sideOffset"];
 }
 
+/** Portalled, positioned panel that holds a menu's items. */
 const MenubarContent = ({
   className,
   align = "start",
@@ -145,6 +184,7 @@ const MenubarContent = ({
 );
 MenubarContent.displayName = "MenubarContent";
 
+/** Panel for a nested submenu. Opens to the right of its `MenubarSubTrigger`. */
 const MenubarSubContent = ({
   className,
   sideOffset = 4,
@@ -161,6 +201,7 @@ const MenubarSubContent = ({
 );
 MenubarSubContent.displayName = "MenubarSubContent";
 
+/** Selectable menu row. Use `asChild` to render a link, and `disabled` to dim it and ignore presses. */
 const MenubarItem = ({
   className,
   inset,
@@ -170,6 +211,7 @@ const MenubarItem = ({
   ref,
   ...props
 }: React.ComponentProps<typeof BaseMenu.Item> & {
+  /** Indent the label to line up with items that carry a check or radio indicator. */
   inset?: boolean;
   /** Render the child element (e.g. a router Link) as the item. */
   asChild?: boolean;
@@ -196,6 +238,7 @@ const MenubarItem = ({
 };
 MenubarItem.displayName = "MenubarItem";
 
+/** Item that toggles a boolean setting and shows a check while `checked`. */
 const MenubarCheckboxItem = ({
   className,
   children,
@@ -219,8 +262,10 @@ const MenubarCheckboxItem = ({
 );
 MenubarCheckboxItem.displayName = "MenubarCheckboxItem";
 
+/** Holds the `value` shared by a set of `MenubarRadioItem`s. */
 const MenubarRadioGroup = BaseMenu.RadioGroup;
 
+/** One choice in a `MenubarRadioGroup`, marked with a dot while selected. */
 const MenubarRadioItem = ({
   className,
   children,
@@ -244,12 +289,16 @@ const MenubarRadioItem = ({
 );
 MenubarRadioItem.displayName = "MenubarRadioItem";
 
+/** Non-interactive heading for a run of items. */
 const MenubarLabel = ({
   className,
   inset,
   ref,
   ...props
-}: React.HTMLAttributes<HTMLDivElement> & { inset?: boolean } & {
+}: React.HTMLAttributes<HTMLDivElement> & {
+  /** Indent the label to line up with items that carry a check or radio indicator. */
+  inset?: boolean;
+} & {
   ref?: React.Ref<HTMLDivElement> | undefined;
 }) => (
   <div
@@ -260,6 +309,7 @@ const MenubarLabel = ({
 );
 MenubarLabel.displayName = "MenubarLabel";
 
+/** Hairline between groups of items. */
 const MenubarSeparator = ({
   className,
   ref,
@@ -271,6 +321,7 @@ const MenubarSeparator = ({
 );
 MenubarSeparator.displayName = "MenubarSeparator";
 
+/** Right-aligned shortcut hint for an item. Decorative: it does not bind the keys itself. */
 const MenubarShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
     <span

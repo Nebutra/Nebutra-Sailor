@@ -6,32 +6,54 @@ import * as React from "react";
 import { cn } from "../utils/cn";
 
 export interface InputOTPProps {
-  /** Maximum number of characters */
+  /** Number of characters in the code. Typed or pasted input beyond it is cut off. */
   maxLength: number;
-  /** Current value */
+  /** Current code. Pass it with `onValueChange` to control the field. */
   value?: string;
-  /** Change handler */
-  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
+  /**
+   * Fires with the new code. Same as `onValueChange`, which wins when both are set.
+   * @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (newValue: string) => void;
+  /** Fires with the new code on every accepted keystroke, paste or deletion. */
   onValueChange?: (newValue: string) => void;
-  /** Complete handler */
+  /** Fires when the code reaches `maxLength`. Only fires when `value` is controlled. */
   onComplete?: (value: string) => void;
-  /** Render function for slots */
+  /** Render-prop alternative to `children`; receives the live slot state. */
   render?: (props: RenderProps) => React.ReactNode;
-  /** Children (alternative to render) */
+  /** Slot layout built from `InputOTPGroup`, `InputOTPSlot` and `InputOTPSeparator`. */
   children?: React.ReactNode;
-  /** Container class name */
+  /** Applied to the element that wraps the slots. */
   containerClassName?: string;
-  /** Input class name */
+  /** Applied to the `<input>` that receives the typing. */
   className?: string;
-  /** Input pattern validation */
+  /** Regular-expression source the code must match, e.g. `^\d+$`. Typed or pasted text that would break it is rejected. */
   pattern?: string;
-  /** Text alignment */
+  /**
+   * Alignment of the input's text.
+   * @default "left"
+   */
   textAlign?: "left" | "center" | "right";
-  /** Disabled state */
+  /** Blocks focus and input, and dims the whole control. */
   disabled?: boolean;
+  /** Id of the input, so an external `<label htmlFor>` can name it. */
+  id?: string;
+  /** Form field name submitted with the code. */
+  name?: string;
+  /** Accessible name when there is no visible label. */
+  "aria-label"?: string;
+  /** Id of the element that labels the control. */
+  "aria-labelledby"?: string;
+  /** Ids of elements that describe the control, such as a hint or an error message. */
+  "aria-describedby"?: string;
+  /** Announces the code as invalid. The slots do not restyle themselves from it. */
+  "aria-invalid"?: boolean | "true" | "false";
 }
 
+/**
+ * One-time-code entry. Renders a single transparent input over the slots, so typing, paste,
+ * autofill (`autocomplete="one-time-code"`) and deletion behave like one field,
+ * and draws the slots from `children` or `render`.
+ */
 const InputOTP = ({
   className,
   containerClassName,
@@ -63,6 +85,7 @@ InputOTP.displayName = "InputOTP";
 
 export type InputOTPGroupProps = React.ComponentPropsWithoutRef<"div">;
 
+/** Joins consecutive `InputOTPSlot`s into one bordered run with shared rounded ends. */
 const InputOTPGroup = ({
   className,
   ref,
@@ -73,9 +96,11 @@ const InputOTPGroup = ({
 InputOTPGroup.displayName = "InputOTPGroup";
 
 export interface InputOTPSlotProps extends React.ComponentPropsWithoutRef<"div"> {
+  /** Position of this slot in the code, counted from 0. */
   index: number;
 }
 
+/** One character cell. Shows the typed character, a blinking caret and the focus ring when active. */
 const InputOTPSlot = ({
   index,
   className,
@@ -113,6 +138,7 @@ InputOTPSlot.displayName = "InputOTPSlot";
 
 export type InputOTPSeparatorProps = React.ComponentPropsWithoutRef<"div">;
 
+/** Decorative dash between two `InputOTPGroup`s. Hidden from assistive tech. */
 const InputOTPSeparator = ({
   ref,
   ...props

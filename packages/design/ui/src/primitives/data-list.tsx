@@ -204,6 +204,12 @@ function resolveStatus<Row>(
 // Component
 // ---------------------------------------------------------------------------
 
+/**
+ * Table-backed list that owns its loading, empty and error bodies. It reserves
+ * a fixed body height so switching between them does not move the page, keeps
+ * rows mounted during a background refresh, and scrolls wide content inside
+ * itself. State precedence is error, then loading, then empty, then rows.
+ */
 export function DataList<Row>({
   columns,
   rows,

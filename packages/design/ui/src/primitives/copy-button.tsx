@@ -88,7 +88,7 @@ export interface CopyButtonProps
   extends Omit<React.ComponentProps<typeof Button>, "onClick" | "onCopy" | "prefix" | "suffix"> {
   /** Value to copy to clipboard */
   value: string;
-  /** Button label (if not icon-only) */
+  /** Visible button label. Omit it for an icon-only button, which is named by `tooltipText`. */
   label?: string;
   /**
    * Visible label while the copied state is held. Only rendered when `label` is
@@ -97,26 +97,48 @@ export interface CopyButtonProps
    * Pass `false` when the label *is* the payload (a token name, a URL): swapping
    * it for "Copied" would hide the thing the user was reading, and the check
    * carries the confirmation on its own.
+   *
+   * @default "Copied"
    */
   copiedLabel?: string | false;
-  /** Success message for toast, and the text announced to screen readers */
+  /**
+   * Success message for toast, and the text announced to screen readers
+   * @default "Copied to clipboard"
+   */
   successMessage?: string;
-  /** Failure message for toast, and the text announced when the write is refused */
+  /**
+   * Failure message for toast, and the text announced when the write is refused
+   * @default "Couldn't copy. Select the text and copy it manually."
+   */
   errorMessage?: string;
-  /** Tooltip text — also the accessible name of an icon-only button */
+  /**
+   * Tooltip text — also the accessible name of an icon-only button
+   * @default "Copy"
+   */
   tooltipText?: string;
-  /** Icon type */
+  /**
+   * Icon shown while idle: copy, link, code or hash.
+   * @default "copy"
+   */
   iconType?: "copy" | "link" | "code" | "hash";
   /**
    * Which side of the label the icon sits on. `trailing` is for full-width rows
    * where the value is the label and the affordance belongs at the far edge.
+   *
+   * @default "leading"
    */
   iconPosition?: "leading" | "trailing";
-  /** Show toast on copy */
+  /**
+   * Show a toast on success and failure. Needs a mounted `<Toaster />`.
+   * @default true
+   */
   showToast?: boolean;
-  /** How long the copied state is held, in ms */
+  /**
+   * How long the copied (or failed) state is held, in ms
+   * @default 2000
+   */
   timeout?: number;
-  /** Callback after successful copy */
+  /** Called with the copied value after the clipboard write succeeds. Not called on failure. */
   onCopied?: (value: string) => void;
 }
 
@@ -124,6 +146,12 @@ export interface CopyButtonProps
 // Component
 // ============================================================================
 
+/**
+ * Button that writes `value` to the clipboard and confirms it with a check, an optional label swap,
+ * a screen-reader announcement and an optional toast. Without a `label` it renders an icon-only
+ * button wrapped in a tooltip; with one it renders a plain labelled button. It defaults to the
+ * `ghost` variant and picks `icon` or `default` size from whether a label is present.
+ */
 export function CopyButton({
   value,
   label,
@@ -234,7 +262,9 @@ export function CopyIdButton({
   className,
   ...props
 }: {
+  /** The identifier to copy. */
   id: string;
+  /** Merged after the default `size-6` box. */
   className?: string;
 } & Omit<CopyButtonProps, "value" | "iconType" | "tooltipText">) {
   return (
@@ -257,7 +287,9 @@ export function CopyLinkButton({
   className,
   ...props
 }: {
+  /** The URL to copy. */
   url: string;
+  /** Merged after the default `size-6` box. */
   className?: string;
 } & Omit<CopyButtonProps, "value" | "iconType" | "tooltipText">) {
   return (
@@ -280,7 +312,9 @@ export function CopyCodeButton({
   className,
   ...props
 }: {
+  /** The snippet to copy. */
   code: string;
+  /** Merged after the default `size-6` box. */
   className?: string;
 } & Omit<CopyButtonProps, "value" | "iconType" | "tooltipText">) {
   return (
@@ -305,13 +339,25 @@ export interface CopyMenuItemProps
   value: string;
   /** Visible item text */
   children: React.ReactNode;
-  /** Success message for toast, and the text announced to screen readers */
+  /**
+   * Success message for toast, and the text announced to screen readers
+   * @default "Copied to clipboard"
+   */
   successMessage?: string;
-  /** Failure message, announced when the write is refused */
+  /**
+   * Failure message, announced when the write is refused
+   * @default "Couldn't copy. Select the text and copy it manually."
+   */
   errorMessage?: string;
-  /** Show toast on copy */
+  /**
+   * Show a toast on success and failure. Off by default because the item shows its own check.
+   * @default false
+   */
   showToast?: boolean;
-  /** How long the copied state is held, in ms */
+  /**
+   * How long the copied (or failed) state is held, in ms
+   * @default 2000
+   */
   timeout?: number;
   /**
    * Close the menu on copy. Defaults to `false`: a menu that closes on select
@@ -383,12 +429,20 @@ export function CopyMenuItem({
  * Copyable text field - displays value with copy button
  */
 export interface CopyableFieldProps {
+  /** The text shown in the field and copied by its button. */
   value: string;
+  /** Optional caption shown before the value, followed by a colon. */
   label?: string;
+  /**
+   * Truncate a long value with an ellipsis; the full value stays in the `title` tooltip.
+   * @default true
+   */
   truncate?: boolean;
+  /** Class applied to the outer row. */
   className?: string;
 }
 
+/** Inline monospace value with an icon-only copy button beside it. */
 export function CopyableField({ value, label, truncate = true, className }: CopyableFieldProps) {
   return (
     <div className={cn("flex items-center gap-2", className)}>
@@ -409,10 +463,22 @@ export function CopyableField({ value, label, truncate = true, className }: Copy
 // ============================================================================
 
 export interface UseCopyToClipboardOptions {
+  /**
+   * Toast text shown after a successful write.
+   * @default "Copied to clipboard"
+   */
   successMessage?: string;
   /** Shown (toast) and announced when the clipboard write is refused. */
   errorMessage?: string;
+  /**
+   * Show a toast on success and failure.
+   * @default true
+   */
   showToast?: boolean;
+  /**
+   * How long the copied (or failed) state is held, in ms.
+   * @default 2000
+   */
   timeout?: number;
 }
 

@@ -37,12 +37,21 @@ export interface NavigationMenuProps
   extends Omit<BaseRootProps, "value" | "defaultValue" | "onValueChange"> {
   /** The open item's value; `""` when every panel is closed. */
   value?: string;
+  /** The value of the item that starts open when uncontrolled; `""` starts with every panel closed. */
   defaultValue?: string;
+  /** Called with the value of the item that opened, or `""` when the panels close. */
   onValueChange?: (value: string) => void;
-  /** Side offset of the flyout panel from the list, in px. */
+  /**
+   * Side offset of the flyout panel from the list, in px.
+   * @default 6
+   */
   sideOffset?: number;
 }
 
+/**
+ * Root of a site navigation. Renders the `<nav>` and the single shared flyout viewport that
+ * morphs between the panels of its items.
+ */
 const NavigationMenu = ({
   className,
   children,
@@ -89,6 +98,7 @@ const NavigationMenu = ({
 };
 NavigationMenu.displayName = "NavigationMenu";
 
+/** The row of top-level items. Renders a `<ul>`. */
 const NavigationMenuList = ({
   className,
   ref,
@@ -104,6 +114,7 @@ const NavigationMenuList = ({
 );
 NavigationMenuList.displayName = "NavigationMenuList";
 
+/** One top-level entry: either a trigger with a panel, or a bare link. Renders a `<li>`. */
 const NavigationMenuItem = ({
   className,
   value,
@@ -122,6 +133,7 @@ const NavigationMenuItem = ({
 );
 NavigationMenuItem.displayName = "NavigationMenuItem";
 
+/** Button that opens its item's panel on press or after a hover delay, with a turning chevron. */
 const NavigationMenuTrigger = ({
   className,
   children,
@@ -150,6 +162,7 @@ const NavigationMenuTrigger = ({
 );
 NavigationMenuTrigger.displayName = "NavigationMenuTrigger";
 
+/** The flyout panel's content for one item. Fades in and out as the viewport switches panels. */
 const NavigationMenuContent = ({
   className,
   ref,
@@ -169,6 +182,10 @@ const NavigationMenuContent = ({
 );
 NavigationMenuContent.displayName = "NavigationMenuContent";
 
+/**
+ * Link inside the list or a panel. Pass `active` to mark the current page, and `asChild` to
+ * render a router link in its place.
+ */
 const NavigationMenuLink = ({
   asChild,
   children: rawChildren,
@@ -191,6 +208,8 @@ const NavigationMenuLink = ({
 NavigationMenuLink.displayName = "NavigationMenuLink";
 
 /**
+ * Placeholder for the flyout viewport, which the root now renders itself.
+ *
  * @deprecated The root renders the viewport. Kept so existing imports compile;
  * renders nothing.
  */

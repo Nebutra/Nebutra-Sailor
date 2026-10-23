@@ -140,6 +140,7 @@ function spacingVars(spacing: BrandSpacing | undefined): string[] {
 function recipeVars(recipe: BrandRecipe): string[] {
   const radii = recipe.radii;
   const elev = recipe.elevationTokens;
+  const chipRadius = radii.chip ?? `min(0.375rem, ${radii.card})`;
 
   const lines: string[] = [
     `  /* Shape slots */`,
@@ -161,8 +162,10 @@ function recipeVars(recipe: BrandRecipe): string[] {
     `  --radius-md: min(${radii.button}, ${radii.card});`,
     `  --radius-card: ${radii.card};`,
     `  --radius-lg: ${radii.card};`,
-    `  --radius-badge: ${radii.badge ?? "9999px"};`,
-    `  --badge-default-radius: ${radii.badge ?? "9999px"};`,
+    // A badge is a chip unless the language says otherwise (a pill is a decision
+    // GSAP and Vanta make for every control; it is not a default).
+    `  --radius-badge: ${radii.badge ?? chipRadius};`,
+    `  --badge-default-radius: ${radii.badge ?? chipRadius};`,
     `  --radius-inputs: ${radii.input ?? radii.button};`,
     `  --input-radius: ${radii.input ?? radii.button};`,
     // The ladder's two named steps. Control is whatever shape a field takes in
@@ -170,7 +173,7 @@ function recipeVars(recipe: BrandRecipe): string[] {
     // step tighter, capped at the card so a skin that omits it can never sit
     // rounder than the surface it labels.
     `  --radius-control: ${radii.input ?? radii.button};`,
-    `  --radius-chip: ${radii.chip ?? `min(0.375rem, ${radii.card})`};`,
+    `  --radius-chip: ${chipRadius};`,
     `  --radius-pill: ${radii.pill ?? "9999px"};`,
     ``,
     `  /* Free elevation (carrier-provided CSS shadows) */`,

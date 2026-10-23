@@ -152,12 +152,15 @@ function normalizeRadii(recipe: BrandRecipeInput): BrandRadii {
   const radii: BrandRadii = {
     button,
     card,
-    badge: recipe.radii?.badge ?? recipe.badgeRadius ?? "9999px",
     input: recipe.radii?.input ?? recipe.inputRadius ?? button,
     pill: recipe.radii?.pill ?? "9999px",
   };
   // Optional under exactOptionalPropertyTypes: absent stays absent, and the
-  // emitter derives the chip step from the card radius.
+  // emitter derives the chip step from the card radius. An undeclared badge
+  // follows the chip step; it used to fall back to a 9999px pill, which is how
+  // five languages ended up with pill badges nobody had chosen.
+  const badge = recipe.radii?.badge ?? recipe.badgeRadius;
+  if (badge) radii.badge = badge;
   if (recipe.radii?.chip) radii.chip = recipe.radii.chip;
   return radii;
 }

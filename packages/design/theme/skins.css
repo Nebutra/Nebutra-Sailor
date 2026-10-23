@@ -590,8 +590,8 @@ html[data-brand="linear"] {
   --radius-md: min(6px, 12px);
   --radius-card: 12px;
   --radius-lg: 12px;
-  --radius-badge: 9999px;
-  --badge-default-radius: 9999px;
+  --radius-badge: 4px;
+  --badge-default-radius: 4px;
   --radius-inputs: 6px;
   --input-radius: 6px;
   --radius-control: 6px;
@@ -832,8 +832,8 @@ html[data-brand="nebutra-site"] {
   --radius-md: min(8px, 12px);
   --radius-card: 12px;
   --radius-lg: 12px;
-  --radius-badge: 9999px;
-  --badge-default-radius: 9999px;
+  --radius-badge: 6px;
+  --badge-default-radius: 6px;
   --radius-inputs: 8px;
   --input-radius: 8px;
   --radius-control: 8px;
@@ -1065,8 +1065,8 @@ html[data-brand="notion"] {
   --radius-md: min(8px, 12px);
   --radius-card: 12px;
   --radius-lg: 12px;
-  --radius-badge: 9999px;
-  --badge-default-radius: 9999px;
+  --radius-badge: 6px;
+  --badge-default-radius: 6px;
   --radius-inputs: 8px;
   --input-radius: 8px;
   --radius-control: 8px;
@@ -1599,8 +1599,8 @@ html[data-brand="stripe"] {
   --radius-md: min(4px, 4px);
   --radius-card: 4px;
   --radius-lg: 4px;
-  --radius-badge: 9999px;
-  --badge-default-radius: 9999px;
+  --radius-badge: 4px;
+  --badge-default-radius: 4px;
   --radius-inputs: 4px;
   --input-radius: 4px;
   --radius-control: 4px;

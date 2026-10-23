@@ -81,7 +81,7 @@ export function buildStripe(ctx: CompileContext): BrandPackage {
       radii: {
         button: ctx.recipeHints.radii?.button ?? "4px",
         card: "4px",
-        badge: "9999px",
+        badge: "4px",
         input: "4px",
       },
       elevationPreset: ctx.recipeHints.elevationPreset ?? "none",

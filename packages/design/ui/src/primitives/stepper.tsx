@@ -10,23 +10,38 @@ import { Button } from "./button";
 // Types
 // ============================================
 
+/** Visual status of one step. The provider only derives `pending`, `current` and `completed`. */
 export type StepStatus = "pending" | "current" | "completed" | "error";
 
+/** One entry in a stepper's ordered list of steps. */
 export interface Step {
+  /** Stable identifier, used as the React key. */
   id: string;
+  /** Step label shown beside the indicator. */
   title: string;
+  /** Secondary line shown under the title. */
   description?: string;
+  /** Appends an "(Optional)" marker to the title. It does not make the step skippable. */
   optional?: boolean;
 }
 
+/** The value `StepperProvider` shares with `Stepper`, `StepperContent` and `StepperNavigation`. */
 export interface StepperContextValue {
+  /** The ordered steps. */
   steps: Step[];
+  /** Zero-based index of the current step. */
   currentStep: number;
+  /** Jumps to a step index; indexes outside the step list are ignored. */
   goToStep: (step: number) => void;
+  /** Moves one step forward; does nothing on the last step. */
   nextStep: () => void;
+  /** Moves one step back; does nothing on the first step. */
   prevStep: () => void;
+  /** True while the current step is the first one. */
   isFirstStep: boolean;
+  /** True while the current step is the last one. */
   isLastStep: boolean;
+  /** Status for a step index: completed before the current step, current at it, pending after. */
   getStepStatus: (index: number) => StepStatus;
 }
 
@@ -47,6 +62,10 @@ const STEPPER_FALLBACK: StepperContextValue = {
   getStepStatus: () => "pending" as StepStatus,
 };
 
+/**
+ * Reads the nearest `StepperProvider`. Outside one it returns an inert fallback with no steps, so
+ * `Stepper` renders an empty wrapper instead of throwing.
+ */
 export function useStepperContext() {
   const context = use(StepperContext);
   if (!context) {
@@ -60,12 +79,23 @@ export function useStepperContext() {
 // ============================================
 
 export interface StepperProviderProps {
+  /** Ordered steps shared with every stepper part below the provider. */
   steps: Step[];
+  /**
+   * Zero-based index of the step shown first. Later changes do not move the stepper.
+   * @default 0
+   */
   initialStep?: number;
+  /** Stepper parts (`Stepper`, `StepperContent`, `StepperNavigation`) and any surrounding content. */
   children: React.ReactNode;
+  /** Called with the new step index after `goToStep`, `nextStep` or `prevStep` changes it. */
   onStepChange?: (step: number) => void;
 }
 
+/**
+ * Owns the current step and shares it, with navigation helpers, to the stepper parts rendered
+ * inside it. It renders no element of its own.
+ */
 export function StepperProvider({
   steps,
   initialStep = 0,
@@ -123,26 +153,35 @@ export function StepperProvider({
 // ============================================
 
 export interface StepperProps {
-  /** orientation */
+  /**
+   * Lay the steps out in a row with the label under each indicator, or in a column with the label
+   * beside it.
+   * @default "horizontal"
+   */
   orientation?: "horizontal" | "vertical";
-  /** 大小 */
+  /**
+   * Indicator, label and connector size.
+   * @default "md"
+   */
   size?: "sm" | "md" | "lg";
-  /** 是否可点击切换 */
+  /**
+   * Make each indicator a button that jumps to its step, including steps ahead of the current one.
+   * When false the indicators are disabled buttons.
+   * @default false
+   */
   clickable?: boolean;
-  /** 是否显示Connector */
+  /**
+   * Draw a connector between consecutive steps; it fills once the step before it is completed.
+   * @default true
+   */
   showConnector?: boolean;
-  /** Custom className */
+  /** Classes applied to the outer wrapper. */
   className?: string;
 }
 
 /**
- * 步骤指示器组件 (Stripe 风格)
- *
- * 功能：
- * - 水平/垂直布局
- * - 多种尺寸
- * - 可点击切换
- * - 完成状态动画
+ * Step indicator driven by the nearest `StepperProvider`: numbered circles with titles, a check
+ * for completed steps and a ring on the current one. Renders an empty wrapper outside a provider.
  */
 export function Stepper({
   orientation = "horizontal",
@@ -255,16 +294,17 @@ export function Stepper({
 // ============================================
 
 export interface StepperContentProps {
-  /** 步骤索引 */
+  /** Zero-based index of the step this content belongs to; it renders only while that step is current. */
   step: number;
-  /** 子内容 */
+  /** Content shown while the step is current. */
   children: React.ReactNode;
-  /** Custom className */
+  /** Classes applied to the content wrapper. */
   className?: string;
 }
 
 /**
- * Step content container
+ * Panel for one step. Renders its children only while `step` is the current step, and nothing
+ * otherwise.
  */
 export function StepperContent({ step, children, className }: StepperContentProps) {
   const { currentStep } = useStepperContext();
@@ -281,24 +321,41 @@ export function StepperContent({ step, children, className }: StepperContentProp
 // ============================================
 
 export interface StepperNavigationProps {
-  /** 上一步按钮文本 */
+  /**
+   * Label of the back button.
+   * @default "Previous"
+   */
   prevLabel?: string;
-  /** 下一步按钮文本 */
+  /**
+   * Label of the forward button on every step except the last.
+   * @default "Next"
+   */
   nextLabel?: string;
-  /** 完成按钮文本 */
+  /**
+   * Label of the forward button on the last step.
+   * @default "Finish"
+   */
   finishLabel?: string;
-  /** 完成回调 */
+  /** Called when the forward button is pressed on the last step. */
   onFinish?: () => void;
-  /** 是否正在加载 */
+  /**
+   * Show a spinner in the forward button and disable both buttons while work is pending.
+   * @default false
+   */
   loading?: boolean;
-  /** 是否禁用下一步 */
+  /**
+   * Disable the forward button, for example until the current step validates. The back button is
+   * unaffected.
+   * @default false
+   */
   disableNext?: boolean;
-  /** Custom className */
+  /** Classes applied to the button row. */
   className?: string;
 }
 
 /**
- * 步骤导航按钮
+ * Back and forward buttons for the nearest `StepperProvider`. Back is disabled on the first step;
+ * the forward button becomes the finish action on the last step.
  */
 export function StepperNavigation({
   prevLabel,
@@ -342,13 +399,20 @@ export function StepperNavigation({
 // ============================================
 
 export interface UseStepperOptions {
+  /** Ordered steps to manage. */
   steps: Step[];
+  /**
+   * Zero-based index of the step shown first.
+   * @default 0
+   */
   initialStep?: number;
+  /** Called when `nextStep` is invoked on the last step. */
   onComplete?: () => void;
 }
 
 /**
- * Step management hook
+ * Standalone step state for flows that do not use `StepperProvider`. Returns the current index and
+ * data, navigation helpers, `reset`, and `progress` as a percentage.
  */
 export function useStepper({ steps, initialStep = 0, onComplete }: UseStepperOptions) {
   const [currentStep, setCurrentStep] = useState(initialStep);
@@ -399,18 +463,19 @@ export function useStepper({ steps, initialStep = 0, onComplete }: UseStepperOpt
 // ============================================
 
 export interface ProgressStepperProps {
-  /** 当前步骤 */
+  /** Zero-based index of the current step; the bar is filled through this step. */
   currentStep: number;
-  /** 总步骤数 */
+  /** Total number of steps. Keep it above zero: the fill is computed as a share of this count. */
   totalSteps: number;
-  /** 步骤Labels */
+  /** Labels spread across the row under the bar; steps up to the current one are highlighted. */
   labels?: string[];
-  /** Custom className */
+  /** Classes applied to the outer wrapper. */
   className?: string;
 }
 
 /**
- * 进度条风格步骤指示器
+ * Progress-bar step indicator that takes its position as props and needs no provider. Prints the
+ * position as "步骤 N / M" (Chinese for "Step N of M"); that text is not configurable.
  */
 export function ProgressStepper({
   currentStep,

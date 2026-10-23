@@ -49,6 +49,7 @@ export interface NumberFieldProps
   > {
   /** Number, `null` (empty), or a numeric string. */
   value?: number | string | null;
+  /** Initial value when uncontrolled. Same accepted shapes as `value`. */
   defaultValue?: number | string | null;
   /** Fires with the parsed number, or `null` when the field is cleared. */
   onValueChange?: (value: number | null) => void;
@@ -66,6 +67,7 @@ export interface NumberFieldProps
   hideSteppers?: boolean;
   /** Unit or affix shown after the number, e.g. "px" or "%". */
   suffix?: React.ReactNode;
+  /** Text shown while the field is empty. */
   placeholder?: string;
   /** Applied to the outer field wrapper. */
   className?: string;
@@ -75,11 +77,13 @@ export interface NumberFieldProps
   inputClassName?: string;
   /** Accessible name when there is no visible label. */
   "aria-label"?: string;
+  /** Ids of extra elements that describe the field; description and error ids are appended. */
   "aria-describedby"?: string;
   /** Set by `FormControl`; equivalent to `error={true}`. */
   "aria-invalid"?: boolean | "true" | "false";
-  /** Accessible names for the steppers. Pass translated strings. */
+  /** Accessible name of the increment stepper. Pass a translated string. */
   incrementLabel?: string;
+  /** Accessible name of the decrement stepper. Pass a translated string. */
   decrementLabel?: string;
   /** Fires when the input loses focus. */
   onBlur?: React.FocusEventHandler<HTMLInputElement>;
@@ -109,6 +113,12 @@ const stepperClassName = cn(
   "[&_svg]:size-[var(--input-control-icon-size)]",
 );
 
+/**
+ * Numeric entry with − / + steppers, arrow-key stepping, min / max clamping and
+ * locale-aware parsing. Replaces `<input type="number">`. Own props follow the
+ * `Input` label / description / error contract; `min`, `max`, `step`, `format`,
+ * `locale` and `disabled` come from Base UI.
+ */
 export function NumberField({
   value,
   defaultValue,

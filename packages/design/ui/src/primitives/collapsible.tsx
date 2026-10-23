@@ -11,6 +11,22 @@ const CollapsibleContext = React.createContext<{
   disabled?: boolean | undefined;
 }>({});
 
+/**
+ * Collapsible - Root of a single show/hide region.
+ *
+ * Holds the open state and shares it with `CollapsibleTrigger` and
+ * `CollapsibleContent`. Renders a `div` carrying `data-state` ("open" or
+ * "closed") and `data-disabled`. Controlled when `open` is passed, otherwise it
+ * keeps its own state starting from `defaultOpen`.
+ *
+ * @example
+ * ```tsx
+ * <Collapsible>
+ *   <CollapsibleTrigger>3 packages</CollapsibleTrigger>
+ *   <CollapsibleContent>@nebutra/ui, @nebutra/tokens, @nebutra/icons</CollapsibleContent>
+ * </Collapsible>
+ * ```
+ */
 const Collapsible = ({
   className,
   open: openProp,
@@ -21,9 +37,19 @@ const Collapsible = ({
   ref,
   ...props
 }: React.HTMLAttributes<HTMLDivElement> & {
+  /** Controlled open state. Pair it with `onOpenChange`; leave it out to let the component keep its own. */
   open?: boolean;
+  /**
+   * Whether the region starts open when uncontrolled.
+   * @default false
+   */
   defaultOpen?: boolean;
+  /** Called with the next open state when the trigger is pressed. Fires in controlled mode too. */
   onOpenChange?: (open: boolean) => void;
+  /**
+   * Stops the trigger from toggling the region.
+   * @default false
+   */
   disabled?: boolean;
 } & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen || false);
@@ -56,13 +82,28 @@ const Collapsible = ({
 };
 Collapsible.displayName = "Collapsible";
 
+/**
+ * CollapsibleTrigger - The control that toggles the region.
+ *
+ * Renders a `button` with `aria-expanded`, `data-state` and `data-disabled`.
+ * It does not set `aria-controls` on its own, and it adds no chevron or other
+ * styling: bring your own, usually through `asChild`.
+ */
 const CollapsibleTrigger = ({
   className,
   asChild,
   children: rawChildren,
+  onClick,
   ref,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean } & {
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  /**
+   * Put the trigger behavior on the single child element (a `Button`, say)
+   * instead of rendering a `button` around it.
+   * @default false
+   */
+  asChild?: boolean;
+} & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
   const children = resolveLazyChild(rawChildren);
@@ -72,9 +113,9 @@ const CollapsibleTrigger = ({
     (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disabled) return;
       onOpenChange?.(!open);
-      props.onClick?.(e);
+      onClick?.(e);
     },
-    [disabled, open, onOpenChange, props.onClick],
+    [disabled, open, onOpenChange, onClick],
   );
 
   if (asChild && React.isValidElement(children)) {
@@ -108,6 +149,13 @@ const CollapsibleTrigger = ({
 };
 CollapsibleTrigger.displayName = "CollapsibleTrigger";
 
+/**
+ * CollapsibleContent - The region that shows and hides.
+ *
+ * Mounted only while open, so closed content is not in the DOM (and not found
+ * by find-in-page). Height and opacity animate, and snap under reduced motion.
+ * `className` and other props land on the inner element, not the animated wrapper.
+ */
 const CollapsibleContent = ({
   className,
   children,

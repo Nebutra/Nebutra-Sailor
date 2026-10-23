@@ -9,14 +9,32 @@ export { HoverCardTrigger } from "./hover-card-trigger";
 
 // Base UI Popover currently lacks a native "hover to open" feature built-in,
 // so we simulate it with simple controlled state around the BasePopover.
+/**
+ * HoverCard - Preview card revealed on pointer hover
+ *
+ * @description
+ * Groups a trigger and a card that opens after the pointer rests on the wrapper and closes
+ * shortly after it leaves. Open state is driven by pointer hover only: keyboard focus and clicks
+ * do not open it, so never make it the only way to reach its content. Closing by Escape or an
+ * outside press is still honoured.
+ */
 const HoverCard = ({
   openDelay = overlayTokens.motion.hoverOpenDelay,
   closeDelay = overlayTokens.motion.hoverCloseDelay,
   children,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BasePopover.Root> & {
+  /**
+   * Milliseconds the pointer must rest on the wrapper before the card opens.
+   * @default 200
+   */
   openDelay?: number;
+  /**
+   * Milliseconds after the pointer leaves before the card closes.
+   * @default 100
+   */
   closeDelay?: number;
+  /** The `HoverCardTrigger` and `HoverCardContent` parts. */
   children: React.ReactNode;
 }) => {
   const [open, setOpen] = React.useState(false);

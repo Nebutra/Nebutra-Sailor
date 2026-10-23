@@ -160,6 +160,38 @@ describe("the factory ladder: control 8, card 12, chip 6", () => {
 });
 
 describe("the surface vocabulary every app can reach for", () => {
+  // A badge is a chip. It is a pill only where the language's own controls are pills,
+  // and Cosmos squares its badge at its 16px control radius. Anything else was an
+  // undeclared 9999px fallback, so every language states its choice here.
+  const BADGE_SHAPE: Record<string, string> = {
+    cosmos: "16px",
+    gsap: "9999px",
+    linear: "4px",
+    "nebutra-site": "6px",
+    notion: "6px",
+    raycast: "6px",
+    stripe: "4px",
+    vanta: "999px",
+    vercel: "6px",
+  };
+
+  it("gives every design language a stated badge radius", () => {
+    assert.deepEqual(
+      skins.map((s) => s.id).sort(),
+      Object.keys(BADGE_SHAPE).sort(),
+      "a new language must declare its badge shape in BADGE_SHAPE",
+    );
+    for (const { id, css } of skins) {
+      const block = rule(css, /data-brand/);
+      assert.equal(declared(block, "--radius-badge"), BADGE_SHAPE[id], `${id} --radius-badge`);
+      assert.equal(
+        declared(block, "--badge-default-radius"),
+        BADGE_SHAPE[id],
+        `${id} --badge-default-radius`,
+      );
+    }
+  });
+
   const theme = cssBlocks(recipe)
     .filter((block) => block.selector.startsWith("@theme"))
     .map((block) => block.body)

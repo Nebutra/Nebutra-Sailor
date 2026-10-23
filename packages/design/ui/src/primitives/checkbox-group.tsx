@@ -116,7 +116,7 @@ export const Checkbox = ({
       <span aria-hidden="true" className={boxClassName(checked || indeterminate)}>
         {indeterminate ? <IndeterminateGlyph /> : <CheckGlyph />}
       </span>
-      {children && <span className="ml-2">{children}</span>}
+      {children && <span className="ms-2">{children}</span>}
     </label>
   );
 };

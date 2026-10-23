@@ -39,13 +39,47 @@ export interface ToggleGroupProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof toggleGroupVariants>,
     VariantProps<typeof toggleGroupItemVariants> {
+  /**
+   * Selection model. `"single"` behaves as a radio group: exactly one item stays selected once
+   * chosen, and arrow keys move and select. `"multiple"` is a row of independent toggle buttons.
+   * @default "single"
+   */
   type?: ToggleGroupType;
+  /**
+   * Controlled selection: the selected item's `value` for `type="single"` (`""` for none), or an
+   * array of selected values for `type="multiple"`. Omit it to let the group keep its own state.
+   */
   value?: ToggleGroupValue;
+  /**
+   * Initial selection for uncontrolled use, in the same shape as `value`. Later changes do not
+   * reset the group. Falls back to `""` for single and `[]` for multiple.
+   */
   defaultValue?: ToggleGroupValue;
+  /**
+   * Called with the next selection after a user change: a string for `type="single"`, a string
+   * array for `type="multiple"`. Not called when the selected item is clicked again in single mode.
+   */
   onValueChange?: (value: ToggleGroupValue) => void;
+  /** Disables every item in the group; an item can also be disabled on its own. */
   disabled?: boolean;
+  /**
+   * Track style, and the default item style for the group. `outline` draws a bordered track and
+   * outlined items; `pill` is a fully rounded segmented control.
+   * @default "default"
+   */
+  variant?: ToggleGroupItemVariant;
+  /**
+   * Default item size for the group; an item's own `size` wins.
+   * @default "default"
+   */
+  size?: ToggleGroupItemSize;
 }
 
+/**
+ * A set of toggle buttons that select a single value (radio semantics) or several (independent
+ * toggles). Compose it with `ToggleGroupItem` children; `variant`, `size` and `disabled` cascade
+ * to them.
+ */
 const ToggleGroup = ({
   className,
   variant,
@@ -102,9 +136,19 @@ ToggleGroup.displayName = "ToggleGroup";
 export interface ToggleGroupItemProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "value" | "type">,
     VariantProps<typeof toggleGroupItemVariants> {
+  /** Identifier this item contributes to the group's `value` when selected. Keep it unique within the group. */
   value: string;
+  /** Item style. Falls back to the group's `variant` when omitted. */
+  variant?: ToggleGroupItemVariant;
+  /** Item size. Falls back to the group's `size` when omitted. */
+  size?: ToggleGroupItemSize;
 }
 
+/**
+ * One toggle button inside a `ToggleGroup`. Renders `role="radio"` with `aria-checked` in a single
+ * group and a native button with `aria-pressed` in a multiple group; `data-state` is `"on"` or
+ * `"off"`.
+ */
 const ToggleGroupItem = ({
   className,
   variant,
@@ -213,7 +257,6 @@ const ToggleGroupItem = ({
     <button
       ref={ref}
       type="button"
-      disabled={isDisabled}
       data-state={isSelected ? "on" : "off"}
       data-toggle-item=""
       data-toggle-value={value}
@@ -230,8 +273,9 @@ const ToggleGroupItem = ({
         controlFocusVisibleClassName,
         "focus-visible:z-10",
       )}
-      onClick={toggleItemSelection}
       {...props}
+      disabled={isDisabled}
+      onClick={toggleItemSelection}
       onKeyDown={handleItemKeyDown}
     >
       {children}

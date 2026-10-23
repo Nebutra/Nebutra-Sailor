@@ -92,27 +92,42 @@ export interface DatePickerProps extends CalendarPassthrough, FieldPassthrough {
   onValueChange?: (value: string) => void;
   /** Visible label. Requires `id` so the label stays associated. */
   label?: string;
+  /** Id of the text field. Required for `label` to stay associated. */
   id?: string;
   /** Submitted with the surrounding form. */
   name?: string;
+  /** Text shown while the field is empty. Defaults to `displayFormat`, so the expected shape is visible. */
   placeholder?: string;
   /** Helper text linked through aria-describedby. */
   description?: string;
   /** Boolean marks invalid; a string also renders the message. */
   error?: string | boolean;
+  /**
+   * Field height and type size, matching `Input`.
+   * @default "md"
+   */
   size?: InputSize;
+  /** Disables the text field and the calendar button. */
   disabled?: boolean;
+  /** Marks the text field required for native form validation. */
   required?: boolean;
   /** Earliest selectable date as `yyyy-MM-dd`. */
   min?: string;
   /** Latest selectable date as `yyyy-MM-dd`. */
   max?: string;
-  /** How the value is rendered in the field. Defaults to the ISO wire format. */
+  /**
+   * How the value is rendered and parsed in the field, as a date-fns format string.
+   * Callers still receive `yyyy-MM-dd`.
+   * @default "yyyy-MM-dd"
+   */
   displayFormat?: string;
   /** Accessible name for the calendar button. */
   triggerLabel?: string;
+  /** Applied to the text field. */
   className?: string;
+  /** Applied to the label, field and message wrapper. Only used when a label, description or error message is shown. */
   fieldClassName?: string;
+  /** Applied to the box that holds the text field and the calendar button. */
   wrapperClassName?: string;
 }
 

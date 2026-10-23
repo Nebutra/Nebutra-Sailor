@@ -16,6 +16,7 @@ import { overlayPrimitiveClassNames } from "./overlay";
 export type CommandProps = React.ComponentPropsWithoutRef<typeof CommandPrimitive>;
 
 export type CommandDialogProps = React.ComponentPropsWithoutRef<typeof Dialog> & {
+  /** Palette content: a `CommandInput`, a `CommandList`, and any groups or items inside it. */
   children?: React.ReactNode;
 };
 
@@ -100,6 +101,10 @@ const Command = ({
 );
 Command.displayName = CommandPrimitive.displayName;
 
+/**
+ * Hosts a `Command` palette inside a modal `Dialog`, with no padding so the input sits flush
+ * against the edge. Control it with the `open` and `onOpenChange` props it forwards to `Dialog`.
+ */
 const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
     <Dialog {...props}>
@@ -115,6 +120,10 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   );
 };
 
+/**
+ * Search field for the palette, with a leading magnifier icon. Typing filters the items under
+ * the nearest `Command`; pass `value` and `onValueChange` to control the query.
+ */
 const CommandInput = ({
   className,
   ref,
@@ -129,6 +138,7 @@ const CommandInput = ({
 );
 CommandInput.displayName = CommandPrimitive.Input.displayName;
 
+/** Scrollable container for groups and items, capped at 300px tall. */
 const CommandList = ({
   className,
   ref,
@@ -144,6 +154,7 @@ const CommandList = ({
 );
 CommandList.displayName = CommandPrimitive.List.displayName;
 
+/** Message shown in place of the list while the current query matches no item. */
 const CommandEmpty = ({
   ref,
   ...props
@@ -152,6 +163,7 @@ const CommandEmpty = ({
 }) => <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />;
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
 
+/** Groups related items under an optional `heading`, hidden when none of its items match. */
 const CommandGroup = ({
   className,
   ref,
@@ -170,6 +182,7 @@ const CommandGroup = ({
 );
 CommandGroup.displayName = CommandPrimitive.Group.displayName;
 
+/** Hairline divider between groups, hidden while a query is filtering the list. */
 const CommandSeparator = ({
   className,
   ref,
@@ -185,6 +198,10 @@ const CommandSeparator = ({
 );
 CommandSeparator.displayName = CommandPrimitive.Separator.displayName;
 
+/**
+ * One selectable row. The row under the cursor or arrow keys is marked `data-selected`;
+ * `onSelect` fires on click or Enter, and `disabled` rows are skipped.
+ */
 const CommandItem = ({
   className,
   ref,
@@ -206,6 +223,7 @@ const defaultResultsLabel = (count: number | undefined, search: string) => {
   return `${count} command results available for ${search}.`;
 };
 
+/** Visually hidden live region that announces the result count to screen readers. */
 const CommandResults = ({
   className,
   count,
@@ -233,6 +251,7 @@ const shortcutKeyId = (key: React.ReactNode) => {
   return String(key);
 };
 
+/** Right-aligned shortcut hint for an item, drawn as one `Kbd` per key. */
 const CommandShortcut = ({ className, keys, label, children, ...props }: CommandShortcutProps) => {
   const shortcutKeys = keys ?? (children != null ? [children] : []);
 

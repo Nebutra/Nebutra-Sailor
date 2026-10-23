@@ -207,6 +207,11 @@ pill). A skin may restate `--radius-control` / `--radius-chip` / `--radius-badge
 its chips and badges stay pills); the ladder is only enforced for non-pill
 values (control and chip never rounder than card).
 
+Every language declares its badge shape (`BADGE_SHAPE` in the surface contract
+test), and a language that does not declare one follows its chip step instead of
+defaulting to a pill. Current badge radii: Cosmos 16, GSAP pill, Linear 4,
+Factory 6, Notion 6, Raycast 6, Stripe 4, Vanta pill, Vercel 6.
+
 ### 2.8.2 Edges, focus and stage (recipe.css)
 
 | Token | Meaning |

@@ -29,7 +29,11 @@ import { UiLabelText } from "./ui-labels";
  */
 export interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
   /**
-   * Custom separator element (defaults to ChevronRight icon)
+   * Accepted by the type but not read by the component: it is forwarded to the
+   * `nav` element as an unknown attribute. Pass the separator as children of
+   * each `BreadcrumbSeparator` instead.
+   *
+   * @deprecated Has no effect. Set the separator on `BreadcrumbSeparator`.
    */
   separator?: React.ReactNode;
 }
@@ -37,7 +41,10 @@ export type BreadcrumbListProps = React.ComponentPropsWithoutRef<"ol">;
 export type BreadcrumbItemProps = React.ComponentPropsWithoutRef<"li">;
 export interface BreadcrumbLinkProps extends React.ComponentPropsWithoutRef<"a"> {
   /**
-   * Render as child component (for use with Next.js Link, etc.)
+   * Render the link styling onto the single child element (a Next.js `Link`,
+   * say) instead of an `a`.
+   *
+   * @default false
    */
   asChild?: boolean;
 }
@@ -196,6 +203,10 @@ const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSepara
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator";
 /**
  * BreadcrumbEllipsis - Collapsed items indicator
+ *
+ * Purely decorative: it is `aria-hidden` and not focusable, so it does not
+ * reveal the hidden levels by itself. To make the collapsed levels reachable,
+ * wrap it in a button or menu trigger that has its own accessible name.
  *
  * @example
  * ```tsx

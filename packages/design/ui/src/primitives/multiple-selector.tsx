@@ -10,8 +10,11 @@ import { cn } from "../utils/cn";
 import { Command, CommandGroup, CommandItem, CommandList } from "./command";
 
 export interface MultipleSelectorOption {
+  /** Stable identity of the option. Also the string cmdk filters on, and what `creatable` stores for a typed value. */
   value: string;
+  /** Text shown in the list and on the selected token. */
   label: string;
+  /** Greys the option out in the list and makes it unselectable. */
   disable?: boolean;
   /** Fixed option that can't be removed */
   fixed?: boolean;
@@ -28,67 +31,107 @@ type MultipleSelectorCommandFilter = NonNullable<
 >;
 
 export interface MultipleSelectorProps {
-  /** Controlled selected values */
+  /**
+   * Selected options. The component keeps its own selection and re-syncs from
+   * this array whenever it changes identity, so pass the array back from
+   * `onValueChange` to control it.
+   */
   value?: MultipleSelectorOption[];
-  /** Default options to display */
+  /**
+   * Options shown in the list on first render. With `onSearch` or
+   * `onSearchSync` they are replaced by the search results.
+   * @default []
+   */
   defaultOptions?: MultipleSelectorOption[];
-  /** Manually controlled options */
+  /**
+   * Options controlled by the parent. Re-read whenever the array changes, so
+   * the list follows it. Ignored when `onSearch` is set.
+   */
   options?: MultipleSelectorOption[];
-  /** Placeholder text */
+  /** Placeholder shown in the empty input. */
   placeholder?: string;
-  /** Loading indicator component */
+  /** Content shown in the list while an `onSearch` request is pending. */
   loadingIndicator?: React.ReactNode;
-  /** Empty state indicator component */
+  /** Content shown in the list when no option matches. Without it the list is simply blank. */
   emptyIndicator?: React.ReactNode;
-  /** Debounce delay for async search (ms) */
+  /**
+   * Debounce delay applied to the typed text before a search runs, in ms.
+   * @default 500
+   */
   delay?: number;
-  /** Trigger search on focus */
+  /**
+   * Run the search as soon as the input is focused, before anything is typed.
+   * @default false
+   */
   triggerSearchOnFocus?: boolean;
-  /** Async search function */
+  /** Async search. Receives the debounced text; its result replaces the list. Shows `loadingIndicator` while pending. */
   onSearch?: (value: string) => Promise<MultipleSelectorOption[]>;
-  /** Sync search function (no loading indicator) */
+  /** Sync search. Receives the debounced text; its result replaces the list. Shows no loading state. */
   onSearchSync?: (value: string) => MultipleSelectorOption[];
-  /** Callback when selection changes */
-  /** @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
+  /**
+   * Called with the new selection when an option is added or removed.
+   * @deprecated Use `onValueChange` — `onChange` conventionally receives an event. */
   onChange?: (options: MultipleSelectorOption[]) => void;
+  /** Called with the full new selection when an option is added, removed or cleared. */
   onValueChange?: (options: MultipleSelectorOption[]) => void;
-  /** Maximum number of selected options */
+  /**
+   * Most options that can be selected. Choosing another calls `onMaxSelected`
+   * instead of adding it.
+   * @default Number.MAX_SAFE_INTEGER
+   */
   maxSelected?: number;
-  /** Callback when max selection is reached */
+  /** Called with the current selection size when an option is chosen at the limit. */
   onMaxSelected?: (maxLimit: number) => void;
-  /** Hide placeholder when options are selected */
+  /** Drop the placeholder once anything is selected, and let the input take the full row. */
   hidePlaceholderWhenSelected?: boolean;
-  /** Disable the selector */
+  /** Disables the input and hides the clear-all button. */
   disabled?: boolean;
-  /** Group options by this key */
+  /** Key on each option whose value names the group it is listed under. */
   groupBy?: string;
-  /** Additional className for container */
+  /** Extra classes for the bordered control that holds the tokens and input. */
   className?: string;
-  /** Additional className for badges */
+  /** Extra classes for each selected token. */
   badgeClassName?: string;
-  /** Select first item by default (cmdk behavior) */
+  /**
+   * Highlight the first item in the list automatically (cmdk behaviour).
+   * @default true
+   */
   selectFirstItem?: boolean;
-  /** Allow creating new options */
+  /**
+   * Offer a `Create "text"` row for typed text that matches no option or
+   * selection, and switch filtering to a case-insensitive substring match.
+   * @default false
+   */
   creatable?: boolean;
-  /** Props for Command component */
+  /** Props passed to the underlying `Command`. `shouldFilter` defaults to off when `onSearch` is set. */
   commandProps?: React.ComponentPropsWithoutRef<typeof Command>;
-  /** Props for input element */
+  /** Props passed to the text input, except the ones the component owns (`value`, `placeholder`, `disabled`). */
   inputProps?: Omit<
     React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>,
     "value" | "placeholder" | "disabled"
   >;
-  /** Hide clear all button */
+  /**
+   * Remove the clear-all button.
+   * @default false
+   */
   hideClearAllButton?: boolean;
-  /** Accessible name for an option's remove button. Pass a translated string. */
+  /**
+   * Accessible name for an option's remove button. Pass a translated string.
+   * @default (optionLabel) => `Remove ${optionLabel}`
+   */
   removeLabel?: (optionLabel: string) => string;
   /** Accessible name for the clear-all button. Pass a translated string. */
   clearAllLabel?: string;
 }
 
 export interface MultipleSelectorRef {
+  /** A copy of the current selection. */
   selectedValue: MultipleSelectorOption[];
+  /** The text input element. */
   input: HTMLInputElement;
+  /** Moves focus to the text input. */
   focus: () => void;
+  /** Clears the selection, including fixed options, without calling `onValueChange`. */
   reset: () => void;
 }
 
@@ -481,6 +524,7 @@ const MultipleSelector = ({
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleUnselect(option);
                   }}
+                  disabled={disabled}
                   onMouseDown={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

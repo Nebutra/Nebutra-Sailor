@@ -97,7 +97,8 @@ export function buildNotion(ctx: CompileContext): BrandPackage {
           leafHex(ctx.radius, ["cards"]) ??
           leafHex(ctx.radius, ["xl"]) ??
           "12px",
-        badge: leafHex(ctx.radius, ["pills"]) ?? leafHex(ctx.radius, ["full"]) ?? "9999px",
+        // Tags in the product are chips, not the marketing pills a reference export lists.
+        badge: "6px",
         input: leafHex(ctx.radius, ["buttons"]) ?? leafHex(ctx.radius, ["lg"]) ?? "8px",
       },
       elevationPreset: ctx.recipeHints.elevationPreset ?? "none",
