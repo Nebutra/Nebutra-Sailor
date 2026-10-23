@@ -1,8 +1,8 @@
 <!--
   The ask (research §4.11, §2.4): intent, not numbers. Two tracks, investors and design partners,
   each one prefilled email to the founders' inbox (contact.ts); the address itself stays on the
-  page with a copy button for anyone whose browser has no mail client. The page's one dark block,
-  which the footer continues, as /home's final CTA; one H2 size, and the tracks are plain columns,
+  page with a copy button for anyone whose browser has no mail client. A closing band the footer
+  continues (public.css .band-closing), as /home's final CTA; one H2 size, and the tracks are plain columns,
   not cards (restraint benchmark rules 2, 4, 9).
 -->
 <script setup lang="ts">
@@ -25,7 +25,7 @@ const tracks = computed(() =>
 const { copy, copied, isSupported } = useClipboard({ copiedDuring: 1500, legacy: true });
 </script>
 <template>
-  <section id="contact" class="band ask" data-theme="dark" aria-labelledby="ask-heading">
+  <section id="contact" class="band band-closing ask" aria-labelledby="ask-heading">
     <div class="container ask-grid">
       <div class="ask-head">
         <h2 id="ask-heading" class="t-heading ask-heading">{{ t("investors.ask.heading") }}</h2>

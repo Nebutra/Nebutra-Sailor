@@ -5,7 +5,8 @@
   where an agent boxed a year of consolidation ranges on the chart. Static: the page's one motion
   is the tool-call log further down. On phones the shot crops to the chart, the part that reads.
   Restraint (benchmark rules 1, 8, 9): nothing above the headline, one stacked column, then one
-  product frame on the fixed dark chart surface; no shadow.
+  product frame in the page's colour mode; no shadow. The screenshot itself is the team's dark-mode
+  capture (there is no light one): content inside the frame, not the frame's surface.
 -->
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
@@ -38,7 +39,7 @@ const { t } = useI18n();
         </div>
       </div>
       <figure class="session enter-settle">
-        <div class="session-frame product-frame" data-theme="dark">
+        <div class="session-frame product-frame">
           <picture>
             <source
               media="(max-width: 767px)"

@@ -65,7 +65,7 @@ const columns = computed<{ heading: string; links: Link[] }[]>(() => [
 ]);
 </script>
 <template>
-  <footer class="site-footer" data-theme="dark">
+  <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -98,8 +98,9 @@ const columns = computed<{ heading: string; links: Link[] }[]>(() => [
 <style scoped>
 .site-footer {
   padding-block: var(--klc-space-64) var(--klc-space-48);
-  background: var(--kcq-page);
+  background: var(--kcq-surface);
   color: var(--kcq-ink);
+  border-top: 1px solid var(--kcq-rule);
 }
 .footer-grid {
   display: grid;

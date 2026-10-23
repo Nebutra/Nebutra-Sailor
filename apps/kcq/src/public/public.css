@@ -92,12 +92,10 @@
   line-gap-override: 0%;
 }
 
-:root,
-[data-theme] {
-  /* Page roles, each one KCQ interface token (Radix-style fixed jobs, CP 1). Declared on every
-     [data-theme] element too: custom properties resolve where they are declared, so a band that
-     sets data-theme="dark" (product frames, final CTA, footer) re-derives every role from the dark
-     tokens. */
+:root {
+  /* Page roles, each one KCQ interface token (Radix-style fixed jobs, CP 1). The colour mode is a
+     page-level fact: only <html> carries data-theme (theme.ts), so every role resolves once, here,
+     and no band or frame re-themes itself (theme.test.ts guards it). */
   --kcq-page: var(--klc-color-ui-background);
   --kcq-surface: var(--klc-color-ui-surface);
   --kcq-raised: var(--klc-color-ui-card);
@@ -150,18 +148,6 @@
      (a copy confirmation landing), never layout or entrances. */
   --kcq-ease-spring: linear(0, 0.075, 0.231, 0.404, 0.564, 0.695, 0.797, 0.871, 0.923, 0.957, 0.979, 0.992, 0.999, 1.003, 1.004, 1.004, 1);
   --kcq-spring-duration: 400ms;
-  /* A product frame's edge: none on the light page (the dark surface is the frame, a tonal fill),
-     a hairline on the dark page where the two darks would otherwise meet. Declared on :root only,
-     so a frame's own data-theme="dark" inherits the page's value. */
-  --kcq-frame-edge: transparent;
-}
-:root[data-theme="dark"] {
-  --kcq-frame-edge: var(--klc-color-ui-border);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --kcq-frame-edge: var(--klc-color-ui-border);
-  }
 }
 @media (min-width: 768px) {
   :root {
@@ -455,6 +441,16 @@ main [id] {
   background: var(--kcq-page);
   color: var(--kcq-ink);
 }
+/* The page's close (final CTA, the ask): the surface one step off the page, which the footer
+   continues, so the page ends in one block in either mode. */
+.band-closing {
+  background: var(--kcq-surface);
+  border-top: 1px solid var(--kcq-rule);
+}
+/* The footer (site-footer.vue, the same surface) continues a closing band with no seam. */
+main:has(> .band-closing:last-child) + .site-footer {
+  border-top-color: transparent;
+}
 .section-head {
   display: grid;
   align-content: start;
@@ -479,8 +475,8 @@ main [id] {
     margin-top: var(--klc-space-64);
   }
 }
-/* A product frame: one fixed chart surface in both page themes (the product reads as one object,
-   contrast without page bands), radius 12, no shadow. Tonal fill or hairline, never both. */
+/* A product frame: the chart's own ground in the page's mode (it equals the page ground in both
+   KCQ presets), so the hairline is what draws the object; radius 12, no shadow. */
 .product-frame {
   position: relative;
   min-width: 0;
@@ -500,8 +496,26 @@ main [id] {
   inset: 0;
   z-index: 3;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 1px var(--kcq-frame-edge);
+  box-shadow: inset 0 0 0 1px var(--kcq-rule);
   pointer-events: none;
+}
+
+/* Theme variants: an asset drawn for one colour mode carries data-theme-variant and shows only in
+   that mode. CSS, not script, so the prerendered page is right before hydration; a lazy image that
+   does not render is never fetched. The no-script case follows the system preference. */
+:root[data-theme="light"] [data-theme-variant="dark"],
+:root[data-theme="dark"] [data-theme-variant="light"] {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) [data-theme-variant="light"] {
+    display: none;
+  }
+}
+@media not (prefers-color-scheme: dark) {
+  :root:not([data-theme]) [data-theme-variant="dark"] {
+    display: none;
+  }
 }
 
 /* Crop-mark corners instead of a box (research A6): 8px brackets at each corner, no extra DOM. */

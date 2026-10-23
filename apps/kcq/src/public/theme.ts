@@ -2,6 +2,12 @@
  * Public-page colour mode. `system` follows `prefers-color-scheme`; an explicit light or dark choice
  * persists and wins. The blocking theme-init script (scripts/landing-plugin.mjs) applies the same
  * resolution before first paint, so hydration never flips the page.
+ *
+ * One mode per page, one way to follow it:
+ * - Only <html> carries `data-theme`; no section or frame pins its own (theme.test.ts).
+ * - Markup and CSS follow it through the `--kcq-*` roles; an asset drawn per mode is a
+ *   `data-theme-variant` pair (public.css), so prerendered HTML is right before hydration.
+ * - Canvases and engines read `useTheme().mode` and redraw from the tokens when it changes.
  */
 export const THEME_STORAGE_KEY = "kcq:theme";
 export const THEME_PREFERENCES = ["system", "light", "dark"] as const;

@@ -1,6 +1,6 @@
 <!--
   Agent (deck 5.2; restraint benchmark §4 row 2). The section grammar: heading, sub, then one framed
-  artifact, the agent's window, kept on the fixed dark chart surface in both page themes. Beside it
+  artifact, the agent's window, a product frame in the page's colour mode. Beside it
   the deck's three details as a plain numbered list. At rest (no script, reduced motion, touch,
   phones) the whole story is shown finished and stacked; on desktop the scroll types the prompt
   and lands each call as the window rises, then holds it under the header for a short runway
@@ -134,7 +134,7 @@ const { copy, copied, text: copiedText } = useClipboard({ copiedDuring: 1600, le
             </li>
           </ol>
 
-          <div class="agent-console product-frame" data-theme="dark" :data-playing="playing || undefined">
+          <div class="agent-console product-frame" :data-playing="playing || undefined">
             <div class="console-bar">
               <span class="t-ui">{{ t("home.agent.console") }}</span>
               <svg class="console-glyph" :viewBox="`0 0 ${COLUMNS} ${ROWS}`" role="img" :aria-label="`${t('home.agent.fieldLabel')} ${progress}`">

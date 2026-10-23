@@ -8,8 +8,8 @@
     into the live candles, then the crisp chart fades in over the dimmed field. The visitor's
     crosshair is one more light. The status chip says why the field is on or off and is the pause
     control (WCAG 2.2.2), a 24px icon in the frame's corner. Older history fades into the frame.
-  - The frame keeps one fixed dark chart surface in both page themes (restraint benchmark rule 4,
-    the Vela technique): the product reads as one object, and the light reads on its own ground.
+  - The frame follows the page's colour mode like every surface (theme.ts): the poster pair swaps
+    in CSS before first paint, and the engine and the light field redraw when the mode changes.
 -->
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef, useId, watch } from "vue";
@@ -17,21 +17,27 @@ import { useI18n } from "vue-i18n";
 import KcqIcon from "../../components/kcq-icon.vue";
 import { useMarketFeed } from "../../state/use-market-feed";
 import { usePublicLocale } from "../../state/use-public-locale";
+import { useTheme } from "../../state/use-theme";
 import type { HeroField } from "../field/renderer";
 import { type Bar, tradingDate } from "./bars";
 import cachedSeries from "./cached-bars.json";
 import HeroTimeAxis from "./hero-time-axis.vue";
 import type { ChartGeometry, HeroChart } from "./live-chart";
-// Inlined: the poster is the hero's LCP image, so it paints with the HTML. One size, the 800px
-// frame (2 KB): it is a soft glow on the dark ground, held only until the light or the chart takes
-// over, and every byte of a data URI is a byte of the document every visitor downloads first.
+// Inlined: the poster is the hero's LCP image, so it paints with the HTML. One size per mode, the
+// 800px frame (2 KB dark, 1.4 KB light): a soft glow held only until the light or the chart takes
+// over, and every byte of a data URI is a byte of the document every visitor downloads first. The
+// prerender cannot know the mode, so both ship and the page theme shows one (public.css).
 import posterDark800 from "./poster/poster-dark-800.webp?inline";
+import posterLight800 from "./poster/poster-light-800.webp?inline";
 
 const emit = defineEmits<{ shown: [withField: boolean] }>();
 const { t } = useI18n();
 const { locale, intl } = usePublicLocale();
-/** The frame is always the dark chart surface, whatever the page theme. */
-const MODE = "dark" as const;
+const POSTERS = [
+  { mode: "light", src: posterLight800 },
+  { mode: "dark", src: posterDark800 },
+] as const;
+const { mode } = useTheme();
 const feed = useMarketFeed();
 const summaryId = useId();
 
@@ -79,7 +85,7 @@ async function readLook() {
       accent: hexToLinear(token("--klc-brand-accent")),
     },
     ground: hexToLinear(token("--klc-color-chart-background")),
-    mode: MODE,
+    mode: mode.value,
   };
 }
 
@@ -109,7 +115,7 @@ async function start() {
         .catch(() => null)
     : Promise.resolve(null);
   // The cached bars are real; the chart mounts on them at once and the live bars replace them.
-  chart = await liveChart.mountHeroChart(chartMount.value, { bars: feed.bars.value, mode: MODE });
+  chart = await liveChart.mountHeroChart(chartMount.value, { bars: feed.bars.value, mode: mode.value });
   cleanups.push(chart.onGeometry((next) => (geometry.value = next)));
   geometry.value = chart.geometry();
   // Let a fast feed land before the unfold, so the light opens onto today's bars.
@@ -130,8 +136,20 @@ async function start() {
   emit("shown", fieldState.value === "on");
 }
 
-// Every later feed update reaches the engine. Page theme flips do not: the frame stays dark.
+// Every later feed update reaches the engine.
 watch(feed.bars, (bars) => chart?.setBars(bars));
+// A mode change repaints the engine and the field from the new tokens. Post-flush: the tokens are
+// read from the cascade, so `data-theme` must already be on <html> (state/use-theme.ts).
+watch(
+  mode,
+  async (next) => {
+    chart?.setMode(next);
+    if (!field) return;
+    const look = await readLook();
+    field?.setLook(look);
+  },
+  { flush: "post" },
+);
 
 function onPointer(event: PointerEvent) {
   if (!chartHost.value) return;
@@ -172,7 +190,6 @@ onBeforeUnmount(() => {
   <figure
     ref="panel"
     class="hero-chart product-frame"
-    data-theme="dark"
     :data-status="feed.status.value"
     :data-field="fieldState === 'on' ? 'on' : 'off'"
     :data-chart="chartShown ? 'shown' : 'pending'"
@@ -206,7 +223,10 @@ onBeforeUnmount(() => {
     <div class="hero-chart-body">
       <picture class="hero-poster">
         <img
-          :src="posterDark800"
+          v-for="poster in POSTERS"
+          :key="poster.mode"
+          :data-theme-variant="poster.mode"
+          :src="poster.src"
           alt=""
           width="800"
           height="350"
