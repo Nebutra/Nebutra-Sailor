@@ -20,6 +20,12 @@ export const LINKS = {
   llms: "/llms.txt",
 } as const;
 
+/**
+ * The benchmark harness (bench/compare.mjs) at the commit a published run measured, which need not
+ * be the commit the site's chart is built from.
+ */
+export const benchHarnessAt = (commit: string) => `${facts.repository}/tree/${commit}/bench`;
+
 export const INSTALL_COMMAND = "pnpm add @363045841yyt/klinechart";
 
 /**

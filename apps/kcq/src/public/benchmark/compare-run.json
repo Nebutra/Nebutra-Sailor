@@ -1,0 +1,360 @@
+{
+  "generatedAt": "2026-10-22T16:38:17.073Z",
+  "commit": "eb3527f5a30760a61ea4a3ddc0b4059e42af98cb",
+  "dirty": false,
+  "environment": {
+    "cpu": "Apple M4 Pro",
+    "memoryGiB": 48,
+    "os": "darwin arm64",
+    "browser": "Chrome 155.0.8059.85",
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)"
+  },
+  "configuration": {
+    "width": 1180,
+    "height": 640,
+    "dpr": 2,
+    "warmupFrames": 60,
+    "sampleFrames": 600,
+    "rounds": 5,
+    "visibleBars": [
+      152,
+      451,
+      1122
+    ],
+    "refreshIntervalMs": 16.699999999999818
+  },
+  "libraries": {
+    "@363045841yyt/klinechart-core": "0.11.0-alpha.9",
+    "lightweight-charts": "5.2.1",
+    "echarts": "6.1.0",
+    "klinecharts": "10.1.0"
+  },
+  "subjects": [
+    {
+      "id": "kcq-webgl",
+      "library": "KLineChartQuant",
+      "packageName": "@363045841yyt/klinechart-core",
+      "renderer": "WebGL2"
+    },
+    {
+      "id": "kcq-webgpu",
+      "library": "KLineChartQuant",
+      "packageName": "@363045841yyt/klinechart-core",
+      "renderer": "WebGPU"
+    },
+    {
+      "id": "kcq-canvas",
+      "library": "KLineChartQuant",
+      "packageName": "@363045841yyt/klinechart-core",
+      "renderer": "Canvas2D"
+    },
+    {
+      "id": "lightweight-charts",
+      "library": "Lightweight Charts",
+      "packageName": "lightweight-charts",
+      "renderer": "Canvas2D"
+    },
+    {
+      "id": "echarts",
+      "library": "Apache ECharts",
+      "packageName": "echarts",
+      "renderer": "Canvas2D"
+    },
+    {
+      "id": "klinecharts",
+      "library": "KLineChart",
+      "packageName": "klinecharts",
+      "renderer": "Canvas2D"
+    }
+  ],
+  "scenarios": [
+    {
+      "subject": "kcq-webgl",
+      "visibleBars": 152,
+      "actualVisibleBars": 152,
+      "mainThreadMsPerFrame": 1.2632823333333332,
+      "mainThreadMsPerFrameRounds": [
+        1.3616949999999997,
+        1.2879250000000002,
+        1.0889649999999995,
+        1.546796666666667,
+        1.0310299999999994
+      ],
+      "frameWorkP50Ms": 1.8000000014872057,
+      "frameWorkP99Ms": 3.900000000016371,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgl",
+      "visibleBars": 451,
+      "actualVisibleBars": 451,
+      "mainThreadMsPerFrame": 1.2297583333333328,
+      "mainThreadMsPerFrameRounds": [
+        1.1506949999999985,
+        1.2106833333333324,
+        1.1969666666666656,
+        1.26021,
+        1.3302366666666674
+      ],
+      "frameWorkP50Ms": 1.8000000022366294,
+      "frameWorkP99Ms": 2.699999998527637,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgl",
+      "visibleBars": 1122,
+      "actualVisibleBars": 1122,
+      "mainThreadMsPerFrame": 1.1782359999999998,
+      "mainThreadMsPerFrameRounds": [
+        1.1823966666666674,
+        1.2541450000000005,
+        1.1848666666666663,
+        1.1867450000000002,
+        1.0830266666666657
+      ],
+      "frameWorkP50Ms": 1.7999999955354724,
+      "frameWorkP99Ms": 2.4000000030067166,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgpu",
+      "visibleBars": 152,
+      "actualVisibleBars": 152,
+      "mainThreadMsPerFrame": 0.9179260000000002,
+      "mainThreadMsPerFrameRounds": [
+        0.9083016666666667,
+        0.9038483333333325,
+        0.90824166666667,
+        0.906383333333333,
+        0.9628549999999988
+      ],
+      "frameWorkP50Ms": 1.5999999985215254,
+      "frameWorkP99Ms": 2.000000001499138,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgpu",
+      "visibleBars": 451,
+      "actualVisibleBars": 451,
+      "mainThreadMsPerFrame": 1.0687356666666652,
+      "mainThreadMsPerFrameRounds": [
+        1.0508749999999978,
+        1.031669999999997,
+        1.0699933333333316,
+        1.0980650000000007,
+        1.093074999999999
+      ],
+      "frameWorkP50Ms": 1.5000000059371814,
+      "frameWorkP99Ms": 2.100000005972106,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgpu",
+      "visibleBars": 1122,
+      "actualVisibleBars": 1122,
+      "mainThreadMsPerFrame": 1.0911689999999996,
+      "mainThreadMsPerFrameRounds": [
+        1.1616316666666648,
+        1.1910216666666666,
+        1.0286749999999973,
+        1.0152833333333375,
+        1.0592333333333315
+      ],
+      "frameWorkP50Ms": 1.799999998533167,
+      "frameWorkP99Ms": 2.200000005948823,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-canvas",
+      "visibleBars": 152,
+      "actualVisibleBars": 152,
+      "mainThreadMsPerFrame": 0.8648756666666665,
+      "mainThreadMsPerFrameRounds": [
+        0.88378333333333,
+        0.8646933333333292,
+        0.8325350000000024,
+        0.8865716666666696,
+        0.8567950000000005
+      ],
+      "frameWorkP50Ms": 1.50000000448199,
+      "frameWorkP99Ms": 2.9000000029918738,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-canvas",
+      "visibleBars": 451,
+      "actualVisibleBars": 451,
+      "mainThreadMsPerFrame": 1.1968696666666692,
+      "mainThreadMsPerFrameRounds": [
+        1.027506666666665,
+        0.9750283333333342,
+        0.9584966666666734,
+        1.4952700000000028,
+        1.5280466666666708
+      ],
+      "frameWorkP50Ms": 2.4000000044470653,
+      "frameWorkP99Ms": 3.800000002987217,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-canvas",
+      "visibleBars": 1122,
+      "actualVisibleBars": 1122,
+      "mainThreadMsPerFrame": 1.2060646666666677,
+      "mainThreadMsPerFrameRounds": [
+        1.2476433333333266,
+        1.0158599999999989,
+        1.3838000000000032,
+        1.241106666666667,
+        1.141913333333342
+      ],
+      "frameWorkP50Ms": 1.800000005227048,
+      "frameWorkP99Ms": 3.9000000030064257,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "lightweight-charts",
+      "visibleBars": 152,
+      "actualVisibleBars": 151,
+      "mainThreadMsPerFrame": 0.7380009999999995,
+      "mainThreadMsPerFrameRounds": [
+        0.6325250000000082,
+        0.9352683333333308,
+        0.8778016666666607,
+        0.6076233333333292,
+        0.636786666666668
+      ],
+      "frameWorkP50Ms": 1.900000000023283,
+      "frameWorkP99Ms": 3.6000000015052502,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "lightweight-charts",
+      "visibleBars": 451,
+      "actualVisibleBars": 450,
+      "mainThreadMsPerFrame": 0.785513000000004,
+      "mainThreadMsPerFrameRounds": [
+        0.6773083333333337,
+        0.717895000000001,
+        0.9977933333333412,
+        0.7417183333333336,
+        0.7928500000000108
+      ],
+      "frameWorkP50Ms": 1.5000000030267984,
+      "frameWorkP99Ms": 2.9000000044470653,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "lightweight-charts",
+      "visibleBars": 1122,
+      "actualVisibleBars": 1121,
+      "mainThreadMsPerFrame": 1.1765433333333348,
+      "mainThreadMsPerFrameRounds": [
+        1.1953566666666642,
+        1.2668916666666756,
+        1.1772099999999952,
+        1.2561716666666694,
+        0.98708666666667
+      ],
+      "frameWorkP50Ms": 2.400000002933666,
+      "frameWorkP99Ms": 3.400000000023283,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "echarts",
+      "visibleBars": 152,
+      "actualVisibleBars": 152,
+      "mainThreadMsPerFrame": 3.07886933333333,
+      "mainThreadMsPerFrameRounds": [
+        2.94898666666666,
+        2.914293333333333,
+        3.273629999999995,
+        3.0478816666666715,
+        3.2095549999999897
+      ],
+      "frameWorkP50Ms": 3.9000000059604645,
+      "frameWorkP99Ms": 5.500000004423782,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "echarts",
+      "visibleBars": 451,
+      "actualVisibleBars": 450,
+      "mainThreadMsPerFrame": 4.255066666666662,
+      "mainThreadMsPerFrameRounds": [
+        4.366854999999994,
+        4.215711666666664,
+        4.280609999999996,
+        4.20105333333332,
+        4.211103333333336
+      ],
+      "frameWorkP50Ms": 5.699999999953434,
+      "frameWorkP99Ms": 6.800000000060536,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "echarts",
+      "visibleBars": 1122,
+      "actualVisibleBars": 1119,
+      "mainThreadMsPerFrame": 3.2695673333333275,
+      "mainThreadMsPerFrameRounds": [
+        3.2229366666666692,
+        3.37296666666667,
+        3.2699616666666507,
+        3.1288249999999826,
+        3.353146666666665
+      ],
+      "frameWorkP50Ms": 4.200000002980232,
+      "frameWorkP99Ms": 5.800000002956949,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "klinecharts",
+      "visibleBars": 152,
+      "actualVisibleBars": 153,
+      "mainThreadMsPerFrame": 0.8087563333333255,
+      "mainThreadMsPerFrameRounds": [
+        0.7833299999999829,
+        0.881874999999989,
+        0.6670249999999811,
+        0.7143233333333399,
+        0.9972283333333346
+      ],
+      "frameWorkP50Ms": 1.700000001466833,
+      "frameWorkP99Ms": 2.4000000015366822,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "klinecharts",
+      "visibleBars": 451,
+      "actualVisibleBars": 452,
+      "mainThreadMsPerFrame": 1.4940003333333274,
+      "mainThreadMsPerFrameRounds": [
+        1.3744533333333209,
+        1.397761666666663,
+        1.7174500000000137,
+        1.7224349999999806,
+        1.2579016666666594
+      ],
+      "frameWorkP50Ms": 1.1999999940162525,
+      "frameWorkP99Ms": 2.3000000044703484,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "klinecharts",
+      "visibleBars": 1122,
+      "actualVisibleBars": 1123,
+      "mainThreadMsPerFrame": 2.2388090000000034,
+      "mainThreadMsPerFrameRounds": [
+        2.2474116666666553,
+        1.997178333333333,
+        2.3457600000000176,
+        2.357913333333338,
+        2.245781666666673
+      ],
+      "frameWorkP50Ms": 1.8000000059255399,
+      "frameWorkP99Ms": 2.3000000044703484,
+      "droppedFrameRate": 0
+    }
+  ]
+}
