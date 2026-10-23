@@ -656,6 +656,78 @@ for (const scheme of ["light", "dark"] as const) {
   });
 }
 
+// ---------------------------------------------------------------------------
+// Logo ink: the manual ships single-ink SVGs; the page decides which ink shows
+// ---------------------------------------------------------------------------
+
+for (const scheme of ["light", "dark"] as const) {
+  test.describe(`brand logos (${scheme})`, () => {
+    test.use({ colorScheme: scheme });
+
+    for (const brand of BRANDS) {
+      test(`${brand} /brand: every solid logo ink is legible on its stage`, async ({ page }) => {
+        await openAs(page, brand, "/brand");
+        const logos = await page.evaluate(() => {
+          type Rgb = [number, number, number];
+          const canvas = document.createElement("canvas");
+          canvas.width = 1;
+          canvas.height = 1;
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
+          if (!ctx) throw new Error("canvas 2d unavailable");
+          const over = (css: string, base: Rgb): Rgb => {
+            ctx.fillStyle = `rgb(${base[0]} ${base[1]} ${base[2]})`;
+            ctx.fillRect(0, 0, 1, 1);
+            ctx.fillStyle = css;
+            ctx.fillRect(0, 0, 1, 1);
+            const px = ctx.getImageData(0, 0, 1, 1).data;
+            return [px[0] ?? 0, px[1] ?? 0, px[2] ?? 0];
+          };
+          const lum = ([r, g, b]: Rgb) => {
+            const lin = (v: number) => {
+              const c = v / 255;
+              return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+            };
+            return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+          };
+          const ratio = (a: Rgb, b: Rgb) => {
+            const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+            return ((hi ?? 0) + 0.05) / ((lo ?? 0) + 0.05);
+          };
+          const root: Rgb = document.documentElement.classList.contains("dark")
+            ? [0, 0, 0]
+            : [255, 255, 255];
+          const surface = (el: Element | null): Rgb => {
+            if (!el) return root;
+            const parent = surface(el.parentElement);
+            const bg = getComputedStyle(el).backgroundColor;
+            return bg === "rgba(0, 0, 0, 0)" || bg === "transparent" ? parent : over(bg, parent);
+          };
+          return [...document.querySelectorAll("main svg[role=img]")].map((svg, index) => {
+            const stage = surface(svg.parentElement);
+            const inks = [...svg.querySelectorAll("path, polygon, rect, circle")]
+              // Clip and gradient geometry is never painted.
+              .filter((shape) => !shape.closest("defs, clipPath, mask"))
+              .map((shape) => getComputedStyle(shape).fill)
+              .filter((fill) => fill !== "none" && !fill.startsWith("url("));
+            const worst = inks.reduce(
+              (min, fill) => Math.min(min, ratio(over(fill, stage), stage)),
+              Number.POSITIVE_INFINITY,
+            );
+            return { index, solidShapes: inks.length, worst: Math.round(worst * 100) / 100 };
+          });
+        });
+        expect(logos.length, "inline logos on the page").toBeGreaterThanOrEqual(4);
+        for (const logo of logos) {
+          if (logo.solidShapes === 0) continue;
+          expect
+            .soft(logo.worst, `logo #${logo.index}: solid ink vs its stage`)
+            .toBeGreaterThanOrEqual(3);
+        }
+      });
+    }
+  });
+}
+
 const SHOT_DIR = process.env.DESIGN_SCREENSHOT_DIR;
 
 test.describe("after screenshots", () => {

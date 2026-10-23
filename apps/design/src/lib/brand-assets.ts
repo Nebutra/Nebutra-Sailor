@@ -75,6 +75,13 @@ export function logoMarkup(asset: LogoAsset, height: number): string | null {
     markup = scoped
       .replace(/<\?xml[^>]*\?>/g, "")
       .replace(/<!--[\s\S]*?-->/g, "")
+      // The single-ink files hard-code their ink: #060307 for the light-background
+      // editions, #FFFFFF for the reversed one. Left as is, the wordmark is black on
+      // the black page in dark mode (and the reversed mark white on a white stage), while
+      // every wrapper here already says `text-foreground` / `text-background`. Ink follows
+      // `currentColor`, so the page decides which of the manual's two inks it is showing.
+      // Gradients (`fill:url(#…)`) are the colour symbol and stay exactly as drawn.
+      .replace(/fill:\s*#(?:060307|ffffff|fff)\b/gi, "fill:currentColor")
       .replace(/<svg([^>]*)>/, (_match, attrs: string) => {
         const viewBox = /viewBox="[^"]*"/.exec(attrs)?.[0] ?? "";
         return `<svg ${viewBox} height="${height}" style="height:${height}px;width:auto" role="img" aria-hidden="true">`;
