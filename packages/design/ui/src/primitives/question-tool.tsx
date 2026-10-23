@@ -359,7 +359,7 @@ function QuestionPromptActions({
           type="button"
           onClick={onSubmit}
           disabled={!canSubmit}
-          className="h-6 rounded-[var(--radius-sm)] bg-primary px-2.5 text-sm font-medium text-primary-foreground transition-[background-color,transform] duration-micro hover:bg-primary/90 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60"
+          className="h-6 rounded-[var(--radius-sm)] bg-primary px-2.5 text-sm font-medium text-primary-foreground transition-[background-color,transform,scale] duration-micro hover:bg-primary/90 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60"
         >
           {primaryLabel}
         </button>

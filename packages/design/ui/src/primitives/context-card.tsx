@@ -212,7 +212,7 @@ const ContextCardTrigger = ({
               "rounded-[var(--context-card-radius)] border border-border bg-popover",
               "px-[var(--context-card-padding-x)] py-[var(--context-card-padding-y)]",
               "text-[length:var(--context-card-body-size)] text-popover-foreground shadow-md outline-none",
-              "transition-[opacity,transform] duration-[var(--context-card-duration)] ease-[var(--context-card-easing)]",
+              "transition-[opacity,transform,scale] duration-[var(--context-card-duration)] ease-[var(--context-card-easing)]",
               "data-starting-style:opacity-0 data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-ending-style:scale-[0.98]",
               "motion-reduce:transition-none motion-reduce:data-starting-style:scale-100 motion-reduce:data-ending-style:scale-100",
               "",

@@ -66,7 +66,7 @@ export const AnimatedHikeCard = ({
       ref={ref}
       href={href}
       className={cn(
-        "group relative block w-full max-w-sm cursor-pointer rounded-[var(--radius-2xl)] border bg-card p-6 text-card-foreground shadow-ambient-sm transition-[border-color,box-shadow,transform] duration-flow ease-out hover:-translate-y-0.5 hover:shadow-ambient-md motion-reduce:hover:translate-y-0 lg:max-w-md",
+        "group relative block w-full max-w-sm cursor-pointer rounded-[var(--radius-2xl)] border bg-card p-6 text-card-foreground shadow-ambient-sm transition-[border-color,box-shadow,transform,translate] duration-flow ease-out hover:-translate-y-0.5 hover:shadow-ambient-md motion-reduce:hover:translate-y-0 lg:max-w-md",
         className,
       )}
       aria-label={`Learn more about ${title}`}
@@ -84,7 +84,7 @@ export const AnimatedHikeCard = ({
             <div
               key={index}
               className={cn(
-                "absolute h-full w-[40%] overflow-hidden rounded-[var(--radius-lg)] shadow-md ring-2 ring-background transition-[transform] duration-flow ease-out motion-reduce:transition-none",
+                "absolute h-full w-[40%] overflow-hidden rounded-[var(--radius-lg)] shadow-md ring-2 ring-background transition-[transform,translate,rotate] duration-flow ease-out motion-reduce:transition-none",
                 "group-hover:translate-x-[var(--tx)] group-hover:rotate-[var(--r)]",
               )}
               style={

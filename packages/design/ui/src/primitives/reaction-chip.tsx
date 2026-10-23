@@ -238,7 +238,7 @@ export function MessageWithReactions({
         className={cn(
           "pointer-events-none absolute -top-3 right-0 z-10",
           "translate-y-1 opacity-0",
-          "transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-micro ease-out",
+          "transition-[background-color,border-color,box-shadow,color,opacity,transform,translate] duration-micro ease-out",
           "group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100",
           "focus-within:pointer-events-auto focus-within:translate-y-0 focus-within:opacity-100",
         )}

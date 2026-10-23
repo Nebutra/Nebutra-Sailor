@@ -209,7 +209,7 @@ const Toggle = ({
         <span
           className={cn(
             "flex size-[var(--toggle-thumb-size)] translate-x-0 items-center justify-center rounded-[var(--toggle-radius)] bg-[var(--toggle-thumb)] shadow-[var(--toggle-thumb-shadow)]",
-            "text-[var(--toggle-icon-off)] transition-[color,transform] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
+            "text-[var(--toggle-icon-off)] transition-[color,translate] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
             "motion-reduce:transition-none [&_svg]:size-[var(--toggle-icon-size)]",
           )}
         >

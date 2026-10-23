@@ -171,7 +171,7 @@ export function ProductHuntUpvoteBadge({
       target={openInNewTab ? "_blank" : undefined}
       rel={openInNewTab ? "noopener noreferrer" : undefined}
       className={clsx(
-        "inline-flex items-center gap-2 rounded-full font-semibold transition-[background-color,box-shadow,color,transform] duration-200",
+        "inline-flex items-center gap-2 rounded-full font-semibold transition-[background-color,box-shadow,color,transform,scale] duration-200",
         "shadow-md hover:shadow-lg active:scale-95",
         config.padding,
         config.fontSize,

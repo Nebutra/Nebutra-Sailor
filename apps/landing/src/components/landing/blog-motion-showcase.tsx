@@ -161,7 +161,7 @@ export function BlogMotionHero({ contactHref, isZh, topics }: BlogMotionHeroProp
                   <span className="flex min-w-0 items-center gap-3 text-3xl font-semibold leading-display text-foreground sm:text-4xl lg:text-5xl">
                     <span className="min-w-0 text-balance">{topic.label}</span>
                     <ArrowRight
-                      className="size-8 shrink-0 text-muted-foreground transition-[transform,color] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none group-hover/topic:translate-x-1.5 group-hover/topic:text-foreground group-focus-visible/topic:translate-x-1.5 group-focus-visible/topic:text-foreground sm:size-9 lg:size-10"
+                      className="size-8 shrink-0 text-muted-foreground transition-[transform,color,translate] duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] motion-reduce:transition-none group-hover/topic:translate-x-1.5 group-hover/topic:text-foreground group-focus-visible/topic:translate-x-1.5 group-focus-visible/topic:text-foreground sm:size-9 lg:size-10"
                       aria-hidden
                     />
                   </span>

@@ -345,7 +345,7 @@ export function KineticCommandBox({
       <button
         type="button"
         onClick={handleCopy}
-        className="relative z-10 mt-2 flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-[var(--radius-lg)] border border-primary/20 bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-sheen transition-[background-color,transform] duration-flow ease-out hover:bg-foreground/90 active:scale-[0.97] motion-reduce:active:scale-100 sm:mt-0"
+        className="relative z-10 mt-2 flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-[var(--radius-lg)] border border-primary/20 bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-sheen transition-[background-color,transform,scale] duration-flow ease-out hover:bg-foreground/90 active:scale-[0.97] motion-reduce:active:scale-100 sm:mt-0"
       >
         {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
         {copied ? copiedLabel : copyLabel}

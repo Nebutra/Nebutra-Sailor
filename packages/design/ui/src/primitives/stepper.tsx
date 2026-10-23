@@ -193,7 +193,7 @@ export function Stepper({
                 onClick={() => clickable && goToStep(index)}
                 disabled={!clickable}
                 className={cn(
-                  "relative flex items-center justify-center rounded-full border transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-micro ease-out active:scale-[0.97] motion-reduce:transition-none motion-reduce:transform-none",
+                  "relative flex items-center justify-center rounded-full border transition-[background-color,border-color,box-shadow,color,opacity,transform,scale] duration-micro ease-out active:scale-[0.97] motion-reduce:transition-none motion-reduce:transform-none",
                   config.icon,
                   status === "completed" && "border-primary bg-primary text-primary-foreground",
                   status === "current" &&
