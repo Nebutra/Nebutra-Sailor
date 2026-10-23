@@ -18,9 +18,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  // The tab icon comes from app/icon.svg and app/favicon.ico. The home-screen icon is the
-  // static file brand:apply writes, so no route draws a stand-in for the logo.
+  // Declaring icons.apple replaces the links Next derives from app/icon.svg and app/favicon.ico,
+  // so all three are listed here. Every one is a static file brand:apply writes from the colour
+  // symbol; no route draws a stand-in for the logo.
   icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+      { url: "/icon.svg", type: "image/svg+xml", sizes: "any" },
+    ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   verification: {
