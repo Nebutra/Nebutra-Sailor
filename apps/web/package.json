@@ -66,7 +66,7 @@
     "@nebutra/ui": "workspace:*",
     "@nebutra/uploads": "workspace:*",
     "@nebutra/webhooks": "workspace:*",
-    "@sentry/nextjs": "^10.68.0",
+    "@sentry/nextjs": "^10.76.2",
     "@simplewebauthn/browser": "^13.3.0",
     "@simplewebauthn/server": "^13.3.0",
     "@t3-oss/env-nextjs": "^0.13.10",
