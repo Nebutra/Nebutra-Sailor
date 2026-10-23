@@ -1,5 +1,6 @@
 <!--
-  Final CTA (deck 5.8; restraint benchmark §4 row 7): the bookend and the page's one dark block.
+  Final CTA (deck 5.8; restraint benchmark §4 row 7): the bookend, a closing band the footer
+  continues (public.css .band-closing), in the visitor's colour mode like the rest of the page.
   The light returns as the same system: the light field's own opening frame (the KCQ candle glyph
   as the only light, the prerendered poster), small and centred above one line and two ways to
   start, "Open the workstation" and "View on GitHub". Static: the one signature motion stays in the
@@ -10,17 +11,26 @@ import { useI18n } from "vue-i18n";
 import KcqIcon from "../components/kcq-icon.vue";
 import { LINKS } from "../links";
 import { APP_PATH } from "../routes";
-// A file, not a data URI: the close is far below the fold, so it stays out of the HTML.
+// Files, not data URIs: the close is far below the fold, so it stays out of the HTML. Lazy, so only
+// the poster of the page's mode loads (public.css "Theme variants").
 import posterDark800 from "./hero/poster/poster-dark-800.webp?no-inline";
+import posterLight800 from "./hero/poster/poster-light-800.webp?no-inline";
 
 const { t } = useI18n();
+const POSTERS = [
+  { mode: "light", src: posterLight800 },
+  { mode: "dark", src: posterDark800 },
+] as const;
 </script>
 <template>
-  <section id="start" class="band cta" data-theme="dark" aria-labelledby="cta-heading">
+  <section id="start" class="band band-closing cta" aria-labelledby="cta-heading">
     <div class="container cta-body">
       <img
+        v-for="poster in POSTERS"
+        :key="poster.mode"
         class="cta-light"
-        :src="posterDark800"
+        :data-theme-variant="poster.mode"
+        :src="poster.src"
         alt=""
         width="800"
         height="350"

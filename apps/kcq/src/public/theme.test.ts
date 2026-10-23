@@ -55,6 +55,15 @@ describe("colour mode", () => {
       expect(root.attrs.get("data-theme")).toBe(mode);
     }
   });
+
+  it("is one page-level fact: no component pins its own data-theme", async () => {
+    const { readdirSync, readFileSync } = await import("node:fs");
+    const root = new URL("./", import.meta.url);
+    const components = readdirSync(root, { recursive: true, encoding: "utf8" }).filter((file) => file.endsWith(".vue"));
+    const pinned = components.filter((file) => /[\s:]data-theme\s*=/.test(readFileSync(new URL(file, root), "utf8")));
+    expect(components.length).toBeGreaterThan(0);
+    expect(pinned).toEqual([]);
+  });
 });
 
 describe("theme-init and the CSP", () => {

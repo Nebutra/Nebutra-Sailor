@@ -3,8 +3,7 @@
   millisecond axis, least first. The bar is the mean; a hairline spans the fastest and slowest round,
   so the noise is on the figure, not in a footnote. A radiogroup switches the visible-bar tier; rows
   re-rank with a FLIP move and the bars morph on the same axis. KCQ rows carry the accent, every other
-  library the secondary ink. It sits on the fixed dark chart surface in both page themes, like every
-  product frame on /home.
+  library the secondary ink. A product frame in the page's colour mode, like every frame on /home.
 -->
 <script setup lang="ts">
 import { computed, ref } from "vue";
@@ -55,7 +54,6 @@ function onKey(event: KeyboardEvent) {
   <figure
     ref="figure"
     class="compare product-frame"
-    data-theme="dark"
     :data-reveal="state"
     :style="{ '--ticks': axisMax }"
   >

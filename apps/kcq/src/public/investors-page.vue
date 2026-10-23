@@ -3,10 +3,10 @@
   (.trellis/tasks/10-09-frontend-design-system/research/investors-page.md §4, Sequoia's spine
   compressed). Marketing, not disclosure: the round size, valuation, use of funds and projections
   live in the deck only. On /home's restraint system (restraint benchmark §3): one page surface,
-  one H2 size, one section rhythm, no eyebrows, product frames on the fixed dark chart surface.
+  one H2 size, one section rhythm, no eyebrows, product frames in the page's colour mode.
   hero with the real 601360 session · why now · the tool calls (the page's one motion) · the live
   workstation · releases in public · business model · who it is for · roadmap · team · the ask
-  (the one dark block, which the footer continues) · footer.
+  (the closing band, which the footer continues) · footer.
 -->
 <script setup lang="ts">
 import { useHead } from "@unhead/vue";

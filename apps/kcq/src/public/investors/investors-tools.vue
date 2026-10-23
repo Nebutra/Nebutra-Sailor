@@ -6,8 +6,8 @@
   The page's one signature motion: when the log first scrolls into view, the rail fills and the
   three calls land in order, the way the agent panel showed them. CSS transitions only, armed
   after hydration, so the prerendered page (and no-JS, and reduced motion) shows the finished log.
-  The section sits on the page surface; the log is the one framed artifact, a product window on
-  the fixed dark chart surface (restraint benchmark rules 4, 9).
+  The section sits on the page surface; the log is the one framed artifact, a product window in
+  the page's colour mode (restraint benchmark rules 4, 9).
 -->
 <script setup lang="ts">
 import { useIntersectionObserver, usePreferredReducedMotion } from "@vueuse/core";
@@ -57,7 +57,6 @@ const { stop } = useIntersectionObserver(
       <figure
         ref="log"
         class="log product-frame"
-        data-theme="dark"
         :data-armed="armed || undefined"
         :data-seen="seen || undefined"
       >

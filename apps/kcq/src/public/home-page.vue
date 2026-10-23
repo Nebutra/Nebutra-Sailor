@@ -2,7 +2,7 @@
   /home: seven blocks on one surface (restraint benchmark §4, founder decisions 2026-10-10), each in
   one grammar (heading, sub, one artifact) and one rhythm: hero · agent (the pinned story) · chart
   quality · markets and data (the real workstation) · developers · open source and trust (merged,
-  text only) · final CTA (the one dark block, where the light returns) · footer.
+  text only) · final CTA (the closing band, where the light returns) · footer.
 -->
 <script setup lang="ts">
 import HomeAgent from "./home/home-agent.vue";

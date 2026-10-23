@@ -42,6 +42,7 @@ function colors() {
     grid: token("--klc-color-grid-major"),
     up: token("--klc-color-candle-up-body"),
     down: token("--klc-color-candle-down-body"),
+    ink: token("--klc-color-ui-text"),
   };
 }
 
@@ -96,11 +97,14 @@ function drawLens() {
   ctx.drawImage(source, sx, sy, CELLS, CELLS, 0, 0, px, px);
   // The device-pixel grid, so a smear reads as two half-filled cells.
   const cell = px / CELLS;
-  ctx.fillStyle = mode.value === "dark" ? "rgb(255 255 255 / 0.08)" : "rgb(0 0 0 / 0.08)";
+  // The interface ink at 8%, so the grid reads on either mode's ground.
+  ctx.fillStyle = colors().ink;
+  ctx.globalAlpha = 0.08;
   for (let i = 1; i < CELLS; i++) {
     ctx.fillRect(Math.round(i * cell), 0, 1, px);
     ctx.fillRect(0, Math.round(i * cell), px, 1);
   }
+  ctx.globalAlpha = 1;
 }
 
 /** Keep the whole lens inside the stage. */
