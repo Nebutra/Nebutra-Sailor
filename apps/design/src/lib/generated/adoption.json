@@ -23,12 +23,12 @@
     ]
   },
   "totals": {
-    "apps": 19,
-    "tsxFiles": 1144,
-    "uiFiles": 678,
-    "uiRatio": 0.5927,
+    "apps": 18,
+    "tsxFiles": 1121,
+    "uiFiles": 675,
+    "uiRatio": 0.6021,
     "hardcodedHex": 95,
-    "arbitraryFontSizes": 877
+    "arbitraryFontSizes": 855
   },
   "apps": [
     {
@@ -115,9 +115,9 @@
       "name": "landing",
       "status": "foundation",
       "graph": "core",
-      "tsxFiles": 334,
+      "tsxFiles": 332,
       "uiFiles": 215,
-      "uiRatio": 0.6437,
+      "uiRatio": 0.6476,
       "hardcodedHex": 36,
       "arbitraryFontSizes": 667
     },
@@ -200,16 +200,6 @@
       "uiRatio": null,
       "hardcodedHex": 0,
       "arbitraryFontSizes": 0
-    },
-    {
-      "name": "typelens",
-      "status": "wip",
-      "graph": "labs",
-      "tsxFiles": 21,
-      "uiFiles": 3,
-      "uiRatio": 0.1429,
-      "hardcodedHex": 0,
-      "arbitraryFontSizes": 22
     },
     {
       "name": "web",

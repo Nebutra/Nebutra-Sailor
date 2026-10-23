@@ -78,7 +78,6 @@ const MUST_STRIP = [
   "apps/forge",
   "apps/router",
   "apps/pebble",
-  "apps/typelens",
   "apps/design",
   "apps/admin",
   "apps/auth",

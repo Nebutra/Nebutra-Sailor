@@ -135,7 +135,6 @@ PACKAGES=(
   "@nebutra/tool-registry"
   "@nebutra/trace-store"
   "@nebutra/tts"
-  "@nebutra/typelens-catalog"
   "@nebutra/ui"
   "@nebutra/uploads"
   "@nebutra/vault"

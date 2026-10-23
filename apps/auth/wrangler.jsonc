@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nebutra-auth",
-  // Same account as sailor-docs / typelens / gateway.
+  // Same account as sailor-docs / gateway.
   "account_id": "a4248a5738df319996a70092fe598d37",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-06-04",

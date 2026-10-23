@@ -165,7 +165,6 @@ jobs:
             "apps/forge",
             "apps/router",
             "apps/pebble",
-            "apps/typelens",
             "apps/design",
             "apps/admin",
             "apps/auth",
@@ -561,7 +560,7 @@ jobs:
           # Labs / sidecar apps are pulled in by token diffs and fail this job
           # on their own seams (Google fonts, brand:sync). They keep their
           # dedicated deploy workflows.
-          for app in apps/sailor-docs apps/storybook apps/studio apps/typelens apps/router apps/forge apps/pebble apps/design apps/sleptons; do
+          for app in apps/sailor-docs apps/storybook apps/studio apps/router apps/forge apps/pebble apps/design apps/sleptons; do
             if [ -d "$app" ]; then
               filters+=(--filter="!./$app")
             fi
@@ -841,7 +840,7 @@ jobs:
           filters=(--filter="...[${TURBO_BASE_REF}]...")
           # Same labs sidecars as Build: token diffs pull them in, and several
           # have no test files (vitest exits 1) or Google-font / brand:sync seams.
-          for app in apps/sailor-docs apps/storybook apps/studio apps/typelens apps/router apps/forge apps/pebble apps/design apps/sleptons; do
+          for app in apps/sailor-docs apps/storybook apps/studio apps/router apps/forge apps/pebble apps/design apps/sleptons; do
             if [ -d "$app" ]; then
               filters+=(--filter="!./$app")
             fi

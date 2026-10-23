@@ -34,7 +34,6 @@ const LABS_APP_DIRS = new Set([
   "apps/pebble",
   "apps/router",
   "apps/sleptons",
-  "apps/typelens",
 ]);
 
 const LABS_PACKAGE_NAMES = new Set([
@@ -71,7 +70,6 @@ const LABS_PACKAGE_NAMES = new Set([
   "@nebutra/support-deflector",
   "@nebutra/time-machine",
   "@nebutra/tts",
-  "@nebutra/typelens-catalog",
   "@nebutra/video-compose",
   "@nebutra/video-pipeline",
   "@nebutra/voice-realtime",

@@ -246,10 +246,10 @@ export const CAPABILITY_FOLDERS: CapabilityFolder[] = [
     icon: Palette,
     layout: "standard",
     sourceStats: {
-      unitCount: 9,
+      unitCount: 8,
       sourceFiles: 1475,
       testFiles: 87,
-      readmes: 14,
+      readmes: 12,
     },
     signature: {
       value: "541",

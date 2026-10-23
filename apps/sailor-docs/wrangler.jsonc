@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nebutra-sailor-docs",
-  // Same account as typelens/gateway; required when API token cannot list accounts.
+  // Same account as gateway; required when API token cannot list accounts.
   "account_id": "a4248a5738df319996a70092fe598d37",
   "compatibility_date": "2026-06-04",
   // No `main`: this is a Workers static-assets-only deploy, not a Worker
