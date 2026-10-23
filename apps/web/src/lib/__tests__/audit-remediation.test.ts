@@ -72,6 +72,8 @@ describe("UI/UX audit remediation invariants", () => {
     }
     const layout = readFromRepo("apps/landing/src/app/layout.tsx");
     expect(layout).toContain("/apple-touch-icon.png");
+    expect(layout).toContain("/icon.svg");
+    expect(layout).toContain("/favicon.ico");
     expect(
       existsSync(
         path.join(
