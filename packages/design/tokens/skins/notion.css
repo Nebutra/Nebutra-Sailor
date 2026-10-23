@@ -90,8 +90,8 @@ html[data-brand="notion"] {
   --radius-md: min(8px, 12px);
   --radius-card: 12px;
   --radius-lg: 12px;
-  --radius-badge: 9999px;
-  --badge-default-radius: 9999px;
+  --radius-badge: 6px;
+  --badge-default-radius: 6px;
   --radius-inputs: 8px;
   --input-radius: 8px;
   --radius-control: 8px;

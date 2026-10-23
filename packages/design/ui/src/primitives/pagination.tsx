@@ -21,14 +21,26 @@ type PaginationCssVar =
 type PaginationCssVars = React.CSSProperties & Record<PaginationCssVar, string>;
 
 export interface PaginationDestination {
+  /** Name of the target page, shown as the rail's main line and used in its accessible name. */
   title: string;
+  /** URL of the target page, rendered as a plain `a` `href`. */
   href: string;
 }
 
 export interface PaginationProps extends Omit<React.ComponentPropsWithoutRef<"nav">, "children"> {
+  /** The page before this one. Leave it out on the first page: the slot stays empty. */
   previous?: PaginationDestination;
+  /** The page after this one. Leave it out on the last page: the slot stays empty. */
   next?: PaginationDestination;
+  /**
+   * Small caption above the previous page's title.
+   * @default "Previous"
+   */
   previousLabel?: string;
+  /**
+   * Small caption above the next page's title.
+   * @default "Next"
+   */
   nextLabel?: string;
 }
 
@@ -103,6 +115,23 @@ function PaginationRail({
   );
 }
 
+/**
+ * Pagination - Previous and next links between neighbouring pages.
+ *
+ * A two-slot navigation rail for ordered content such as docs or posts, not a
+ * numbered page list: there are no page numbers, current-page marker or
+ * ellipsis. Each side is a titled link with a caption. The two sit side by side
+ * from `sm` up and stack below it. The rail labels itself "Page navigation"
+ * (override with `aria-label`).
+ *
+ * @example
+ * ```tsx
+ * <Pagination
+ *   previous={{ title: "Installation", href: "/docs/installation" }}
+ *   next={{ title: "Theming", href: "/docs/theming" }}
+ * />
+ * ```
+ */
 export function Pagination({
   previous,
   next,

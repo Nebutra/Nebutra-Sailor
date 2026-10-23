@@ -185,7 +185,8 @@ export function buildGeneric(ctx: CompileContext): BrandPackage {
           leafHex(ctx.radius, ["xl"]) ??
           leafHex(ctx.radius, ["lg"]) ??
           "0.75rem",
-        badge: leafHex(ctx.radius, ["pills"]) ?? leafHex(ctx.radius, ["badges"]) ?? "9999px",
+        // Badges first: a reference that lists both means the badge step by "badges".
+        badge: leafHex(ctx.radius, ["badges"]) ?? leafHex(ctx.radius, ["pills"]) ?? "6px",
         input: leafHex(ctx.radius, ["inputs"]) ?? ctx.recipeHints.radii?.button ?? "0.375rem",
       },
       elevationPreset,

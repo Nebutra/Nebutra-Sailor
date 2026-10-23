@@ -1,7 +1,9 @@
 /**
  * Toggle Component Tokens — Layer 3
  *
- * Boolean setting switch. It consumes semantic status colors only; decorative
+ * Boolean setting switch. The default is the active design language's action colour
+ * (`--primary`), so a switch reads as part of the brand it sits in; the status colours
+ * (success, warning, error) stay opt-in for the cases where on means a status. Decorative
  * hue families without semantic ownership should not be added here.
  */
 
@@ -36,6 +38,8 @@ type ToggleColorTokens = {
   readonly trackOff: string;
   readonly trackBorder: string;
   readonly thumb: string;
+  /** Thumb while checked; the track colour decides whether white still reads on it. */
+  readonly thumbOn: string;
   readonly iconOn: string;
   readonly iconOff: string;
 };
@@ -52,6 +56,7 @@ const offState = {
   trackOff: "var(--neutral-10)",
   trackBorder: "transparent",
   thumb: THUMB,
+  thumbOn: THUMB,
   iconOff: "var(--neutral-10)",
 } as const;
 
@@ -66,6 +71,15 @@ const semanticColor = (
     iconOn: color,
   };
 };
+
+/**
+ * The brand track follows `--primary`, which is near-black, white, lime or green depending on
+ * the design language, so the on thumb takes `--primary-foreground` rather than a fixed white.
+ */
+const brandColor = (): ToggleColorTokens => ({
+  ...semanticColor("primary"),
+  thumbOn: "hsl(var(--primary-foreground))",
+});
 
 export const toggleTokens = {
   size: {
@@ -107,11 +121,10 @@ export const toggleTokens = {
     easing: primitiveTransition.easing.default,
   },
   color: {
-    default: semanticColor("success"),
-    blue: semanticColor("primary"),
+    default: brandColor(),
+    blue: brandColor(),
     cyan: {
-      ...offState,
-      trackOn: "hsl(var(--primary))",
+      ...brandColor(),
       iconOn: "var(--cyan-11)",
     },
     success: semanticColor("success"),
@@ -119,6 +132,7 @@ export const toggleTokens = {
     error: semanticColor("destructive"),
     neutral: {
       ...offState,
+      thumbOn: "var(--neutral-1)",
       trackOn: "var(--neutral-12)",
       iconOn: "var(--neutral-12)",
     },

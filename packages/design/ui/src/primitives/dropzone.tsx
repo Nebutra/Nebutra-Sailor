@@ -39,21 +39,36 @@ import { Progress } from "./progress";
 export type DropzoneRejectionReason = "type" | "size" | "count";
 
 export interface DropzoneRejection {
+  /** The file that failed validation. */
   file: File;
+  /** Which rule it broke. */
   reason: DropzoneRejectionReason;
+  /** The user-facing message, from `messages` or the English default. */
   message: string;
 }
 
 export interface DropzoneProps {
   /** Same syntax as the input `accept` attribute: ".pdf,image/*,text/csv". */
   accept?: string;
+  /**
+   * Allow more than one file per selection. Without it only the first file is
+   * accepted and any others are rejected with reason `count`.
+   * @default false
+   */
   multiple?: boolean;
   /** Largest accepted file, in bytes. */
   maxSize?: number;
   /** Most files accepted in one selection (with `multiple`). */
   maxFiles?: number;
+  /**
+   * Disables the picker, drop and paste, and dims the surface.
+   * @default false
+   */
   disabled?: boolean;
-  /** Accept files pasted while the zone has focus. */
+  /**
+   * Accept files pasted while the zone has focus.
+   * @default false
+   */
   paste?: boolean;
   /** Fires with the accepted files of a selection, drop or paste. */
   onFiles: (files: File[]) => void;
@@ -65,16 +80,25 @@ export interface DropzoneProps {
   description?: React.ReactNode;
   /** Determinate progress 0–100, or `null` for indeterminate. Omit to hide. */
   progress?: number | null;
-  /** Accessible label for the progress bar. */
+  /**
+   * Accessible label for the progress bar.
+   * @default "Upload progress"
+   */
   progressLabel?: string;
   /** External error to show (e.g. an upload failure). */
   error?: string;
   /** Replace the default icon + copy body. */
   children?: React.ReactNode;
-  /** `sm` is a single inline row; `md` is the tall drop target. */
+  /**
+   * `sm` is a single inline row; `md` is the tall drop target.
+   * @default "md"
+   */
   size?: "sm" | "md";
+  /** Id of the hidden file input, which the surface's label points at. Generated when omitted. */
   id?: string;
+  /** Name of the file input, so a surrounding form submits the chosen files under it. */
   name?: string;
+  /** Extra classes for the outer wrapper that holds the surface, progress bar and status line. */
   className?: string;
   /** Extra attributes for the hidden `<input type="file">`, e.g. `capture`. */
   inputProps?: Omit<
@@ -134,6 +158,11 @@ function dragCarriesAcceptedTypes(event: React.DragEvent, accept: string | undef
   });
 }
 
+/**
+ * File selection surface: drag and drop, paste and the native picker behind
+ * one label. Validates `accept`, `maxSize` and `maxFiles`, reports rejections
+ * inline and through a polite live region, and can show upload progress.
+ */
 export function Dropzone({
   accept,
   multiple = false,

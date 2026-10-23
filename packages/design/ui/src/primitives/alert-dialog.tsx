@@ -8,15 +8,31 @@ import { resolveLazyChild } from "../utils/lazy-child";
 import { rendersNativeButton } from "../utils/native-button";
 import { buttonVariants } from "./button-variants";
 
+/**
+ * AlertDialog - Interrupting confirmation modal
+ *
+ * @description
+ * Groups the parts of a modal that asks the user to confirm or cancel before anything else can
+ * happen. Focus is trapped while it is open and a click on the backdrop never closes it; only
+ * Cancel, the action or Escape does. Accepts `open`, `defaultOpen` and `onOpenChange` from Base UI.
+ */
 const AlertDialog = BaseAlertDialog.Root;
+/** Portals its children to the document body. `AlertDialogContent` already includes one. */
 const AlertDialogPortal = BaseAlertDialog.Portal;
 
+/** Button that opens the dialog. Pass `asChild` to put the behaviour on your own control. */
 const AlertDialogTrigger = ({
   asChild,
   children: rawChildren,
   ref,
   ...props
-}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & { asChild?: boolean } & {
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Trigger> & {
+  /**
+   * Render the trigger onto the single child element instead of a native button.
+   * @default false
+   */
+  asChild?: boolean;
+} & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
   const children = resolveLazyChild(rawChildren);
@@ -38,6 +54,7 @@ const AlertDialogTrigger = ({
 };
 AlertDialogTrigger.displayName = "AlertDialogTrigger";
 
+/** Dimmed backdrop behind the dialog. Clicking it does not close the dialog. */
 const AlertDialogOverlay = ({
   className,
   style,
@@ -55,6 +72,7 @@ const AlertDialogOverlay = ({
 );
 AlertDialogOverlay.displayName = "AlertDialogOverlay";
 
+/** Portalled modal surface with its own overlay. Holds the header, body and footer. */
 const AlertDialogContent = ({
   className,
   children,
@@ -78,11 +96,13 @@ const AlertDialogContent = ({
 );
 AlertDialogContent.displayName = "AlertDialogContent";
 
+/** Stacks the title and description; centred on small screens, left-aligned from `sm`. */
 const AlertDialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn("flex flex-col space-y-2 text-center sm:text-left", className)} {...props} />
 );
 AlertDialogHeader.displayName = "AlertDialogHeader";
 
+/** Row of actions; stacked with the primary action last on small screens, right-aligned from `sm`. */
 const AlertDialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}
@@ -91,6 +111,7 @@ const AlertDialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDiv
 );
 AlertDialogFooter.displayName = "AlertDialogFooter";
 
+/** Accessible name of the dialog. Always render one. */
 const AlertDialogTitle = ({
   className,
   ref,
@@ -102,6 +123,7 @@ const AlertDialogTitle = ({
 );
 AlertDialogTitle.displayName = "AlertDialogTitle";
 
+/** Accessible description of the dialog: what will happen if the user confirms. */
 const AlertDialogDescription = ({
   className,
   ref,
@@ -118,13 +140,20 @@ const AlertDialogDescription = ({
 AlertDialogDescription.displayName = "AlertDialogDescription";
 
 // Base UI doesn't have an explicit 'Action' or 'Cancel' component. We render native Close triggers.
+/** Confirming button; closes the dialog and renders the default button style unless `asChild` is used. */
 const AlertDialogAction = ({
   className,
   asChild,
   children: rawChildren,
   ref,
   ...props
-}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { asChild?: boolean } & {
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & {
+  /**
+   * Render the action onto the single child element, e.g. a destructive `Button`, instead of the default button.
+   * @default false
+   */
+  asChild?: boolean;
+} & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
   const children = resolveLazyChild(rawChildren);
@@ -148,13 +177,20 @@ const AlertDialogAction = ({
 AlertDialogAction.displayName = "AlertDialogAction";
 
 // Base UI's <Close> acts exactly like a Cancel when mapped as a trigger.
+/** Dismissing button; closes the dialog and renders the outline button style unless `asChild` is used. */
 const AlertDialogCancel = ({
   className,
   asChild,
   children: rawChildren,
   ref,
   ...props
-}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & { asChild?: boolean } & {
+}: React.ComponentPropsWithoutRef<typeof BaseAlertDialog.Close> & {
+  /**
+   * Render the cancel control onto the single child element instead of the outline button.
+   * @default false
+   */
+  asChild?: boolean;
+} & {
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
   const children = resolveLazyChild(rawChildren);

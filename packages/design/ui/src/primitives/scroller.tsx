@@ -4,6 +4,7 @@ import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "@nebutra/icon
 import * as React from "react";
 import { scrollerTokens } from "../tokens/components/scroller";
 import { cn } from "../utils/cn";
+import { controlFocusVisibleClassName } from "./form-control";
 
 export type ScrollerOverflow = "x" | "y" | "both";
 export type ScrollerButtonAxis = "x" | "y";
@@ -34,25 +35,52 @@ type EdgeState = {
 
 export interface ScrollerProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "style"> {
+  /** Scrollable content. With `withButtons`, each direct child is one step for the buttons. */
   children?: React.ReactNode;
-  /** Scroll axis. Use "both" only when content genuinely overflows in two dimensions. */
+  /**
+   * Scroll axis. Use "both" only when content genuinely overflows in two dimensions.
+   * @default "y"
+   */
   overflow?: ScrollerOverflow;
-  /** Outer width. Numbers resolve to px. */
+  /**
+   * Outer width. Numbers resolve to px.
+   * @default "100%"
+   */
   width?: ScrollerSize;
-  /** Outer height. Numbers resolve to px. */
+  /**
+   * Outer height. Numbers resolve to px; leave unset to size to the content, which never scrolls.
+   * @default "auto"
+   */
   height?: ScrollerSize;
   /** Class applied to the direct-child container inside the scroll viewport. */
   childrenContainerClassName?: string;
-  /** Render directional buttons that scroll to the next direct child. */
+  /**
+   * Render directional buttons that scroll to the next direct child.
+   * @default false
+   */
   withButtons?: boolean;
   /** Axis used by directional buttons. Defaults to x for horizontal, y otherwise. */
   buttonAxis?: ScrollerButtonAxis;
-  /** Accessible noun used by the viewport and generated button labels. */
+  /**
+   * Accessible noun used by the viewport and generated button labels.
+   * @default "content"
+   */
   contentLabel?: string;
+  /** Accessible name of the previous button. Defaults to "Scroll {contentLabel} left" (x) or "up" (y). */
   previousButtonLabel?: string;
+  /** Accessible name of the next button. Defaults to "Scroll {contentLabel} right" (x) or "down" (y). */
   nextButtonLabel?: string;
+  /**
+   * Edge treatment: "fade" shows a gradient on each side that has more content, "none" hides it.
+   * @default "fade"
+   */
   edgeAffordance?: ScrollerEdgeAffordance;
+  /**
+   * Scroll behavior used by the directional buttons.
+   * @default "smooth"
+   */
   scrollBehavior?: ScrollBehavior;
+  /** Inline styles for the outer element. They are merged after the component's own CSS variables. */
   style?: React.CSSProperties;
 }
 
@@ -271,6 +299,12 @@ function ScrollerButton({
   );
 }
 
+/**
+ * Native scroll viewport with edge fades and optional previous/next buttons.
+ * The viewport is a labelled `section`; the buttons step to the previous or next direct child and
+ * are disabled (and hidden) at the matching end. Use it for rails, feeds and logs, not for
+ * carousels or virtualized lists.
+ */
 export function Scroller({
   children,
   overflow = "y",
@@ -365,7 +399,8 @@ export function Scroller({
         aria-label={contentLabel}
         onScroll={updateEdgeState}
         className={cn(
-          "h-[var(--scroller-height)] rounded-[var(--scroller-radius)] outline-none",
+          "h-[var(--scroller-height)] rounded-[var(--scroller-radius)]",
+          controlFocusVisibleClassName,
           "scroll-smooth overscroll-contain motion-reduce:scroll-auto",
           resolveScrollClasses(overflow),
         )}

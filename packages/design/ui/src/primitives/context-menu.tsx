@@ -15,15 +15,28 @@ export interface ContextMenuItemProps
     React.ComponentPropsWithoutRef<typeof BaseContextMenu.Item>,
     "disabled" | "label" | "closeOnClick"
   > {
+  /** Label content of the item. */
   children?: React.ReactNode;
+  /** Called when the item is clicked or chosen with the keyboard. Mapped onto `onClick`. */
   onSelect?: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Item>["onClick"];
+  /** Renders the item as a link to this URL instead of a button-like row. */
   href?: string;
+  /** Where a linked item opens. Only used with `href`. */
   target?: React.HTMLAttributeAnchorTarget;
+  /** Link relationship for a linked item. Only used with `href`. */
   rel?: string;
+  /** Leading content, usually an icon, shown before the label in the muted colour. */
   prefix?: React.ReactNode;
+  /** Trailing content, usually a `ContextMenuShortcut`, pushed to the end of the row. */
   suffix?: React.ReactNode;
+  /**
+   * Visual intent. `destructive` colours the row with the danger tone.
+   * @default "default"
+   */
   variant?: ContextMenuItemVariant;
+  /** Written to the row as `data-value`, for tests and styling hooks. */
   value?: string;
+  /** Additional classes for the row. */
   className?: string;
 }
 
@@ -32,11 +45,17 @@ export interface ContextMenuCheckboxItemProps
     React.ComponentPropsWithoutRef<typeof BaseContextMenu.CheckboxItem>,
     "checked" | "defaultChecked" | "disabled" | "label" | "closeOnClick" | "onCheckedChange"
   > {
+  /** Label content of the item. */
   children?: React.ReactNode;
+  /** Leading content, usually an icon, shown before the label in the muted colour. */
   prefix?: React.ReactNode;
+  /** Trailing content, usually a `ContextMenuShortcut`, pushed to the end of the row. */
   suffix?: React.ReactNode;
+  /** Called when the item is clicked or chosen with the keyboard. Mapped onto `onClick`. */
   onSelect?: React.ComponentPropsWithoutRef<typeof BaseContextMenu.CheckboxItem>["onClick"];
+  /** Written to the row as `data-value`, for tests and styling hooks. */
   value?: string;
+  /** Additional classes for the row. */
   className?: string;
 }
 
@@ -45,8 +64,11 @@ export interface ContextMenuRadioGroupProps
     React.ComponentPropsWithoutRef<typeof BaseContextMenu.RadioGroup>,
     "value" | "defaultValue" | "onValueChange"
   > {
+  /** The selected radio value when controlled. */
   value?: string;
+  /** The radio value selected at first when uncontrolled. */
   defaultValue?: string;
+  /** Called with the new value when the user picks a different radio item. */
   onValueChange?: (
     value: string,
     eventDetails: Parameters<
@@ -62,11 +84,17 @@ export interface ContextMenuRadioItemProps
     React.ComponentPropsWithoutRef<typeof BaseContextMenu.RadioItem>,
     "disabled" | "label" | "closeOnClick"
   > {
+  /** Label content of the item. */
   children?: React.ReactNode;
+  /** The value this item sets on its `ContextMenuRadioGroup` when chosen. */
   value: string;
+  /** Leading content, usually an icon, shown before the label in the muted colour. */
   prefix?: React.ReactNode;
+  /** Trailing content, usually a `ContextMenuShortcut`, pushed to the end of the row. */
   suffix?: React.ReactNode;
+  /** Called when the item is clicked or chosen with the keyboard. Mapped onto `onClick`. */
   onSelect?: React.ComponentPropsWithoutRef<typeof BaseContextMenu.RadioItem>["onClick"];
+  /** Additional classes for the row. */
   className?: string;
 }
 
@@ -75,27 +103,51 @@ export interface ContextMenuSubTriggerProps
     React.ComponentPropsWithoutRef<typeof BaseContextMenu.SubmenuTrigger>,
     "disabled" | "label" | "delay" | "closeDelay" | "openOnHover"
   > {
+  /** Label content of the row. */
   children?: React.ReactNode;
+  /** Leading content, usually an icon, shown before the label in the muted colour. */
   prefix?: React.ReactNode;
+  /** Trailing content. Defaults to a right-pointing chevron. */
   suffix?: React.ReactNode;
+  /** Called when the row is clicked. Mapped onto `onClick`. */
   onSelect?: React.ComponentPropsWithoutRef<typeof BaseContextMenu.SubmenuTrigger>["onClick"];
+  /** Additional classes for the row. */
   className?: string;
 }
 
 export interface ContextMenuLabelProps {
+  /** Heading text for the run of items below it. */
   children?: React.ReactNode;
+  /** Additional classes for the label. */
   className?: string;
 }
 
 export interface ContextMenuSeparatorProps {
+  /** Additional classes for the divider. */
   className?: string;
 }
 
 export interface ContextMenuContentProps
   extends React.ComponentPropsWithoutRef<typeof BaseContextMenu.Popup> {
+  /**
+   * Alignment of the panel against the pointer along the edge it opens from.
+   * @default "start"
+   */
   align?: React.ComponentProps<typeof BaseContextMenu.Positioner>["align"];
+  /**
+   * Gap between the pointer and the panel, in px.
+   * @default 4
+   */
   sideOffset?: React.ComponentProps<typeof BaseContextMenu.Positioner>["sideOffset"];
+  /**
+   * Extra offset along the alignment axis, in px.
+   * @default 0
+   */
   alignOffset?: React.ComponentProps<typeof BaseContextMenu.Positioner>["alignOffset"];
+  /**
+   * Edge of the pointer the panel opens from.
+   * @default "bottom"
+   */
   side?: React.ComponentProps<typeof BaseContextMenu.Positioner>["side"];
 }
 
@@ -122,15 +174,24 @@ function ContextMenuItemContent({
   );
 }
 
+/** Holds the open state of one context menu. Renders no element of its own. */
 export const ContextMenuRoot = BaseContextMenu.Root;
 
+/**
+ * Region that opens the menu on right click, or on a long press on touch. It renders a plain
+ * `<div>` that is not focusable, so wrap a focusable element with `asChild` if keyboard users
+ * need to reach it.
+ */
 export const ContextMenuTrigger = ({
   asChild,
   children: rawChildren,
   render,
   ref,
   ...props
-}: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Trigger> & { asChild?: boolean } & {
+}: React.ComponentPropsWithoutRef<typeof BaseContextMenu.Trigger> & {
+  /** Render the child element as the trigger region instead of a wrapping `<div>`. */
+  asChild?: boolean;
+} & {
   ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.Trigger>> | undefined;
 }) => {
   const children = resolveLazyChild(rawChildren);
@@ -146,6 +207,7 @@ export const ContextMenuTrigger = ({
 };
 ContextMenuTrigger.displayName = "ContextMenu.Trigger";
 
+/** Portalled panel that holds the menu's items, positioned from the pointer. */
 export const ContextMenuContent = ({
   className,
   alignOffset = 0,
@@ -186,9 +248,11 @@ export const ContextMenuContent = ({
 );
 ContextMenuContent.displayName = "ContextMenu.Content";
 
+/** Groups related items so assistive tech announces them together. */
 export const ContextMenuGroup = BaseContextMenu.Group;
 ContextMenuGroup.displayName = "ContextMenu.Group";
 
+/** Non-interactive heading that names the group of items below it. */
 export const ContextMenuLabel = ({
   className,
   ref,
@@ -204,6 +268,7 @@ export const ContextMenuLabel = ({
 );
 ContextMenuLabel.displayName = "ContextMenu.Label";
 
+/** Hairline between groups of items. */
 export const ContextMenuSeparator = ({
   className,
   ref,
@@ -219,6 +284,10 @@ export const ContextMenuSeparator = ({
 );
 ContextMenuSeparator.displayName = "ContextMenu.Separator";
 
+/**
+ * Selectable row. Renders as a link when `href` is set. Use `variant="destructive"` for
+ * actions that delete or discard.
+ */
 export const ContextMenuItem = ({
   children,
   onSelect,
@@ -275,6 +344,7 @@ export const ContextMenuItem = ({
 };
 ContextMenuItem.displayName = "ContextMenu.Item";
 
+/** Item that toggles a boolean setting and shows a check while `checked`. */
 export const ContextMenuCheckboxItem = ({
   children,
   prefix,
@@ -308,6 +378,7 @@ export const ContextMenuCheckboxItem = ({
 );
 ContextMenuCheckboxItem.displayName = "ContextMenu.CheckboxItem";
 
+/** Holds the `value` shared by a set of `ContextMenuRadioItem`s. */
 export const ContextMenuRadioGroup = ({
   onValueChange,
   ref,
@@ -317,6 +388,7 @@ export const ContextMenuRadioGroup = ({
 }) => <BaseContextMenu.RadioGroup ref={ref} onValueChange={onValueChange} {...props} />;
 ContextMenuRadioGroup.displayName = "ContextMenu.RadioGroup";
 
+/** One choice in a `ContextMenuRadioGroup`, marked with a dot while selected. */
 export const ContextMenuRadioItem = ({
   children,
   prefix,
@@ -346,8 +418,10 @@ export const ContextMenuRadioItem = ({
 );
 ContextMenuRadioItem.displayName = "ContextMenu.RadioItem";
 
+/** Wraps a `ContextMenuSubTrigger` and its `ContextMenuSubContent` to form a nested submenu. */
 export const ContextMenuSub = BaseContextMenu.SubmenuRoot;
 
+/** Row that opens a nested submenu, with a trailing chevron unless `suffix` replaces it. */
 export const ContextMenuSubTrigger = ({
   children,
   prefix,
@@ -372,9 +446,11 @@ export const ContextMenuSubTrigger = ({
 );
 ContextMenuSubTrigger.displayName = "ContextMenu.SubTrigger";
 
+/** Panel for a nested submenu. The same component as `ContextMenuContent`. */
 export const ContextMenuSubContent = ContextMenuContent;
 ContextMenuSubContent.displayName = "ContextMenu.SubContent";
 
+/** Right-aligned shortcut hint for an item. Decorative: it does not bind the keys itself. */
 export const ContextMenuShortcut = ({
   className,
   ref,
@@ -388,19 +464,37 @@ export const ContextMenuShortcut = ({
 );
 ContextMenuShortcut.displayName = "ContextMenu.Shortcut";
 
+/**
+ * Context menu root with every part attached as a static, so `ContextMenu.Item` and
+ * `ContextMenuItem` are the same component.
+ */
 export const ContextMenu = Object.assign(ContextMenuRoot, {
+  /** Holds the open state of one context menu. */
   Root: ContextMenuRoot,
+  /** Region that opens the menu on right click or long press. */
   Trigger: ContextMenuTrigger,
+  /** Portalled panel that holds the menu's items. */
   Content: ContextMenuContent,
+  /** Groups related items so assistive tech announces them together. */
   Group: ContextMenuGroup,
+  /** Selectable row; renders as a link when `href` is set. */
   Item: ContextMenuItem,
+  /** Item that toggles a boolean setting. */
   CheckboxItem: ContextMenuCheckboxItem,
+  /** Holds the value shared by a set of radio items. */
   RadioGroup: ContextMenuRadioGroup,
+  /** One choice in a radio group. */
   RadioItem: ContextMenuRadioItem,
+  /** Non-interactive heading for a group of items. */
   Label: ContextMenuLabel,
+  /** Hairline between groups of items. */
   Separator: ContextMenuSeparator,
+  /** Right-aligned shortcut hint for an item. */
   Shortcut: ContextMenuShortcut,
+  /** Wraps a sub trigger and its content to form a nested submenu. */
   Sub: ContextMenuSub,
+  /** Row that opens a nested submenu. */
   SubTrigger: ContextMenuSubTrigger,
+  /** Panel for a nested submenu. */
   SubContent: ContextMenuSubContent,
 });

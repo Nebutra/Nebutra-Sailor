@@ -34,36 +34,67 @@ export interface SplitButtonPrimaryProps
     | "type"
     | "variant"
   > {
-  /** Geist-compatible visual type. Intentionally limited to non-destructive variants. */
+  /**
+   * Geist-compatible visual type. Intentionally limited to non-destructive variants.
+   * @default "default"
+   */
   type?: SplitButtonType;
-  /** Native button type. Defaults to `button` to avoid accidental form submit. */
+  /**
+   * Native button type. Defaults to `button` to avoid accidental form submit.
+   * @default "button"
+   */
   htmlType?: ButtonProps["type"];
+  /**
+   * Height of both halves. `small`, `medium` and `large` are aliases of `sm`, `default` and `lg`.
+   * @default "medium"
+   */
   size?: SplitButtonSize;
+  /** Class applied to the primary button only, merged after its seam styling. */
   className?: string;
+  /** Mark the primary action busy. This disables both halves, so the menu cannot be opened mid-request. */
   loading?: boolean;
+  /** Decorative content before the label, hidden from assistive technology. */
   prefix?: React.ReactNode;
 }
 
 export interface SplitButtonMenuContentProps
   extends Omit<DropdownMenuContentProps, "align" | "side"> {
+  /**
+   * Width of the menu panel. Numbers resolve to px.
+   * @default 264
+   */
   width?: number | string;
 }
 
 export interface SplitButtonProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "children" | "onChange"> {
+  /** Label of the primary action button. */
   children: React.ReactNode;
+  /** Props for the primary button: `type`, `size`, `loading`, `prefix`, `onClick`, `disabled` and so on. */
   buttonProps?: SplitButtonPrimaryProps;
+  /** Disable both halves. The primary button's own `disabled` and `loading` also disable both. */
   disabled?: boolean;
+  /**
+   * Where the menu opens relative to the chevron: `bottom-start` aligns to its left edge, `bottom-end` to its right.
+   * @default "bottom-start"
+   */
   menuAlignment?: SplitButtonMenuAlignment;
+  /** Accessible name of the chevron button, for example "More deploy options". Required: the chevron has no text. */
   menuButtonLabel: string;
+  /** Menu content, usually `SplitButton.MenuItem` entries or `DropdownMenuItem`s. */
   menuItems: React.ReactNode;
+  /** Props for the menu panel, such as `width`, `className` and `style`. */
   menuProps?: SplitButtonMenuContentProps;
 }
 
 export interface SplitButtonMenuItemProps {
+  /** Item label. Truncated to one line. */
   title: React.ReactNode;
+  /** Secondary text under the title, clamped to two lines. */
   description?: React.ReactNode;
+  /** Leading icon, hidden from assistive technology. */
   icon?: React.ReactNode;
+  /** Props for the underlying `DropdownMenuItem`, such as `onClick`, `disabled` and `className`. */
   menuItemProps?: Omit<React.ComponentPropsWithoutRef<typeof DropdownMenuItem>, "children">;
 }
 
@@ -134,6 +165,11 @@ function createSplitButtonVars(size: SplitButtonSize): SplitButtonCssVars {
   };
 }
 
+/**
+ * Primary action button with a chevron button attached to its right edge that opens a menu of
+ * alternatives. Both halves share the same type and size. `disabled` or `loading` on either the
+ * root or `buttonProps` disables both halves, and `menuButtonLabel` names the chevron.
+ */
 function SplitButtonRoot({
   children,
   className,
@@ -221,6 +257,7 @@ function SplitButtonRoot({
   );
 }
 
+/** Two-line menu entry (title plus optional description and icon) for a `SplitButton` menu. */
 function SplitButtonMenuItem({
   title,
   description,
@@ -257,7 +294,13 @@ function SplitButtonMenuItem({
   );
 }
 
+/**
+ * Primary action button with a chevron button attached to its right edge that opens a menu of
+ * alternatives. Both halves share the same type and size. `disabled` or `loading` on either the
+ * root or `buttonProps` disables both halves, and `menuButtonLabel` names the chevron.
+ */
 const SplitButton = Object.assign(SplitButtonRoot, {
+  /** Two-line menu entry (title plus optional description and icon) for a `SplitButton` menu. */
   MenuItem: SplitButtonMenuItem,
 });
 

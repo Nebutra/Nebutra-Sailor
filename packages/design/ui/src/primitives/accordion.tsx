@@ -23,17 +23,52 @@ const AccordionPanelBase = withHtmlProps<"div">(BaseAccordion.Panel);
 // Root
 // =============================================================================
 
+/**
+ * Accordion - Root of a stack of disclosure sections.
+ *
+ * Open items are an array of item `value`s, so it is the same shape whether one
+ * or many are open. Only one item stays open unless `multiple` is set. Arrow
+ * keys move focus between triggers, Home and End jump to the first and last.
+ * Props come straight from Base UI's Accordion root (`value`, `defaultValue`,
+ * `onValueChange`, `multiple`, `disabled`, `keepMounted`, `hiddenUntilFound`,
+ * `loopFocus`, `orientation`).
+ *
+ * @example
+ * ```tsx
+ * <Accordion defaultValue={["billing"]}>
+ *   <AccordionItem value="billing">
+ *     <AccordionTrigger>Billing</AccordionTrigger>
+ *     <AccordionContent>Invoices and payment methods.</AccordionContent>
+ *   </AccordionItem>
+ * </Accordion>
+ * ```
+ */
 const Accordion = BaseAccordion.Root;
 
 // =============================================================================
 // Item
 // =============================================================================
 
+/**
+ * AccordionItem - One section: a trigger paired with its panel.
+ *
+ * Draws the hairline between sections. A disabled item cannot be opened or
+ * closed; arrow keys skip its trigger, but Tab can still reach it and it is
+ * dimmed through `data-disabled`.
+ */
 const AccordionItem = ({
   className,
   ref,
   ...props
-}: React.ComponentPropsWithoutRef<"div"> & { value: string; disabled?: boolean } & {
+}: React.ComponentPropsWithoutRef<"div"> & {
+  /** Identifies this item in the root's `value` array, and so what opens it. */
+  value: string;
+  /**
+   * Prevents this item from being opened or closed by the user.
+   * @default false
+   */
+  disabled?: boolean;
+} & {
   ref?: React.Ref<HTMLDivElement> | undefined;
 }) => (
   <AccordionItemBase
@@ -48,6 +83,12 @@ AccordionItem.displayName = "AccordionItem";
 // Trigger
 // =============================================================================
 
+/**
+ * AccordionTrigger - The heading button that opens and closes its item.
+ *
+ * Renders an `h3` containing a `button`, with a plus icon that turns into a
+ * cross while the panel is open.
+ */
 const AccordionTrigger = ({
   className,
   children,
@@ -55,14 +96,17 @@ const AccordionTrigger = ({
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<"button"> & {
-  /** Size variant matching Geist Collapse */
+  /**
+   * Type size and vertical padding of the trigger. Match it on `AccordionContent`.
+   * @default "default"
+   */
   size?: AccordionSize;
 } & { ref?: React.Ref<HTMLButtonElement> | undefined }) => (
   <AccordionHeaderBase className="flex">
     <AccordionTriggerBase
       ref={ref}
       className={cn(
-        "font-medium flex flex-1 items-center justify-between transition-[color,box-shadow] duration-micro ease-out motion-reduce:transition-none hover:text-muted-foreground focus-visible:outline-none [&[data-panel-open]>svg]:rotate-45",
+        "font-medium flex flex-1 items-center justify-between transition-[color,box-shadow] duration-micro ease-out motion-reduce:transition-none hover:text-muted-foreground focus-visible:outline-none data-[disabled]:pointer-events-none data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50 [&[data-panel-open]>svg]:rotate-45",
         size === "small" ? "py-2.5 text-sm" : "py-4 text-[15px]",
         className,
       )}
@@ -84,6 +128,12 @@ AccordionTrigger.displayName = "AccordionTrigger";
 // Content
 // =============================================================================
 
+/**
+ * AccordionContent - The collapsible panel of an item.
+ *
+ * The height animates open and closed (instant under reduced motion).
+ * `className` is applied to the padded inner wrapper, not the panel itself.
+ */
 const AccordionContent = ({
   className,
   children,
@@ -92,12 +142,15 @@ const AccordionContent = ({
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<"div"> & {
-  /** Size variant matching Geist Collapse */
+  /**
+   * Bottom padding and type size of the panel. Match it on `AccordionTrigger`.
+   * @default "default"
+   */
   size?: AccordionSize;
   /**
    * Keep the panel content in the DOM when closed. Lets browser find-in-page
    * and search crawlers hit hidden content. Forwarded to Base UI's Panel.
-   * @default false (Base UI's default)
+   * @default false
    */
   keepMounted?: boolean;
 } & { ref?: React.Ref<HTMLDivElement> | undefined }) => (

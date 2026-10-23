@@ -6,6 +6,7 @@ import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
 import { overlayPrimitiveClassNames } from "./overlay";
 
+/** Portalled, anchored card surface shown while the hover card is open. */
 const HoverCardContent = ({
   className,
   align = "center",
@@ -15,8 +16,20 @@ const HoverCardContent = ({
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BasePopover.Popup> & {
+  /**
+   * Alignment of the card against the trigger along the chosen side.
+   * @default "center"
+   */
   align?: "start" | "center" | "end";
+  /**
+   * Gap in pixels between the trigger and the card.
+   * @default 4
+   */
   sideOffset?: number;
+  /**
+   * Preferred side of the trigger; the card flips when there is no room.
+   * @default "bottom"
+   */
   side?: "top" | "right" | "bottom" | "left";
 } & { ref?: React.Ref<React.ElementRef<typeof BasePopover.Popup>> | undefined }) => (
   <BasePopover.Portal>

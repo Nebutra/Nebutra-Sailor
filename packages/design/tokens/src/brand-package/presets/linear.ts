@@ -117,7 +117,8 @@ export function buildLinear(ctx: CompileContext): BrandPackage {
     },
     recipe: buildRecipe({
       buttonDefault: "solid",
-      radii: { button: "6px", card: "12px" },
+      // Linear's brand spec: pills 9999px, badges 4px.
+      radii: { button: "6px", card: "12px", badge: "4px" },
       elevationPreset: "soft",
       density: "compact",
     }),

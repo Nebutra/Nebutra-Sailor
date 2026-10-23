@@ -35,6 +35,7 @@ type ToggleCssVar =
   | "--toggle-track-off"
   | "--toggle-track-border"
   | "--toggle-thumb"
+  | "--toggle-thumb-on"
   | "--toggle-icon-on"
   | "--toggle-icon-off";
 
@@ -50,7 +51,8 @@ export interface ToggleProps
   /** Classes applied to the outer span that lays out the switch and label. */
   className?: string;
   /**
-   * Semantic palette for the checked track and thumb icon; default uses the success palette.
+   * Semantic palette for the checked track and thumb icon; default follows the design
+   * language's brand action colour, and success, warning and error are opt-in status palettes.
    * @default "default"
    */
   color?: ToggleColor;
@@ -112,6 +114,7 @@ function getToggleStyle(size: ToggleSize, color: ToggleColor, style: unknown) {
     "--toggle-track-off": colorTokens.trackOff,
     "--toggle-track-border": colorTokens.trackBorder,
     "--toggle-thumb": colorTokens.thumb,
+    "--toggle-thumb-on": colorTokens.thumbOn,
     "--toggle-icon-on": colorTokens.iconOn,
     "--toggle-icon-off": colorTokens.iconOff,
     ...asPlainStyle(style),
@@ -200,7 +203,7 @@ const Toggle = ({
           controlFocusProxyClassName,
           "border-[var(--toggle-track-border)] transition-[background-color,border-color] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
           "peer-checked:bg-[var(--toggle-track-on)]",
-          "peer-checked:[&>span]:translate-x-[var(--toggle-thumb-translate)] peer-checked:[&>span]:text-[var(--toggle-icon-on)]",
+          "peer-checked:[&>span]:translate-x-[var(--toggle-thumb-translate)] peer-checked:[&>span]:bg-[var(--toggle-thumb-on)] peer-checked:[&>span]:text-[var(--toggle-icon-on)]",
           "",
           "peer-disabled:cursor-not-allowed peer-disabled:opacity-60",
           "motion-reduce:transition-none",

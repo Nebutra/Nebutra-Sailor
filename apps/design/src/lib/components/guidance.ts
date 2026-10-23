@@ -12,6 +12,34 @@
  * client.
  */
 
+import { guidance as accordionGuidance } from "./guidance-parts/accordion";
+import { guidance as alertDialogGuidance } from "./guidance-parts/alert-dialog";
+import { guidance as breadcrumbGuidance } from "./guidance-parts/breadcrumb";
+import { guidance as calendarGuidance } from "./guidance-parts/calendar";
+import { guidance as checkboxGroupGuidance } from "./guidance-parts/checkbox-group";
+import { guidance as collapsibleGuidance } from "./guidance-parts/collapsible";
+import { guidance as commandGuidance } from "./guidance-parts/command";
+import { guidance as contextMenuGuidance } from "./guidance-parts/context-menu";
+import { guidance as copyButtonGuidance } from "./guidance-parts/copy-button";
+import { guidance as dataListGuidance } from "./guidance-parts/data-list";
+import { guidance as datePickerGuidance } from "./guidance-parts/date-picker";
+import { guidance as drawerGuidance } from "./guidance-parts/drawer";
+import { guidance as dropzoneGuidance } from "./guidance-parts/dropzone";
+import { guidance as hoverCardGuidance } from "./guidance-parts/hover-card";
+import { guidance as inputOtpGuidance } from "./guidance-parts/input-otp";
+import { guidance as menubarGuidance } from "./guidance-parts/menubar";
+import { guidance as multipleSelectorGuidance } from "./guidance-parts/multiple-selector";
+import { guidance as navigationMenuGuidance } from "./guidance-parts/navigation-menu";
+import { guidance as numberFieldGuidance } from "./guidance-parts/number-field";
+import { guidance as paginationGuidance } from "./guidance-parts/pagination";
+import { guidance as radioGroupCardGuidance } from "./guidance-parts/radio-group-card";
+import { guidance as resizableGuidance } from "./guidance-parts/resizable";
+import { guidance as scrollerGuidance } from "./guidance-parts/scroller";
+import { guidance as sheetGuidance } from "./guidance-parts/sheet";
+import { guidance as splitButtonGuidance } from "./guidance-parts/split-button";
+import { guidance as stepperGuidance } from "./guidance-parts/stepper";
+import { guidance as toggleGroupGuidance } from "./guidance-parts/toggle-group";
+
 export interface KeyRow {
   /** Alternatives: any one of them does it. */
   keys: string[];
@@ -416,4 +444,31 @@ export const GUIDANCE: Record<string, Guidance> = {
       },
     ],
   },
+  accordion: accordionGuidance,
+  "alert-dialog": alertDialogGuidance,
+  breadcrumb: breadcrumbGuidance,
+  calendar: calendarGuidance,
+  "checkbox-group": checkboxGroupGuidance,
+  collapsible: collapsibleGuidance,
+  command: commandGuidance,
+  "context-menu": contextMenuGuidance,
+  "copy-button": copyButtonGuidance,
+  "data-list": dataListGuidance,
+  "date-picker": datePickerGuidance,
+  drawer: drawerGuidance,
+  dropzone: dropzoneGuidance,
+  "hover-card": hoverCardGuidance,
+  "input-otp": inputOtpGuidance,
+  menubar: menubarGuidance,
+  "multiple-selector": multipleSelectorGuidance,
+  "navigation-menu": navigationMenuGuidance,
+  "number-field": numberFieldGuidance,
+  pagination: paginationGuidance,
+  "radio-group-card": radioGroupCardGuidance,
+  resizable: resizableGuidance,
+  scroller: scrollerGuidance,
+  sheet: sheetGuidance,
+  "split-button": splitButtonGuidance,
+  stepper: stepperGuidance,
+  "toggle-group": toggleGroupGuidance,
 };

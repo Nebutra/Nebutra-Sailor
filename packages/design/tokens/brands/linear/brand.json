@@ -34,7 +34,7 @@
     "radii": {
       "button": "6px",
       "card": "12px",
-      "badge": "9999px",
+      "badge": "4px",
       "input": "6px",
       "pill": "9999px"
     },

@@ -39,14 +39,13 @@ export interface RecipeInput {
 export function buildRecipe(input: RecipeInput): BrandRecipe {
   const button = input.radii?.button ?? "0.375rem";
   const card = input.radii?.card ?? "0.75rem";
-  const badge = input.radii?.badge ?? "9999px";
   const radii: BrandRadii = {
     button,
     card,
-    badge,
     input: input.radii?.input ?? button,
     pill: input.radii?.pill ?? "9999px",
   };
+  if (input.radii?.badge) radii.badge = input.radii.badge;
   if (input.radii?.chip) radii.chip = input.radii.chip;
   const elevationPreset = input.elevationPreset ?? "soft";
   const elevationTokens =

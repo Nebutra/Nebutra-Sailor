@@ -86,8 +86,8 @@ html[data-brand="linear"] {
   --radius-md: min(6px, 12px);
   --radius-card: 12px;
   --radius-lg: 12px;
-  --radius-badge: 9999px;
-  --badge-default-radius: 9999px;
+  --radius-badge: 4px;
+  --badge-default-radius: 4px;
   --radius-inputs: 6px;
   --input-radius: 6px;
   --radius-control: 6px;

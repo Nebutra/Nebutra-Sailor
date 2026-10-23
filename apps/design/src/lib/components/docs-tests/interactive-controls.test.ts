@@ -21,6 +21,34 @@ const NAMES = [
   "dropdown-menu",
   "tabs",
   "avatar",
+  "accordion",
+  "collapsible",
+  "breadcrumb",
+  "pagination",
+  "navigation-menu",
+  "menubar",
+  "stepper",
+  "toggle-group",
+  "alert-dialog",
+  "sheet",
+  "drawer",
+  "hover-card",
+  "context-menu",
+  "command",
+  "checkbox-group",
+  "input-otp",
+  "number-field",
+  "date-picker",
+  "calendar",
+  "radio-group-card",
+  "multiple-selector",
+  "dropzone",
+  "aspect-ratio",
+  "data-list",
+  "resizable",
+  "scroller",
+  "copy-button",
+  "split-button",
 ] as const;
 
 const DERIVED: DemoProps["derived"] = {
@@ -80,7 +108,12 @@ function harness() {
   const primitives = new Proxy(
     {},
     {
-      get: (_, key) => (key === "Switch" ? { Control: "Switch.Control" } : key),
+      get: (_, key) => {
+        if (key === "Switch") return { Control: "Switch.Control" };
+        // Class helpers such as navigationMenuTriggerStyle are plain functions.
+        if (typeof key === "string" && /^[a-z]/.test(key)) return () => "";
+        return key;
+      },
     },
   );
 
@@ -105,6 +138,7 @@ function harness() {
           if (specifier === "react") return react;
           if (specifier === "react/jsx-runtime") return { jsx: element, jsxs: element };
           if (specifier === "@nebutra/ui/primitives") return primitives;
+          if (specifier === "@nebutra/icons") return primitives;
           if (specifier === "@/components/component-playground")
             return { ComponentPlayground: "Playground" };
           if (specifier === "@/components/component-states-matrix")
