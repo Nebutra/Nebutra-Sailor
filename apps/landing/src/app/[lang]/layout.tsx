@@ -45,7 +45,7 @@ const jsonLd = [
     ...orgBase,
     // Company-specific fields not in the brand object:
     legalName: brand.nameFull,
-    logo: `${orgBase.url}/icon.png`,
+    logo: `${orgBase.url}/android-chrome-512x512.png`,
     ...(SITE_ID === "nebutra"
       ? {
           foundingDate: "2024",

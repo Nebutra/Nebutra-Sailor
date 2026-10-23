@@ -835,8 +835,20 @@ const APP_ICON_TARGETS: ReadonlyArray<[source: string, target: string]> = [
       [file, `apps/web/public/${file}`],
     ],
   ),
+  // The other apps that carry the parent brand's set, each with the files it already serves.
+  ...["auth", "studio", "forge", "router"].flatMap(
+    (app): Array<[string, string]> =>
+      [
+        ...(app === "forge" || app === "router" ? ["favicon.ico"] : []),
+        "favicon.svg",
+        "apple-touch-icon.png",
+        "android-chrome-192x192.png",
+        "android-chrome-512x512.png",
+      ].map((file): [string, string] => [file, `apps/${app}/public/${file}`]),
+  ),
   ["favicon.svg", "apps/landing/src/app/icon.svg"],
   ["favicon.ico", "apps/landing/src/app/favicon.ico"],
+  ["favicon.ico", "apps/web/src/app/favicon.ico"],
 ];
 
 function syncFaviconsToApps(brandAssetsDir: string): void {
@@ -861,7 +873,7 @@ async function main() {
 
     // Apply changes
     copyCustomAssets(config);
-    // Phase 5: generate favicon set from logo-inverse.svg after copyCustomAssets
+    // Phase 5: generate favicon set from logo-color.svg after copyCustomAssets
     // has had a chance to copy operator-supplied SVGs into brand/assets/.
     const brandAssetsDir = path.join(ROOT, "packages", "design", "brand", "assets");
     if (config.brand.logo === "wordmark") {
@@ -872,7 +884,7 @@ async function main() {
         background: config.colors.primary["500"],
       });
     } else {
-      logStep("Generating favicon set from logo-inverse.svg");
+      logStep("Generating favicon set from logo-color.svg");
       await generateFavicons(brandAssetsDir);
     }
     syncFaviconsToApps(brandAssetsDir);
