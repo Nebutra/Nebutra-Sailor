@@ -40,11 +40,12 @@ describe("publicHead", () => {
     expect(ogImageUrl("en")).not.toBe(ogImageUrl("zh"));
   });
 
-  it("gives /investors its own card and the benchmark the home card", () => {
+  it("gives /investors and /benchmark their own cards", () => {
     const image = (page: "investors" | "benchmark") =>
       publicHead(page, "en").meta.find((tag) => "property" in tag && tag.property === "og:image")?.content;
     expect(image("investors")).toMatch(/\/og\/investors-en\.png\?v=/);
-    expect(image("benchmark")).toBe(ogImageUrl("en"));
+    expect(image("benchmark")).toBe(ogImageUrl("en", "benchmark"));
+    expect(image("benchmark")).toMatch(/\/og\/benchmark-en\.png\?v=/);
   });
 
   it("keeps 404 pages out of the index with no canonical", () => {

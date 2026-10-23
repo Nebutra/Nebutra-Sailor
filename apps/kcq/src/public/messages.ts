@@ -344,6 +344,8 @@ const en = {
     title: "Chart library benchmark: KCQ, Lightweight Charts, ECharts, KLineChart",
     description:
       "Main-thread time per frame for KLineChartQuant, Lightweight Charts, Apache ECharts and KLineChart drawing the same candles. Method, hardware and raw data published.",
+    ogAlt:
+      "Ranked bars of main-thread time per frame for KLineChartQuant, Lightweight Charts, Apache ECharts and KLineChart drawing the same candles. Lower is better.",
     heading: "Four chart libraries, one scene",
     lede: "The same candles and moving averages, drawn by each library and scrolled one bar per frame. The figure is main-thread time per frame; lower is better.",
     run: "Measured {date} on {cpu}, {browser}.",
@@ -714,6 +716,7 @@ const zh: PublicMessages = {
     title: "图表库基准测试：KCQ、Lightweight Charts、ECharts、KLineChart",
     description:
       "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时的每帧主线程耗时。方法、硬件与原始数据全部公开。",
+    ogAlt: "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时每帧主线程耗时的排名条形图，越低越好。",
     heading: "四个图表库，同一张图",
     lede: "同样的 K 线与均线，由各库分别绘制，每帧向历史滚动一根。图中是每帧主线程耗时，越低越好。",
     run: "测于 {date}，{cpu}，{browser}。",
