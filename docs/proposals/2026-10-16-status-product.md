@@ -1,16 +1,56 @@
 # Nebutra Status — 把 status.nebutra.com 产品化
 
-Date: 2026-10-16 · Status: Proposed · Owner: Tseka · Related: ADR 2026-09-24 Sailor convergence,
+Date: 2026-10-16 · Status: Proposed (revised same day, see §0) · Owner: Tseka · Related: ADR 2026-09-24 Sailor convergence,
 ADR 2026-09-30 supply capability probing, ADR 2026-10-02 self-hosted Inngest
 
 > 一句话：**中英双语、中国大陆可达、能接 AI 供应商与设备舰队的状态页**——incident.io 的质感，
 > Statuspage 的渠道广度，Flashduty 的中国通道，而且每个客户的成本被配额封顶，不可能亏。
 
+## 0. 修订（2026-10-16，owner）
+
+> 那就不给小芽换了，小芽还是自己运维。但是我希望小芽的轮子还是能换成自部署版本的 Nebutra Status，
+> 就像自部署的 Mintlify 一样。（形态的比喻；产品对标见下表。）
+
+这改变了产品形态，下文与之冲突处以本节为准：
+
+- **自部署版的对标是自部署 status 竞品**（owner：对标 status 竞品，不是 Mintlify——Mintlify 只是
+  "可自部署"这个形态的比喻）：
+  | 竞品 | 取什么 | 我们多什么 |
+  |---|---|---|
+  | Uptime Kuma（自部署监控 + 状态页里采用最广的） | 一条 docker 命令起服务；通知渠道覆盖飞书/钉钉/企微 | 证据新鲜度与覆盖类型、事故时间线质感、发布闸门 |
+  | Gatus（配置即代码） | `status.config.json` 声明组件与监控、可进 git 评审 | 推送证据（合成旅程、设备）与探测同一判定 |
+  | OpenStatus（开源 + 托管云同一代码） | 两种发行同一镜像 | 中文一等、大陆可部署、兼容 profile |
+  | Cachet / cState（经典自部署事故页） | 组件 + 事故 + 维护的信息架构 | 自带探测，不只是手工发布 |
+- **一份代码，两种发行**（OpenStatus 的模式：开源自部署 + 托管云）：
+  - **Self-hosted**：一个 Docker 镜像 + 一个 Postgres。单租户，探测在进程内调度（不需要 Modal），
+    本地管理员账号或任意 OIDC 登录。小芽部署在自己的阿里云上，自己运维，大陆可达不再是问题。
+  - **Cloud**（status.nebutra.com 及付费客户）：同一个镜像以多租户模式运行，Nebutra IdP 作为 OIDC，
+    探测扇出到 Modal，页面发布到 Cloudflare，计费走 ADR 2026-10-16 需求先付。
+- **因此控制面不进 `backends/gateway` 和平台库。** 它是独立可部署的产品，必须自带数据库：
+  `apps/status` 拥有自己的 Prisma schema 和自己的 `STATUS_DATABASE_URL`。这是"平台库唯一 schema"
+  规则（ADR 2026-09-25）的一个明确例外，理由是：自部署方不运行 Nebutra 平台。Cloud 版的租户、计费
+  通过 OIDC 声明与网关 API 对接，不跨库 join。
+- **探测只有一份实现（TypeScript）。** 自部署在进程内跑；Cloud 版的 Modal 函数用一个装着同一份
+  探测 bundle 的镜像以子进程方式调用，不写第二套 Python 探测器。
+- **小芽的接入**：小芽在自己机器上跑 Nebutra Status 容器，nginx 把 `/status` 与 `/api/v1/status`
+  转给它（兼容 profile `xiaoya-v1`，部署闸门不改）；Go 里的业务旅程把结果推到本机实例的
+  `/v1/evidence`；依赖探测迁成实例里的监控；Prometheus 指标留在 Go。
+- **分期改为自部署优先**：先做单租户自部署版，用 Nebutra 自己和小芽做两个真实用户，再加多租户、
+  Modal、计费。这样每一期都有真实生产在跑。
+
+| 期 | 内容 |
+|---|---|
+| P1 | `apps/status` 单租户：自有 schema、组件/分组/监控/事故/维护/订阅、进程内探测、证据 API、管理后台、公开页、Docker 镜像 + compose |
+| P2 | 小芽替换（`xiaoya-v1` 兼容、证据推送、依赖监控迁移）；Nebutra 自身页迁到 P1 实例 |
+| P3 | 多租户 + OIDC（Nebutra IdP）+ 静态快照发布到 Cloudflare / 阿里云镜像 |
+| P4 | Modal 探测扇出 + 计费（需求先付） |
+| P5 | 五个差异化能力 |
+
 ## 1. 成功的产品化是什么（验收即定义）
 
 三条同时成立才算成功，任何一条做不到就不算上线：
 
-1. **完全替换小芽（拍学机）的手搓 status，零改部署闸门。** 小芽 `scripts/deploy.sh` 用 jq 读
+1. **小芽用自部署版替换手搓 status，零改部署闸门**（§0：小芽自己运维）。 小芽 `scripts/deploy.sh` 用 jq 读
    `/api/v1/status` 的 `components[].verification.{coverage,verified,checked_at}` 判断发布能否切流；
    Nebutra Status 必须输出字节兼容的 JSON（兼容 profile `xiaoya-v1`），小芽删掉 `internal/ops/status*.go`
    之后 `deploy.sh`、`verify-production.sh`、Prometheus 规则一行不改仍然绿。

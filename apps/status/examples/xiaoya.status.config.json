@@ -1,0 +1,148 @@
+{
+  "workspace": {
+    "slug": "xiaoya",
+    "name": "小芽"
+  },
+  "page": {
+    "slug": "xiaoya",
+    "title": "小芽服务状态",
+    "description": "小芽当前产品服务、访问入口与平台基础设施的实时可用性。",
+    "locales": ["zh-CN"],
+    "compatProfile": "xiaoya-v1"
+  },
+  "groups": [
+    {
+      "key": "product",
+      "name": "产品服务",
+      "description": "登录、学习、探索与家庭协作等用户旅程。"
+    },
+    {
+      "key": "delivery",
+      "name": "访问与交付",
+      "description": "Web、管理平台与应用更新的发布入口。"
+    },
+    {
+      "key": "platform",
+      "name": "平台基础设施",
+      "description": "支撑所有产品服务的核心运行单元。"
+    },
+    {
+      "key": "external",
+      "name": "外部依赖",
+      "description": "已登记并允许公开的第三方服务状态。"
+    }
+  ],
+  "components": [
+    {
+      "key": "identity-access",
+      "name": "登录与账号",
+      "description": "账号登录、注册、会话与微信授权入口。",
+      "group": "product"
+    },
+    {
+      "key": "family-device",
+      "name": "家庭与设备",
+      "description": "家庭创建、孩子档案、设备配对与管控。",
+      "group": "product"
+    },
+    {
+      "key": "learning-content",
+      "name": "学习内容",
+      "description": "课程、故事、测评、日记与复习内容。",
+      "group": "product"
+    },
+    {
+      "key": "exploration-collections",
+      "name": "探索与收藏",
+      "description": "今日小世界、识物记录、收藏与知识卡。",
+      "group": "product"
+    },
+    {
+      "key": "ai-companion",
+      "name": "小芽语音与对话",
+      "description": "小芽实时语音、级联语音与对话服务。",
+      "group": "product"
+    },
+    {
+      "key": "vision-learning",
+      "name": "拍照识物与学习",
+      "description": "拍照识物、视觉理解与图片学习。",
+      "group": "product"
+    },
+    {
+      "key": "content-safety",
+      "name": "儿童内容安全",
+      "description": "儿童场景的输入输出安全检查。",
+      "group": "product"
+    },
+    {
+      "key": "stickers-knowledge",
+      "name": "贴纸与知识生成",
+      "description": "收藏贴纸、词条与适龄知识内容。",
+      "group": "product"
+    },
+    {
+      "key": "family-contact",
+      "name": "亲友联络",
+      "description": "家长与孩子之间的消息、语音和通话。",
+      "group": "product"
+    },
+    {
+      "key": "web-app",
+      "name": "小芽 Web App",
+      "description": "浏览器中的孩子端与家长端体验。",
+      "group": "delivery"
+    },
+    {
+      "key": "admin-console",
+      "name": "智能管理平台",
+      "description": "运营、设备、家庭、审核与系统管理控制台。",
+      "group": "delivery"
+    },
+    {
+      "key": "app-updates",
+      "name": "App 下载与更新",
+      "description": "Android 安装包、版本清单与 OTA 发布入口。",
+      "group": "delivery"
+    },
+    {
+      "key": "core-api",
+      "name": "核心 API",
+      "description": "认证、业务、设备与管理 API 进程。",
+      "group": "platform",
+      "monitors": [
+        {
+          "kind": "http",
+          "url": "https://zk.mox.ktvsky.com/health",
+          "intervalSeconds": 60,
+          "timeoutMs": 4000
+        }
+      ]
+    },
+    {
+      "key": "database",
+      "name": "主数据服务",
+      "description": "账号、家庭、设备、内容与事件主数据。",
+      "group": "platform"
+    },
+    {
+      "key": "distributed-cache",
+      "name": "Redis 实时状态",
+      "description": "分布式限流、缓存、信令与在线状态。",
+      "group": "platform"
+    },
+    {
+      "key": "ai-gateway",
+      "name": "AI 能力网关",
+      "description": "模型能力的统一路由、限流、超时、重试与熔断。",
+      "group": "platform"
+    },
+    {
+      "key": "notification-delivery",
+      "name": "Push 通知投递",
+      "description": "亲友联络的设备 Push 通知。",
+      "group": "platform",
+      "public": false
+    }
+  ]
+}

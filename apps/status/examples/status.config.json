@@ -1,0 +1,86 @@
+{
+  "workspace": {
+    "slug": "acme",
+    "name": "Acme"
+  },
+  "page": {
+    "slug": "acme",
+    "title": "Acme Status",
+    "description": "Live availability of Acme's product and API.",
+    "locales": ["en", "zh-CN"]
+  },
+  "groups": [
+    {
+      "key": "product",
+      "name": "Product",
+      "nameI18n": {
+        "zh-CN": "产品"
+      }
+    },
+    {
+      "key": "upstream",
+      "name": "Upstream providers",
+      "nameI18n": {
+        "zh-CN": "上游服务"
+      }
+    }
+  ],
+  "components": [
+    {
+      "key": "website",
+      "name": "Website",
+      "nameI18n": {
+        "zh-CN": "官网"
+      },
+      "group": "product",
+      "monitors": [
+        {
+          "kind": "keyword",
+          "url": "https://acme.example/",
+          "keyword": "Acme",
+          "intervalSeconds": 60
+        }
+      ]
+    },
+    {
+      "key": "api",
+      "name": "API",
+      "group": "product",
+      "monitors": [
+        {
+          "kind": "json_status",
+          "url": "https://api.acme.example/healthz",
+          "intervalSeconds": 30,
+          "timeoutMs": 3000
+        }
+      ]
+    },
+    {
+      "key": "sign-in",
+      "name": "Sign-in",
+      "nameI18n": {
+        "zh-CN": "登录"
+      },
+      "group": "product",
+      "description": "Proven by a synthetic login journey pushed from CI."
+    },
+    {
+      "key": "github",
+      "name": "GitHub",
+      "group": "upstream",
+      "monitors": [
+        {
+          "kind": "statuspage",
+          "coverage": "upstream",
+          "url": "https://www.githubstatus.com/api/v2/status.json",
+          "intervalSeconds": 300
+        }
+      ]
+    },
+    {
+      "key": "database",
+      "name": "Database",
+      "public": false
+    }
+  ]
+}
