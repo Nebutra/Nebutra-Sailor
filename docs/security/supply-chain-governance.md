@@ -33,6 +33,41 @@ The two former image-size audit ignores were removed after updating its
 Fumadocs dependency to the fixed 2.0.3+ line. No GHSA ignore remains in the
 workspace policy.
 
+## Dependency remediation (2026-10-26)
+
+The four production high findings reported after the October 23 advisory
+updates are fixed in the locked graph without changing the audit gate:
+
+| Package | Locked version | Security floor | Advisory |
+| --- | --- | --- | --- |
+| `zod` | `4.6.7` | `4.6.6` | `GHSA-mrhx-c7xc-m3w5` |
+| `body-parser` | `2.4.0` | `2.4.0` | `GHSA-27r3-jxmh-p828` |
+| `undici` (7.x) | `7.30.1` | `7.30.1` | `GHSA-xjj6-f33q-929c` |
+| `undici` (8.x) | `8.12.2` | `8.12.2` | `GHSA-xjj6-f33q-929c` |
+
+Zod's shared catalog also governs transitive consumers. Every Undici override,
+including the exact AI SDK / Miniflare pins and the dormant 6.x floor, rejects
+the affected versions while keeping each scoped major intact. Body-parser's
+override remains on 2.x; its new `content-type` dependency is the only other
+package added to the lockfile.
+
+All four selected releases have npm provenance attestations and were older
+than the 24-hour release-age gate when resolved. No install-script permission,
+trust exception, advisory ignore or severity threshold changes are needed.
+
+`scripts/ci/security-dependencies.test.mjs` checks every locked package and
+snapshot against the fixed-version floors. It also verifies that Zod rejects
+an oversized constrained array before inspecting its elements, and replays the
+excessive-encoding / early-close attack against both installed Undici versions
+in isolated child processes. The old Undici versions crashed despite handling
+the fetch rejection; both fixed versions survive. These tests run in the
+existing security-regressions workflow.
+
+After a frozen install, both production and full audits on October 26 report
+zero high/critical findings, with two moderate and two low findings still
+visible. The existing Braces patch and its verification remain in place even
+though the current registry report no longer includes that advisory.
+
 ## Dependency remediation (2026-10-22)
 
 The production gate's six unpatched high findings are addressed in the locked
