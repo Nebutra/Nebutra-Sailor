@@ -355,7 +355,7 @@ const en = {
     ogAlt:
       "Ranked bars of main-thread time per frame for KLineChartQuant, Lightweight Charts, Apache ECharts and KLineChart drawing the same candles. Lower is better.",
     heading: "Every millisecond counts.",
-    lede: "See it sooner. Act sooner. With {bars} candles on screen, KCQ draws each frame in {ms} ms of main-thread time.",
+    lede: "See it sooner. Act sooner. With {bars} candles and {lines} moving averages on screen, KCQ draws each frame in {ms} ms of main-thread time.",
     run: "Tested {date} on {cpu}, {browser}.",
     fineprintLink: "How we tested",
     figure: {
@@ -363,6 +363,8 @@ const en = {
       lower: "Lower is better",
       tiers: "Visible bars",
       tier: "{count} bars",
+      lines: "Moving averages",
+      line: "{count} MAs",
       note: "Bars are the mean of {frames} frames × {rounds} rounds; the line spans the fastest and slowest round. A 60 Hz frame is {budget} ms.",
     },
     proof: {
@@ -370,6 +372,10 @@ const en = {
       growth: {
         value: "{times}×",
         label: "the candles on screen, from {from} to {to}. KCQ's cost per frame rises only {rate}%.",
+      },
+      indicators: {
+        value: "+{rate}%",
+        label: "KCQ's cost per frame going from {from} to {to} moving averages. {library}'s: +{other}%.",
       },
       ratio: {
         value: "{ratio}×",
@@ -395,6 +401,7 @@ const en = {
     table: {
       library: "Library",
       renderer: "Renderer",
+      lines: "MAs",
       bars: "Visible bars",
       main: "Main thread, ms/frame",
       range: "Round range, ms",
@@ -403,7 +410,7 @@ const en = {
       dropped: "Dropped frames",
     },
     method: [
-      "Same data: 50,000 seeded one-minute candles and five simple moving averages (5, 10, 20, 30, 60), mounted through each library's public API from a production build.",
+      "Same data: 50,000 seeded one-minute candles under five simple moving averages (5 to 60) or twelve (5 to 300), mounted through each library's public API from a production build.",
       "Same window: KCQ snaps bar width to whole device pixels, so its reachable counts set the tiers and every other library zooms to the same number of visible bars.",
       "Same motion: after warm-up frames, each chart scrolls one bar per frame, in several rounds per library and tier.",
       "The metric: Chrome's main-thread task time divided by frames, which covers script, style, layout and garbage collection. Work in the GPU process is not counted.",
@@ -751,7 +758,7 @@ const zh: PublicMessages = {
       "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时的每帧主线程耗时。方法、硬件与原始数据全部公开。",
     ogAlt: "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时每帧主线程耗时的排名条形图，越低越好。",
     heading: "毫秒必争。",
-    lede: "看到得早一点，就快人一步。{bars} 根 K\u00a0线同屏，KCQ 画一帧只占主线程 {ms} ms。",
+    lede: "看到得早一点，就快人一步。{bars} 根 K\u00a0线、{lines} 条均线同屏，KCQ 画一帧只占主线程 {ms} ms。",
     run: "测于 {date}，{cpu}，{browser}。",
     fineprintLink: "怎么测的",
     figure: {
@@ -759,6 +766,8 @@ const zh: PublicMessages = {
       lower: "越低越好",
       tiers: "可见 K 线数",
       tier: "{count} 根",
+      lines: "均线条数",
+      line: "{count} 条均线",
       note: "柱为 {frames} 帧 × {rounds} 轮的均值，细线标出最快与最慢的一轮。60 Hz 下一帧为 {budget} ms。",
     },
     proof: {
@@ -766,6 +775,10 @@ const zh: PublicMessages = {
       growth: {
         value: "{times}×",
         label: "同屏 K\u00a0线从 {from} 根加到 {to} 根，KCQ 每帧开销只多 {rate}%。",
+      },
+      indicators: {
+        value: "+{rate}%",
+        label: "均线从 {from} 条加到 {to} 条，KCQ 每帧多花这么多；{library} 多花 {other}%。",
       },
       ratio: {
         value: "{ratio}×",
@@ -791,6 +804,7 @@ const zh: PublicMessages = {
     table: {
       library: "图表库",
       renderer: "渲染后端",
+      lines: "均线",
       bars: "可见 K 线",
       main: "主线程 ms/帧",
       range: "逐轮区间 ms",
@@ -799,7 +813,7 @@ const zh: PublicMessages = {
       dropped: "掉帧率",
     },
     method: [
-      "同样的数据：50,000 根固定种子生成的一分钟 K 线和五条简单均线（5、10、20、30、60），各库都以生产构建、经公开 API 挂载。",
+      "同样的数据：50,000 根固定种子生成的一分钟 K 线，叠五条（5 到 60）或十二条（5 到 300）简单均线，各库都以生产构建、经公开 API 挂载。",
       "同样的窗口：KCQ 的 K 线宽度按整数设备像素取整，由它能取到的根数定档，其他库缩放到相同的可见根数。",
       "同样的动作：预热之后，每帧向历史滚动一根；每个库、每档都跑多轮。",
       "指标：Chrome 主线程任务时间除以帧数，涵盖脚本、样式、布局与垃圾回收；GPU 进程里的工作不计入。",

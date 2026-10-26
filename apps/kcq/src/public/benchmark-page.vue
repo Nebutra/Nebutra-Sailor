@@ -32,9 +32,13 @@ const date = computed(() =>
   new Intl.DateTimeFormat(lang.value, { dateStyle: "long", timeZone: "UTC" }).format(new Date(run.generatedAt)),
 );
 const ledeText = computed(() =>
-  t("benchmark.lede", { bars: count(figures.bars), ms: ms(figures.best.scenario.mainThreadMsPerFrame) }),
+  t("benchmark.lede", {
+    bars: count(figures.bars),
+    lines: figures.lines,
+    ms: ms(figures.best.scenario.mainThreadMsPerFrame),
+  }),
 );
-/** The three numbers under the hero, each a big value and the one line that makes it a claim. */
+/** The four numbers under the hero, each a big value and the one line that makes it a claim. */
 const proofs = computed(() => [
   {
     key: "growth",
@@ -43,6 +47,16 @@ const proofs = computed(() => [
       from: count(figures.growth.from),
       to: count(figures.growth.to),
       rate: Math.round(figures.growth.rate * 100),
+    }),
+  },
+  {
+    key: "indicators",
+    value: t("benchmark.proof.indicators.value", { rate: Math.round(figures.indicators.rate * 100) }),
+    label: t("benchmark.proof.indicators.label", {
+      from: figures.indicators.from,
+      to: figures.indicators.to,
+      library: figures.heaviest.subject.library,
+      other: Math.round(figures.indicators.heaviestRate * 100),
     }),
   },
   {
@@ -170,7 +184,7 @@ const environment = computed(() => [
   margin-inline-start: var(--klc-space-8);
   color: var(--kcq-accent-text);
 }
-/* The three numbers: one row from tablet up, each value over its line, a hairline above each. */
+/* The four numbers: two by two on tablets, one row on wide screens, each value over its line. */
 .proofs {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -191,7 +205,12 @@ const environment = computed(() => [
 }
 @media (min-width: 768px) {
   .proofs {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1200px) {
+  .proofs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 

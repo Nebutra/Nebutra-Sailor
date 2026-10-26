@@ -205,7 +205,12 @@ function benchmarkCard(html, page) {
   const figure = capture(html, /(<figure class="compare [\s\S]*?<\/figure>)/, page);
   const caption = capture(figure, /class="t-label"[^>]*>([^<]+)/, page);
   const lower = capture(figure, /class="t-ui compare-hint"[^>]*>([^<]+)/, page);
-  const tier = capture(figure, /aria-checked="true"[^>]*>([^<]+)/, page);
+  // Every switch's selection (visible bars, then moving averages), as the figure opens.
+  const selected = [...figure.matchAll(/aria-checked="true"[^>]*>\s*([^<]+?)\s*</g)].map(
+    ([, label]) => label,
+  );
+  if (!selected.length) throw new Error(`${page}: the comparison figure has no selected switch`);
+  const tier = selected.join("  ·  ");
   const rows = figureRows(figure, page);
 
   // One clause or sentence per line where it fits, so "See it sooner. / Act sooner." breaks where it reads.
