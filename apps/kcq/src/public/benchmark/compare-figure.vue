@@ -1,12 +1,13 @@
 <!--
   The comparison figure: one row per library and backend, main-thread time per frame on one shared
   millisecond axis, least first. The bar is the mean; a hairline spans the fastest and slowest round,
-  so the noise is on the figure, not in a footnote. A radiogroup switches the visible-bar tier; rows
-  re-rank with a FLIP move and the bars morph on the same axis. KCQ rows carry the accent, every other
-  library the secondary ink. A product frame in the page's colour mode, like every frame on /home.
+  so the noise is on the figure, not in a footnote. Two radiogroups switch the visible-bar tier and
+  the moving-average count; rows re-rank with a FLIP move and the bars morph on the same axis. KCQ
+  rows carry the accent, every other library the secondary ink. A product frame in the page's colour
+  mode, like every frame on /home.
 -->
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, type Ref, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useReveal } from "../motion/use-reveal";
 import { PUBLIC_LOCALES } from "../routes";
@@ -15,10 +16,16 @@ import { axisTicks, COMPARE_RUN, type CompareRow, roundRange, tierRows } from ".
 
 const { t } = useI18n();
 const { locale } = usePublicLocale();
-const tiers = COMPARE_RUN.configuration.visibleBars;
-// The largest tier opens the figure: the most bars on screen is the case a chart engine is for.
-const tier = ref(Math.max(...tiers));
-const rows = computed(() => tierRows(COMPARE_RUN, tier.value));
+const { visibleBars, maLines } = COMPARE_RUN.configuration;
+// The heaviest scene opens the figure: the most bars and indicators on screen is what a chart engine is for.
+const bars = ref(Math.max(...visibleBars));
+const lines = ref(Math.max(...maLines));
+const rows = computed(() => tierRows(COMPARE_RUN, bars.value, lines.value));
+/** The figure's two switches, in reading order: how many bars, then how many indicators over them. */
+const switches = [
+  { id: "bars", values: visibleBars, model: bars, label: "benchmark.figure.tiers", option: "benchmark.figure.tier" },
+  { id: "lines", values: maLines, model: lines, label: "benchmark.figure.lines", option: "benchmark.figure.line" },
+];
 const ticks = axisTicks(COMPARE_RUN);
 const axisMax = ticks[ticks.length - 1];
 const figure = ref<HTMLElement>();
@@ -38,14 +45,14 @@ function geometry(row: CompareRow, index: number) {
 }
 
 /** Arrow, Home and End move the selection inside the radiogroup (WAI-ARIA radio pattern). */
-function onKey(event: KeyboardEvent) {
+function onKey(event: KeyboardEvent, values: number[], model: Ref<number>) {
   const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
   if (!step && event.key !== "Home" && event.key !== "End") return;
   event.preventDefault();
-  const current = tiers.indexOf(tier.value);
+  const current = values.indexOf(model.value);
   const index =
-    event.key === "Home" ? 0 : event.key === "End" ? tiers.length - 1 : (current + (step ?? 0) + tiers.length) % tiers.length;
-  tier.value = tiers[index];
+    event.key === "Home" ? 0 : event.key === "End" ? values.length - 1 : (current + (step ?? 0) + values.length) % values.length;
+  model.value = values[index];
   const group = event.currentTarget as HTMLElement;
   group.querySelectorAll<HTMLElement>('[role="radio"]')[index]?.focus();
 }
@@ -62,19 +69,28 @@ function onKey(event: KeyboardEvent) {
         <span class="t-label">{{ t("benchmark.figure.caption") }}</span>
         <span class="t-ui compare-hint">{{ t("benchmark.figure.lower") }}</span>
       </figcaption>
-      <div class="tier-switch" role="radiogroup" :aria-label="t('benchmark.figure.tiers')" @keydown="onKey">
-        <button
-          v-for="value in tiers"
-          :key="value"
-          type="button"
-          role="radio"
-          class="tier-option t-ui t-num"
-          :aria-checked="tier === value"
-          :tabindex="tier === value ? 0 : -1"
-          @click="tier = value"
+      <div class="switches">
+        <div
+          v-for="control in switches"
+          :key="control.id"
+          class="tier-switch"
+          role="radiogroup"
+          :aria-label="t(control.label)"
+          @keydown="onKey($event, control.values, control.model)"
         >
-          {{ t("benchmark.figure.tier", { count: count(value) }) }}
-        </button>
+          <button
+            v-for="value in control.values"
+            :key="value"
+            type="button"
+            role="radio"
+            class="tier-option t-ui t-num"
+            :aria-checked="control.model.value === value"
+            :tabindex="control.model.value === value ? 0 : -1"
+            @click="control.model.value = value"
+          >
+            {{ t(control.option, { count: count(value) }) }}
+          </button>
+        </div>
       </div>
     </div>
     <TransitionGroup tag="ol" name="compare-row" class="compare-rows">
@@ -132,6 +148,11 @@ function onKey(event: KeyboardEvent) {
 .compare-caption {
   display: grid;
   gap: var(--klc-space-2);
+}
+.switches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--klc-space-8);
 }
 .compare-hint,
 .compare-note {

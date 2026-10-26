@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-22T16:38:17.073Z",
-  "commit": "eb3527f5a30760a61ea4a3ddc0b4059e42af98cb",
+  "generatedAt": "2026-10-26T05:38:53.074Z",
+  "commit": "8f5f1e4f8f277ad85333ae07208adb52e0ee1f73",
   "dirty": false,
   "environment": {
     "cpu": "Apple M4 Pro",
@@ -20,6 +20,10 @@
       152,
       451,
       1122
+    ],
+    "maLines": [
+      5,
+      12
     ],
     "refreshIntervalMs": 16.699999999999818
   },
@@ -71,289 +75,613 @@
     {
       "subject": "kcq-webgl",
       "visibleBars": 152,
+      "maLines": 5,
       "actualVisibleBars": 152,
-      "mainThreadMsPerFrame": 1.2632823333333332,
+      "mainThreadMsPerFrame": 2.3439606666666664,
       "mainThreadMsPerFrameRounds": [
-        1.3616949999999997,
-        1.2879250000000002,
-        1.0889649999999995,
-        1.546796666666667,
-        1.0310299999999994
+        2.2774499999999995,
+        2.4214066666666665,
+        2.611121666666666,
+        2.6067899999999997,
+        1.8030349999999995
       ],
-      "frameWorkP50Ms": 1.8000000014872057,
-      "frameWorkP99Ms": 3.900000000016371,
+      "frameWorkP50Ms": 3.099999982121517,
+      "frameWorkP99Ms": 4.199999994099471,
       "droppedFrameRate": 0
     },
     {
       "subject": "kcq-webgl",
       "visibleBars": 451,
+      "maLines": 5,
       "actualVisibleBars": 451,
-      "mainThreadMsPerFrame": 1.2297583333333328,
+      "mainThreadMsPerFrame": 1.7559406666666668,
       "mainThreadMsPerFrameRounds": [
-        1.1506949999999985,
-        1.2106833333333324,
-        1.1969666666666656,
-        1.26021,
-        1.3302366666666674
+        1.4980266666666666,
+        1.5500466666666668,
+        1.9101849999999991,
+        1.8213016666666673,
+        2.0001433333333343
       ],
-      "frameWorkP50Ms": 1.8000000022366294,
-      "frameWorkP99Ms": 2.699999998527637,
+      "frameWorkP50Ms": 2.399999970191857,
+      "frameWorkP99Ms": 4.30000000000291,
       "droppedFrameRate": 0
     },
     {
       "subject": "kcq-webgl",
       "visibleBars": 1122,
+      "maLines": 5,
       "actualVisibleBars": 1122,
-      "mainThreadMsPerFrame": 1.1782359999999998,
+      "mainThreadMsPerFrame": 1.5417456666666651,
       "mainThreadMsPerFrameRounds": [
-        1.1823966666666674,
-        1.2541450000000005,
-        1.1848666666666663,
-        1.1867450000000002,
-        1.0830266666666657
+        1.3211733333333284,
+        1.4664566666666623,
+        1.5193966666666665,
+        1.398213333333338,
+        2.0034883333333298
       ],
-      "frameWorkP50Ms": 1.7999999955354724,
-      "frameWorkP99Ms": 2.4000000030067166,
+      "frameWorkP50Ms": 2.0999999880732503,
+      "frameWorkP99Ms": 4.0000000000596625,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgl",
+      "visibleBars": 152,
+      "maLines": 12,
+      "actualVisibleBars": 152,
+      "mainThreadMsPerFrame": 1.4922063333333333,
+      "mainThreadMsPerFrameRounds": [
+        1.698128333333333,
+        1.3542266666666631,
+        1.5152733333333344,
+        1.3180649999999972,
+        1.5753383333333382
+      ],
+      "frameWorkP50Ms": 2.0999999880732503,
+      "frameWorkP99Ms": 3.8999999821840903,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgl",
+      "visibleBars": 451,
+      "maLines": 12,
+      "actualVisibleBars": 451,
+      "mainThreadMsPerFrame": 1.6261893333333348,
+      "mainThreadMsPerFrameRounds": [
+        1.8112749999999997,
+        1.572129999999999,
+        1.5045566666666708,
+        1.663465000000001,
+        1.5795200000000045
+      ],
+      "frameWorkP50Ms": 2.199999988079071,
+      "frameWorkP99Ms": 4.001000017392775,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgl",
+      "visibleBars": 1122,
+      "maLines": 12,
+      "actualVisibleBars": 1122,
+      "mainThreadMsPerFrame": 1.7023313333333312,
+      "mainThreadMsPerFrameRounds": [
+        1.7533899999999982,
+        1.5502833333333281,
+        1.8838450000000035,
+        1.532284999999997,
+        1.7918533333333286
+      ],
+      "frameWorkP50Ms": 2.399999994027894,
+      "frameWorkP99Ms": 4.200000000130967,
       "droppedFrameRate": 0
     },
     {
       "subject": "kcq-webgpu",
       "visibleBars": 152,
+      "maLines": 5,
       "actualVisibleBars": 152,
-      "mainThreadMsPerFrame": 0.9179260000000002,
+      "mainThreadMsPerFrame": 1.7254866666666662,
       "mainThreadMsPerFrameRounds": [
-        0.9083016666666667,
-        0.9038483333333325,
-        0.90824166666667,
-        0.906383333333333,
-        0.9628549999999988
+        1.753281666666666,
+        1.5212700000000012,
+        1.7685616666666704,
+        1.7770000000000035,
+        1.8073199999999898
       ],
-      "frameWorkP50Ms": 1.5999999985215254,
-      "frameWorkP99Ms": 2.000000001499138,
+      "frameWorkP50Ms": 2.2999999821186066,
+      "frameWorkP99Ms": 3.6999999940162525,
       "droppedFrameRate": 0
     },
     {
       "subject": "kcq-webgpu",
       "visibleBars": 451,
+      "maLines": 5,
       "actualVisibleBars": 451,
-      "mainThreadMsPerFrame": 1.0687356666666652,
+      "mainThreadMsPerFrame": 1.76537033333333,
       "mainThreadMsPerFrameRounds": [
-        1.0508749999999978,
-        1.031669999999997,
-        1.0699933333333316,
-        1.0980650000000007,
-        1.093074999999999
+        2.1196399999999946,
+        1.9150433333333319,
+        1.1118533333333267,
+        1.9061966666666663,
+        1.7741183333333292
       ],
-      "frameWorkP50Ms": 1.5000000059371814,
-      "frameWorkP99Ms": 2.100000005972106,
+      "frameWorkP50Ms": 2.100000005972106,
+      "frameWorkP99Ms": 3.999999976194813,
       "droppedFrameRate": 0
     },
     {
       "subject": "kcq-webgpu",
       "visibleBars": 1122,
+      "maLines": 5,
       "actualVisibleBars": 1122,
-      "mainThreadMsPerFrame": 1.0911689999999996,
+      "mainThreadMsPerFrame": 2.165017333333334,
       "mainThreadMsPerFrameRounds": [
-        1.1616316666666648,
-        1.1910216666666666,
-        1.0286749999999973,
-        1.0152833333333375,
-        1.0592333333333315
+        1.882763333333332,
+        2.2734649999999945,
+        2.0901166666666766,
+        2.274804999999998,
+        2.3039366666666674
       ],
-      "frameWorkP50Ms": 1.799999998533167,
-      "frameWorkP99Ms": 2.200000005948823,
+      "frameWorkP50Ms": 2.699999988079071,
+      "frameWorkP99Ms": 4.599999988221097,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgpu",
+      "visibleBars": 152,
+      "maLines": 12,
+      "actualVisibleBars": 152,
+      "mainThreadMsPerFrame": 1.6409166666666695,
+      "mainThreadMsPerFrameRounds": [
+        1.8555133333333393,
+        1.8782049999999844,
+        1.8758100000000157,
+        1.4938766666666699,
+        1.101178333333337
+      ],
+      "frameWorkP50Ms": 2.099999988102354,
+      "frameWorkP99Ms": 3.999999988125637,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgpu",
+      "visibleBars": 451,
+      "maLines": 12,
+      "actualVisibleBars": 451,
+      "mainThreadMsPerFrame": 1.200667333333333,
+      "mainThreadMsPerFrameRounds": [
+        1.2109316666666814,
+        1.2082916666666677,
+        1.183009999999977,
+        1.235205000000003,
+        1.1658983333333357
+      ],
+      "frameWorkP50Ms": 1.9000000298256055,
+      "frameWorkP99Ms": 2.400000000023283,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-webgpu",
+      "visibleBars": 1122,
+      "maLines": 12,
+      "actualVisibleBars": 1122,
+      "mainThreadMsPerFrame": 1.3511060000000061,
+      "mainThreadMsPerFrameRounds": [
+        1.3493433333333371,
+        1.3378766666666781,
+        1.4106850000000055,
+        1.331559999999996,
+        1.326065000000014
+      ],
+      "frameWorkP50Ms": 2.0000000059371814,
+      "frameWorkP99Ms": 2.5999999822245443,
       "droppedFrameRate": 0
     },
     {
       "subject": "kcq-canvas",
       "visibleBars": 152,
+      "maLines": 5,
       "actualVisibleBars": 152,
-      "mainThreadMsPerFrame": 0.8648756666666665,
+      "mainThreadMsPerFrame": 0.9255229999999934,
       "mainThreadMsPerFrameRounds": [
-        0.88378333333333,
-        0.8646933333333292,
-        0.8325350000000024,
-        0.8865716666666696,
-        0.8567950000000005
+        0.9280333333333127,
+        0.9157500000000122,
+        0.9064200000000019,
+        0.9472433333333186,
+        0.9301683333333225
       ],
-      "frameWorkP50Ms": 1.50000000448199,
-      "frameWorkP99Ms": 2.9000000029918738,
+      "frameWorkP50Ms": 1.7999999939929694,
+      "frameWorkP99Ms": 2.101000029182736,
       "droppedFrameRate": 0
     },
     {
       "subject": "kcq-canvas",
       "visibleBars": 451,
+      "maLines": 5,
       "actualVisibleBars": 451,
-      "mainThreadMsPerFrame": 1.1968696666666692,
+      "mainThreadMsPerFrame": 1.2845386666666627,
       "mainThreadMsPerFrameRounds": [
-        1.027506666666665,
-        0.9750283333333342,
-        0.9584966666666734,
-        1.4952700000000028,
-        1.5280466666666708
+        1.0901216666666613,
+        1.1263616666666583,
+        1.1122383333333374,
+        1.0965149999999824,
+        1.9974566666666742
       ],
-      "frameWorkP50Ms": 2.4000000044470653,
-      "frameWorkP99Ms": 3.800000002987217,
+      "frameWorkP50Ms": 1.899999988032505,
+      "frameWorkP99Ms": 3.999999988125637,
       "droppedFrameRate": 0
     },
     {
       "subject": "kcq-canvas",
       "visibleBars": 1122,
+      "maLines": 5,
       "actualVisibleBars": 1122,
-      "mainThreadMsPerFrame": 1.2060646666666677,
+      "mainThreadMsPerFrame": 1.2643593333333363,
       "mainThreadMsPerFrameRounds": [
-        1.2476433333333266,
-        1.0158599999999989,
-        1.3838000000000032,
-        1.241106666666667,
-        1.141913333333342
+        1.2839866666666684,
+        1.208355000000007,
+        1.3453433333333227,
+        1.3063216666666715,
+        1.1777900000000112
       ],
-      "frameWorkP50Ms": 1.800000005227048,
-      "frameWorkP99Ms": 3.9000000030064257,
+      "frameWorkP50Ms": 2.099999988102354,
+      "frameWorkP99Ms": 2.7999999703036154,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-canvas",
+      "visibleBars": 152,
+      "maLines": 12,
+      "actualVisibleBars": 152,
+      "mainThreadMsPerFrame": 1.2467813333333357,
+      "mainThreadMsPerFrameRounds": [
+        0.9463466666666657,
+        1.630523333333329,
+        1.3805783333333228,
+        1.116190000000022,
+        1.1602683333333392
+      ],
+      "frameWorkP50Ms": 1.9000000089290552,
+      "frameWorkP99Ms": 3.699999999953434,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-canvas",
+      "visibleBars": 451,
+      "maLines": 12,
+      "actualVisibleBars": 451,
+      "mainThreadMsPerFrame": 1.3203613333333333,
+      "mainThreadMsPerFrameRounds": [
+        1.3427933333333186,
+        1.3843050000000072,
+        1.2645516666666623,
+        1.2381383333333436,
+        1.3720183333333342
+      ],
+      "frameWorkP50Ms": 1.8999999940861017,
+      "frameWorkP99Ms": 2.7000000061257743,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "kcq-canvas",
+      "visibleBars": 1122,
+      "maLines": 12,
+      "actualVisibleBars": 1122,
+      "mainThreadMsPerFrame": 2.0698939999999957,
+      "mainThreadMsPerFrameRounds": [
+        2.148169999999989,
+        2.165536666666673,
+        1.8876833333333327,
+        2.11307499999999,
+        2.0350049999999933
+      ],
+      "frameWorkP50Ms": 2.699999994132668,
+      "frameWorkP99Ms": 4.599999976111576,
       "droppedFrameRate": 0
     },
     {
       "subject": "lightweight-charts",
       "visibleBars": 152,
+      "maLines": 5,
       "actualVisibleBars": 151,
-      "mainThreadMsPerFrame": 0.7380009999999995,
+      "mainThreadMsPerFrame": 0.9295656666666663,
       "mainThreadMsPerFrameRounds": [
-        0.6325250000000082,
-        0.9352683333333308,
-        0.8778016666666607,
-        0.6076233333333292,
-        0.636786666666668
+        0.854935000000007,
+        0.8105650000000016,
+        1.0956400000000126,
+        1.0994216666666528,
+        0.787266666666658
       ],
-      "frameWorkP50Ms": 1.900000000023283,
-      "frameWorkP99Ms": 3.6000000015052502,
+      "frameWorkP50Ms": 1.4999999820720404,
+      "frameWorkP99Ms": 2.6000000059138983,
       "droppedFrameRate": 0
     },
     {
       "subject": "lightweight-charts",
       "visibleBars": 451,
+      "maLines": 5,
       "actualVisibleBars": 450,
-      "mainThreadMsPerFrame": 0.785513000000004,
+      "mainThreadMsPerFrame": 0.9566023333333314,
       "mainThreadMsPerFrameRounds": [
-        0.6773083333333337,
-        0.717895000000001,
-        0.9977933333333412,
-        0.7417183333333336,
-        0.7928500000000108
+        1.2984616666666682,
+        0.9821949999999902,
+        0.7689499999999801,
+        0.9103850000000099,
+        0.8230200000000091
       ],
-      "frameWorkP50Ms": 1.5000000030267984,
-      "frameWorkP99Ms": 2.9000000044470653,
+      "frameWorkP50Ms": 1.6999999941326678,
+      "frameWorkP99Ms": 2.9999999939464033,
       "droppedFrameRate": 0
     },
     {
       "subject": "lightweight-charts",
       "visibleBars": 1122,
+      "maLines": 5,
       "actualVisibleBars": 1121,
-      "mainThreadMsPerFrame": 1.1765433333333348,
+      "mainThreadMsPerFrame": 1.2804873333333309,
       "mainThreadMsPerFrameRounds": [
-        1.1953566666666642,
-        1.2668916666666756,
-        1.1772099999999952,
-        1.2561716666666694,
-        0.98708666666667
+        0.9603316666666709,
+        1.309844999999991,
+        1.535546666666671,
+        1.5713550000000016,
+        1.02535833333332
       ],
-      "frameWorkP50Ms": 2.400000002933666,
-      "frameWorkP99Ms": 3.400000000023283,
+      "frameWorkP50Ms": 1.7999999821186066,
+      "frameWorkP99Ms": 3.0999999822233804,
       "droppedFrameRate": 0
     },
     {
-      "subject": "echarts",
+      "subject": "lightweight-charts",
       "visibleBars": 152,
-      "actualVisibleBars": 152,
-      "mainThreadMsPerFrame": 3.07886933333333,
+      "maLines": 12,
+      "actualVisibleBars": 151,
+      "mainThreadMsPerFrame": 1.2427193333333453,
       "mainThreadMsPerFrameRounds": [
-        2.94898666666666,
-        2.914293333333333,
-        3.273629999999995,
-        3.0478816666666715,
-        3.2095549999999897
+        0.8410299999999893,
+        1.24597833333335,
+        1.2690966666666743,
+        1.3761833333333584,
+        1.4813083333333548
       ],
-      "frameWorkP50Ms": 3.9000000059604645,
-      "frameWorkP99Ms": 5.500000004423782,
+      "frameWorkP50Ms": 1.7999999939929694,
+      "frameWorkP99Ms": 3.199999999953434,
       "droppedFrameRate": 0
     },
     {
-      "subject": "echarts",
+      "subject": "lightweight-charts",
       "visibleBars": 451,
+      "maLines": 12,
       "actualVisibleBars": 450,
-      "mainThreadMsPerFrame": 4.255066666666662,
+      "mainThreadMsPerFrame": 1.3550083333333398,
       "mainThreadMsPerFrameRounds": [
-        4.366854999999994,
-        4.215711666666664,
-        4.280609999999996,
-        4.20105333333332,
-        4.211103333333336
+        1.6867850000000335,
+        1.2069333333333059,
+        0.9456166666666851,
+        1.361046666666681,
+        1.5746599999999944
       ],
-      "frameWorkP50Ms": 5.699999999953434,
-      "frameWorkP99Ms": 6.800000000060536,
+      "frameWorkP50Ms": 1.7999999881722033,
+      "frameWorkP99Ms": 3.5999999941000715,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "lightweight-charts",
+      "visibleBars": 1122,
+      "maLines": 12,
+      "actualVisibleBars": 1121,
+      "mainThreadMsPerFrame": 1.356130666666663,
+      "mainThreadMsPerFrameRounds": [
+        1.3882399999999961,
+        1.4019316666666743,
+        1.3934766666666576,
+        1.304093333333327,
+        1.2929116666666591
+      ],
+      "frameWorkP50Ms": 2.0999999821651727,
+      "frameWorkP99Ms": 2.900999993965937,
+      "droppedFrameRate": 0.0003333333333333333
+    },
+    {
+      "subject": "echarts",
+      "visibleBars": 152,
+      "maLines": 5,
+      "actualVisibleBars": 152,
+      "mainThreadMsPerFrame": 2.9274363333333326,
+      "mainThreadMsPerFrameRounds": [
+        2.8780366666666644,
+        3.1867433333333395,
+        3.02298833333334,
+        2.8308716666666576,
+        2.718541666666662
+      ],
+      "frameWorkP50Ms": 3.599999987985939,
+      "frameWorkP99Ms": 4.700000006065238,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "echarts",
+      "visibleBars": 451,
+      "maLines": 5,
+      "actualVisibleBars": 450,
+      "mainThreadMsPerFrame": 4.656767000000002,
+      "mainThreadMsPerFrameRounds": [
+        4.526804999999996,
+        4.580786666666654,
+        4.6541900000000185,
+        4.837654999999994,
+        4.684398333333348
+      ],
+      "frameWorkP50Ms": 5.29999997606501,
+      "frameWorkP99Ms": 6.001000023153587,
       "droppedFrameRate": 0
     },
     {
       "subject": "echarts",
       "visibleBars": 1122,
+      "maLines": 5,
       "actualVisibleBars": 1119,
-      "mainThreadMsPerFrame": 3.2695673333333275,
+      "mainThreadMsPerFrame": 2.872253333333314,
       "mainThreadMsPerFrameRounds": [
-        3.2229366666666692,
-        3.37296666666667,
-        3.2699616666666507,
-        3.1288249999999826,
-        3.353146666666665
+        2.911033333333298,
+        2.9050500000000077,
+        2.8554366666666433,
+        2.819071666666654,
+        2.870674999999968
       ],
-      "frameWorkP50Ms": 4.200000002980232,
-      "frameWorkP99Ms": 5.800000002956949,
+      "frameWorkP50Ms": 3.5000000060535967,
+      "frameWorkP99Ms": 4.199999988079071,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "echarts",
+      "visibleBars": 152,
+      "maLines": 12,
+      "actualVisibleBars": 152,
+      "mainThreadMsPerFrame": 3.423254333333318,
+      "mainThreadMsPerFrameRounds": [
+        3.55702333333331,
+        3.557486666666658,
+        3.3457449999999747,
+        3.2722466666666605,
+        3.383769999999989
+      ],
+      "frameWorkP50Ms": 3.9999999791616574,
+      "frameWorkP99Ms": 4.800000017974526,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "echarts",
+      "visibleBars": 451,
+      "maLines": 12,
+      "actualVisibleBars": 450,
+      "mainThreadMsPerFrame": 5.402113333333328,
+      "mainThreadMsPerFrameRounds": [
+        5.4311866666666715,
+        5.4107583333333285,
+        5.32038,
+        5.404908333333319,
+        5.443333333333318
+      ],
+      "frameWorkP50Ms": 6.099999982165173,
+      "frameWorkP99Ms": 6.899999982211739,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "echarts",
+      "visibleBars": 1122,
+      "maLines": 12,
+      "actualVisibleBars": 1119,
+      "mainThreadMsPerFrame": 4.74384733333333,
+      "mainThreadMsPerFrameRounds": [
+        4.869125000000025,
+        4.878518333333327,
+        4.872708333333312,
+        4.558428333333306,
+        4.540456666666681
+      ],
+      "frameWorkP50Ms": 5.500000006053597,
+      "frameWorkP99Ms": 6.399999994144309,
       "droppedFrameRate": 0
     },
     {
       "subject": "klinecharts",
       "visibleBars": 152,
+      "maLines": 5,
       "actualVisibleBars": 153,
-      "mainThreadMsPerFrame": 0.8087563333333255,
+      "mainThreadMsPerFrame": 0.6399983333333239,
       "mainThreadMsPerFrameRounds": [
-        0.7833299999999829,
-        0.881874999999989,
-        0.6670249999999811,
-        0.7143233333333399,
-        0.9972283333333346
+        0.6528800000000009,
+        0.6063249999999698,
+        0.6261583333332984,
+        0.6923366666666672,
+        0.6222916666666833
       ],
-      "frameWorkP50Ms": 1.700000001466833,
-      "frameWorkP99Ms": 2.4000000015366822,
+      "frameWorkP50Ms": 0.9999999820720404,
+      "frameWorkP99Ms": 1.4000000059604645,
       "droppedFrameRate": 0
     },
     {
       "subject": "klinecharts",
       "visibleBars": 451,
+      "maLines": 5,
       "actualVisibleBars": 452,
-      "mainThreadMsPerFrame": 1.4940003333333274,
+      "mainThreadMsPerFrame": 1.0279966666666858,
       "mainThreadMsPerFrameRounds": [
-        1.3744533333333209,
-        1.397761666666663,
-        1.7174500000000137,
-        1.7224349999999806,
-        1.2579016666666594
+        0.8852766666666886,
+        0.8849550000000287,
+        1.0525783333333532,
+        1.0993799999999965,
+        1.2177933333333613
       ],
-      "frameWorkP50Ms": 1.1999999940162525,
-      "frameWorkP99Ms": 2.3000000044703484,
+      "frameWorkP50Ms": 0.9000000059604645,
+      "frameWorkP99Ms": 1.4000000178953633,
       "droppedFrameRate": 0
     },
     {
       "subject": "klinecharts",
       "visibleBars": 1122,
+      "maLines": 5,
       "actualVisibleBars": 1123,
-      "mainThreadMsPerFrame": 2.2388090000000034,
+      "mainThreadMsPerFrame": 1.6812960000000032,
       "mainThreadMsPerFrameRounds": [
-        2.2474116666666553,
-        1.997178333333333,
-        2.3457600000000176,
-        2.357913333333338,
-        2.245781666666673
+        1.8358133333333626,
+        1.5660383333333527,
+        1.6900583333332975,
+        1.5487699999999904,
+        1.765800000000013
       ],
-      "frameWorkP50Ms": 1.8000000059255399,
-      "frameWorkP99Ms": 2.3000000044703484,
+      "frameWorkP50Ms": 0.9500000029802322,
+      "frameWorkP99Ms": 1.4000000178348273,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "klinecharts",
+      "visibleBars": 152,
+      "maLines": 12,
+      "actualVisibleBars": 153,
+      "mainThreadMsPerFrame": 0.9516046666666492,
+      "mainThreadMsPerFrameRounds": [
+        0.9511633333333217,
+        0.9655349999999885,
+        1.024976666666646,
+        0.8679049999999696,
+        0.9484433333333205
+      ],
+      "frameWorkP50Ms": 1.0999999821651727,
+      "frameWorkP99Ms": 1.4000000120140612,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "klinecharts",
+      "visibleBars": 451,
+      "maLines": 12,
+      "actualVisibleBars": 452,
+      "mainThreadMsPerFrame": 1.3878503333333374,
+      "mainThreadMsPerFrameRounds": [
+        1.4050166666667014,
+        1.467061666666704,
+        1.6263199999999738,
+        1.1647766666666353,
+        1.276076666666673
+      ],
+      "frameWorkP50Ms": 1.0000000030267984,
+      "frameWorkP99Ms": 1.400000018067658,
+      "droppedFrameRate": 0
+    },
+    {
+      "subject": "klinecharts",
+      "visibleBars": 1122,
+      "maLines": 12,
+      "actualVisibleBars": 1123,
+      "mainThreadMsPerFrame": 2.214365333333329,
+      "mainThreadMsPerFrameRounds": [
+        2.216678333333325,
+        2.361941666666638,
+        2.1690066666666517,
+        2.1809033333333616,
+        2.1432966666666666
+      ],
+      "frameWorkP50Ms": 0.899999993853271,
+      "frameWorkP99Ms": 1.4000000059604645,
       "droppedFrameRate": 0
     }
   ]

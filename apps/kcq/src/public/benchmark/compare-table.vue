@@ -1,7 +1,7 @@
 <!--
   Every scenario of the run as a table, inside the page's fine print: the figure's main-thread time
-  plus the in-page frame-work percentiles and dropped frames, tier by tier in the figure's order.
-  The same numbers as the CSV download.
+  plus the in-page frame-work percentiles and dropped frames, one group per moving-average count and
+  tier, each in the figure's order. The same numbers as the CSV download.
 -->
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
@@ -11,7 +11,10 @@ import { COMPARE_RUN, type CompareRow, roundRange, tierRows } from "./compare-ru
 
 const { t } = useI18n();
 const { locale } = usePublicLocale();
-const tiers = COMPARE_RUN.configuration.visibleBars.map((bars) => ({ bars, rows: tierRows(COMPARE_RUN, bars) }));
+const { visibleBars, maLines } = COMPARE_RUN.configuration;
+const groups = maLines.flatMap((lines) =>
+  visibleBars.map((bars) => ({ key: `${lines}-${bars}`, lines, rows: tierRows(COMPARE_RUN, bars, lines) })),
+);
 
 const count = (value: number) => value.toLocaleString(PUBLIC_LOCALES[locale.value].htmlLang);
 const ms = (value: number) => value.toFixed(2);
@@ -29,6 +32,7 @@ const percent = (value: number) =>
         <tr>
           <th scope="col">{{ t("benchmark.table.library") }}</th>
           <th scope="col">{{ t("benchmark.table.renderer") }}</th>
+          <th scope="col" class="number">{{ t("benchmark.table.lines") }}</th>
           <th scope="col" class="number">{{ t("benchmark.table.bars") }}</th>
           <th scope="col" class="number">{{ t("benchmark.table.main") }}</th>
           <th scope="col" class="number">{{ t("benchmark.table.range") }}</th>
@@ -37,10 +41,11 @@ const percent = (value: number) =>
           <th scope="col" class="number">{{ t("benchmark.table.dropped") }}</th>
         </tr>
       </thead>
-      <tbody v-for="tier in tiers" :key="tier.bars">
-        <tr v-for="row in tier.rows" :key="row.subject.id" :data-kcq="row.kcq || undefined">
+      <tbody v-for="group in groups" :key="group.key">
+        <tr v-for="row in group.rows" :key="row.subject.id" :data-kcq="row.kcq || undefined">
           <th scope="row">{{ row.subject.library }}</th>
           <td>{{ row.subject.renderer }}</td>
+          <td class="number">{{ group.lines }}</td>
           <td class="number">{{ count(row.scenario.actualVisibleBars) }}</td>
           <td class="number">{{ ms(row.scenario.mainThreadMsPerFrame) }}</td>
           <td class="number">{{ range(row) }}</td>
@@ -58,7 +63,7 @@ const percent = (value: number) =>
 }
 table {
   width: 100%;
-  min-width: 44rem;
+  min-width: 48rem;
   border-collapse: collapse;
 }
 th,
