@@ -1,15 +1,56 @@
+"use client";
+
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import { usePortalContainer } from "@nebutra/ui/utils/portal-container";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import {
+  BaseDirectionScope,
+  mergeRefs,
+  type TextDirection,
+  useTriggerDirection,
+} from "../utils/direction";
 import { resolveLazyChild } from "../utils/lazy-child";
 import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
 
-/** Coordinates a trigger and anchored popup using Base UI's popover state and focus handling. */
-function Popover({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) {
-  return <PopoverPrimitive.Root data-slot="popover" {...props} />;
+type PopoverDirectionValue = {
+  /** Ref callback for the trigger (or anchor) the reading direction is measured from. */
+  triggerRef: React.RefCallback<Element>;
+  /** Reading direction applied to the popup and handed to Base UI for `inline-*` sides. */
+  direction: TextDirection;
+};
+
+// Undefined outside a Popover so a stray PopoverContent never forces `dir` onto the page.
+const PopoverDirectionContext = React.createContext<PopoverDirectionValue | undefined>(undefined);
+
+/**
+ * Coordinates a trigger and anchored popup using Base UI's popover state and focus handling. The
+ * portalled popup takes the reading direction of its trigger, so under `dir="rtl"` the
+ * `inline-start` / `inline-end` sides, `align`, and the content inside it all mirror.
+ */
+function Popover({
+  dir: dirProp,
+  ...props
+}: React.ComponentProps<typeof PopoverPrimitive.Root> & {
+  /**
+   * Reading direction of the popup. Leave it out to follow the `dir` in effect around the trigger
+   * (an ancestor `dir` attribute, else CSS `direction`); set it when the popover has no trigger to
+   * measure from.
+   * @default "the direction around the trigger"
+   */
+  dir?: TextDirection;
+}) {
+  const { triggerRef, direction } = useTriggerDirection(dirProp);
+  const directionValue = React.useMemo(() => ({ triggerRef, direction }), [triggerRef, direction]);
+  return (
+    <PopoverDirectionContext.Provider value={directionValue}>
+      <BaseDirectionScope direction={direction}>
+        <PopoverPrimitive.Root data-slot="popover" {...props} />
+      </BaseDirectionScope>
+    </PopoverDirectionContext.Provider>
+  );
 }
 
 /** Portal target accepted by popover content and positioning primitives. */
@@ -23,13 +64,26 @@ type PopoverTriggerProps = React.ComponentProps<typeof PopoverPrimitive.Trigger>
 };
 
 /** Opens or toggles the popover, optionally composing the behavior onto a child element. */
-function PopoverTrigger({ asChild, children: rawChildren, render, ...props }: PopoverTriggerProps) {
+function PopoverTrigger({
+  asChild,
+  children: rawChildren,
+  render,
+  ref,
+  ...props
+}: PopoverTriggerProps) {
   const children = resolveLazyChild(rawChildren);
+  const directionTriggerRef = React.use(PopoverDirectionContext)?.triggerRef;
+  // Memoised: a fresh callback ref every render would detach and re-register the trigger in Base UI.
+  const mergedRef = React.useMemo(
+    () => mergeRefs<HTMLButtonElement>(ref, directionTriggerRef),
+    [ref, directionTriggerRef],
+  );
   const renderElement: PopoverPrimitive.Trigger.Props["render"] =
     asChild && React.isValidElement(children) ? children : render;
   return (
     <PopoverPrimitive.Trigger
       data-slot="popover-trigger"
+      ref={mergedRef}
       render={renderElement}
       nativeButton={rendersNativeButton(renderElement)}
       {...(renderElement ? props : { ...props, children })}
@@ -48,10 +102,12 @@ function PopoverPositioner({
   container?: PopoverPortalContainer;
 }) {
   const portalContainer = usePortalContainer(container);
+  const direction = React.use(PopoverDirectionContext)?.direction;
   return (
     <PopoverPrimitive.Portal container={portalContainer}>
       <PopoverPrimitive.Positioner
         data-slot="popover-positioner"
+        dir={direction}
         sideOffset={sideOffset}
         style={{ zIndex: overlayZIndex.popover, ...style }}
         {...props}
@@ -89,11 +145,13 @@ function PopoverContent({
   ...props
 }: PopoverContentProps) {
   const portalContainer = usePortalContainer(container);
+  const direction = React.use(PopoverDirectionContext)?.direction;
   return (
     <PopoverPrimitive.Portal container={portalContainer}>
       <PopoverPrimitive.Positioner
         style={{ zIndex: overlayZIndex.popover }}
         data-slot="popover-positioner"
+        dir={direction}
         sideOffset={sideOffset}
         align={align}
         alignOffset={alignOffset}
@@ -149,8 +207,13 @@ function PopoverArrow({
 }
 
 /** Span wrapper for caller-composed anchor content, marked with the popover-anchor slot. */
-function PopoverAnchor({ ...props }: React.ComponentProps<"span">) {
-  return <span data-slot="popover-anchor" {...props} />;
+function PopoverAnchor({ ref, ...props }: React.ComponentProps<"span">) {
+  const directionTriggerRef = React.use(PopoverDirectionContext)?.triggerRef;
+  const mergedRef = React.useMemo(
+    () => mergeRefs<HTMLSpanElement>(ref, directionTriggerRef),
+    [ref, directionTriggerRef],
+  );
+  return <span data-slot="popover-anchor" ref={mergedRef} {...props} />;
 }
 
 export { Popover, PopoverAnchor, PopoverContent, PopoverPositioner, PopoverTrigger };

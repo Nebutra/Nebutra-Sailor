@@ -143,6 +143,17 @@ export default function ComboboxDemo({ derived }: DemoProps) {
       </State>
 
       <State
+        breaks="A list that ignores dir: the search field and options stay left-aligned in a popover outside the rtl container, and the selection check stays on the left. Open the list and look at the text edge and the check."
+        id="rtl"
+        note="The same combobox under dir=rtl. The popover takes the direction of its trigger, so the search field and options read right to left and the selection check leads each row from the right."
+        title="Right-to-left"
+      >
+        <div className="max-w-sm" dir="rtl">
+          <Combobox label="Region" options={REGIONS} placeholder="Select a region" width={280} />
+        </div>
+      </State>
+
+      <State
         breaks="A combobox that traps focus in the search field, or one where typing filters the list but Enter selects the wrong row."
         id="keyboard"
         title="Keyboard path"

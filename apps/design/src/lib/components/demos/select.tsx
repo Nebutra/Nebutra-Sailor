@@ -166,6 +166,17 @@ export default function SelectDemo({ derived }: DemoProps) {
       </State>
 
       <State
+        breaks="A listbox that ignores dir: the options stay left-aligned in a portal outside the rtl container, and the selected-item check lands on the wrong side. Open the list and look at the text edge and the check."
+        id="rtl"
+        note="The same select under dir=rtl. The listbox takes the direction of its trigger, so the options read right to left and the selected check sits on the inline-end edge, the left here."
+        title="Right-to-left"
+      >
+        <div className="max-w-sm" dir="rtl">
+          <Select defaultValue="fra1" label="Region" options={REGIONS} />
+        </div>
+      </State>
+
+      <State
         breaks="A listbox that cannot be opened from the keyboard, or one that does not return focus to the trigger on close."
         id="keyboard"
         title="Keyboard path"
