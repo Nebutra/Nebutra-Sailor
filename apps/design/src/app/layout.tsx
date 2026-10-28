@@ -1,5 +1,5 @@
 import { FontFaces, fontClassName } from "@nebutra/tokens/fonts";
-import { fontRegistryClassName } from "@nebutra/tokens/fonts/registry";
+import { fontDisplayClassName, fontRegistryClassName } from "@nebutra/tokens/fonts/registry";
 import "./globals.css";
 import { brand } from "@nebutra/brand/metadata";
 import type { Metadata } from "next";
@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       // fontRegistryClassName defines the --font-* variables skins.css names.
       // This app IS the language switcher; without it every non-default language
       // demonstrates itself in the system font.
-      className={`${fontClassName} ${fontRegistryClassName}`}
+      className={`${fontClassName} ${fontRegistryClassName} ${fontDisplayClassName}`}
       lang="en"
       suppressHydrationWarning
     >

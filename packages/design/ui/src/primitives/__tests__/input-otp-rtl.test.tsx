@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../input-otp";
 
 // input-otp polls document.elementFromPoint to detect password-manager badges; jsdom has none.
@@ -10,6 +10,33 @@ beforeAll(() => {
 });
 afterAll(() => {
   document.elementFromPoint = original;
+});
+
+// input-otp schedules 2s and 5s timeouts and a 1s interval for that badge check and never
+// clears them on unmount. They fire after jsdom is torn down and throw "window is not
+// defined" as an unhandled error, which fails the whole run. Fake timers are no use here
+// (Testing Library's async wrapper waits on a real setTimeout(0) and would hang), so record
+// every timer the test creates and clear them all once the test is over.
+const realSetTimeout = globalThis.setTimeout;
+const realSetInterval = globalThis.setInterval;
+const pending = new Set<ReturnType<typeof setTimeout>>();
+beforeEach(() => {
+  globalThis.setTimeout = ((...args: Parameters<typeof setTimeout>) => {
+    const id = realSetTimeout(...args);
+    pending.add(id);
+    return id;
+  }) as typeof setTimeout;
+  globalThis.setInterval = ((...args: Parameters<typeof setInterval>) => {
+    const id = realSetInterval(...args);
+    pending.add(id);
+    return id;
+  }) as typeof setInterval;
+});
+afterEach(() => {
+  globalThis.setTimeout = realSetTimeout;
+  globalThis.setInterval = realSetInterval;
+  for (const id of pending) clearTimeout(id);
+  pending.clear();
 });
 
 function Otp(props: Partial<React.ComponentProps<typeof InputOTP>>) {

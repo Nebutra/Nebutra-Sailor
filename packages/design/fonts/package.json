@@ -67,6 +67,11 @@
       "import": "./src/next-geist.ts",
       "default": "./src/next-geist.ts"
     },
+    "./next/display": {
+      "types": "./src/next-display.ts",
+      "import": "./src/next-display.ts",
+      "default": "./src/next-display.ts"
+    },
     "./font-face": {
       "types": "./src/cjk-font-face.tsx",
       "import": "./src/cjk-font-face.tsx",
