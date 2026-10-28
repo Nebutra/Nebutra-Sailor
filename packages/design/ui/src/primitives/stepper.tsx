@@ -288,7 +288,7 @@ export function Stepper({
                   status === "completed" && "text-primary",
                   status === "current" && "text-foreground",
                   status === "pending" && "text-muted-foreground",
-                  status === "error" && "text-destructive",
+                  status === "error" && "text-destructive-strong",
                 )}
               >
                 {step.title}
