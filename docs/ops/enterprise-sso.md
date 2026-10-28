@@ -73,7 +73,7 @@ Use this path when the customer wants Feishu or Lark login.
 
 1. Create or open the Feishu/Lark app in the developer console.
 2. Add the login-center redirect URI:
-   `https://auth.nebutra.com/api/auth/oauth2/callback/feishu`.
+   `https://auth.nebutra.com/api/auth/callback/feishu`.
 3. Grant the scopes needed to read a stable user id, name, avatar, and email.
    Recommended default: `contact:user.email contact:user.base:readonly`.
 4. Set these runtime variables on auth-center and web (shared session secret):

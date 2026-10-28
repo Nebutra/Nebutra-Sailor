@@ -49,7 +49,7 @@ fallback (`nebutra status` reports this as `local-fallback`), not to a different
 | `FEISHU_APP_SECRET` | If Feishu/Lark SSO is enabled | — | Feishu/Lark app secret. Never expose this as `NEXT_PUBLIC_`. |
 | `FEISHU_OAUTH_SCOPES` | No | `contact:user.email contact:user.base:readonly` | Space- or comma-separated OAuth scopes requested from Feishu/Lark. |
 | `FEISHU_ALLOWED_TENANT_KEYS` | No | — | Optional allowlist of Feishu tenant keys accepted by this deployment. |
-| `FEISHU_REDIRECT_URI` | No | — | Optional override. Default Better Auth callback is `/api/auth/oauth2/callback/feishu`. |
+| `FEISHU_REDIRECT_URI` | No | — | Optional override. Default Better Auth callback is `/api/auth/callback/feishu`. |
 | `GOOGLE_CLIENT_ID` | If Google OAuth is enabled | — | Google OAuth web client id for Better Auth. |
 | `GOOGLE_CLIENT_SECRET` | If Google OAuth is enabled | — | Google OAuth web client secret for Better Auth. |
 | `GITHUB_CLIENT_ID` | If GitHub OAuth is enabled | — | GitHub OAuth app client id (Better Auth). |

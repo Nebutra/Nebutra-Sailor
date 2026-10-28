@@ -1,6 +1,6 @@
-import type { OAuth2Tokens, OAuth2UserInfo } from "@better-auth/core/oauth2";
+import type { OAuth2Tokens } from "@better-auth/core/oauth2";
 import { logger } from "@nebutra/logger";
-import type { GenericOAuthConfig } from "better-auth/plugins/generic-oauth";
+import type { GenericOAuthConfig, GenericOAuthUserInfo } from "better-auth/plugins/generic-oauth";
 import type { BetterAuthPlugin } from "better-auth/types";
 
 const FEISHU_PROVIDER_ID = "feishu";
@@ -25,7 +25,11 @@ interface FeishuOAuthEndpoints {
 
 type FeishuOAuthRecord = Record<string, unknown>;
 
-export type FeishuOAuthUserInfo = OAuth2UserInfo & {
+// Better Auth 1.7 types `OAuth2UserInfo.id` as `never` (the mapped local user must
+// not carry provider identity). Generic OAuth's raw profile type still takes `id`,
+// which is what plain-OAuth providers use as the account subject.
+export type FeishuOAuthUserInfo = GenericOAuthUserInfo & {
+  id: string;
   openId?: string;
   unionId?: string;
   userId?: string;

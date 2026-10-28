@@ -46,8 +46,8 @@ const CLIENT_ID = "nebutra-admin";
  * script to an untrusted operator.
  */
 const REDIRECT_URIS = [
-  "https://admin.nebutra.com/api/auth/oauth2/callback/nebutra-sso",
-  "http://localhost:3108/api/auth/oauth2/callback/nebutra-sso",
+  "https://admin.nebutra.com/api/auth/callback/nebutra-sso",
+  "http://localhost:3108/api/auth/callback/nebutra-sso",
 ];
 
 /** The row this script converges on. Pure, so --dry-run needs no database. */
