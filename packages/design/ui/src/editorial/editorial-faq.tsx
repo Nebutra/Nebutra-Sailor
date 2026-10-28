@@ -59,7 +59,7 @@ export function EditorialFaq({
                 className="mt-0.5 size-4 shrink-0 text-muted-foreground transition-transform duration-micro group-open:rotate-45"
               />
             </summary>
-            <p className={cn("pb-4 pr-8", EDITORIAL_BODY)}>{item.answer}</p>
+            <p className={cn("pb-4 pe-8", EDITORIAL_BODY)}>{item.answer}</p>
           </details>
         ))}
       </div>

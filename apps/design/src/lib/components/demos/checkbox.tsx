@@ -47,7 +47,7 @@ export default function CheckboxDemo() {
           >
             All features
           </Checkbox>
-          <div className="ml-6 flex flex-col gap-2">
+          <div className="ms-6 flex flex-col gap-2">
             {["Analytics", "Notifications", "API access"].map((label, i) => (
               <Checkbox
                 checked={checked[i] ?? false}

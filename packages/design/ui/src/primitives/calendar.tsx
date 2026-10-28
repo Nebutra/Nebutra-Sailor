@@ -1,18 +1,20 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "@nebutra/icons";
-import type * as React from "react";
+import * as React from "react";
 import {
   type ChevronProps,
   DayFlag,
   DayPicker,
   type DayPickerProps,
   type DayButtonProps as RdpDayButtonProps,
+  type RootProps as RdpRootProps,
   SelectionState,
   UI,
 } from "react-day-picker";
 import { calendarTokens } from "../tokens/components/calendar";
 import { cn } from "../utils/cn";
+import { mergeRefs, useResolvedDirection } from "../utils/direction";
 
 type CalendarCssVars = React.CSSProperties & {
   "--calendar-cell-size"?: string;
@@ -91,9 +93,43 @@ function CalendarDayButton({ day: _day, modifiers, className, ...props }: RdpDay
   );
 }
 
+/**
+ * react-day-picker's default navigation hard-codes "left" for previous and "right" for next; only
+ * its `navLayout="around"` variant swaps them under `dir="rtl"`. True when the chevrons it hands
+ * over still need mirroring.
+ */
+const CalendarMirrorChevronsContext = React.createContext(false);
+
 function CalendarChevron({ orientation, className, ...props }: ChevronProps) {
-  const Icon = orientation === "left" ? ChevronLeft : ChevronRight;
-  return <Icon aria-hidden="true" className={cn("shrink-0", className)} {...props} />;
+  const mirror = React.use(CalendarMirrorChevronsContext);
+  const resolved =
+    mirror && (orientation === "left" || orientation === "right")
+      ? orientation === "left"
+        ? "right"
+        : "left"
+      : orientation;
+  const Icon = resolved === "left" ? ChevronLeft : ChevronRight;
+  return (
+    <Icon
+      aria-hidden="true"
+      data-orientation={resolved}
+      className={cn("shrink-0", className)}
+      {...props}
+    />
+  );
+}
+
+/**
+ * react-day-picker only mirrors its chevrons and arrow keys from its own `dir` prop, never from the
+ * DOM, so the root hands its element to `Calendar` to measure the surrounding direction.
+ */
+const CalendarRootRefContext = React.createContext<React.RefObject<HTMLDivElement | null> | null>(
+  null,
+);
+
+function CalendarRoot({ rootRef, ...props }: RdpRootProps) {
+  const measureRef = React.use(CalendarRootRefContext);
+  return <div {...props} ref={mergeRefs(rootRef, measureRef ?? undefined)} />;
 }
 
 export type CalendarProps = DayPickerProps;
@@ -102,55 +138,83 @@ export type CalendarProps = DayPickerProps;
  * Month grid built on react-day-picker. Owns presentation only — selection mode,
  * value and constraints are the caller's, so the same grid backs the single-date
  * `DatePicker` and any range surface without forking.
+ *
+ * Reading direction comes from the `dir` prop when set, otherwise from the nearest `dir`
+ * attribute above the calendar. It decides which way the previous and next chevrons point and
+ * which way ArrowLeft and ArrowRight move between days.
  */
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
   style,
+  dir,
   ...props
 }: CalendarProps) {
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
+  // The root carries the `dir` this component sets, so measure from its parent or the first
+  // reading would pin every later one.
+  const surroundings = React.useMemo<React.RefObject<Element | null>>(
+    () => ({
+      get current() {
+        return rootRef.current?.parentElement ?? null;
+      },
+      set current(_: Element | null) {},
+    }),
+    [],
+  );
+  const measuredDirection = useResolvedDirection(surroundings);
+  const direction = dir ?? measuredDirection;
+  const mirrorChevrons = direction === "rtl" && props.navLayout !== "around";
+
   return (
-    <DayPicker
-      data-slot="calendar"
-      showOutsideDays={showOutsideDays}
-      className={cn("p-[var(--calendar-padding)] text-foreground", className)}
-      style={getCalendarStyle(style)}
-      classNames={{
-        [UI.Months]: "relative flex flex-col gap-[var(--calendar-month-gap)] sm:flex-row",
-        [UI.Month]: "flex flex-col gap-[var(--calendar-caption-gap)]",
-        [UI.MonthCaption]: "flex h-[var(--calendar-nav-button-size)] items-center justify-center",
-        [UI.CaptionLabel]:
-          "select-none text-[length:var(--calendar-caption-font-size)] font-medium text-foreground",
-        [UI.Nav]: "absolute inset-x-0 top-0 z-10 flex items-center justify-between",
-        [UI.PreviousMonthButton]: navButtonClassName,
-        [UI.NextMonthButton]: navButtonClassName,
-        [UI.MonthGrid]: "w-full border-collapse",
-        [UI.Weekdays]: "flex",
-        [UI.Weekday]:
-          "w-[var(--calendar-cell-size)] select-none pb-1 text-[length:var(--calendar-weekday-font-size)] font-normal text-muted-foreground",
-        [UI.Week]: "mt-0.5 flex w-full",
-        // The cell carries the connective band; the button carries the pill.
-        [UI.Day]: "relative p-0 text-center",
-        [SelectionState.range_start]:
-          "rounded-l-[var(--calendar-cell-radius)] bg-accent [&:has(+td[data-selected])]:rounded-r-none",
-        [SelectionState.range_middle]: "bg-accent",
-        [SelectionState.range_end]: "rounded-r-[var(--calendar-cell-radius)] bg-accent",
-        [DayFlag.outside]: "text-muted-foreground/60",
-        [DayFlag.disabled]: "opacity-40",
-        [DayFlag.hidden]: "invisible",
-        [UI.WeekNumber]:
-          "w-[var(--calendar-cell-size)] select-none text-[length:var(--calendar-weekday-font-size)] text-muted-foreground",
-        [UI.WeekNumberHeader]: "w-[var(--calendar-cell-size)]",
-        [UI.Footer]: "pt-2 text-center text-xs text-muted-foreground",
-        ...classNames,
-      }}
-      components={{
-        Chevron: CalendarChevron,
-        DayButton: CalendarDayButton,
-      }}
-      {...props}
-    />
+    <CalendarRootRefContext.Provider value={rootRef}>
+      <CalendarMirrorChevronsContext.Provider value={mirrorChevrons}>
+        <DayPicker
+          data-slot="calendar"
+          showOutsideDays={showOutsideDays}
+          dir={direction}
+          className={cn("p-[var(--calendar-padding)] text-foreground", className)}
+          style={getCalendarStyle(style)}
+          classNames={{
+            [UI.Months]: "relative flex flex-col gap-[var(--calendar-month-gap)] sm:flex-row",
+            [UI.Month]: "flex flex-col gap-[var(--calendar-caption-gap)]",
+            [UI.MonthCaption]:
+              "flex h-[var(--calendar-nav-button-size)] items-center justify-center",
+            [UI.CaptionLabel]:
+              "select-none text-[length:var(--calendar-caption-font-size)] font-medium text-foreground",
+            [UI.Nav]: "absolute inset-x-0 top-0 z-10 flex items-center justify-between",
+            [UI.PreviousMonthButton]: navButtonClassName,
+            [UI.NextMonthButton]: navButtonClassName,
+            [UI.MonthGrid]: "w-full border-collapse",
+            [UI.Weekdays]: "flex",
+            [UI.Weekday]:
+              "w-[var(--calendar-cell-size)] select-none pb-1 text-[length:var(--calendar-weekday-font-size)] font-normal text-muted-foreground",
+            [UI.Week]: "mt-0.5 flex w-full",
+            // The cell carries the connective band; the button carries the pill.
+            [UI.Day]: "relative p-0 text-center",
+            [SelectionState.range_start]:
+              "rounded-s-[var(--calendar-cell-radius)] bg-accent [&:has(+td[data-selected])]:rounded-e-none",
+            [SelectionState.range_middle]: "bg-accent",
+            [SelectionState.range_end]: "rounded-e-[var(--calendar-cell-radius)] bg-accent",
+            [DayFlag.outside]: "text-muted-foreground/60",
+            [DayFlag.disabled]: "opacity-40",
+            [DayFlag.hidden]: "invisible",
+            [UI.WeekNumber]:
+              "w-[var(--calendar-cell-size)] select-none text-[length:var(--calendar-weekday-font-size)] text-muted-foreground",
+            [UI.WeekNumberHeader]: "w-[var(--calendar-cell-size)]",
+            [UI.Footer]: "pt-2 text-center text-xs text-muted-foreground",
+            ...classNames,
+          }}
+          components={{
+            Chevron: CalendarChevron,
+            DayButton: CalendarDayButton,
+            Root: CalendarRoot,
+          }}
+          {...props}
+        />
+      </CalendarMirrorChevronsContext.Provider>
+    </CalendarRootRefContext.Provider>
   );
 }
 Calendar.displayName = "Calendar";

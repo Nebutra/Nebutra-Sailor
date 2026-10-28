@@ -6,7 +6,7 @@ import { ComponentStatesMatrix } from "@/components/component-states-matrix";
 import { jsx, snippet } from "../code-gen";
 import type { DemoProps } from "../derived";
 
-const SIDES = ["top", "right", "bottom", "left"] as const;
+const SIDES = ["top", "inline-end", "bottom", "inline-start"] as const;
 type Side = (typeof SIDES)[number];
 type Align = "start" | "center" | "end";
 
@@ -63,7 +63,7 @@ function LiveHoverCard({
 export function Playground(_: DemoProps) {
   return (
     <ComponentPlayground
-      caption="Hover the trigger to open the card and move the pointer away to close it. It opens on pointer hover only, so keep anything essential on the page itself."
+      caption="Hover the trigger, Tab onto it, or click it to open the card. Move the pointer away, Tab off, or press Escape to close it. It is still a preview, so keep anything essential on the page itself."
       code={(v) => {
         const description = String(v.description);
         return snippet({
@@ -148,7 +148,7 @@ export function StatesMatrix(_: DemoProps) {
         { id: "slow", label: "Slow open" },
         { id: "long", label: "Long content" },
       ]}
-      note="Hover each trigger to open its card; the card is a separate real instance per cell. HoverCard has no disabled, loading or invalid prop, and it opens on pointer hover only, so keyboard focus alone does not open it. Preferred placement may flip to stay in the viewport."
+      note="Hover each trigger to open its card; the card is a separate real instance per cell. Keyboard: Tab onto a trigger and the card opens after the open delay and stays while focus is on the trigger or inside the card; Enter or Space toggles it at once, Escape closes it and leaves focus on the trigger. A tap on touch toggles it too. HoverCard has no disabled, loading or invalid prop. Rows use the logical inline-start and inline-end sides, which mirror under dir=rtl; preferred placement may flip to stay in the viewport."
       render={(side, kind) => (
         <LiveHoverCard
           align="center"

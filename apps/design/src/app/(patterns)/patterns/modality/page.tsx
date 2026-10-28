@@ -71,7 +71,7 @@ export default function ModalityPage() {
 
       <Section title="Which one">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px] text-left text-[14px]">
+          <table className="w-full min-w-[640px] text-start text-[14px]">
             <thead>
               <tr className="text-muted-foreground text-xs">
                 <th className="pb-2 font-medium">Surface</th>
@@ -82,10 +82,10 @@ export default function ModalityPage() {
             <tbody>
               {SURFACES.map((surface) => (
                 <tr className="align-top" key={surface.name}>
-                  <td className="py-3 pr-6">
+                  <td className="py-3 pe-6">
                     <Mono>{surface.name}</Mono>
                   </td>
-                  <td className="py-3 pr-6 text-foreground">{surface.use}</td>
+                  <td className="py-3 pe-6 text-foreground">{surface.use}</td>
                   <td className="py-3 text-muted-foreground">{surface.not}</td>
                 </tr>
               ))}

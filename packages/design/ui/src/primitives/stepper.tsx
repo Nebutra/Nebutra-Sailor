@@ -10,7 +10,10 @@ import { Button } from "./button";
 // Types
 // ============================================
 
-/** Visual status of one step. The provider only derives `pending`, `current` and `completed`. */
+/**
+ * Visual status of one step. The provider derives `completed`, `current` and `pending` from the
+ * current index, and `error` from `Step.error`, which wins over the other three.
+ */
 export type StepStatus = "pending" | "current" | "completed" | "error";
 
 /** One entry in a stepper's ordered list of steps. */
@@ -23,6 +26,12 @@ export interface Step {
   description?: string;
   /** Appends an "(Optional)" marker to the title. It does not make the step skippable. */
   optional?: boolean;
+  /**
+   * Marks the step as failed: the indicator turns destructive and the step reports
+   * `data-status="error"`, whether it is behind, at or ahead of the current step.
+   * @default false
+   */
+  error?: boolean;
 }
 
 /** The value `StepperProvider` shares with `Stepper`, `StepperContent` and `StepperNavigation`. */
@@ -41,7 +50,10 @@ export interface StepperContextValue {
   isFirstStep: boolean;
   /** True while the current step is the last one. */
   isLastStep: boolean;
-  /** Status for a step index: completed before the current step, current at it, pending after. */
+  /**
+   * Status for a step index: `error` when the step sets `error`, otherwise completed before the
+   * current step, current at it and pending after.
+   */
   getStepStatus: (index: number) => StepStatus;
 }
 
@@ -124,11 +136,12 @@ export function StepperProvider({
 
   const getStepStatus = useCallback(
     (index: number): StepStatus => {
+      if (steps[index]?.error) return "error";
       if (index < currentStep) return "completed";
       if (index === currentStep) return "current";
       return "pending";
     },
-    [currentStep],
+    [currentStep, steps],
   );
 
   const value = useMemo(
@@ -181,7 +194,9 @@ export interface StepperProps {
 
 /**
  * Step indicator driven by the nearest `StepperProvider`: numbered circles with titles, a check
- * for completed steps and a ring on the current one. Renders an empty wrapper outside a provider.
+ * for completed steps and a ring on the current one. Renders an ordered list with one item per
+ * step; the current item carries `aria-current="step"` and every item a `data-status`. Renders an
+ * empty list outside a provider.
  */
 export function Stepper({
   orientation = "horizontal",
@@ -201,9 +216,9 @@ export function Stepper({
   const config = sizeConfig[size];
 
   return (
-    <div
+    <ol
       className={cn(
-        "flex",
+        "m-0 flex list-none p-0",
         orientation === "horizontal" ? "flex-row items-start" : "flex-col items-start",
         className,
       )}
@@ -213,8 +228,10 @@ export function Stepper({
         const isLast = index === steps.length - 1;
 
         return (
-          <div
+          <li
             key={step.id}
+            data-status={status}
+            aria-current={index === currentStep ? "step" : undefined}
             className={cn(
               "flex",
               orientation === "horizontal" ? "flex-col items-center" : "flex-row items-start",
@@ -263,7 +280,7 @@ export function Stepper({
             </div>
 
             {/* Step text */}
-            <div className={cn("mt-2", orientation === "vertical" && "ml-3 mt-0")}>
+            <div className={cn("mt-2", orientation === "vertical" && "ms-3 mt-0")}>
               <p
                 className={cn(
                   "font-medium",
@@ -271,21 +288,22 @@ export function Stepper({
                   status === "completed" && "text-primary",
                   status === "current" && "text-foreground",
                   status === "pending" && "text-muted-foreground",
+                  status === "error" && "text-destructive",
                 )}
               >
                 {step.title}
                 {step.optional && (
-                  <span className="ml-1 text-xs text-muted-foreground">(Optional)</span>
+                  <span className="ms-1 text-xs text-muted-foreground">(Optional)</span>
                 )}
               </p>
               {step.description && (
                 <p className="mt-0.5 text-xs text-muted-foreground">{step.description}</p>
               )}
             </div>
-          </div>
+          </li>
         );
       })}
-    </div>
+    </ol>
   );
 }
 
@@ -381,12 +399,12 @@ export function StepperNavigation({
           disabled={loading || disableNext}
           className="bg-primary hover:bg-primary/90"
         >
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin motion-reduce:animate-pulse" />}
+          {loading && <Loader2 className="me-2 h-4 w-4 animate-spin motion-reduce:animate-pulse" />}
           {finishLabel || "Finish"}
         </Button>
       ) : (
         <Button type="button" onClick={nextStep} disabled={loading || disableNext}>
-          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin motion-reduce:animate-pulse" />}
+          {loading && <Loader2 className="me-2 h-4 w-4 animate-spin motion-reduce:animate-pulse" />}
           {nextLabel || "Next"}
         </Button>
       )}
@@ -454,7 +472,7 @@ export function useStepper({ steps, initialStep = 0, onComplete }: UseStepperOpt
     reset,
     isFirstStep: currentStep === 0,
     isLastStep: currentStep === steps.length - 1,
-    progress: ((currentStep + 1) / steps.length) * 100,
+    progress: steps.length > 0 ? ((currentStep + 1) / steps.length) * 100 : 0,
   };
 }
 
@@ -465,7 +483,7 @@ export function useStepper({ steps, initialStep = 0, onComplete }: UseStepperOpt
 export interface ProgressStepperProps {
   /** Zero-based index of the current step; the bar is filled through this step. */
   currentStep: number;
-  /** Total number of steps. Keep it above zero: the fill is computed as a share of this count. */
+  /** Total number of steps. The fill is 0% when this is zero or less, and never exceeds 100%. */
   totalSteps: number;
   /** Labels spread across the row under the bar; steps up to the current one are highlighted. */
   labels?: string[];
@@ -483,7 +501,8 @@ export function ProgressStepper({
   labels,
   className,
 }: ProgressStepperProps) {
-  const progress = ((currentStep + 1) / totalSteps) * 100;
+  const progress =
+    totalSteps > 0 ? Math.min(100, Math.max(0, ((currentStep + 1) / totalSteps) * 100)) : 0;
 
   return (
     <div className={cn("space-y-2", className)}>
@@ -514,7 +533,7 @@ export function ProgressStepper({
 
       {/* Step count */}
       <p className="text-center text-sm text-muted-foreground">
-        步骤 {currentStep + 1} / {totalSteps}
+        步骤 {totalSteps > 0 ? currentStep + 1 : 0} / {Math.max(0, totalSteps)}
       </p>
     </div>
   );

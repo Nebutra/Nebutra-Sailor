@@ -26,14 +26,14 @@ export function KeyboardTable({ rows }: { rows: NonNullable<Guidance["keyboard"]
         <thead className="max-md:sr-only" role="rowgroup">
           <tr className="border-hairline border-b bg-background" role="row">
             <th
-              className="w-[34%] px-4 py-2 text-left font-medium text-muted-foreground text-xs"
+              className="w-[34%] px-4 py-2 text-start font-medium text-muted-foreground text-xs"
               role="columnheader"
               scope="col"
             >
               Key
             </th>
             <th
-              className="px-4 py-2 text-left font-medium text-muted-foreground text-xs"
+              className="px-4 py-2 text-start font-medium text-muted-foreground text-xs"
               role="columnheader"
               scope="col"
             >

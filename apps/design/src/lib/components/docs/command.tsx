@@ -49,13 +49,13 @@ const KNOBS: Knob[] = [
     name: "loop",
     type: "boolean",
     defaultValue: false,
-    hint: "Inline only. CommandDialog does not forward Command props.",
+    hint: "Wraps from the last row to the first. CommandDialog forwards it to its Command.",
   },
   {
     name: "shouldFilter",
     type: "boolean",
     defaultValue: true,
-    hint: "Inline only. Off lists every item whatever you type.",
+    hint: "Off lists every item whatever you type. CommandDialog forwards it too.",
   },
 ];
 
@@ -166,7 +166,7 @@ function LiveCommand({
           <Button onClick={() => setOpen(true)} variant="outline">
             Open command palette
           </Button>
-          <CommandDialog onOpenChange={setOpen} open={open}>
+          <CommandDialog loop={loop} onOpenChange={setOpen} open={open} shouldFilter={shouldFilter}>
             {body(true)}
           </CommandDialog>
         </>
@@ -248,7 +248,13 @@ export function Playground(_: DemoProps) {
         const palette = dialog
           ? jsx({
               name: "CommandDialog",
-              props: { open: raw("open"), onOpenChange: raw("setOpen") },
+              defaults: { loop: false, shouldFilter: true },
+              props: {
+                loop: v.loop,
+                shouldFilter: v.shouldFilter,
+                open: raw("open"),
+                onOpenChange: raw("setOpen"),
+              },
               children: [input, list],
             })
           : jsx({

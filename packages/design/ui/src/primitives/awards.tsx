@@ -262,7 +262,7 @@ export function Awards({
       <div className={cn("", className)}>
         <div className={cn("rounded-[var(--radius-md)] border-4 p-4", "flex justify-start gap-3")}>
           <Badge />
-          <div className={cn("border-l px-3")}>
+          <div className={cn("border-s px-3")}>
             <h1 className={cn("text-primary text-4xl tracking-tight")}>{title}</h1>
             <h2 className={cn("text-muted-foreground text-md")}>{subtitle}</h2>
 
@@ -486,7 +486,7 @@ export function Awards({
         )}
       >
         <div className="relative h-100 w-72 rounded-[var(--radius-sm)] overflow-hidden border-4">
-          <span className="absolute top-8 right-8 flex h-4 w-4 items-center justify-center">
+          <span className="absolute top-8 end-8 flex h-4 w-4 items-center justify-center">
             <span className="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
             <span className="bg-primary relative inline-flex h-3 w-3 rounded-full"></span>
           </span>

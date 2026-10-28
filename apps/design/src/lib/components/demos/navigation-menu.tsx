@@ -285,9 +285,9 @@ export default function NavigationMenuDemo() {
       </State>
 
       <State
-        breaks="Physical spacing in a right-to-left page: the chevron gap on a trigger is a left margin and the item spacing is space-x, so neither mirrors. Check the gap between each label and its chevron."
+        breaks="A navigation that ignores dir: the chevron gap sits on the wrong side of the label and ArrowRight still moves to the next trigger. Check the gap between each label and its chevron, then press ArrowLeft on a trigger."
         id="rtl"
-        note="The same navigation under dir=rtl."
+        note="The same navigation under dir=rtl. The chevron gap is a logical margin, and the arrow keys between triggers swap (ArrowLeft moves to the next trigger)."
         title="Right-to-left"
       >
         <div className="min-h-56" dir="rtl">

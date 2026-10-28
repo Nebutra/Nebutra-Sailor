@@ -373,7 +373,7 @@ export function EditTool({
                 >
                   {op.type === "add" ? "+" : op.type === "remove" ? "-" : " "}
                 </span>
-                <span className="min-w-0 flex-1 whitespace-pre pr-2">{op.text || " "}</span>
+                <span className="min-w-0 flex-1 whitespace-pre pe-2">{op.text || " "}</span>
               </div>
             );
           })}

@@ -38,15 +38,15 @@ export function EditorialTimeline({ className, items, label, title }: EditorialT
           {title && <h3 className="mt-2 text-lg leading-6 text-foreground">{title}</h3>}
         </div>
       )}
-      <ol className="ml-[3.25rem] border-l border-border sm:ml-24">
+      <ol className="ms-[3.25rem] border-s border-border sm:ms-24">
         {visible.map((item, index) => (
-          <li key={item.key ?? `${index}-${item.marker}`} className="relative pb-7 pl-6 last:pb-0">
+          <li key={item.key ?? `${index}-${item.marker}`} className="relative pb-7 ps-6 last:pb-0">
             <span
               aria-hidden
-              className="absolute -left-[0.3125rem] top-1.5 size-2.5 rounded-full bg-[hsl(var(--primary))] ring-2 ring-background"
+              className="absolute -start-[0.3125rem] top-1.5 size-2.5 rounded-full bg-[hsl(var(--primary))] ring-2 ring-background"
             />
             <span
-              className="absolute right-[calc(100%+1.5rem)] top-0 whitespace-nowrap font-mono text-xs font-semibold tabular-nums leading-6 text-muted-foreground"
+              className="absolute end-[calc(100%+1.5rem)] top-0 whitespace-nowrap font-mono text-xs font-semibold tabular-nums leading-6 text-muted-foreground"
               aria-hidden
             >
               {item.marker}

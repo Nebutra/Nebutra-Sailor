@@ -331,6 +331,12 @@ const CASES: Case[] = [
       'export const C = () => <a href={process.env.NEXT_PUBLIC_FORGE_URL ?? "http://localhost:3105"}>Forge</a>;\n',
   },
   {
+    // A physical margin, text-align and inset in the design system: wrong under
+    // dir="rtl", identical to ms-2 / text-start / end-0 under LTR.
+    guard: "lint-logical-direction",
+    violation: 'export const C = () => <div className="ml-2 text-left absolute right-0" />;\n',
+  },
+  {
     // A copy action with no feedback and no failure path.
     guard: "lint-no-raw-clipboard",
     violation:
@@ -467,6 +473,27 @@ describe.sequential("lint guards actually guard", () => {
     // the fact that its rule left the repo.
     const stale = Object.keys(UNCOVERED).filter((g) => !guards.includes(g));
     expect(stale, `UNCOVERED names guards that no longer exist: ${stale.join(", ")}`).toEqual([]);
+  });
+
+  it("lint-logical-direction honours a reasoned allow-physical marker and centring pairs, not a bare one", () => {
+    const run = (src: string) => {
+      try {
+        writeFileSync(PROBE, src);
+        return runGuard("lint-logical-direction");
+      } finally {
+        rmSync(PROBE, { force: true });
+      }
+    };
+    const centred =
+      'export const A = () => <div className="absolute left-1/2 -translate-x-1/2" />;\n';
+    const reasoned =
+      '// allow-physical: the fill always runs left to right\nexport const B = () => <div className="left-0" />;\n';
+    const bare = '// allow-physical:\nexport const C = () => <div className="left-0" />;\n';
+    const prose = 'export const D = "Switch to right-to-left and left-aligned text";\n';
+    expect(run(centred), "left-1/2 + translate-x is symmetric and must pass").toBe(0);
+    expect(run(reasoned), "a reasoned marker must excuse the line").toBe(0);
+    expect(run(prose), "prose such as right-to-left is not a class").toBe(0);
+    expect(run(bare), "a marker with no reason must not excuse anything").not.toBe(0);
   });
 
   it("the probe path is not a real file", () => {

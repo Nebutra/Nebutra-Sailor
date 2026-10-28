@@ -135,8 +135,8 @@ export function AppShell({
         className={cn(
           "hidden h-dvh overflow-hidden bg-sidebar text-sidebar-foreground md:block",
           "transition-[width] duration-flow ease-out",
-          overlay ? "absolute inset-y-0 left-0 z-40" : "shrink-0",
-          railWidth > 0 && !isInset && "border-r border-sidebar-border",
+          overlay ? "absolute inset-y-0 start-0 z-40" : "shrink-0",
+          railWidth > 0 && !isInset && "border-e border-sidebar-border",
           overlay && railWidth > 0 && "shadow-2xl",
         )}
         style={{ width: railWidth }}
@@ -162,7 +162,7 @@ export function AppShell({
 
       {/* Mobile sidebar — Sheet overlay */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="left" className="w-72 border-r border-sidebar-border bg-sidebar p-0">
+        <SheetContent side="start" className="w-72 border-e border-sidebar-border bg-sidebar p-0">
           <div className="h-full overflow-y-auto">{sidebar}</div>
         </SheetContent>
       </Sheet>
@@ -174,7 +174,7 @@ export function AppShell({
           "relative isolate flex min-h-0 min-w-0 flex-1 flex-col",
           isCardLike && "bg-card",
           isInset &&
-            "md:my-2 md:mr-2 md:overflow-hidden md:rounded-xl md:border md:border-border/80 md:shadow-glass-sm",
+            "md:my-2 md:me-2 md:overflow-hidden md:rounded-xl md:border md:border-border/80 md:shadow-glass-sm",
         )}
       >
         {ambientLight ? (
@@ -229,7 +229,7 @@ export function AppShell({
               <Menu className="size-4" aria-hidden="true" />
             </button>
             {mobileBar ? (
-              <div className="ml-2 flex min-w-0 flex-1 items-center">{mobileBar}</div>
+              <div className="ms-2 flex min-w-0 flex-1 items-center">{mobileBar}</div>
             ) : null}
           </div>
         )}

@@ -76,10 +76,11 @@ export default function BreadcrumbDemo() {
       </State>
 
       <State
-        breaks="A separator passed to Breadcrumb as a prop. Breadcrumb does not read it; the separator is the children of each BreadcrumbSeparator."
-        code={`<BreadcrumbSeparator>/</BreadcrumbSeparator>`}
+        breaks="A separator that needs to differ on one divider but is only set once on Breadcrumb. Children of a BreadcrumbSeparator win over the separator prop."
+        code={`<Breadcrumb separator="/">…</Breadcrumb>
+<BreadcrumbSeparator>/</BreadcrumbSeparator>`}
         id="separator"
-        note="Any node works as a separator. It is aria-hidden, so it adds nothing to what a screen reader reads."
+        note="Any node works as a separator, set once with the separator prop on Breadcrumb or per divider as children of BreadcrumbSeparator. It is aria-hidden, so it adds nothing to what a screen reader reads."
         title="Custom separators"
       >
         <Stack>
@@ -258,9 +259,9 @@ export default function BreadcrumbDemo() {
       </State>
 
       <State
-        breaks="The default separator is a ChevronRight that does not mirror, so in a right-to-left page it points back toward the root of the trail. A text separator such as / reads the same either way."
+        breaks="A custom separator that points one way (such as →) is drawn as given, so in a right-to-left page it points back toward the root of the trail. The built-in chevron mirrors; a symmetric mark such as / reads the same either way."
         id="rtl"
-        note="The same trail inside dir=rtl. The order follows the writing direction; the chevron on top still points right. The slash below does not have that problem."
+        note="The same trail inside dir=rtl. The order follows the writing direction and the default chevron on top mirrors to point left, toward the trail's end. The slash below reads the same in both directions."
         title="Right-to-left"
       >
         <div dir="rtl">
@@ -371,10 +372,10 @@ export default function BreadcrumbDemo() {
 
       <Aside title="The separator prop on Breadcrumb">
         <p>
-          <code>BreadcrumbProps</code> declares a <code>separator</code> prop, but{" "}
-          <code>Breadcrumb</code> does not use it: the value is forwarded to the <code>nav</code>{" "}
-          element as an unknown attribute. Set the separator on each{" "}
-          <code>BreadcrumbSeparator</code> instead. The prop is marked deprecated in the source.
+          <code>Breadcrumb</code> reads its <code>separator</code> prop and uses it for every{" "}
+          <code>BreadcrumbSeparator</code> that has no children of its own. It is no longer
+          forwarded to the <code>nav</code> element. A <code>Breadcrumb</code> with no children
+          renders nothing, so there is no empty landmark.
         </p>
       </Aside>
     </DemoPage>

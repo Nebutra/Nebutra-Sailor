@@ -149,7 +149,7 @@ export function FileAttachment({
         "group relative rounded-[var(--radius-md)] bg-muted",
         canShowImageOnly
           ? "flex size-10 items-center justify-center"
-          : "flex min-w-[120px] max-w-[200px] items-center gap-2 py-1 pl-1 pr-2",
+          : "flex min-w-[120px] max-w-[200px] items-center gap-2 py-1 ps-1 pe-2",
         className,
       )}
     >
@@ -188,7 +188,7 @@ export function FileAttachment({
             onRemove();
           }}
           className={cn(
-            "absolute -right-1.5 -top-1.5 z-10 flex size-4 items-center justify-center",
+            "absolute -end-1.5 -top-1.5 z-10 flex size-4 items-center justify-center",
             "rounded-full border border-border bg-background text-muted-foreground",
             "opacity-0 transition-opacity duration-micro ease-out",
             "group-hover:opacity-100 group-focus-within:opacity-100 focus-visible:opacity-100",

@@ -94,7 +94,7 @@ export function ComponentMaintainers({
             <h3 className="m-0 text-foreground text-sm">
               What the examples guard against
               {catches.length > 0 ? (
-                <span className="ml-2 text-muted-foreground tabular-nums">{catches.length}</span>
+                <span className="ms-2 text-muted-foreground tabular-nums">{catches.length}</span>
               ) : null}
             </h3>
             {catches.length > 0 ? (

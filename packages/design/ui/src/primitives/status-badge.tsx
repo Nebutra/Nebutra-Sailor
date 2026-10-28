@@ -107,7 +107,7 @@ export function StatusBadge({
       <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
         {LeftIcon && (
           <LeftIcon
-            className={cn("-ml-0.5 size-4 shrink-0", iconColorClasses[status || "default"])}
+            className={cn("-ms-0.5 size-4 shrink-0", iconColorClasses[status || "default"])}
             aria-hidden="true"
           />
         )}
@@ -115,7 +115,7 @@ export function StatusBadge({
       </span>
       <span className="h-4 w-px bg-border" aria-hidden="true" />
       <span className="inline-flex items-center gap-1.5 text-muted-foreground">
-        {RightIcon && <RightIcon className="-ml-0.5 size-4 shrink-0" aria-hidden="true" />}
+        {RightIcon && <RightIcon className="-ms-0.5 size-4 shrink-0" aria-hidden="true" />}
         {rightLabel}
       </span>
     </span>

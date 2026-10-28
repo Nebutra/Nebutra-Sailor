@@ -67,18 +67,18 @@ export function PageToc() {
   return (
     <nav
       aria-label="On this page"
-      className="sticky top-16 hidden max-h-[calc(100dvh-4rem)] w-56 shrink-0 flex-col self-start overflow-y-auto py-12 pr-6 xl:flex"
+      className="sticky top-16 hidden max-h-[calc(100dvh-4rem)] w-56 shrink-0 flex-col self-start overflow-y-auto py-12 pe-6 xl:flex"
     >
       <span className="pb-3 font-medium text-foreground text-sm">On this page</span>
       {/* A hairline rail with the current section marked on it — position in
           the article, not a second menu competing with the sidebar. */}
-      <ul className="m-0 flex list-none flex-col border-hairline border-l p-0">
+      <ul className="m-0 flex list-none flex-col border-hairline border-s p-0">
         {headings.map((heading) => (
           <li key={heading.id}>
             <a
               aria-current={active === heading.id ? "location" : undefined}
               className={cn(
-                "-ml-px block border-l-2 py-1.5 pl-3 text-ui no-underline transition-colors duration-micro",
+                "-ms-px block border-s-2 py-1.5 ps-3 text-ui no-underline transition-colors duration-micro",
                 active === heading.id
                   ? "border-primary text-foreground"
                   : "border-transparent text-muted-foreground hover:text-foreground",

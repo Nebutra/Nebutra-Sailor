@@ -13,13 +13,19 @@ import {
   primitiveTransition,
 } from "../primitive";
 
-export type SheetSide = "top" | "right" | "bottom" | "left";
+/**
+ * `left` and `right` are physical screen edges; `start` and `end` are the inline edges, which
+ * swap under `dir="rtl"`.
+ */
+export type SheetSide = "top" | "right" | "bottom" | "left" | "start" | "end";
 
 export const sheetSides = [
   "top",
   "right",
   "bottom",
   "left",
+  "start",
+  "end",
 ] as const satisfies readonly SheetSide[];
 
 export const sheetTokens = {

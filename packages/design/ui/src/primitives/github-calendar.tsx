@@ -238,7 +238,7 @@ export const GitHubCalendar: React.FC<GitHubCalendarProps> = ({
       <div className="flex">
         {/* Day Labels */}
         {showDayLabels && (
-          <div className="mr-2 mt-6 flex flex-col justify-between">
+          <div className="me-2 mt-6 flex flex-col justify-between">
             {dayLabels.map((day, index) => (
               <span key={index} className="h-3 text-xs text-muted-foreground">
                 {day}

@@ -226,7 +226,7 @@ function ReorderDemo() {
           >
             <Card className="overflow-hidden" interactive variant="outline">
               <button
-                className="w-full px-3 py-2 text-left text-foreground text-sm"
+                className="w-full px-3 py-2 text-start text-foreground text-sm"
                 onClick={() => reorder([item, ...order.filter((other) => other !== item)])}
                 type="button"
               >

@@ -119,10 +119,10 @@ function UserMenuItemContent({ item }: UserMenuItemContentProps) {
   const Icon = item.icon;
   return (
     <>
-      {Icon ? <Icon className="mr-2 h-4 w-4 shrink-0" aria-hidden /> : null}
+      {Icon ? <Icon className="me-2 h-4 w-4 shrink-0" aria-hidden /> : null}
       <span className="flex-1 truncate">{item.label}</span>
       {item.shortcut ? (
-        <Kbd className="ml-2" small>
+        <Kbd className="ms-2" small>
           {item.shortcut}
         </Kbd>
       ) : null}

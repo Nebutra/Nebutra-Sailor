@@ -77,12 +77,12 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
       <button
         aria-keyshortcuts="Meta+K Control+K"
         aria-label="Search the design system"
-        className="flex h-9 items-center gap-2 rounded-[min(var(--radius-lg),0.5rem)] text-muted-foreground transition-[background-color,border-color,color] duration-micro ease-out hover:text-foreground max-lg:w-8 max-lg:justify-center max-lg:hover:bg-muted lg:w-full lg:border lg:border-transparent lg:bg-muted/50 lg:pr-1.5 lg:pl-2.5 lg:hover:border-hairline/30 lg:hover:bg-card"
+        className="flex h-9 items-center gap-2 rounded-[min(var(--radius-lg),0.5rem)] text-muted-foreground transition-[background-color,border-color,color] duration-micro ease-out hover:text-foreground max-lg:w-8 max-lg:justify-center max-lg:hover:bg-muted lg:w-full lg:border lg:border-transparent lg:bg-muted/50 lg:pe-1.5 lg:ps-2.5 lg:hover:border-hairline/30 lg:hover:bg-card"
         onClick={() => setOpen(true)}
         type="button"
       >
         <MagnifyingGlass aria-hidden className="size-4 shrink-0" />
-        <span className="hidden min-w-0 flex-1 truncate whitespace-nowrap text-left text-ui lg:inline">
+        <span className="hidden min-w-0 flex-1 truncate whitespace-nowrap text-start text-ui lg:inline">
           Search documentation…
         </span>
         <Kbd
@@ -153,7 +153,7 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
                     results.map((entry, index) => (
                       <button
                         className={cn(
-                          "flex w-full items-baseline justify-between gap-4 rounded-[var(--radius-md)] px-3 py-2 text-left transition-colors",
+                          "flex w-full items-baseline justify-between gap-4 rounded-[var(--radius-md)] px-3 py-2 text-start transition-colors",
                           index === active ? "bg-muted text-foreground" : "text-muted-foreground",
                         )}
                         key={`${entry.group}/${entry.label}`}

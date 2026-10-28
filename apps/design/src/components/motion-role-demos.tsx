@@ -118,14 +118,14 @@ function RoleStage({
             <div className="h-10 rounded-[var(--radius-md)] border border-border border-dashed" />
             <div className="h-10 rounded-[var(--radius-md)] border border-border border-dashed" />
             <div
-              className="absolute inset-y-0 left-0 grid place-items-center rounded-[var(--radius-md)] bg-primary text-primary-foreground text-xs"
+              className="absolute inset-y-0 left-0 grid place-items-center rounded-[var(--radius-md)] bg-primary text-primary-foreground text-xs" // allow-physical: the pose frames move on the x axis, so the slots anchor physically
               style={{ ...pose(frames.subject), width: SLOT_WIDTH }}
             >
               Build
             </div>
             {frames.partner ? (
               <div
-                className="absolute inset-y-0 right-0 grid place-items-center rounded-[var(--radius-md)] bg-primary text-primary-foreground text-xs"
+                className="absolute inset-y-0 right-0 grid place-items-center rounded-[var(--radius-md)] bg-primary text-primary-foreground text-xs" // allow-physical: the pose frames move on the x axis, so the slots anchor physically
                 style={{ ...pose(frames.partner), width: SLOT_WIDTH }}
               >
                 Build

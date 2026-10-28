@@ -149,7 +149,7 @@ function Tree({
 export function TopNav() {
   const active = groupForPath(usePathname())?.id;
   return (
-    <nav aria-label="Sections" className="ml-4 hidden items-center gap-0.5 lg:flex">
+    <nav aria-label="Sections" className="ms-4 hidden items-center gap-0.5 lg:flex">
       {NAV_GROUPS.map((group) => (
         <Link
           aria-current={group.id === active ? "page" : undefined}
@@ -175,7 +175,7 @@ export function SiteNav({ sections }: { sections: NavSection[] }) {
   // The home page is the front door, not a place inside one group.
   if (!groupForPath(pathname)) return null;
   return (
-    <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-64 shrink-0 flex-col border-hairline border-r lg:flex">
+    <aside className="sticky top-16 hidden h-[calc(100dvh-4rem)] w-64 shrink-0 flex-col border-hairline border-e lg:flex">
       <nav
         aria-label="Design system"
         className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pt-8 pb-12"
@@ -196,7 +196,7 @@ export function SiteNavSheet({ sections }: { sections: NavSection[] }) {
       <SheetTrigger asChild>
         <Button
           aria-label="Open navigation"
-          className="-ml-1 text-muted-foreground lg:hidden"
+          className="-ms-1 text-muted-foreground lg:hidden"
           iconSize="sm"
           shape="square"
           variant="ghost"
@@ -204,7 +204,7 @@ export function SiteNavSheet({ sections }: { sections: NavSection[] }) {
           <Menu aria-hidden className="size-4" />
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex flex-col gap-0 p-0" side="left">
+      <SheetContent className="flex flex-col gap-0 p-0" side="start">
         <SheetTitle className="px-7 pt-6 pb-4 text-sm">Design system</SheetTitle>
         <nav aria-label="Sections" className="grid grid-cols-2 gap-2 px-4 pb-4">
           {NAV_GROUPS.map((group) => (

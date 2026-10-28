@@ -26,8 +26,8 @@ export function EditorialMarginNote({
   return (
     <aside
       className={cn(
-        "my-6 border-l-2 border-border py-1 pl-4 text-sm leading-6 text-muted-foreground",
-        "xl:float-right xl:-mr-56 xl:my-2 xl:ml-8 xl:w-48 xl:border-l xl:pl-4",
+        "my-6 border-s-2 border-border py-1 ps-4 text-sm leading-6 text-muted-foreground",
+        "xl:float-end xl:-me-56 xl:my-2 xl:ms-8 xl:w-48 xl:border-s xl:ps-4",
         className,
       )}
     >

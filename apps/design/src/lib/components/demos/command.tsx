@@ -261,9 +261,9 @@ export default function CommandDemo() {
       </State>
 
       <State
-        breaks="Physical margins in a right-to-left page: the search icon gap and the shortcut sit on the wrong side, because the component uses ml and mr rather than logical properties. Check where the icon and the shortcut land."
+        breaks="Physical margins in a right-to-left page: the search icon gap and the shortcut sit on the wrong side. The palette uses logical margins, so both follow dir. Check where the icon and the shortcut land."
         id="rtl"
-        note="The same palette under dir=rtl. The text and the list flip; look at the gap between the icon and the field and at which edge the shortcut sits."
+        note="The same palette under dir=rtl. The text and the list flip, the gap between the icon and the field and the shortcut edge follow the direction. The arrow keys are vertical, so none of them swap."
         title="Right-to-left"
       >
         <div dir="rtl">
@@ -297,9 +297,11 @@ export default function CommandDemo() {
       <Aside title="Command versus CommandMenu">
         <p>
           This page covers the cmdk primitive. <code>CommandMenu</code> is a separate, higher-level
-          export with its own parts file; it is not documented here. <code>CommandDialog</code> only
-          forwards <code>Dialog</code> props, so <code>loop</code> and <code>shouldFilter</code>{" "}
-          cannot be set on a palette in a dialog.
+          export with its own parts file; it is not documented here. <code>CommandDialog</code>{" "}
+          names the modal with a visually hidden title (<code>Command menu</code> unless you pass{" "}
+          <code>title</code>), accepts an optional <code>description</code>, and forwards{" "}
+          <code>loop</code>, <code>shouldFilter</code> and <code>filter</code> to its{" "}
+          <code>Command</code>.
         </p>
       </Aside>
     </DemoPage>

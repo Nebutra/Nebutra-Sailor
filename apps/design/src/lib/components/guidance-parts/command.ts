@@ -24,7 +24,7 @@ export const guidance: import("../guidance").Guidance = {
     },
     {
       title: "Give the dialog a name",
-      body: "CommandDialog renders no DialogTitle, so the modal has no accessible name of its own. Put a visually hidden title inside it.",
+      body: 'CommandDialog renders a visually hidden DialogTitle, "Command menu" by default. Pass a translated title (and an optional description) so the modal is named in the user\'s language.',
     },
     {
       title: "Empty is a state, not a blank",
@@ -45,8 +45,8 @@ export const guidance: import("../guidance").Guidance = {
   ],
   donts: [
     {
-      title: "Do not expect Command props on CommandDialog",
-      body: "CommandDialog only forwards Dialog props. loop, shouldFilter and a custom filter cannot be set on a palette in a dialog; build it from Dialog and Command instead.",
+      title: "Do not leave the default title in a translated app",
+      body: 'The default title is the English string "Command menu". In any other locale pass title, or a screen reader announces English over your translated palette.',
     },
     {
       title: "Do not use it for form selection",

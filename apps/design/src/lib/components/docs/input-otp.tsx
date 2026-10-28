@@ -31,7 +31,7 @@ function LiveOtp({
   split,
   pattern,
   disabled,
-  invalid,
+  error,
   initial,
   label,
   showStatus,
@@ -40,7 +40,7 @@ function LiveOtp({
   split: boolean;
   pattern: string | undefined;
   disabled: boolean;
-  invalid: boolean;
+  error: boolean;
   initial: string;
   label: string;
   showStatus: boolean;
@@ -60,18 +60,14 @@ function LiveOtp({
           setCompleted(null);
         }}
         value={value}
-        {...present({ pattern, "aria-invalid": invalid ? true : undefined })}
+        {...present({ pattern, error: error ? true : undefined })}
       >
         {groupsOf(length, split).map((group, g) => (
           <React.Fragment key={group[0]}>
             {g > 0 ? <InputOTPSeparator /> : null}
             <InputOTPGroup>
               {group.map((index) => (
-                <InputOTPSlot
-                  className={invalid ? "border-destructive" : undefined}
-                  index={index}
-                  key={index}
-                />
+                <InputOTPSlot index={index} key={index} />
               ))}
             </InputOTPGroup>
           </React.Fragment>
@@ -104,16 +100,16 @@ export function Playground(_: DemoProps) {
     },
     { name: "disabled", type: "boolean", defaultValue: false },
     {
-      name: "invalid",
+      name: "error",
       type: "boolean",
       defaultValue: false,
-      hint: "No error prop: sets aria-invalid and a destructive border on each slot.",
+      hint: "Sets aria-invalid on the input and a destructive border and focus ring on each slot.",
     },
   ];
 
   return (
     <ComponentPlayground
-      caption="Click the slots and type, or paste a code. onComplete fires when the code reaches maxLength. InputOTP has no loading state and no error prop; invalid is composed from aria-invalid and slot classes."
+      caption="Click the slots and type, or paste a code. onComplete fires when the code reaches maxLength. InputOTP has no loading state; the error knob sets aria-invalid and restyles the slots, and the message is yours to write."
       code={(v) => {
         const length = Number(v.maxLength);
         const split = Boolean(v.split);
@@ -125,10 +121,7 @@ export function Playground(_: DemoProps) {
             children: group.map((index) =>
               jsx({
                 name: "InputOTPSlot",
-                props: {
-                  index,
-                  className: v.invalid ? "border-destructive" : undefined,
-                },
+                props: { index },
               }),
             ),
           }),
@@ -142,7 +135,7 @@ export function Playground(_: DemoProps) {
             maxLength: length,
             pattern,
             "aria-label": "Verification code",
-            "aria-invalid": v.invalid ? true : undefined,
+            error: v.error ? true : undefined,
             disabled: v.disabled,
             value: raw("code"),
             onValueChange: raw("setCode"),
@@ -167,7 +160,7 @@ export function Playground(_: DemoProps) {
         <LiveOtp
           disabled={Boolean(v.disabled)}
           initial=""
-          invalid={Boolean(v.invalid)}
+          error={Boolean(v.error)}
           label="Verification code"
           length={Number(v.maxLength)}
           pattern={PATTERNS[v.pattern as PatternName]}
@@ -192,7 +185,7 @@ export function StatesMatrix(_: DemoProps) {
   return (
     <ComponentStatesMatrix
       columns={COLUMNS}
-      note="Rows are code lengths: InputOTP has no size prop, and each slot is a fixed 40px cell. Invalid is composed from aria-invalid and a slot border class, since there is no error prop; there is no loading state. Focus a cell with Tab or a click to see the active slot ring and caret."
+      note="Rows are code lengths: InputOTP has no size prop, and each slot is a fixed 40px cell. Invalid is the error prop, which sets aria-invalid and a destructive slot border; there is no loading state. Focus a cell with Tab or a click to see the active slot ring and caret."
       render={(length, column) => {
         const n = Number(length);
         const initial =
@@ -203,7 +196,7 @@ export function StatesMatrix(_: DemoProps) {
           <LiveOtp
             disabled={column === "disabled"}
             initial={initial}
-            invalid={column === "invalid"}
+            error={column === "invalid"}
             label={`${length} digit code, ${column}`}
             length={n}
             pattern={PATTERNS.digits}

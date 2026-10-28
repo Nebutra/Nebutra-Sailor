@@ -218,7 +218,7 @@ const Progress = function Progress({
 
   return (
     <div className="w-full space-y-2">
-      {label && <div className="text-left font-medium text-foreground text-sm">{label}</div>}
+      {label && <div className="text-start font-medium text-foreground text-sm">{label}</div>}
       <div className="relative">
         <BaseProgress.Root
           {...props}
@@ -242,7 +242,7 @@ const Progress = function Progress({
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: pct / 100 }}
-                style={{ transformOrigin: "left center" }}
+                className="origin-left rtl:origin-right"
                 transition={{
                   duration: animated ? motionDurations.cinematic / 1000 : 0,
                   ease: easings.easeInOut,
@@ -265,10 +265,10 @@ const Progress = function Progress({
                       <span
                         aria-hidden={!stop.ariaLabel ? "true" : undefined}
                         className={cn(
-                          "pointer-events-auto -translate-x-1/2 -translate-y-1/2 absolute top-1/2 inline-block h-1.5 w-1.5 rounded-full border border-background transition-colors",
+                          "pointer-events-auto -translate-x-1/2 -translate-y-1/2 rtl:translate-x-1/2 absolute top-1/2 inline-block h-1.5 w-1.5 rounded-full border border-background transition-colors",
                           reached ? "bg-foreground" : "bg-muted-foreground/60",
                         )}
-                        style={{ left: `${stopPct}%` }}
+                        style={{ insetInlineStart: `${stopPct}%` }}
                       >
                         {stop.ariaLabel && <span className="sr-only">{stop.ariaLabel}</span>}
                       </span>
@@ -288,7 +288,7 @@ const Progress = function Progress({
 
       {showValue && !isIndeterminate && (
         <motion.div
-          className="text-right font-semibold text-muted-foreground text-xs tabular-nums"
+          className="text-end font-semibold text-muted-foreground text-xs tabular-nums"
           initial={{ opacity: 0, y: -5 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{

@@ -185,8 +185,10 @@ SheetOverlay.displayName = "SheetOverlay";
 const sheetVariants = cva(overlayClassNames.sheetSurface, {
   variants: {
     /**
-     * Screen edge the sheet is anchored to and slides in from; `left` and `right` are physical
-     * edges and do not flip in right-to-left layouts.
+     * Edge the sheet is anchored to and slides in from. `left` and `right` are physical screen
+     * edges and never flip; `start` and `end` are the inline edges and mirror under `dir="rtl"`
+     * (`start` is the left edge in LTR and the right edge in RTL). Use `start`/`end` for
+     * navigation and detail panels that should follow the reading direction.
      * @default "right"
      */
     side: {
@@ -196,6 +198,12 @@ const sheetVariants = cva(overlayClassNames.sheetSurface, {
       left: "inset-y-[var(--sheet-inset)] left-[var(--sheet-inset)] h-[calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset))] w-[min(var(--sheet-side-width),calc(100vw_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:-translate-x-full data-starting-style:-translate-x-full",
       right:
         "inset-y-[var(--sheet-inset)] right-[var(--sheet-inset)] h-[calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset))] w-[min(var(--sheet-side-width),calc(100vw_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] data-ending-style:translate-x-full data-starting-style:translate-x-full",
+      // Logical edges: `start-*`/`end-*` place the panel, and the slide direction is chosen per
+      // direction so it always travels in from (and back out to) its own edge. The ltr:/rtl:
+      // variants are mutually exclusive, so they never compete on specificity.
+      start:
+        "inset-y-[var(--sheet-inset)] start-[var(--sheet-inset)] h-[calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset))] w-[min(var(--sheet-side-width),calc(100vw_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] ltr:data-ending-style:-translate-x-full ltr:data-starting-style:-translate-x-full rtl:data-ending-style:translate-x-full rtl:data-starting-style:translate-x-full",
+      end: "inset-y-[var(--sheet-inset)] end-[var(--sheet-inset)] h-[calc(100dvh_-_var(--sheet-inset)_-_var(--sheet-inset))] w-[min(var(--sheet-side-width),calc(100vw_-_var(--sheet-inset)_-_var(--sheet-inset)))] rounded-[var(--sheet-radius)] ltr:data-ending-style:translate-x-full ltr:data-starting-style:translate-x-full rtl:data-ending-style:-translate-x-full rtl:data-starting-style:-translate-x-full",
     },
   },
   defaultVariants: {
@@ -231,7 +239,12 @@ export interface SheetContentProps
   closeLabel?: string;
 }
 
-/** Portalled panel anchored to a screen edge, with its own overlay and an optional close button. */
+/**
+ * Portalled panel anchored to a screen edge, with its own overlay and an optional close button.
+ * The close button sits on the inline end (top-right in LTR, top-left in RTL). The panel is
+ * portalled to `<body>`, so `start`/`end` follow the direction in effect there (normally
+ * `<html dir>`); pass `dir="rtl"` to this component to force it for one sheet.
+ */
 const SheetContent = ({
   side = "right",
   className,
@@ -254,6 +267,7 @@ const SheetContent = ({
       <BaseDialog.Popup
         ref={ref}
         data-slot="sheet-content"
+        data-side={side}
         className={cn(sheetVariants({ side }), className)}
         style={{ zIndex: overlayZIndex.modal, ...getSheetStyle(style) }}
         {...props}
@@ -263,7 +277,7 @@ const SheetContent = ({
           <SheetClose
             aria-label={closeLabel}
             className={cn(
-              "absolute right-[var(--sheet-close-offset)] top-[var(--sheet-close-offset)] inline-flex size-[var(--sheet-close-size)] items-center justify-center rounded-[var(--sheet-close-radius)] text-muted-foreground",
+              "absolute end-[var(--sheet-close-offset)] top-[var(--sheet-close-offset)] inline-flex size-[var(--sheet-close-size)] items-center justify-center rounded-[var(--sheet-close-radius)] text-muted-foreground",
               "transition-[background-color,color,box-shadow] duration-[var(--motion-duration-micro)] ease-[var(--ease-out)] hover:bg-muted hover:text-foreground",
               overlayClassNames.focusRing,
               "disabled:pointer-events-none motion-reduce:transition-none",
@@ -291,7 +305,7 @@ const SheetHeader = ({
     ref={ref}
     data-slot="sheet-header"
     className={cn(
-      "grid gap-[var(--sheet-header-gap)] border-b border-border px-[var(--sheet-padding-x)] py-[var(--sheet-padding-y)] pr-[calc(var(--sheet-padding-x)_+_var(--sheet-close-size))] text-left",
+      "grid gap-[var(--sheet-header-gap)] border-b border-border px-[var(--sheet-padding-x)] py-[var(--sheet-padding-y)] pe-[calc(var(--sheet-padding-x)_+_var(--sheet-close-size))] text-start",
       className,
     )}
     {...props}
@@ -321,7 +335,7 @@ SheetBody.displayName = "SheetBody";
 
 export type SheetFooterProps = React.ComponentPropsWithoutRef<"div">;
 
-/** Bottom action row, pinned below the body; stacked on small screens, right-aligned from `sm`. */
+/** Bottom action row, pinned below the body; stacked on small screens, end-aligned from `sm`. */
 const SheetFooter = ({
   className,
   ref,

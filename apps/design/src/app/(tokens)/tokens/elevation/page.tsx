@@ -94,19 +94,19 @@ export default function ElevationTokensPage() {
             <tr>
               <th
                 scope="col"
-                className="border-border border-b pb-2.5 pl-3 font-medium text-muted-foreground text-xs"
+                className="border-border border-b pb-2.5 ps-3 font-medium text-muted-foreground text-xs"
               >
                 Token
               </th>
               <th
                 scope="col"
-                className="border-border border-b pb-2.5 pl-3 font-medium text-muted-foreground text-xs"
+                className="border-border border-b pb-2.5 ps-3 font-medium text-muted-foreground text-xs"
               >
                 Light
               </th>
               <th
                 scope="col"
-                className="border-border border-b pb-2.5 pl-3 font-medium text-muted-foreground text-xs"
+                className="border-border border-b pb-2.5 ps-3 font-medium text-muted-foreground text-xs"
               >
                 Dark
               </th>
@@ -115,7 +115,7 @@ export default function ElevationTokensPage() {
           <tbody>
             {light.map((step, index) => (
               <tr key={step.token.cssVar} className={index % 2 === 1 ? "bg-muted/35" : undefined}>
-                <td className="py-2.5 pl-3 align-top">
+                <td className="py-2.5 ps-3 align-top">
                   <Mono>--{step.token.cssVar}</Mono>
                   <div className="mt-1">
                     {step.otherMode === null ? (
@@ -125,10 +125,10 @@ export default function ElevationTokensPage() {
                     )}
                   </div>
                 </td>
-                <td className="max-w-[22rem] py-2.5 pl-3 align-top">
+                <td className="max-w-[22rem] py-2.5 ps-3 align-top">
                   <Mono className="break-words">{step.token.resolved}</Mono>
                 </td>
-                <td className="max-w-[22rem] py-2.5 pl-3 align-top">
+                <td className="max-w-[22rem] py-2.5 ps-3 align-top">
                   <Mono className="break-words">{step.otherMode ?? step.token.resolved}</Mono>
                 </td>
               </tr>

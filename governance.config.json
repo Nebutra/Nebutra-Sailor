@@ -3507,5 +3507,8 @@
         "count": 3
       }
     ]
+  },
+  "logicalDirection": {
+    "allowlist": []
   }
 }

@@ -10,6 +10,7 @@ import {
 } from "../tokens/components/control-ladder";
 import { type TabsSize, tabsSizes, tabsTokens } from "../tokens/components/tabs";
 import { cn } from "../utils";
+import { BaseDirectionScope, mergeRefs, useResolvedDirection } from "../utils/direction";
 import { asPlainStyle, withHtmlProps } from "../utils/primitive-props";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
 
@@ -323,6 +324,8 @@ function getFirstEnabledValue(tabs: readonly TabsItem[] | undefined) {
 /**
  * Coordinates single-selection tabs and panels with keyboard navigation.
  * Use a tabs array for generated content or compose TabsList, TabsTrigger, and TabsContent.
+ * Arrow keys follow the reading direction: under `dir="rtl"` (on the root or any ancestor) the
+ * Left arrow moves to the next tab and the Right arrow to the previous one.
  */
 function Tabs({
   "aria-label": ariaLabel,
@@ -342,8 +345,13 @@ function Tabs({
   value,
   variant = "default",
   children,
+  ref,
   ...props
-}: TabsProps) {
+}: TabsProps & { ref?: React.Ref<HTMLDivElement> | undefined }) {
+  const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const mergedRef = React.useMemo(() => mergeRefs(rootRef, ref), [ref]);
+  // Base UI mirrors arrow keys from its DirectionProvider, not from the DOM `dir`.
+  const direction = useResolvedDirection(rootRef);
   const rootValue = selected ?? value;
   const rootDefaultValue = defaultValue ?? getFirstEnabledValue(tabs);
   const context = React.useMemo<TabsContextValue>(
@@ -358,30 +366,33 @@ function Tabs({
 
   return (
     <TabsContext.Provider value={context}>
-      <BaseRoot
-        data-slot="tabs"
-        data-disabled={disabled ? "" : undefined}
-        value={rootValue}
-        defaultValue={rootValue === undefined ? rootDefaultValue : undefined}
-        onValueChange={handleValueChange}
-        orientation={orientation}
-        className={cn("w-full", className)}
-        style={getTabsStyle(size, style)}
-        {...props}
-      >
-        {tabs ? (
-          <TabsCollection
-            tabs={tabs}
-            ariaLabel={ariaLabel}
-            className={listClassName}
-            variant={variant}
-            shape={shape}
-            disabled={disabled}
-          />
-        ) : (
-          children
-        )}
-      </BaseRoot>
+      <BaseDirectionScope direction={direction}>
+        <BaseRoot
+          ref={mergedRef}
+          data-slot="tabs"
+          data-disabled={disabled ? "" : undefined}
+          value={rootValue}
+          defaultValue={rootValue === undefined ? rootDefaultValue : undefined}
+          onValueChange={handleValueChange}
+          orientation={orientation}
+          className={cn("w-full", className)}
+          style={getTabsStyle(size, style)}
+          {...props}
+        >
+          {tabs ? (
+            <TabsCollection
+              tabs={tabs}
+              ariaLabel={ariaLabel}
+              className={listClassName}
+              variant={variant}
+              shape={shape}
+              disabled={disabled}
+            />
+          ) : (
+            children
+          )}
+        </BaseRoot>
+      </BaseDirectionScope>
     </TabsContext.Provider>
   );
 }

@@ -13,7 +13,7 @@ export const guidance: import("../guidance").Guidance = {
     },
     {
       title: "Links name their destination",
-      body: "Each link reads Go to previous page or Go to next page followed by the destination title. The text is fixed English and ignores previousLabel and nextLabel, which only change the visible caption.",
+      body: "Each link reads Go to previous page or Go to next page followed by the destination title. Pass linkLabel to replace that English default (for example when localising); previousLabel and nextLabel only change the visible caption.",
     },
     {
       title: "Relations are declared",
@@ -45,8 +45,8 @@ export const guidance: import("../guidance").Guidance = {
       body: "It is a previous and next pair for sequential documents. There are no page numbers or ellipsis.",
     },
     {
-      title: "Don't render it with neither side",
-      body: "An empty nav is still emitted. Skip the component when there are no neighbours.",
+      title: "Don't expect anything with neither side",
+      body: "With no previous and no next the component renders nothing at all, so no empty landmark is emitted.",
     },
   ],
 };

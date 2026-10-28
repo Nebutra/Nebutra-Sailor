@@ -20,7 +20,8 @@ describe("primitive motion governance", () => {
     const progressSource = source("progress.tsx");
 
     expect(progressSource).toMatch(/scaleX/u);
-    expect(progressSource).toMatch(/transformOrigin:\s*"left center"/u);
+    // The fill grows from the inline start: origin-left in LTR, origin-right under dir=rtl.
+    expect(progressSource).toMatch(/origin-left\s+rtl:origin-right/u);
     expect(progressSource).not.toMatch(/translateX\(/u);
   });
 

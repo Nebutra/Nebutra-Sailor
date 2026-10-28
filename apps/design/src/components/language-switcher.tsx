@@ -86,7 +86,7 @@ export function LanguageSwitcher({ shortcut = false, className }: LanguageSwitch
           className={cn(
             // A crumb, not a field: no border, no fill at rest, the tint on
             // hover and while open is the only thing that says "press me".
-            "-mx-1.5 inline-flex h-8 min-w-0 items-center gap-2 rounded-[var(--radius-md)] px-1.5 text-left transition-colors duration-micro ease-out hover:bg-muted data-[state=open]:bg-muted",
+            "-mx-1.5 inline-flex h-8 min-w-0 items-center gap-2 rounded-[var(--radius-md)] px-1.5 text-start transition-colors duration-micro ease-out hover:bg-muted data-[state=open]:bg-muted",
             className,
           )}
           data-language-trigger
@@ -109,7 +109,7 @@ export function LanguageSwitcher({ shortcut = false, className }: LanguageSwitch
         <DropdownMenuRadioGroup onValueChange={(value) => select(String(value))} value={current.id}>
           {LANGUAGES.map((language) => (
             <DropdownMenuRadioItem
-              className="min-h-9 gap-3 py-1.5 pr-3 pl-8"
+              className="min-h-9 gap-3 py-1.5 pe-3 ps-8"
               closeOnClick
               key={language.id}
               value={language.id}

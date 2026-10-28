@@ -27,6 +27,10 @@ export const guidance: import("../guidance").Guidance = {
       title: "The handle is decoration",
       body: "The handle is a visual affordance for the drag gesture and only draws on bottom drawers. It adds no keyboard behaviour.",
     },
+    {
+      title: "Left and right are physical edges",
+      body: "Vaul slides and drags side drawers along the x axis, so left and right do not flip under dir=rtl. Header text is start-aligned on top, left and right drawers (centred only on bottom ones) and follows the dir the panel inherits.",
+    },
   ],
   dos: [
     {
@@ -44,6 +48,11 @@ export const guidance: import("../guidance").Guidance = {
       body: "dismissible turns off swipe, Escape and outside press. Drive it from your pending state and control open yourself.",
       code: "<Drawer dismissible={!saving} onOpenChange={setOpen} open={open}>…</Drawer>",
     },
+    {
+      title: "Launch it from a Dialog or Sheet when you need to",
+      body: "Drawer uses the same backdrop and modal layers as Sheet and Dialog, so a drawer opened from inside one stacks above it. Its backdrop shares the dialog's backdrop layer, so the dialog panel itself is not dimmed.",
+      code: "<Dialog><DialogContent><Drawer>…</Drawer></DialogContent></Dialog>",
+    },
   ],
   donts: [
     {
@@ -51,8 +60,9 @@ export const guidance: import("../guidance").Guidance = {
       body: "Sheet is the lateral panel for desktop, with a fixed width and a built-in close button. Drawer's side directions are plain edge panels.",
     },
     {
-      title: "Don't stack it over a Dialog or Sheet",
-      body: "Drawer layers at z-index 50, below the backdrop and modal layers (1040 and 1050) that Dialog and Sheet use. Opened from inside one of them it appears behind it.",
+      title: "Don't assume a wrapper's dir reaches the panel",
+      body: "A drawer is portalled to the body, so dir set on a wrapper element does not apply to it. Set dir on html, or pass dir to DrawerContent.",
+      code: '<DrawerContent dir="rtl">…</DrawerContent>',
     },
   ],
 };

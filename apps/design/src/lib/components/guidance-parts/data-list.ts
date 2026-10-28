@@ -6,7 +6,7 @@ export const guidance: import("../guidance").Guidance = {
     },
     {
       keys: ["Enter", "Space"],
-      does: "On a focused row, calls onRowClick for it. The default action is prevented, so Space does not scroll the page.",
+      does: "On a focused row, calls onRowClick for it. The default action is prevented, so Space does not scroll the page. The same keys on a button or link inside a cell go to that control, not to the row.",
     },
   ],
   a11y: [
@@ -24,7 +24,7 @@ export const guidance: import("../guidance").Guidance = {
     },
     {
       title: "Clickable rows have no role",
-      body: "A row with onRowClick is focusable and responds to Enter and Space, but it is still a table row to assistive technology. Put a real link in a cell for navigation.",
+      body: "A row with onRowClick is focusable and responds to Enter and Space, but it keeps its native row role on purpose: role=button on a tr would remove it from the table structure. Clicks and keys from a control inside a cell do not also activate the row. Put a real link in a cell for navigation.",
     },
   ],
   dos: [

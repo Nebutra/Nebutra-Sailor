@@ -14,12 +14,12 @@ export function CommandLine({ command, className }: { command: string; className
   return (
     <div
       className={cn(
-        "flex h-10 items-center justify-between gap-1 rounded-[var(--radius-md)] border border-hairline bg-muted/40 pr-1 pl-3",
+        "flex h-10 items-center justify-between gap-1 rounded-[var(--radius-md)] border border-hairline bg-muted/40 pe-1 ps-3",
         className,
       )}
     >
       <code className="min-w-0 overflow-x-auto whitespace-nowrap font-mono text-foreground text-ui">
-        <span aria-hidden className="select-none pr-2 text-muted-foreground">
+        <span aria-hidden className="select-none pe-2 text-muted-foreground">
           $
         </span>
         {command}

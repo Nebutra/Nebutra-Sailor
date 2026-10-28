@@ -245,9 +245,9 @@ export default function MenubarDemo() {
       </State>
 
       <State
-        breaks="Physical padding and indicator offsets in a right-to-left page: the check gutter, the submenu chevron and the shortcut stay on the left or right regardless of direction. Look at which side they land on."
+        breaks="A bar that ignores dir: the check gutter, the submenu chevron and the shortcut stay on the left or right, and the arrow keys still move the wrong way between triggers. Look at which side they land on, then press ArrowLeft on a trigger."
         id="rtl"
-        note="The same bar under dir=rtl. The triggers flow right to left; check the item indicators, the Share chevron and the shortcuts."
+        note="The same bar under dir=rtl. The triggers flow right to left and the arrow keys swap (ArrowLeft moves to the next trigger); the item indicators, the Share chevron and the shortcuts follow the direction."
         title="Right-to-left"
       >
         <div dir="rtl">

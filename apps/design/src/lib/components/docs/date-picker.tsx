@@ -170,7 +170,7 @@ export function StatesMatrix({ derived }: DemoProps) {
   return (
     <ComponentStatesMatrix
       columns={COLUMNS}
-      note={`Selected uses ${SAMPLE_DATE}. Min and max bound the calendar to October 2026; a date typed into the field is not checked against them. Open any cell with the calendar button, or Tab to it. DatePicker has no loading state and no read-only state.`}
+      note={`Selected uses ${SAMPLE_DATE}. Min and max bound the calendar and the typed value to October 2026; a typed date outside them is not committed. Open any cell with the calendar button, or Tab to it. DatePicker has no loading state and no read-only state.`}
       render={(size, column) => (
         <div className="w-60">
           <DatePicker

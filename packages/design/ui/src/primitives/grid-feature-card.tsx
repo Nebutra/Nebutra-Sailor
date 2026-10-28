@@ -47,7 +47,7 @@ GridFeatureCard.displayName = "GridFeatureCard";
 function DecorativeGridOverlay({ size = 20, pattern }: { size?: number; pattern: number[][] }) {
   return (
     <div
-      className="pointer-events-none absolute left-1/2 top-0 -ml-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]"
+      className="pointer-events-none absolute start-1/2 top-0 -ms-20 -mt-2 h-full w-full [mask-image:linear-gradient(white,transparent)]"
       aria-hidden="true"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-foreground/5 to-foreground/[0.01] opacity-100 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)]">

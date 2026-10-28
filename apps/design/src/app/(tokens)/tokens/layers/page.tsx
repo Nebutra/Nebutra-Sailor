@@ -132,19 +132,19 @@ export default function LayersPage() {
               <tr>
                 <th
                   scope="col"
-                  className="border-border border-b pb-2.5 pl-3 font-medium text-muted-foreground text-xs"
+                  className="border-border border-b pb-2.5 ps-3 font-medium text-muted-foreground text-xs"
                 >
                   DTCG group
                 </th>
                 <th
                   scope="col"
-                  className="border-border border-b pb-2.5 pl-3 font-medium text-muted-foreground text-xs"
+                  className="border-border border-b pb-2.5 ps-3 font-medium text-muted-foreground text-xs"
                 >
                   Tier
                 </th>
                 <th
                   scope="col"
-                  className="border-border border-b pb-2.5 pl-3 font-medium text-muted-foreground text-xs"
+                  className="border-border border-b pb-2.5 ps-3 font-medium text-muted-foreground text-xs"
                 >
                   Tokens
                 </th>
@@ -155,13 +155,13 @@ export default function LayersPage() {
                 .sort((a, b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier))
                 .map((entry, index) => (
                   <tr key={entry.name} className={index % 2 === 1 ? "bg-muted/35" : undefined}>
-                    <td className="py-2.5 pl-3">
+                    <td className="py-2.5 ps-3">
                       <Mono>{entry.name}</Mono>
                     </td>
-                    <td className="py-2.5 pl-3 text-[13px] text-muted-foreground">
+                    <td className="py-2.5 ps-3 text-[13px] text-muted-foreground">
                       {TIER_LABEL[entry.tier]}
                     </td>
-                    <td className="py-2.5 pl-3 font-mono text-[13px] tabular-nums">
+                    <td className="py-2.5 ps-3 font-mono text-[13px] tabular-nums">
                       {entry.count}
                     </td>
                   </tr>

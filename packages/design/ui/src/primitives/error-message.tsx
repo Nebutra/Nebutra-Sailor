@@ -177,7 +177,7 @@ export const ErrorMessage = ({
               rel="noopener noreferrer"
             >
               {error.action}
-              <ExternalLink size={10} aria-hidden="true" className="ml-0.5 inline" />
+              <ExternalLink size={10} aria-hidden="true" className="ms-0.5 inline" />
             </a>
           </>
         )}

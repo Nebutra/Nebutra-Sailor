@@ -20,7 +20,7 @@ export function TableDemo() {
           <TableHead>Invoice</TableHead>
           <TableHead>Status</TableHead>
           <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          <TableHead className="text-end">Amount</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -28,25 +28,25 @@ export function TableDemo() {
           <TableCell className="font-medium">INV-001</TableCell>
           <TableCell>Paid</TableCell>
           <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right">$250.00</TableCell>
+          <TableCell className="text-end">$250.00</TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">INV-002</TableCell>
           <TableCell>Pending</TableCell>
           <TableCell>Bank Transfer</TableCell>
-          <TableCell className="text-right">$150.00</TableCell>
+          <TableCell className="text-end">$150.00</TableCell>
         </TableRow>
         <TableRow>
           <TableCell className="font-medium">INV-003</TableCell>
           <TableCell>Unpaid</TableCell>
           <TableCell>PayPal</TableCell>
-          <TableCell className="text-right">$350.00</TableCell>
+          <TableCell className="text-end">$350.00</TableCell>
         </TableRow>
       </TableBody>
       <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$750.00</TableCell>
+          <TableCell className="text-end">$750.00</TableCell>
         </TableRow>
       </TableFooter>
     </Table>

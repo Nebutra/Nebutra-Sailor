@@ -56,12 +56,12 @@ export function EditorialCallout({
         editorialBlock({ spacing: "normal" }),
         editorialFrame({ elevation: "resting" }),
         EDITORIAL_TONE_WASH,
-        "relative overflow-hidden pl-6 pr-5 py-5",
+        "relative overflow-hidden ps-6 pe-5 py-5",
         className,
       )}
       style={editorialToneStyle(tone)}
     >
-      <span aria-hidden className="absolute inset-y-0 left-0 w-0.5 bg-[var(--editorial-tone)]" />
+      <span aria-hidden className="absolute inset-y-0 start-0 w-0.5 bg-[var(--editorial-tone)]" />
       <div className="flex gap-3.5">
         <span
           aria-hidden

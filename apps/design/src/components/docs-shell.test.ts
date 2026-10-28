@@ -159,7 +159,7 @@ describe("motion — baseline, press feedback, rail indicator", () => {
 
   it("draws the current on-this-page marker 2px wide in a restrained colour", () => {
     const toc = read("components/page-toc.tsx");
-    expect(toc).toMatch(/border-l-2/);
+    expect(toc).toMatch(/border-s-2/);
     expect(toc).not.toMatch(/border-foreground/);
   });
 });

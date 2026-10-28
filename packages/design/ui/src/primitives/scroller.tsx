@@ -4,6 +4,7 @@ import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "@nebutra/icon
 import * as React from "react";
 import { scrollerTokens } from "../tokens/components/scroller";
 import { cn } from "../utils/cn";
+import { readElementDirection, type TextDirection, useResolvedDirection } from "../utils/direction";
 import { controlFocusVisibleClassName } from "./form-control";
 
 export type ScrollerOverflow = "x" | "y" | "both";
@@ -26,9 +27,10 @@ type ScrollerCssVar =
 
 type ScrollerCssVars = React.CSSProperties & Record<ScrollerCssVar, string>;
 
+/** Edges are logical on the x axis: `start` is the left edge in LTR and the right edge in RTL. */
 type EdgeState = {
-  left: boolean;
-  right: boolean;
+  start: boolean;
+  end: boolean;
   top: boolean;
   bottom: boolean;
 };
@@ -66,9 +68,15 @@ export interface ScrollerProps
    * @default "content"
    */
   contentLabel?: string;
-  /** Accessible name of the previous button. Defaults to "Scroll {contentLabel} left" (x) or "up" (y). */
+  /**
+   * Accessible name of the previous button. Defaults to "Scroll {contentLabel} left" (x, "right"
+   * under `dir="rtl"`) or "up" (y).
+   */
   previousButtonLabel?: string;
-  /** Accessible name of the next button. Defaults to "Scroll {contentLabel} right" (x) or "down" (y). */
+  /**
+   * Accessible name of the next button. Defaults to "Scroll {contentLabel} right" (x, "left"
+   * under `dir="rtl"`) or "down" (y).
+   */
   nextButtonLabel?: string;
   /**
    * Edge treatment: "fade" shows a gradient on each side that has more content, "none" hides it.
@@ -76,7 +84,8 @@ export interface ScrollerProps
    */
   edgeAffordance?: ScrollerEdgeAffordance;
   /**
-   * Scroll behavior used by the directional buttons.
+   * Scroll behavior used by the directional buttons. `"smooth"` becomes an instant jump when the
+   * user prefers reduced motion.
    * @default "smooth"
    */
   scrollBehavior?: ScrollBehavior;
@@ -137,22 +146,50 @@ function getDirectChildElements(container: HTMLDivElement | null): HTMLElement[]
   );
 }
 
-function getChildPosition(child: HTMLElement, axis: ScrollerButtonAxis) {
-  return axis === "x" ? child.offsetLeft : child.offsetTop;
+/**
+ * Distance scrolled from the start edge. Browsers report `scrollLeft` as 0 at the start in both
+ * directions, but it runs negative towards the end in RTL, so the x axis is normalised here.
+ */
+function getScrollPosition(
+  viewport: HTMLDivElement,
+  axis: ScrollerButtonAxis,
+  textDirection: TextDirection,
+) {
+  if (axis === "y") return viewport.scrollTop;
+  return textDirection === "rtl" ? -viewport.scrollLeft : viewport.scrollLeft;
 }
 
-function getScrollPosition(viewport: HTMLDivElement, axis: ScrollerButtonAxis) {
-  return axis === "x" ? viewport.scrollLeft : viewport.scrollTop;
+/** Offset of a child's start edge from the start of the scrollable content. */
+function getChildPosition(
+  child: HTMLElement,
+  viewport: HTMLDivElement,
+  axis: ScrollerButtonAxis,
+  textDirection: TextDirection,
+) {
+  const viewportRect = viewport.getBoundingClientRect();
+  const childRect = child.getBoundingClientRect();
+  const scrolled = getScrollPosition(viewport, axis, textDirection);
+  if (axis === "y") return childRect.top - viewportRect.top + scrolled;
+  return textDirection === "rtl"
+    ? viewportRect.right - childRect.right + scrolled
+    : childRect.left - viewportRect.left + scrolled;
 }
 
-function getEdgeState(viewport: HTMLDivElement): EdgeState {
+/** The `behavior` to scroll with: smooth scrolling becomes an instant jump under reduced motion. */
+function resolveScrollBehavior(behavior: ScrollBehavior): ScrollBehavior {
+  if (behavior !== "smooth" || typeof window === "undefined") return behavior;
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ? "auto" : behavior;
+}
+
+function getEdgeState(viewport: HTMLDivElement, textDirection: TextDirection): EdgeState {
   const threshold = 1;
   const maxX = viewport.scrollWidth - viewport.clientWidth;
   const maxY = viewport.scrollHeight - viewport.clientHeight;
+  const scrolledX = getScrollPosition(viewport, "x", textDirection);
 
   return {
-    left: viewport.scrollLeft > threshold,
-    right: viewport.scrollLeft < maxX - threshold,
+    start: scrolledX > threshold,
+    end: scrolledX < maxX - threshold,
     top: viewport.scrollTop > threshold,
     bottom: viewport.scrollTop < maxY - threshold,
   };
@@ -162,26 +199,26 @@ function findTargetChild(
   children: readonly HTMLElement[],
   viewport: HTMLDivElement,
   axis: ScrollerButtonAxis,
-  direction: "previous" | "next",
+  step: "previous" | "next",
+  textDirection: TextDirection,
 ) {
   if (children.length === 0) return undefined;
 
   const threshold = 2;
-  const currentPosition = getScrollPosition(viewport, axis);
-  const sortedChildren = [...children].sort(
-    (a, b) => getChildPosition(a, axis) - getChildPosition(b, axis),
-  );
+  const currentPosition = getScrollPosition(viewport, axis, textDirection);
+  const positionOf = (child: HTMLElement) => getChildPosition(child, viewport, axis, textDirection);
+  const sortedChildren = [...children].sort((a, b) => positionOf(a) - positionOf(b));
 
-  if (direction === "next") {
+  if (step === "next") {
     return (
-      sortedChildren.find((child) => getChildPosition(child, axis) > currentPosition + threshold) ??
+      sortedChildren.find((child) => positionOf(child) > currentPosition + threshold) ??
       sortedChildren.at(-1)
     );
   }
 
   for (let index = sortedChildren.length - 1; index >= 0; index -= 1) {
     const child = sortedChildren[index];
-    if (child && getChildPosition(child, axis) < currentPosition - threshold) {
+    if (child && positionOf(child) < currentPosition - threshold) {
       return child;
     }
   }
@@ -194,28 +231,31 @@ function scrollToChild({
   viewport,
   axis,
   behavior,
+  textDirection,
 }: {
   child: HTMLElement;
   viewport: HTMLDivElement;
   axis: ScrollerButtonAxis;
   behavior: ScrollBehavior;
+  textDirection: TextDirection;
 }) {
-  const position = getChildPosition(child, axis);
+  const position = getChildPosition(child, viewport, axis, textDirection);
   viewport.scrollTo({
-    left: axis === "x" ? position : viewport.scrollLeft,
+    // RTL scrollLeft is negative towards the end of the content.
+    left: axis === "x" ? (textDirection === "rtl" ? -position : position) : viewport.scrollLeft,
     top: axis === "y" ? position : viewport.scrollTop,
-    behavior,
+    behavior: resolveScrollBehavior(behavior),
   });
 }
 
 function edgeClasses(overflow: ScrollerOverflow, edgeState: EdgeState) {
   return [
     (overflow === "x" || overflow === "both") &&
-      edgeState.left &&
-      "before:absolute before:inset-y-0 before:left-0 before:z-10 before:w-[var(--scroller-fade-size)] before:pointer-events-none before:bg-gradient-to-r before:from-background before:to-transparent",
+      edgeState.start &&
+      "before:absolute before:inset-y-0 before:start-0 before:z-10 before:w-[var(--scroller-fade-size)] before:pointer-events-none before:bg-gradient-to-r rtl:before:bg-gradient-to-l before:from-background before:to-transparent",
     (overflow === "x" || overflow === "both") &&
-      edgeState.right &&
-      "after:absolute after:inset-y-0 after:right-0 after:z-10 after:w-[var(--scroller-fade-size)] after:pointer-events-none after:bg-gradient-to-l after:from-background after:to-transparent",
+      edgeState.end &&
+      "after:absolute after:inset-y-0 after:end-0 after:z-10 after:w-[var(--scroller-fade-size)] after:pointer-events-none after:bg-gradient-to-l rtl:after:bg-gradient-to-r after:from-background after:to-transparent",
   ];
 }
 
@@ -282,10 +322,10 @@ function ScrollerButton({
         "disabled:pointer-events-none disabled:opacity-0 motion-reduce:transition-none",
         axis === "x" &&
           direction === "previous" &&
-          "left-[var(--scroller-button-offset)] top-1/2 -translate-y-1/2",
+          "start-[var(--scroller-button-offset)] top-1/2 -translate-y-1/2",
         axis === "x" &&
           direction === "next" &&
-          "right-[var(--scroller-button-offset)] top-1/2 -translate-y-1/2",
+          "end-[var(--scroller-button-offset)] top-1/2 -translate-y-1/2",
         axis === "y" &&
           direction === "previous" &&
           "left-1/2 top-[var(--scroller-button-offset)] -translate-x-1/2",
@@ -294,7 +334,14 @@ function ScrollerButton({
           "bottom-[var(--scroller-button-offset)] left-1/2 -translate-x-1/2",
       )}
     >
-      <Icon aria-hidden="true" className="size-[var(--scroller-button-icon-size)]" />
+      <Icon
+        aria-hidden="true"
+        className={cn(
+          "size-[var(--scroller-button-icon-size)]",
+          // The x chevrons point at the physical left/right; mirror them for RTL.
+          axis === "x" && "rtl:rotate-180",
+        )}
+      />
     </button>
   );
 }
@@ -325,18 +372,25 @@ export function Scroller({
   const viewportRef = React.useRef<HTMLDivElement | null>(null);
   const childrenContainerRef = React.useRef<HTMLDivElement | null>(null);
   const [edgeState, setEdgeState] = React.useState<EdgeState>({
-    left: false,
-    right: false,
+    start: false,
+    end: false,
     top: false,
     bottom: false,
   });
   const resolvedButtonAxis = resolveButtonAxis(overflow, buttonAxis);
+  const direction = useResolvedDirection(viewportRef);
 
   const updateEdgeState = React.useCallback(() => {
     const viewport = viewportRef.current;
     if (!viewport) return;
-    setEdgeState(getEdgeState(viewport));
+    setEdgeState(getEdgeState(viewport, readElementDirection(viewport)));
   }, []);
+
+  // The scroll origin moves with the direction, so the edges need re-measuring when it changes.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: direction is the trigger, not a value read inside
+  React.useEffect(() => {
+    updateEdgeState();
+  }, [direction, updateEdgeState]);
 
   React.useEffect(() => {
     updateEdgeState();
@@ -359,12 +413,19 @@ export function Scroller({
   }, [updateEdgeState]);
 
   const scrollToSibling = React.useCallback(
-    (direction: "previous" | "next") => {
+    (step: "previous" | "next") => {
       const viewport = viewportRef.current;
       if (!viewport) return;
 
       const directChildren = getDirectChildElements(childrenContainerRef.current);
-      const targetChild = findTargetChild(directChildren, viewport, resolvedButtonAxis, direction);
+      const textDirection = readElementDirection(viewport);
+      const targetChild = findTargetChild(
+        directChildren,
+        viewport,
+        resolvedButtonAxis,
+        step,
+        textDirection,
+      );
       if (!targetChild) return;
 
       scrollToChild({
@@ -372,17 +433,22 @@ export function Scroller({
         viewport,
         axis: resolvedButtonAxis,
         behavior: scrollBehavior,
+        textDirection,
       });
     },
     [resolvedButtonAxis, scrollBehavior],
   );
 
-  const hasPrevious = resolvedButtonAxis === "x" ? edgeState.left : edgeState.top;
-  const hasNext = resolvedButtonAxis === "x" ? edgeState.right : edgeState.bottom;
+  const hasPrevious = resolvedButtonAxis === "x" ? edgeState.start : edgeState.top;
+  const hasNext = resolvedButtonAxis === "x" ? edgeState.end : edgeState.bottom;
+  // Previous steps towards the start, which is the right-hand side in RTL.
+  const previousSide = direction === "rtl" ? "right" : "left";
+  const nextSide = direction === "rtl" ? "left" : "right";
   const previousLabel =
-    previousButtonLabel ?? `Scroll ${contentLabel} ${resolvedButtonAxis === "x" ? "left" : "up"}`;
+    previousButtonLabel ??
+    `Scroll ${contentLabel} ${resolvedButtonAxis === "x" ? previousSide : "up"}`;
   const nextLabel =
-    nextButtonLabel ?? `Scroll ${contentLabel} ${resolvedButtonAxis === "x" ? "right" : "down"}`;
+    nextButtonLabel ?? `Scroll ${contentLabel} ${resolvedButtonAxis === "x" ? nextSide : "down"}`;
 
   return (
     <div

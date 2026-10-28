@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, KeyboardEvent, ReactNode } from "react";
+import type { CSSProperties, KeyboardEvent, MouseEvent, ReactNode } from "react";
 import { cn } from "../utils/cn";
 import { Button } from "./button";
 import { EmptyStateRoot } from "./empty-state";
@@ -127,7 +127,11 @@ export interface DataListProps<Row> {
   striped?: boolean | undefined;
   /** Hover/focus tint. Implied by `onRowClick`. */
   interactive?: boolean | undefined;
-  /** Row activation. Rows become keyboard-operable when provided. */
+  /**
+   * Row activation. Rows become focusable and respond to Enter and Space when provided. The row
+   * keeps its native `row` role; clicks and keys that come from a button, link or other control
+   * inside a cell are left to that control and do not activate the row.
+   */
   onRowClick?: ((row: Row, index: number) => void) | undefined;
 
   /** Accessible name for the table. */
@@ -149,17 +153,31 @@ export interface DataListProps<Row> {
 const DEFAULT_MIN_BODY_ROWS = 5;
 const DEFAULT_ROW_HEIGHT = 44;
 
+const NESTED_INTERACTIVE =
+  "a[href],button,input,select,textarea,summary,label,[role=button],[role=link],[role=checkbox],[role=switch],[role=menuitem],[role=tab],[contenteditable=true]";
+
 /**
- * TableHead and TableCell both hard-code `last:text-right` at specificity
+ * True when the event came from a control inside the row rather than the row itself, so a button
+ * or link in a cell keeps its own behaviour and does not also fire `onRowClick`.
+ */
+function fromNestedControl(event: { target: EventTarget; currentTarget: Element }): boolean {
+  const target = event.target;
+  if (!(target instanceof Element) || target === event.currentTarget) return false;
+  const control = target.closest(NESTED_INTERACTIVE);
+  return control !== null && event.currentTarget.contains(control);
+}
+
+/**
+ * TableHead and TableCell both hard-code `last:text-end` at specificity
  * (0,2,0), which a flat `text-center` on the cell cannot beat. Alignment is
  * therefore carried by a child element: a specified declaration on the child
  * always outranks a value inherited from the cell, whatever the specificity of
  * the rule that produced it.
  */
 const alignClassName: Record<DataListAlign, string> = {
-  start: "justify-start text-left",
+  start: "justify-start text-start",
   center: "justify-center text-center",
-  end: "justify-end text-right",
+  end: "justify-end text-end",
 };
 
 function AlignedCellContent({
@@ -255,7 +273,13 @@ export function DataList<Row>({
   const handleRowKeyDown = (event: KeyboardEvent<HTMLTableRowElement>, row: Row, index: number) => {
     if (onRowClick === undefined) return;
     if (event.key !== "Enter" && event.key !== " ") return;
+    if (fromNestedControl(event)) return;
     event.preventDefault();
+    onRowClick(row, index);
+  };
+
+  const handleRowClick = (event: MouseEvent<HTMLTableRowElement>, row: Row, index: number) => {
+    if (onRowClick === undefined || fromNestedControl(event)) return;
     onRowClick(row, index);
   };
 
@@ -275,7 +299,7 @@ export function DataList<Row>({
               // Cell x-padding is 8px in the primitive, which is tight once the
               // card padding is zeroed. 12px restores the rhythm.
               "bg-muted/45 px-3 text-xs uppercase tracking-[0.04em] text-muted-foreground",
-              "first:rounded-l-[var(--table-row-radius)] last:rounded-r-[var(--table-row-radius)]",
+              "first:rounded-s-[var(--table-row-radius)] last:rounded-e-[var(--table-row-radius)]",
               column.headClassName,
             )}
           >
@@ -351,7 +375,8 @@ export function DataList<Row>({
           ? {}
           : {
               tabIndex: 0,
-              onClick: () => onRowClick(row, rowIndex),
+              onClick: (event: MouseEvent<HTMLTableRowElement>) =>
+                handleRowClick(event, row, rowIndex),
               onKeyDown: (event: KeyboardEvent<HTMLTableRowElement>) =>
                 handleRowKeyDown(event, row, rowIndex),
             })}

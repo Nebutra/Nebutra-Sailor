@@ -53,6 +53,13 @@ const MANY_STEPS = Array.from({ length: 8 }, (_, index) => ({
   title: `Step ${index + 1}`,
 }));
 
+const ERROR_STEPS = [
+  { id: "account", title: "Account" },
+  { id: "workspace", title: "Workspace", description: "Region is unavailable", error: true },
+  { id: "billing", title: "Billing" },
+  { id: "review", title: "Review" },
+];
+
 function HookDemo() {
   const stepper = useStepper({ steps: STEPS });
   return (
@@ -273,6 +280,24 @@ export default function StepperDemo(_: DemoProps) {
       </State>
 
       <State
+        breaks="A failed step that looks like a pending one, loses its red once the user moves past it, or reads the same as the others to assistive tech."
+        id="error"
+        note="A step with error set shows the destructive indicator and title whether it is behind, at or ahead of the current step, and reports data-status=error. Step 2 is flagged; the current step is 1, 2 and 4 in the rows, then 2 again in the vertical layout."
+        title="Error step"
+      >
+        <Stack>
+          {[0, 1, 3].map((initial) => (
+            <StepperProvider initialStep={initial} key={initial} steps={ERROR_STEPS}>
+              <Stepper />
+            </StepperProvider>
+          ))}
+          <StepperProvider initialStep={1} steps={ERROR_STEPS}>
+            <Stepper orientation="vertical" />
+          </StepperProvider>
+        </Stack>
+      </State>
+
+      <State
         breaks="Long titles that wrap or overlap the connector, and a row of steps wider than its container."
         id="overflow"
         note="Titles are not truncated and the horizontal row does not wrap, so a long title or many steps scroll the stage. The enclosing layout has to give."
@@ -300,7 +325,7 @@ export default function StepperDemo(_: DemoProps) {
       <State
         breaks="A provider with no steps that throws, or a stepper outside a provider that crashes the page."
         id="empty"
-        note="Zero steps render an empty wrapper, and a Stepper with no provider at all falls back to the same empty state. Both are call-site bugs that should be recognisable."
+        note="Zero steps render an empty list, and a Stepper with no provider at all falls back to the same empty state. Both are call-site bugs that should be recognisable. ProgressStepper with totalSteps of 0 fills 0% and prints 步骤 0 / 0 rather than NaN."
         title="Empty"
       >
         <Row align="start">
@@ -311,6 +336,9 @@ export default function StepperDemo(_: DemoProps) {
           </Specimen>
           <Specimen label="no provider">
             <Stepper />
+          </Specimen>
+          <Specimen label="ProgressStepper, 0 steps">
+            <ProgressStepper currentStep={0} totalSteps={0} />
           </Specimen>
         </Row>
       </State>
@@ -342,10 +370,8 @@ export default function StepperDemo(_: DemoProps) {
 
       <Aside title="What Stepper does not do">
         <p>
-          The error status is declared on the status type and styled, but the provider only produces
-          pending, current and completed, so there is no way to mark a step as failed. The markup is
-          a row of buttons in plain divs: no list, and no <code>aria-current</code> on the current
-          step, so assistive tech cannot tell which step is active. The "(Optional)" marker and the
+          A step's <code>error</code> flag carries no message, so the reason has to be rendered in
+          the step panel. Moving between steps is not announced. The "(Optional)" marker and the
           ProgressStepper caption are fixed strings. <code>initialStep</code> is read once.
         </p>
       </Aside>

@@ -561,6 +561,7 @@ export const CATALOG: readonly CatalogEntry[] = [
     status: "stable",
     import: "@nebutra/ui/primitives",
     files: [
+      "primitives/hover-card-context.ts",
       "primitives/hover-card-content.tsx",
       "primitives/hover-card-trigger.tsx",
       "primitives/hover-card.tsx",

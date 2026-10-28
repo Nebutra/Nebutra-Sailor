@@ -355,7 +355,7 @@ export function Aside({ title, children }: { title: string; children: React.Reac
     <div className="mt-12 rounded-lg border border-border bg-card">
       <button
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-2 px-4 py-2.5 text-left font-medium text-foreground text-sm"
+        className="flex w-full items-center justify-between gap-2 px-4 py-2.5 text-start font-medium text-foreground text-sm"
         onClick={() => setOpen((v) => !v)}
         type="button"
       >

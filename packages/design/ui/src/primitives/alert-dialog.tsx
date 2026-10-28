@@ -96,13 +96,13 @@ const AlertDialogContent = ({
 );
 AlertDialogContent.displayName = "AlertDialogContent";
 
-/** Stacks the title and description; centred on small screens, left-aligned from `sm`. */
+/** Stacks the title and description; centred on small screens, start-aligned from `sm`. */
 const AlertDialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col space-y-2 text-center sm:text-left", className)} {...props} />
+  <div className={cn("flex flex-col space-y-2 text-center sm:text-start", className)} {...props} />
 );
 AlertDialogHeader.displayName = "AlertDialogHeader";
 
-/** Row of actions; stacked with the primary action last on small screens, right-aligned from `sm`. */
+/** Row of actions; stacked with the primary action last on small screens, end-aligned from `sm`. */
 const AlertDialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2", className)}

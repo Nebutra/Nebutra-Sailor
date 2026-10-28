@@ -18,11 +18,11 @@ export function DropdownMenu8Demo() {
       <DropdownMenuContent align="center" className="w-[180px]">
         <DropdownMenuItem>
           GitHub Repo
-          <ChevronRight className="h-4 w-4 ml-auto" />
+          <ChevronRight className="h-4 w-4 ms-auto" />
         </DropdownMenuItem>
         <DropdownMenuItem>
           Documentation
-          <ChevronRight className="h-4 w-4 ml-auto" />
+          <ChevronRight className="h-4 w-4 ms-auto" />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

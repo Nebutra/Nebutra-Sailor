@@ -124,12 +124,12 @@ export function IconGallery() {
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
           <div className="relative w-full max-w-md">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3 text-muted-foreground">
               <Search size={16} />
             </div>
             <Input
               aria-label="Search icons"
-              className="h-10 w-full bg-background pl-9 text-foreground"
+              className="h-10 w-full bg-background ps-9 text-foreground"
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search — “close”, “arrow up”"
               value={query}

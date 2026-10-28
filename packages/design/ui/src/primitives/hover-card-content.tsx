@@ -1,12 +1,16 @@
 "use client";
 
 import { Popover as BasePopover } from "@base-ui/react/popover";
-import type * as React from "react";
+import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { HoverCardContext } from "./hover-card-context";
 import { overlayPrimitiveClassNames } from "./overlay";
 
-/** Portalled, anchored card surface shown while the hover card is open. */
+/**
+ * Portalled, anchored card surface shown while the hover card is open. Opening never moves focus
+ * into it: focus stays on the trigger, and Tab reaches the card's focusable content in page order.
+ */
 const HoverCardContent = ({
   className,
   align = "center",
@@ -27,32 +31,41 @@ const HoverCardContent = ({
    */
   sideOffset?: number;
   /**
-   * Preferred side of the trigger; the card flips when there is no room.
+   * Preferred side of the trigger; the card flips when there is no room. Prefer `inline-start` and
+   * `inline-end`: they mirror under `dir="rtl"`, while `left` and `right` stay physical.
    * @default "bottom"
    */
-  side?: "top" | "right" | "bottom" | "left";
-} & { ref?: React.Ref<React.ElementRef<typeof BasePopover.Popup>> | undefined }) => (
-  <BasePopover.Portal>
-    <BasePopover.Positioner
-      style={{ zIndex: overlayZIndex.popover }}
-      side={side}
-      align={align}
-      sideOffset={sideOffset}
-    >
-      <BasePopover.Popup
-        ref={ref}
-        className={cn(
-          overlayClassNames.popoverSurface,
-          overlayPrimitiveClassNames.popoverSurface,
-          "w-64",
-          className,
-        )}
-        style={{ zIndex: overlayZIndex.popover, ...style }}
-        {...props}
-      />
-    </BasePopover.Positioner>
-  </BasePopover.Portal>
-);
+  side?: "top" | "right" | "bottom" | "left" | "inline-start" | "inline-end";
+} & { ref?: React.Ref<React.ElementRef<typeof BasePopover.Popup>> | undefined }) => {
+  const root = React.use(HoverCardContext);
+  return (
+    <BasePopover.Portal>
+      <BasePopover.Positioner
+        style={{ zIndex: overlayZIndex.popover }}
+        side={side}
+        align={align}
+        sideOffset={sideOffset}
+      >
+        <BasePopover.Popup
+          ref={ref}
+          initialFocus={false}
+          finalFocus={() => {
+            root?.suppressFocusOpen();
+            return true;
+          }}
+          className={cn(
+            overlayClassNames.popoverSurface,
+            overlayPrimitiveClassNames.popoverSurface,
+            "w-64",
+            className,
+          )}
+          style={{ zIndex: overlayZIndex.popover, ...style }}
+          {...props}
+        />
+      </BasePopover.Positioner>
+    </BasePopover.Portal>
+  );
+};
 HoverCardContent.displayName = "HoverCardContent";
 
 export { HoverCardContent };

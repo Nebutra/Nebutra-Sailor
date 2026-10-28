@@ -266,7 +266,7 @@ export function StarsCanvas({
       ref={canvasRef}
       // display is a class, not inline: an inline display would beat a
       // caller's `hidden` (tests/architecture/class-hideable.test.ts).
-      className={cn("top-0 left-0 block h-full w-full", className)}
+      className={cn("top-0 start-0 block h-full w-full", className)}
       style={{
         position,
         zIndex,

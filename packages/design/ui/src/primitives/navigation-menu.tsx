@@ -12,7 +12,9 @@
  *     triangle so a diagonal move into the panel does not close it
  *   - `aria-expanded` / `aria-controls` on every trigger
  *   - Esc closes and returns focus to the trigger; outside click dismisses
- *   - ← / → move between triggers, ↓ / Enter move into the open panel
+ *   - ← / → move between triggers, ↓ / Enter move into the open panel; the two arrows swap
+ *     under dir="rtl" (the root measures its own direction and hands it to Base UI, which only
+ *     reads direction from its provider, never from the DOM)
  *   - the panel is portalled and positioned by the shared overlay layer, one
  *     viewport morphs between panels instead of each panel stacking with `z-[1]`
  *
@@ -28,6 +30,7 @@ import * as React from "react";
 
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import { BaseDirectionScope, mergeRefs, useResolvedDirection } from "../utils/direction";
 import { resolveLazyChild } from "../utils/lazy-child";
 import { navigationMenuTriggerStyle } from "./navigation-menu-variants";
 
@@ -50,7 +53,8 @@ export interface NavigationMenuProps
 
 /**
  * Root of a site navigation. Renders the `<nav>` and the single shared flyout viewport that
- * morphs between the panels of its items.
+ * morphs between the panels of its items. Set `dir="rtl"` on it (or any ancestor) and the left
+ * and right arrow keys between triggers swap, along with the flyout's own `dir`.
  */
 const NavigationMenu = ({
   className,
@@ -62,38 +66,45 @@ const NavigationMenu = ({
   ref,
   ...props
 }: NavigationMenuProps & { ref?: React.Ref<HTMLElement> | undefined }) => {
+  const rootRef = React.useRef<HTMLElement | null>(null);
+  const direction = useResolvedDirection(rootRef);
+  // Memoised so Base UI does not see a new callback ref on every render.
+  const mergedRef = React.useMemo(() => mergeRefs(ref, rootRef), [ref]);
   const controlled = value !== undefined ? { value: value === "" ? null : value } : {};
   const uncontrolled =
     defaultValue !== undefined ? { defaultValue: defaultValue === "" ? null : defaultValue } : {};
 
   return (
-    <BaseNavigationMenu.Root
-      ref={ref}
-      className={cn("relative z-10 flex max-w-max flex-1 items-center justify-center", className)}
-      onValueChange={(next: unknown) => onValueChange?.(next == null ? "" : String(next))}
-      {...controlled}
-      {...uncontrolled}
-      {...props}
-    >
-      {children}
-      <BaseNavigationMenu.Portal>
-        <BaseNavigationMenu.Positioner
-          sideOffset={sideOffset}
-          collisionPadding={8}
-          style={{ zIndex: overlayZIndex.popover }}
-          className="h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)]"
-        >
-          <BaseNavigationMenu.Popup
-            className={cn(
-              overlayClassNames.navigationMenuSurface,
-              "relative h-[var(--popup-height)] w-[var(--popup-width)]",
-            )}
+    <BaseDirectionScope direction={direction}>
+      <BaseNavigationMenu.Root
+        ref={mergedRef}
+        className={cn("relative z-10 flex max-w-max flex-1 items-center justify-center", className)}
+        onValueChange={(next: unknown) => onValueChange?.(next == null ? "" : String(next))}
+        {...controlled}
+        {...uncontrolled}
+        {...props}
+      >
+        {children}
+        <BaseNavigationMenu.Portal>
+          <BaseNavigationMenu.Positioner
+            dir={direction}
+            sideOffset={sideOffset}
+            collisionPadding={8}
+            style={{ zIndex: overlayZIndex.popover }}
+            className="h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)]"
           >
-            <BaseNavigationMenu.Viewport className="relative h-full w-full overflow-hidden" />
-          </BaseNavigationMenu.Popup>
-        </BaseNavigationMenu.Positioner>
-      </BaseNavigationMenu.Portal>
-    </BaseNavigationMenu.Root>
+            <BaseNavigationMenu.Popup
+              className={cn(
+                overlayClassNames.navigationMenuSurface,
+                "relative h-[var(--popup-height)] w-[var(--popup-width)]",
+              )}
+            >
+              <BaseNavigationMenu.Viewport className="relative h-full w-full overflow-hidden" />
+            </BaseNavigationMenu.Popup>
+          </BaseNavigationMenu.Positioner>
+        </BaseNavigationMenu.Portal>
+      </BaseNavigationMenu.Root>
+    </BaseDirectionScope>
   );
 };
 NavigationMenu.displayName = "NavigationMenu";
@@ -154,7 +165,7 @@ const NavigationMenuTrigger = ({
     {children}{" "}
     <BaseNavigationMenu.Icon
       aria-hidden="true"
-      className="relative top-[1px] ml-1 transition-transform duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] data-[popup-open]:rotate-180 motion-reduce:transition-none"
+      className="relative top-[1px] ms-1 transition-transform duration-[var(--motion-duration-flow)] ease-[var(--ease-out)] data-[popup-open]:rotate-180 motion-reduce:transition-none"
     >
       <ChevronDown className="h-3 w-3" />
     </BaseNavigationMenu.Icon>
@@ -228,7 +239,7 @@ const NavigationMenuIndicator = ({
     className={cn("top-full flex h-1.5 items-end justify-center overflow-hidden", className)}
     {...props}
   >
-    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
+    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-ss-sm bg-border shadow-md" />
   </div>
 );
 NavigationMenuIndicator.displayName = "NavigationMenuIndicator";

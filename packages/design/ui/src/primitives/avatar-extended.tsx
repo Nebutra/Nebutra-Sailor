@@ -87,7 +87,7 @@ export function GitHubAvatar({ username, size = "sm", className, ...props }: Git
         />
         <AvatarFallback size={size}>{getAvatarInitials(username)}</AvatarFallback>
       </Avatar>
-      <div className="absolute -bottom-[5px] -left-[3px] flex items-center justify-center overflow-hidden rounded-full border border-background bg-background text-foreground">
+      <div className="absolute -bottom-[5px] -start-[3px] flex items-center justify-center overflow-hidden rounded-full border border-background bg-background text-foreground">
         <GitHubIcon />
       </div>
     </div>
@@ -107,7 +107,7 @@ export function GitLabAvatar({ username, size = "sm", className, ...props }: Git
         <AvatarImage src={`https://gitlab.com/${username}.png`} alt={`Avatar for ${username}`} />
         <AvatarFallback size={size}>{getAvatarInitials(username)}</AvatarFallback>
       </Avatar>
-      <div className="absolute -bottom-[5px] -left-[3px] flex items-center justify-center overflow-hidden rounded-full border border-background bg-primary">
+      <div className="absolute -bottom-[5px] -start-[3px] flex items-center justify-center overflow-hidden rounded-full border border-background bg-primary">
         <GitLabIcon />
       </div>
     </div>
@@ -135,7 +135,7 @@ export function BitbucketAvatar({
         />
         <AvatarFallback size={size}>{getAvatarInitials(username)}</AvatarFallback>
       </Avatar>
-      <div className="absolute -bottom-[5px] -left-[3px] flex items-center justify-center overflow-hidden rounded-full border border-background bg-primary">
+      <div className="absolute -bottom-[5px] -start-[3px] flex items-center justify-center overflow-hidden rounded-full border border-background bg-primary">
         <BitbucketIcon />
       </div>
     </div>
@@ -163,15 +163,15 @@ export function AvatarWithIcon({
   ...props
 }: AvatarWithIconProps) {
   const badgeSizes = {
-    xs: "h-3 w-3 -bottom-[3px] -right-[2px]",
-    sm: "h-3.5 w-3.5 -bottom-[4px] -right-[3px]",
-    md: "h-4 w-4 -bottom-[5px] -right-[3px]",
-    lg: "h-5 w-5 -bottom-[5px] -right-[3px]",
-    xl: "h-6 w-6 -bottom-[6px] -right-[4px]",
+    xs: "h-3 w-3 -bottom-[3px] -end-[2px]",
+    sm: "h-3.5 w-3.5 -bottom-[4px] -end-[3px]",
+    md: "h-4 w-4 -bottom-[5px] -end-[3px]",
+    lg: "h-5 w-5 -bottom-[5px] -end-[3px]",
+    xl: "h-6 w-6 -bottom-[6px] -end-[4px]",
   } as const satisfies Record<AvatarPresetSize, string>;
   const badgeSizeClass =
     typeof size === "number"
-      ? "h-[var(--avatar-badge-size)] w-[var(--avatar-badge-size)] -bottom-[5px] -right-[3px]"
+      ? "h-[var(--avatar-badge-size)] w-[var(--avatar-badge-size)] -bottom-[5px] -end-[3px]"
       : badgeSizes[size];
   const badgeStyle =
     typeof size === "number"
