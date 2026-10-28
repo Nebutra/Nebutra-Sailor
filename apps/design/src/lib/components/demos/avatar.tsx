@@ -110,7 +110,7 @@ export default function AvatarDemo() {
         <div className="max-w-[10rem] rounded-lg bg-background p-3">
           <div className="flex">
             {Array.from({ length: 8 }, (_, i) => (
-              <div className="-ml-2 first:ml-0" key={i}>
+              <div className="-ms-2 first:ms-0" key={i}>
                 <Avatar letter={String.fromCharCode(65 + i)} size="sm" />
               </div>
             ))}

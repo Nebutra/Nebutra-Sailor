@@ -70,7 +70,7 @@ function RatioBar({ ratio }: { ratio: number | null }) {
           style={{ width: `${Math.round((ratio ?? 0) * 100)}%` }}
         />
       </div>
-      <span className="w-10 text-right text-foreground text-sm tabular-nums">{percent(ratio)}</span>
+      <span className="w-10 text-end text-foreground text-sm tabular-nums">{percent(ratio)}</span>
     </div>
   );
 }
@@ -99,11 +99,11 @@ function AdoptionDesktopTable({
         <tr>
           <Th>App</Th>
           <Th>Status</Th>
-          <Th className="text-right">.tsx files</Th>
-          <Th className="text-right">Import @nebutra/ui</Th>
+          <Th className="text-end">.tsx files</Th>
+          <Th className="text-end">Import @nebutra/ui</Th>
           <Th>Share of files</Th>
-          <Th className="text-right">Hard-coded hex</Th>
-          <Th className="text-right">Arbitrary sizes</Th>
+          <Th className="text-end">Hard-coded hex</Th>
+          <Th className="text-end">Arbitrary sizes</Th>
         </tr>
       </thead>
       <tbody>
@@ -117,19 +117,19 @@ function AdoptionDesktopTable({
                 <span className="text-muted-foreground">—</span>
               )}
             </Td>
-            <Td className="text-right tabular-nums">
+            <Td className="text-end tabular-nums">
               <Count value={app.tsxFiles} />
             </Td>
-            <Td className="text-right tabular-nums">
+            <Td className="text-end tabular-nums">
               <Count value={app.uiFiles} />
             </Td>
             <Td>
               <RatioBar ratio={app.uiRatio} />
             </Td>
-            <Td className="text-right tabular-nums">
+            <Td className="text-end tabular-nums">
               <Count value={app.hardcodedHex} />
             </Td>
-            <Td className="text-right tabular-nums">
+            <Td className="text-end tabular-nums">
               <Count value={app.arbitraryFontSizes} />
             </Td>
           </Tr>
@@ -137,19 +137,19 @@ function AdoptionDesktopTable({
         <tr className="border-border border-t-2">
           <Td className="py-3 font-medium text-foreground">All {totals.apps} apps</Td>
           <Td>{null}</Td>
-          <Td className="text-right text-foreground tabular-nums">
+          <Td className="text-end text-foreground tabular-nums">
             {totals.tsxFiles.toLocaleString("en-US")}
           </Td>
-          <Td className="text-right text-foreground tabular-nums">
+          <Td className="text-end text-foreground tabular-nums">
             {totals.uiFiles.toLocaleString("en-US")}
           </Td>
           <Td>
             <RatioBar ratio={totals.uiRatio} />
           </Td>
-          <Td className="text-right text-foreground tabular-nums">
+          <Td className="text-end text-foreground tabular-nums">
             {totals.hardcodedHex.toLocaleString("en-US")}
           </Td>
-          <Td className="text-right text-foreground tabular-nums">
+          <Td className="text-end text-foreground tabular-nums">
             {totals.arbitraryFontSizes.toLocaleString("en-US")}
           </Td>
         </tr>

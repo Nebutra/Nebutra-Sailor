@@ -6,6 +6,12 @@ import { usePortalContainer } from "@nebutra/ui/utils/portal-container";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import {
+  BaseDirectionScope,
+  mergeRefs,
+  type TextDirection,
+  useResolvedDirection,
+} from "../utils/direction";
 import { resolveLazyChild } from "../utils/lazy-child";
 import { rendersNativeButton } from "../utils/native-button";
 import { overlayPrimitiveClassNames } from "./overlay";
@@ -14,22 +20,43 @@ type PortalContainer = React.ComponentProps<typeof BaseMenu.Portal>["container"]
 
 type DropdownMenuContextValue = {
   setOpen: (open: boolean) => void;
+  /** Trigger element the reading direction is measured from. */
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
+  /** Reading direction applied to the popups and handed to Base UI for arrow keys. */
+  direction: TextDirection;
 };
 
 const DropdownMenuContext = React.createContext<DropdownMenuContextValue | null>(null);
 
-type DropdownMenuProps = React.ComponentPropsWithoutRef<typeof BaseMenu.Root>;
+type DropdownMenuProps = React.ComponentPropsWithoutRef<typeof BaseMenu.Root> & {
+  /**
+   * Reading direction used to mirror the submenu arrow keys (`ArrowLeft` opens a submenu in
+   * `rtl`) and the side submenus open on. Leave it out to follow the `dir` in effect around the
+   * trigger (an ancestor `dir` attribute, else CSS `direction`); set it when the menu has no
+   * trigger to measure from.
+   * @default "the direction around the trigger"
+   */
+  dir?: TextDirection;
+};
 
-/** Coordinates a menu trigger, popup, keyboard navigation, and controlled open state. */
+/**
+ * Coordinates a menu trigger, popup, keyboard navigation, and controlled open state. Under
+ * `dir="rtl"` the submenu arrow keys, the side submenus open on and the popup's own `dir` all
+ * mirror.
+ */
 function DropdownMenu({
   open: controlledOpen,
   defaultOpen = false,
   onOpenChange,
+  dir: dirProp,
   children,
   ...props
 }: DropdownMenuProps) {
   const [uncontrolledOpen, setUncontrolledOpen] = React.useState(defaultOpen);
   const open = controlledOpen ?? uncontrolledOpen;
+  const triggerRef = React.useRef<HTMLButtonElement | null>(null);
+  const measuredDirection = useResolvedDirection(triggerRef);
+  const direction = dirProp ?? measuredDirection;
 
   function setOpen(
     nextOpen: boolean,
@@ -41,13 +68,15 @@ function DropdownMenu({
     onOpenChange?.(nextOpen, eventDetails as never);
   }
 
-  const contextValue: DropdownMenuContextValue = { setOpen };
+  const contextValue: DropdownMenuContextValue = { setOpen, triggerRef, direction };
 
   return (
     <DropdownMenuContext.Provider value={contextValue}>
-      <BaseMenu.Root open={open} onOpenChange={setOpen} {...props}>
-        {children}
-      </BaseMenu.Root>
+      <BaseDirectionScope direction={direction}>
+        <BaseMenu.Root open={open} onOpenChange={setOpen} {...props}>
+          {children}
+        </BaseMenu.Root>
+      </BaseDirectionScope>
     </DropdownMenuContext.Provider>
   );
 }
@@ -68,6 +97,9 @@ const DropdownMenuTrigger = ({
 }: DropdownMenuTriggerProps & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
   const children = resolveLazyChild(rawChildren);
   const context = React.use(DropdownMenuContext);
+  const triggerRef = context?.triggerRef;
+  // Memoised: a fresh callback ref every render would detach and re-register the trigger in Base UI.
+  const mergedRef = React.useMemo(() => mergeRefs(ref, triggerRef), [ref, triggerRef]);
   function openFromTrigger() {
     context?.setOpen(true);
   }
@@ -101,7 +133,7 @@ const DropdownMenuTrigger = ({
   const renderElement = childRenderElement ?? render;
   return (
     <BaseMenu.Trigger
-      ref={ref}
+      ref={mergedRef}
       render={renderElement as React.ComponentProps<typeof BaseMenu.Trigger>["render"]}
       nativeButton={rendersNativeButton(renderElement)}
       {...(renderElement ? props : { ...props, children })}
@@ -129,11 +161,11 @@ const DropdownMenuSubTrigger = ({
 } & { ref?: React.Ref<React.ElementRef<typeof BaseMenu.SubmenuTrigger>> | undefined }) => (
   <BaseMenu.SubmenuTrigger
     ref={ref}
-    className={cn(overlayPrimitiveClassNames.menuSubTrigger, inset && "pl-8", className)}
+    className={cn(overlayPrimitiveClassNames.menuSubTrigger, inset && "ps-8", className)}
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto size-4" />
+    <ChevronRight aria-hidden="true" className="ms-auto size-4 rtl:rotate-180" />
   </BaseMenu.SubmenuTrigger>
 );
 DropdownMenuSubTrigger.displayName = "DropdownMenuSubTrigger";
@@ -150,9 +182,10 @@ const DropdownMenuSubContent = ({
   ref?: React.Ref<React.ElementRef<typeof BaseMenu.Popup>> | undefined;
 }) => {
   const portalContainer = usePortalContainer(container);
+  const direction = React.use(DropdownMenuContext)?.direction;
   return (
     <BaseMenu.Portal container={portalContainer}>
-      <BaseMenu.Positioner style={{ zIndex: overlayZIndex.popover }}>
+      <BaseMenu.Positioner dir={direction} style={{ zIndex: overlayZIndex.popover }}>
         <BaseMenu.Popup
           ref={ref}
           className={cn(
@@ -198,9 +231,11 @@ const DropdownMenuContent = ({
   ref?: React.Ref<React.ElementRef<typeof BaseMenu.Popup>> | undefined;
 }) => {
   const portalContainer = usePortalContainer(container);
+  const direction = React.use(DropdownMenuContext)?.direction;
   return (
     <BaseMenu.Portal container={portalContainer}>
       <BaseMenu.Positioner
+        dir={direction}
         sideOffset={sideOffset}
         align={align}
         alignOffset={alignOffset}
@@ -235,7 +270,7 @@ const DropdownMenuItem = ({
 } & { ref?: React.Ref<React.ElementRef<typeof BaseMenu.Item>> | undefined }) => (
   <BaseMenu.Item
     ref={ref}
-    className={cn(overlayPrimitiveClassNames.menuItem, inset && "pl-8", className)}
+    className={cn(overlayPrimitiveClassNames.menuItem, inset && "ps-8", className)}
     {...props}
   />
 );
@@ -257,7 +292,7 @@ const DropdownMenuCheckboxItem = ({
     {...(checked !== undefined && { checked })}
     {...props}
   >
-    <span className="absolute left-2 flex size-3.5 items-center justify-center">
+    <span className="absolute start-2 flex size-3.5 items-center justify-center">
       <BaseMenu.CheckboxItemIndicator>
         <Check className="size-4" />
       </BaseMenu.CheckboxItemIndicator>
@@ -280,7 +315,7 @@ const DropdownMenuRadioItem = ({
     className={cn(overlayPrimitiveClassNames.menuCheckboxItem, className)}
     {...props}
   >
-    <span className="absolute left-2 flex size-3.5 items-center justify-center">
+    <span className="absolute start-2 flex size-3.5 items-center justify-center">
       <BaseMenu.RadioItemIndicator>
         <Circle className="size-2 fill-current" />
       </BaseMenu.RadioItemIndicator>
@@ -355,7 +390,7 @@ const DropdownMenuLabel = ({
 } & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
   <div
     ref={ref}
-    className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className)}
+    className={cn("px-2 py-1.5 text-sm font-semibold", inset && "ps-8", className)}
     {...props}
   />
 );
@@ -382,7 +417,7 @@ DropdownMenuSeparator.displayName = "DropdownMenuSeparator";
 /** Displays a keyboard shortcut hint at the end of a menu item. */
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
-    <span className={cn("ml-auto text-xs tracking-widest opacity-60", className)} {...props} />
+    <span className={cn("ms-auto text-xs tracking-widest opacity-60", className)} {...props} />
   );
 };
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut";

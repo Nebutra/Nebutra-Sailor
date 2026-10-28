@@ -90,7 +90,7 @@ export function SidebarWorkspacePlate({
       type="button"
       data-slot="workspace-plate"
       className={cn(
-        "group/plate flex min-w-0 items-center gap-2 rounded-[var(--radius-md)] text-left outline-none",
+        "group/plate flex min-w-0 items-center gap-2 rounded-[var(--radius-md)] text-start outline-none",
         "transition-[background-color] duration-micro ease-brand hover:bg-sidebar-accent/70",
         collapsed ? "size-8 justify-center" : "h-8 w-full px-1.5",
         className,
@@ -112,7 +112,7 @@ export function SidebarWorkspacePlate({
           {hideChevron ? null : (
             <ChevronUpDown
               aria-hidden="true"
-              className="ml-auto size-3.5 shrink-0 text-sidebar-foreground/45 transition-colors group-hover/plate:text-sidebar-foreground/70"
+              className="ms-auto size-3.5 shrink-0 text-sidebar-foreground/45 transition-colors group-hover/plate:text-sidebar-foreground/70"
             />
           )}
         </>
@@ -159,7 +159,7 @@ export function SidebarSearchButton({
       <MagnifyingGlass aria-hidden="true" className="size-3.5 shrink-0" />
       {collapsed ? null : (
         <>
-          <span className="min-w-0 flex-1 truncate text-left">{label}</span>
+          <span className="min-w-0 flex-1 truncate text-start">{label}</span>
           <Kbd meta small aria-hidden="true">
             {shortcutKey}
           </Kbd>

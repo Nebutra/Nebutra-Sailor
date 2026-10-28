@@ -22,7 +22,7 @@ export function ToasterDemo() {
       {/* Mock Sonner Toast */}
       {showToast && (
         <div className="bottom-4 right-4 animate-in slide-in-from-bottom-5 fade-in absolute duration-flow">
-          <div className="gap-3 p-4 pr-8 max-w-sm flex items-center rounded-lg border bg-background shadow-lg">
+          <div className="gap-3 p-4 pe-8 max-w-sm flex items-center rounded-lg border bg-background shadow-lg">
             <CheckCircle2 className="text-success-strong w-5 h-5 flex-shrink-0" />
             <div className="flex flex-col">
               <span className="font-semibold text-sm">Action successful</span>

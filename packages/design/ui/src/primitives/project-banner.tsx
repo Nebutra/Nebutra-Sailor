@@ -125,7 +125,7 @@ export function ProjectBanner({
           <span>{label}</span>
         </div>
         {callToAction && (
-          <div className="ml-6 md:ml-0">
+          <div className="ms-6 md:ms-0">
             {callToAction.href !== undefined ? (
               <a className={cn(ctaBase, tokens.cta)} href={callToAction.href}>
                 {callToAction.label}

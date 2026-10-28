@@ -180,7 +180,7 @@ export default function CollapsibleDemo() {
           <Collapsible defaultOpen>
             <CollapsibleTrigger asChild>
               <Button
-                className="h-auto max-w-full whitespace-normal break-words py-2 text-left"
+                className="h-auto max-w-full whitespace-normal break-words py-2 text-start"
                 suffix={<ChevronDown />}
                 variant="outline"
               >

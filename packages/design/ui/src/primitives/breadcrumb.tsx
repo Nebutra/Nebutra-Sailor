@@ -1,6 +1,6 @@
 "use client";
 import { ChevronRight, MoreHorizontal } from "@nebutra/icons";
-import type * as React from "react";
+import * as React from "react";
 import { cn } from "../utils";
 import { Slot } from "../utils/slot";
 import { UiLabelText } from "./ui-labels";
@@ -29,11 +29,12 @@ import { UiLabelText } from "./ui-labels";
  */
 export interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
   /**
-   * Accepted by the type but not read by the component: it is forwarded to the
-   * `nav` element as an unknown attribute. Pass the separator as children of
-   * each `BreadcrumbSeparator` instead.
+   * Separator drawn by every `BreadcrumbSeparator` that has no children of its own. A
+   * `BreadcrumbSeparator` with children still wins, so one divider can differ from the rest.
+   * The built-in chevron mirrors in right-to-left pages; a custom node is drawn as given, so
+   * pick a symmetric one (`/`) or flip it yourself.
    *
-   * @deprecated Has no effect. Set the separator on `BreadcrumbSeparator`.
+   * @default A right-pointing chevron that mirrors in RTL
    */
   separator?: React.ReactNode;
 }
@@ -51,6 +52,8 @@ export interface BreadcrumbLinkProps extends React.ComponentPropsWithoutRef<"a">
 export type BreadcrumbPageProps = React.ComponentPropsWithoutRef<"span">;
 export type BreadcrumbSeparatorProps = React.ComponentPropsWithoutRef<"li">;
 export type BreadcrumbEllipsisProps = React.ComponentPropsWithoutRef<"span">;
+
+const BreadcrumbSeparatorContext = React.createContext<React.ReactNode>(undefined);
 // =============================================================================
 // Components
 // =============================================================================
@@ -88,10 +91,20 @@ export type BreadcrumbEllipsisProps = React.ComponentPropsWithoutRef<"span">;
 const Breadcrumb = ({
   ref,
   "aria-label": ariaLabel = "breadcrumb",
+  separator,
+  children,
   ...props
-}: BreadcrumbProps & { ref?: React.Ref<HTMLElement> | undefined }) => (
-  <nav ref={ref} aria-label={ariaLabel} {...props} />
-);
+}: BreadcrumbProps & { ref?: React.Ref<HTMLElement> | undefined }) => {
+  // An empty landmark is announced but leads nowhere, so render nothing without content.
+  if (React.Children.toArray(children).length === 0) return null;
+  return (
+    <BreadcrumbSeparatorContext.Provider value={separator}>
+      <nav ref={ref} aria-label={ariaLabel} {...props}>
+        {children}
+      </nav>
+    </BreadcrumbSeparatorContext.Provider>
+  );
+};
 Breadcrumb.displayName = "Breadcrumb";
 /**
  * BreadcrumbList - Ordered list container for breadcrumb items
@@ -190,16 +203,19 @@ BreadcrumbPage.displayName = "BreadcrumbPage";
  * <BreadcrumbSeparator>→</BreadcrumbSeparator>
  * ```
  */
-const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => (
-  <li
-    role="presentation"
-    aria-hidden="true"
-    className={cn("[&>svg]:size-3.5", className)}
-    {...props}
-  >
-    {children ?? <ChevronRight />}
-  </li>
-);
+const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => {
+  const inherited = React.use(BreadcrumbSeparatorContext);
+  return (
+    <li
+      role="presentation"
+      aria-hidden="true"
+      className={cn("[&>svg]:size-3.5", className)}
+      {...props}
+    >
+      {children ?? inherited ?? <ChevronRight className="rtl:rotate-180" />}
+    </li>
+  );
+};
 BreadcrumbSeparator.displayName = "BreadcrumbSeparator";
 /**
  * BreadcrumbEllipsis - Collapsed items indicator

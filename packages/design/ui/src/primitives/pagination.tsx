@@ -42,6 +42,16 @@ export interface PaginationProps extends Omit<React.ComponentPropsWithoutRef<"na
    * @default "Next"
    */
   nextLabel?: string;
+  /**
+   * Accessible name of each link. It replaces the English default, so pass it to localise the
+   * rail; the visible caption (`previousLabel` / `nextLabel`) is separate.
+   * @default (direction, title) => `Go to ${direction} page: ${title}`
+   */
+  linkLabel?: (direction: "previous" | "next", title: string) => string;
+}
+
+function defaultLinkLabel(direction: "previous" | "next", title: string): string {
+  return `Go to ${direction} page: ${title}`;
 }
 
 function paginationCssVars(style: React.CSSProperties | undefined): PaginationCssVars {
@@ -65,10 +75,12 @@ function PaginationRail({
   destination,
   direction,
   label,
+  linkLabel,
 }: {
   destination: PaginationDestination | undefined;
   direction: "previous" | "next";
   label: string;
+  linkLabel: (direction: "previous" | "next", title: string) => string;
 }) {
   if (!destination) {
     return <div aria-hidden="true" className="hidden sm:block" />;
@@ -81,20 +93,20 @@ function PaginationRail({
     <a
       href={destination.href}
       rel={direction === "previous" ? "prev" : "next"}
-      aria-label={`Go to ${direction} page: ${destination.title}`}
+      aria-label={linkLabel(direction, destination.title)}
       className={cn(
         "group flex min-h-[var(--pagination-min-height)] min-w-0 items-center gap-[var(--pagination-gap)] rounded-[var(--pagination-radius)] border border-border bg-background",
         "px-[var(--pagination-padding-x)] py-[var(--pagination-padding-y)] text-foreground shadow-xs",
         "transition-[background-color,border-color,box-shadow,color,transform] duration-[var(--pagination-duration)] ease-[var(--pagination-easing)]",
         "hover:border-ring hover:bg-accent focus-visible:outline-none",
         "motion-reduce:transition-none",
-        isPrevious ? "justify-start text-left" : "justify-end text-right",
+        isPrevious ? "justify-start text-start" : "justify-end text-end",
       )}
     >
       {isPrevious && (
         <Icon
           aria-hidden="true"
-          className="size-[var(--pagination-icon-size)] shrink-0 text-muted-foreground transition-transform duration-[var(--pagination-duration)] group-hover:-translate-x-0.5 motion-reduce:transition-none"
+          className="size-[var(--pagination-icon-size)] shrink-0 text-muted-foreground transition-transform duration-[var(--pagination-duration)] group-hover:-translate-x-0.5 motion-reduce:transition-none rtl:rotate-180 rtl:group-hover:translate-x-0.5"
         />
       )}
       <span className="flex min-w-0 flex-col gap-[var(--pagination-title-gap)]">
@@ -108,7 +120,7 @@ function PaginationRail({
       {!isPrevious && (
         <Icon
           aria-hidden="true"
-          className="size-[var(--pagination-icon-size)] shrink-0 text-muted-foreground transition-transform duration-[var(--pagination-duration)] group-hover:translate-x-0.5 motion-reduce:transition-none"
+          className="size-[var(--pagination-icon-size)] shrink-0 text-muted-foreground transition-transform duration-[var(--pagination-duration)] group-hover:translate-x-0.5 motion-reduce:transition-none rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
         />
       )}
     </a>
@@ -122,7 +134,8 @@ function PaginationRail({
  * numbered page list: there are no page numbers, current-page marker or
  * ellipsis. Each side is a titled link with a caption. The two sit side by side
  * from `sm` up and stack below it. The rail labels itself "Page navigation"
- * (override with `aria-label`).
+ * (override with `aria-label`). With neither `previous` nor `next` it renders nothing instead of
+ * an empty landmark. In right-to-left pages the slots swap sides and the arrows mirror.
  *
  * @example
  * ```tsx
@@ -137,11 +150,13 @@ export function Pagination({
   next,
   previousLabel = "Previous",
   nextLabel = "Next",
+  linkLabel = defaultLinkLabel,
   className,
   style,
   "aria-label": ariaLabel = "Page navigation",
   ...props
 }: PaginationProps) {
+  if (!previous && !next) return null;
   return (
     <nav
       aria-label={ariaLabel}
@@ -152,8 +167,13 @@ export function Pagination({
       style={paginationCssVars(style)}
       {...props}
     >
-      <PaginationRail destination={previous} direction="previous" label={previousLabel} />
-      <PaginationRail destination={next} direction="next" label={nextLabel} />
+      <PaginationRail
+        destination={previous}
+        direction="previous"
+        label={previousLabel}
+        linkLabel={linkLabel}
+      />
+      <PaginationRail destination={next} direction="next" label={nextLabel} linkLabel={linkLabel} />
     </nav>
   );
 }

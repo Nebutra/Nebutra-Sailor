@@ -68,8 +68,8 @@ const pillActiveClass: Record<FilterPillsVariant, string> = {
 
 const pillDisabledClass = "opacity-40 pointer-events-none";
 
-const countInactiveClass = "text-muted-foreground/80 ml-1 tabular-nums";
-const countActiveClass = "text-current/80 ml-1 tabular-nums";
+const countInactiveClass = "text-muted-foreground/80 ms-1 tabular-nums";
+const countActiveClass = "text-current/80 ms-1 tabular-nums";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 

@@ -39,8 +39,8 @@ export const guidance: import("../guidance").Guidance = {
       body: "A disabled divider gets aria-disabled and leaves the tab order. The panels keep their size.",
     },
     {
-      title: "Arrow keys are not mirrored in RTL",
-      body: "Right always grows the first panel, which sits on the right edge in a right-to-left page. The layout flips; the key mapping does not.",
+      title: "RTL: keys mirror, pointer dragging does not",
+      body: "Under dir=rtl the first panel sits on the right, so ArrowLeft grows it and ArrowRight shrinks it. Dragging with a pointer is still measured from the left edge by react-resizable-panels and may move the divider the wrong way.",
     },
   ],
   dos: [

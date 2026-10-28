@@ -27,7 +27,7 @@ export function DialogDeactivateDemo() {
           <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
             <AlertTriangleIcon className="h-6 w-6 text-red-600 dark:text-red-500" />
           </div>
-          <DialogHeader className="text-left">
+          <DialogHeader className="text-start">
             <DialogTitle>Deactivate account</DialogTitle>
             <DialogDescription>
               Are you sure you want to deactivate your account? All of your data will be permanently

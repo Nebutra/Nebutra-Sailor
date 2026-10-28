@@ -259,7 +259,7 @@ const ContextCardEntity = ({
             className="grid grid-cols-[minmax(5rem,auto)_1fr] items-baseline gap-[var(--context-card-section-gap)]"
           >
             <dt className="text-muted-foreground">{item.label}</dt>
-            <dd className="min-w-0 truncate text-right text-popover-foreground">
+            <dd className="min-w-0 truncate text-end text-popover-foreground">
               {item.value ?? CONTEXT_CARD_FALLBACK}
             </dd>
           </div>

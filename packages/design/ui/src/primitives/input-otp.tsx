@@ -16,7 +16,7 @@ export interface InputOTPProps {
   onChange?: (newValue: string) => void;
   /** Fires with the new code on every accepted keystroke, paste or deletion. */
   onValueChange?: (newValue: string) => void;
-  /** Fires when the code reaches `maxLength`. Only fires when `value` is controlled. */
+  /** Fires once when the code reaches `maxLength`, whether `value` is controlled or not. */
   onComplete?: (value: string) => void;
   /** Render-prop alternative to `children`; receives the live slot state. */
   render?: (props: RenderProps) => React.ReactNode;
@@ -45,9 +45,18 @@ export interface InputOTPProps {
   "aria-labelledby"?: string;
   /** Ids of elements that describe the control, such as a hint or an error message. */
   "aria-describedby"?: string;
-  /** Announces the code as invalid. The slots do not restyle themselves from it. */
+  /** Announces the code as invalid. The slots do not restyle themselves from it; use `error` for that. */
   "aria-invalid"?: boolean | "true" | "false";
+  /**
+   * Marks the code as wrong: sets `aria-invalid` on the input and gives every slot a destructive
+   * border and focus ring. It shows no message, so link one with `aria-describedby`.
+   * @default false
+   */
+  error?: boolean;
 }
+
+/** Tells the slots drawn inside an `InputOTP` whether the field is in its error state. */
+const InputOTPErrorContext = React.createContext(false);
 
 /**
  * One-time-code entry. Renders a single transparent input over the slots, so typing, paste,
@@ -62,23 +71,30 @@ const InputOTP = ({
   ref,
   onValueChange,
   onChange: legacyOnChange,
+  error = false,
   ...rest
 }: InputOTPProps & { ref?: React.Ref<HTMLInputElement> | undefined }) => {
   // The underlying OTPInput calls onChange with the value; ours is onValueChange.
-  const props = { ...rest, onChange: onValueChange ?? legacyOnChange };
+  const props = {
+    ...rest,
+    ...(error ? { "aria-invalid": true } : {}),
+    onChange: onValueChange ?? legacyOnChange,
+  };
   // Build the OTPInput props based on whether render or children is provided
   const otpProps = render ? { render, ...props } : { children, ...props };
 
   return (
-    <OTPInput
-      ref={ref}
-      containerClassName={cn(
-        "flex items-center gap-2 has-[:disabled]:opacity-50",
-        containerClassName,
-      )}
-      className={cn("disabled:cursor-not-allowed", className)}
-      {...(otpProps as React.ComponentProps<typeof OTPInput>)}
-    />
+    <InputOTPErrorContext.Provider value={error}>
+      <OTPInput
+        ref={ref}
+        containerClassName={cn(
+          "flex items-center gap-2 has-[:disabled]:opacity-50",
+          containerClassName,
+        )}
+        className={cn("disabled:cursor-not-allowed", className)}
+        {...(otpProps as React.ComponentProps<typeof OTPInput>)}
+      />
+    </InputOTPErrorContext.Provider>
   );
 };
 InputOTP.displayName = "InputOTP";
@@ -111,6 +127,7 @@ const InputOTPSlot = ({
     slots: Array<{ char?: string; hasFakeCaret?: boolean; isActive?: boolean } | undefined>;
   };
   const slot = inputOTPContext.slots[index];
+  const error = React.use(InputOTPErrorContext);
   const char = slot?.char ?? "";
   const hasFakeCaret = slot?.hasFakeCaret ?? false;
   const isActive = slot?.isActive ?? false;
@@ -119,10 +136,13 @@ const InputOTPSlot = ({
     <div
       ref={ref}
       className={cn(
-        "relative flex h-10 w-10 items-center justify-center border-y border-r border-input text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] first:rounded-l-md first:border-l last:rounded-r-md",
+        "relative flex h-10 w-10 items-center justify-center border-y border-e border-input text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] first:rounded-s-md first:border-s last:rounded-e-md",
         isActive && "z-10 ring-2 ring-ring ring-offset-background",
+        error && "border-destructive",
+        error && isActive && "ring-destructive",
         className,
       )}
+      data-invalid={error ? "true" : undefined}
       {...props}
     >
       {char}

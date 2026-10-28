@@ -78,43 +78,43 @@ type FolderSizeTokens = {
 const sizeMap: Readonly<Record<FolderSize, FolderSizeTokens>> = {
   sm: {
     container: "size-24 rounded-[24px]",
-    tabLeft: "w-9 h-3 rounded-tl-lg",
-    tabRight: "w-2 h-3 rounded-tr-[24px]",
+    tabLeft: "w-9 h-3 rounded-ss-lg",
+    tabRight: "w-2 h-3 rounded-se-[24px]",
     tabBridge: "w-2 h-2",
     flapBody: "h-9",
     papers: "inset-x-5 top-2",
     paperOffset: "top-1",
     paperH: "h-16",
     paperContent: "pt-2.5 px-2.5 space-y-1",
-    label: "bottom-2 left-2 text-[9px] py-0.5 px-1.5",
+    label: "bottom-2 start-2 text-[9px] py-0.5 px-1.5",
     hoverY: -3,
     hoverBackY: -4,
   },
   md: {
     container: "size-32 rounded-[32px]",
-    tabLeft: "w-12 h-4 rounded-tl-lg",
-    tabRight: "w-2.5 h-4 rounded-tr-[32px]",
+    tabLeft: "w-12 h-4 rounded-ss-lg",
+    tabRight: "w-2.5 h-4 rounded-se-[32px]",
     tabBridge: "w-2.5 h-2.5",
     flapBody: "h-12",
     papers: "inset-x-6 top-3",
     paperOffset: "top-1.5",
     paperH: "h-24",
     paperContent: "pt-3 px-3 space-y-1",
-    label: "bottom-3 left-3 text-[10px] py-0.5 px-1.5",
+    label: "bottom-3 start-3 text-[10px] py-0.5 px-1.5",
     hoverY: -3,
     hoverBackY: -5,
   },
   lg: {
     container: "size-40 rounded-[40px]",
-    tabLeft: "w-16 h-5 rounded-tl-xl",
-    tabRight: "w-3 h-5 rounded-tr-[40px]",
+    tabLeft: "w-16 h-5 rounded-ss-xl",
+    tabRight: "w-3 h-5 rounded-se-[40px]",
     tabBridge: "w-3 h-3",
     flapBody: "h-16",
     papers: "inset-x-8 top-4",
     paperOffset: "top-2",
     paperH: "h-28",
     paperContent: "pt-4 px-4 space-y-1.5",
-    label: "bottom-4 left-4 text-xs py-1 px-2",
+    label: "bottom-4 start-4 text-xs py-1 px-2",
     hoverY: -4,
     hoverBackY: -6,
   },
@@ -293,7 +293,7 @@ export const Folder = function Folder({
   const children = (
     <>
       {/* Front flap */}
-      <div className="absolute right-0 bottom-0 left-0 z-20">
+      <div className="absolute end-0 bottom-0 start-0 z-20">
         <div className="flex items-end">
           <div className={cn(s.tabLeft, "backdrop-blur-sm", c.flap)} />
           <div className={cn(s.tabRight, "backdrop-blur-sm", c.flap)} />
@@ -305,7 +305,7 @@ export const Folder = function Folder({
             )}
           />
         </div>
-        <div className={cn(s.flapBody, "rounded-tr-xl backdrop-blur-sm", c.flap)} />
+        <div className={cn(s.flapBody, "rounded-se-xl backdrop-blur-sm", c.flap)} />
       </div>
 
       {/* Papers */}

@@ -154,7 +154,7 @@ function DeploymentsPanel() {
             <TableHead>Deployment</TableHead>
             <TableHead className="hidden md:table-cell">Environment</TableHead>
             <TableHead className="hidden sm:table-cell">Branch</TableHead>
-            <TableHead className="text-right">Age</TableHead>
+            <TableHead className="text-end">Age</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -179,7 +179,7 @@ function DeploymentsPanel() {
               <TableCell className="hidden font-mono text-muted-foreground text-xs sm:table-cell">
                 {row.branch}
               </TableCell>
-              <TableCell className="text-right text-muted-foreground tabular-nums">
+              <TableCell className="text-end text-muted-foreground tabular-nums">
                 {row.age}
               </TableCell>
             </TableRow>
@@ -218,7 +218,7 @@ function KeysPanel() {
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead className="hidden md:table-cell">Scope</TableHead>
-            <TableHead className="text-right">Last used</TableHead>
+            <TableHead className="text-end">Last used</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -244,7 +244,7 @@ function KeysPanel() {
                   {key.scope}
                 </Badge>
               </TableCell>
-              <TableCell className="text-right text-muted-foreground tabular-nums">
+              <TableCell className="text-end text-muted-foreground tabular-nums">
                 {key.used}
               </TableCell>
             </TableRow>
@@ -265,7 +265,7 @@ export function ProductScene({ className }: { className?: string }) {
         className,
       )}
     >
-      <aside className="hidden flex-col gap-1 border-border border-r bg-background p-3 md:flex">
+      <aside className="hidden flex-col gap-1 border-border border-e bg-background p-3 md:flex">
         <div className="flex items-center gap-2 px-2 pt-1 pb-4">
           <BrandMark size={18} />
           <span className="font-medium text-foreground text-sm">Acme</span>

@@ -2,6 +2,11 @@
 
 import {
   Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
   Drawer,
   DrawerBody,
   DrawerClose,
@@ -160,6 +165,89 @@ export default function DrawerDemo() {
             </DrawerContent>
           </Drawer>
         </Row>
+      </State>
+
+      <State
+        breaks="A drawer opened from inside a Dialog or Sheet that lands behind it, so the confirm step is invisible and the page looks frozen. Drawer takes the same backdrop and modal layers as Sheet and Dialog, and the newest overlay paints on top."
+        code={`<Dialog>
+  <DialogContent>
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button variant="outline">Open drawer</Button>
+      </DrawerTrigger>
+      <DrawerContent>…</DrawerContent>
+    </Drawer>
+  </DialogContent>
+</Dialog>`}
+        id="in-dialog"
+        note="Open the dialog, then the drawer inside it. The drawer panel stacks above the dialog. Its backdrop shares the dialog's backdrop layer, so it dims the page but not the dialog panel itself."
+        title="Opened from a Dialog"
+      >
+        <Row>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">Open dialog</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogTitle>Invite a teammate</DialogTitle>
+              <DialogDescription>Send the invite now or review the role first.</DialogDescription>
+              <Drawer>
+                <DrawerTrigger asChild>
+                  <Button variant="outline">Review role</Button>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerHeader>
+                    <DrawerTitle>Member role</DrawerTitle>
+                    <DrawerDescription>
+                      Members can deploy but not change billing.
+                    </DrawerDescription>
+                  </DrawerHeader>
+                  <DrawerFooter>
+                    <DrawerClose asChild>
+                      <Button variant="outline">Back to the dialog</Button>
+                    </DrawerClose>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+            </DialogContent>
+          </Dialog>
+        </Row>
+      </State>
+
+      <State
+        breaks="A header centred in a side drawer, where every other line of text is start-aligned, or a left drawer assumed to flip in a right-to-left page."
+        code={`<Drawer direction="right">
+  <DrawerContent dir="rtl">…</DrawerContent>
+</Drawer>`}
+        id="rtl"
+        note="Header text is start-aligned in top, left and right drawers and centred only in bottom ones, so it follows dir. Left and right are physical edges that do not flip: Vaul slides and drags along the x axis, so choose the edge from your own dir. A drawer is portalled to the body, so a dir on a wrapper does not reach it; set dir on html or pass it to DrawerContent."
+        title="Right-to-left"
+      >
+        <AxisMatrix
+          axisName="direction"
+          defaultValue="right"
+          render={(direction) => (
+            <Drawer direction={direction as (typeof DIRECTIONS)[number]}>
+              <DrawerTrigger asChild>
+                <Button size="sm" variant="outline">
+                  Open {direction} (rtl)
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent dir="rtl">
+                <DrawerHeader>
+                  <DrawerTitle>ملاحظات الإصدار</DrawerTitle>
+                  <DrawerDescription>ما الذي تغيّر في هذا الإصدار.</DrawerDescription>
+                </DrawerHeader>
+                <DrawerBody>
+                  <p className="m-0 text-muted-foreground text-sm">
+                    بناء أسرع ونظرة عامة جديدة على المشروع.
+                  </p>
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          )}
+          values={[...DIRECTIONS]}
+        />
       </State>
 
       <State
@@ -397,10 +485,12 @@ export default function DrawerDemo() {
         <p>
           Drawer is the touch-first bottom panel, built on Vaul, with drag-to-dismiss. Use{" "}
           <code>Sheet</code> for a lateral desktop panel and <code>Dialog</code> or{" "}
-          <code>AlertDialog</code> for a blocking decision. Drawer layers its backdrop and panel at
-          z-index 50, below the 1040 and 1050 that Sheet and Dialog use, so a Drawer opened beneath
-          one of those cannot be stacked above it. The header text is centred whatever the
-          direction.
+          <code>AlertDialog</code> for a blocking decision. Drawer layers its backdrop and panel on
+          the same overlay tokens as Sheet and Dialog (the backdrop and modal layers), so a Drawer
+          opened from inside one of them stacks above it. The header text is start-aligned and
+          centred only in a bottom drawer, so it follows the reading direction. The{" "}
+          <code>left</code> and <code>right</code> directions are physical screen edges and do not
+          flip under <code>dir=&quot;rtl&quot;</code>.
         </p>
       </Aside>
     </DemoPage>

@@ -42,7 +42,7 @@ export function DialogShareDemo() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <Share2 className="mr-2 h-4 w-4" />
+          <Share2 className="me-2 h-4 w-4" />
           Share
         </Button>
       </DialogTrigger>

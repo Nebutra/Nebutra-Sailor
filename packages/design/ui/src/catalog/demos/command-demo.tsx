@@ -19,7 +19,7 @@ export function CommandDemo() {
         <CommandGroup heading="Suggestions">
           <CommandItem></CommandItem>
           <CommandItem>
-            <Search className="mr-2 h-4 w-4" />
+            <Search className="me-2 h-4 w-4" />
             Search
             <>⌘K</>
           </CommandItem>
@@ -27,7 +27,7 @@ export function CommandDemo() {
         <CommandSeparator />
         <CommandGroup heading="Settings">
           <CommandItem>
-            <User className="mr-2 h-4 w-4" />
+            <User className="me-2 h-4 w-4" />
             Profile
             <>⌘P</>
           </CommandItem>

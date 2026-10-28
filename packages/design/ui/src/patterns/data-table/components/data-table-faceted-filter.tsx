@@ -82,7 +82,7 @@ export function DataTableFacetedFilter({
           {selectedCount > 0 && (
             <Badge
               variant="secondary"
-              className="ml-0.5 h-5 min-w-[20px] rounded-full px-1.5 text-2xs font-medium"
+              className="ms-0.5 h-5 min-w-[20px] rounded-full px-1.5 text-2xs font-medium"
             >
               {selectedCount}
             </Badge>
@@ -107,7 +107,7 @@ export function DataTableFacetedFilter({
                   >
                     <div
                       className={cn(
-                        "mr-2 flex h-4 w-4 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border",
+                        "me-2 flex h-4 w-4 shrink-0 items-center justify-center rounded-[var(--radius-sm)] border",
                         allSelected
                           ? "border-primary bg-primary text-primary-foreground"
                           : "border-muted-foreground/40",

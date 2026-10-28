@@ -39,8 +39,8 @@ export const guidance: import("../guidance").Guidance = {
       code: '<DatePicker id="due" label="Due date" value={date} onValueChange={setDate} />',
     },
     {
-      title: "Bound the calendar and validate the text",
-      body: "min and max disable days in the grid. A typed date is not checked against them, so validate the value as well.",
+      title: "Bound the calendar and the text",
+      body: "min and max disable days in the grid and reject a typed date outside them: the value is not committed and the field is marked invalid until blur. Still validate on submit, because a bound says nothing about required or cross-field rules.",
       code: '<DatePicker id="launch" label="Launch" min="2026-10-05" max="2026-10-28" />',
     },
   ],
@@ -52,7 +52,7 @@ export const guidance: import("../guidance").Guidance = {
     },
     {
       title: "Don't treat min and max as validation",
-      body: "They shape the calendar only. Typing a date outside the range still commits it.",
+      body: "They keep out-of-range dates from committing, but they show no message and know nothing about required or cross-field rules. Validate on submit.",
       code: '<DatePicker min="2026-10-05" onValueChange={save} />',
     },
   ],

@@ -330,6 +330,35 @@ import { ThemeProvider } from "@nebutra/tokens";
 </html>
 ```
 
+### 3.3 Logical direction (RTL-safe by default)
+
+Library and docs code names the **inline** axis, not a side of the screen. Under `dir="rtl"` the
+logical utilities flip on their own; in LTR they compile to the same pixels as the physical ones.
+
+| Instead of | Write | Notes |
+|------------|-------|-------|
+| `ml-* mr-* pl-* pr-*` | `ms-* me-* ps-* pe-*` | also `scroll-ms/me/ps/pe-*` |
+| `left-* right-*` | `start-* end-*` | `left-1/2` stays when paired with `-translate-x-1/2`, `slide-in/out` or `inset-x` |
+| `text-left text-right` | `text-start text-end` | |
+| `rounded-l/r`, `rounded-tl/tr/bl/br` | `rounded-s/e`, `rounded-ss/se/es/ee` | |
+| `border-l border-r` | `border-s border-e` | |
+| `float-left/right` | `float-start/end` | |
+
+- **Directional glyphs** (chevrons, arrows, "back"/"next") are not mirrored by CSS alone: add
+  `rtl:rotate-180` or `rtl:-scale-x-100`. Symmetric icons (close, search, plus) stay as they are.
+- **CSS** in this package uses no physical `margin-left` / `padding-right` / `left` / `text-align: left`;
+  write `margin-inline-start`, `padding-inline-end`, `inset-inline-start`, `text-align: start` in new rules.
+  The `slide-in-from-left/right` keyframes are physical by name and are only for edge-anchored surfaces
+  whose side is a physical choice (`side="left"`); do not use them for inline-start/end content.
+- **Physical by nature** (a progress bar that fills left to right, a toggle thumb, a map) is allowed with
+  `// allow-physical: <reason>` on the line or the line above. A marker without a reason is ignored.
+- **Guard**: `pnpm lint:logical-direction` (`scripts/lint-logical-direction.mjs`) is a shrink-only
+  ratchet over `packages/design/ui/src` and `apps/design/src` (`governance.config.json` →
+  `logicalDirection.allowlist`). New physical classes fail; fixing a listed file requires
+  `node scripts/lint-logical-direction.mjs --prune` so the entry shrinks or is deleted. `--list` prints
+  every counted class; `--report-inline` reports (without gating) inline `style` props such as
+  `marginLeft`, `paddingRight`, `left`, `textAlign: "left"`.
+
 ---
 
 ## 4. Imports & Conventions

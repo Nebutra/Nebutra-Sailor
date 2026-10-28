@@ -267,9 +267,9 @@ export default function ResizableDemo() {
       </State>
 
       <State
-        breaks="A right-to-left page where the layout mirrors but the arrow keys do not: in the library source ArrowRight always grows the first panel, which sits on the right in RTL."
+        breaks="Dragging the divider with a pointer inside dir=rtl: react-resizable-panels measures the drag from the left edge and has no dir option, so the divider can follow the pointer the wrong way. Use the keyboard in RTL layouts until the library supports it."
         id="rtl"
-        note="Inside dir=rtl the panels flip. The key mapping is physical, so ArrowRight moves the divider toward the start edge here. Check that this is what you want before shipping an RTL layout."
+        note="Inside dir=rtl the panels flip and the arrow keys mirror with them: the first panel sits on the right, ArrowLeft grows it and ArrowRight shrinks it. Pointer dragging is the part that is not mirrored."
         title="Right-to-left"
       >
         <div dir="rtl">

@@ -5,7 +5,7 @@ import { Table } from "../table";
 /**
  * The two contracts app code depends on when a table lives inside a panel that
  * already owns the border: `bare` must not draw a second frame, and `alignment`
- * must beat the implicit last-column right alignment (a plain `text-left` class
+ * must beat the implicit last-column end alignment (a plain `text-left` class
  * cannot, because `:last-child` outranks it).
  */
 describe("Table chrome", () => {
@@ -87,7 +87,7 @@ describe("Table chrome", () => {
     );
 
     const cells = container.querySelectorAll("td");
-    expect(cells[1]?.className).toContain("last:text-right");
+    expect(cells[1]?.className).toContain("last:text-end");
   });
 
   it("suppresses the implicit last-column rule when alignment is set", () => {
@@ -109,11 +109,11 @@ describe("Table chrome", () => {
     );
 
     const head = container.querySelector("th") as HTMLElement;
-    expect(head.className).not.toContain("last:text-right");
-    expect(head.className).toContain("text-left");
+    expect(head.className).not.toContain("last:text-end");
+    expect(head.className).toContain("text-start");
 
     const cell = container.querySelector("td") as HTMLElement;
-    expect(cell.className).not.toContain("last:text-right");
+    expect(cell.className).not.toContain("last:text-end");
     expect(cell.className).toContain("text-center");
   });
 });

@@ -61,7 +61,7 @@ export function EditorialStatGrid({ className, items, label, title }: EditorialS
         {visible.map((item, index) => (
           <div
             key={item.key ?? `${index}-${item.label}`}
-            className="px-0 py-5 sm:px-6 sm:first:pl-0 sm:last:pr-0"
+            className="px-0 py-5 sm:px-6 sm:first:ps-0 sm:last:pe-0"
           >
             <dt className="sr-only">{item.label}</dt>
             <dd>

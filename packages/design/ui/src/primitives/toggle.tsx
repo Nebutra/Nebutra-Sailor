@@ -203,7 +203,7 @@ const Toggle = ({
           controlFocusProxyClassName,
           "border-[var(--toggle-track-border)] transition-[background-color,border-color] duration-[var(--toggle-duration)] ease-[var(--toggle-easing)]",
           "peer-checked:bg-[var(--toggle-track-on)]",
-          "peer-checked:[&>span]:translate-x-[var(--toggle-thumb-translate)] peer-checked:[&>span]:bg-[var(--toggle-thumb-on)] peer-checked:[&>span]:text-[var(--toggle-icon-on)]",
+          "peer-checked:[&>span]:translate-x-[var(--toggle-thumb-translate)] rtl:peer-checked:[&>span]:-translate-x-[var(--toggle-thumb-translate)] peer-checked:[&>span]:bg-[var(--toggle-thumb-on)] peer-checked:[&>span]:text-[var(--toggle-icon-on)]",
           "",
           "peer-disabled:cursor-not-allowed peer-disabled:opacity-60",
           "motion-reduce:transition-none",

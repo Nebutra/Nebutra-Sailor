@@ -12,7 +12,7 @@ export function NoisePatternCardDemo() {
             <Sparkles className="w-8 h-8" />
           </div>
 
-          <div className="gap-4 md:text-left flex flex-col text-center">
+          <div className="gap-4 md:text-start flex flex-col text-center">
             <div>
               <h3 className="text-2xl tracking-tight mb-2 text-foreground">
                 Organic Grain Texture

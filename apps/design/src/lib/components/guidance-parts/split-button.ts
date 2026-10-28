@@ -59,8 +59,8 @@ export const guidance: import("../guidance").Guidance = {
       body: "type is limited to default and secondary. Put a destructive action in the menu behind a confirmation instead.",
     },
     {
-      title: "Don't rely on it in right-to-left pages yet",
-      body: "The seam uses a physical rounded-r-none on the primary half and rounded-l-none plus border-l on the chevron, so in RTL the outer corners are squared and the seam corners rounded.",
+      title: "Don't override the seam with physical classes",
+      body: "The seam uses logical edges (rounded-e-none on the primary half, rounded-s-none plus border-s on the chevron) so the pair mirrors in RTL. A className that rounds or rules a physical left or right edge on either half would pin that side in both directions.",
     },
   ],
 };

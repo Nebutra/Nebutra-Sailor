@@ -68,7 +68,7 @@ export default function EcosystemPage() {
         return (
           <Section key={audience.id} note={<p>{audience.note}</p>} title={audience.title}>
             {/* Left and top rules here, right and bottom on each cell: a short last row leaves clean space, not a filled-in grey slot. */}
-            <div className="grid border-border border-t border-l sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-border [&>*]:border-r [&>*]:border-b">
+            <div className="grid border-border border-t border-s sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-border [&>*]:border-e [&>*]:border-b">
               {items.map((item) => (
                 <EcosystemCard item={item} key={item.id} showBasis />
               ))}

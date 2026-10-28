@@ -230,9 +230,9 @@ export default function ToggleGroupDemo({ derived }: DemoProps) {
       </State>
 
       <State
-        breaks="Layout that assumes left-to-right: the track and item order must mirror under dir=rtl. The arrow keys do not mirror (see the note below)."
+        breaks="Layout or keys that assume left-to-right: the track and item order must mirror under dir=rtl, and so must the arrow keys (see the note below)."
         id="rtl"
-        note="dir=rtl on the wrapper reverses the visual order of the items."
+        note="dir=rtl on the wrapper reverses the visual order of the items, and the Left and Right arrows follow it: Left moves to the next item, Right to the previous one."
         title="Right-to-left layout"
       >
         <div dir="rtl">
@@ -278,12 +278,14 @@ export default function ToggleGroupDemo({ derived }: DemoProps) {
         </KeyboardPath>
       </State>
 
-      <Aside title="Arrow keys do not follow dir=rtl">
+      <Aside title="Arrow keys follow dir=rtl">
         <p>
-          The arrow handler maps ArrowRight and ArrowDown to the next item in DOM order and
-          ArrowLeft and ArrowUp to the previous one, with no check of the document direction. In a
-          right-to-left layout the next item is on the left, so ArrowRight moves focus visually
-          leftward. Up and Down still work as expected; Home and End are unaffected.
+          In a left-to-right layout ArrowRight and ArrowDown move to the next item in DOM order and
+          ArrowLeft and ArrowUp to the previous one. The handler reads the direction in effect at
+          the item (the nearest <code>dir</code> attribute, else the computed direction), so inside{" "}
+          <code>dir=rtl</code> ArrowLeft moves to the next item and ArrowRight to the previous one,
+          matching where those items sit on screen. Up and Down always mean next and previous; Home
+          and End are unaffected.
         </p>
       </Aside>
     </DemoPage>

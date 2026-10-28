@@ -63,7 +63,7 @@ export function RouterRevokeKey() {
             <TableHead>Name</TableHead>
             <TableHead>Key</TableHead>
             <TableHead>Last used</TableHead>
-            <TableHead className="text-right">
+            <TableHead className="text-end">
               <span className="sr-only">Actions</span>
             </TableHead>
           </TableRow>
@@ -79,7 +79,7 @@ export function RouterRevokeKey() {
               </TableCell>
               <TableCell className="font-mono text-muted-foreground">{key.prefix}…</TableCell>
               <TableCell className="text-muted-foreground">{key.lastUsed}</TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-end">
                 {key.revoked ? (
                   <Badge size="sm" variant="gray-subtle">
                     Revoked

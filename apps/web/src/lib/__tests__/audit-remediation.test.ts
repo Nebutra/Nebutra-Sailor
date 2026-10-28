@@ -286,7 +286,7 @@ describe("UI/UX audit remediation invariants", () => {
     expect(sidebarNav).toContain(
       'const ITEM_COLLAPSED_CLASSES = "justify-center px-0 size-8 mx-auto"',
     );
-    expect(workspaceSwitcher).toContain("px-2 py-1 text-left");
+    expect(workspaceSwitcher).toContain("px-2 py-1 text-start");
     // The brand mark sits on the workspace plate at 16px (2026-10-16 craft
     // pass), in every rail state; the full wordmark no longer heads the rail.
     expect(shell).toContain('<BrandLogo variant="mark" className="size-4"');

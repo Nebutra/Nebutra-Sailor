@@ -125,7 +125,7 @@ function PricingCardPeriod({ className, ...props }: React.ComponentProps<"span">
 function PricingCardOriginalPrice({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
-      className={cn("text-muted-foreground mr-1 ml-auto text-lg line-through", className)}
+      className={cn("text-muted-foreground me-1 ms-auto text-lg line-through", className)}
       {...props}
     />
   );

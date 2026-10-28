@@ -33,7 +33,7 @@ const RadioGroupStackedItem = ({
       className={cn(
         // Base UI radio emits `data-checked` / `data-unchecked`; the Radix-era
         // `data-state-checked:` selectors never matched.
-        "relative flex w-full flex-row items-center justify-between rounded-[var(--radius-card,var(--radius-lg))] border border-input px-4 py-3 text-left",
+        "relative flex w-full flex-row items-center justify-between rounded-[var(--radius-card,var(--radius-lg))] border border-input px-4 py-3 text-start",
         "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out motion-reduce:transition-none",
         "hover:bg-accent",
         "data-[checked]:border-primary data-[checked]:bg-primary/5 data-[checked]:ring-1 data-[checked]:ring-primary",
@@ -43,7 +43,7 @@ const RadioGroupStackedItem = ({
       {...props}
     >
       <div className="flex w-full items-center">
-        <BaseRadio.Indicator className="absolute left-4 flex items-center justify-center"></BaseRadio.Indicator>
+        <BaseRadio.Indicator className="absolute start-4 flex items-center justify-center"></BaseRadio.Indicator>
         <div className="flex w-full items-center">{children}</div>
       </div>
     </BaseRadio.Root>

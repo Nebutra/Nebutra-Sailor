@@ -69,7 +69,7 @@ export default function IconsPage() {
         title="Which set"
       >
         <div className="overflow-x-auto">
-          <table className="w-full max-w-3xl min-w-[640px] table-fixed text-left text-ui">
+          <table className="w-full max-w-3xl min-w-[640px] table-fixed text-start text-ui">
             <colgroup>
               <col className="w-[26%]" />
               <col className="w-[34%]" />
@@ -85,10 +85,10 @@ export default function IconsPage() {
             <tbody>
               {TIERS.map((row) => (
                 <tr className="align-top" key={row.library}>
-                  <td className="py-3 pr-6">
+                  <td className="py-3 pe-6">
                     <Mono>{row.library}</Mono>
                   </td>
-                  <td className="py-3 pr-6 text-foreground">{row.scope}</td>
+                  <td className="py-3 pe-6 text-foreground">{row.scope}</td>
                   <td className="py-3 text-muted-foreground">{row.why}</td>
                 </tr>
               ))}

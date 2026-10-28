@@ -17,7 +17,7 @@ import { cn } from "@nebutra/ui/utils";
 import type * as React from "react";
 import type { ApiBlock, ApiProp, InheritedGroup } from "@/lib/components/api-docs";
 
-const TH = "px-3 py-2 text-left font-medium text-muted-foreground text-xs";
+const TH = "px-3 py-2 text-start font-medium text-muted-foreground text-xs";
 
 export function ApiBlocks({ blocks, unresolved }: { blocks: ApiBlock[]; unresolved: string[] }) {
   if (blocks.length === 0) {

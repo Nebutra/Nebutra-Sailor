@@ -55,9 +55,5 @@ export const guidance: import("../guidance").Guidance = {
       title: "Don't treat it as a carousel",
       body: "There is no snapping, looping or virtualization. A long data set or a carousel belongs in a dedicated primitive.",
     },
-    {
-      title: "Don't use it in right-to-left layouts yet",
-      body: "Edge detection reads scrollLeft as a distance from the left edge, which browsers report as zero or negative in RTL. Fades and buttons can show on the wrong side.",
-    },
   ],
 };

@@ -46,7 +46,7 @@ export function ConsentCard({
       data-ui="nebutra-consent-card"
       className={cn(
         "fixed bottom-4 z-[var(--layer-banner)] flex w-[calc(100%-2rem)] max-w-sm flex-col gap-3 rounded-[var(--radius-lg)] border border-border bg-background/85 p-4 text-sm shadow-glass-md backdrop-blur-xl sm:bottom-6",
-        corner === "right" ? "right-4 sm:right-6" : "left-4 sm:left-6",
+        corner === "right" ? "end-4 sm:end-6" : "start-4 sm:start-6",
         className,
       )}
     >

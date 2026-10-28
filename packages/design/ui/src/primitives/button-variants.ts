@@ -34,9 +34,13 @@ export const buttonVariants = cva(
         // not move on hover (docs/design-system/hover-motion.md).
         ink: "bg-neutral-12 text-neutral-1 ring-1 ring-inset ring-neutral-1/5 hover:bg-neutral-12/90",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        // outline and ghost name their own text colour. They used to inherit it, so a
+        // dark island inside a light document (the docs Split pane, a dark product
+        // section) left them with the document's dark ink on a dark fill.
+        outline:
+          "border border-input bg-background text-foreground hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: "text-foreground hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         tertiary:
           "border border-transparent bg-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground hover:border-input",

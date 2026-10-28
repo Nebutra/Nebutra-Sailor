@@ -46,7 +46,7 @@ function Swatches({ steps }: { steps: readonly Step[] }) {
           return (
             <button
               aria-label={`Copy step ${step.step}, ${role?.label ?? ""}, ${value}`}
-              className="group flex min-w-0 flex-col bg-card text-left focus-visible:z-10"
+              className="group flex min-w-0 flex-col bg-card text-start focus-visible:z-10"
               key={step.step}
               onClick={() => {
                 void copy(value, key);
@@ -62,7 +62,7 @@ function Swatches({ steps }: { steps: readonly Step[] }) {
               <span className="flex min-w-0 flex-col gap-0.5 px-2 py-2">
                 <span className="font-medium text-foreground text-xs tabular-nums">
                   {step.step}
-                  {copied === key ? <span className="ml-1 text-success-strong">copied</span> : null}
+                  {copied === key ? <span className="ms-1 text-success-strong">copied</span> : null}
                 </span>
                 <span className="truncate font-mono text-muted-foreground text-2xs">
                   {step.hex}

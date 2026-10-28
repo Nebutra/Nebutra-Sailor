@@ -35,8 +35,8 @@ export const guidance: import("../guidance").Guidance = {
       body: "Clicking the selected item is a no-op, matching the radio role it announces. The only way to start empty is to omit the value.",
     },
     {
-      title: "Arrow keys ignore dir=rtl",
-      body: "ArrowRight always moves to the next item in DOM order, which is on the left in a right-to-left layout.",
+      title: "Arrow keys follow dir=rtl",
+      body: "Under dir=rtl, ArrowLeft moves to the next item and ArrowRight to the previous one, so the key matches the side the item is on. Up and Down are unchanged.",
     },
   ],
   dos: [

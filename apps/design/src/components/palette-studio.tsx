@@ -129,7 +129,7 @@ export function PaletteStudio({ defaultSeed }: { defaultSeed: string }) {
               </span>
             )}
             {NAME_RE.test(name) ? null : (
-              <span className="ml-3 text-destructive-strong">
+              <span className="ms-3 text-destructive-strong">
                 Token names use lowercase letters, digits and hyphens — exporting as "brand".
               </span>
             )}

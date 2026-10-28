@@ -75,7 +75,8 @@ export interface SplitButtonProps
   /** Disable both halves. The primary button's own `disabled` and `loading` also disable both. */
   disabled?: boolean;
   /**
-   * Where the menu opens relative to the chevron: `bottom-start` aligns to its left edge, `bottom-end` to its right.
+   * Where the menu opens relative to the chevron: `bottom-start` aligns to its start edge,
+   * `bottom-end` to its end edge (passed to the dropdown menu as `align` start or end).
    * @default "bottom-start"
    */
   menuAlignment?: SplitButtonMenuAlignment;
@@ -166,9 +167,10 @@ function createSplitButtonVars(size: SplitButtonSize): SplitButtonCssVars {
 }
 
 /**
- * Primary action button with a chevron button attached to its right edge that opens a menu of
+ * Primary action button with a chevron button attached to its end edge that opens a menu of
  * alternatives. Both halves share the same type and size. `disabled` or `loading` on either the
- * root or `buttonProps` disables both halves, and `menuButtonLabel` names the chevron.
+ * root or `buttonProps` disables both halves, and `menuButtonLabel` names the chevron. The seam
+ * (corner rounding and divider) uses logical edges, so it follows `dir`.
  */
 function SplitButtonRoot({
   children,
@@ -209,7 +211,7 @@ function SplitButtonRoot({
       >
         <Button
           className={cn(
-            "rounded-r-none focus-visible:relative focus-visible:z-10",
+            "rounded-e-none focus-visible:relative focus-visible:z-10",
             buttonClassName,
           )}
           disabled={isDisabled}
@@ -227,11 +229,11 @@ function SplitButtonRoot({
           <Button
             aria-label={menuButtonLabel}
             className={cn(
-              "w-[var(--split-button-trigger-width)] rounded-l-none px-0 focus-visible:relative focus-visible:z-10",
+              "w-[var(--split-button-trigger-width)] rounded-s-none px-0 focus-visible:relative focus-visible:z-10",
               "transition-[background-color,border-color,color] duration-[var(--split-button-duration)] ease-[var(--split-button-easing)]",
               type === "default"
-                ? "border-l border-primary-foreground/20"
-                : "border-l border-border/80",
+                ? "border-s border-primary-foreground/20"
+                : "border-s border-border/80",
             )}
             disabled={isDisabled}
             size={buttonSize}
@@ -295,9 +297,10 @@ function SplitButtonMenuItem({
 }
 
 /**
- * Primary action button with a chevron button attached to its right edge that opens a menu of
+ * Primary action button with a chevron button attached to its end edge that opens a menu of
  * alternatives. Both halves share the same type and size. `disabled` or `loading` on either the
- * root or `buttonProps` disables both halves, and `menuButtonLabel` names the chevron.
+ * root or `buttonProps` disables both halves, and `menuButtonLabel` names the chevron. The seam
+ * (corner rounding and divider) uses logical edges, so it follows `dir`.
  */
 const SplitButton = Object.assign(SplitButtonRoot, {
   /** Two-line menu entry (title plus optional description and icon) for a `SplitButton` menu. */

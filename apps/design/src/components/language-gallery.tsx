@@ -213,7 +213,7 @@ export function LanguageGallery({ className }: { className?: string }) {
           <button
             aria-label={`${language.name} design language`}
             aria-pressed={checked}
-            className="group/tile flex min-w-0 flex-col gap-3 text-left"
+            className="group/tile flex min-w-0 flex-col gap-3 text-start"
             key={language.id}
             onClick={() => select(language.id)}
             onFocus={() => preview(language.id)}

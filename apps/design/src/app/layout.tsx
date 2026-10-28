@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <FontFaces />
         <Providers>
           <a
-            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-[var(--radius-md)] focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground focus:text-sm"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:start-3 focus:z-50 focus:rounded-[var(--radius-md)] focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground focus:text-sm"
             href="#content"
           >
             Skip to content

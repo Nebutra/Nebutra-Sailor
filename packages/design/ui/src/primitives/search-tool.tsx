@@ -179,7 +179,7 @@ export function SearchTool({
         aria-expanded={expandable ? isOpen : undefined}
         aria-controls={expandable ? panelId : undefined}
         className={cn(
-          "group m-0 flex max-w-full select-none items-center gap-1 border-0 bg-transparent p-0 text-left",
+          "group m-0 flex max-w-full select-none items-center gap-1 border-0 bg-transparent p-0 text-start",
           expandable ? "cursor-pointer" : "cursor-default",
         )}
       >

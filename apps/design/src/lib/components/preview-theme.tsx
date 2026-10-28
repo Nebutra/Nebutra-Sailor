@@ -129,7 +129,10 @@ function Pane({ children, dark }: { children: React.ReactNode; dark: boolean }) 
       <div
         className={cn(
           // States are full-bleed bands in the article; inside a pane they sit flush.
-          "rounded-lg border border-border bg-background p-4 [&_section]:mx-0 [&_section]:px-0",
+          // text-foreground re-resolves the inherited text colour inside `.dark`: controls
+          // that set no colour of their own (an outline Button) otherwise inherit the
+          // light document's dark text and vanish on the dark pane.
+          "rounded-lg border border-border bg-background p-4 text-foreground [&_section]:mx-0 [&_section]:px-0",
           dark && "dark",
         )}
         ref={setHost}

@@ -321,7 +321,7 @@ function AvatarGroup({
         <span
           key={item.alt}
           aria-hidden="true"
-          className={cn("relative inline-flex items-center", index !== 0 && "-ml-2", Z[index])}
+          className={cn("relative inline-flex items-center", index !== 0 && "-ms-2", Z[index])}
         >
           <Avatar size={size} className="border border-border bg-background">
             {item.src && <AvatarImage src={item.src} alt="" />}
@@ -332,7 +332,7 @@ function AvatarGroup({
 
       {/* Exact limit: show the last real avatar */}
       {lastItem && (
-        <span aria-hidden="true" className={cn("relative inline-flex items-center -ml-2", lastZ)}>
+        <span aria-hidden="true" className={cn("relative inline-flex items-center -ms-2", lastZ)}>
           <Avatar size={size} className="border border-border bg-background">
             {lastItem.src && <AvatarImage src={lastItem.src} alt="" />}
             <AvatarFallback size={size}>{lastItem.fallback}</AvatarFallback>
@@ -342,7 +342,7 @@ function AvatarGroup({
 
       {/* Over limit: +N overflow badge */}
       {overflowCount > 0 && (
-        <span aria-hidden="true" className={cn("relative inline-flex items-center -ml-2", lastZ)}>
+        <span aria-hidden="true" className={cn("relative inline-flex items-center -ms-2", lastZ)}>
           <Avatar size={size} className="border border-border">
             <AvatarFallback
               size={size}

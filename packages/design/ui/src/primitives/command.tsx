@@ -9,7 +9,7 @@ import {
   commandInputClassName,
   commandInputWrapperClassName,
 } from "./command-styles";
-import { Dialog, DialogContent } from "./dialog";
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from "./dialog";
 import { Kbd } from "./kbd";
 import { overlayPrimitiveClassNames } from "./overlay";
 
@@ -18,6 +18,34 @@ export type CommandProps = React.ComponentPropsWithoutRef<typeof CommandPrimitiv
 export type CommandDialogProps = React.ComponentPropsWithoutRef<typeof Dialog> & {
   /** Palette content: a `CommandInput`, a `CommandList`, and any groups or items inside it. */
   children?: React.ReactNode;
+  /**
+   * Accessible name of the dialog, rendered as a visually hidden `DialogTitle`. Pass a
+   * translated string.
+   * @default "Command menu"
+   */
+  title?: React.ReactNode;
+  /**
+   * Accessible description of the dialog, rendered as a visually hidden `DialogDescription`.
+   * Nothing is rendered when omitted.
+   */
+  description?: React.ReactNode;
+  /**
+   * Wrap focus from the last item back to the first, and the reverse, with the arrow keys.
+   * Forwarded to the inner `Command`.
+   * @default false
+   */
+  loop?: CommandProps["loop"];
+  /**
+   * Filter and sort items by the query. Turn it off when you filter the list yourself.
+   * Forwarded to the inner `Command`.
+   * @default true
+   */
+  shouldFilter?: CommandProps["shouldFilter"];
+  /**
+   * Custom scoring function: return 0 to hide an item, higher numbers rank first. Forwarded to
+   * the inner `Command`.
+   */
+  filter?: CommandProps["filter"];
 };
 
 export type CommandInputProps = React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>;
@@ -104,8 +132,18 @@ Command.displayName = CommandPrimitive.displayName;
 /**
  * Hosts a `Command` palette inside a modal `Dialog`, with no padding so the input sits flush
  * against the edge. Control it with the `open` and `onOpenChange` props it forwards to `Dialog`.
+ * The dialog is named by a visually hidden title ("Command menu" unless you pass `title`), and
+ * `loop`, `shouldFilter` and `filter` reach the inner `Command`.
  */
-const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
+const CommandDialog = ({
+  children,
+  title = "Command menu",
+  description,
+  loop,
+  shouldFilter,
+  filter,
+  ...props
+}: CommandDialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent
@@ -114,7 +152,18 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
           overlayPrimitiveClassNames.commandDialogSurface,
         )}
       >
-        <Command className={commandFrameClassName}>{children}</Command>
+        <DialogTitle className="sr-only">{title}</DialogTitle>
+        {description ? (
+          <DialogDescription className="sr-only">{description}</DialogDescription>
+        ) : null}
+        <Command
+          className={commandFrameClassName}
+          {...(loop !== undefined && { loop })}
+          {...(shouldFilter !== undefined && { shouldFilter })}
+          {...(filter !== undefined && { filter })}
+        >
+          {children}
+        </Command>
       </DialogContent>
     </Dialog>
   );
@@ -132,7 +181,7 @@ const CommandInput = ({
   ref?: React.Ref<React.ElementRef<typeof CommandPrimitive.Input>> | undefined;
 }) => (
   <div className={commandInputWrapperClassName} data-cmdk-input-wrapper="">
-    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+    <Search className="me-2 h-4 w-4 shrink-0 opacity-50" />
     <CommandPrimitive.Input ref={ref} className={cn(commandInputClassName, className)} {...props} />
   </div>
 );
@@ -251,13 +300,13 @@ const shortcutKeyId = (key: React.ReactNode) => {
   return String(key);
 };
 
-/** Right-aligned shortcut hint for an item, drawn as one `Kbd` per key. */
+/** End-aligned shortcut hint for an item, drawn as one `Kbd` per key. */
 const CommandShortcut = ({ className, keys, label, children, ...props }: CommandShortcutProps) => {
   const shortcutKeys = keys ?? (children != null ? [children] : []);
 
   return (
     <span
-      className={cn("ml-auto flex shrink-0 items-center gap-1 text-muted-foreground", className)}
+      className={cn("ms-auto flex shrink-0 items-center gap-1 text-muted-foreground", className)}
       {...props}
     >
       {label ? <span className="sr-only">{label}</span> : null}

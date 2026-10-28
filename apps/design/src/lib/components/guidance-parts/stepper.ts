@@ -11,12 +11,12 @@ export const guidance: import("../guidance").Guidance = {
   ],
   a11y: [
     {
-      title: "The current step is not announced",
-      body: "Indicators are plain buttons in plain divs: there is no list, and no aria-current on the current step. Surface the position yourself, for example with a heading or a live region in the panel.",
+      title: "The current step is announced, a change is not",
+      body: 'Stepper is an ordered list; the current item carries aria-current="step" and every item a data-status. Moving between steps does not announce itself, so give the panel a heading or a live region.',
     },
     {
       title: "Color is not the only signal",
-      body: "Completed steps show a check, the current step a ring and a foreground-coloured title, pending steps a number in a muted outline.",
+      body: 'Completed steps show a check, the current step a ring and a foreground-coloured title, pending steps a number in a muted outline. A failed step is a destructive fill with a destructive title, and data-status="error" is the only non-visual cue, so say what failed in the panel.',
     },
     {
       title: "Disabled indicators are not tab stops",
@@ -46,8 +46,8 @@ export const guidance: import("../guidance").Guidance = {
   ],
   donts: [
     {
-      title: "Don't expect an error step",
-      body: "StepStatus includes error, but the provider only produces pending, current and completed, so a failed step cannot be shown through the public API.",
+      title: "Don't set error without saying why",
+      body: "Step.error turns the indicator destructive and wins over completed, current and pending, so a passed step can stay red. It carries no message; render the reason in the step panel.",
     },
     {
       title: "Don't use clickable to enforce order",

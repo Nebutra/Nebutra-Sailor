@@ -111,9 +111,16 @@ export interface DatePickerProps extends CalendarPassthrough, FieldPassthrough {
   disabled?: boolean;
   /** Marks the text field required for native form validation. */
   required?: boolean;
-  /** Earliest selectable date as `yyyy-MM-dd`. */
+  /**
+   * Earliest selectable date as `yyyy-MM-dd`. Earlier days are disabled in the calendar, and a
+   * typed date before it is not committed: the field is marked `aria-invalid` until it is fixed
+   * or blurred, and blur restores the last committed value.
+   */
   min?: string;
-  /** Latest selectable date as `yyyy-MM-dd`. */
+  /**
+   * Latest selectable date as `yyyy-MM-dd`. Later days are disabled in the calendar, and a typed
+   * date after it is not committed, with the same invalid marking and blur behaviour as `min`.
+   */
   max?: string;
   /**
    * How the value is rendered and parsed in the field, as a date-fns format string.
@@ -192,6 +199,14 @@ function DatePicker({
   const errorId = typeof error === "string" ? `${fieldId}-error` : undefined;
   const invalid = error === true || typeof error === "string";
 
+  // ISO strings sort the same as the dates they name, so range checks stay on whole days.
+  const isOutOfRange = (date: Date) => {
+    const iso = toIsoDate(date);
+    return Boolean((minDate && iso < toIsoDate(minDate)) || (maxDate && iso > toIsoDate(maxDate)));
+  };
+  const draftDate = draft ? parse(draft, displayFormat, new Date()) : undefined;
+  const draftOutOfRange = Boolean(draftDate && isValid(draftDate) && isOutOfRange(draftDate));
+
   const commit = React.useCallback(
     (next: string) => {
       if (!isControlled) setInternalValue(next);
@@ -210,7 +225,7 @@ function DatePicker({
     }
 
     const parsed = parse(text, displayFormat, new Date());
-    if (isValid(parsed)) commit(toIsoDate(parsed));
+    if (isValid(parsed) && !isOutOfRange(parsed)) commit(toIsoDate(parsed));
   };
 
   // Drop the draft on blur so an unparseable string cannot outlive the field's
@@ -239,9 +254,10 @@ function DatePicker({
         inputMode="numeric"
         autoComplete="off"
         data-slot="date-picker-input"
-        aria-invalid={invalid || undefined}
+        aria-invalid={invalid || draftOutOfRange || undefined}
         aria-describedby={joinIds(descriptionId, errorId)}
         {...fieldProps}
+        {...(dir !== undefined ? { dir } : {})}
         id={fieldId}
         name={name}
         className={cn(inputVariants({ size, affix: "suffix", tone: "bordered" }), className)}

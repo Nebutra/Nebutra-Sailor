@@ -185,7 +185,7 @@ export function ConfirmDialog({
             )}
           >
             {isProcessing && (
-              <Loader2 className="size-4 mr-2 animate-spin motion-reduce:animate-pulse" />
+              <Loader2 className="size-4 me-2 animate-spin motion-reduce:animate-pulse" />
             )}
             {confirmText}
           </AlertDialogAction>
@@ -619,7 +619,7 @@ function BulkActionConfirmDialogContent({
             disabled={!isConfirmEnabled || isProcessing}
           >
             {isProcessing && (
-              <Loader2 className="size-4 mr-2 animate-spin motion-reduce:animate-pulse" />
+              <Loader2 className="size-4 me-2 animate-spin motion-reduce:animate-pulse" />
             )}
             Confirm
           </Button>

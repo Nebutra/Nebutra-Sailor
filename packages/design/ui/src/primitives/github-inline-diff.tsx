@@ -168,7 +168,7 @@ function InlineThread({
             <div className="min-w-0 flex-1">
               <div className="flex items-center justify-between gap-2">
                 <p className="truncate text-[12px] font-medium">{c.author}</p>
-                <span className="ml-2 shrink-0 text-[10px] text-muted-foreground">
+                <span className="ms-2 shrink-0 text-[10px] text-muted-foreground">
                   {c.createdAt}
                 </span>
               </div>
@@ -318,7 +318,7 @@ export function GithubInlineDiff({
                   line.kind === "del" && "bg-destructive/10",
                 )}
               >
-                <div className="absolute -left-4 top-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
+                <div className="absolute -start-4 top-1/2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
                   {line.kind !== "hunk" && (
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -341,13 +341,13 @@ export function GithubInlineDiff({
                 <div
                   role="cell"
                   className={cn(
-                    "grid w-16 shrink-0 grid-cols-2 border-r text-[11px] text-muted-foreground",
+                    "grid w-16 shrink-0 grid-cols-2 border-e text-[11px] text-muted-foreground",
                   )}
                 >
-                  <span className="px-2 py-1 text-right tabular-nums">
+                  <span className="px-2 py-1 text-end tabular-nums">
                     {line.kind === "add" ? "" : line.kind === "hunk" ? "" : (line.old ?? "")}
                   </span>
-                  <span className="px-2 py-1 text-right tabular-nums">
+                  <span className="px-2 py-1 text-end tabular-nums">
                     {line.kind === "del" ? "" : line.kind === "hunk" ? "" : (line.new ?? "")}
                   </span>
                 </div>
@@ -357,14 +357,14 @@ export function GithubInlineDiff({
                   <pre
                     className={cn(
                       "whitespace-pre-wrap px-2 py-1 font-mono text-[12px] leading-5",
-                      isChange && "pl-5",
+                      isChange && "ps-5",
                     )}
                     aria-label={`${line.kind} line`}
                   >
                     <span
                       aria-hidden
                       className={cn(
-                        "mr-1 inline-block w-2 text-center font-semibold",
+                        "me-1 inline-block w-2 text-center font-semibold",
                         line.kind === "add" && "text-success-strong",
                         line.kind === "del" && "text-destructive-strong",
                       )}

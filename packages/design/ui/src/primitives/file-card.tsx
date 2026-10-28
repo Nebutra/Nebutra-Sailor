@@ -273,12 +273,12 @@ function HtmlCodePlaceholder() {
         <div className="h-0.75 w-3 rounded-full bg-chart-2/60" />
         <div className="text-foreground/30 font-mono text-[5px]">&gt;</div>
       </div>
-      <div className="flex items-center gap-0.5 pl-1">
+      <div className="flex items-center gap-0.5 ps-1">
         <div className="text-foreground/30 font-mono text-[5px]">&lt;</div>
         <div className="h-0.75 w-2.5 rounded-full bg-chart-2/60" />
         <div className="text-foreground/30 font-mono text-[5px]">&gt;</div>
       </div>
-      <div className="flex items-center gap-0.5 pl-1">
+      <div className="flex items-center gap-0.5 ps-1">
         <div className="text-foreground/30 font-mono text-[5px]">&lt;/</div>
         <div className="h-0.75 w-2.5 rounded-full bg-chart-2/60" />
         <div className="text-foreground/30 font-mono text-[5px]">&gt;</div>
@@ -298,15 +298,15 @@ function CssPlaceholder() {
       <div className="flex items-center gap-1">
         <div className="text-foreground/40 font-mono text-[6px]">{"{"}</div>
       </div>
-      <div className="flex items-center gap-1 pl-1.5">
+      <div className="flex items-center gap-1 ps-1.5">
         <div className="h-0.75 w-3 rounded-full bg-chart-2/60" />
         <div className="h-0.75 w-4 rounded-full bg-chart-2/60" />
       </div>
-      <div className="flex items-center gap-1 pl-1.5">
+      <div className="flex items-center gap-1 ps-1.5">
         <div className="h-0.75 w-4 rounded-full bg-chart-2/60" />
         <div className="h-0.75 w-2 rounded-full bg-chart-2/60" />
       </div>
-      <div className="flex items-center gap-1 pl-1.5">
+      <div className="flex items-center gap-1 ps-1.5">
         <div className="h-0.75 w-3 rounded-full bg-chart-2/60" />
         <div className="h-0.75 w-4 rounded-full bg-chart-2/60" />
       </div>
@@ -323,19 +323,19 @@ function JsonPlaceholder() {
       <div className="flex items-center gap-1">
         <div className="text-foreground/40 font-mono text-[6px]">{"{"}</div>
       </div>
-      <div className="flex items-center gap-1 pl-1.5">
+      <div className="flex items-center gap-1 ps-1.5">
         <div className="bg-foreground/20 h-0.75 w-3 rounded-full" />
         <div className="bg-foreground/20 h-0.75 w-4 rounded-full" />
       </div>
-      <div className="flex items-center gap-1 pl-1.5">
+      <div className="flex items-center gap-1 ps-1.5">
         <div className="bg-foreground/10 h-0.75 w-4 rounded-full" />
         <div className="bg-foreground/10 h-0.75 w-2 rounded-full" />
       </div>
-      <div className="flex items-center gap-1 pl-1.5">
+      <div className="flex items-center gap-1 ps-1.5">
         <div className="bg-foreground/10 h-0.75 w-3 rounded-full" />
         <div className="bg-foreground/10 h-0.75 w-4 rounded-full" />
       </div>
-      <div className="flex items-center gap-1 pl-1.5">
+      <div className="flex items-center gap-1 ps-1.5">
         <div className="bg-foreground/10 h-0.75 w-3 rounded-full" />
       </div>
       <div className="flex items-center gap-1">
@@ -392,7 +392,7 @@ export const FileCard = function FileCard({
     <div ref={ref} aria-hidden="true" className={cn("relative size-fit", className)}>
       <div
         className={cn(
-          "absolute -right-2 bottom-1.5 z-2 rounded px-1.5 py-0.5 text-[8px] font-medium uppercase",
+          "absolute -end-2 bottom-1.5 z-2 rounded px-1.5 py-0.5 text-[8px] font-medium uppercase",
           bannerCls,
         )}
       >

@@ -28,7 +28,7 @@ export function EditorialDataTable({ caption, className, head, rows }: Editorial
   return (
     <figure className={cn(editorialBlock({ spacing: "normal", width: "breakout" }), className)}>
       <div className={cn(editorialFrame({ elevation: "resting" }), "overflow-x-auto")}>
-        <table className="w-full min-w-[36rem] border-collapse text-left text-sm text-muted-foreground">
+        <table className="w-full min-w-[36rem] border-collapse text-start text-sm text-muted-foreground">
           <thead className="bg-muted">
             <tr>
               {head.map((cell, index) => (

@@ -72,5 +72,5 @@ export type NoisePatternCardBodyProps = React.HTMLAttributes<HTMLDivElement>;
  * NoisePatternCardBody - Content container for NoisePatternCard
  */
 export function NoisePatternCardBody({ className, ...props }: NoisePatternCardBodyProps) {
-  return <div className={cn("p-4 text-left md:p-6", className)} {...props} />;
+  return <div className={cn("p-4 text-start md:p-6", className)} {...props} />;
 }

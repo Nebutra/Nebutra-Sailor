@@ -70,7 +70,7 @@ const KNOBS: Knob[] = [
 export function Playground(_: DemoProps) {
   return (
     <ComponentPlayground
-      caption="Stepper only draws the steps; StepperProvider owns the current step. Next and Previous move it, and with clickable on the indicators do too. Steps before the current one are completed, and an error status cannot be produced through the public API."
+      caption="Stepper only draws the steps; StepperProvider owns the current step. Next and Previous move it, and with clickable on the indicators do too. Steps before the current one are completed; a step with error set shows the error status instead."
       code={(v) => {
         const steps = stepsOf({
           descriptions: Boolean(v.descriptions),
@@ -191,7 +191,7 @@ export function StatesMatrix(_: DemoProps) {
         { id: "clickable", label: "Clickable" },
         { id: "vertical", label: "Vertical" },
       ]}
-      note="Rows are the Stepper size prop. Each cell is its own provider with four steps: earlier steps are completed, the current one is ringed, later ones are pending. Clickable cells jump on click; other indicators are disabled buttons. Stepper has no loading state (StepperNavigation does), and nothing can set the error status. Hover is live."
+      note="Rows are the Stepper size prop. Each cell is its own provider with four steps: earlier steps are completed, the current one is ringed, later ones are pending. Clickable cells jump on click; other indicators are disabled buttons. Stepper has no loading state (StepperNavigation does). The error status comes from Step.error and is shown on the demo page. Hover is live."
       render={(size, column) => (
         <StepperProvider initialStep={initial[column] ?? 0} steps={steps}>
           <Stepper

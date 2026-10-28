@@ -273,7 +273,7 @@ export const Slider = ({
         onKeyUp={handleKeyUp}
         onBlur={onBlur}
         className={cn(
-          "h-[var(--slider-height)] w-full cursor-pointer appearance-none rounded-[var(--slider-radius)] bg-[linear-gradient(to_right,var(--slider-track-fill)_0,var(--slider-track-fill)_var(--slider-progress),var(--slider-track-background)_var(--slider-progress),var(--slider-track-background)_100%)] bg-[length:100%_var(--slider-track-height)] bg-center bg-no-repeat outline-none",
+          "h-[var(--slider-height)] w-full cursor-pointer appearance-none rounded-[var(--slider-radius)] bg-[linear-gradient(to_right,var(--slider-track-fill)_0,var(--slider-track-fill)_var(--slider-progress),var(--slider-track-background)_var(--slider-progress),var(--slider-track-background)_100%)] rtl:bg-[linear-gradient(to_left,var(--slider-track-fill)_0,var(--slider-track-fill)_var(--slider-progress),var(--slider-track-background)_var(--slider-progress),var(--slider-track-background)_100%)] bg-[length:100%_var(--slider-track-height)] bg-center bg-no-repeat outline-none",
           "disabled:cursor-not-allowed disabled:opacity-50",
           rangeThumbFocusClassName,
           "[&::-moz-range-thumb]:size-[var(--slider-thumb-size)] [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border [&::-moz-range-thumb]:border-border [&::-moz-range-thumb]:bg-[var(--slider-thumb-background)] [&::-moz-range-thumb]:shadow-[var(--slider-thumb-shadow)]",

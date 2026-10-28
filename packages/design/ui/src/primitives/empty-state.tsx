@@ -170,7 +170,7 @@ const EmptyStateRoot = ({
       className={cn(
         "flex min-h-[var(--empty-state-min-height)] w-full flex-col justify-center rounded-[var(--empty-state-radius)] px-[var(--empty-state-padding-x)] py-[var(--empty-state-padding-y)]",
         variantClassName[variant],
-        align === "center" ? "items-center text-center" : "items-start text-left",
+        align === "center" ? "items-center text-center" : "items-start text-start",
         className,
       )}
       style={{ ...emptyStateCssVars(size), ...style }}
@@ -294,7 +294,7 @@ function EmptyStateSimple({
           )}
         >
           <div className="pointer-events-none select-none">{ghost}</div>
-          <div className="flex flex-col items-start gap-1.5 text-left">
+          <div className="flex flex-col items-start gap-1.5 text-start">
             <h3 className="text-base text-foreground">{title}</h3>
             {description ? (
               <p className="max-w-sm text-pretty text-sm text-muted-foreground">{description}</p>

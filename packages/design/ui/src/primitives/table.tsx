@@ -54,15 +54,15 @@ export type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement> & {
 
 /**
  * Explicit horizontal alignment. Setting it also opts the cell out of the
- * implicit "last column is the action column, so right-align it" rule, which a
- * plain `text-left` class cannot override — `:last-child` outranks it.
+ * implicit "last column is the action column, so end-align it" rule, which a
+ * plain `text-start` class cannot override — `:last-child` outranks it.
  */
 export type TableCellAlignment = "start" | "center" | "end";
 
 const ALIGNMENT_CLASS: Record<TableCellAlignment, string> = {
-  start: "text-left",
+  start: "text-start",
   center: "text-center",
-  end: "text-right",
+  end: "text-end",
 };
 
 export type TableHeadProps = React.ThHTMLAttributes<HTMLTableCellElement> & {
@@ -236,7 +236,7 @@ const TableRow = ({
   <tr
     ref={ref}
     className={cn(
-      "[&_td:first-child]:rounded-l-[var(--table-row-radius)] [&_td:last-child]:rounded-r-[var(--table-row-radius)] transition-colors duration-[var(--table-motion-duration)] ease-[var(--table-motion-easing)] motion-reduce:transition-none",
+      "[&_td:first-child]:rounded-s-[var(--table-row-radius)] [&_td:last-child]:rounded-e-[var(--table-row-radius)] transition-colors duration-[var(--table-motion-duration)] ease-[var(--table-motion-easing)] motion-reduce:transition-none",
       className,
     )}
     {...props}
@@ -257,10 +257,10 @@ const TableHead = ({
     ref={ref}
     scope={scope}
     className={cn(
-      "h-[var(--table-header-height)] px-[var(--table-cell-padding-x)] text-left align-middle font-[var(--table-heading-weight)] text-muted-foreground",
-      "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-px",
-      !alignment && "last:text-right",
-      numeric && "text-right font-mono tabular-nums",
+      "h-[var(--table-header-height)] px-[var(--table-cell-padding-x)] text-start align-middle font-[var(--table-heading-weight)] text-muted-foreground",
+      "[&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-px",
+      !alignment && "last:text-end",
+      numeric && "text-end font-mono tabular-nums",
       alignment && ALIGNMENT_CLASS[alignment],
       className,
     )}
@@ -281,9 +281,9 @@ const TableCell = ({
     ref={ref}
     className={cn(
       "px-[var(--table-cell-padding-x)] py-[var(--table-cell-padding-y)] align-middle",
-      "[&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-px",
-      !alignment && "last:text-right",
-      numeric && "text-right font-mono tabular-nums",
+      "[&:has([role=checkbox])]:pe-0 [&>[role=checkbox]]:translate-y-px",
+      !alignment && "last:text-end",
+      numeric && "text-end font-mono tabular-nums",
       alignment && ALIGNMENT_CLASS[alignment],
       className,
     )}

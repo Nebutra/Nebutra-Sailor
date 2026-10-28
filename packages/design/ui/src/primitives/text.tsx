@@ -29,9 +29,9 @@ export interface TextProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const alignMap = {
-  left: "text-left",
+  left: "text-start",
   center: "text-center",
-  right: "text-right",
+  right: "text-end",
 };
 
 const lineClampMap = {

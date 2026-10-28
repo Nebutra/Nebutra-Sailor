@@ -2,6 +2,11 @@
 
 import {
   Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
   Drawer,
   DrawerBody,
   DrawerClose,
@@ -245,7 +250,7 @@ export function Playground(_: DemoProps) {
 
 // One closed drawer per cell; the panel mounts in a portal only when its trigger is pressed.
 function DrawerCell({ direction, kind }: { direction: Direction; kind: string }) {
-  return (
+  const drawer = (
     <Drawer
       dismissible={kind !== "locked"}
       direction={direction}
@@ -276,6 +281,26 @@ function DrawerCell({ direction, kind }: { direction: Direction; kind: string })
       </DrawerContent>
     </Drawer>
   );
+
+  if (kind !== "in-dialog") {
+    return drawer;
+  }
+
+  // The drawer is launched from inside an open Dialog, to show it stacking above it.
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button size="sm" variant="outline">
+          Dialog, then {direction}
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogTitle>Invite a teammate</DialogTitle>
+        <DialogDescription>Review the role in a drawer before sending.</DialogDescription>
+        {drawer}
+      </DialogContent>
+    </Dialog>
+  );
 }
 
 export function StatesMatrix(_: DemoProps) {
@@ -288,8 +313,9 @@ export function StatesMatrix(_: DemoProps) {
         { id: "scroll", label: "Long body" },
         { id: "locked", label: "Not dismissible" },
         { id: "disabled", label: "Disabled trigger" },
+        { id: "in-dialog", label: "In a Dialog" },
       ]}
-      note="Every cell opens its own real drawer on demand. Drawer has no loading, invalid or empty state of its own, so those come from what you put in the body. The handle shows only on bottom drawers, and height only caps top and bottom ones. Not dismissible turns off swipe, Escape and outside press; the footer button still closes it."
+      note="Every cell opens its own real drawer on demand. Drawer has no loading, invalid or empty state of its own, so those come from what you put in the body. The handle shows only on bottom drawers, and height only caps top and bottom ones. Not dismissible turns off swipe, Escape and outside press; the footer button still closes it. In a Dialog opens a dialog first and launches the drawer from inside it: the drawer shares Sheet's overlay layers, so its panel stacks above the dialog. Header text is start-aligned except on bottom drawers, and left and right are physical edges that do not flip under dir=rtl."
       render={(direction, kind) => <DrawerCell direction={direction as Direction} kind={kind} />}
       rows={DIRECTIONS.map((direction) => ({ id: direction, label: direction }))}
       rowsLabel="Direction"

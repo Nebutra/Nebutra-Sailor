@@ -6,10 +6,10 @@ export function ButtonWithIconDemo() {
   return (
     <div className="gap-4 flex flex-wrap items-center">
       <Button>
-        <span className="mr-2">✉️</span> Login with Email
+        <span className="me-2">✉️</span> Login with Email
       </Button>
       <Button>
-        Continue <span className="ml-2">➔</span>
+        Continue <span className="ms-2">➔</span>
       </Button>
     </div>
   );

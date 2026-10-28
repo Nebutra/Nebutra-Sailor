@@ -696,7 +696,8 @@ export const COMPONENTS: ComponentEntry[] = [
     covers: ["HoverCard"],
     consumers: 0,
     consumersMeasured: "2026-10-23",
-    blurb: "Preview card revealed on hover or focus. Never the only way to reach its content.",
+    blurb:
+      "Preview card revealed on hover, keyboard focus or a click. Never the only way to reach its content.",
   },
   {
     slug: "context-menu",

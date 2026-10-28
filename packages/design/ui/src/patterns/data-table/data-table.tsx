@@ -73,7 +73,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                       return (
                         <th
                           key={header.id}
-                          className={`group relative select-none border-b border-border px-4 py-4 text-left text-xs font-semibold align-middle whitespace-nowrap overflow-hidden ${appliedColorClass}`}
+                          className={`group relative select-none border-b border-border px-4 py-4 text-start text-xs font-semibold align-middle whitespace-nowrap overflow-hidden ${appliedColorClass}`}
                           style={{
                             width: isGroupHeader ? undefined : header.getSize(),
                             minWidth: isGroupHeader ? undefined : header.getSize(),
@@ -102,7 +102,7 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
                               onMouseDown={header.getResizeHandler()}
                               onTouchStart={header.getResizeHandler()}
                               onDoubleClick={() => header.column.resetSize()}
-                              className={`absolute -right-1 top-0 h-full w-2 cursor-col-resize select-none touch-none transition ${
+                              className={`absolute -end-1 top-0 h-full w-2 cursor-col-resize select-none touch-none transition ${
                                 header.column.getIsResizing()
                                   ? "bg-primary"
                                   : "bg-transparent group-hover:bg-primary/50"
@@ -183,10 +183,10 @@ export function DataTable<TData>(props: DataTableProps<TData>) {
             </table>
           </div>
           {scrollIndicators.left ? (
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-6 bg-linear-to-r from-card via-card/80 to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 start-0 w-6 bg-linear-to-r from-card via-card/80 to-transparent" />
           ) : null}
           {scrollIndicators.right ? (
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-linear-to-l from-card via-card/80 to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 end-0 w-6 bg-linear-to-l from-card via-card/80 to-transparent" />
           ) : null}
         </div>
       </div>

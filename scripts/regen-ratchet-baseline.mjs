@@ -21,6 +21,7 @@ const GUARDS = {
   routerRawColors: "scripts/lint-router-raw-colors.mjs",
   uiHardcodedLabels: "scripts/lint-ui-hardcoded-labels.mjs",
   hardcodedCopy: "scripts/lint-hardcoded-copy.mjs",
+  logicalDirection: "scripts/lint-logical-direction.mjs",
 };
 
 const key = process.argv[2];
