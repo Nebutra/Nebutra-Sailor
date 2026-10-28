@@ -83,9 +83,9 @@ export default function PaginationDemo() {
       </State>
 
       <State
-        breaks="An empty nav landmark. With neither neighbour the component still renders a nav (labelled, with two empty slots), so a screen reader announces a region with nothing in it. Do not render Pagination when there is nothing to link to."
+        breaks="A landmark with nothing in it. With neither neighbour the component now renders nothing, so a screen reader finds no empty region; the dashed frame below is all that remains."
         id="empty"
-        note="Neither previous nor next: the nav exists and nothing is visible."
+        note="Neither previous nor next: no nav is rendered and nothing is visible."
         title="Empty — no neighbours"
       >
         <div className="max-w-xl rounded-lg border border-border border-dashed p-3">
@@ -94,9 +94,9 @@ export default function PaginationDemo() {
       </State>
 
       <State
-        breaks="Physical left and right in the rail. The slots follow the writing direction (previous moves to the right), but the arrow icons do not mirror, so the previous arrow points left, away from the previous page's side. Text alignment is also physical (text-left, text-right)."
+        breaks="An arrow that points away from the page it leads to, or a hover nudge that moves the wrong way, in a right-to-left page."
         id="rtl"
-        note="The same pair inside dir=rtl. Look at which way each arrow points relative to the side it sits on."
+        note="The same pair inside dir=rtl. The slots follow the writing direction (previous moves to the right), the arrows mirror with them and text alignment is logical (text-start, text-end)."
         title="Right-to-left"
       >
         <div className="max-w-xl" dir="rtl">

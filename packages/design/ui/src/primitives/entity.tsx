@@ -91,7 +91,7 @@ function EntityRoot<T extends React.ElementType = "div">({
   return (
     <Comp
       className={cn(
-        "flex w-full items-center gap-3 px-4 py-3 text-left",
+        "flex w-full items-center gap-3 px-4 py-3 text-start",
         // Clickable rows get hover + focus-visible affordance, plus `group`
         // so trailing affordances (the chevron below) can react to hover.
         isButton &&

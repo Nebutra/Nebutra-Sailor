@@ -173,12 +173,12 @@ export function KineticCodePreview({
         <span className="size-2.5 rounded-full bg-border/80" aria-hidden />
         <span className="size-2.5 rounded-full bg-border/70" aria-hidden />
         <span
-          className="ml-3 min-w-0 truncate font-mono text-[11px] text-muted-foreground"
+          className="ms-3 min-w-0 truncate font-mono text-[11px] text-muted-foreground"
           translate="no"
         >
           {filename}
         </span>
-        <span className="ml-auto rounded-full border border-border/60 bg-background/60 px-2 py-0.5 font-mono text-[10px] uppercase text-muted-foreground">
+        <span className="ms-auto rounded-full border border-border/60 bg-background/60 px-2 py-0.5 font-mono text-[10px] uppercase text-muted-foreground">
           {language}
         </span>
       </div>
@@ -186,7 +186,7 @@ export function KineticCodePreview({
       <pre className="relative max-h-[190px] overflow-hidden p-4 font-mono text-[12px] leading-5">
         {lines.map((line, index) => (
           <span key={`${line}-${index}`} className="flex min-w-0 gap-3">
-            <span className="w-5 shrink-0 text-right text-muted-foreground/45 tabular-nums">
+            <span className="w-5 shrink-0 text-end text-muted-foreground/45 tabular-nums">
               {index + 1}
             </span>
             <code className={cn("min-w-0 truncate", lineTone(line))} translate="no">
@@ -299,11 +299,11 @@ export function KineticSignalMarquee({
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-background via-background/90 to-transparent z-20"
+        className="pointer-events-none absolute inset-y-0 start-0 w-28 bg-gradient-to-r rtl:bg-gradient-to-l from-background via-background/90 to-transparent z-20"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 w-28 bg-gradient-to-l from-background via-background/90 to-transparent z-20"
+        className="pointer-events-none absolute inset-y-0 end-0 w-28 bg-gradient-to-l rtl:bg-gradient-to-r from-background via-background/90 to-transparent z-20"
       />
       {eyebrow && (
         <div className="relative z-30 mb-6 text-center font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
@@ -370,7 +370,7 @@ export function KineticStepRail({ className, children, ...props }: KineticStepRa
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-8 right-8 top-[5.7rem] hidden h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent md:block"
+        className="pointer-events-none absolute start-8 end-8 top-[5.7rem] hidden h-px bg-gradient-to-r from-transparent via-primary/45 to-transparent md:block"
       />
       <div
         aria-hidden="true"
@@ -402,7 +402,7 @@ export function KineticStep({
     >
       <div className="relative mb-6 grid size-16 place-items-center rounded-[var(--radius-xl)] border border-border/65 bg-background shadow-glass-sm">
         <span
-          className="absolute -right-2 -top-2 rounded-full border border-border/60 bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
+          className="absolute -end-2 -top-2 rounded-full border border-border/60 bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
           aria-hidden
         >
           {formatted}

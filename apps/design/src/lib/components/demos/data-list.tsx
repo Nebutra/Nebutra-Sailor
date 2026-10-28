@@ -331,9 +331,9 @@ export default function DataListDemo() {
       </State>
 
       <State
-        breaks="Alignment written with physical left and right. justify-start flips with direction but the text-left class and the header corner radii do not, so the end column and the header band corners are what to check."
+        breaks="Alignment or corner rounding written with physical left and right, so the end column or the header band corners stay on the wrong side in a right-to-left page."
         id="rtl"
-        note="Worth checking by eye in a right-to-left document: column order mirrors, but the header band's rounded corners and text-left do not."
+        note="Column order, cell alignment and the header band's rounded corners all use logical edges (text-start, rounded-s, rounded-e), so they mirror with dir=rtl."
         title="Right-to-left"
       >
         <div dir="rtl">

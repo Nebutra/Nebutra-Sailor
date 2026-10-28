@@ -108,7 +108,7 @@ export type GridPatternCardBodyProps = React.HTMLAttributes<HTMLDivElement>;
  * GridPatternCardBody - Content wrapper for GridPatternCard
  */
 export function GridPatternCardBody({ className, ...props }: GridPatternCardBodyProps) {
-  return <div className={cn("text-left p-4 md:p-6", className)} {...props} />;
+  return <div className={cn("text-start p-4 md:p-6", className)} {...props} />;
 }
 
 GridPatternCardBody.displayName = "GridPatternCardBody";

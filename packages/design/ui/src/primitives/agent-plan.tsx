@@ -334,7 +334,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                     {/* Task row */}
                     <motion.div className="group flex items-center rounded-[var(--radius-md)] px-3 py-1.5 transition-[background-color] duration-micro ease-out hover:bg-accent">
                       <motion.div
-                        className="mr-2 flex-shrink-0 cursor-pointer"
+                        className="me-2 flex-shrink-0 cursor-pointer"
                         onClick={(e: React.MouseEvent) => {
                           e.stopPropagation();
                           cycleTaskStatus(task.id);
@@ -359,7 +359,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                       >
                         <span
                           className={cn(
-                            "mr-2 flex-1 truncate",
+                            "me-2 flex-1 truncate",
                             isCompleted && "text-muted-foreground line-through",
                           )}
                         >
@@ -368,7 +368,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
 
                         <div className="flex flex-shrink-0 items-center gap-2 text-xs">
                           {task.dependencies && task.dependencies.length > 0 && (
-                            <div className="mr-2 flex gap-1">
+                            <div className="me-2 flex gap-1">
                               {task.dependencies.map((dep, idx) => (
                                 <span
                                   key={idx}
@@ -394,8 +394,8 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                           animate="visible"
                           exit="hidden"
                         >
-                          <div className="absolute bottom-0 left-[20px] top-0 border-l-2 border-dashed border-muted-foreground/30" />
-                          <ul className="mb-1.5 ml-3 mr-2 mt-1 space-y-0.5">
+                          <div className="absolute bottom-0 start-[20px] top-0 border-s-2 border-dashed border-muted-foreground/30" />
+                          <ul className="mb-1.5 ms-3 me-2 mt-1 space-y-0.5">
                             {task.subtasks.map((subtask) => {
                               const subtaskKey = `${task.id}-${subtask.id}`;
                               const isSubtaskExpanded = expandedSubtasks[subtaskKey];
@@ -403,13 +403,13 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                               return (
                                 <motion.li
                                   key={subtask.id}
-                                  className="group flex flex-col py-0.5 pl-6"
+                                  className="group flex flex-col py-0.5 ps-6"
                                   variants={subtaskVariants}
                                   onClick={() => toggleSubtaskExpansion(task.id, subtask.id)}
                                 >
                                   <motion.div className="flex flex-1 items-center rounded-[var(--radius-md)] p-1 transition-[background-color] duration-micro ease-out hover:bg-accent">
                                     <motion.div
-                                      className="mr-2 flex-shrink-0 cursor-pointer"
+                                      className="me-2 flex-shrink-0 cursor-pointer"
                                       onClick={(e: React.MouseEvent) => {
                                         e.stopPropagation();
                                         toggleSubtaskStatus(task.id, subtask.id);
@@ -442,7 +442,7 @@ export const AgentPlan: React.FC<AgentPlanProps> = ({
                                   <AnimatePresence mode="wait">
                                     {isSubtaskExpanded && (
                                       <motion.div
-                                        className="ml-1.5 mt-1 overflow-hidden border-l border-dashed border-border pl-5 text-xs text-muted-foreground"
+                                        className="ms-1.5 mt-1 overflow-hidden border-s border-dashed border-border ps-5 text-xs text-muted-foreground"
                                         initial={{ opacity: 0, height: 0 }}
                                         animate={{ opacity: 1, height: "auto" }}
                                         exit={{ opacity: 0, height: 0 }}

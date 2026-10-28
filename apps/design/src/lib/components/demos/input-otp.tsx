@@ -32,7 +32,7 @@ function Otp({
       onValueChange={setValue}
       value={value}
       {...props}
-      {...(invalid ? { "aria-invalid": true } : {})}
+      {...(invalid ? { error: true } : {})}
       {...(describedBy ? { "aria-describedby": describedBy } : {})}
     >
       {groups.map((size, g) => {
@@ -44,11 +44,7 @@ function Otp({
             {g > 0 ? <InputOTPSeparator /> : null}
             <InputOTPGroup>
               {Array.from({ length: size }, (_, i) => (
-                <InputOTPSlot
-                  className={invalid ? "border-destructive" : undefined}
-                  index={first + i}
-                  key={first + i}
-                />
+                <InputOTPSlot index={first + i} key={first + i} />
               ))}
             </InputOTPGroup>
           </React.Fragment>
@@ -123,7 +119,7 @@ export default function InputOtpDemo() {
       </State>
 
       <State
-        breaks="onComplete firing on every keystroke, or never firing because the field was uncontrolled. It needs a controlled value to fire."
+        breaks="onComplete firing on every keystroke instead of once, when the code is full."
         code={`<InputOTP
   maxLength={6}
   value={code}
@@ -132,7 +128,7 @@ export default function InputOtpDemo() {
   aria-label="Verification code"
 >…</InputOTP>`}
         id="complete"
-        note="Fill all six slots. onComplete reports the finished code once; editing it clears the message."
+        note="Fill all six slots. onComplete reports the finished code once; editing it clears the message. It fires the same way on an uncontrolled field."
         title="Controlled, with onComplete"
       >
         <Stack>
@@ -191,17 +187,17 @@ export default function InputOtpDemo() {
       </State>
 
       <State
-        breaks="An invalid code that is only red. There is no error prop, so the page has to set aria-invalid and say what is wrong in text."
-        code={`<InputOTP maxLength={6} aria-invalid aria-describedby="code-error">
+        breaks="An invalid code that is only red. error sets aria-invalid and the slot colours, but the page still has to say what is wrong in text."
+        code={`<InputOTP maxLength={6} error aria-describedby="code-error">
   <InputOTPGroup>
-    <InputOTPSlot index={0} className="border-destructive" />
+    <InputOTPSlot index={0} />
     …
   </InputOTPGroup>
 </InputOTP>
 <p id="code-error" className="text-destructive-strong text-sm">That code has expired.</p>`}
         id="invalid"
-        note="Composed by the caller: aria-invalid on InputOTP, a destructive border on each slot through className, and a message tied in with aria-describedby."
-        title="Invalid (composed)"
+        note="The error prop sets aria-invalid on InputOTP and a destructive border and focus ring on each slot. The message is the caller's: a text tied in with aria-describedby."
+        title="Invalid (error)"
       >
         <Stack>
           <InvalidOtp />
@@ -220,9 +216,9 @@ export default function InputOtpDemo() {
       </State>
 
       <State
-        breaks="Slot ends and borders that are written with physical left and right classes (first:rounded-l-md, border-r), so a right-to-left page rounds the inner edge and doubles a border."
+        breaks="Slot ends and borders that stay on the physical left and right, so a right-to-left page rounds the inner edge and doubles a border."
         id="rtl"
-        note="The same six slots under dir=rtl. Look at which corners are rounded and where the borders meet."
+        note="The same six slots under dir=rtl. Slot corners and borders use logical edges, so the rounded ends sit on the outer sides of the row. The text input's textAlign stays a physical left, centre or right value."
         title="Right-to-left"
       >
         <div dir="rtl">
@@ -251,7 +247,7 @@ export default function InputOtpDemo() {
       <State
         breaks="Nothing — this state exists to record an absence."
         id="no-loading"
-        note="InputOTP has no loading state and no error prop. To show a pending verification, disable the field and show a Spinner beside it; to show an error, compose it as above."
+        note="InputOTP has no loading state. To show a pending verification, disable the field and show a Spinner beside it; to show an error, use the error prop as above."
         title="States InputOTP deliberately does not have"
       >
         <Row>

@@ -172,7 +172,7 @@ export function MotionSpringTuner({ presets }: { presets: SpringPreset[] }) {
             </div>
             <span
               aria-hidden
-              className="absolute -inset-y-3 left-[70%] border-border border-l border-dashed"
+              className="absolute -inset-y-3 left-[70%] border-border border-l border-dashed" // allow-physical: a time-axis marker placed by percentage from the physical left
             />
           </div>
         </div>
@@ -222,10 +222,10 @@ export function MotionSpringTuner({ presets }: { presets: SpringPreset[] }) {
           </ToggleGroup>
         </div>
         <div className="relative rounded-[var(--radius-lg)] bg-muted/50">
-          <div className="absolute top-2 right-2">
+          <div className="absolute top-2 end-2">
             <CopyButton size="sm" successMessage={`Copied ${format}`} value={code} />
           </div>
-          <pre className="m-0 max-h-80 overflow-auto p-4 pr-14 font-mono text-foreground text-xs leading-relaxed">
+          <pre className="m-0 max-h-80 overflow-auto p-4 pe-14 font-mono text-foreground text-xs leading-relaxed">
             <code>{code}</code>
           </pre>
         </div>

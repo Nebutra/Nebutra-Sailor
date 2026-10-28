@@ -75,7 +75,7 @@ export function NotificationMessageList({
             <div className="flex flex-col">
               <div className="flex items-center gap-2 text-xs font-semibold text-foreground">
                 {msg.title}
-                <span className="text-xs text-muted-foreground before:mr-1 before:content-['•']">
+                <span className="text-xs text-muted-foreground before:me-1 before:content-['•']">
                   {msg.time}
                 </span>
               </div>

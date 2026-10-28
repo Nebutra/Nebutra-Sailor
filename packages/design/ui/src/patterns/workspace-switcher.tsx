@@ -162,7 +162,7 @@ function TriggerButton({
       aria-label={switchLabel}
       disabled={disabled}
       className={cn(
-        "inline-flex w-full items-center gap-2 rounded-[var(--radius-md)] border border-border bg-background px-2 py-1 text-left outline-none transition-colors",
+        "inline-flex w-full items-center gap-2 rounded-[var(--radius-md)] border border-border bg-background px-2 py-1 text-start outline-none transition-colors",
         "hover:bg-accent hover:text-accent-foreground",
         "",
         "disabled:cursor-not-allowed disabled:opacity-50",
@@ -229,7 +229,7 @@ function WorkspaceItem({ workspace, isActive, onSelect }: WorkspaceItemProps) {
         )}
       </div>
       {isActive && (
-        <Check aria-hidden="true" className="ml-auto h-4 w-4 shrink-0 text-foreground" />
+        <Check aria-hidden="true" className="ms-auto h-4 w-4 shrink-0 text-foreground" />
       )}
     </DropdownMenuItem>
   );

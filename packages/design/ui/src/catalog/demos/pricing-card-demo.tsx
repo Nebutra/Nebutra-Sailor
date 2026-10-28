@@ -11,7 +11,7 @@ export function PricingCardDemo() {
       <PricingCard.Header>
         <PricingCard.Plan>
           <PricingCard.PlanName>
-            <Zap className="mr-2 h-4 w-4" />
+            <Zap className="me-2 h-4 w-4" />
             Pro
           </PricingCard.PlanName>
           <PricingCard.Badge>Popular</PricingCard.Badge>

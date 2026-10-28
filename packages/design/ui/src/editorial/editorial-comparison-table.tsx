@@ -51,7 +51,7 @@ export function EditorialComparisonTable({
         </div>
       )}
       <div className={cn(editorialFrame({ elevation: "resting" }), "overflow-hidden")}>
-        <table className="w-full border-collapse text-left text-sm">
+        <table className="w-full border-collapse text-start text-sm">
           <thead className="hidden md:table-header-group">
             <tr className="bg-muted">
               <th
@@ -78,7 +78,7 @@ export function EditorialComparisonTable({
                 className="block border-b border-border last:border-b-0 md:table-row"
               >
                 <th
-                  className="block bg-muted px-4 pb-2 pt-3 text-left align-top font-semibold text-foreground md:table-cell md:bg-transparent md:py-3"
+                  className="block bg-muted px-4 pb-2 pt-3 text-start align-top font-semibold text-foreground md:table-cell md:bg-transparent md:py-3"
                   scope="row"
                 >
                   {row.label}

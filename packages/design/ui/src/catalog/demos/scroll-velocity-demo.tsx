@@ -14,7 +14,7 @@ export function ScrollVelocityDemo() {
 
       <ScrollVelocityContainer className="gap-6 flex flex-col">
         <ScrollVelocityRow baseVelocity={3} direction={1}>
-          <div className="gap-4 pr-4 flex">
+          <div className="gap-4 pe-4 flex">
             <span className="text-4xl md:text-6xl font-black tracking-tighter text-foreground uppercase opacity-80">
               BUILD FASTER
             </span>
@@ -37,7 +37,7 @@ export function ScrollVelocityDemo() {
         </ScrollVelocityRow>
 
         <ScrollVelocityRow baseVelocity={4} direction={-1}>
-          <div className="gap-4 pr-4 flex">
+          <div className="gap-4 pe-4 flex">
             <span className="text-4xl md:text-6xl font-black tracking-tighter text-primary uppercase">
               NEXTJS
             </span>

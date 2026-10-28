@@ -55,7 +55,7 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
           {/* Fixed columns, capped. Left to itself the table spread across the
               whole article width, putting half a screen between a control and
               the reason to avoid it — the two cells a reader compares. */}
-          <table className="w-full max-w-3xl min-w-[640px] table-fixed text-left text-[14px]">
+          <table className="w-full max-w-3xl min-w-[640px] table-fixed text-start text-[14px]">
             <colgroup>
               <col className="w-[24%]" />
               <col className="w-[40%]" />
@@ -73,10 +73,10 @@ export default async function PatternPage({ params }: { params: Promise<{ slug: 
             <tbody>
               {pattern.rows.map((row) => (
                 <tr className="align-top" key={row.subject}>
-                  <td className="py-3 pr-6">
+                  <td className="py-3 pe-6">
                     <Mono>{row.subject}</Mono>
                   </td>
-                  <td className="py-3 pr-6 text-foreground">{row.use}</td>
+                  <td className="py-3 pe-6 text-foreground">{row.use}</td>
                   <td className="py-3 text-muted-foreground">{row.not ?? "—"}</td>
                 </tr>
               ))}

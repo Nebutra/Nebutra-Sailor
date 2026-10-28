@@ -120,7 +120,7 @@ export function AssistedPasswordConfirmation({
           </div>
           {/* Character match indicators */}
           <div
-            className="absolute bottom-0 left-0 top-0 z-0 flex h-full w-full items-center justify-start"
+            className="absolute bottom-0 start-0 top-0 z-0 flex h-full w-full items-center justify-start"
             aria-hidden="true"
           >
             {password.split("").map((letter, index) => (

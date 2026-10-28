@@ -28,8 +28,8 @@ export const guidance: import("../guidance").Guidance = {
       body: 'The input carries autocomplete="one-time-code" and a numeric input mode, so SMS codes can be suggested and a phone shows the number pad.',
     },
     {
-      title: "Invalid is composed, not built in",
-      body: "There is no error prop. Set aria-invalid on InputOTP, add a destructive border to the slots through className, and link a text message with aria-describedby.",
+      title: "Invalid needs a message too",
+      body: "error sets aria-invalid on the input and restyles the slots, but shows no text. Link a message with aria-describedby so the reason is announced.",
     },
   ],
   dos: [
@@ -40,15 +40,15 @@ export const guidance: import("../guidance").Guidance = {
     },
     {
       title: "Submit on complete",
-      body: "Control the value and use onComplete to verify as soon as the last character arrives.",
+      body: "Use onComplete to verify as soon as the last character arrives. It fires once whether or not you control the value.",
       code: "<InputOTP maxLength={6} value={code} onValueChange={setCode} onComplete={verify} />",
     },
   ],
   donts: [
     {
-      title: "Don't rely on onComplete without a value",
-      body: "onComplete only fires when value is controlled. An uncontrolled field never calls it.",
-      code: "<InputOTP maxLength={6} onComplete={verify} />",
+      title: "Don't signal an error with colour alone",
+      body: "error changes the slot borders, but the code is still just red cells to anyone who cannot see it. Say what is wrong in text.",
+      code: "<InputOTP maxLength={6} error>…</InputOTP>",
     },
     {
       title: "Don't ship it unnamed",

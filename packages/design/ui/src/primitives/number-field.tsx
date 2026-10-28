@@ -224,16 +224,16 @@ export function NumberField({
         {suffix != null ? (
           <span
             aria-hidden="true"
-            className="flex items-center pr-[var(--input-padding-x)] text-[length:var(--input-font-size)] text-muted-foreground"
+            className="flex items-center pe-[var(--input-padding-x)] text-[length:var(--input-font-size)] text-muted-foreground"
           >
             {suffix}
           </span>
         ) : null}
         {hideSteppers ? null : (
-          <span className="flex shrink-0 border-l border-input">
+          <span className="flex shrink-0 border-s border-input">
             <BaseNumberField.Decrement
               aria-label={decrementLabel}
-              className={cn(stepperClassName, "border-r border-input")}
+              className={cn(stepperClassName, "border-e border-input")}
             >
               <Minus aria-hidden="true" />
             </BaseNumberField.Decrement>

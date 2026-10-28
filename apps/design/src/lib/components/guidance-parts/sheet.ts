@@ -57,8 +57,9 @@ export const guidance: import("../guidance").Guidance = {
       body: "A confirm that must be answered belongs in AlertDialog, which cannot be dismissed by accident. A sheet can be closed with Escape.",
     },
     {
-      title: "Don't rely on left and right in RTL",
-      body: "The sides and the close button are physical. They do not mirror in a right-to-left page, so choose the edge deliberately.",
+      title: "Don't use left and right for reading-direction panels",
+      body: "left and right are physical and never flip in a right-to-left page. For a navigation or detail panel that should follow the reading direction, use start or end; the close button already sits on the inline end.",
+      code: '<SheetContent side="start">…</SheetContent>',
     },
   ],
 };

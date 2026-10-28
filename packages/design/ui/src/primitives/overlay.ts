@@ -49,14 +49,14 @@ export const overlayPrimitiveClassNames = {
     menuItemBaseClassName,
     "data-[highlighted]:bg-accent data-[popup-open]:bg-accent",
   ].join(" "),
-  menuCheckboxItem: [menuItemBaseClassName, menuHighlightedClassName, "pl-8"].join(" "),
+  menuCheckboxItem: [menuItemBaseClassName, menuHighlightedClassName, "ps-8"].join(" "),
   menuFilterInput: [
     "h-7 w-full rounded-[var(--radius-sm)] bg-muted px-2 text-sm text-foreground",
     "placeholder:text-muted-foreground outline-none",
   ].join(" "),
   menuEmpty: "px-2 py-3 text-center text-sm text-muted-foreground",
   menuIndicator:
-    "pointer-events-none absolute left-2 flex size-3.5 items-center justify-center text-muted-foreground",
+    "pointer-events-none absolute start-2 flex size-3.5 items-center justify-center text-muted-foreground",
   menubarRoot:
     "flex h-10 items-center space-x-1 rounded-[var(--radius-md)] border border-border bg-background p-1 outline-none",
   menubarTrigger: [
@@ -78,7 +78,7 @@ export const overlayPrimitiveClassNames = {
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
   ].join(" "),
   menubarCheckboxItem: [
-    "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] py-1.5 pl-8 pr-2 text-sm",
+    "relative flex cursor-default select-none items-center rounded-[var(--radius-sm)] py-1.5 ps-8 pe-2 text-sm",
     "outline-none",
     menubarFocusClassName,
     "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",

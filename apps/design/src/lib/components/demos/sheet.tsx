@@ -26,7 +26,7 @@ import {
   State,
 } from "../demo-kit";
 
-const SIDES = ["top", "right", "bottom", "left"] as const;
+const SIDES = ["top", "right", "bottom", "left", "start", "end"] as const;
 
 export default function SheetDemo() {
   const [open, setOpen] = React.useState(false);
@@ -89,10 +89,10 @@ export default function SheetDemo() {
       </State>
 
       <State
-        breaks="A side that slides from the wrong edge, or a top and bottom sheet that stretches to the full viewport height instead of capping at its edge height."
+        breaks="A side that slides from the wrong edge, a top and bottom sheet that stretches to the full viewport height instead of capping at its edge height, or start and end sheets that stay on one physical edge in a right-to-left page."
         code={`<SheetContent side="left">…</SheetContent>`}
         id="sides"
-        note="One sheet per edge. Top and bottom cap their height; left and right cap their width and never exceed the viewport."
+        note="One sheet per edge. Top and bottom cap their height; left, right, start and end cap their width and never exceed the viewport. Left and right are physical; start and end are the inline edges and swap under dir=rtl."
         title="Sides"
       >
         <AxisMatrix
@@ -405,9 +405,13 @@ export default function SheetDemo() {
         <p>
           Sheet is an edge panel for a secondary task on desktop. Use <code>Drawer</code> for a
           touch-first bottom panel with drag-to-dismiss, and <code>Dialog</code> or{" "}
-          <code>AlertDialog</code> for a decision that must block. The sides are physical:{" "}
-          <code>left</code> and <code>right</code> do not flip in a right-to-left page, and the
-          built-in close button stays in the top-right corner.
+          <code>AlertDialog</code> for a decision that must block. <code>left</code> and{" "}
+          <code>right</code> are physical edges and never flip; <code>start</code> and{" "}
+          <code>end</code> are the inline edges and mirror in a right-to-left page, sliding in from
+          their own edge. The built-in close button sits on the inline end, so it moves to the
+          top-left corner in RTL. The panel is portalled to <code>&lt;body&gt;</code>, so the
+          direction comes from <code>&lt;html dir&gt;</code> unless you pass <code>dir</code> to{" "}
+          <code>SheetContent</code>.
         </p>
       </Aside>
     </DemoPage>

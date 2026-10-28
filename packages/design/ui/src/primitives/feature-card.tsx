@@ -62,19 +62,19 @@ export function FeatureCardDecorator() {
   return (
     <>
       <span
-        className="absolute -left-px -top-px block size-2 border-l-2 border-t-2 border-primary"
+        className="absolute -start-px -top-px block size-2 border-s-2 border-t-2 border-primary"
         aria-hidden="true"
       />
       <span
-        className="absolute -right-px -top-px block size-2 border-r-2 border-t-2 border-primary"
+        className="absolute -end-px -top-px block size-2 border-e-2 border-t-2 border-primary"
         aria-hidden="true"
       />
       <span
-        className="absolute -bottom-px -left-px block size-2 border-b-2 border-l-2 border-primary"
+        className="absolute -bottom-px -start-px block size-2 border-b-2 border-s-2 border-primary"
         aria-hidden="true"
       />
       <span
-        className="absolute -bottom-px -right-px block size-2 border-b-2 border-r-2 border-primary"
+        className="absolute -bottom-px -end-px block size-2 border-b-2 border-e-2 border-primary"
         aria-hidden="true"
       />
     </>

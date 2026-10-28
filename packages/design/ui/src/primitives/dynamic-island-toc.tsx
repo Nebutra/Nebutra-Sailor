@@ -261,7 +261,7 @@ function TocClosedPill({
           : { ...islandTween, delay: isExpanded ? 0 : motionDurationSec.micro }
       }
       className={cn(
-        "absolute inset-0 flex w-full items-center gap-4 border-0 bg-transparent px-4 text-left text-foreground outline-none sm:px-5",
+        "absolute inset-0 flex w-full items-center gap-4 border-0 bg-transparent px-4 text-start text-foreground outline-none sm:px-5",
         isExpanded && "pointer-events-none",
       )}
     >
@@ -410,7 +410,7 @@ function TocMenuItem({
       onClick={() => onJump(heading)}
       style={{ paddingLeft: `${paddingLeft}px` }}
       className={cn(
-        "group flex w-full shrink-0 cursor-pointer items-center rounded-[var(--radius-lg)] border-none py-2 pr-3 text-left text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal ease-out",
+        "group flex w-full shrink-0 cursor-pointer items-center rounded-[var(--radius-lg)] border-none py-2 pe-3 text-start text-sm transition-[background-color,border-color,box-shadow,color,opacity,transform] duration-reveal ease-out",
         "focus-visible:outline-none",
         isActive && "bg-foreground/10 text-foreground",
         !isActive && isHovered && "bg-foreground/5 text-foreground/85",
@@ -427,7 +427,7 @@ function TocMenuItem({
         transition={
           reduceMotion ? { duration: 0 } : { duration: motionDurationSec.reveal, ease: "easeOut" }
         }
-        className="ml-3 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground"
+        className="ms-3 h-1.5 w-1.5 shrink-0 rounded-full bg-foreground"
       />
     </button>
   );
@@ -624,7 +624,7 @@ export function DynamicIslandTOC({
         <span
           ref={titleSizerRef}
           aria-hidden="true"
-          className="pointer-events-none invisible fixed left-0 top-0 -z-[1] whitespace-nowrap text-sm font-medium"
+          className="pointer-events-none invisible fixed start-0 top-0 -z-[1] whitespace-nowrap text-sm font-medium"
         >
           {activeHeading?.text || emptyLabel}
         </span>

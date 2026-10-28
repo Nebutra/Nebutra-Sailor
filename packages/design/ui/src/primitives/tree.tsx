@@ -550,7 +550,7 @@ export const TreeLines = () => {
   }
 
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute top-0 bottom-0 left-0">
+    <div aria-hidden="true" className="pointer-events-none absolute top-0 bottom-0 start-0">
       {/* Render vertical lines for all parent levels */}
       {Array.from({ length: level }, (_, index) => {
         const shouldHideLine = parentPath[index] === true;
@@ -560,7 +560,7 @@ export const TreeLines = () => {
 
         return (
           <div
-            className="absolute top-0 bottom-0 border-border/40 border-l"
+            className="absolute top-0 bottom-0 border-border/40 border-s"
             key={index.toString()}
             style={{
               left: index * (indent ?? 0) + 12,
@@ -583,7 +583,7 @@ export const TreeLines = () => {
       {/* Vertical line to midpoint for last items */}
       {isLast && (
         <div
-          className="absolute top-0 border-border/40 border-l"
+          className="absolute top-0 border-border/40 border-s"
           style={{
             left: (level - 1) * (indent ?? 0) + 12,
             height: "50%",
@@ -663,7 +663,7 @@ export const TreeExpander = ({ hasChildren = false, className, ...props }: TreeE
   useRegisterChildren(hasChildren);
 
   if (!hasChildren) {
-    return <div aria-hidden="true" className="mr-1 h-4 w-4" />;
+    return <div aria-hidden="true" className="me-1 h-4 w-4" />;
   }
 
   return (
@@ -671,7 +671,7 @@ export const TreeExpander = ({ hasChildren = false, className, ...props }: TreeE
       aria-hidden="true"
       data-tree-expander=""
       animate={{ rotate: isExpanded ? 90 : 0 }}
-      className={cn("mr-1 flex h-4 w-4 cursor-pointer items-center justify-center", className)}
+      className={cn("me-1 flex h-4 w-4 cursor-pointer items-center justify-center", className)}
       transition={reduceMotion ? { duration: 0 } : { duration: 0.2, ease: "easeInOut" }}
       {...props}
     >
@@ -709,7 +709,7 @@ export const TreeIcon = ({ icon, hasChildren = false, className, ...props }: Tre
     <motion.div
       aria-hidden="true"
       className={cn(
-        "mr-2 flex h-4 w-4 items-center justify-center text-muted-foreground",
+        "me-2 flex h-4 w-4 items-center justify-center text-muted-foreground",
         className,
       )}
       transition={reduceMotion ? { duration: 0 } : { duration: 0.15 }}

@@ -93,7 +93,7 @@ export function ArtifactShiftCardPreview({
       <div className="relative mt-3 space-y-1.5 rounded-[var(--radius-lg)] border border-border/50 bg-muted/25 p-3 font-mono text-[11px] leading-5">
         {lines.map((line, index) => (
           <div key={`${line}-${index}`} className="flex min-w-0 gap-3">
-            <span className="w-5 shrink-0 text-right text-muted-foreground/55 tabular-nums">
+            <span className="w-5 shrink-0 text-end text-muted-foreground/55 tabular-nums">
               {index + 1}
             </span>
             <code className="min-w-0 truncate text-foreground/75" translate="no">

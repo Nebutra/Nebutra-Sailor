@@ -5,6 +5,12 @@ import { Check, ChevronRight } from "@nebutra/icons";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import {
+  BaseDirectionScope,
+  mergeRefs,
+  type TextDirection,
+  useResolvedDirection,
+} from "../utils/direction";
 import { resolveLazyChild } from "../utils/lazy-child";
 import { overlayPrimitiveClassNames } from "./overlay";
 
@@ -107,7 +113,7 @@ export interface ContextMenuSubTriggerProps
   children?: React.ReactNode;
   /** Leading content, usually an icon, shown before the label in the muted colour. */
   prefix?: React.ReactNode;
-  /** Trailing content. Defaults to a right-pointing chevron. */
+  /** Trailing content. Defaults to a chevron towards the submenu: right in LTR, left in RTL. */
   suffix?: React.ReactNode;
   /** Called when the row is clicked. Mapped onto `onClick`. */
   onSelect?: React.ComponentPropsWithoutRef<typeof BaseContextMenu.SubmenuTrigger>["onClick"];
@@ -168,14 +174,52 @@ function ContextMenuItemContent({
       {!prefix && inset && <span aria-hidden="true" className="size-4 shrink-0" />}
       <span className="min-w-0 flex-1 truncate">{children}</span>
       {suffix && (
-        <span className="ml-auto flex shrink-0 items-center text-muted-foreground">{suffix}</span>
+        <span className="ms-auto flex shrink-0 items-center text-muted-foreground">{suffix}</span>
       )}
     </>
   );
 }
 
-/** Holds the open state of one context menu. Renders no element of its own. */
-export const ContextMenuRoot = BaseContextMenu.Root;
+export interface ContextMenuRootProps
+  extends React.ComponentPropsWithoutRef<typeof BaseContextMenu.Root> {
+  /**
+   * Reading direction used to mirror the submenu arrow keys (`ArrowLeft` opens a submenu in
+   * `rtl`) and the side submenus open on. Leave it out to follow the `dir` in effect around the
+   * `ContextMenuTrigger` (an ancestor `dir` attribute, else CSS `direction`).
+   * @default "the direction around the trigger"
+   */
+  dir?: TextDirection;
+}
+
+type ContextMenuDirectionValue = {
+  triggerRef: React.RefObject<HTMLDivElement | null>;
+  direction: TextDirection;
+};
+
+// Undefined outside a ContextMenuRoot so a stray part never forces `dir` onto the page.
+const ContextMenuDirectionContext = React.createContext<ContextMenuDirectionValue | undefined>(
+  undefined,
+);
+
+/**
+ * Holds the open state of one context menu. Renders no element of its own. It measures the
+ * reading direction around its trigger and hands it to Base UI, so under `dir="rtl"` the
+ * submenu arrow keys and the side submenus open on mirror.
+ */
+export const ContextMenuRoot = ({ dir: dirProp, children, ...props }: ContextMenuRootProps) => {
+  const triggerRef = React.useRef<HTMLDivElement | null>(null);
+  const measuredDirection = useResolvedDirection(triggerRef);
+  const direction = dirProp ?? measuredDirection;
+  const value = React.useMemo(() => ({ triggerRef, direction }), [direction]);
+  return (
+    <ContextMenuDirectionContext.Provider value={value}>
+      <BaseDirectionScope direction={direction}>
+        <BaseContextMenu.Root {...props}>{children}</BaseContextMenu.Root>
+      </BaseDirectionScope>
+    </ContextMenuDirectionContext.Provider>
+  );
+};
+ContextMenuRoot.displayName = "ContextMenu.Root";
 
 /**
  * Region that opens the menu on right click, or on a long press on touch. It renders a plain
@@ -195,11 +239,14 @@ export const ContextMenuTrigger = ({
   ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.Trigger>> | undefined;
 }) => {
   const children = resolveLazyChild(rawChildren);
+  const triggerRef = React.use(ContextMenuDirectionContext)?.triggerRef;
+  // Memoised so Base UI does not see a new callback ref on every render.
+  const mergedRef = React.useMemo(() => mergeRefs(ref, triggerRef), [ref, triggerRef]);
   const renderElement: BaseContextMenu.Trigger.Props["render"] =
     asChild && React.isValidElement(children) ? children : render;
   return (
     <BaseContextMenu.Trigger
-      ref={ref}
+      ref={mergedRef}
       render={renderElement}
       {...(renderElement ? props : { ...props, children })}
     />
@@ -219,33 +266,37 @@ export const ContextMenuContent = ({
   ...props
 }: ContextMenuContentProps & {
   ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.Popup>> | undefined;
-}) => (
-  <BaseContextMenu.Portal>
-    <BaseContextMenu.Positioner
-      style={{ zIndex: overlayZIndex.popover }}
-      alignOffset={alignOffset}
-      align={align}
-      sideOffset={sideOffset}
-      side={side}
-    >
-      <BaseContextMenu.Popup
-        ref={ref}
-        className={cn(
-          overlayClassNames.menuSurface,
-          overlayPrimitiveClassNames.menuSurface,
-          "min-w-40 max-w-80",
-          className,
-        )}
-        style={{
-          zIndex: overlayZIndex.popover,
-          maxHeight: "var(--context-menu-max-height, var(--available-height))",
-          ...style,
-        }}
-        {...props}
-      />
-    </BaseContextMenu.Positioner>
-  </BaseContextMenu.Portal>
-);
+}) => {
+  const direction = React.use(ContextMenuDirectionContext)?.direction;
+  return (
+    <BaseContextMenu.Portal>
+      <BaseContextMenu.Positioner
+        dir={direction}
+        style={{ zIndex: overlayZIndex.popover }}
+        alignOffset={alignOffset}
+        align={align}
+        sideOffset={sideOffset}
+        side={side}
+      >
+        <BaseContextMenu.Popup
+          ref={ref}
+          className={cn(
+            overlayClassNames.menuSurface,
+            overlayPrimitiveClassNames.menuSurface,
+            "min-w-40 max-w-80",
+            className,
+          )}
+          style={{
+            zIndex: overlayZIndex.popover,
+            maxHeight: "var(--context-menu-max-height, var(--available-height))",
+            ...style,
+          }}
+          {...props}
+        />
+      </BaseContextMenu.Positioner>
+    </BaseContextMenu.Portal>
+  );
+};
 ContextMenuContent.displayName = "ContextMenu.Content";
 
 /** Groups related items so assistive tech announces them together. */
@@ -312,14 +363,23 @@ export const ContextMenuItem = ({
   );
 
   if (href) {
+    // `onSelect` is typed for the div row; the same handler is valid on the anchor row.
+    const onLinkClick = onSelect as React.ComponentPropsWithoutRef<
+      typeof BaseContextMenu.LinkItem
+    >["onClick"];
     return (
       <BaseContextMenu.LinkItem
         ref={ref}
-        href={href}
+        // Base UI's link item has no `disabled`, so a disabled link drops its href (nothing to
+        // navigate to), is announced as disabled and swallows the click.
+        href={disabled ? undefined : href}
         target={target}
         rel={rel}
         data-value={value}
         data-variant={variant}
+        aria-disabled={disabled ? true : undefined}
+        data-disabled={disabled ? "" : undefined}
+        onClick={disabled ? (event) => event.preventDefault() : onLinkClick}
         className={cn(overlayPrimitiveClassNames.contextMenuItem, className)}
         {...props}
       >
@@ -365,7 +425,7 @@ export const ContextMenuCheckboxItem = ({
     defaultChecked={defaultChecked}
     data-value={value}
     onClick={onSelect}
-    className={cn(overlayPrimitiveClassNames.contextMenuItem, "pl-8", className)}
+    className={cn(overlayPrimitiveClassNames.contextMenuItem, "ps-8", className)}
     {...props}
   >
     <BaseContextMenu.CheckboxItemIndicator className={overlayPrimitiveClassNames.menuIndicator}>
@@ -405,7 +465,7 @@ export const ContextMenuRadioItem = ({
     ref={ref}
     value={value}
     onClick={onSelect}
-    className={cn(overlayPrimitiveClassNames.contextMenuItem, "pl-8", className)}
+    className={cn(overlayPrimitiveClassNames.contextMenuItem, "ps-8", className)}
     {...props}
   >
     <BaseContextMenu.RadioItemIndicator className={overlayPrimitiveClassNames.menuIndicator}>
@@ -439,18 +499,40 @@ export const ContextMenuSubTrigger = ({
     className={cn(overlayPrimitiveClassNames.contextMenuItem, className)}
     {...props}
   >
-    <ContextMenuItemContent prefix={prefix} suffix={suffix ?? <ChevronRight className="size-4" />}>
+    <ContextMenuItemContent
+      prefix={prefix}
+      suffix={suffix ?? <ChevronRight aria-hidden="true" className="size-4 rtl:rotate-180" />}
+    >
       {children}
     </ContextMenuItemContent>
   </BaseContextMenu.SubmenuTrigger>
 );
 ContextMenuSubTrigger.displayName = "ContextMenu.SubTrigger";
 
-/** Panel for a nested submenu. The same component as `ContextMenuContent`. */
-export const ContextMenuSubContent = ContextMenuContent;
+/**
+ * Panel for a nested submenu. Takes the props of `ContextMenuContent`, but opens beside its
+ * `ContextMenuSubTrigger` on the inline-end side (right in LTR, left in RTL) rather than below it.
+ */
+export const ContextMenuSubContent = ({
+  side = "inline-end",
+  sideOffset = 0,
+  alignOffset = -4,
+  ref,
+  ...props
+}: ContextMenuContentProps & {
+  ref?: React.Ref<React.ElementRef<typeof BaseContextMenu.Popup>> | undefined;
+}) => (
+  <ContextMenuContent
+    ref={ref}
+    side={side}
+    sideOffset={sideOffset}
+    alignOffset={alignOffset}
+    {...props}
+  />
+);
 ContextMenuSubContent.displayName = "ContextMenu.SubContent";
 
-/** Right-aligned shortcut hint for an item. Decorative: it does not bind the keys itself. */
+/** End-aligned shortcut hint for an item. Decorative: it does not bind the keys itself. */
 export const ContextMenuShortcut = ({
   className,
   ref,
@@ -458,7 +540,7 @@ export const ContextMenuShortcut = ({
 }: React.ComponentPropsWithoutRef<"span"> & { ref?: React.Ref<HTMLSpanElement> | undefined }) => (
   <span
     ref={ref}
-    className={cn("ml-auto text-xs tabular-nums text-muted-foreground", className)}
+    className={cn("ms-auto text-xs tabular-nums text-muted-foreground", className)}
     {...props}
   />
 );
@@ -489,12 +571,12 @@ export const ContextMenu = Object.assign(ContextMenuRoot, {
   Label: ContextMenuLabel,
   /** Hairline between groups of items. */
   Separator: ContextMenuSeparator,
-  /** Right-aligned shortcut hint for an item. */
+  /** End-aligned shortcut hint for an item. */
   Shortcut: ContextMenuShortcut,
   /** Wraps a sub trigger and its content to form a nested submenu. */
   Sub: ContextMenuSub,
   /** Row that opens a nested submenu. */
   SubTrigger: ContextMenuSubTrigger,
-  /** Panel for a nested submenu. */
+  /** Panel for a nested submenu; opens on the inline-end side of its trigger. */
   SubContent: ContextMenuSubContent,
 });

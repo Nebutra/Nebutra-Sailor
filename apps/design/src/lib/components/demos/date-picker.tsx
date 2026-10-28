@@ -92,10 +92,10 @@ export default function DatePickerDemo({ derived }: DemoProps) {
       </State>
 
       <State
-        breaks="A bound that only the calendar enforces. Days outside min and max are disabled in the grid, but a date typed into the field is accepted as typed."
+        breaks="A bound that one entry path ignores. Days outside min and max are disabled in the grid, and a date typed outside them must not commit either."
         code={`<DatePicker id="launch" label="Launch" min="2026-10-05" max="2026-10-28" />`}
         id="bounds"
-        note="Bounded to 5 to 28 October 2026. Open the calendar: earlier and later days are disabled and navigation stops at those months. Then type 2026-11-15 into the field and see what it does."
+        note="Bounded to 5 to 28 October 2026. Open the calendar: earlier and later days are disabled and navigation stops at those months. Then type 2026-11-15 into the field: the value is not committed, the field is marked invalid while you type, and on blur it returns to the last committed date."
         title="Min and max"
       >
         <Live
@@ -179,9 +179,9 @@ export default function DatePickerDemo({ derived }: DemoProps) {
       </State>
 
       <State
-        breaks="A calendar that opens left-to-right in a right-to-left page. dir only reaches the calendar; the text field keeps the direction of the page."
+        breaks="A calendar or text field that stays left-to-right in a right-to-left page."
         id="rtl"
-        note="dir=rtl is passed to the picker, so the opened calendar mirrors its navigation and week order."
+        note="dir=rtl is passed to the picker and reaches both the text field and the opened calendar, which mirrors its navigation arrows and week order."
         title="Right-to-left calendar"
       >
         <Live dir="rtl" id="dp-rtl" initial="2026-10-23" label="Date" />

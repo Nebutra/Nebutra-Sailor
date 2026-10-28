@@ -66,7 +66,7 @@ function GhostChart() {
         </svg>
         <span className="absolute top-[30%] left-[72.7%] size-2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-card bg-foreground/30" />
         {/* The tooltip card the crosshair would open. */}
-        <span className="absolute top-1 left-[74.5%] hidden w-28 flex-col gap-1.5 rounded-[var(--radius-lg)] border border-border bg-card/80 p-2.5 shadow-xs sm:flex">
+        <span className="absolute top-1 start-[74.5%] hidden w-28 flex-col gap-1.5 rounded-[var(--radius-lg)] border border-border bg-card/80 p-2.5 shadow-xs sm:flex">
           <span className="h-1.5 w-12 rounded-full bg-foreground/[0.12]" />
           <span className="h-2 w-16 rounded-full bg-foreground/[0.09]" />
         </span>

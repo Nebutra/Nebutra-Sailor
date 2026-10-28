@@ -728,7 +728,7 @@ export function CodeBlock(props: CodeBlockProps) {
                       )}
                     >
                       <CodeBlockLanguageIcon
-                        className="mr-1 size-3.5"
+                        className="me-1 size-3.5"
                         icon={opt.icon}
                         icons={languageIcons}
                         language={opt.value}
@@ -770,7 +770,7 @@ export function CodeBlock(props: CodeBlockProps) {
                       )}
                     >
                       <CodeBlockLanguageIcon
-                        className="mr-1 size-3.5"
+                        className="me-1 size-3.5"
                         icons={languageIcons}
                         language={lang}
                       />

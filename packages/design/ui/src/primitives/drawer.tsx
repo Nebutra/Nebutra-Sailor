@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
+import { overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils";
 
 // =============================================================================
@@ -22,7 +23,10 @@ export type DrawerProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {
   /** Alias for `height` when the content needs a capped frame. */
   customHeight?: DrawerHeight;
   /**
-   * Direction the drawer slides from. Use bottom for Drawer; use Sheet for lateral desktop panels.
+   * Screen edge the drawer slides from. Use bottom for Drawer; use Sheet for lateral desktop panels.
+   * `left` and `right` are physical edges: Vaul animates and drags them along the x axis, so they do
+   * not flip under `dir="rtl"` (the same contract as `Sheet` `side`). To follow the reading
+   * direction, choose the value from your own `dir` state.
    * @default "bottom"
    */
   direction?: DrawerDirection;
@@ -181,15 +185,16 @@ function DrawerClose({ ...props }: DrawerCloseProps) {
 }
 
 /** Dimmed, blurred backdrop behind the drawer. Rendered by `DrawerContent`. */
-function DrawerOverlay({ className, ...props }: DrawerOverlayProps) {
+function DrawerOverlay({ className, style, ...props }: DrawerOverlayProps) {
   return (
     <DrawerPrimitive.Overlay
       data-slot="drawer-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-background/70 backdrop-blur-[2px]",
+        "fixed inset-0 bg-background/70 backdrop-blur-[2px]",
         "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
         className,
       )}
+      style={{ zIndex: overlayZIndex.backdrop, ...style }}
       {...props}
     />
   );
@@ -207,13 +212,12 @@ function DrawerContent({
 }: DrawerContentProps) {
   const rootContext = React.use(DrawerRootContext);
   const resolvedHeight = formatDrawerHeight(height ?? rootContext.height);
-  const contentStyle =
-    resolvedHeight === undefined
-      ? style
-      : ({
-          "--drawer-height": resolvedHeight,
-          ...style,
-        } satisfies DrawerContentStyle);
+  // Same tier as Sheet and Dialog; equal tiers stack by portal order, so the newest overlay wins.
+  const contentStyle = {
+    zIndex: overlayZIndex.modal,
+    ...(resolvedHeight === undefined ? null : { "--drawer-height": resolvedHeight }),
+    ...style,
+  } satisfies DrawerContentStyle;
 
   return (
     <DrawerPortal data-slot="drawer-portal">
@@ -221,12 +225,13 @@ function DrawerContent({
       <DrawerPrimitive.Content
         data-slot="drawer-content"
         className={cn(
-          "group/drawer-content fixed z-50 flex bg-background text-foreground shadow-lg outline-none",
+          "group/drawer-content fixed flex bg-background text-foreground shadow-lg outline-none",
           verticalScroll && "overflow-hidden",
           "data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:h-[var(--drawer-height,auto)] data-[vaul-drawer-direction=bottom]:max-h-[min(var(--drawer-height,80vh),calc(100dvh-1rem))] data-[vaul-drawer-direction=bottom]:flex-col data-[vaul-drawer-direction=bottom]:rounded-t-[var(--radius-xl)] data-[vaul-drawer-direction=bottom]:border-t",
           "data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:h-[var(--drawer-height,auto)] data-[vaul-drawer-direction=top]:max-h-[min(var(--drawer-height,80vh),calc(100dvh-1rem))] data-[vaul-drawer-direction=top]:flex-col data-[vaul-drawer-direction=top]:rounded-b-[var(--radius-xl)] data-[vaul-drawer-direction=top]:border-b",
-          "data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-[min(24rem,calc(100vw-2rem))] data-[vaul-drawer-direction=right]:flex-col data-[vaul-drawer-direction=right]:border-l",
-          "data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-[min(24rem,calc(100vw-2rem))] data-[vaul-drawer-direction=left]:flex-col data-[vaul-drawer-direction=left]:border-r",
+          // left/right are physical: Vaul slides and drags along the x axis, so anchor and hairline stay physical.
+          "data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-[min(24rem,calc(100vw-2rem))] data-[vaul-drawer-direction=right]:flex-col data-[vaul-drawer-direction=right]:border-l", // allow-physical: Vaul slides and drags along the physical x axis
+          "data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-[min(24rem,calc(100vw-2rem))] data-[vaul-drawer-direction=left]:flex-col data-[vaul-drawer-direction=left]:border-r", // allow-physical: Vaul slides and drags along the physical x axis
           className,
         )}
         style={contentStyle}
@@ -241,13 +246,14 @@ function DrawerContent({
   );
 }
 
-/** Top section holding the title and description, separated from the body by a hairline. */
+/** Top section holding the title and description, separated from the body by a hairline. Start-aligned, and centred only in a bottom drawer. */
 function DrawerHeader({ className, ...props }: DrawerHeaderProps) {
   return (
     <div
       data-slot="drawer-header"
       className={cn(
-        "grid w-full gap-1 border-b px-5 pb-4 pt-3 text-center md:mx-auto md:max-w-md",
+        "grid w-full gap-1 border-b px-5 pb-4 pt-3 text-start md:mx-auto md:max-w-md",
+        "group-data-[vaul-drawer-direction=bottom]/drawer-content:text-center",
         className,
       )}
       {...props}

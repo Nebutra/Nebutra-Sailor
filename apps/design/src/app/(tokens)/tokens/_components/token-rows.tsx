@@ -196,11 +196,11 @@ export function DescriptionRow({ entry, index }: { entry: MeasuredColor; index: 
   if (!entry.token.slotDescription) return null;
   return (
     <tr className={index % 2 === 1 ? "bg-muted/35" : undefined}>
-      <td colSpan={5} className="pb-3 pl-3">
+      <td colSpan={5} className="pb-3 ps-3">
         <p className="max-w-4xl text-[12px] text-muted-foreground leading-relaxed">
           {entry.token.slotDescriptionBorrowed ? (
             <span
-              className="mr-1.5 font-mono text-[11px] uppercase"
+              className="me-1.5 font-mono text-[11px] uppercase"
               title="this mode's declaration carries no description; the slot is documented in the other mode"
             >
               slot:

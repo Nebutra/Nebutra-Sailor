@@ -17,7 +17,7 @@ export function Textarea2Demo() {
         placeholder="Type here..."
         maxLength={maxLength}
       />
-      <span className="w-full text-right text-muted-foreground text-xs">
+      <span className="w-full text-end text-muted-foreground text-xs">
         {value.length}/{maxLength}
       </span>
     </div>

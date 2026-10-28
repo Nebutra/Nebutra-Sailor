@@ -85,9 +85,9 @@ export function ComponentPlayground({
 
           <aside
             aria-label="Props"
-            className="flex min-w-0 flex-col border-hairline border-t lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-h-[40rem] lg:border-t-0 lg:border-l"
+            className="flex min-w-0 flex-col border-hairline border-t lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-h-[40rem] lg:border-t-0 lg:border-s"
           >
-            <div className="flex min-h-9 shrink-0 items-center justify-between gap-2 border-hairline border-b bg-muted/40 py-1 pr-2 pl-3">
+            <div className="flex min-h-9 shrink-0 items-center justify-between gap-2 border-hairline border-b bg-muted/40 py-1 pe-2 ps-3">
               <span className="font-medium text-muted-foreground text-xs">Props</span>
               <Button
                 className="text-muted-foreground"

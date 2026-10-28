@@ -250,7 +250,7 @@ function SaturationArea({ hsva, disabled, labels, commit, complete }: SurfacePro
         data-dragging={dragging}
         className={cn(
           thumbClass,
-          "left-[var(--cp-x)] top-[var(--cp-y)] bg-[color:var(--cp-color)]",
+          "start-[var(--cp-x)] top-[var(--cp-y)] bg-[color:var(--cp-color)]",
         )}
         style={
           {
@@ -298,7 +298,7 @@ function HueSlider({ hsva, disabled, labels, commit, complete }: SurfaceProps) {
         data-dragging={dragging}
         className={cn(
           thumbClass,
-          "top-1/2 left-[var(--cp-x)] bg-[color:hsl(var(--cp-hue)_100%_50%)]",
+          "top-1/2 start-[var(--cp-x)] bg-[color:hsl(var(--cp-hue)_100%_50%)]",
         )}
         style={{ "--cp-x": `${(hsva.h / 360) * 100}%`, "--cp-hue": hsva.h } as CpVars}
         onKeyDown={(event) => {
@@ -350,7 +350,7 @@ function AlphaSlider({ hsva, disabled, labels, commit, complete }: SurfaceProps)
         aria-valuetext={`${pct}%`}
         aria-disabled={disabled || undefined}
         data-dragging={dragging}
-        className={cn(thumbClass, "top-1/2 left-[var(--cp-x)] bg-[color:var(--cp-color)]")}
+        className={cn(thumbClass, "top-1/2 start-[var(--cp-x)] bg-[color:var(--cp-color)]")}
         style={{ "--cp-x": `${hsva.a * 100}%`, "--cp-color": solid } as CpVars}
         onKeyDown={(event) => {
           if (disabled) return;

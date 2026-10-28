@@ -17,7 +17,7 @@ export function FormDemo() {
 
   return (
     <form
-      className="max-w-sm space-y-4 p-6 w-full rounded-xl border bg-background text-left shadow-sm"
+      className="max-w-sm space-y-4 p-6 w-full rounded-xl border bg-background text-start shadow-sm"
       onSubmit={(event) => {
         event.preventDefault();
         if (error) return;

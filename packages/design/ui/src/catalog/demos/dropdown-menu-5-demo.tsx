@@ -22,21 +22,21 @@ export function DropdownMenu5Demo() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <User className="mr-2 h-4 w-4" />
+          <User className="me-2 h-4 w-4" />
           Profile
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Settings className="mr-2 h-4 w-4" />
+          <Settings className="me-2 h-4 w-4" />
           Settings
           <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Command className="mr-2 h-4 w-4" />
+          <Command className="me-2 h-4 w-4" />
           Keyboard shortcuts
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-destructive-strong focus:bg-destructive focus:text-destructive-foreground">
-          <LogOut className="mr-2 h-4 w-4" />
+          <LogOut className="me-2 h-4 w-4" />
           Log out
         </DropdownMenuItem>
       </DropdownMenuContent>

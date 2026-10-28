@@ -126,7 +126,9 @@ function PopoverArrow({
     <PopoverPrimitive.Arrow
       data-slot="popover-arrow"
       className={cn(
-        "data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90 data-[side=right]:left-[-13px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180",
+        // `data-side` is the physical side the popup opened on, so the arrow must sit on the
+        // matching physical edge (right-/left-), not on a logical one.
+        "data-[side=bottom]:top-[-8px] data-[side=left]:right-[-13px] data-[side=left]:rotate-90 data-[side=right]:left-[-13px] data-[side=right]:-rotate-90 data-[side=top]:bottom-[-8px] data-[side=top]:rotate-180", // allow-physical: data-side is the physical side the popup opened on
         className,
       )}
       style={{ zIndex: overlayZIndex.popover, ...style }}

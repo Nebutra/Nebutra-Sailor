@@ -42,7 +42,7 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
         className={cn(
           "fixed top-1/2 -translate-y-1/2 z-50",
           "hidden lg:flex flex-col items-center gap-1",
-          position === "right" ? "right-6" : "left-6",
+          position === "right" ? "end-6" : "start-6",
           className,
         )}
         aria-label={navLabel}

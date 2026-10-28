@@ -19,7 +19,7 @@ import { ComponentStatesMatrix } from "@/components/component-states-matrix";
 import { jsx, snippet } from "../code-gen";
 import type { DemoProps } from "../derived";
 
-const SIDES = ["top", "right", "bottom", "left"] as const;
+const SIDES = ["top", "right", "bottom", "left", "start", "end"] as const;
 type Side = (typeof SIDES)[number];
 
 const MODALS = ["trap-focus", "true", "false"] as const;

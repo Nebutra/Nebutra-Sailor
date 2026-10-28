@@ -3,6 +3,7 @@
 import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { cn } from "../utils/cn";
+import { readElementDirection } from "../utils/direction";
 import { controlFocusVisibleClassName } from "./form-control";
 import { toggleGroupItemVariants, toggleGroupVariants } from "./toggle-group-variants";
 
@@ -219,7 +220,16 @@ const ToggleGroupItem = ({
       if (targetValue !== undefined) context.onValueChange(targetValue);
     };
 
-    switch (event.key) {
+    // Left and Right follow the reading direction; Up and Down always mean previous and next.
+    const rtl = readElementDirection(event.currentTarget) === "rtl";
+    const key =
+      rtl && (event.key === "ArrowLeft" || event.key === "ArrowRight")
+        ? event.key === "ArrowLeft"
+          ? "ArrowRight"
+          : "ArrowLeft"
+        : event.key;
+
+    switch (key) {
       case "ArrowRight":
       case "ArrowDown":
         event.preventDefault();

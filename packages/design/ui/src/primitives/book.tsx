@@ -153,13 +153,13 @@ export function Book({
         style={innerStyle}
       >
         <div
-          className="relative flex h-full translate-x-0 flex-col overflow-hidden rounded-l-md rounded-r"
+          className="relative flex h-full translate-x-0 flex-col overflow-hidden rounded-s-md rounded-e"
           style={coverShellStyle}
         >
           {/* Border-shadow layer (replaces the missing `shadow-book-border` util) */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-l-md rounded-r"
+            className="pointer-events-none absolute inset-0 rounded-s-md rounded-e"
             style={coverBorderStyle}
           />
 
@@ -190,7 +190,7 @@ export function Book({
             />
             <div
               className={cn(
-                "flex w-full flex-col p-[6.1%] pl-[14.3%]",
+                "flex w-full flex-col p-[6.1%] ps-[14.3%]",
                 variant === "simple" ? "gap-4" : "justify-between",
               )}
               style={{
@@ -210,7 +210,7 @@ export function Book({
               {variant === "stripe" ? (
                 <svg
                   aria-hidden="true"
-                  className="-ml-1 -mb-1 scale-75"
+                  className="-ms-1 -mb-1 scale-75"
                   height="24"
                   width="24"
                   style={{ fill: textColor }}
@@ -226,7 +226,7 @@ export function Book({
 
           {textured && (
             <div
-              className="pointer-events-none absolute inset-0 top-0 left-0 rotate-180 rounded-l-md rounded-r bg-cover bg-no-repeat opacity-50 brightness-110 mix-blend-hard-light"
+              className="pointer-events-none absolute inset-0 top-0 start-0 rotate-180 rounded-s-md rounded-e bg-cover bg-no-repeat opacity-50 brightness-110 mix-blend-hard-light"
               style={{ backgroundImage: `url('${TEXTURE_URL}')` }}
             />
           )}
@@ -242,7 +242,7 @@ export function Book({
         />
         {/* Back cover */}
         <div
-          className="absolute top-0 left-0 h-full rounded-l-md rounded-r"
+          className="absolute top-0 start-0 h-full rounded-s-md rounded-e"
           style={{
             width: resolvedWidth,
             transform: "translateZ(calc(-1 * 29cqw))",

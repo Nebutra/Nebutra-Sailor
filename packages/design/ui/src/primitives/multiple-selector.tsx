@@ -510,7 +510,7 @@ const MultipleSelector = ({
             <div
               key={option.value}
               className={cn(
-                "animate-fadeIn relative inline-flex h-7 cursor-default items-center rounded-[var(--radius-md)] border border-solid bg-background pe-7 pl-2 ps-2 text-xs font-medium text-secondary-foreground transition-[background-color,border-color,box-shadow,color,opacity,transform] hover:bg-background disabled:cursor-not-allowed disabled:opacity-50 data-[fixed]:pe-2",
+                "animate-fadeIn relative inline-flex h-7 cursor-default items-center rounded-[var(--radius-md)] border border-solid bg-background pe-7 ps-2 ps-2 text-xs font-medium text-secondary-foreground transition-[background-color,border-color,box-shadow,color,opacity,transform] hover:bg-background disabled:cursor-not-allowed disabled:opacity-50 data-[fixed]:pe-2",
                 badgeClassName,
               )}
               data-fixed={option.fixed}
@@ -561,7 +561,7 @@ const MultipleSelector = ({
               {
                 "w-full": hidePlaceholderWhenSelected,
                 "px-3 py-2": selected.length === 0,
-                "ml-1": selected.length !== 0,
+                "ms-1": selected.length !== 0,
               },
               inputProps?.className,
             )}

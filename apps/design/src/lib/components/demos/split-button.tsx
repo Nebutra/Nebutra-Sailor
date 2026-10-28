@@ -281,7 +281,7 @@ export default function SplitButtonDemo(_: DemoProps) {
       <State
         breaks="A pair in a right-to-left page whose rounding and divider stay on the physical left and right, so the outer corners are squared and the seam corners rounded."
         id="rtl"
-        note="Inside dir=rtl the halves swap sides but the seam styling (rounded-r-none, border-l) is physical. Look at the corners and the divider line. This is a known limitation of the current implementation, read from its source."
+        note="Inside dir=rtl the halves swap sides and the seam follows: the primary half squares its end corners (rounded-e-none), the chevron squares its start corners (rounded-s-none) and draws the divider on its start edge (border-s). Where the menu panel opens is decided by the dropdown menu, not by this component."
         title="Right-to-left"
       >
         <div className="flex justify-start" dir="rtl">

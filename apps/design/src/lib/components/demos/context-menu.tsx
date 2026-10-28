@@ -241,9 +241,9 @@ export default function ContextMenuDemo() {
       </State>
 
       <State
-        breaks="Physical padding and offsets in a right-to-left page: the check gutter and the shortcut stay on one physical side regardless of direction. Look at where the indicator and the shortcut land."
+        breaks="A menu that ignores dir: the check gutter and the shortcut stay on one physical side, the submenu chevron keeps pointing right, and ArrowRight still opens a submenu. Look at where the indicator and the shortcut land, which way the chevron points, and press ArrowLeft on a submenu row."
         id="rtl"
-        note="The same menu under dir=rtl."
+        note="The same menu under dir=rtl. The gutter and shortcut follow the direction, the submenu chevron mirrors, submenus open towards the inline end, and ArrowLeft (not ArrowRight) opens one."
         title="Right-to-left"
       >
         <div dir="rtl">

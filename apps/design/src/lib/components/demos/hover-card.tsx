@@ -25,7 +25,7 @@ export default function HoverCardDemo() {
   return (
     <DemoPage>
       <State
-        breaks="A hover card that carries information found nowhere else. It opens on pointer hover only, so anything essential has to be on the page itself; the card is a preview."
+        breaks="A hover card that carries information found nowhere else. It opens from hover, keyboard focus and a click, but it is still a preview: anything essential has to be on the page itself."
         code={`<HoverCard>
   <HoverCardTrigger asChild>
     <Button variant="outline">@acme-web</Button>
@@ -36,7 +36,7 @@ export default function HoverCardDemo() {
   </HoverCardContent>
 </HoverCard>`}
         id="default"
-        note="Hover the trigger. The card opens after a short delay and closes shortly after the pointer leaves."
+        note="Hover the trigger, or Tab onto it. The card opens after a short delay and closes shortly after the pointer or focus leaves. A click or tap toggles it at once."
         title="Default"
       >
         <Row>
@@ -55,12 +55,12 @@ export default function HoverCardDemo() {
       <State
         breaks="A card that opens off the edge of a narrow viewport instead of flipping, or an alignment that changes its width."
         id="placement"
-        note="Four sides and three alignments against the same trigger style. The cards flip when there is no room."
+        note="Four sides and three alignments against the same trigger style. inline-start and inline-end are the logical sides: they swap left and right under dir=rtl. The cards flip when there is no room."
         title="Side and alignment"
       >
         <div className="flex flex-col gap-4">
           <Row>
-            {(["top", "right", "bottom", "left"] as const).map((side) => (
+            {(["top", "inline-end", "bottom", "inline-start"] as const).map((side) => (
               <HoverCard key={side}>
                 <HoverCardTrigger asChild>
                   <Button size="sm" variant="outline">
@@ -192,28 +192,40 @@ export default function HoverCardDemo() {
       </State>
 
       <State
-        breaks="A hover card relied on as the only route to its content. It opens on pointer hover only: focusing the trigger with the keyboard does not open it, and a click does not either. Put the same information on the page the trigger links to."
+        breaks="A hover card relied on as the only route to its content, or one that traps focus. Keyboard focus, Enter / Space and a tap all open it now, but the card is a preview that supplements a link: put the same information on the page the trigger links to."
         id="keyboard"
+        note="Tab onto the trigger: the card opens after the open delay and focus stays on the trigger. Tab again to move into the card's links, and once more to leave it, which closes the card."
         title="Keyboard path"
       >
         <KeyboardPath
           steps={[
-            { keys: "Tab", does: "focuses the trigger, as for any button." },
+            {
+              keys: "Tab",
+              does: "focuses the trigger and opens the card after openDelay. Focus stays on the trigger.",
+            },
             {
               keys: "Enter / Space",
-              does: "does not open the card; the open state is driven by pointer hover only.",
+              does: "toggles the card at once, without waiting for openDelay.",
             },
-            { keys: "Escape", does: "closes an open card." },
-            { keys: "pointer leave", does: "closes it after closeDelay." },
+            {
+              keys: "Tab (again)",
+              does: "moves into the card's focusable content, then on to the next control; the card closes. It is not a focus trap.",
+            },
+            { keys: "Escape", does: "closes an open card and leaves focus on the trigger." },
+            { keys: "pointer leave / blur", does: "closes it after closeDelay." },
+            { keys: "tap (touch)", does: "toggles the card; touch has no hover." },
           ]}
         >
           <Row>
             <HoverCard>
               <HoverCardTrigger asChild>
-                <Button variant="secondary">Tab to me, then hover</Button>
+                <Button variant="secondary">Tab to me</Button>
               </HoverCardTrigger>
               <HoverCardContent>
-                <p className="m-0 text-foreground">Only a hover opens this.</p>
+                <p className="m-0 text-foreground">Opened by hover, focus or a click.</p>
+                <a className="text-sm underline" href="#keyboard">
+                  A link you can Tab to
+                </a>
               </HoverCardContent>
             </HoverCard>
           </Row>
@@ -224,9 +236,11 @@ export default function HoverCardDemo() {
         <p>
           Use <code>Tooltip</code> for a one-line hint on a control, <code>Popover</code> for a
           panel the user opens on purpose with a click or the keyboard, and HoverCard only for a
-          richer preview that supplements a link. HoverCard has no disabled state of its own: the
-          hover handlers sit on the wrapper, not the trigger, so they do not read the trigger's
-          disabled state, and touch devices have no hover to open it.
+          richer preview that supplements a link. HoverCard opens from hover, keyboard focus and a
+          click or tap, so a keyboard or touch user can reach it, but it is not announced like a
+          dialog: keep the same information on the page. It has no disabled state of its own: the
+          handlers sit on the wrapper, not the trigger, so they do not read the trigger's disabled
+          state.
         </p>
       </Aside>
     </DemoPage>

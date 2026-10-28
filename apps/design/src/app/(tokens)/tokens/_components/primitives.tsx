@@ -165,7 +165,7 @@ export function Chip({
 export function Table({ children }: { children: ReactNode }) {
   return (
     <div className="-mx-2 overflow-x-auto px-2">
-      <table className="w-full min-w-[42rem] border-collapse text-left text-ui">{children}</table>
+      <table className="w-full min-w-[42rem] border-collapse text-start text-ui">{children}</table>
     </div>
   );
 }
@@ -174,7 +174,7 @@ export function Th({ children, className = "" }: { children: ReactNode; classNam
   return (
     <th
       scope="col"
-      className={`border-border border-b py-2.5 pl-3 font-medium text-muted-foreground text-xs first:pl-0 ${className}`}
+      className={`border-border border-b py-2.5 ps-3 font-medium text-muted-foreground text-xs first:ps-0 ${className}`}
     >
       {children}
     </th>
@@ -191,7 +191,7 @@ export function Td({
   colSpan?: number;
 }) {
   return (
-    <td colSpan={colSpan} className={`py-3 pl-3 align-middle first:pl-0 ${className}`}>
+    <td colSpan={colSpan} className={`py-3 ps-3 align-middle first:ps-0 ${className}`}>
       {children}
     </td>
   );

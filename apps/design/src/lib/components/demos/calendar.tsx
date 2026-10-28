@@ -199,7 +199,7 @@ export default function CalendarDemo() {
       <State
         breaks="Navigation arrows that point the wrong way, or week order that stays left-to-right, in a right-to-left page."
         id="rtl"
-        note="dir=rtl passed to the calendar. The previous and next arrows come from the chevron component; check which way they point and which side each sits on."
+        note="dir=rtl passed to the calendar. Without dir, the calendar reads the direction of its nearest ancestor, so a page in dir=rtl mirrors it too. The default previous and next chevrons mirror with the direction, and week order follows it."
         title="Right-to-left"
       >
         <Surface>

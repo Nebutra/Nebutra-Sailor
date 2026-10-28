@@ -27,26 +27,26 @@ export function MaterialDemo() {
         <div className="p-2 space-y-1 flex flex-col">
           <button
             type="button"
-            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-start transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             <User className="w-4 h-4" /> Profile
           </button>
           <button
             type="button"
-            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-start transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             <Settings className="w-4 h-4" /> Settings
           </button>
           <button
             type="button"
-            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-left transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-start transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             <Bell className="w-4 h-4" /> Notifications
           </button>
           <div className="my-1 mx-2 h-px bg-border" />
           <button
             type="button"
-            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-left text-destructive-strong transition-colors hover:bg-destructive/10"
+            className="gap-3 px-3 py-2 text-sm flex w-full items-center rounded-md text-start text-destructive-strong transition-colors hover:bg-destructive/10"
           >
             <LogOut className="w-4 h-4" /> Logout
           </button>

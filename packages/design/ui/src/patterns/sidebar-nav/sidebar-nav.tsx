@@ -227,7 +227,7 @@ function InteractiveItem({
     isActive ? ITEM_ACTIVE_CLASSES : ITEM_DEFAULT_CLASSES,
     isDisabled && ITEM_DISABLED_CLASSES,
     collapsed && ITEM_COLLAPSED_CLASSES,
-    !collapsed && nested && "pl-9",
+    !collapsed && nested && "ps-9",
     itemClassName,
   );
 
@@ -272,7 +272,7 @@ function InteractiveItem({
     element = (
       <button
         type="button"
-        className={cn(classes, "w-full text-left")}
+        className={cn(classes, "w-full text-start")}
         aria-current={ariaCurrent}
         aria-disabled={ariaDisabled}
         aria-label={collapsed ? item.label : undefined}
@@ -347,7 +347,7 @@ function ParentItem({
 
   const triggerClasses = cn(
     ITEM_BASE_CLASSES,
-    "w-full text-left",
+    "w-full text-start",
     isActive ? PARENT_ACTIVE_CLASSES : ITEM_DEFAULT_CLASSES,
     isDisabled && ITEM_DISABLED_CLASSES,
     itemClassName,
@@ -364,7 +364,7 @@ function ParentItem({
       </CollapsibleTrigger>
       <CollapsibleContent>
         {/* A 1px guide joins nested rows to their parent (Linear's tree). */}
-        <ul className="relative mt-0.5 flex flex-col gap-0.5 before:absolute before:inset-y-1 before:left-[1.0625rem] before:w-px before:bg-sidebar-border">
+        <ul className="relative mt-0.5 flex flex-col gap-0.5 before:absolute before:inset-y-1 before:start-[1.0625rem] before:w-px before:bg-sidebar-border">
           {item.children?.map((child) => (
             <li key={child.id}>
               <InteractiveItem

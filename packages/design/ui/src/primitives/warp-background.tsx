@@ -112,7 +112,7 @@ const Beam: React.FC<BeamProps> = ({ seed, width, x, delay, duration }) => {
           "--beam-fill": `linear-gradient(hsl(${hue} 80% 60%), transparent)`,
         } as any
       }
-      className="absolute left-[var(--x)] top-0 [aspect-ratio:1/var(--aspect-ratio)] [background:var(--beam-fill)] [width:var(--width)]"
+      className="absolute left-[var(--x)] top-0 [aspect-ratio:1/var(--aspect-ratio)] [background:var(--beam-fill)] [width:var(--width)]" // allow-physical: the beam stage is a 3D rotation about a physical edge and must not mirror
       initial={{ y: "100cqmax", x: "-50%" }}
       animate={{ y: "-100%", x: "-50%" }}
       transition={{
@@ -214,7 +214,7 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
             "--beam-size": `${beamSize}%`,
           } as React.CSSProperties
         }
-        className="pointer-events-none absolute left-0 top-0 size-full overflow-hidden [clipPath:inset(0)] [container-type:size] [perspective:var(--perspective)] [transform-style:preserve-3d]"
+        className="pointer-events-none absolute left-0 top-0 size-full overflow-hidden [clipPath:inset(0)] [container-type:size] [perspective:var(--perspective)] [transform-style:preserve-3d]" // allow-physical: the beam stage is a 3D rotation about a physical edge and must not mirror
         aria-hidden="true"
       >
         {/* Top side */}
@@ -260,14 +260,14 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
         {/* Left side */}
         <div
           className={cn(
-            "absolute left-0 top-0 [container-type:inline-size] [height:100cqmax] [width:100cqh] [transform-origin:0%_0%] [transform:rotate(90deg)_rotateX(-90deg)]",
+            "absolute left-0 top-0 [container-type:inline-size] [height:100cqmax] [width:100cqh] [transform-origin:0%_0%] [transform:rotate(90deg)_rotateX(-90deg)]", // allow-physical: the beam stage is a 3D rotation about a physical edge and must not mirror
             gridBackgroundClass,
           )}
         >
           {!shouldReduceMotion &&
             leftBeams.map((beam, index) => (
               <Beam
-                key={`left-${index}`}
+                key={`leftBeam-${index}`}
                 seed={beam.seed}
                 width={`${beamSize}%`}
                 x={`${beam.x * beamSize}%`}
@@ -280,14 +280,14 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
         {/* Right side */}
         <div
           className={cn(
-            "absolute right-0 top-0 [container-type:inline-size] [height:100cqmax] [width:100cqh] [transform-origin:100%_0%] [transform:rotate(-90deg)_rotateX(-90deg)]",
+            "absolute right-0 top-0 [container-type:inline-size] [height:100cqmax] [width:100cqh] [transform-origin:100%_0%] [transform:rotate(-90deg)_rotateX(-90deg)]", // allow-physical: the beam stage is a 3D rotation about a physical edge and must not mirror
             gridBackgroundClass,
           )}
         >
           {!shouldReduceMotion &&
             rightBeams.map((beam, index) => (
               <Beam
-                key={`right-${index}`}
+                key={`rightBeam-${index}`}
                 seed={beam.seed}
                 width={`${beamSize}%`}
                 x={`${beam.x * beamSize}%`}

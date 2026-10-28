@@ -229,9 +229,9 @@ export default function ScrollerDemo() {
       </State>
 
       <State
-        breaks="Edge detection that assumes left-to-right. scrollLeft is read as a positive offset from the left edge, but browsers report it as zero or negative in right-to-left, so the fades and buttons can show the wrong sides."
+        breaks="Edge detection that assumes left-to-right. Browsers report scrollLeft as zero at the start and negative toward the end in right-to-left, so a naive check shows the fades and buttons on the wrong sides."
         id="rtl"
-        note="Inside dir=rtl. Scroll toward the end and check which fades and buttons appear. This is a known limitation of the current implementation, read from its source."
+        note="Inside dir=rtl. The scroller reads the direction from the DOM and normalises scrollLeft, so the start edge is on the right: the previous button and its fade sit there, the chevrons mirror, and the default button labels name the physical side they scroll toward."
         title="Right-to-left"
       >
         <div className="max-w-md" dir="rtl">

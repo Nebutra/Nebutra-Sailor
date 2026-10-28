@@ -28,15 +28,15 @@ type GradientColor = "primary" | "secondary" | "accent" | "muted" | "custom";
 type GradientSize = "sm" | "md" | "lg" | "xl";
 
 const positionStyles: Record<GradientPosition, string> = {
-  "top-left": "-top-1/4 -left-1/4",
+  "top-left": "-top-1/4 -start-1/4",
   "top-center": "-top-1/4 left-1/2 -translate-x-1/2",
-  "top-right": "-top-1/4 -right-1/4",
-  "center-left": "top-1/2 -left-1/4 -translate-y-1/2",
+  "top-right": "-top-1/4 -end-1/4",
+  "center-left": "top-1/2 -start-1/4 -translate-y-1/2",
   center: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-  "center-right": "top-1/2 -right-1/4 -translate-y-1/2",
-  "bottom-left": "-bottom-1/4 -left-1/4",
+  "center-right": "top-1/2 -end-1/4 -translate-y-1/2",
+  "bottom-left": "-bottom-1/4 -start-1/4",
   "bottom-center": "-bottom-1/4 left-1/2 -translate-x-1/2",
-  "bottom-right": "-bottom-1/4 -right-1/4",
+  "bottom-right": "-bottom-1/4 -end-1/4",
 };
 
 const colorStyles: Record<Exclude<GradientColor, "custom">, string> = {

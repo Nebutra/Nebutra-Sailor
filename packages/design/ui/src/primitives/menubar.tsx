@@ -11,6 +11,8 @@
  *   ← / →         move between top-level triggers (focus loops)
  *   ↓ / Enter     open the focused menu and focus its first item
  *   ↑ / ↓         move within a menu; → / ← open / close a submenu
+ *                 (← / → swap under dir="rtl": the bar measures its own direction and hands
+ *                 it to Base UI, which only reads direction from its provider, not the DOM)
  *   a–z           typeahead to a matching item
  *   Esc           close the menu and return focus to its trigger
  *   hover         once one menu is open, hovering a sibling trigger switches
@@ -22,10 +24,16 @@
 import { Menu as BaseMenu } from "@base-ui/react/menu";
 import { Menubar as BaseMenubar } from "@base-ui/react/menubar";
 import { Check, ChevronRight, Status as Circle } from "@nebutra/icons";
-import type * as React from "react";
+import * as React from "react";
 
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import {
+  BaseDirectionScope,
+  mergeRefs,
+  type TextDirection,
+  useResolvedDirection,
+} from "../utils/direction";
 import { overlayPrimitiveClassNames } from "./overlay";
 
 // Base UI marks an open trigger with `data-popup-open`; the shared menubar
@@ -39,21 +47,36 @@ const OPEN_STATE_CLASSNAME =
 // disabled menu looked live and still took the hover highlight.
 const DISABLED_TRIGGER_CLASSNAME = "data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
 
+// Direction measured on the bar, read by every popup it opens. Undefined outside a Menubar so a
+// stray MenubarContent never forces `dir` onto the page.
+const MenubarDirectionContext = React.createContext<TextDirection | undefined>(undefined);
+
 /**
  * Horizontal bar of top-level menus. Owns roving focus across its triggers and the hover
- * hand-off between menus once one is open.
+ * hand-off between menus once one is open. Under `dir="rtl"` (set `dir` on the bar or any
+ * ancestor) the left and right arrow keys swap, and submenus open towards the inline end.
  */
 const Menubar = ({
   className,
   ref,
   ...props
-}: React.ComponentProps<typeof BaseMenubar> & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
-  <BaseMenubar
-    ref={ref}
-    className={cn(overlayPrimitiveClassNames.menubarRoot, className)}
-    {...props}
-  />
-);
+}: React.ComponentProps<typeof BaseMenubar> & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const barRef = React.useRef<HTMLDivElement | null>(null);
+  const direction = useResolvedDirection(barRef);
+  // Memoised so Base UI does not see a new callback ref on every render.
+  const mergedRef = React.useMemo(() => mergeRefs(ref, barRef), [ref]);
+  return (
+    <MenubarDirectionContext.Provider value={direction}>
+      <BaseDirectionScope direction={direction}>
+        <BaseMenubar
+          ref={mergedRef}
+          className={cn(overlayPrimitiveClassNames.menubarRoot, className)}
+          {...props}
+        />
+      </BaseDirectionScope>
+    </MenubarDirectionContext.Provider>
+  );
+};
 Menubar.displayName = "Menubar";
 
 /** One top-level menu: a `MenubarTrigger` and its `MenubarContent`. */
@@ -95,7 +118,7 @@ const MenubarSub = (props: React.ComponentProps<typeof BaseMenu.SubmenuRoot>) =>
 );
 MenubarSub.displayName = "MenubarSub";
 
-/** Item that opens a nested submenu, with a trailing chevron. */
+/** Item that opens a nested submenu, with a trailing chevron that mirrors in RTL. */
 const MenubarSubTrigger = ({
   className,
   inset,
@@ -113,18 +136,28 @@ const MenubarSubTrigger = ({
     className={cn(
       overlayPrimitiveClassNames.menubarSubTrigger,
       OPEN_STATE_CLASSNAME,
-      inset && "pl-8",
+      inset && "ps-8",
       className,
     )}
     {...props}
   >
     {children}
-    <ChevronRight aria-hidden="true" className="ml-auto h-4 w-4" />
+    <ChevronRight aria-hidden="true" className="ms-auto h-4 w-4 rtl:rotate-180" />
   </BaseMenu.SubmenuTrigger>
 );
 MenubarSubTrigger.displayName = "MenubarSubTrigger";
 
 type PositionerProps = React.ComponentProps<typeof BaseMenu.Positioner>;
+
+// Carries the bar's measured direction onto the portalled popup, so floating-ui flips the
+// alignment and the `rtl:` variants inside the menu match, even when `dir` sits on a wrapper
+// that the portal escapes.
+const MenubarPositioner = (props: PositionerProps) => {
+  const direction = React.use(MenubarDirectionContext);
+  return (
+    <BaseMenu.Positioner dir={direction} style={{ zIndex: overlayZIndex.popover }} {...props} />
+  );
+};
 
 export interface MenubarContentProps extends React.ComponentProps<typeof BaseMenu.Popup> {
   /**
@@ -161,13 +194,7 @@ const MenubarContent = ({
   ...props
 }: MenubarContentProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
   <BaseMenu.Portal>
-    <BaseMenu.Positioner
-      align={align}
-      alignOffset={alignOffset}
-      side={side}
-      sideOffset={sideOffset}
-      style={{ zIndex: overlayZIndex.popover }}
-    >
+    <MenubarPositioner align={align} alignOffset={alignOffset} side={side} sideOffset={sideOffset}>
       <BaseMenu.Popup
         ref={ref}
         className={cn(
@@ -179,12 +206,15 @@ const MenubarContent = ({
         style={{ zIndex: overlayZIndex.popover, ...style }}
         {...props}
       />
-    </BaseMenu.Positioner>
+    </MenubarPositioner>
   </BaseMenu.Portal>
 );
 MenubarContent.displayName = "MenubarContent";
 
-/** Panel for a nested submenu. Opens to the right of its `MenubarSubTrigger`. */
+/**
+ * Panel for a nested submenu. Opens on the inline-end side of its `MenubarSubTrigger`: to the
+ * right in LTR and to the left in RTL.
+ */
 const MenubarSubContent = ({
   className,
   sideOffset = 4,
@@ -192,7 +222,7 @@ const MenubarSubContent = ({
   ...props
 }: MenubarContentProps & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
   <MenubarContent
-    side="right"
+    side="inline-end"
     sideOffset={sideOffset}
     alignOffset={alignOffset}
     className={cn("min-w-[8rem]", className)}
@@ -227,7 +257,7 @@ const MenubarItem = ({
       className={cn(
         overlayPrimitiveClassNames.menuItem,
         "data-[disabled]:opacity-50",
-        inset && "pl-8",
+        inset && "ps-8",
         className,
       )}
       {...props}
@@ -252,7 +282,7 @@ const MenubarCheckboxItem = ({
     className={cn(overlayPrimitiveClassNames.menuCheckboxItem, className)}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute start-2 flex h-3.5 w-3.5 items-center justify-center">
       <BaseMenu.CheckboxItemIndicator>
         <Check aria-hidden="true" className="h-4 w-4" />
       </BaseMenu.CheckboxItemIndicator>
@@ -279,7 +309,7 @@ const MenubarRadioItem = ({
     className={cn(overlayPrimitiveClassNames.menuCheckboxItem, className)}
     {...props}
   >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute start-2 flex h-3.5 w-3.5 items-center justify-center">
       <BaseMenu.RadioItemIndicator>
         <Circle aria-hidden="true" className="h-2 w-2 fill-current" />
       </BaseMenu.RadioItemIndicator>
@@ -303,7 +333,7 @@ const MenubarLabel = ({
 }) => (
   <div
     ref={ref}
-    className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className)}
+    className={cn("px-2 py-1.5 text-sm font-semibold", inset && "ps-8", className)}
     {...props}
   />
 );
@@ -321,11 +351,11 @@ const MenubarSeparator = ({
 );
 MenubarSeparator.displayName = "MenubarSeparator";
 
-/** Right-aligned shortcut hint for an item. Decorative: it does not bind the keys itself. */
+/** End-aligned shortcut hint for an item. Decorative: it does not bind the keys itself. */
 const MenubarShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
     <span
-      className={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)}
+      className={cn("ms-auto text-xs tracking-widest text-muted-foreground", className)}
       {...props}
     />
   );

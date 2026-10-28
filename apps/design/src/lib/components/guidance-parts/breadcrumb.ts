@@ -39,19 +39,15 @@ export const guidance: import("../guidance").Guidance = {
       body: "The last item is the current page, rendered as plain text rather than a link to itself.",
     },
     {
-      title: "Set the separator on BreadcrumbSeparator",
-      body: "Children replace the default chevron.",
-      code: "<BreadcrumbSeparator>/</BreadcrumbSeparator>",
+      title: "Set the separator once, or per divider",
+      body: "The separator prop on Breadcrumb replaces the default chevron everywhere; children of a BreadcrumbSeparator override it for that divider.",
+      code: '<Breadcrumb separator="/">…</Breadcrumb>',
     },
   ],
   donts: [
     {
-      title: "Don't use the separator prop on Breadcrumb",
-      body: "It is deprecated and has no effect; it is only forwarded to the nav element.",
-    },
-    {
-      title: "Don't rely on the chevron in right-to-left layouts",
-      body: "The default separator does not mirror. Supply your own separator when the page is RTL.",
+      title: "Don't use a one-way arrow as a custom separator in RTL",
+      body: "The default chevron mirrors in right-to-left pages, but a custom node such as → is drawn as given. Use a symmetric mark like / or flip your own icon.",
     },
     {
       title: "Don't make it the only way back",

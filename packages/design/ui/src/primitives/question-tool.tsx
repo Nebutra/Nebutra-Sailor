@@ -139,7 +139,7 @@ export type QuestionAnswer =
 // ---------------------------------------------------------------------------
 
 const optionRowBase =
-  "w-full text-left rounded-[var(--radius-md)] px-2 py-1.5 flex items-center gap-2 -mx-2 hover:bg-accent focus-visible:bg-accent focus-visible:outline-none transition-colors duration-micro";
+  "w-full text-start rounded-[var(--radius-md)] px-2 py-1.5 flex items-center gap-2 -mx-2 hover:bg-accent focus-visible:bg-accent focus-visible:outline-none transition-colors duration-micro";
 
 const badgeBase =
   "h-5 min-w-5 px-1 rounded-[var(--radius-sm)] inline-flex items-center justify-center text-sm font-medium border transition-colors duration-micro";
