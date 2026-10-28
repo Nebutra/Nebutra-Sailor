@@ -208,7 +208,7 @@ const ContextCardTrigger = ({
             }}
             style={contextCardCssVars(width) as React.CSSProperties}
             className={cn(
-              "z-50 flex w-[var(--context-card-width)] flex-col gap-[var(--context-card-stack-gap)] overflow-hidden",
+              "flex w-[var(--context-card-width)] flex-col gap-[var(--context-card-stack-gap)] overflow-hidden",
               "rounded-[var(--context-card-radius)] border border-border bg-popover",
               "px-[var(--context-card-padding-x)] py-[var(--context-card-padding-y)]",
               "text-[length:var(--context-card-body-size)] text-popover-foreground shadow-md outline-none",

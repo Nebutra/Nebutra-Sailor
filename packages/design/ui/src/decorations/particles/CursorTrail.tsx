@@ -228,7 +228,10 @@ export const CursorTrail = React.forwardRef<HTMLDivElement, CursorTrailProps>(
             if (typeof ref === "function") ref(node);
             else if (ref) ref.current = node;
           }}
-          className={cn("absolute inset-0 overflow-hidden pointer-events-none z-50", className)}
+          className={cn(
+            "absolute inset-0 overflow-hidden pointer-events-none z-[var(--layer-raised)]",
+            className,
+          )}
           aria-hidden="true"
           {...props}
         >
@@ -240,7 +243,10 @@ export const CursorTrail = React.forwardRef<HTMLDivElement, CursorTrailProps>(
     return (
       <div
         ref={ref}
-        className={cn("fixed inset-0 overflow-hidden pointer-events-none z-50", className)}
+        className={cn(
+          "fixed inset-0 overflow-hidden pointer-events-none z-[var(--layer-banner)]",
+          className,
+        )}
         aria-hidden="true"
         {...props}
       >

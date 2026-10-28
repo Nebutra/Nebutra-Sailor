@@ -58,7 +58,7 @@ export function PresetPreview() {
     <div
       role="status"
       data-cookie={PRESET_COOKIE}
-      className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full border border-border bg-background/90 py-1.5 pr-1.5 pl-4 text-sm shadow-ambient-md backdrop-blur-xl"
+      className="fixed bottom-4 left-1/2 z-[var(--layer-floating)] flex -translate-x-1/2 items-center gap-3 rounded-full border border-border bg-background/90 py-1.5 pr-1.5 pl-4 text-sm shadow-ambient-md backdrop-blur-xl"
     >
       <span className="text-muted-foreground">
         Your Sailor Studio look <code className="font-mono text-foreground">{code}</code>

@@ -107,7 +107,8 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         className={cn(
           // Opaque, with a hairline: the bar never shows the page sliding under
           // it, and the hero's light starts cleanly below it.
-          "sticky top-0 z-50 grid shrink-0 grid-cols-[1fr_auto_1fr] items-center border-border/80 border-b bg-background px-3 sm:px-5",
+          // The drawer role: the bar is the drawer's top row, so it sits over the drawer (-5) and its scrim (-10).
+          "sticky top-0 z-[var(--layer-drawer)] grid shrink-0 grid-cols-[1fr_auto_1fr] items-center border-border/80 border-b bg-background px-3 sm:px-5",
           compact ? "h-12" : "h-16",
         )}
       >
@@ -187,7 +188,7 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         aria-hidden
         onClick={close}
         className={cn(
-          "fixed inset-0 z-40 bg-background/60 backdrop-blur-[2px] motion-safe:transition-opacity motion-safe:[transition-duration:var(--duration-reveal)] motion-safe:ease-brand",
+          "fixed inset-0 z-[calc(var(--layer-drawer)-10)] bg-background/60 backdrop-blur-[2px] motion-safe:transition-opacity motion-safe:[transition-duration:var(--duration-reveal)] motion-safe:ease-brand",
           open ? "opacity-100" : "opacity-0",
           open === "pinned" ? "" : "pointer-events-none",
         )}
@@ -200,9 +201,9 @@ export function SiteHeader({ brandName, mailto }: { brandName: string; mailto: s
         onMouseEnter={() => open === "hover" && clear()}
         onMouseLeave={hoverClose}
         className={cn(
-          // z-[45]: under the bar, so the bar is the drawer's top row. pt = bar height.
+          // Under the bar, so the bar is the drawer's top row. pt = bar height.
           // overscroll-contain: scrolling the drawer never scrolls the page behind it (Stripe does the same).
-          "fixed inset-y-0 left-0 z-[45] max-w-[100vw] overflow-y-auto overscroll-contain border-r border-border bg-background shadow-ambient-lg",
+          "fixed inset-y-0 left-0 z-[calc(var(--layer-drawer)-5)] max-w-[100vw] overflow-y-auto overscroll-contain border-r border-border bg-background shadow-ambient-lg",
           compact ? "pt-12" : "pt-16",
           "motion-safe:transition-[transform,box-shadow] motion-safe:[transition-duration:var(--duration-reveal)] motion-safe:ease-brand",
           open ? "translate-x-0" : "-translate-x-full shadow-none",

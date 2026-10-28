@@ -154,7 +154,7 @@ export function CookieBanner({
 
   return (
     <div
-      className={`fixed left-0 right-0 z-50 border-[var(--neutral-6)] bg-[var(--neutral-1)]/95 text-[var(--neutral-12)] shadow-lg backdrop-blur-md ${positionClasses} ${className}`}
+      className={`fixed left-0 right-0 z-[var(--layer-banner)] border-[var(--neutral-6)] bg-[var(--neutral-1)]/95 text-[var(--neutral-12)] shadow-lg backdrop-blur-md ${positionClasses} ${className}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="cookie-banner-title"

@@ -173,7 +173,7 @@ export function LaunchBannerTop({
   return (
     // biome-ignore lint/a11y/useSemanticElements: ARIA pattern
     <div
-      className={clsx("fixed inset-x-0 top-0 z-50", className)}
+      className={clsx("fixed inset-x-0 top-0 z-[var(--layer-banner)]", className)}
       style={{
         backgroundColor: styles.background,
         color: styles.text,
@@ -241,7 +241,10 @@ export function LaunchBannerFloating({
   return (
     // biome-ignore lint/a11y/useSemanticElements: ARIA pattern
     <div
-      className={clsx("fixed bottom-4 right-4 z-50 max-w-sm rounded-xl p-4 shadow-2xl", className)}
+      className={clsx(
+        "fixed bottom-4 right-4 z-[var(--layer-banner)] max-w-sm rounded-xl p-4 shadow-2xl",
+        className,
+      )}
       style={{
         backgroundColor: styles.background,
         color: styles.text,

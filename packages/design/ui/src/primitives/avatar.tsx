@@ -301,27 +301,26 @@ function AvatarGroup({
   const normalizedItems = sourceItems.map((item) => normalizeGroupItem(item, size));
   // Show max-1 real avatars; if items.length === max show last one too,
   // if items.length > max show +N badge instead of last slot.
-  // Use built-in Tailwind z-index utilities (z-10..z-60) so they are
-  // guaranteed to exist without arbitrary-value scanning.
-  const Z = ["z-10", "z-20", "z-30", "z-40", "z-50", "z-60"] as const;
   const visibleCount =
     normalizedItems.length >= resolvedMax ? resolvedMax - 1 : normalizedItems.length;
   const visible = normalizedItems.slice(0, visibleCount);
   const lastItem = normalizedItems.length === resolvedMax ? normalizedItems[resolvedMax - 1] : null;
   const overflowCount =
     normalizedItems.length > resolvedMax ? normalizedItems.length - resolvedMax + 1 : 0;
-  const lastZ = Z[Math.min(resolvedMax - 1, Z.length - 1)];
+  // Overlapping avatars stack left to right. The ranks are local to the group
+  // (`isolate` below), so they never compete with page chrome and need no role.
+  const lastRank = visibleCount + 1;
   const groupLabel =
     ariaLabel ?? `${normalizedItems.length} ${normalizedItems.length === 1 ? "member" : "members"}`;
 
   return (
-    <div role="img" aria-label={groupLabel} className={cn("flex items-center", className)}>
+    <div role="img" aria-label={groupLabel} className={cn("isolate flex items-center", className)}>
       {visible.map((item, index) => (
-        // relative is required for z-index to take effect on non-flex-item contexts
         <span
           key={item.alt}
           aria-hidden="true"
-          className={cn("relative inline-flex items-center", index !== 0 && "-ms-2", Z[index])}
+          className={cn("relative inline-flex items-center", index !== 0 && "-ms-2")}
+          style={{ zIndex: index + 1 }}
         >
           <Avatar size={size} className="border border-border bg-background">
             {item.src && <AvatarImage src={item.src} alt="" />}
@@ -332,7 +331,11 @@ function AvatarGroup({
 
       {/* Exact limit: show the last real avatar */}
       {lastItem && (
-        <span aria-hidden="true" className={cn("relative inline-flex items-center -ms-2", lastZ)}>
+        <span
+          aria-hidden="true"
+          className="relative inline-flex items-center -ms-2"
+          style={{ zIndex: lastRank }}
+        >
           <Avatar size={size} className="border border-border bg-background">
             {lastItem.src && <AvatarImage src={lastItem.src} alt="" />}
             <AvatarFallback size={size}>{lastItem.fallback}</AvatarFallback>
@@ -342,7 +345,11 @@ function AvatarGroup({
 
       {/* Over limit: +N overflow badge */}
       {overflowCount > 0 && (
-        <span aria-hidden="true" className={cn("relative inline-flex items-center -ms-2", lastZ)}>
+        <span
+          aria-hidden="true"
+          className="relative inline-flex items-center -ms-2"
+          style={{ zIndex: lastRank }}
+        >
           <Avatar size={size} className="border border-border">
             <AvatarFallback
               size={size}

@@ -268,7 +268,7 @@ export function InboxBell({
         <section
           aria-label={tc("notifications")}
           data-testid="inbox-bell-panel"
-          className="absolute right-0 z-50 mt-2 w-80 overflow-hidden rounded-xl border border-border bg-card shadow-lg sm:w-96"
+          className="absolute right-0 z-[var(--layer-floating)] mt-2 w-80 overflow-hidden rounded-xl border border-border bg-card shadow-lg sm:w-96"
         >
           <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
             <h2 className="text-sm font-semibold text-foreground">{tc("notifications")}</h2>
