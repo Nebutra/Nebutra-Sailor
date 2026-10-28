@@ -101,3 +101,7 @@ try {
 
 - [API Gateway](../../../backends/gateway/)
 - [Observability](../../../infra/ops/observability/)
+
+## License
+
+Apache-2.0. See [LICENSE](./LICENSE).

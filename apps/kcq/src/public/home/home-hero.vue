@@ -1,12 +1,4 @@
-<!--
-  Hero (restraint benchmark §4 row 1, founder option A): one idea. The deck's sentence as the H1
-  (≤ 3 lines at 1440), the sub, two ways in ("Open the workstation", "Embed the chart") and one
-  microcopy line; nothing above the headline. GitHub lives in the nav star button and the final CTA.
-  Below the text, one live chart frame across the container that breaks the fold: the page's one
-  signature motion lives inside it, the light field's candle glyph unfolding into live candles.
-  The layout and the entrance are the shared page opening (components/page-hero.vue); the later
-  handoff to the live chart is one GSAP timeline (motion/hero-timeline.ts).
--->
+<!-- 首屏解释图表与 AI 的关系，提供工作台和操作演示入口；保留现有真实行情与光影展示。 -->
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
@@ -57,13 +49,13 @@ function onShown(withField: boolean) {
 }
 </script>
 <template>
-  <PageHero ref="hero" :heading="t('home.heading')" :lede="t('home.hero.lede')">
+  <PageHero ref="hero" class="home-hero" :heading="t('home.heading')" :lede="t('home.hero.lede')">
     <template #actions>
       <a class="button button-primary" :href="APP_PATH">
         {{ t("home.hero.primary") }}
         <KcqIcon class="button-arrow" name="arrow" />
       </a>
-      <a class="button button-quiet" href="#developers">{{ t("home.hero.embed") }}</a>
+      <a class="button button-quiet" href="#agent">{{ t("home.hero.demo") }}</a>
     </template>
     <template #note>{{ t("home.hero.micro") }}</template>
     <template #artifact>
@@ -71,3 +63,25 @@ function onShown(withField: boolean) {
     </template>
   </PageHero>
 </template>
+<style scoped>
+.home-hero {
+  padding-top: var(--klc-space-40);
+}
+.home-hero :deep(.page-hero-copy) {
+  gap: var(--klc-space-16);
+}
+.home-hero :deep(.page-hero-heading) {
+  white-space: pre-line;
+}
+.home-hero :deep(.page-hero-lede) {
+  max-width: 44rem;
+}
+.home-hero :deep(.page-hero-note) {
+  margin-top: 0;
+}
+@media (min-width: 1024px) {
+  .home-hero {
+    padding-top: var(--klc-space-64);
+  }
+}
+</style>

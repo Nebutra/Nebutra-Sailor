@@ -131,7 +131,8 @@
   --kcq-column-gap: var(--klc-space-12);
   /* Half the gap between blocks: 128px between blocks on phones, 160 on tablets, 224 on desktops. */
   --kcq-band-space: var(--klc-space-64);
-  --kcq-header-height: var(--klc-space-64);
+  /* 窄屏保留 64px 品牌与操作行，另用一行容纳可横向滚动的导航。 */
+  --kcq-header-height: calc(var(--klc-space-64) + var(--klc-density-hit-target-touch));
   /* Press feedback (Emil Kowalski, "Great animations"): text buttons settle 2%, small icon buttons
      4% so the change is visible at 32px. Both over the 140ms press duration. */
   --kcq-press: 0.98;
@@ -158,6 +159,7 @@
 @media (min-width: 1280px) {
   :root {
     --kcq-band-space: calc(var(--klc-space-96) + var(--klc-space-16));
+    --kcq-header-height: var(--klc-space-64);
   }
 }
 
@@ -283,11 +285,7 @@ a {
   outline: 2px solid var(--kcq-accent);
   outline-offset: 2px;
 }
-/* Anchor targets land below the sticky header (scroll-padding on html covers the scroll; this
-   covers focus moves and :target in engines that ignore it). */
-main [id] {
-  scroll-margin-top: calc(var(--kcq-header-height) + var(--klc-space-16));
-}
+/* 锚点避让统一由 html 的 scroll-padding-top 负责，避免与目标的 scroll-margin 叠加。 */
 
 .skip-link {
   position: absolute;

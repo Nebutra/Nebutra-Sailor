@@ -1,12 +1,4 @@
-<!--
-  Nav (restraint benchmark rule 12, founder decision): six groups, wordmark · Agent · Developers ·
-  Benchmark · Docs · GitHub with its star count · Open workstation. Language, theme and the market-feed
-  status live in the footer. "Charts" and "Open source" stay scroll anchors on /home.
-  - always opaque on the page ground, a 1px hairline once content scrolls under it;
-  - on /home, the section in view is `aria-current="location"` and a 2px Cobalt bar slides under it
-    (it shows where you are; it jumps under reduced motion);
-  - one small true count: GitHub stars (a dated build-time snapshot, research E2).
--->
+<!-- 公共导航：工作台始终可进入；窄屏以可滚动的第二行保留章节与文档导航。 -->
 <script setup lang="ts">
 import { useIntersectionObserver, useResizeObserver } from "@vueuse/core";
 import facts from "virtual:kcq-facts";
@@ -23,7 +15,7 @@ const props = defineProps<{ locale: PublicLocale; onHome: boolean; scrolled: boo
 const { t } = useI18n();
 const route = useRoute();
 const home = computed(() => publicPath("home", props.locale));
-const SECTIONS = ["agent", "developers"] as const;
+const SECTIONS = ["markets", "agent", "developers"] as const;
 type SectionId = (typeof SECTIONS)[number];
 const sections = computed(() =>
   SECTIONS.map((id) => ({
@@ -133,26 +125,36 @@ const starsLabel = computed(() =>
   box-shadow: 0 1px 0 var(--kcq-rule);
 }
 .site-header-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: var(--klc-space-64) var(--klc-density-hit-target-touch);
   align-items: center;
-  gap: var(--klc-space-24);
+  column-gap: var(--klc-space-8);
   height: var(--kcq-header-height);
 }
 .site-home {
+  grid-column: 1;
+  grid-row: 1;
   display: inline-flex;
   min-height: var(--klc-density-comfortable);
   align-items: center;
   text-decoration: none;
 }
 .site-nav {
+  grid-column: 1 / -1;
+  grid-row: 2;
   position: relative;
-  display: none;
+  min-width: 0;
   align-self: stretch;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 .site-nav ul {
   display: flex;
   align-items: center;
   height: 100%;
+  width: max-content;
+  min-width: 100%;
   gap: var(--klc-space-4);
 }
 .site-nav a {
@@ -171,7 +173,7 @@ const starsLabel = computed(() =>
   transition-duration: var(--klc-motion-dur-fast);
   transition-timing-function: var(--klc-motion-ease-out);
 }
-.site-nav a[aria-current="location"] {
+.site-nav a[aria-current] {
   color: var(--kcq-ink);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -204,6 +206,8 @@ const starsLabel = computed(() =>
   }
 }
 .site-tools {
+  grid-column: 2;
+  grid-row: 1;
   display: flex;
   align-items: center;
   gap: var(--klc-space-8);
@@ -216,6 +220,7 @@ const starsLabel = computed(() =>
   padding-inline: var(--klc-space-12);
 }
 .site-github {
+  display: none;
   gap: var(--klc-space-8);
   padding-right: var(--klc-space-4);
 }
@@ -252,13 +257,27 @@ const starsLabel = computed(() =>
     min-height: var(--klc-density-comfortable);
   }
 }
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
+  .site-github {
+    display: inline-flex;
+  }
+}
+@media (min-width: 1280px) {
+  .site-header-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-rows: var(--kcq-header-height);
+    column-gap: var(--klc-space-24);
+  }
   .site-nav {
-    display: block;
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .site-tools {
+    grid-column: 3;
   }
 }
 @media (max-width: 479px) {
-  .site-cta {
+  .site-cta .button-arrow {
     display: none;
   }
 }

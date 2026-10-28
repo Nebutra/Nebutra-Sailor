@@ -16,8 +16,8 @@ import summary from "./compare-run.json";
 
 /** The published raw report and its CSV, static files beside the page (nginx `location /`). */
 export const COMPARE_RUN_FILES = {
-  json: "/benchmark/kcq-compare-2026-10-23.json",
-  csv: "/benchmark/kcq-compare-2026-10-23.csv",
+  json: "/benchmark/kcq-compare-2026-10-26.json",
+  csv: "/benchmark/kcq-compare-2026-10-26.csv",
 } as const;
 
 /** The package bench/compare.mjs reports for every KCQ backend. */
@@ -30,10 +30,12 @@ export interface CompareSubject {
   renderer: string;
 }
 
-/** One library at one visible-bar tier, aggregated over every round. */
+/** One library at one visible-bar tier and moving-average count, aggregated over every round. */
 export interface CompareScenario {
   subject: string;
   visibleBars: number;
+  /** Moving-average lines drawn over the candles: the indicator load of the scene. */
+  maLines: number;
   actualVisibleBars: number;
   /** Chrome TaskDuration over the measured frames: script, style, layout and GC. The comparable figure. */
   mainThreadMsPerFrame: number;
@@ -59,6 +61,7 @@ export interface CompareRun {
     sampleFrames: number;
     rounds: number;
     visibleBars: number[];
+    maLines: number[];
     refreshIntervalMs: number;
   };
   /** Package name to version; KCQ is the workspace source at `commit`. */
@@ -107,6 +110,7 @@ export function summarizeCompareRun(raw: RawCompareRun): CompareRun {
       sampleFrames: configuration.sampleFrames,
       rounds: configuration.rounds,
       visibleBars: configuration.visibleBars,
+      maLines: configuration.maLines,
       refreshIntervalMs: configuration.refreshIntervalMs,
     },
     libraries: raw.libraries,
@@ -114,6 +118,7 @@ export function summarizeCompareRun(raw: RawCompareRun): CompareRun {
     scenarios: raw.scenarios.map((scenario) => ({
       subject: scenario.subject,
       visibleBars: scenario.visibleBars,
+      maLines: scenario.maLines,
       actualVisibleBars: scenario.actualVisibleBars,
       mainThreadMsPerFrame: scenario.mainThreadMsPerFrame,
       mainThreadMsPerFrameRounds: scenario.mainThreadMsPerFrameRounds,
@@ -138,10 +143,10 @@ function subjectOf(run: CompareRun, id: string): CompareSubject {
   return subject;
 }
 
-/** Every library at one tier, least main-thread time first. */
-export function tierRows(run: CompareRun, visibleBars: number): CompareRow[] {
+/** Every library at one visible-bar tier and moving-average count, least main-thread time first. */
+export function tierRows(run: CompareRun, visibleBars: number, maLines: number): CompareRow[] {
   return run.scenarios
-    .filter((scenario) => scenario.visibleBars === visibleBars)
+    .filter((scenario) => scenario.visibleBars === visibleBars && scenario.maLines === maLines)
     .map((scenario) => {
       const subject = subjectOf(run, scenario.subject);
       return { subject, scenario, kcq: subject.packageName === KCQ_PACKAGE };
@@ -164,30 +169,44 @@ export function axisTicks(run: CompareRun): number[] {
 }
 
 /**
- * The figures the page sells with, all from the run: KCQ's best backend at the largest tier (the
- * hero's number and its share of one frame), the heaviest competitor there as a multiple of it, and
- * how much KCQ's best frame cost grows from the smallest tier to the largest.
+ * The figures the page sells with, all from the run, in the heaviest scene (most bars, most moving
+ * averages): KCQ's best backend there (the hero's number and its share of one frame), the heaviest
+ * competitor there as a multiple of it, how much KCQ's best frame cost grows from the fewest bars to
+ * the most, and how much it and that competitor grow from the fewest moving averages to the most.
  */
 export function highlights(run: CompareRun) {
-  const tiers = run.configuration.visibleBars;
-  const bestAt = (bars: number) => {
-    const row = tierRows(run, bars).find((candidate) => candidate.kcq);
-    if (!row) throw new Error(`The comparison run has no KCQ scenario at ${bars} bars`);
+  const { visibleBars, maLines } = run.configuration;
+  const bestAt = (bars: number, lines: number) => {
+    const row = tierRows(run, bars, lines).find((candidate) => candidate.kcq);
+    if (!row) throw new Error(`The comparison run has no KCQ scenario at ${bars} bars, ${lines} lines`);
     return row;
   };
-  const bars = Math.max(...tiers);
-  const fewest = Math.min(...tiers);
-  const best = bestAt(bars);
-  const heaviest = tierRows(run, bars).at(-1);
+  const bars = Math.max(...visibleBars);
+  const lines = Math.max(...maLines);
+  const fewestBars = Math.min(...visibleBars);
+  const fewestLines = Math.min(...maLines);
+  const best = bestAt(bars, lines);
+  const heaviest = tierRows(run, bars, lines).at(-1);
   if (!heaviest || heaviest.kcq) throw new Error("The comparison run has no competitor heavier than KCQ");
+  const heaviestFewer = tierRows(run, bars, fewestLines).find((row) => row.subject.id === heaviest.subject.id);
+  if (!heaviestFewer) throw new Error(`The comparison run has no ${heaviest.subject.id} scenario at ${fewestLines} lines`);
   const ms = best.scenario.mainThreadMsPerFrame;
+  const sparse = bestAt(fewestBars, lines).scenario;
+  const lighter = bestAt(bars, fewestLines).scenario;
   return {
     bars,
+    lines,
     best,
     heaviest,
     ratio: heaviest.scenario.mainThreadMsPerFrame / ms,
     // "Under N%": the next whole percent above the measured share, so the claim always holds.
     share: Math.floor((ms / run.configuration.refreshIntervalMs) * 100) + 1,
-    growth: { from: bestAt(fewest).scenario.actualVisibleBars, to: best.scenario.actualVisibleBars, rate: ms / bestAt(fewest).scenario.mainThreadMsPerFrame - 1 },
+    growth: { from: sparse.actualVisibleBars, to: best.scenario.actualVisibleBars, rate: ms / sparse.mainThreadMsPerFrame - 1 },
+    indicators: {
+      from: fewestLines,
+      to: lines,
+      rate: ms / lighter.mainThreadMsPerFrame - 1,
+      heaviestRate: heaviest.scenario.mainThreadMsPerFrame / heaviestFewer.scenario.mainThreadMsPerFrame - 1,
+    },
   };
 }

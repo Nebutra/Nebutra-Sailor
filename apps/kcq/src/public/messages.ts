@@ -16,6 +16,7 @@ const en = {
     label: "Site",
     skip: "Skip to content",
     home: "KLineChartQuant home",
+    markets: "Workstation",
     agent: "Agent",
     rendering: "Charts",
     developers: "Developers",
@@ -24,7 +25,7 @@ const en = {
     docs: "Docs",
     github: "GitHub",
     stars: "{stars} stars on GitHub, counted on {date}",
-    app: "Open workstation",
+    app: "Open chart",
     language: "Language",
     theme: "Colour theme",
     themes: { system: "System", light: "Light", dark: "Dark" },
@@ -39,19 +40,20 @@ const en = {
     description:
       "Ask for an indicator, a trendline or a comparison, and the agent adds it to the chart you're looking at. A-shares, global markets and crypto, running in your browser.",
     ogAlt: "KLineChartQuant is the open-source chart engine your AI agent can operate.",
-    heading: "KLineChartQuant is the open-source chart engine your AI agent can operate.",
+    heading: "Let your AI agent\nwork on your chart.",
     hero: {
-      lede: "Ask for an indicator, a trendline or a comparison, and the agent adds it to the chart you're looking at. A-shares, global markets and crypto, running in your browser.",
+      lede: "Explore A-shares, global markets and crypto. Add indicators, draw levels and compare symbols by hand or with an AI agent.",
       quoteLabel: "600519 last close",
       primary: "Open the workstation",
-      embed: "Embed the chart",
+      demo: "See the agent at work",
       github: "View on GitHub",
-      micro: "No account needed.",
+      micro: "No account needed to chart. Connect a model service to use AI.",
     },
     chart: {
       region: "Live chart of {name}, daily bars",
       summary:
         "A daily K-line chart of Kweichow Moutai (600519) on public market data. Hover a candle for its open, high, low, close and volume.",
+      caption: "KCQ chart · Real market data",
       name: "Kweichow Moutai",
       period: "1D",
       live: "Live",
@@ -134,10 +136,16 @@ const en = {
       },
     },
     workstation: {
-      heading: "Market data, connected from the first load",
-      body: "A-shares through GOTDX, global markets through the TradingView feed, and crypto order-book depth from Binance. Bring your own source when you need another.",
-      sources: ["GOTDX", "TradingView", "Binance", "Your own source (BYOK)"],
+      heading: "Your research, in one workspace",
+      body: "Draw trendlines, add BOLL and MACD, and compare symbols. Keep the AI agent beside the chart as you work.",
+      open: "Explore the workstation",
+      sources: {
+        aShares: { market: "A-shares", detail: "Price history and charts through GOTDX." },
+        global: { market: "Global markets", detail: "Symbols and price history through the TradingView feed." },
+        crypto: { market: "Crypto", detail: "Spot charts and order-book depth from Binance." },
+      },
       sourcesLabel: "Market data sources",
+      availability: "Coverage and refresh rates depend on each source. You can also connect your own data.",
       alt: "The KLineChartQuant workstation: Kweichow Moutai daily candles with Bollinger bands, a MACD pane, a trend line, the drawing tools and the agent panel.",
       callouts: {
         drawing: "Trend line",
@@ -347,7 +355,7 @@ const en = {
     ogAlt:
       "Ranked bars of main-thread time per frame for KLineChartQuant, Lightweight Charts, Apache ECharts and KLineChart drawing the same candles. Lower is better.",
     heading: "Every millisecond counts.",
-    lede: "See it sooner. Act sooner. With {bars} candles on screen, KCQ draws each frame in {ms} ms of main-thread time.",
+    lede: "See it sooner. Act sooner. With {bars} candles and {lines} moving averages on screen, KCQ draws each frame in {ms} ms of main-thread time.",
     run: "Tested {date} on {cpu}, {browser}.",
     fineprintLink: "How we tested",
     figure: {
@@ -355,6 +363,8 @@ const en = {
       lower: "Lower is better",
       tiers: "Visible bars",
       tier: "{count} bars",
+      lines: "Moving averages",
+      line: "{count} MAs",
       note: "Bars are the mean of {frames} frames × {rounds} rounds; the line spans the fastest and slowest round. A 60 Hz frame is {budget} ms.",
     },
     proof: {
@@ -362,6 +372,10 @@ const en = {
       growth: {
         value: "{times}×",
         label: "the candles on screen, from {from} to {to}. KCQ's cost per frame rises only {rate}%.",
+      },
+      indicators: {
+        value: "+{rate}%",
+        label: "KCQ's cost per frame going from {from} to {to} moving averages. {library}'s: +{other}%.",
       },
       ratio: {
         value: "{ratio}×",
@@ -387,6 +401,7 @@ const en = {
     table: {
       library: "Library",
       renderer: "Renderer",
+      lines: "MAs",
       bars: "Visible bars",
       main: "Main thread, ms/frame",
       range: "Round range, ms",
@@ -395,7 +410,7 @@ const en = {
       dropped: "Dropped frames",
     },
     method: [
-      "Same data: 50,000 seeded one-minute candles and five simple moving averages (5, 10, 20, 30, 60), mounted through each library's public API from a production build.",
+      "Same data: 50,000 seeded one-minute candles under five simple moving averages (5 to 60) or twelve (5 to 300), mounted through each library's public API from a production build.",
       "Same window: KCQ snaps bar width to whole device pixels, so its reachable counts set the tiers and every other library zooms to the same number of visible bars.",
       "Same motion: after warm-up frames, each chart scrolls one bar per frame, in several rounds per library and tier.",
       "The metric: Chrome's main-thread task time divided by frames, which covers script, style, layout and garbage collection. Work in the GPU process is not counted.",
@@ -436,6 +451,7 @@ const zh: PublicMessages = {
     label: "站点",
     skip: "跳到正文",
     home: "KLineChartQuant 首页",
+    markets: "工作台",
     agent: "智能体",
     rendering: "图表",
     developers: "开发者",
@@ -444,7 +460,7 @@ const zh: PublicMessages = {
     docs: "文档",
     github: "GitHub",
     stars: "GitHub 上 {stars} 颗星，统计于 {date}",
-    app: "打开工作台",
+    app: "打开图表",
     language: "语言",
     theme: "颜色主题",
     themes: { system: "跟随系统", light: "浅色", dark: "深色" },
@@ -459,18 +475,19 @@ const zh: PublicMessages = {
     description:
       "想加指标、画趋势线、对比两只标的，跟智能体说一声，它就在你正看着的这张图上完成。A 股、全球市场和加密货币，浏览器里直接运行。",
     ogAlt: "KLineChartQuant 是一个能让 AI 智能体直接操作的开源 K\u00a0线图表引擎。",
-    heading: "KLineChartQuant 是一个能让 AI 智能体直接操作的开源 K\u00a0线图表引擎。",
+    heading: "让 AI 在你的图上工作。",
     hero: {
-      lede: "想加指标、画趋势线、对比两只标的，跟智能体说一声，它就在你正看着的这张图上完成。A 股、全球市场和加密货币，浏览器里直接运行。",
+      lede: "在同一个工作台里看 A 股、全球市场和加密货币。加指标、画趋势线、对比标的，手动操作或交给 AI。",
       quoteLabel: "600519 最新收盘",
       primary: "打开工作台",
-      embed: "嵌入图表",
+      demo: "看 AI 如何操作",
       github: "GitHub",
-      micro: "无需注册，直接使用。",
+      micro: "无需注册即可看图。使用 AI 需连接模型服务。",
     },
     chart: {
       region: "{name} 日线实时图表",
       summary: "贵州茅台（600519）日线图，数据来自公开行情。把鼠标停在 K\u00a0线上，就能看到开高低收和成交量。",
+      caption: "KCQ 图表 · 真实行情数据",
       name: "贵州茅台",
       period: "日线",
       live: "实时",
@@ -544,10 +561,16 @@ const zh: PublicMessages = {
       },
     },
     workstation: {
-      heading: "打开就有行情",
-      body: "A 股走 GOTDX，全球市场走 TradingView 数据源，加密货币深度来自 Binance。需要别的数据，接入你自己的源即可。",
-      sources: ["GOTDX", "TradingView", "Binance", "自有数据源"],
+      heading: "从行情到分析，都在工作台里",
+      body: "画趋势线、叠加布林带和 MACD、对比标的。智能体就在图表旁边，随时接手图上的操作。",
+      open: "进入工作台体验",
+      sources: {
+        aShares: { market: "A 股", detail: "通过 GOTDX 获取历史行情与图表数据。" },
+        global: { market: "全球市场", detail: "通过 TradingView 数据源获取标的与历史行情。" },
+        crypto: { market: "加密货币", detail: "通过 Binance 获取现货 K\u00a0线与盘口深度。" },
+      },
       sourcesLabel: "行情数据源",
+      availability: "品种覆盖与刷新频率取决于各数据源，也可以接入你自己的数据。",
       alt: "KLineChartQuant 工作台：贵州茅台日线，叠加布林带、MACD 副图、一条趋势线、画线工具和智能体面板。",
       callouts: {
         drawing: "趋势线",
@@ -735,7 +758,7 @@ const zh: PublicMessages = {
       "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时的每帧主线程耗时。方法、硬件与原始数据全部公开。",
     ogAlt: "KLineChartQuant、Lightweight Charts、Apache ECharts 与 KLineChart 绘制同一组 K 线时每帧主线程耗时的排名条形图，越低越好。",
     heading: "毫秒必争。",
-    lede: "看到得早一点，就快人一步。{bars} 根 K\u00a0线同屏，KCQ 画一帧只占主线程 {ms} ms。",
+    lede: "看到得早一点，就快人一步。{bars} 根 K\u00a0线、{lines} 条均线同屏，KCQ 画一帧只占主线程 {ms} ms。",
     run: "测于 {date}，{cpu}，{browser}。",
     fineprintLink: "怎么测的",
     figure: {
@@ -743,6 +766,8 @@ const zh: PublicMessages = {
       lower: "越低越好",
       tiers: "可见 K 线数",
       tier: "{count} 根",
+      lines: "均线条数",
+      line: "{count} 条均线",
       note: "柱为 {frames} 帧 × {rounds} 轮的均值，细线标出最快与最慢的一轮。60 Hz 下一帧为 {budget} ms。",
     },
     proof: {
@@ -750,6 +775,10 @@ const zh: PublicMessages = {
       growth: {
         value: "{times}×",
         label: "同屏 K\u00a0线从 {from} 根加到 {to} 根，KCQ 每帧开销只多 {rate}%。",
+      },
+      indicators: {
+        value: "+{rate}%",
+        label: "均线从 {from} 条加到 {to} 条，KCQ 每帧多花这么多；{library} 多花 {other}%。",
       },
       ratio: {
         value: "{ratio}×",
@@ -775,6 +804,7 @@ const zh: PublicMessages = {
     table: {
       library: "图表库",
       renderer: "渲染后端",
+      lines: "均线",
       bars: "可见 K 线",
       main: "主线程 ms/帧",
       range: "逐轮区间 ms",
@@ -783,7 +813,7 @@ const zh: PublicMessages = {
       dropped: "掉帧率",
     },
     method: [
-      "同样的数据：50,000 根固定种子生成的一分钟 K 线和五条简单均线（5、10、20、30、60），各库都以生产构建、经公开 API 挂载。",
+      "同样的数据：50,000 根固定种子生成的一分钟 K 线，叠五条（5 到 60）或十二条（5 到 300）简单均线，各库都以生产构建、经公开 API 挂载。",
       "同样的窗口：KCQ 的 K 线宽度按整数设备像素取整，由它能取到的根数定档，其他库缩放到相同的可见根数。",
       "同样的动作：预热之后，每帧向历史滚动一根；每个库、每档都跑多轮。",
       "指标：Chrome 主线程任务时间除以帧数，涵盖脚本、样式、布局与垃圾回收；GPU 进程里的工作不计入。",

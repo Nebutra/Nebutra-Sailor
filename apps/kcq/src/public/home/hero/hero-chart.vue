@@ -256,6 +256,10 @@ onBeforeUnmount(() => {
         <p v-else-if="chartShown" class="hero-hint">{{ t("home.chart.hint") }}</p>
       </div>
     </div>
+    <figcaption class="hero-chart-caption t-meta">
+      <span>{{ t("home.chart.caption") }}</span>
+      <span>{{ statusNote }}</span>
+    </figcaption>
   </figure>
 </template>
 <style scoped>
@@ -334,6 +338,15 @@ onBeforeUnmount(() => {
   position: relative;
   height: clamp(20rem, 38vw, 32rem);
   overflow: hidden;
+}
+/* 数据日期与连接状态直接可见，缓存行情也能明确交代时效。 */
+.hero-chart-caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--klc-space-4) var(--klc-space-16);
+  padding: var(--klc-space-12) var(--klc-space-16);
+  border-top: 1px solid var(--kcq-rule);
 }
 .hero-poster,
 .hero-poster img,
