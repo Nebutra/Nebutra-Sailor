@@ -48,7 +48,8 @@ export function SiteHeader({ search, menu }: { search: ReactNode; menu: ReactNod
               aria-hidden
               className="hidden h-[13px] w-auto text-foreground sm:block"
             />
-            <span className="hidden font-medium text-muted-foreground text-sm sm:inline">
+            {/* Italic serif, light: it reads as a title set after the mark rather than a third sans label. Fraunces is the same family the registry ships upright. */}
+            <span className="hidden font-wordmark font-light text-lg text-muted-foreground italic leading-none tracking-tight sm:inline">
               Design
             </span>
           </Link>

@@ -15,6 +15,11 @@
 /* Scan this app's source so its utility classes generate */
 @source "../**/*.{ts,tsx}";
 
+/* `font-wordmark`: the italic serif that sets "Design" beside the Nebutra mark. */
+@theme inline {
+  --font-wordmark: var(--font-reg-fraunces-italic), "Times New Roman", serif;
+}
+
 /* How the change moves lives with the mechanism — see @nebutra/theme/morph.css. */
 @import "@nebutra/theme/morph.css";
 
