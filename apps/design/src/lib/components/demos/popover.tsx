@@ -138,6 +138,38 @@ export default function PopoverDemo() {
       </State>
 
       <State
+        breaks="A panel that opens on the wrong physical side under dir=rtl, or whose text stays left-aligned because the portalled panel lost the direction of its trigger. Open each panel and look at which side it lands on."
+        id="rtl"
+        note="The same popovers under dir=rtl. The panel takes the direction of its trigger, so its content reads right to left; align=start now aligns to the right edge of the trigger, and inline-end opens to the left of it."
+        title="Right-to-left"
+      >
+        <div dir="rtl">
+          <Row>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button size="sm" variant="outline">
+                  align=start
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="start" className="w-56 p-3">
+                <p className="text-foreground text-sm">Aligned to the start edge.</p>
+              </PopoverContent>
+            </Popover>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button size="sm" variant="outline">
+                  side=inline-end
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-56 p-3" side="inline-end">
+                <p className="text-foreground text-sm">Opens toward the end of the line.</p>
+              </PopoverContent>
+            </Popover>
+          </Row>
+        </div>
+      </State>
+
+      <State
         breaks="A panel with a form inside it that closes on the first Escape while a field is still focused, or one that never returns focus to the trigger."
         id="keyboard"
         title="Keyboard path"

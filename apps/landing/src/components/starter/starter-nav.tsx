@@ -59,7 +59,7 @@ export function StarterNav() {
       className={cn(
         // Always opaque: the page never shows through the bar. Scrolling only
         // adds the hairline that separates it from the content under it.
-        "fixed inset-x-0 top-0 z-50 border-b bg-background transition-[border-color] duration-flow",
+        "fixed inset-x-0 top-0 z-[var(--layer-nav)] border-b bg-background transition-[border-color] duration-flow",
         scrolled || open ? "border-border" : "border-transparent",
       )}
     >

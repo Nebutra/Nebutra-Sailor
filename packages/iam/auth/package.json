@@ -100,14 +100,14 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@better-auth/core": "^1.6.13",
+    "@better-auth/core": "^1.7.14",
     "@nebutra/audit": "workspace:*",
     "@nebutra/email": "workspace:*",
     "@nebutra/i18n": "workspace:*",
     "@nebutra/logger": "workspace:*",
     "@nebutra/repositories": "workspace:*",
     "@simplewebauthn/server": "^13.3.0",
-    "better-auth": "^1.6.13",
+    "better-auth": "^1.7.14",
     "jose": "^6.2.0"
   },
   "devDependencies": {

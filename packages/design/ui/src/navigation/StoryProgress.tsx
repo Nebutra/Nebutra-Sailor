@@ -40,7 +40,7 @@ export const StoryProgress = React.forwardRef<HTMLElement, StoryProgressProps>(
       <nav
         ref={ref as React.Ref<HTMLElement>}
         className={cn(
-          "fixed top-1/2 -translate-y-1/2 z-50",
+          "fixed top-1/2 -translate-y-1/2 z-[var(--layer-floating)]",
           "hidden lg:flex flex-col items-center gap-1",
           position === "right" ? "end-6" : "start-6",
           className,

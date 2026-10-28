@@ -266,7 +266,7 @@ export function CookieBanner() {
       role="dialog"
       aria-modal="false"
       aria-labelledby="cookie-banner-title"
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--neutral-6)] bg-[var(--neutral-1)]/95 text-[var(--neutral-12)] shadow-lg backdrop-blur-md"
+      className="fixed inset-x-0 bottom-0 z-[var(--layer-banner)] border-t border-[var(--neutral-6)] bg-[var(--neutral-1)]/95 text-[var(--neutral-12)] shadow-lg backdrop-blur-md"
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 sm:px-6 lg:px-8">
         <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">

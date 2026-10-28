@@ -1,5 +1,6 @@
 "use client";
 
+import { useDirection } from "@base-ui/react/direction-provider";
 import { Popover as BasePopover } from "@base-ui/react/popover";
 import * as React from "react";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
@@ -38,9 +39,14 @@ const HoverCardContent = ({
   side?: "top" | "right" | "bottom" | "left" | "inline-start" | "inline-end";
 } & { ref?: React.Ref<React.ElementRef<typeof BasePopover.Popup>> | undefined }) => {
   const root = React.use(HoverCardContext);
+  // HoverCard wraps its root in a DirectionProvider fed from the `dir` around the trigger; the
+  // portalled positioner needs the same value as a `dir` attribute so `align` and the text inside
+  // the card resolve in that direction too.
+  const direction = useDirection();
   return (
     <BasePopover.Portal>
       <BasePopover.Positioner
+        dir={direction}
         style={{ zIndex: overlayZIndex.popover }}
         side={side}
         align={align}

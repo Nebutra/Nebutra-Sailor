@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 
 /**
  * Better Auth's catch-all. Serves the SSO sign-in redirect and the
- * /api/auth/oauth2/callback/nebutra-sso return leg — the exact path registered
+ * /api/auth/callback/nebutra-sso return leg — the exact path registered
  * as this client's redirect URI.
  *
  * NOT THE AUTHORIZATION PATH. A session minted here grants nothing: getStaffContext

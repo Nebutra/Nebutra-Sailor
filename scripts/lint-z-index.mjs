@@ -8,6 +8,9 @@
  * overlay tier stops being a guarantee. Local layering inside a component
  * (z-10, z-20) is fine; anything at 50 or above must be a role:
  * z-[var(--layer-banner)], zIndex: "var(--layer-panel)", or overlayZIndex.*.
+ * "Number" covers the arbitrary form z-[150] and the plain Tailwind utility
+ * z-50 / z-100, bare or behind any variant (focus:z-50, md:-z-50, !z-50):
+ * z-50 is the same hand-picked 50 as z-[50], it just never matched the bracket.
  * Exempt a line with `// allow-z-index: <reason>` above it.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -17,7 +20,14 @@ const ROOT = join(import.meta.dirname, "..");
 const SKIP_DIR =
   /(^|\/)(node_modules|dist|build|\.next|\.open-next|storybook-static|__tests__|coverage)(\/|$)/;
 const SKIP_FILE = /(\.stories\.|\.test\.|\.spec\.|theming-demos\.tsx$)/;
-const LITERAL = [/(?<![\w-])-?z-\[(\d+)\]/g, /zIndex:\s*(\d+)/g, /z-index:\s*(\d+)/g];
+// The utility form must start at a class boundary (so translate-z-50 and
+// -mt-z-50 are not read as z-index) and end there too (z-50/10, z-500x are not).
+const LITERAL = [
+  /(?<![\w-])-?z-\[(\d+)\]/g,
+  /(?<![\w-])-?z-(\d+)(?![\w[/-])/g,
+  /zIndex:\s*(\d+)/g,
+  /z-index:\s*(\d+)/g,
+];
 
 function* files(dir) {
   for (const name of readdirSync(dir)) {

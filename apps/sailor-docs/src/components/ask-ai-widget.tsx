@@ -56,7 +56,7 @@ export function AskAiWidget() {
   }
 
   return (
-    <div className="fixed bottom-4 end-4 z-50">
+    <div className="fixed bottom-4 end-4 z-[var(--layer-floating)]">
       {open ? (
         <div className="flex h-[28rem] w-80 flex-col rounded-xl border bg-fd-card text-fd-card-foreground shadow-lg">
           <div className="flex items-center justify-between border-b px-3 py-2">

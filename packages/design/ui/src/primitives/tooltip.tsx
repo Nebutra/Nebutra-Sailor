@@ -6,6 +6,12 @@ import * as React from "react";
 import { interaction } from "../tokens/components/interaction";
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { cn } from "../utils/cn";
+import {
+  BaseDirectionScope,
+  mergeRefs,
+  type TextDirection,
+  useTriggerDirection,
+} from "../utils/direction";
 import { resolveLazyChild } from "../utils/lazy-child";
 
 /* -------------------------------------------------------------------------- *\
@@ -81,6 +87,16 @@ function useSkipDelay() {
 
 const TooltipInstantContext = React.createContext(false);
 
+type TooltipDirectionValue = {
+  /** Ref callback for the trigger the reading direction is measured from. */
+  triggerRef: React.RefCallback<Element>;
+  /** Reading direction applied to the popup and handed to Base UI for `inline-*` sides. */
+  direction: TextDirection;
+};
+
+// Undefined outside a Tooltip so a stray TooltipContent never forces `dir` onto the page.
+const TooltipDirectionContext = React.createContext<TooltipDirectionValue | undefined>(undefined);
+
 /** Provides Base UI tooltip timing with a shared skip window after a tooltip opens. */
 const TooltipProvider = ({
   children,
@@ -97,34 +113,52 @@ const TooltipProvider = ({
   );
 };
 
-/** Shows contextual help on hover or keyboard focus, with a delay skipped after recent tooltips. */
+/**
+ * Shows contextual help on hover or keyboard focus, with a delay skipped after recent tooltips.
+ * The portalled tooltip takes the reading direction of its trigger, so under `dir="rtl"` the
+ * `inline-start` / `inline-end` sides, `align`, and the text inside it all mirror.
+ */
 const Tooltip = ({
   delayDuration,
   children,
   onOpenChange,
+  dir: dirProp,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseTooltip.Root> & {
   /** Hover delay in milliseconds; an explicit value overrides the recent-open skip behavior. */
   delayDuration?: number;
   /** TooltipTrigger and TooltipContent elements belonging to this tooltip. */
   children?: React.ReactNode;
+  /**
+   * Reading direction of the tooltip. Leave it out to follow the `dir` in effect around the
+   * trigger (an ancestor `dir` attribute, else CSS `direction`); set it when the tooltip has no
+   * trigger to measure from.
+   * @default "the direction around the trigger"
+   */
+  dir?: TextDirection;
 }) => {
   const skipDelay = useSkipDelay();
   const instant = delayDuration == null && skipDelay;
   const delay = delayDuration ?? (instant ? 0 : DEFAULT_TOOLTIP_DELAY_MS);
+  const { triggerRef, direction } = useTriggerDirection(dirProp);
+  const directionValue = React.useMemo(() => ({ triggerRef, direction }), [triggerRef, direction]);
 
   return (
     <TooltipInstantContext.Provider value={instant}>
       <BaseTooltip.Provider delay={delay}>
-        <BaseTooltip.Root
-          {...props}
-          onOpenChange={(open, eventDetails) => {
-            if (open) markTooltipOpened();
-            onOpenChange?.(open, eventDetails);
-          }}
-        >
-          {children}
-        </BaseTooltip.Root>
+        <TooltipDirectionContext.Provider value={directionValue}>
+          <BaseDirectionScope direction={direction}>
+            <BaseTooltip.Root
+              {...props}
+              onOpenChange={(open, eventDetails) => {
+                if (open) markTooltipOpened();
+                onOpenChange?.(open, eventDetails);
+              }}
+            >
+              {children}
+            </BaseTooltip.Root>
+          </BaseDirectionScope>
+        </TooltipDirectionContext.Provider>
       </BaseTooltip.Provider>
     </TooltipInstantContext.Provider>
   );
@@ -143,24 +177,33 @@ const TooltipTrigger = ({
   ref?: React.Ref<HTMLButtonElement> | undefined;
 }) => {
   const children = resolveLazyChild(rawChildren);
+  const directionTriggerRef = React.use(TooltipDirectionContext)?.triggerRef;
+  // Memoised: a fresh callback ref every render would detach and re-register the trigger in Base UI.
+  const mergedRef = React.useMemo(
+    () => mergeRefs<HTMLButtonElement>(ref, directionTriggerRef),
+    [ref, directionTriggerRef],
+  );
   if (asChild && React.isValidElement(children)) {
     return (
       <BaseTooltip.Trigger
-        ref={ref}
+        ref={mergedRef}
         {...props}
         render={children as React.ReactElement<Record<string, unknown>>}
       />
     );
   }
   return (
-    <BaseTooltip.Trigger ref={ref} {...props}>
+    <BaseTooltip.Trigger ref={mergedRef} {...props}>
       {children}
     </BaseTooltip.Trigger>
   );
 };
 TooltipTrigger.displayName = "TooltipTrigger";
 
-/** Renders tooltip text in a portal positioned relative to TooltipTrigger. */
+/**
+ * Renders tooltip text in a portal positioned relative to TooltipTrigger. Prefer `inline-start`
+ * and `inline-end` over `left` and `right`: they mirror under `dir="rtl"`.
+ */
 const TooltipContent = ({
   className,
   style,
@@ -172,8 +215,11 @@ const TooltipContent = ({
   ref,
   ...props
 }: React.ComponentPropsWithoutRef<typeof BaseTooltip.Popup> & {
-  /** Preferred side of the trigger; collision handling may choose another side. */
-  side?: "top" | "right" | "bottom" | "left";
+  /**
+   * Preferred side of the trigger; collision handling may choose another side. `inline-start` and
+   * `inline-end` mirror under `dir="rtl"`, while `left` and `right` stay physical.
+   */
+  side?: "top" | "right" | "bottom" | "left" | "inline-start" | "inline-end";
   /** Alignment of the popup along the trigger's side. */
   align?: "start" | "center" | "end";
   /** Distance in pixels between the trigger and tooltip. */
@@ -184,11 +230,13 @@ const TooltipContent = ({
   container?: React.ComponentProps<typeof BaseTooltip.Portal>["container"];
 } & { ref?: React.Ref<React.ElementRef<typeof BaseTooltip.Popup>> | undefined }) => {
   const instant = React.use(TooltipInstantContext);
+  const direction = React.use(TooltipDirectionContext)?.direction;
   const portalContainer = usePortalContainer(container);
 
   return (
     <BaseTooltip.Portal container={portalContainer}>
       <BaseTooltip.Positioner
+        dir={direction}
         side={side}
         align={align}
         sideOffset={sideOffset}

@@ -235,6 +235,27 @@ const CASES: Case[] = [
     violation: 'export const C = () => <div className="fixed z-[150]" />;\n',
   },
   {
+    // The same number as a Tailwind utility — z-50 is the same hand-picked
+    // stacking as z-[50], and it is what the guard used to wave through.
+    guard: "lint-z-index",
+    violation: 'export const C = () => <div className="fixed inset-0 z-50" />;\n',
+  },
+  {
+    // The utility behind a variant prefix, on the skip-link shape.
+    guard: "lint-z-index",
+    violation: 'export const C = () => <a className="sr-only focus:not-sr-only focus:z-50" />;\n',
+  },
+  {
+    // A negative utility past the local range, behind a responsive variant.
+    guard: "lint-z-index",
+    violation: 'export const C = () => <div className="md:-z-50" />;\n',
+  },
+  {
+    // Three-digit utilities (z-100 is a Tailwind extension in v4).
+    guard: "lint-z-index",
+    violation: 'export const C = () => <div className="relative z-100" />;\n',
+  },
+  {
     // A display surface restating the palette instead of reading
     // @nebutra/tokens/values.
     guard: "lint-token-mirrors",
@@ -494,6 +515,31 @@ describe.sequential("lint guards actually guard", () => {
     expect(run(reasoned), "a reasoned marker must excuse the line").toBe(0);
     expect(run(prose), "prose such as right-to-left is not a class").toBe(0);
     expect(run(bare), "a marker with no reason must not excuse anything").not.toBe(0);
+  });
+
+  it("lint-z-index flags Tailwind utilities at 50+, not local layering, roles or marked lines", () => {
+    const run = (src: string) => {
+      try {
+        writeFileSync(PROBE, src);
+        return runGuard("lint-z-index");
+      } finally {
+        rmSync(PROBE, { force: true });
+      }
+    };
+    const local =
+      'export const A = () => <div className="z-0 z-10 z-20 z-40 -z-10 hover:z-30 md:z-10" />;\n';
+    const role =
+      'export const B = () => <div className="z-[var(--layer-banner)] focus:z-[var(--layer-skip-link)]" />;\n';
+    const lookalikes =
+      'export const C = () => <div className="top-50 w-100 size-50 gap-z-50 translate-z-50 -mt-z-50" />;\n';
+    const marked =
+      '// allow-z-index: sits above a third-party widget that ships its own z-index\nexport const D = () => <div className="z-50" />;\n';
+    expect(run(local), "z-10..z-40 is local layering and must pass").toBe(0);
+    expect(run(role), "a layer role must pass").toBe(0);
+    expect(run(lookalikes), "other utilities ending in a number are not z-index").toBe(0);
+    expect(run(marked), "a marked line must be excused").toBe(0);
+    expect(run('export const E = () => <div className="z-49" />;\n')).toBe(0);
+    expect(run('export const F = () => <div className="z-60" />;\n')).not.toBe(0);
   });
 
   it("the probe path is not a real file", () => {

@@ -13,6 +13,12 @@ import {
 import { overlayClassNames, overlayZIndex } from "../tokens/components/overlay";
 import { type SelectSize, selectTokens } from "../tokens/components/select";
 import { cn } from "../utils/cn";
+import {
+  BaseDirectionScope,
+  mergeRefs,
+  type TextDirection,
+  useTriggerDirection,
+} from "../utils/direction";
 import { asPlainStyle } from "../utils/primitive-props";
 import { ErrorMessage } from "./error-message";
 import { formControlFocusClassNames, formControlInvalidClassNames } from "./form-control";
@@ -146,6 +152,12 @@ export type NativeSelectProps = OptionsSelectProps & { native?: true };
 
 export type CompoundSelectProps = SelectRoot.Props<string, false> & {
   native?: false;
+  /**
+   * Reading direction of the listbox. Leave it out to follow the `dir` in effect around the
+   * trigger (an ancestor `dir` attribute, else CSS `direction`).
+   * @default "the direction around the trigger"
+   */
+  dir?: TextDirection;
 };
 
 export type SelectProps = OptionsSelectProps | CompoundSelectProps;
@@ -205,6 +217,36 @@ function textOf(node: React.ReactNode): string {
     return textOf(props.children);
   }
   return "";
+}
+
+type SelectDirectionValue = {
+  /** Ref callback for the trigger the reading direction is measured from. */
+  triggerRef: React.RefCallback<Element>;
+  /** Reading direction applied to the listbox and handed to Base UI for `inline-*` sides. */
+  direction: TextDirection;
+};
+
+// Undefined outside a Select so a stray SelectContent never forces `dir` onto the page.
+const SelectDirectionContext = React.createContext<SelectDirectionValue | undefined>(undefined);
+
+/**
+ * Measures the reading direction around the trigger and shares it with the listbox, which renders
+ * in a portal outside the trigger's `dir` subtree. Wraps `BaseSelect.Root`.
+ */
+function SelectDirectionScope({
+  dir,
+  children,
+}: {
+  dir?: TextDirection | undefined;
+  children: React.ReactNode;
+}) {
+  const { triggerRef, direction } = useTriggerDirection(dir);
+  const value = React.useMemo(() => ({ triggerRef, direction }), [triggerRef, direction]);
+  return (
+    <SelectDirectionContext.Provider value={value}>
+      <BaseDirectionScope direction={direction}>{children}</BaseDirectionScope>
+    </SelectDirectionContext.Provider>
+  );
 }
 
 function optionsFromChildren(children: React.ReactNode): SelectOption[] {
@@ -382,6 +424,7 @@ function OptionsListboxSelect({
   name,
   onChange,
   onValueChange,
+  dir,
   "aria-describedby": ariaDescribedBy,
   "data-testid": dataTestId,
 }: OptionsSelectProps & { "data-testid"?: string }) {
@@ -453,30 +496,32 @@ function OptionsListboxSelect({
           disabled={disabled}
           items={items}
         >
-          <SelectTrigger
-            id={selectId}
-            size={size}
-            data-testid={dataTestId}
-            aria-invalid={error ? true : undefined}
-            aria-describedby={describedBy}
-            aria-labelledby={labelId}
-            className={cn(
-              variant === "ghost" && "border-transparent bg-transparent shadow-none",
-              prefix && "ps-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]",
-              className,
-            )}
-          >
-            <SelectValue placeholder={placeholder ?? "Select…"}>
-              {() => selectedLabel || placeholder || "Select…"}
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            {options.map((option) => (
-              <SelectItem key={option.value} value={option.value} disabled={option.disabled}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
+          <SelectDirectionScope dir={dir === "rtl" || dir === "ltr" ? dir : undefined}>
+            <SelectTrigger
+              id={selectId}
+              size={size}
+              data-testid={dataTestId}
+              aria-invalid={error ? true : undefined}
+              aria-describedby={describedBy}
+              aria-labelledby={labelId}
+              className={cn(
+                variant === "ghost" && "border-transparent bg-transparent shadow-none",
+                prefix && "ps-[calc(var(--select-icon-inset)+var(--select-icon-box-size))]",
+                className,
+              )}
+            >
+              <SelectValue placeholder={placeholder ?? "Select…"}>
+                {() => selectedLabel || placeholder || "Select…"}
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {options.map((option) => (
+                <SelectItem key={option.value} value={option.value} disabled={option.disabled}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </SelectDirectionScope>
         </BaseSelect.Root>
         {suffix && (
           <span className="pointer-events-none absolute end-[var(--select-icon-inset)] z-10 inline-flex size-[var(--select-icon-box-size)] items-center justify-center">
@@ -521,11 +566,13 @@ function collectItemLabels(
 }
 
 function CompoundSelectRoot(props: Omit<CompoundSelectProps, "native">) {
-  const { children } = props;
+  const { children, dir, ...rootProps } = props;
   const labels = React.useMemo(() => collectItemLabels(children), [children]);
   return (
     <SelectLabelsContext.Provider value={labels}>
-      <BaseSelect.Root {...props} />
+      <SelectDirectionScope dir={dir}>
+        <BaseSelect.Root {...rootProps}>{children}</BaseSelect.Root>
+      </SelectDirectionScope>
     </SelectLabelsContext.Provider>
   );
 }
@@ -601,27 +648,35 @@ const SelectTrigger = ({
 }: Omit<React.ComponentPropsWithoutRef<typeof BaseSelect.Trigger>, "size"> & {
   /** Control size on the shared form-control ladder. @default "medium" */
   size?: SelectSize;
-} & { ref?: React.Ref<HTMLButtonElement> | undefined }) => (
-  <BaseSelect.Trigger
-    ref={ref}
-    className={cn(
-      "flex h-[var(--select-height)] w-full min-w-0 items-center justify-between gap-2 whitespace-nowrap rounded-[var(--select-radius)] border border-input bg-background",
-      "px-[var(--select-padding-x)] text-[length:var(--select-font-size)] text-foreground",
-      "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
-      formControlFocusClassNames.select,
-      "disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-      formControlInvalidClassNames.select,
-      className,
-    )}
-    style={getSelectTriggerStyle(size, style)}
-    {...props}
-  >
-    {children}
-    <BaseSelect.Icon render={<span />}>
-      <ChevronDown className="size-4 shrink-0 opacity-50" />
-    </BaseSelect.Icon>
-  </BaseSelect.Trigger>
-);
+} & { ref?: React.Ref<HTMLButtonElement> | undefined }) => {
+  const directionTriggerRef = React.use(SelectDirectionContext)?.triggerRef;
+  // Memoised: a fresh callback ref every render would detach and re-register the trigger in Base UI.
+  const mergedRef = React.useMemo(
+    () => mergeRefs<HTMLButtonElement>(ref, directionTriggerRef),
+    [ref, directionTriggerRef],
+  );
+  return (
+    <BaseSelect.Trigger
+      ref={mergedRef}
+      className={cn(
+        "flex h-[var(--select-height)] w-full min-w-0 items-center justify-between gap-2 whitespace-nowrap rounded-[var(--select-radius)] border border-input bg-background",
+        "px-[var(--select-padding-x)] text-[length:var(--select-font-size)] text-foreground",
+        "transition-[background-color,border-color,box-shadow,color] duration-micro ease-out placeholder:text-muted-foreground",
+        formControlFocusClassNames.select,
+        "disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        formControlInvalidClassNames.select,
+        className,
+      )}
+      style={getSelectTriggerStyle(size, style)}
+      {...props}
+    >
+      {children}
+      <BaseSelect.Icon render={<span />}>
+        <ChevronDown className="size-4 shrink-0 opacity-50" />
+      </BaseSelect.Icon>
+    </BaseSelect.Trigger>
+  );
+};
 SelectTrigger.displayName = "SelectTrigger";
 
 const SelectScrollUpButton = ({
@@ -648,28 +703,33 @@ const SelectContent = ({
   position?: "item-aligned" | "popper";
   /** Portal target; defaults to the nearest portal scope or document.body. */
   container?: React.ComponentProps<typeof BaseSelect.Portal>["container"];
-} & { ref?: React.Ref<HTMLDivElement> | undefined }) => (
-  <BaseSelect.Portal container={usePortalContainer(container)}>
-    <BaseSelect.Positioner
-      // z-index on the positioned element — the Popup inside is static, so a
-      // z-index there is ignored and any z-10 layer on the page covers the list.
-      style={{ zIndex: overlayZIndex.popover }}
-      alignItemWithTrigger={position === "item-aligned"}
-      sideOffset={selectTokens.content.sideOffset}
-    >
-      <BaseSelect.Popup
-        ref={ref}
-        className={cn("relative", overlayClassNames.selectSurface, className)}
-        style={getSelectContentStyle(style)}
-        {...props}
+} & { ref?: React.Ref<HTMLDivElement> | undefined }) => {
+  const portalContainer = usePortalContainer(container);
+  const direction = React.use(SelectDirectionContext)?.direction;
+  return (
+    <BaseSelect.Portal container={portalContainer}>
+      <BaseSelect.Positioner
+        dir={direction}
+        // z-index on the positioned element — the Popup inside is static, so a
+        // z-index there is ignored and any z-10 layer on the page covers the list.
+        style={{ zIndex: overlayZIndex.popover }}
+        alignItemWithTrigger={position === "item-aligned"}
+        sideOffset={selectTokens.content.sideOffset}
       >
-        <BaseSelect.List className="h-full w-full p-[var(--select-content-padding)]">
-          {children}
-        </BaseSelect.List>
-      </BaseSelect.Popup>
-    </BaseSelect.Positioner>
-  </BaseSelect.Portal>
-);
+        <BaseSelect.Popup
+          ref={ref}
+          className={cn("relative", overlayClassNames.selectSurface, className)}
+          style={getSelectContentStyle(style)}
+          {...props}
+        >
+          <BaseSelect.List className="h-full w-full p-[var(--select-content-padding)]">
+            {children}
+          </BaseSelect.List>
+        </BaseSelect.Popup>
+      </BaseSelect.Positioner>
+    </BaseSelect.Portal>
+  );
+};
 SelectContent.displayName = "SelectContent";
 
 const SelectLabel = ({

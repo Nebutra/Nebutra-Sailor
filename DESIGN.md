@@ -248,6 +248,10 @@ Dark mode glow uses `#5C7CFA` (nebutra-blue-400) for visibility on `#020617`.
 | `--container-content` | `1152px` | Pricing, blog, architecture |
 | `--container-wide` | `1400px` | Feature bento, navbar, product demos |
 
+### 2.9 Stacking (z-index)
+
+Stacking is chosen by role, from one ladder (`core.json:layer`, CSS `--layer-*`): `raised` 10, `sticky` 20, `floating` 30, `nav` 40, `drawer` 60, `banner` 90, `skip-link` 100, `panel` 200, then the overlay tier `backdrop` 1040, `modal` 1050, `popover` 1060, `tooltip` 1070 (`overlayZIndex` in `@nebutra/ui`). Local layering inside one component (`z-10`, `z-20`) is fine; anything at 50 or above is a role — `z-[var(--layer-banner)]`, `zIndex: "var(--layer-panel)"`, `overlayZIndex.*`. Offsets from a role (`z-[calc(var(--layer-drawer)-5)]`) are allowed when one surface must sit between two others. `scripts/lint-z-index.mjs` rejects both `z-[150]` and the plain utility `z-50` / `z-100` (with any variant: `focus:z-50`, `md:-z-50`); `// allow-z-index: <reason>` on the line above exempts one.
+
 ---
 
 ## 3. Components

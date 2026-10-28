@@ -28,7 +28,7 @@
     "@nebutra/theme": "workspace:*",
     "@nebutra/tokens": "workspace:*",
     "@nebutra/ui": "workspace:*",
-    "better-auth": "^1.6.13",
+    "better-auth": "^1.7.14",
     "geist": "catalog:",
     "jose": "^6.1.0",
     "next": "catalog:",

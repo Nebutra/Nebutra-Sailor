@@ -99,7 +99,7 @@ export function UserAvatarMenu(): React.ReactElement | null {
   const subtitle = me.activeOrganization?.name ?? me.email ?? "";
 
   // The DS menu, not a hand-rolled absolute panel: the navbar is a blurred,
-  // stacking-context surface, and an in-place z-50 panel is only as high as
+  // stacking-context surface, and an in-place absolute panel is only as high as
   // the navbar itself. The DS menu portals, and owns outside-click, Escape,
   // focus and arrow-key navigation.
   return (

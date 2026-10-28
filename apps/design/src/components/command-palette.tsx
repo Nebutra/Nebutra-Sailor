@@ -107,7 +107,7 @@ export function CommandPalette({ entries }: { entries: CommandEntry[] }) {
              white veil laid over dark content. That is the haze: measured at
              oklab(0.999994 … / 0.2) under Raycast. A scrim is shadow rather
              than surface; it darkens in both modes or it is not a scrim. */
-              className="fixed inset-0 z-50 flex items-start justify-center bg-[oklch(0_0_0/0.45)] p-4 pt-[12vh] backdrop-blur-sm"
+              className="fixed inset-0 z-[var(--layer-modal)] flex items-start justify-center bg-[oklch(0_0_0/0.45)] p-4 pt-[12vh] backdrop-blur-sm"
               onClick={(event) => {
                 if (event.target === event.currentTarget) setOpen(false);
               }}

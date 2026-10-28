@@ -24,7 +24,7 @@ export function WelcomeOverlay({ memberNumber, onClose }: WelcomeOverlayProps) {
 
   return (
     // allow-palette: dialog backdrop dims arbitrary app content behind it, must stay dark in both themes
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[var(--layer-modal)] flex items-center justify-center bg-black/60 backdrop-blur-sm">
       <div className="relative mx-4 w-full max-w-md rounded-2xl border border-border bg-background p-8 text-center shadow-2xl">
         <button
           type="button"

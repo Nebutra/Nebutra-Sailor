@@ -27,7 +27,7 @@ export function SiteHeader({ signInHref, signUpHref }: SiteHeaderProps = {}) {
   const t = useTranslations("nav");
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-neutral-6 bg-[color-mix(in_srgb,var(--neutral-1)_92%,transparent)] backdrop-blur-xl">
+    <header className="sticky top-0 z-[var(--layer-nav)] w-full border-b border-neutral-6 bg-[color-mix(in_srgb,var(--neutral-1)_92%,transparent)] backdrop-blur-xl">
       <div className="mx-auto flex h-16 w-full max-w-wide min-w-0 items-center gap-2 px-4 sm:gap-4 sm:px-6 md:gap-6">
         <Link
           href="/"

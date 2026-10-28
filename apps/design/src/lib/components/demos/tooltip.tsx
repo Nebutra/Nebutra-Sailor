@@ -129,6 +129,32 @@ export default function TooltipDemo() {
       </State>
 
       <State
+        breaks="A tooltip that opens on the wrong physical side under dir=rtl, or whose text stays left-aligned because the portalled bubble lost the direction of its trigger. Hover each trigger and look at which side the bubble lands on."
+        id="rtl"
+        note="The same tooltips under dir=rtl. The bubble takes the direction of its trigger, so its text reads right to left, and the logical inline-start and inline-end sides swap: inline-end opens to the left of the trigger here. left and right stay physical."
+        title="Right-to-left"
+      >
+        <div dir="rtl">
+          <Row>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline">inline-end</Button>
+              </TooltipTrigger>
+              <TooltipContent side="inline-end">Opens toward the end of the line.</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline">inline-start</Button>
+              </TooltipTrigger>
+              <TooltipContent side="inline-start">
+                Opens toward the start of the line.
+              </TooltipContent>
+            </Tooltip>
+          </Row>
+        </div>
+      </State>
+
+      <State
         breaks="A tooltip that only opens on hover. Keyboard focus must open it, and Escape must close it without moving focus."
         id="keyboard"
         title="Keyboard path"

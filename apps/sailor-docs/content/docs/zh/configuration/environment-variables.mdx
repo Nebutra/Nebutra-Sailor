@@ -47,7 +47,7 @@ Better Auth 是唯一的认证服务商——Sailor Convergence ADR（2026-09-24
 | `FEISHU_APP_SECRET` | 启用飞书/Lark SSO 时 | — | 飞书/Lark App Secret。切勿暴露为 `NEXT_PUBLIC_`。 |
 | `FEISHU_OAUTH_SCOPES` | 否 | `contact:user.email contact:user.base:readonly` | 向飞书/Lark 请求的 OAuth scope，支持空格或逗号分隔。 |
 | `FEISHU_ALLOWED_TENANT_KEYS` | 否 | — | 可选的飞书 tenant key 白名单，用于限制本部署接受的租户。 |
-| `FEISHU_REDIRECT_URI` | 否 | — | 可选覆盖。Better Auth 默认回调为 `/api/auth/oauth2/callback/feishu`。 |
+| `FEISHU_REDIRECT_URI` | 否 | — | 可选覆盖。Better Auth 默认回调为 `/api/auth/callback/feishu`。 |
 | `GOOGLE_CLIENT_ID` | 启用 Google OAuth 时 | — | Better Auth 使用的 Google OAuth Web Client ID。 |
 | `GOOGLE_CLIENT_SECRET` | 启用 Google OAuth 时 | — | Better Auth 使用的 Google OAuth Web Client Secret。 |
 | `GITHUB_CLIENT_ID` | 启用 GitHub OAuth 时 | — | Better Auth 使用的 GitHub OAuth App Client ID。 |
