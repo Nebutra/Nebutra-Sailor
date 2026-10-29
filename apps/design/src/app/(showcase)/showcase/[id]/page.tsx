@@ -14,6 +14,8 @@ import { SITE_NAME } from "@/lib/site";
  * so there is no dynamic request API here on purpose.
  */
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return showcaseItems().map((item) => ({ id: item.id }));
 }

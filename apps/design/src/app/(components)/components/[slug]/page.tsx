@@ -34,6 +34,10 @@ import { PageHeader } from "../../../(tokens)/tokens/_components/primitives";
  * shell turns it on.
  */
 
+// Every valid slug is prerendered by generateStaticParams below. Anything else
+// is a 404 without running this module's render path, which scans the ui source.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return COMPONENTS.map((entry) => ({ slug: entry.slug }));
 }
