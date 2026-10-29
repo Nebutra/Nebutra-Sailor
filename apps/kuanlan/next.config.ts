@@ -25,10 +25,7 @@ const nextConfig: NextConfig = {
   // same recipe apps/web ships to Fly with.
   serverExternalPackages: ["sharp", "@prisma/client", "@prisma/adapter-pg", "pg"],
   images: {
-    remotePatterns: [
-      { protocol: "https", hostname: brand.domains.cdn, pathname: "/kuanlan/**" },
-      { protocol: "https", hostname: "**.r2.dev", pathname: "/kuanlan/**" },
-    ],
+    remotePatterns: [{ protocol: "https", hostname: brand.domains.cdn, pathname: "/kuanlan/**" }],
   },
 };
 

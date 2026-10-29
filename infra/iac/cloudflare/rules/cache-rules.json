@@ -87,17 +87,27 @@
     },
     {
       "name": "Cache CDN assets",
-      "description": "Long cache for R2 CDN assets",
+      "description": "Long cache for R2 CDN assets; query strings never reach the bucket as distinct objects",
       "expression": "http.host eq \"cdn.nebutra.com\"",
       "action": "set_cache_settings",
       "action_parameters": {
         "edge_ttl": {
           "mode": "override_origin",
-          "default": 2592000
+          "default": 2592000,
+          "status_code_ttl": [
+            { "status_code_range": { "to": 299 }, "value": 2592000 },
+            { "status_code_range": { "from": 300, "to": 499 }, "value": 0 },
+            { "status_code_range": { "from": 500 }, "value": -1 }
+          ]
         },
         "browser_ttl": {
           "mode": "override_origin",
           "default": 604800
+        },
+        "cache_key": {
+          "custom_key": {
+            "query_string": { "exclude": { "all": true } }
+          }
         },
         "cache": true
       }

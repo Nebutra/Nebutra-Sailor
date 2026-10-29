@@ -47,6 +47,7 @@ async def presign_upload(
                 presigned = await storage.create_presigned_upload(
                     key=existing.key,
                     content_type=existing.content_type,
+                    content_length=existing.size,
                 )
                 return existing.envelope(presigned)
 
@@ -55,6 +56,7 @@ async def presign_upload(
         presigned = await storage.create_presigned_upload(
             key=key,
             content_type=request.content_type,
+            content_length=request.size,
         )
         upload = await store.create_pending(
             request,

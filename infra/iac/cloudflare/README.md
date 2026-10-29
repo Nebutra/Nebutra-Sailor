@@ -56,7 +56,7 @@ A       status    106.15.4.31              ✅      Auto   # ECS nginx → landi
 A       design    106.15.4.31              ✅      Auto   # design PM2 :3109
 CNAME   docs      331816c5997d8344.vercel-dns-017.com  DNS only  # project-specific Auto  # grey cloud
 CNAME   studio    <active studio host>     ✅      Auto
-CNAME   cdn       <r2-bucket>.r2.dev       ✅      Auto
+CNAME   cdn       (managed)                ✅      Auto   # R2 custom domain on nebutra-assets; r2.dev stays off
 ```
 
 `nebutra.com/docs` is the Vercel project `docs` (`apps/sailor-docs`). Deploy is

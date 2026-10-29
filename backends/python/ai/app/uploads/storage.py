@@ -20,6 +20,7 @@ class UploadStorageProvider(Protocol):
         key: str,
         content_type: str,
         expires_in_seconds: int = 3600,
+        content_length: int | None = None,
     ) -> PresignedUpload: ...
 
 
@@ -40,6 +41,7 @@ class LocalUploadStorageProvider:
         key: str,
         content_type: str,
         expires_in_seconds: int = 3600,
+        content_length: int | None = None,
     ) -> PresignedUpload:
         return PresignedUpload(
             url=(
@@ -76,6 +78,7 @@ class S3UploadStorageProvider:
         key: str,
         content_type: str,
         expires_in_seconds: int = 3600,
+        content_length: int | None = None,
     ) -> PresignedUpload:
         import boto3
 
@@ -86,13 +89,19 @@ class S3UploadStorageProvider:
             region_name=self._region,
             endpoint_url=self._endpoint_url,
         )
+        params: dict[str, object] = {
+            "Bucket": self.bucket,
+            "Key": key,
+            "ContentType": content_type,
+        }
+        if content_length is not None:
+            # A signed length makes the bucket refuse a body of any other size, so the
+            # size declared here (capped by the request model) is the size that lands.
+            # Unsigned, the URL accepts an object of any size.
+            params["ContentLength"] = content_length
         url = client.generate_presigned_url(
             "put_object",
-            Params={
-                "Bucket": self.bucket,
-                "Key": key,
-                "ContentType": content_type,
-            },
+            Params=params,
             ExpiresIn=expires_in_seconds,
             HttpMethod="PUT",
         )
@@ -126,6 +135,7 @@ class OssUploadStorageProvider:
         key: str,
         content_type: str,
         expires_in_seconds: int = 3600,
+        content_length: int | None = None,
     ) -> PresignedUpload:
         import oss2
 
