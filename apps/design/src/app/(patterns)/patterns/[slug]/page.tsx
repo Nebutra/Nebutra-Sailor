@@ -5,6 +5,9 @@ import { PATTERNS, PATTERNS_BY_SLUG } from "@/lib/pattern-data";
 import { verifyCast } from "@/lib/patterns";
 import { Mono, PageHeader, Section } from "../../../(tokens)/tokens/_components/primitives";
 
+// Every pattern is prerendered by generateStaticParams; an unknown slug is a 404.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return PATTERNS.map((pattern) => ({ slug: pattern.slug }));
 }

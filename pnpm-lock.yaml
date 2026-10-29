@@ -84,7 +84,7 @@ overrides:
   '@opentelemetry/instrumentation-oracledb': '>=0.46.0 <0.47'
   '@opentelemetry/instrumentation-tedious': '>=0.40.0 <0.41'
   '@opentelemetry/instrumentation-cassandra-driver': '>=0.66.0 <0.67'
-  seroval: '>=1.6.3 <2'
+  seroval: '>=1.6.11 <2'
   proxy-addr: '>=2.0.8 <3'
   source-map-js: '>=1.2.2 <2'
   image-size: '>=2.0.3 <3'
@@ -119,7 +119,7 @@ overrides:
   '@clerk/react': '>=6.4.3'
   '@clerk/shared': '>=4.8.3'
   '@grpc/grpc-js': '>=1.14.5'
-  '@hono/node-server': '>=2.0.5'
+  '@hono/node-server': '>=2.1.3'
   '@modelcontextprotocol/sdk': 1.32.0
   '@opentelemetry/auto-instrumentations-node': '>=0.75.0'
   '@opentelemetry/core': '>=2.8.0'
@@ -148,7 +148,7 @@ overrides:
   dompurify: '>=3.4.17'
   effect: '>=3.20.0'
   esbuild: '>=0.28.1'
-  fast-uri: '>=4.1.5'
+  fast-uri: '>=4.2.3'
   fast-xml-builder: '>=1.1.7'
   fast-xml-parser: '>=5.7.0'
   follow-redirects: '>=1.16.1 <2'
@@ -185,7 +185,7 @@ overrides:
   picomatch@4.0.3: 4.0.4
   postcss: '>=8.5.23'
   protobufjs: '>=7.6.5'
-  qs: '>=6.16.0'
+  qs: '>=6.16.1'
   react: 19.2.4
   react-avatar-editor: ^14.0.0
   react-dom: 19.2.4
@@ -753,8 +753,8 @@ importers:
         specifier: 3.5.32
         version: 3.5.32(typescript@5.9.3)
       vue-i18n:
-        specifier: 11.4.13
-        version: 11.4.13(vue@3.5.32(typescript@5.9.3))
+        specifier: 11.4.16
+        version: 11.4.16(vue@3.5.32(typescript@5.9.3))
       vue-router:
         specifier: 4.6.4
         version: 4.6.4(vue@3.5.32(typescript@5.9.3))
@@ -2062,8 +2062,8 @@ importers:
         specifier: 1.4.1
         version: 1.4.1
       '@hono/node-server':
-        specifier: '>=2.0.5'
-        version: 2.0.11(hono@4.13.13)
+        specifier: '>=2.1.3'
+        version: 2.1.5(hono@4.13.13)
       '@hono/swagger-ui':
         specifier: ^0.6.0
         version: 0.6.0(hono@4.13.13)
@@ -8051,8 +8051,8 @@ packages:
   '@hexagon/base64@1.1.28':
     resolution: {integrity: sha512-lhqDEAvWixy3bZ+UOYbPwUbBkwBq5C1LAJ/xPC8Oi+lL54oyakv/npbA0aU2hgCsx/1NUd4IBvV03+aUBWxerw==}
 
-  '@hono/node-server@2.0.11':
-    resolution: {integrity: sha512-bjD221KPLoJTWUwso1J6fGKiTXEUFedG/s0visavY4zakFPkeGURMRNly+FhBHs7T8Dz4qHaZIMX9ZoJHSJtKA==}
+  '@hono/node-server@2.1.5':
+    resolution: {integrity: sha512-MgP/I06GdvsilDspMk/qmRzpk8LOUStP6jFAbSRi40W09DhoyUn+Mj7eyKICPqeYKybOjVFLVIAQzvu1bfIa7Q==}
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4.13.7
@@ -8665,20 +8665,20 @@ packages:
   '@internationalized/date@3.12.0':
     resolution: {integrity: sha512-/PyIMzK29jtXaGU23qTvNZxvBXRtKbNnGDFD+PY6CZw/Y8Ex8pFUzkuCJCG9aOqmShjqhS9mPqP6Dk5onQY8rQ==}
 
-  '@intlify/core-base@11.4.13':
-    resolution: {integrity: sha512-3qGv1/j0fl6ZSeehGaznE78A4i3hCaOeOyDh7jq7SV6ch/XGoy96xIrYuALTV3xhIqj2rktsIKcwlLZ3CbOhkA==}
+  '@intlify/core-base@11.4.16':
+    resolution: {integrity: sha512-xB8nMdMRLNx7b0zPvrHy0+N9uq9Vfi1aUxHqWgn2e2/TbjCKy8HfoFpnUXXxVP8I0p1ccd6LFSC3XsFjZ3vweA==}
     engines: {node: '>= 22'}
 
-  '@intlify/devtools-types@11.4.13':
-    resolution: {integrity: sha512-f38d2yvjNc1/c+BnTLsxTB0729clTtyy7kTxHu4FFlvI6FpmBOp7b9sLYtsKJpXSZ70kIEexvNwDSzLkIlYnlQ==}
+  '@intlify/devtools-types@11.4.16':
+    resolution: {integrity: sha512-Bl7arICsKgwcSEQuZJun3swenN4jwSpg35lCpijFznYbW9GvkfH4wLxcI5+gz7d/EHqu66UT9CZDIdnQdgMAGg==}
     engines: {node: '>= 22'}
 
-  '@intlify/message-compiler@11.4.13':
-    resolution: {integrity: sha512-cjKsDeWUD/i3mj0QtC8hydLCFP5mgZtTU1xZZaN9/O3FG94EXc0rTbecYpifglp26rpoJoIjSlW137VejLKsZw==}
+  '@intlify/message-compiler@11.4.16':
+    resolution: {integrity: sha512-p4lDWmBAsi3ja+PuEfPRavYyvqkYn/Upxz7UpnyI9LgIIy8XawcGIDzN+k99Z+99etO3HmDXGeTxnJIJGgSZ+g==}
     engines: {node: '>= 22'}
 
-  '@intlify/shared@11.4.13':
-    resolution: {integrity: sha512-ZjcNgEED1FtTCFb+ohWBdR21k5kvleKtM9peobQtLB83mNIfEhJK86dEbhfk+OcUrybrEbc4eDeE9UbFUVHsjQ==}
+  '@intlify/shared@11.4.16':
+    resolution: {integrity: sha512-xehmkbEgbbNh/V+d8r3hFup0ViaN29YTJSAfRr28C54rxjyZEO0RNQKqW7VVajj16gLdglotNjiq+sIVNtHGzw==}
     engines: {node: '>= 22'}
 
   '@ioredis/commands@1.5.1':
@@ -16221,8 +16221,8 @@ packages:
   fast-string-width@3.0.2:
     resolution: {integrity: sha512-gX8LrtNEI5hq8DVUfRQMbr5lpaS4nMIWV+7XEbXk2b8kiQIizgnlr12B4dA3ZEx3308ze0O4Q1R+cHts8kyUJg==}
 
-  fast-uri@4.2.1:
-    resolution: {integrity: sha512-TmHQgewjHtMq1E5QKA0tOE0yeYGQs25KZC/ziJpubRtWI15W92e6vPFydWOeZBVROSHBYw/QhD9d5OefdD6LDg==}
+  fast-uri@4.2.3:
+    resolution: {integrity: sha512-I1PXwP5eAhlNlcdpjt9CgB59op2ZvZfxw+BkqGFVIUOgNpCVTcTqp3HhTX7brxj5vsip+nSY4nTvff+eIA76hg==}
 
   fast-wrap-ansi@0.2.0:
     resolution: {integrity: sha512-rLV8JHxTyhVmFYhBJuMujcrHqOT2cnO5Zxj37qROj23CP39GXubJRBUFF0z8KFK77Uc0SukZUf7JZhsVEQ6n8w==}
@@ -19405,8 +19405,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  qs@6.16.0:
-    resolution: {integrity: sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==}
+  qs@6.17.0:
+    resolution: {integrity: sha512-5LK5BZ2XDHMvcUJaf0CQ5HL3aVgKbpklvByC7qLSxYkfE8COEEbJg5xCHWCTqzqi0Gs4Jn5Mv5v3R38W6edscA==}
     engines: {node: '>=0.6'}
 
   quansync@0.2.11:
@@ -20259,11 +20259,11 @@ packages:
     resolution: {integrity: sha512-S0xQPhUTefAhNvNWFg0c1J8qJArHt5KdtJ/cFAofo06KD1MVSeFWyl4iiu+ApDIuw0WhjpOfCdgConOfAnLgkw==}
     engines: {node: '>=10'}
     peerDependencies:
-      seroval: '>=1.6.3 <2'
+      seroval: '>=1.6.11 <2'
 
-  seroval@1.6.8:
-    resolution: {integrity: sha512-HlSgSAkTk4EqHcje1ptJjfZi1YDv5KbhVJ/d3P7T/nAXua2VmDu+AKDX5VTdFfZf48nDkWB2TKYt0DrCSa+3wg==}
-    engines: {node: '>=10'}
+  seroval@1.7.1:
+    resolution: {integrity: sha512-tSRMcPkD/bu1rmY0/XfFP2zLPD8jXVuzHli6Y2UFi9AiG/d0kOd8LAc/G6NolpW8MA1PtgDUhywKCmerS4E3tg==}
+    engines: {node: '>=20'}
 
   serve-static@2.2.1:
     resolution: {integrity: sha512-xRXBn0pPqQTVQiC8wyQrKs2MOlX24zQ0POGaj0kultvoOCstBQM5yvOhAVSUwOMjQtTvsPWoNCHfPGwaaQJhTw==}
@@ -21583,8 +21583,8 @@ packages:
   vscode-uri@3.2.0:
     resolution: {integrity: sha512-m2gXo3bn0G1kT9InzMf07fTbqMbGtyckj3bH5ktLO+1Ssv+yiATZ4dhwaQv9UZWxJh6E9IFGnQyjgWVDWVBDrg==}
 
-  vue-i18n@11.4.13:
-    resolution: {integrity: sha512-2G7LC9XcdZ0IljFib7lKGHNiBBOTv6HO+2bnBaOiQgDYZ+uUnqSpuED5DbBo1t7su50o/WRGn+ZfDQTGd26xEw==}
+  vue-i18n@11.4.16:
+    resolution: {integrity: sha512-Kv9tp6iTmaAeOwop7hkAo28N1IBsbSVpnxyE26b6gqc4Q2E9Ke3ZHHA3oqqwS6/cYLT1henZU4etTaLQxrK98Q==}
     engines: {node: '>= 22'}
     peerDependencies:
       vue: ^3.0.0
@@ -25631,7 +25631,7 @@ snapshots:
 
   '@hexagon/base64@1.1.28': {}
 
-  '@hono/node-server@2.0.11(hono@4.13.13)':
+  '@hono/node-server@2.1.5(hono@4.13.13)':
     dependencies:
       hono: 4.13.13
 
@@ -26149,23 +26149,23 @@ snapshots:
     dependencies:
       '@swc/helpers': 0.5.19
 
-  '@intlify/core-base@11.4.13':
+  '@intlify/core-base@11.4.16':
     dependencies:
-      '@intlify/devtools-types': 11.4.13
-      '@intlify/message-compiler': 11.4.13
-      '@intlify/shared': 11.4.13
+      '@intlify/devtools-types': 11.4.16
+      '@intlify/message-compiler': 11.4.16
+      '@intlify/shared': 11.4.16
 
-  '@intlify/devtools-types@11.4.13':
+  '@intlify/devtools-types@11.4.16':
     dependencies:
-      '@intlify/core-base': 11.4.13
-      '@intlify/shared': 11.4.13
+      '@intlify/core-base': 11.4.16
+      '@intlify/shared': 11.4.16
 
-  '@intlify/message-compiler@11.4.13':
+  '@intlify/message-compiler@11.4.16':
     dependencies:
-      '@intlify/shared': 11.4.13
+      '@intlify/shared': 11.4.16
       source-map-js: 1.2.2
 
-  '@intlify/shared@11.4.13': {}
+  '@intlify/shared@11.4.16': {}
 
   '@ioredis/commands@1.5.1': {}
 
@@ -26627,7 +26627,7 @@ snapshots:
 
   '@modelcontextprotocol/sdk@1.32.0(@cfworker/json-schema@4.1.1)(supports-color@10.2.2)(zod@4.6.7)':
     dependencies:
-      '@hono/node-server': 2.0.11(hono@4.13.13)
+      '@hono/node-server': 2.1.5(hono@4.13.13)
       ajv: 8.20.0
       ajv-formats: 3.0.1(ajv@8.20.0)
       content-type: 1.0.5
@@ -28994,7 +28994,7 @@ snapshots:
       '@electric-sql/pglite': 0.3.15
       '@electric-sql/pglite-socket': 0.0.20(@electric-sql/pglite@0.3.15)
       '@electric-sql/pglite-tools': 0.2.20(@electric-sql/pglite@0.3.15)
-      '@hono/node-server': 2.0.11(hono@4.13.13)
+      '@hono/node-server': 2.1.5(hono@4.13.13)
       '@mrleebo/prisma-ast': 0.13.1
       '@prisma/get-platform': 7.2.0
       '@prisma/query-plan-executor': 7.2.0
@@ -32212,8 +32212,8 @@ snapshots:
     dependencies:
       '@tanstack/history': 1.162.0
       cookie-es: 3.1.1
-      seroval: 1.6.8
-      seroval-plugins: 1.5.4(seroval@1.6.8)
+      seroval: 1.7.1
+      seroval-plugins: 1.5.4(seroval@1.7.1)
 
   '@tanstack/router-generator@1.167.15(supports-color@10.2.2)':
     dependencies:
@@ -33517,14 +33517,14 @@ snapshots:
   ajv@8.18.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 4.2.1
+      fast-uri: 4.2.3
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
   ajv@8.20.0:
     dependencies:
       fast-deep-equal: 3.1.3
-      fast-uri: 4.2.1
+      fast-uri: 4.2.3
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
@@ -33985,7 +33985,7 @@ snapshots:
       http-errors: 2.0.1
       iconv-lite: 0.7.3
       on-finished: 2.4.1
-      qs: 6.16.0
+      qs: 6.17.0
       raw-body: 3.0.2
       type-is: 2.1.0
     transitivePeerDependencies:
@@ -35324,7 +35324,7 @@ snapshots:
       once: 1.4.0
       parseurl: 1.3.3
       proxy-addr: 2.0.8
-      qs: 6.16.0
+      qs: 6.17.0
       range-parser: 1.2.1
       router: 2.2.0(supports-color@10.2.2)
       send: 1.2.1(supports-color@10.2.2)
@@ -35392,7 +35392,7 @@ snapshots:
     dependencies:
       fast-string-truncated-width: 3.0.3
 
-  fast-uri@4.2.1: {}
+  fast-uri@4.2.3: {}
 
   fast-wrap-ansi@0.2.0:
     dependencies:
@@ -39486,7 +39486,7 @@ snapshots:
       pngjs: 5.0.0
       yargs: 15.4.1
 
-  qs@6.16.0:
+  qs@6.17.0:
     dependencies:
       es-define-property: 1.0.1
       side-channel: 1.1.1
@@ -40704,11 +40704,11 @@ snapshots:
 
   serialize-error-cjs@0.1.4: {}
 
-  seroval-plugins@1.5.4(seroval@1.6.8):
+  seroval-plugins@1.5.4(seroval@1.7.1):
     dependencies:
-      seroval: 1.6.8
+      seroval: 1.7.1
 
-  seroval@1.6.8: {}
+  seroval@1.7.1: {}
 
   serve-static@2.2.1(supports-color@10.2.2):
     dependencies:
@@ -41884,7 +41884,7 @@ snapshots:
   url@0.11.4:
     dependencies:
       punycode: 1.4.1
-      qs: 6.16.0
+      qs: 6.17.0
 
   urlpattern-polyfill@10.1.0: {}
 
@@ -42318,11 +42318,11 @@ snapshots:
 
   vscode-uri@3.2.0: {}
 
-  vue-i18n@11.4.13(vue@3.5.32(typescript@5.9.3)):
+  vue-i18n@11.4.16(vue@3.5.32(typescript@5.9.3)):
     dependencies:
-      '@intlify/core-base': 11.4.13
-      '@intlify/devtools-types': 11.4.13
-      '@intlify/shared': 11.4.13
+      '@intlify/core-base': 11.4.16
+      '@intlify/devtools-types': 11.4.16
+      '@intlify/shared': 11.4.16
       '@vue/devtools-api': 6.6.4
       vue: 3.5.32(typescript@5.9.3)
 
