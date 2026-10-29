@@ -38,6 +38,9 @@ Configure controls through shared variants, label/error props and semantic recip
 variables. Do not restyle primitive borders, padding, focus or disabled states
 from a page selector. The KCQ token bridge must cover recipes and proxy-control
 focus as well as Tailwind colours; portals inherit that bridge from body.
+Chart text fields (inputs, textareas, search and composer groups) draw no focus
+ring or focus border; non-text controls keep the keyboard focus ring. This
+follows the upstream chart design and the ui-smoke checks assert it.
 Empty-chart actions and bootstrap recovery use the same canonical Button contract.
 Anonymous activation statistics require explicit consent and stay off by default.
 

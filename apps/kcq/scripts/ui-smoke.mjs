@@ -240,10 +240,11 @@ async function workbench(page, id, colorScheme) {
   await bounds(naming);
   const name = naming.getByLabel("布局名称", { exact: true });
   await name.focus();
-  assert.notEqual(
+  // Chart text fields draw no focus ring; the caret is the only focus cue.
+  assert.equal(
     await name.evaluate((element) => getComputedStyle(element).boxShadow),
     "none",
-    "Layout names must have a visible focus ring",
+    "Layout names must not draw a focus ring",
   );
   await close(page, naming);
   await page.getByRole("button", { name: "指标", exact: true }).click();
@@ -260,7 +261,8 @@ async function workbench(page, id, colorScheme) {
     await search.evaluate(
       (element) => getComputedStyle(element.closest(".search-field")).outlineStyle,
     ),
-    "solid",
+    "none",
+    "Search groups must not draw a focus outline",
   );
   await close(page, symbols);
   await page.getByTestId("agent-panel-open").click();
@@ -272,7 +274,8 @@ async function workbench(page, id, colorScheme) {
     await composer.evaluate(
       (element) => getComputedStyle(element.closest(".composer__input")).outlineStyle,
     ),
-    "solid",
+    "none",
+    "Agent composers must not draw a focus outline",
   );
   assert.equal(await composer.evaluate((element) => getComputedStyle(element).resize), "none");
   await panel.getByRole("button", { name: "模型设置", exact: true }).click();
