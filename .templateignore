@@ -489,6 +489,10 @@ infra/ops/scripts/*-kcq-edge-cache.sh
 infra/ops/scripts/*-landing-edge-cache.sh
 infra/iac/cloudflare/edge-cache/
 scripts/perf/edge-cache-proxy.mjs
+# R2 cost guardrails: Nebutra's buckets, its cdn.nebutra.com host and its Cloudflare zone.
+.github/workflows/ops-r2-guardrails.yml
+infra/ops/scripts/apply-r2-guardrails.sh
+infra/iac/cloudflare/r2/lifecycle/
 docs/architecture/2026-10-09-kcq-product-surface.md
 docs/architecture/2026-10-09-kcq-brand-architecture.md
 .github/workflows/deploy-kcq-fly.yml

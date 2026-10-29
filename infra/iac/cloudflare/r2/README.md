@@ -38,9 +38,9 @@ wrangler r2 bucket create nebutra-backups
 For `nebutra-assets` bucket:
 
 1. Go to Cloudflare Dashboard → R2 → nebutra-assets
-2. Click **Settings** → **Public Access**
-3. Enable public access
-4. Add custom domain: `cdn.nebutra.com`
+2. Click **Settings** → **Custom Domains** and add `cdn.nebutra.com`
+3. Leave the **r2.dev subdomain disabled**. It bypasses the zone's Cache Rules and WAF, so
+   every request would reach the bucket as a Class B read.
 
 ### 3. Configure CORS
 
@@ -130,10 +130,27 @@ nebutra-backups/          # Internal backups
 
 ## Lifecycle Rules
 
-Configure via Cloudflare Dashboard or API:
+Applied from the repo by `.github/workflows/ops-r2-guardrails.yml` (runs on a push to `main` that
+touches these files, or by hand). Each file in `lifecycle/` is the complete rule set for the bucket
+it is named after; the API replaces the set on every apply.
 
 | Bucket | Rule | Action |
 |--------|------|--------|
-| `nebutra-uploads` | Delete incomplete uploads after 1 day | Auto-delete |
-| `nebutra-backups` | Move to Infrequent Access after 30 days | Transition |
-| `nebutra-backups` | Delete after 90 days | Expiration |
+| `nebutra-uploads` | Abort incomplete multipart uploads after 1 day | Abort |
+| `nebutra-pebble-diagnostics` | Abort incomplete multipart uploads after 1 day | Abort |
+| `nebutra-backups` | Abort incomplete multipart uploads after 1 day | Abort |
+| `nebutra-backups` | Delete after 30 days | Expiration |
+
+Object expiry is deliberately absent on `nebutra-uploads` (user photos and exports) and
+`nebutra-pebble-diagnostics` (support bundles): how long those are kept is a retention decision,
+not a cost guardrail. The backups rule is a backstop; `backup-db.sh` already prunes at
+`BACKUP_RETENTION_DAYS` (default 7).
+
+## CDN cache rule
+
+`cdn.nebutra.com` has one Cache Rule, defined as "Cache CDN assets" in
+`../rules/cache-rules.json` and applied by the same workflow: 30-day edge TTL on 2xx, no caching
+of 3xx/4xx/5xx, and **query strings are not part of the cache key**. Without that last part a flood
+of `?x=<random>` requests is a cache miss each, and every miss is a billed bucket read. The
+`?v=` suffixes in kuanlan are harmless but no longer bust the edge cache: replace an object in
+place and purge it, or write it under a new key. Applying a changed rule purges the cdn host once.

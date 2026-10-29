@@ -178,3 +178,33 @@ def test_upload_provider_selection_is_provider_switchable(monkeypatch):
     monkeypatch.setenv("UPLOAD_STORAGE_PROVIDER", "local")
     with pytest.raises(RuntimeError, match="local upload storage is not allowed"):
         resolve_upload_storage_provider()
+
+
+@pytest.mark.asyncio
+async def test_s3_presigned_put_binds_the_declared_content_length():
+    from urllib.parse import parse_qs, urlparse
+
+    from app.uploads.storage import S3UploadStorageProvider
+
+    provider = S3UploadStorageProvider(
+        bucket="nebutra-uploads",
+        access_key_id="key",
+        secret_access_key="secret",  # noqa: S106
+        region="auto",
+        endpoint_url="https://account.r2.cloudflarestorage.com",
+        provider="r2",
+    )
+
+    bound = await provider.create_presigned_upload(
+        key="t/u/file.pdf", content_type="application/pdf", content_length=1234
+    )
+    unbound = await provider.create_presigned_upload(
+        key="t/u/file.pdf", content_type="application/pdf"
+    )
+
+    def signed_headers(url: str) -> set[str]:
+        return set(parse_qs(urlparse(url).query)["X-Amz-SignedHeaders"][0].split(";"))
+
+    # A signed content-length is what makes the bucket refuse a body of any other size.
+    assert "content-length" in signed_headers(bound.url)
+    assert "content-length" not in signed_headers(unbound.url)

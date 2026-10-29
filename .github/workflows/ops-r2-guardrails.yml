@@ -1,0 +1,55 @@
+name: R2 cost guardrails
+
+# Applies the R2 lifecycle rules and the cdn.nebutra.com Cache Rule from the repo.
+#   infra/iac/cloudflare/r2/lifecycle/<bucket>.json   -> bucket lifecycle (PUT replaces the set)
+#   infra/iac/cloudflare/rules/cache-rules.json       -> "Cache CDN assets" rule (ref r2_cdn_assets)
+# Both jobs are idempotent. They fail loudly: a skipped guardrail must not look like an applied one.
+#
+# Secrets: CLOUDFLARE_API_TOKEN (R2 Admin Write; Cache Rules Edit + Cache Purge fallback),
+#          CLOUDFLARE_CACHE_API_TOKEN (preferred for the cdn rule), CLOUDFLARE_ACCOUNT_ID.
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Why (run summary)"
+        required: false
+        default: "apply R2 guardrails"
+  push:
+    branches: [main]
+    paths:
+      - "infra/iac/cloudflare/r2/lifecycle/**"
+      - "infra/iac/cloudflare/rules/cache-rules.json"
+      - "infra/ops/scripts/apply-r2-guardrails.sh"
+      - ".github/workflows/ops-r2-guardrails.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ops-r2-guardrails
+  cancel-in-progress: false
+
+jobs:
+  lifecycle:
+    name: Bucket lifecycle rules
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Apply lifecycle rules
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFLARE_WORKERS_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: bash infra/ops/scripts/apply-r2-guardrails.sh lifecycle
+
+  cdn-cache:
+    name: cdn.nebutra.com cache rule
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Apply cache rule
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_CACHE_API_TOKEN || secrets.CLOUDFLARE_API_TOKEN }}
+        run: bash infra/ops/scripts/apply-r2-guardrails.sh cdn-cache
