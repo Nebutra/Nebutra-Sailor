@@ -93,7 +93,11 @@ describe("R2 cost guardrails", () => {
     expect(wf).toContain("infra/iac/cloudflare/rules/cache-rules.json");
     // A guardrail that silently skips reads as one that is on.
     expect(wf).not.toMatch(/\|\|\s*true/);
-    expect(read(SCRIPT)).not.toContain("::warning");
+    // The only soft spot is a lifecycle file for a bucket that does not exist yet.
+    const script = read(SCRIPT);
+    expect(script.match(/::warning/g)).toHaveLength(1);
+    expect(script).toContain("10006");
+    expect(script).toContain("failed=1");
   });
 
   it("does not let the Next image optimizer reach the bucket through r2.dev", () => {
