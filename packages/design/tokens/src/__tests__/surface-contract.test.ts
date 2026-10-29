@@ -316,3 +316,27 @@ describe("motion is complete in every language", () => {
     });
   }
 });
+
+describe("unchecked-control edge", () => {
+  const mix = (body: string) =>
+    /--control-border:\s*color-mix\(in oklab,\s*hsl\(var\(--foreground\)\)\s*(\d+)%/.exec(
+      body,
+    )?.[1];
+
+  it("is declared for light and for dark, and dark is heavier", () => {
+    const light = Number(mix(rule(recipe, /^:root$/)));
+    const dark = Number(mix(rule(recipe, /^\.dark$/)));
+    assert.ok(Number.isFinite(light) && Number.isFinite(dark), "both modes declare a mix");
+    // Measured on the live site: the 50% midpoint is 2.5-3.0:1 against the dark
+    // card/muted surfaces on Factory, Vercel and Notion; 56% is the floor that
+    // clears 3:1 on every language, 58% is what ships.
+    assert.ok(dark >= 56, `dark --control-border mixes ${dark}% foreground; 56% is the 3:1 floor`);
+    assert.ok(dark > light, "dark mode needs more foreground than light");
+  });
+
+  it("is not overridden by a skin, so the contrast guarantee holds per language", () => {
+    for (const { id, css } of skins) {
+      assert.ok(!/--control-border\s*:/.test(css), `${id} overrides --control-border`);
+    }
+  });
+});
