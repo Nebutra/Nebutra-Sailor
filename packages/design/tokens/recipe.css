@@ -534,6 +534,17 @@
   --focus-ring: var(--shadow-focus);
 }
 
+/* The unchecked-control edge in dark mode. The 50% midpoint above holds 3:1 in
+ * light, but in dark the raised surfaces (card, muted) sit well above the page
+ * colour, so the same midpoint fell to 2.5–3.0:1 against them on Factory and
+ * Vercel (Notion 2.9:1 on muted). 58% clears 3.3:1 on every surface of every
+ * language without turning the edge into a heavy stroke. Declared on `.dark`
+ * itself, not only `html`, so a dark subtree (Split preview) re-resolves it
+ * against its own foreground and background. */
+.dark {
+  --control-border: color-mix(in oklab, hsl(var(--foreground)) 58%, hsl(var(--background)));
+}
+
 /* Tailwind v4: the vocabulary as classes.
  *
  * `inline`, so the value is written into the utility and resolves on the element
