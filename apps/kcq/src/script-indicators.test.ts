@@ -26,6 +26,10 @@ it("awaits registration, provides the same source store and disposes on unmount"
     list: vi.fn(() => []),
     update: vi.fn(),
     remove: vi.fn(),
+    run: vi.fn(),
+    createFolder: vi.fn(),
+    removeFolder: vi.fn(),
+    listFolders: vi.fn(() => []),
     dispose: vi.fn(),
   };
   let finish: ((service: ScriptService) => void) | undefined;

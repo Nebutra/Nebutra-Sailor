@@ -63,16 +63,7 @@ export function initializeMarketConnectors(
         // Streams open only when the connector's probe declares liveBars, and only for
         // instruments that do not opt out (core MarketRuntime).
         liveBars: {
-          createStream: ({ symbol, period, barAggregation, instrumentId }) =>
-            new BarsLiveSource(
-              id,
-              symbol,
-              period,
-              barAggregation,
-              currentBaseUrl(),
-              undefined,
-              instrumentId,
-            ),
+          createStream: (request) => new BarsLiveSource(id, request, currentBaseUrl()),
         },
       }),
     );
