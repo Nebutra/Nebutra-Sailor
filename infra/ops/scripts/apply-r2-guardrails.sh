@@ -13,7 +13,9 @@
 #   Needs CLOUDFLARE_API_TOKEN with Zone -> Cache Rules Edit + Cache Purge on CF_ZONE_NAME.
 #
 # Unlike the deploy-time edge-cache scripts this one fails loudly: it only runs from an ops
-# workflow, where a silent skip would look like a guardrail that is on when it is not.
+# workflow, where a silent skip would look like a guardrail that is on when it is not. The one
+# exception is a lifecycle file for a bucket that does not exist (R2 error 10006): there is
+# nothing to guard yet, so it is a warning, and the remaining buckets are still applied.
 set -euo pipefail
 
 MODE="${1:?usage: apply-r2-guardrails.sh lifecycle|cdn-cache|print-lifecycle|print-cdn-rule}"
@@ -91,15 +93,24 @@ print(json.dumps(d.get("result")))
 }
 
 lifecycle() {
-  local account="${CLOUDFLARE_ACCOUNT_ID:-}" f bucket body out
+  local account="${CLOUDFLARE_ACCOUNT_ID:-}" f bucket body out failed=0
   [ -n "$account" ] || die "CLOUDFLARE_ACCOUNT_ID is not set."
   for f in "$LIFECYCLE_DIR"/*.json; do
     bucket="$(basename "$f" .json)"
     body="$(python3 -c 'import json,sys; print(json.dumps(json.load(open(sys.argv[1]))))' "$f")"
-    out=$(cf PUT "/accounts/${account}/r2/buckets/${bucket}/lifecycle" "$body" | result) ||
-      die "Lifecycle for ${bucket} refused (${out}). The token needs R2 Admin Write."
-    echo "Lifecycle applied to ${bucket}: $(python3 -c 'import json,sys; print(", ".join(r["id"] for r in json.load(open(sys.argv[1]))["rules"]))' "$f")"
+    if out=$(cf PUT "/accounts/${account}/r2/buckets/${bucket}/lifecycle" "$body" | result); then
+      echo "Lifecycle applied to ${bucket}: $(python3 -c 'import json,sys; print(", ".join(r["id"] for r in json.load(open(sys.argv[1]))["rules"]))' "$f")"
+      continue
+    fi
+    case "$out" in
+      *10006*|*"does not exist"*)
+        echo "::warning title=R2 guardrails::Bucket ${bucket} does not exist in this account; its lifecycle file takes effect once the bucket is created." ;;
+      *)
+        echo "::error title=R2 guardrails::Lifecycle for ${bucket} refused (${out}). A permission error means the token needs R2 Admin Write."
+        failed=1 ;;
+    esac
   done
+  [ "$failed" = 0 ] || exit 1
 }
 
 cdn_cache() {
